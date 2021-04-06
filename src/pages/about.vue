@@ -46,7 +46,7 @@
             </template>
             <template v-slot:search>
               <a
-                aria-label="cc search repository"
+                aria-label="WP Photos repository"
                 href="https://github.com/creativecommons/cccatalog-frontend/"
                 >{{ $t('about.planning.search') }}</a
               >

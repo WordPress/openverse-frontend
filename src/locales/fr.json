@@ -15,7 +15,7 @@
     },
     "old-cc-search": {
       "label": "Accédez au {link} portail",
-      "link": "ancienne recherche CC"
+      "link": "ancienne WP Photos"
     },
     "locale": {
       "label": "Langues disponibles",
@@ -24,7 +24,7 @@
     "aria": {
       "search": "chercher",
       "caption": "à propos des licences cc",
-      "old-cc-search": "ancienne recherche cc"
+      "old-cc-search": "ancienne WP Photos"
     }
   },
   "header": {
@@ -43,7 +43,7 @@
   },
   "footer": {
     "address": {
-      "title": "Creative Commons",
+      "title": "WP Photos",
       "address": "PO Box 1866, Mountain View CA 94042"
     },
     "navigation": {
@@ -70,14 +70,14 @@
     }
   },
   "about": {
-    "title": "À propos de CC Search",
+    "title": "À propos de WP Photos",
     "description": {
-      "content": "CC Search est un outil qui permet à tout le monde de découvrir et d'utiliser des œuvres sous licence ouverte et du domaine public. Creative Commons, l'organisation à but non lucratif derrière CC Search, est le créateur du {link}, utilisé plus de 1,4 milliard de fois pour aider les créateurs à partager leurs connaissances et leur créativité en ligne.",
+      "content": "WP Photos est un outil qui permet à tout le monde de découvrir et d'utiliser des œuvres sous licence ouverte et du domaine public. Creative Commons, l'organisation à but non lucratif derrière WP Photos, est le créateur du {link}, utilisé plus de 1,4 milliard de fois pour aider les créateurs à partager leurs connaissances et leur créativité en ligne.",
       "licenses-link": "Licences CC"
     },
-    "collection": "La recherche CC recherche dans plus de 300 millions d'images à partir d'API ouvertes et de l'ensemble de données {common-crawl}. Il va au-delà de la simple recherche pour regrouper les résultats dans plusieurs référentiels publics dans un seul catalogue et facilite la réutilisation grâce à des fonctionnalités telles que les balises générées par machine et l'attribution en un clic.",
+    "collection": "WP Photos recherche dans plus de 300 millions d'images à partir d'API ouvertes et de l'ensemble de données {common-crawl}. Il va au-delà de la simple recherche pour regrouper les résultats dans plusieurs référentiels publics dans un seul catalogue et facilite la réutilisation grâce à des fonctionnalités telles que les balises générées par machine et l'attribution en un clic.",
     "planning": {
-      "content": "Actuellement, CC Search ne recherche que les images, mais nous prévoyons d'ajouter des types de médias supplémentaires tels que les textes ouverts et l'audio, dans le but ultime de fournir un accès à l'ensemble des 1,4 milliard d'œuvres CC sous licence et du domaine public sur le Web. En savoir plus sur la {vision} et la feuille de route de CC pour la recherche CC et voir ce qui fonctionne. Tout notre code est open source ({search}, {catalog-api}, {catalog}) et nous {community}",
+      "content": "Actuellement, WP Photos ne recherche que les images, mais nous prévoyons d'ajouter des types de médias supplémentaires tels que les textes ouverts et l'audio, dans le but ultime de fournir un accès à l'ensemble des 1,4 milliard d'œuvres CC sous licence et du domaine public sur le Web. En savoir plus sur la {vision} et la feuille de route de CC pour la WP Photos et voir ce qui fonctionne. Tout notre code est open source ({search}, {catalog-api}, {catalog}) et nous {community}",
       "vision": "Vision, stratégie 2019",
       "roadmap": "feuille de route",
       "working": "nous travaillons actuellement sur",
@@ -148,7 +148,7 @@
   },
   "feedback": {
     "title": "Retour d'information",
-    "description": "Merci d'utiliser CC Search! Nous apprécions vos idées pour améliorer l'outil ci-dessous. Pour fournir des commentaires réguliers des utilisateurs, rejoignez la chaîne {channel} sur {slack}.",
+    "description": "Merci d'utiliser WP Photos! Nous apprécions vos idées pour améliorer l'outil ci-dessous. Pour fournir des commentaires réguliers des utilisateurs, rejoignez la chaîne {channel} sur {slack}.",
     "improve": "Aidez nous à améliorer",
     "bug": "Signaler un bug",
     "loading": "Chargement...",
@@ -314,7 +314,7 @@
       "answer": " en répondant à quelques questions."
     },
     "weblink": "Aller sur le site de l'image",
-    "legal-disclaimer": "CC Search regroupe les données des référentiels de contenu ouvert accessibles au public. CC n'héberge pas le contenu et ne vérifie pas que le contenu est correctement sous licence CC ou que les informations d'attribution sont exactes ou complètes. Veuillez suivre le lien vers la source du contenu pour vérifier indépendamment avant réutilisation.",
+    "legal-disclaimer": "WP Photos regroupe les données des référentiels de contenu ouvert accessibles au public. CC n'héberge pas le contenu et ne vérifie pas que le contenu est correctement sous licence CC ou que les informations d'attribution sont exactes ou complètes. Veuillez suivre le lien vers la source du contenu pour vérifier indépendamment avant réutilisation.",
     "related-images": "Images associées",
     "copy": {
       "copy": "Copie",
@@ -334,7 +334,7 @@
       "dmca": {
         "content": "Vous devez remplir ce {link} pour signaler une violation du droit d'auteur. Aucune action ne sera entreprise tant que le formulaire n'aura pas été rempli et soumis.",
         "provider": "Nous vous recommandons de faire de même à la source, {link}.",
-        "thanks": "Merci d'avoir signalé un problème avec les résultats de CC Search!",
+        "thanks": "Merci d'avoir signalé un problème avec les résultats de WP Photos!",
         "error": "Une erreur s'est produite lors de la soumission du rapport. Veuillez réessayer."
       }
     },
@@ -357,7 +357,7 @@
   },
   "meta-search": {
     "sources": "Sources",
-    "caption": "CC Search n'indexe pas actuellement les sources énumérées ci-dessus, mais grâce à cette interface, il offre un accès pratique aux services de recherche fournis par d'autres organisations indépendantes. CC n'a aucun contrôle sur les résultats renvoyés. Ne supposez pas que les résultats affichés dans ce portail de recherche sont sous une licence CC. Vérifiez toujours que l'œuvre est bien sous licence CC en suivant le lien. En cas de doute, vous devez contacter directement le détenteur des droits d'auteur ou essayer de contacter le site où vous avez trouvé le contenu.",
+    "caption": "WP Photos n'indexe pas actuellement les sources énumérées ci-dessus, mais grâce à cette interface, il offre un accès pratique aux services de recherche fournis par d'autres organisations indépendantes. CC n'a aucun contrôle sur les résultats renvoyés. Ne supposez pas que les résultats affichés dans ce portail de recherche sont sous une licence CC. Vérifiez toujours que l'œuvre est bien sous licence CC en suivant le lien. En cas de doute, vous devez contacter directement le détenteur des droits d'auteur ou essayer de contacter le site où vous avez trouvé le contenu.",
     "card": {
       "search": "Chercher",
       "caption": "Cliquez sur une source ci-dessous pour rechercher directement d'autres collections d'images sous licence CC.{break}Veuillez noter que les filtres Utiliser ne sont pas pris en charge pour Open Clip Art Library ou Nappy.",
@@ -368,7 +368,7 @@
       }
     },
     "form": {
-      "title": "CC Search ne prend pas encore en charge la recherche {type} intégrée.",
+      "title": "WP Photos ne prend pas encore en charge la recherche {type} intégrée.",
       "caption": "Cliquez sur une source ci-dessous pour rechercher directement d'autres collections de {type} sous licence CC.{break}Veuillez noter que l'utilisation de filtres n'est pas prise en charge pour {filter}."
     }
   }
