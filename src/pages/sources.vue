@@ -22,26 +22,28 @@
           class="table is-bordered is-striped margin-bottom-large margin-top-normal"
         >
           <thead>
-            <th
-              tabindex="0"
-              @click="sortTable('display_name')"
-              @keypress.enter="sortTable('display_name')"
-            >
-              <span class="table-header-inner">
-                {{ $t('sources.providers.source') }}
-                <span class="icon"><i class="icon sort" /></span>
-              </span>
-            </th>
-            <th
-              tabindex="0"
-              @click="sortTable('image_count')"
-              @keypress.enter="sortTable('image_count')"
-            >
-              <span class="table-header-inner">
-                {{ $t('sources.providers.item') }}
-                <span class="icon"><i class="icon sort" /></span>
-              </span>
-            </th>
+            <tr>
+              <th
+                tabindex="0"
+                @click="sortTable('display_name')"
+                @keypress.enter="sortTable('display_name')"
+              >
+                <span class="table-header-inner">
+                  {{ $t('sources.providers.source') }}
+                  <span class="icon"><i class="icon sort" /></span>
+                </span>
+              </th>
+              <th
+                tabindex="0"
+                @click="sortTable('image_count')"
+                @keypress.enter="sortTable('image_count')"
+              >
+                <span class="table-header-inner">
+                  {{ $t('sources.providers.item') }}
+                  <span class="icon"><i class="icon sort" /></span>
+                </span>
+              </th>
+            </tr>
           </thead>
           <tbody>
             <tr v-for="(imageProvider, index) in sortedProviders" :key="index">

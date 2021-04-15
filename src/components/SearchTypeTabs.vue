@@ -1,23 +1,21 @@
 <template>
   <div>
     <section class="tabs">
-      <ul role="tablist">
-        <li
+      <div role="tablist">
+        <NuxtLink
           v-for="type in contentTypes"
+          :id="type"
           :key="type"
+          aria-live="polite"
+          :to="{ path: `/search/${type}`, query: $route.query }"
           :aria-selected="activeTab == type"
+          :aria-controls="'tab-' + type"
           role="tab"
           :class="tabClass(type, 'tab')"
         >
-          <NuxtLink
-            aria-live="polite"
-            class="is-size-5"
-            :to="{ path: `/search/${type}`, query: $route.query }"
-          >
-            {{ capitalize(type) }}
-          </NuxtLink>
-        </li>
-      </ul>
+          {{ capitalize(type) }}
+        </NuxtLink>
+      </div>
     </section>
   </div>
 </template>
@@ -42,6 +40,7 @@ export default {
     tabClass(tabSlug, tabClass) {
       return {
         [tabClass]: true,
+        'is-size-5': true,
         'is-active': tabSlug === this.activeTab,
       }
     },
@@ -49,8 +48,8 @@ export default {
 }
 </script>
 
-<style scoped>
-.tabs ul {
-  padding-left: 24px;
+<style lang="scss" scoped>
+.tabs {
+  margin-left: 1rem;
 }
 </style>

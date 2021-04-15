@@ -181,7 +181,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-@import 'bulma/sass/utilities/_all';
+@import '~/styles/ext/bulma_utilities/_all.sass';
 
 .button[disabled] {
   opacity: 1;
@@ -191,9 +191,6 @@ export default {
   padding-top: 1.36vh;
   font-size: 1rem;
   display: inline-block;
-}
-
-.search-grid_layout-control h5 {
   margin-right: 10px;
 }
 
@@ -213,8 +210,7 @@ export default {
 
 .search-grid_ctr {
   .masonry-layout {
-    margin: auto;
-    margin-top: 1rem;
+    margin: 1rem auto auto;
   }
 
   .item {
