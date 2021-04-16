@@ -10,11 +10,11 @@
           <a
             :aria-label="$t('footer.aria.homepage')"
             href="https://creativecommons.org"
-            class="main-logo margin-bottom-bigger has-text-white"
+            class="main-logo mb-bigger has-text-white"
           >
             <IconCCLogo focusable="false" aria-hidden="true" />
           </a>
-          <address class="margin-bottom-normal">
+          <address class="mb-normal">
             <span class="is-block">{{ $t('footer.address.title') }}</span>
             <span>{{ $t('footer.address.address') }}</span>
           </address>
@@ -23,7 +23,7 @@
           </a>
           <a href="tel://+1-415-429-6753" class="phone">+1-415-429-6753</a>
 
-          <div class="margin-vertical-large">
+          <div class="my-large">
             <a
               href="https://www.instagram.com/creativecommons"
               aria-label="instagram"
@@ -31,7 +31,7 @@
               target="_blank"
               rel="noopener"
             >
-              <i class="icon instagram margin-right-small is-size-4" />
+              <i class="icon instagram mr-small is-size-4" />
             </a>
             <a
               href="https://www.twitter.com/creativecommons"
@@ -40,7 +40,7 @@
               target="_blank"
               rel="noopener"
             >
-              <i class="icon twitter margin-right-small is-size-4" />
+              <i class="icon twitter mr-small is-size-4" />
             </a>
             <a
               href="https://www.facebook.com/creativecommons"
@@ -49,7 +49,7 @@
               target="_blank"
               rel="noopener"
             >
-              <i class="icon facebook margin-right-small is-size-4" />
+              <i class="icon facebook mr-small is-size-4" />
             </a>
           </div>
         </section>
@@ -86,7 +86,7 @@
               </li>
             </ul>
           </nav>
-          <div class="attribution margin-top-bigger">
+          <div class="attribution mt-bigger">
             <i18n path="footer.caption.label" tag="p" class="caption">
               <template #noted>
                 <a
@@ -116,13 +116,9 @@
                 </a>
               </template>
             </i18n>
-            <div class="margin-top-smaller">
-              <i
-                class="icon cc-logo margin-right-small is-size-4 is-color-white"
-              />
-              <i
-                class="icon cc-by margin-right-small is-size-4 is-color-white"
-              />
+            <div class="mt-smaller">
+              <i class="icon cc-logo mr-small is-size-4 is-color-white" />
+              <i class="icon cc-by mr-small is-size-4 is-color-white" />
             </div>
           </div>
         </div>
@@ -143,7 +139,7 @@
               @keypress.enter="sendClickEvent"
             >
               <i
-                class="icon cc-letterheart-filled margin-right-small is-size-5 padding-top-smaller"
+                class="icon cc-letterheart-filled mr-small is-size-5 pt-smaller"
               />
               {{ $t('footer.donate.link') }}
             </a>

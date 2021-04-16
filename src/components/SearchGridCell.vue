@@ -26,12 +26,10 @@
           @error="onImageLoadError($event, image)"
         />
       </RouterLink>
-      <figcaption class="overlay overlay__top padding-small">
+      <figcaption class="overlay overlay__top p-small">
         <LicenseIcons :license="image.license" />
       </figcaption>
-      <figcaption
-        class="overlay overlay__bottom padding-vertical-small padding-horizontal-normal"
-      >
+      <figcaption class="overlay overlay__bottom py-small px-normal">
         <span class="caption has-text-weight-semibold">{{ image.title }}</span>
       </figcaption>
     </figure>

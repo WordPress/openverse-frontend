@@ -1,5 +1,5 @@
 <template>
-  <div class="filter-display padding-normal" aria-live="polite">
+  <div class="filter-display p-normal" aria-live="polite">
     <span v-if="anyFilterApplied" class="caption has-text-weight-semibold"
       >Filter By</span
     >

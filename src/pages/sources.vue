@@ -1,7 +1,7 @@
 <template>
   <div class="section">
     <div class="container is-fluid columns">
-      <header class="column is-full margin-bottom-small">
+      <header class="column is-full mb-small">
         <h1 class="title is-2" role="article">
           {{ $t('sources.title') }}
         </h1>
@@ -19,7 +19,7 @@
         <table
           :aria-label="$t('about.aria.sources')"
           role="region"
-          class="table is-bordered is-striped margin-bottom-large margin-top-normal"
+          class="table is-bordered is-striped mb-large mt-normal"
         >
           <thead>
             <tr>
@@ -66,13 +66,13 @@
         <h3 class="title subtitle is-normal is-4">
           {{ $t('sources.cc-content.where') }}
         </h3>
-        <p class="body-big margin-vertical-normal">
+        <p class="body-big my-normal">
           {{ $t('sources.cc-content.content') }}
         </p>
         <i18n
           path="sources.cc-content.provider"
           tag="p"
-          class="body-big margin-vertical-normal"
+          class="body-big my-normal"
         >
           <template #flickr>
             <a aria-label="flickr" href="https://www.flickr.com/">Flickr</a>
@@ -86,7 +86,7 @@
         <i18n
           path="sources.cc-content.europeana"
           tag="p"
-          class="body-big margin-vertical-normal"
+          class="body-big my-normal"
         >
           <template #link>
             <a aria-label="europeana" href="https://www.europeana.eu/en"
@@ -104,7 +104,7 @@
         <h3 class="title subtitle is-normal is-4">
           {{ $t('sources.new-content.next') }}
         </h3>
-        <p class="body-big margin-vertical-normal">
+        <p class="body-big my-normal">
           {{ $t('sources.new-content.integrate') }}
         </p>
         <div class="content">
@@ -120,7 +120,7 @@
             </li>
           </ul>
         </div>
-        <h5 class="title subtitle is-5 margin-vertical-normal">
+        <h5 class="title subtitle is-5 my-normal">
           {{ $t('sources.suggestions') }}
         </h5>
         <a
@@ -130,7 +130,7 @@
           rel="noopener noreferrer"
         >
           {{ $t('sources.issue-button') }}
-          <i class="margin-left-small icon external-link" />
+          <i class="ml-small icon external-link" />
         </a>
       </div>
     </div>

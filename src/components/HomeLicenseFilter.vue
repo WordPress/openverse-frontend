@@ -1,12 +1,8 @@
 <template>
-  <div class="home-license-filter margin-top-xl">
+  <div class="home-license-filter mt-xl">
     <span>{{ $t('hero.license-filter.label') }}</span>
     <template v-for="(licenseType, index) in licenseTypes">
-      <label
-        :key="index"
-        class="checkbox margin-right-big"
-        :for="licenseType.code"
-      >
+      <label :key="index" class="checkbox mr-big" :for="licenseType.code">
         <input
           :id="licenseType.code"
           type="checkbox"

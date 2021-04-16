@@ -1,11 +1,11 @@
 <template>
-  <div role="main" class="section margin-bottom-large">
+  <div role="main" class="section mb-large">
     <div class="container is-fluid">
-      <div class="margin-bottom-large">
-        <h1 class="title is-2 margin-bottom-normal">
+      <div class="mb-large">
+        <h1 class="title is-2 mb-normal">
           {{ $t('support.title') }}
         </h1>
-        <div class="margin-bottom-normal">
+        <div class="mb-normal">
           <article
             class="card entry-post entry-image horizontal column is-half is-offset-one-quarter"
           >
@@ -17,7 +17,7 @@
             <div class="card-content with-button">
               <div class="content">
                 <h2>CC Search</h2>
-                <span class="subtitle is-italic margin-bottom-normal">
+                <span class="subtitle is-italic mb-normal">
                   {{ $t('support.open') }}</span
                 >
                 <p>
@@ -25,14 +25,12 @@
                 </p>
               </div>
               <a
-                class="button normal donate margin-right-normal"
+                class="button normal donate mr-normal"
                 :href="donationLink"
                 @click="sendDonationEvent"
                 @keypress.enter="sendDonationEvent"
               >
-                <i
-                  class="icon cc-letterheart-filled margin-right-small padding-top-smaller"
-                />
+                <i class="icon cc-letterheart-filled mr-small pt-smaller" />
                 {{ $t('support.button.donate') }}</a
               >
             </div>
@@ -65,8 +63,8 @@
             </template>
           </i18n>
         </div>
-        <p class="margin-bottom-normal">{{ $t('support.inclusive') }}</p>
-        <i18n path="support.work" tag="p" class="margin-bottom-normal">
+        <p class="mb-normal">{{ $t('support.inclusive') }}</p>
+        <i18n path="support.work" tag="p" class="mb-normal">
           <template #license>
             <a
               aria-label="licenses"
@@ -96,38 +94,36 @@
             >
           </template>
         </i18n>
-        <h2 class="title subtitle is-3 margin-bottom-normal">
+        <h2 class="title subtitle is-3 mb-normal">
           {{ $t('support.free') }}
         </h2>
-        <p class="margin-bottom-normal">{{ $t('support.access') }}</p>
-        <i18n path="support.public-good" tag="p" class="margin-bottom-normal">
+        <p class="mb-normal">{{ $t('support.access') }}</p>
+        <i18n path="support.public-good" tag="p" class="mb-normal">
           <template #public-good>
             <strong>public good</strong>
           </template>
         </i18n>
         <div class="field is-grouped is-grouped-centered">
           <a
-            class="button normal donate margin-right-normal"
+            class="button normal donate mr-normal"
             :href="donationLink"
             @click="sendDonationEvent"
             @keypress.enter="sendDonationEvent"
           >
-            <i
-              class="icon cc-letterheart-filled margin-right-small padding-top-smaller"
-            />
+            <i class="icon cc-letterheart-filled mr-small pt-smaller" />
             {{ $t('support.button.donate') }}</a
           >
           <h2 class="title subtitle is-3">or</h2>
           <a
-            class="button is-primary normal margin-left-normal"
+            class="button is-primary normal ml-normal"
             href=" https://github.com/sponsors/creativecommons"
             >{{ $t('support.button.sponsor') }}</a
           >
         </div>
-        <h2 class="title subtitle is-3 margin-vertical-normal">
+        <h2 class="title subtitle is-3 my-normal">
           {{ $t('support.launch.title') }}
         </h2>
-        <p class="margin-bottom-normal">{{ $t('support.launch.first') }}</p>
+        <p class="mb-normal">{{ $t('support.launch.first') }}</p>
         <div class="content">
           <ul>
             <li>
@@ -145,14 +141,14 @@
           </ul>
         </div>
         <strong
-          ><p class="margin-bottom-normal">
+          ><p class="mb-normal">
             {{ $t('support.launch.education') }}
           </p></strong
         >
-        <h2 class="title subtitle is-3 margin-bottom-normal">
+        <h2 class="title subtitle is-3 mb-normal">
           {{ $t('support.future.title') }}
         </h2>
-        <p class="margin-bottom-normal">{{ $t('support.future.more') }}</p>
+        <p class="mb-normal">{{ $t('support.future.more') }}</p>
         <div class="content">
           <ul>
             <li>
@@ -181,18 +177,16 @@
             </li>
           </ul>
         </div>
-        <h2 class="title subtitle is-3 margin-bottom-normal has-text-centered">
+        <h2 class="title subtitle is-3 mb-normal has-text-centered">
           {{ $t('support.future.support') }}
         </h2>
-        <div class="field is-grouped is-grouped-centered margin-bottom-medium">
+        <div class="field is-grouped is-grouped-centered mb-medium">
           <a class="button normal donate" :href="donationLink">
-            <i
-              class="icon cc-letterheart-filled margin-right-small padding-top-smaller"
-            />
+            <i class="icon cc-letterheart-filled mr-small pt-smaller" />
             {{ $t('support.button.donate') }}</a
           >
         </div>
-        <p class="margin-bottom-normal">{{ $t('support.grateful') }}</p>
+        <p class="mb-normal">{{ $t('support.grateful') }}</p>
       </div>
     </div>
   </div>

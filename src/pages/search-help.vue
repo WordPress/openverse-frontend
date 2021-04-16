@@ -1,7 +1,7 @@
 <template>
   <div class="section">
     <div class="container is-fluid">
-      <div class="margin-bottom-large">
+      <div class="mb-large">
         <h1 class="title is-2">
           {{ $t('search-guide.title') }}
         </h1>
@@ -9,7 +9,7 @@
           {{ $t('search-guide.intro') }}
         </p>
 
-        <h3 class="margin-top-large">
+        <h3 class="mt-large">
           {{ $t('search-guide.exact.title') }}
         </h3>
         <i18n path="search-guide.exact.content" tag="p">
@@ -25,11 +25,11 @@
           </template>
         </i18n>
 
-        <h3 role="region" class="margin-vertical-normal">
+        <h3 role="region" class="my-normal">
           {{ $t('search-guide.combine.title') }}
         </h3>
 
-        <p class="margin-vertical-normal">
+        <p class="my-normal">
           {{ $t('search-guide.combine.description') }}
         </p>
 
@@ -73,11 +73,7 @@
           </i18n>
         </ul>
 
-        <i18n
-          path="search-guide.example.and"
-          tag="p"
-          class="margin-vertical-normal"
-        >
+        <i18n path="search-guide.example.and" tag="p" class="my-normal">
           <template #link>
             <a
               aria-label="dog plus cat"
@@ -91,11 +87,7 @@
           </template>
         </i18n>
 
-        <i18n
-          path="search-guide.example.or"
-          tag="p"
-          class="margin-vertical-normal"
-        >
+        <i18n path="search-guide.example.or" tag="p" class="my-normal">
           <template #link>
             <a
               aria-label="dog vertical bar cat"
@@ -112,7 +104,7 @@
         <i18n
           path="search-guide.example.negate.description"
           tag="p"
-          class="margin-top-normal"
+          class="mt-normal"
         >
           <template #highlight>
             <em aria-label="minus operator (signifies NOT)"
@@ -124,7 +116,7 @@
         <i18n
           path="search-guide.example.negate.content"
           tag="p"
-          class="margin-bottom-normal"
+          class="mb-normal"
         >
           <template #link>
             <a
@@ -142,7 +134,7 @@
         <i18n
           path="search-guide.example.prefix.description"
           tag="p"
-          class="margin-top-normal"
+          class="mt-normal"
         >
           <template #highlight>
             <em>* operator (wildcard)</em>
@@ -152,7 +144,7 @@
         <i18n
           path="search-guide.example.prefix.content"
           tag="p"
-          class="margin-bottom-normal"
+          class="mb-normal"
         >
           <template #link>
             <a
@@ -170,7 +162,7 @@
         <i18n
           path="search-guide.example.precedence.description"
           tag="p"
-          class="margin-top-normal"
+          class="mt-normal"
         >
           <template #highlight>
             <em>( and )</em>
@@ -180,7 +172,7 @@
         <i18n
           path="search-guide.example.precedence.content"
           tag="p"
-          class="margin-bottom-normal"
+          class="mb-normal"
         >
           <template #link>
             <a
@@ -198,7 +190,7 @@
         <i18n
           path="search-guide.example.fuzziness.description"
           tag="p"
-          class="margin-top-normal"
+          class="mt-normal"
         >
           <template #highlight>
             <em aria-label="tilde N">~N</em>
@@ -213,7 +205,7 @@
         <i18n
           path="search-guide.example.fuzziness.content"
           tag="p"
-          class="margin-bottom-normal"
+          class="mb-normal"
         >
           <template #link>
             <a

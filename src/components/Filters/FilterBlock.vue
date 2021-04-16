@@ -1,13 +1,13 @@
 <template>
   <button
     v-if="filterType === 'searchBy'"
-    class="filter-block button tiny tag margin-horizontal-smaller"
+    class="filter-block button tiny tag mx-smaller"
     :aria-label="label + 'filter'"
   >
     <span>{{ $props.label }}</span>
     <span
       :aria-label="$t('browse-page.aria.remove-filter')"
-      class="close margin-left-small"
+      class="close ml-small"
       tabindex="0"
       @click="onClickIsolatedFilter"
       @keyup.enter="onClickIsolatedFilter"
@@ -16,12 +16,12 @@
   </button>
   <button
     v-else
-    class="filter-block button tiny tag margin-horizontal-smaller margin-bottom-smaller"
+    class="filter-block button tiny tag mx-smaller mb-smaller"
     :aria-label="label + 'filter'"
   >
     <span>{{ $t($props.label) }}</span>
     <span
-      class="close margin-left-small padding-small"
+      class="close ml-small p-small"
       tabindex="0"
       @click="onClick"
       @keyup.enter="onClick"

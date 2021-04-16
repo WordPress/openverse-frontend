@@ -1,6 +1,6 @@
 <template>
-  <div class="margin-bottom-large">
-    <h5 class="b-header margin-bottom-small">
+  <div class="mb-large">
+    <h5 class="b-header mb-small">
       {{ $t('meta-search.sources') }}
     </h5>
     <ul class="buttons">
@@ -9,11 +9,11 @@
           target="_blank"
           rel="nofollow noreferrer"
           :href="getSourceUrl(source)"
-          class="button small margin-right-small"
+          class="button small mr-small"
         >
           {{ source }}
           <sup class="">
-            <i class="margin-left-small icon external-link" />
+            <i class="ml-small icon external-link" />
           </sup>
         </a>
       </li>

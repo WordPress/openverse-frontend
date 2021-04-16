@@ -40,11 +40,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~/styles/ext/bulma_utilities/_all.sass';
+@import '~/styles/ext/utilities/_all.sass';
 
 .icon i {
   padding-top: 0.75rem;
-  padding-left: 1.25rem;
+  pl-: 1.25rem;
 }
 
 @include mobile {

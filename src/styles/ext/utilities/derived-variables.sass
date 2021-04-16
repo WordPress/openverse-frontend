@@ -1,0 +1,118 @@
+@import "initial-variables"
+@import "functions"
+
+$primary: $color-tomato
+
+$info: $color-dark-info
+$info-dark: $color-dark-info
+$info-light: $color-light-info
+
+$success: $color-dark-success
+$success-dark: $color-dark-success
+$success-light: $color-light-success
+
+$warning: $color-dark-warning
+$warning-dark: $color-dark-warning
+$warning-light: $color-light-warning
+
+$danger: $color-dark-error
+$danger-dark: $color-dark-error
+$danger-light: $color-light-error
+
+// Invert colors
+
+$orange-invert: findColorInvert($orange)
+$yellow-invert: findColorInvert($yellow)
+$green-invert: findColorInvert($green)
+$turquoise-invert: findColorInvert($turquoise)
+$cyan-invert: findColorInvert($cyan)
+$blue-invert: findColorInvert($blue)
+$red-invert: findColorInvert($red)
+
+$primary-invert: findColorInvert($primary)
+$primary-light: findLightColor($primary)
+$primary-dark: findDarkColor($primary)
+$info-invert: findColorInvert($info)
+
+$success-invert: findColorInvert($success)
+$warning-invert: findColorInvert($warning)
+$danger-invert: findColorInvert($danger)
+
+
+// General colors
+
+$scheme-main: $white
+$scheme-invert: $black
+$border: $grey-lighter
+$border-hover: $grey-light
+$border-light: $color-light-gray
+$border-light-hover: $grey-light
+$background: $color-white
+
+// Text colors
+
+$text: $grey-dark
+$text-invert: findColorInvert($text)
+$text-light: $grey
+$text-strong: $color-dark-slate-gray
+
+// Code colors
+$code: darken($red, 15%)
+$pre: $text
+
+// Link colors
+
+$link: $color-tomato
+$link-invert: findColorInvert($link)
+$link-light: findLightColor($link)
+$link-dark: findDarkColor($link)
+
+$link-hover: currentColor
+$link-visited: currentColor
+$link-hover-border: $grey-light
+$link-focus-border: $blue
+$link-active-border: $grey-dark
+
+// Lists and maps
+$custom-colors: null
+$custom-shades: null
+
+$colors: mergeColorMaps(("white": ($white, $black), "black": ($black, $white),  "primary": ($primary, $primary-invert, $primary-light, $primary-dark), "link": ($link, $link-invert, $link-light, $link-dark), "info": ($info, $info-invert, $info-light, $info-dark), "success": ($success, $success-invert, $success-light, $success-dark), "warning": ($warning, $warning-invert, $warning-light, $warning-dark), "danger": ($danger, $danger-invert, $danger-light, $danger-dark)), $custom-colors)
+
+$shades: mergeColorMaps(("grey-dark": $grey-dark, "grey": $grey, "grey-light": $grey-light, "grey-lighter": $grey-lighter), $custom-shades)
+
+$sizes: $size-1 $size-2 $size-3 $size-4 $size-5 $size-6 $size-7
+
+
+// Typography
+
+$family-primary:   $family-body
+$family-secondary: $family-heading
+$family-code:      $family-monospace
+
+$size-small: $size-7
+$size-normal: $size-6
+$size-medium: $size-5
+$size-large: $size-4
+
+$header-font-sizes: ('1': $font-size-h1,'2': $font-size-h2,'3': $font-size-h3,'4': $font-size-h4,'5': $font-size-h5,'6': $font-size-h6,)
+
+@mixin header-typography($header-level, $header-font-size)
+  h#{$header-level},
+  .title.is-#{$header-level},
+  .subtitle.is-#{$header-level}
+    font-size: $header-font-size
+
+@each $header-level, $header-font-size in $header-font-sizes
+  @include header-typography($header-level, $header-font-size)
+
+// Classes
+$body-font-sizes: ('-bigger': $font-size-body-bigger,'-big': $font-size-body-big,'-normal': $font-size-body-normal,'-list': $font-size-body-list,)
+
+@mixin body-typography($body-name, $body-font-size)
+  .body#{$body-name}
+    line-height: 1.6
+    font-size: $body-font-size
+
+@each $body-name, $body-font-size in $body-font-sizes
+  @include body-typography($body-name, $body-font-size)

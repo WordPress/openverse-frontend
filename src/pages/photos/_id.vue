@@ -12,12 +12,12 @@
       :social-sharing-enabled="socialSharingEnabled"
       @onImageLoaded="onImageLoaded"
     />
-    <div class="padding-normal margin-vertical-big">
+    <div class="p-normal my-big">
       <PhotoTags :tags="tags" :show-header="true" />
     </div>
     <aside
       :aria-label="$t('photo-details.aria.related')"
-      class="padding-normal margin-vertical-big"
+      class="p-normal my-big"
     >
       <RelatedImages
         :related-images="relatedImages"

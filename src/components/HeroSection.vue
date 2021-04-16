@@ -2,14 +2,14 @@
   <!-- eslint-disable vuejs-accessibility/no-autofocus -->
   <div class="hero">
     <div class="hero-center has-text-centered">
-      <h1 class="title is-2 padding-bottom-normal">
+      <h1 class="title is-2 pb-normal">
         {{ $t('hero.title') }}
       </h1>
       <h2 class="title is-5 b-header">
         {{ $t('hero.subtitle') }}
       </h2>
       <form
-        class="hero-search__form margin-top-bigger"
+        class="hero-search__form mt-bigger"
         role="search"
         method="get"
         action="/search"
@@ -32,7 +32,7 @@
             {{ $t('hero.search.button') }}
           </button>
         </div>
-        <div class="caption has-text-centered margin-top-big">
+        <div class="caption has-text-centered mt-big">
           <i18n path="hero.caption.content" tag="p">
             <template #link>
               <a
@@ -87,10 +87,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-@import '~/styles/ext/bulma_utilities/initial-variables.sass';
-@import '~/styles/ext/bulma_utilities/derived-variables.sass';
-@import '~/styles/ext/bulma_utilities/mixins.sass';
-
+@import '~/styles/ext/utilities/_all.sass';
 $hero-height: 85vh;
 
 .hero {
@@ -125,7 +122,7 @@ $hero-height: 85vh;
       width: 570px;
       font-size: 1.75rem;
       height: 5.063rem;
-      padding-left: 1.5rem;
+      pl-: 1.5rem;
     }
   }
   &__button {
@@ -156,7 +153,7 @@ $hero-height: 85vh;
   z-index: 0;
   margin-top: auto;
   width: 100%;
-  padding-left: 1rem;
+  pl-: 1rem;
   height: 120px;
   object-fit: cover;
   object-position: left center;

@@ -1,22 +1,20 @@
 <template>
   <div>
     <div class="filterlist-header">
-      <h4
-        class="padding-top-big padding-left-big padding-right-normal is-inline-block"
-      >
+      <h4 class="pt-big pl-big pr-normal is-inline-block">
         {{ $t('filter-list.filter-by') }}
       </h4>
 
       <button
         type="button"
-        class="button is-text tiny is-paddingless margin-top-big margin-right-small report is-shadowless is-pulled-right"
+        class="button is-text tiny is-paddingless mt-big mr-small report is-shadowless is-pulled-right"
         @click="onToggleSearchGridFilter()"
         @keyup.enter="onToggleSearchGridFilter()"
       >
         <span class="has-color-tomato is-hidden-touch">{{
           $t('filter-list.hide')
         }}</span>
-        <span class="margin-right-normal is-size-5 is-hidden-desktop">
+        <span class="mr-normal is-size-5 is-hidden-desktop">
           <i class="icon cross" />
         </span>
       </button>
@@ -81,7 +79,7 @@
       />
       <div
         v-if="activeTab == 'image'"
-        class="margin-normal filter-option small-filter margin-bottom-normal"
+        class="m-normal filter-option small-filter"
       >
         <label for="creator" :aria-label="$t('browse-page.aria.creator')">
           <input
@@ -97,7 +95,7 @@
     </form>
     <div
       v-if="isFilterApplied"
-      class="margin-big padding-bottom-normal clear-filters is-hidden-touch"
+      class="m-big pb-normal clear-filters is-hidden-touch"
     >
       <button class="button tiny" @click="onClearFilters">
         {{ $t('filter-list.clear') }}
@@ -105,9 +103,9 @@
     </div>
     <div
       v-if="isFilterApplied"
-      class="has-background-white padding-big is-hidden-desktop has-text-centered"
+      class="has-background-white p-big is-hidden-desktop has-text-centered"
     >
-      <button class="button tiny margin-right-normal" @click="onClearFilters">
+      <button class="button tiny mr-normal" @click="onClearFilters">
         {{ $t('filter-list.clear') }}
       </button>
       <button

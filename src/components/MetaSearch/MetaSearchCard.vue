@@ -3,21 +3,19 @@
     <!-- <i18n
       path="meta-search.card.caption"
       tag="p"
-      class="padding-left-bigger padding-right-bigger"
+      class="pl-bigger pr-bigger"
     >
       <template v-slot:break>
         <br />
       </template>
     </i18n> -->
-    <hr class="margin-bottom-bigger" />
-    <div
-      class="padding-left-bigger padding-right-bigger padding-bottom-bigger meta-modal-content"
-    >
-      <h5 class="b-header margin-bottom-small">
+    <hr class="mb-bigger" />
+    <div class="pl-bigger pr-bigger pb-bigger meta-modal-content">
+      <h5 class="b-header mb-small">
         {{ $t('meta-search.card.search') }}
       </h5>
 
-      <div class="control has-icons-left margin-bottom-bigger">
+      <div class="control has-icons-left mb-bigger">
         <label for="searchTerm">
           <input
             id="searchTerm"
@@ -35,15 +33,15 @@
       </div>
 
       <!-- <template v-if="type !== 'image'">
-        <h5 for="metaUseCheckboxes" class="b-header margin-bottom-small">
+        <h5 for="metaUseCheckboxes" class="b-header mb-small">
           {{ $t('meta-search.card.checkboxes.title') }}
         </h5>
-        <div class="meta-filters margin-bottom-bigger flex">
-          <label for="commercial-chk" class="margin-right-big"
+        <div class="meta-filters mb-bigger flex">
+          <label for="commercial-chk" class="mr-big"
             ><input
               id="commercial-chk"
               v-model="editableQuery.filters.commercial"
-              class="margin-right-smaller"
+              class="mr-smaller"
               type="checkbox"
             />
             {{ $t('meta-search.card.checkboxes.commercial') }}</label
@@ -52,7 +50,7 @@
             ><input
               id="modify-chk"
               v-model="editableQuery.filters.modify"
-              class="margin-right-smaller"
+              class="mr-smaller"
               type="checkbox"
             />
             {{ $t('meta-search.card.checkboxes.modify') }}</label
@@ -92,7 +90,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~/styles/ext/bulma_utilities/_all.sass';
+@import '~/styles/ext/utilities/_all.sass';
 
 .meta-modal-content {
   max-width: 46rem;
