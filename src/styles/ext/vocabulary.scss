@@ -4,18 +4,12 @@
 @import 'vocabulary/minireset.sass';
 
 // Bulma
-@import 'vocabulary/spacing.scss';
-@import 'vocabulary/spacing_overrides.scss';
 @import 'bulma_utilities/_all.sass';
 @import 'bulma_helpers/_all.sass';
 @import 'bulma_base/generic.sass';
 
 // Tokens
 @import 'vocabulary/color.scss';
-
-//@import 'vocabulary/spacing.scss';
-//@import 'vocabulary/spacing_overrides.scss';
-
 @import 'vocabulary/typography.scss';
 
 //// Elements

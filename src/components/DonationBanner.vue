@@ -62,8 +62,6 @@ export default {
 
 <style scoped lang="scss">
 @import '~/styles/ext/bulma_utilities/_all.sass';
-@import '~/styles/ext/vocabulary/color.scss';
-@import '~/styles/ext/vocabulary/spacing.scss';
 
 $bgColor: #e6f6eb;
 
