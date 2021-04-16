@@ -1,5 +1,5 @@
 <template>
-  <div id="content-report-form" class="padding-normal is-clearfix arrow-popup">
+  <div id="content-report-form" class="p-normal is-clearfix arrow-popup">
     <button
       :aria-label="$t('photo-details.aria.close-form')"
       class="button close-button is-text tiny is-pulled-right is-block has-background-white"
@@ -28,16 +28,16 @@
       @sendContentReport="sendContentReport"
     />
     <form v-else>
-      <h5 class="b-header margin-bottom-normal">
+      <h5 class="b-header mb-normal">
         {{ $t('photo-details.content-report.title') }}
       </h5>
-      <fieldset class="margin-bottom-normal">
-        <legend class="margin-bottom-normal">
+      <fieldset class="mb-normal">
+        <legend class="mb-normal">
           {{ $t('photo-details.content-report.issue') }}
         </legend>
 
         <div>
-          <label for="dmca" class="margin-left-small">
+          <label for="dmca" class="ml-small">
             <input
               id="dmca"
               v-model="selectedReason"
@@ -50,7 +50,7 @@
         </div>
 
         <div>
-          <label for="mature" class="margin-left-small">
+          <label for="mature" class="ml-small">
             <input
               id="mature"
               v-model="selectedReason"
@@ -63,7 +63,7 @@
         </div>
 
         <div>
-          <label for="other" class="margin-left-small">
+          <label for="other" class="ml-small">
             <input
               id="other"
               v-model="selectedReason"
@@ -76,9 +76,7 @@
         </div>
       </fieldset>
 
-      <p
-        class="caption has-text-weight-semibold has-text-grey margin-bottom-normal"
-      >
+      <p class="caption has-text-weight-semibold has-text-grey mb-normal">
         {{ $t('photo-details.content-report.caption') }}
       </p>
 

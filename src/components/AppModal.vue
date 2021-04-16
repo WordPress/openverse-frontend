@@ -5,7 +5,7 @@
       <div class="modal relative" aria-modal="true" role="dialog">
         <header
           v-if="title"
-          class="modal-header padding-top-bigger padding-left-bigger padding-right-normal padding-bottom-small"
+          class="modal-header pt-bigger pl-bigger pr-normal pb-small"
         >
           <slot name="header">
             <h3>{{ title }}</h3>
@@ -59,7 +59,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~/styles/ext/bulma_utilities/_all.sass';
+@import '~/styles/ext/utilities/_all.sass';
 
 .modal {
   position: relative;

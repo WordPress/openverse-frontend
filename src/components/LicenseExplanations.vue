@@ -1,11 +1,11 @@
 <template>
   <div v-if="license">
-    <ul class="margin-vertical-small">
+    <ul class="my-small">
       <template v-for="(li, index) in splitLicenses">
         <li
           :key="index"
           :class="{
-            ['margin-vertical-small']: true,
+            ['my-small']: true,
             ['is-flex']: true,
           }"
         >
@@ -15,7 +15,7 @@
               ['has-text-black']: true,
               ['has-background-white']: true,
               ['is-size-4']: true,
-              ['margin-right-small']: true,
+              ['mr-small']: true,
               [`cc-${getLicenseIcon(li)}`]: true,
             }"
             :alt="`${li.toUpperCase()}`"

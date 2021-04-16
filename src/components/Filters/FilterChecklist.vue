@@ -1,6 +1,6 @@
 <template>
   <div
-    class="filters padding-vertical-big padding-left-big padding-right-normal"
+    class="filters py-big pl-big pr-normal"
     @click="hideLicenseExplanationVisibility()"
     @keyup.enter="hideLicenseExplanationVisibility()"
   >
@@ -13,7 +13,7 @@
       <button
         v-if="!filtersExpandedByDefault"
         :aria-label="'filters list for' + title + 'category'"
-        class="filter-visibility-toggle is-white padding-vertical-small"
+        class="filter-visibility-toggle is-white py-small"
       >
         <i
           v-if="areFiltersExpanded"
@@ -28,17 +28,13 @@
       </button>
     </div>
     <template v-if="areFiltersExpanded && options">
-      <div
-        v-for="(item, index) in options"
-        :key="index"
-        class="margin-top-small"
-      >
+      <div v-for="(item, index) in options" :key="index" class="mt-small">
         <label class="checkbox" :for="item.code" :disabled="block(item)">
           <input
             :id="item.code"
             :key="index"
             type="checkbox"
-            class="filter-checkbox margin-right-small"
+            class="filter-checkbox mr-small"
             :checked="item.checked"
             :disabled="block(item)"
             @change="onValueChange"
@@ -57,7 +53,7 @@
           tabindex="0"
           src="@/assets/help_icon.svg"
           alt="help"
-          class="license-help is-pulled-right padding-top-smallest padding-right-smaller"
+          class="license-help is-pulled-right pt-smallest pr-smaller"
           @click.stop="toggleLicenseExplanationVisibility(item.code)"
           @keyup.enter="toggleLicenseExplanationVisibility(item.code)"
         />

@@ -1,11 +1,7 @@
 <template>
-  <section :key="type" class="padding-normal">
-    <header class="margin-bottom-large">
-      <i18n
-        path="meta-search.form.title"
-        tag="h4"
-        class="b-header margin-bottom-small"
-      >
+  <section :key="type" class="p-normal">
+    <header class="mb-large">
+      <i18n path="meta-search.form.title" tag="h4" class="b-header mb-small">
         <template #type>
           {{ type }}
         </template>

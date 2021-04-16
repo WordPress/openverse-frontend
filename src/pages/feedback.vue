@@ -1,11 +1,11 @@
 <template>
   <div class="section">
     <div class="container is-fluid">
-      <div class="padding-bottom-big">
+      <div class="pb-big">
         <h1 id="feedback" class="title is-2">
           {{ $t('feedback.title') }}
         </h1>
-        <i18n path="feedback.description" tag="p" class="margin-bottom-large">
+        <i18n path="feedback.description" tag="p" class="mb-large">
           <template #channel>
             <a
               :aria-label="$t('feedback.aria.cc-usability')"
@@ -21,7 +21,7 @@
             >
           </template>
         </i18n>
-        <section class="tabs margin-top-big">
+        <section class="tabs mt-big">
           <ul role="tablist">
             <li
               role="tab"

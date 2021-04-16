@@ -1,13 +1,13 @@
 <template>
-  <div class="section margin-bottom-large">
+  <div class="section mb-large">
     <div class="container is-fluid">
-      <div class="margin-bottom-large">
+      <div class="mb-large">
         <h1 class="title is-2">
           {{ $t('meta-search-page.title') }}
         </h1>
       </div>
 
-      <i18n path="meta-search-page.intro" tag="p" class="margin-bottom-normal">
+      <i18n path="meta-search-page.intro" tag="p" class="mb-normal">
         <template #link>
           <a aria-label="sources" href="/sources">sources</a>
         </template>
@@ -31,48 +31,36 @@
           </li>
         </ol>
       </div>
-      <i18n
-        path="meta-search-page.images.info"
-        tag="p"
-        class="margin-bottom-small"
-      >
+      <i18n path="meta-search-page.images.info" tag="p" class="mb-small">
         <template #use>
           <strong> Use </strong>
         </template>
       </i18n>
-      <figure class="image margin-vertical-large">
+      <figure class="image my-large">
         <img
           src="@/assets/meta-search-images.gif"
           alt="Meta Search Images - Cars"
         />
       </figure>
-      <h4 class="b-header margin-top-large">
+      <h4 class="b-header mt-large">
         {{ $t('meta-search-page.audio-video.title') }}
       </h4>
       <p>{{ $t('meta-search-page.audio-video.content') }}</p>
-      <i18n
-        path="meta-search-page.audio-video.filter"
-        tag="p"
-        class="margin-vertical-small"
-      >
+      <i18n path="meta-search-page.audio-video.filter" tag="p" class="my-small">
         <template #use>
           <strong> Use </strong>
         </template>
       </i18n>
-      <figure class="image margin-vertical-large">
+      <figure class="image my-large">
         <img
           src="@/assets/meta-search-audio.gif"
           alt="Meta Search Audio - Drums"
         />
       </figure>
-      <h4 class="b-header margin-top-large">
+      <h4 class="b-header mt-large">
         {{ $t('meta-search-page.new.title') }}
       </h4>
-      <i18n
-        path="meta-search-page.new.content"
-        tag="p"
-        class="margin-bottom-small"
-      >
+      <i18n path="meta-search-page.new.content" tag="p" class="mb-small">
         <template #issue>
           <a
             aria-label="issue"
@@ -86,17 +74,17 @@
           >
         </template>
       </i18n>
-      <h4 class="b-header margin-top-large">
+      <h4 class="b-header mt-large">
         {{ $t('meta-search-page.why.title') }}
       </h4>
       <p>{{ $t('meta-search-page.why.content') }}</p>
-      <figure class="image margin-vertical-large">
+      <figure class="image my-large">
         <img
           src="@/assets/cc-meta-search.gif"
           alt="Old CC Meta Search Portal Demo"
         />
       </figure>
-      <p class="margin-vertical-small">
+      <p class="my-small">
         {{ $t('meta-search-page.why.new') }}
       </p>
       <i18n path="meta-search-page.why.feedback" tag="p">

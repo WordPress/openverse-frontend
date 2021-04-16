@@ -3,7 +3,7 @@
   <form
     role="search"
     method="post"
-    class="search-form padding-normal"
+    class="search-form p-normal"
     @submit.prevent="onSubmit"
   >
     <button
@@ -16,7 +16,7 @@
       {{ $t('filters.title') }}
     </button>
     <div
-      class="search-field field has-addons control search-control has-icons-left margin-left-small"
+      class="search-field field has-addons control search-control has-icons-left ml-small"
     >
       <label for="searchInput" class="search-field__label control label">
         <input
@@ -126,7 +126,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~/styles/ext/bulma_utilities/_all.sass';
+@import '~/styles/ext/utilities/_all.sass';
 
 .filter-toggle {
   text-transform: none;

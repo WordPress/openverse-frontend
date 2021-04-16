@@ -11,7 +11,7 @@
         <span class="caption has-text-weight-semibold">
           {{ _imagesCount }}
         </span>
-        <div class="is-hidden-touch mr-auto padding-left-big">
+        <div class="is-hidden-touch mr-auto pl-big">
           <SearchRating v-if="_query.q" :search-term="_query.q" />
         </div>
         <div class="is-hidden-desktop is-block">
@@ -26,11 +26,11 @@
           :image="image"
         />
       </div>
-      <div class="padding-bottom-big">
+      <div class="pb-big">
         <div class="load-more">
           <button
             v-show="!isFetchingImages && includeAnalytics"
-            class="button margin-bottom-big"
+            class="button mb-big"
             :disabled="isFinished"
             @click="onLoadMoreImages"
             @keyup.enter="onLoadMoreImages"
@@ -42,7 +42,7 @@
         </div>
         <button
           type="button"
-          class="meta-popup-trigger has-color-tomato text-center caption padding-normal"
+          class="meta-popup-trigger has-color-tomato text-center caption p-normal"
           @click="showMetaImageSearch = true"
           @keyup.enter="showMetaImageSearch = true"
         >
@@ -181,7 +181,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-@import '~/styles/ext/bulma_utilities/_all.sass';
+@import '~/styles/ext/utilities/_all.sass';
 
 .button[disabled] {
   opacity: 1;
@@ -267,7 +267,7 @@ label {
 
 .results-meta {
   padding-top: 0.6rem;
-  padding-left: 1.3rem;
+  pl-: 1.3rem;
   padding-right: 1.3rem;
 
   @include desktop {

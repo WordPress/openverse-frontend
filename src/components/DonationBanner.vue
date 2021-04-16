@@ -1,5 +1,5 @@
 <template>
-  <div class="padding-horizontal-bigger padding-vertical-small donation-banner">
+  <div class="py-small px-bigger donation-banner">
     <p class="has-text-centered-mobile">
       {{ donationText }}
     </p>
@@ -11,9 +11,7 @@
         class="button is-success small"
         @click="handleDonateClick"
       >
-        <i
-          class="icon cc-letterheart-filled margin-right-small is-size-5 padding-top-smaller"
-        />
+        <i class="icon cc-letterheart-filled mr-small is-size-5 pt-smaller" />
         {{ $t('header.donation-banner.yes') }}
       </a>
       <button class="button is-text small dismiss-button" @click="onDismiss">
@@ -61,7 +59,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '~/styles/ext/bulma_utilities/_all.sass';
+@import '~/styles/ext/utilities/_all.sass';
+@import '~/styles/ext/helpers/_all.sass';
 
 $bgColor: #e6f6eb;
 
@@ -84,7 +83,7 @@ $bgColor: #e6f6eb;
   }
 
   @include tablet {
-    padding-left: $space-normal;
+    pl-: $space-normal;
   }
 }
 

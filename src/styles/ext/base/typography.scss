@@ -1,0 +1,50 @@
+@import '../utilities/initial-variables';
+@import '../utilities/derived-variables';
+
+// Usage
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.title {
+  color: $text-strong;
+
+  font-family: $family-heading;
+  font-weight: bold;
+
+  text-transform: uppercase;
+  line-height: 1.3;
+  letter-spacing: 0.02rem;
+}
+
+.caption {
+  font-size: $font-size-caption;
+}
+
+.b-header,
+.subtitle {
+  color: $text-strong;
+
+  font-family: $family-body;
+  font-weight: bold;
+
+  text-transform: none;
+  line-height: 1.3;
+  letter-spacing: 0.02rem;
+}
+
+body {
+  font-family: $family-body;
+  font-size: $font-size-body-normal;
+}
+
+a:hover:not(.button) {
+  text-decoration: underline;
+}
+
+.monospace {
+  font-family: $family-code;
+  font-size: 0.875em; // Code fonts at 14px are similar to other fonts at 16px
+}

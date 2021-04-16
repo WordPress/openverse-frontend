@@ -1,6 +1,6 @@
 <template>
-  <div class="copy-license margin-vertical-normal">
-    <h5 class="b-header margin-bottom-small">
+  <div class="copy-license my-normal">
+    <h5 class="b-header mb-small">
       {{ $t('photo-details.reuse.copy-license.title') }}
     </h5>
     <section class="tabs boxed">

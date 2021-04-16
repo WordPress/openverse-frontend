@@ -1,0 +1,140 @@
+@import url('https://unpkg.com/@creativecommons/fonts@2020.9.3/css/fonts.css')
+
+// Colors
+
+// Brand
+$color-tomato: rgb(226, 54, 0)
+$color-gold: rgb(239, 190, 0)
+$color-forest-green: rgb(0, 131, 0)
+$color-dark-turquoise: rgb(5, 181, 218)
+$color-dark-slate-blue: rgb(60, 92, 153)
+$color-brighter-dark-slate-blue: rgb(16, 102, 231)
+$color-dark-slate-gray: rgb(51, 51, 51)
+
+
+// Neutral
+$color-dark-gray: rgb(118, 118, 118)
+$color-gray: rgb(176, 176, 176)
+$color-light-gray: rgb(216, 216, 216)
+$color-lighter-gray: rgb(245, 245, 245)
+
+// Binary
+$color-black: rgb(0, 0, 0)
+$color-white: rgb(255, 255, 255)
+
+// Interaction
+$color-brighter-tomato: rgb(255, 105, 51)
+$color-brighter-gold: rgb(245, 212, 0)
+$color-brighter-forest-green: rgb(0, 184, 80)
+
+// Feedback
+$color-dark-success: rgb(0, 131, 0)
+$color-light-success: rgb(224, 242, 191)
+$color-dark-warning: rgb(242, 171, 32)
+$color-light-warning: rgb(250, 236, 188)
+$color-dark-error: rgb(200, 59, 30)
+$color-light-error: rgb(255, 201, 201)
+$color-dark-info: rgb(25, 80, 184)
+$color-light-info: rgb(209, 220, 241)
+
+$black:        $color-black
+
+$grey-dark:    $color-dark-gray
+$grey:         $color-gray
+$grey-light:   $color-light-gray
+$grey-lighter: $color-lighter-gray
+
+$white:        $color-white
+
+$orange:       $color-tomato
+$yellow:       $color-gold
+$green:        $color-forest-green
+$turquoise:    $color-dark-turquoise
+$cyan:         $color-dark-slate-blue
+$blue:         $color-dark-slate-blue
+$red:          $color-tomato
+
+// Typography
+$family-roboto-condensed: 'Roboto Condensed', sans-serif
+$family-source-sans-pro: 'Source Sans Pro', sans-serif
+$family-jetbrains-mono: 'JetBrains Mono', monospace
+$family-vocabulary-icons: 'Vocabulary Icons'
+$family-system: BlinkMacSystemFont, -apple-system, 'Segoe UI', 'Roboto','Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue','Helvetica', 'Arial', sans-serif
+
+$family-heading:    $family-roboto-condensed
+$family-body:       $family-source-sans-pro
+$family-icons:      $family-vocabulary-icons
+$family-sans-serif: $family-body
+$family-monospace:  $family-jetbrains-mono
+$render-mode:       optimizeLegibility
+
+$font-size-h1: 3.56rem
+$font-size-h2: 2.25rem
+$font-size-h3: 1.75rem
+$font-size-h4: 1.43rem
+$font-size-h5: 1.25rem
+$font-size-h6: 1.15rem // Not in Figma, extrapolated
+
+$font-size-value: 4.37rem
+
+$font-size-body-bigger: 1.43rem
+$font-size-body-big: 1.12rem
+$font-size-body-normal: 1rem
+$font-size-body-list: 1rem
+
+$font-size-caption: 0.8rem
+
+$size-1: $font-size-h1
+$size-2: $font-size-h2
+$size-3: $font-size-h3
+$size-4: $font-size-body-bigger // Same as $font-size-h4
+$size-5: $font-size-body-big
+$size-6: $font-size-body-normal
+$size-7: $font-size-caption
+
+$weight-light: 300
+$weight-normal: 400
+$weight-medium: 500
+$weight-semibold: 600
+$weight-bold: 700
+
+// Spacings
+$space-smaller: 0.25rem
+$space-small: 0.5rem
+$space-normal: 1rem
+$space-big: 1.5rem
+$space-bigger: 2rem
+$space-large: 2.5rem
+$space-larger: 3rem
+$space-xl: 4rem
+$space-xxl: 6rem
+$block-spacing: 1.5rem
+
+// Responsiveness
+
+// The container horizontal gap, which acts as the offset for breakpoints
+$gap: 32px
+// 960, 1152, and 1344 have been chosen because they are divisible by both 12 and 16
+$tablet: 769px
+// 960px container + 4rem
+$desktop: 960px + (2 * $gap)
+// 1152px container + 4rem
+$widescreen: 1152px + (2 * $gap)
+$widescreen-enabled: true
+// 1344px container + 4rem
+$fullhd: 1248px + (2 * $gap)
+$fullhd-enabled: true
+
+// Miscellaneous
+
+$easing: ease-out
+$radius-small: 0.125rem
+$radius: 0.25rem
+$radius-large: 0.375rem
+$radius-rounded: 290486px
+$speed: 86ms
+
+// Flags
+
+$variable-columns: true
+$rtl: false

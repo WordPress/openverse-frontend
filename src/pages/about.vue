@@ -2,7 +2,7 @@
   <div class="section">
     <div class="container is-fluid">
       <div>
-        <h1 class="title is-2 margin-bottom-large" role="article">
+        <h1 class="title is-2 mb-large" role="article">
           {{ $t('about.title') }}
         </h1>
         <div class="content">
@@ -82,13 +82,13 @@
               >
             </template>
           </i18n>
-          <h2 class="margin-top-large margin-bottom-normal">
+          <h2 class="mt-large mb-normal">
             {{ $t('about.sources') }}
           </h2>
           <table
             :aria-label="$t('about.aria.sources')"
             role="region"
-            class="table is-bordered is-striped margin-bottom-large"
+            class="table is-bordered is-striped mb-large"
           >
             <thead>
               <tr>

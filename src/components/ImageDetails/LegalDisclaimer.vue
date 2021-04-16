@@ -1,5 +1,5 @@
 <template>
-  <div class="margin-top-normal">
+  <div class="mt-normal">
     <p
       class="caption has-text-left has-text-grey-dark has-text-weight-semibold"
     >

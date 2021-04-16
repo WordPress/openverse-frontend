@@ -1,24 +1,22 @@
 <template>
   <section class="sidebar_section">
-    <div class="margin-bottom-big">
+    <div class="mb-big">
       <dl>
-        <dt class="margin-bottom-small">
+        <dt class="mb-small">
           {{ $t('photo-details.information.type') }}
         </dt>
         <dd>{{ prettyImageType }}</dd>
-        <dt class="margin-bottom-small">
+        <dt class="mb-small">
           {{ $t('photo-details.information.dimensions') }}:
         </dt>
         <dd>{{ imageWidth }} &times; {{ imageHeight }} pixels</dd>
-        <dt v-if="providerName != sourceName" class="margin-bottom-small">
+        <dt v-if="providerName != sourceName" class="mb-small">
           {{ $t('photo-details.information.provider') }}
         </dt>
         <dd v-if="providerName != sourceName">
           {{ providerName }}
         </dd>
-        <dt class="margin-bottom-small">
-          {{ $t('photo-details.information.source') }}:
-        </dt>
+        <dt class="mb-small">{{ $t('photo-details.information.source') }}:</dt>
         <dd>
           <a
             :aria-label="sourceName"
@@ -33,8 +31,8 @@
         </dd>
       </dl>
     </div>
-    <div class="margin-bottom-big">
-      <h5 class="is-block margin-bottom-small b-header">
+    <div class="mb-big">
+      <h5 class="is-block mb-small b-header">
         {{ $t('photo-details.information.tags') }}
       </h5>
       <PhotoTags :tags="image.tags" :show-header="false" />

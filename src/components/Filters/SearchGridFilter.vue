@@ -81,7 +81,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~/styles/ext/bulma_utilities/_all.sass';
+@import '~/styles/ext/utilities/_all.sass';
 
 .search-filters {
   display: none;

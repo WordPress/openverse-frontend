@@ -1,48 +1,42 @@
 @charset "utf-8";
 
 // Reset
-@import 'vocabulary/minireset.sass';
+@import 'base/minireset';
 
 // Bulma
-@import 'bulma_utilities/_all.sass';
-@import 'bulma_helpers/_all.sass';
-@import 'bulma_base/generic.sass';
+@import 'utilities/_all.sass';
+@import 'helpers/_all.sass';
+@import 'base/generic.sass';
 
 // Tokens
-@import 'vocabulary/typography.scss';
+@import 'base/typography';
 
 //// Elements
-@import 'vocabulary/button.scss';
+@import 'components/button';
 
 //// Form
-@import 'vocabulary/form.scss';
+@import 'components/form';
 
 //// Layouts
-@import 'vocabulary/layout.scss';
-//@import "./card.scss"; Is used on the support us page
-@import 'vocabulary/table.scss';
-// For now, commenting this out. TODO: extract tabs styles from components
-@import 'vocabulary/tabs.scss';
-// Not used in Search
-//@import "./notification.scss";
-
-//// Navigation
-// Not used in Search
-//@import "./sidebar_menu";
-// Not used in Search
-//@import "./table_of_contents.scss";
-// Not used in Search
-//@import "./table_of_progress";
-// Not used in Search
-//@import "./breadcrumb.scss";
-//@import "./pagination.scss";
+@import 'base/layout';
+@import 'base/card.sass';
+@import 'components/table';
+@import 'components/tabs';
 
 //// Patterns
-@import 'vocabulary/header.scss';
-@import 'vocabulary/footer.scss';
-@import 'vocabulary/image.scss';
-// Not used in Search
-//@import "./profile_image.scss";
+@import 'components/header';
+@import 'components/footer';
+@import 'components/image';
 
 // Content
-@import 'bulma_elements/content.sass';
+@import 'base/content';
+@import 'helpers/spacing';
+
+// The following files from vocabulary were not used in search:
+// - notification.scss
+// - sidebar_menu
+// - table_of_contents.scss
+// - table_of_progress.scss
+// - breadcrumb.scss
+// - pagination.scss
+// - profile_image.scss

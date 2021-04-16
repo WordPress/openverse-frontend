@@ -1,14 +1,14 @@
 <template>
-  <div class="photo columns is-desktop is-marginless padding-bottom-xl">
-    <div class="column is-three-fifths photo_image-ctr margin-top-normal">
+  <div class="photo columns is-desktop is-marginless pb-xl">
+    <div class="column is-three-fifths photo_image-ctr mt-normal">
       <a
         v-if="shouldShowBreadcrumb"
-        class="is-block photo_breadcrumb has-text-left margin-left-normal margin-bottom-normal has-text-grey-dark has-text-weight-semibold caption"
+        class="is-block photo_breadcrumb has-text-left ml-normal mb-normal has-text-grey-dark has-text-weight-semibold caption"
         :href="breadCrumbURL"
         @click.prevent="onGoBackToSearchResults"
         @keyup.enter.prevent="onGoBackToSearchResults"
       >
-        <i class="icon chevron-left margin-right-small" />
+        <i class="icon chevron-left mr-small" />
         {{ $t('photo-details.back') }}
       </a>
 
@@ -28,19 +28,19 @@
 
       <LegalDisclaimer />
 
-      <div class="margin-bottom-smaller has-text-left">
+      <div class="mb-smaller has-text-left">
         <button
           class="button is-text tiny is-paddingless report is-shadowless"
           @click.prevent="toggleReportFormVisibility"
           @keypress.enter.prevent="toggleReportFormVisibility"
         >
-          <span class="has-color-tomato margin-left-small">
-            <i class="icon flag margin-right-small" />
+          <span class="has-color-tomato ml-small">
+            <i class="icon flag mr-small" />
             {{ $t('photo-details.content-report.title') }}
           </span>
         </button>
       </div>
-      <div class="margin-top-small has-text-left">
+      <div class="mt-small has-text-left">
         <ContentReportForm
           v-if="isReportFormVisible"
           :image="image"
@@ -51,9 +51,9 @@
     <div
       role="region"
       :aria-label="$t('photo-details.aria.details')"
-      class="column image-info margin-left-xl"
+      class="column image-info ml-xl"
     >
-      <div class="margin-top-normal margin-bottom-small">
+      <div class="mt-normal mb-small">
         <h1 class="title is-5 b-header">
           {{ image.title }}
         </h1>
@@ -162,13 +162,13 @@
         :href="image.foreign_landing_url"
         target="_blank"
         rel="noopener"
-        class="button is-success margin-bottom-small"
+        class="button is-success mb-small"
         @click="onPhotoSourceLinkClicked"
         @keyup.enter="onPhotoSourceLinkClicked"
       >
         {{ $t('photo-details.weblink') }}
         <i
-          class="icon external-link margin-left-normal is-size-6 padding-top-smaller has-text-grey-lighter"
+          class="icon external-link ml-normal is-size-6 pt-smaller has-text-grey-lighter"
         />
       </a>
 
@@ -279,7 +279,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '~/styles/photodetails.scss';
-@import '~/styles/ext/bulma_utilities/_all.sass';
+@import '~/styles/ext/utilities/_all.sass';
 
 @include touch {
   .image-info {

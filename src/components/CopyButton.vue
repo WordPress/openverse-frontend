@@ -2,15 +2,15 @@
   <button
     :id="id"
     type="button"
-    class="button tiny donate is-paddingless margin-top-normal padding-horizontal-normal"
+    class="button tiny donate is-paddingless mt-normal px-normal"
     :data-clipboard-target="el"
   >
     <span v-if="!success">
-      <i class="icon cc-share margin-right-small" />
+      <i class="icon cc-share mr-small" />
       {{ $t('photo-details.copy.copy') }}
     </span>
     <span v-else>
-      <i class="icon cc-share margin-right-small" />
+      <i class="icon cc-share mr-small" />
       {{ $t('photo-details.copy.copied') }}
     </span>
   </button>

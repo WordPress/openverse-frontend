@@ -4,7 +4,7 @@
     <div
       v-show="showDonate"
       :class="{
-        'padding-bottom-bigger': needsPadding,
+        'pb-bigger': needsPadding,
       }"
     >
       <DonationBanner @onDismiss="hideDonate" />
