@@ -20,11 +20,9 @@ $code-size: 0.875em !default
 
 $small-font-size: 0.875em !default
 
-$hr-background-color: $background !default
 $hr-height: 2px !default
 $hr-margin: 1.5rem 0 !default
 
-$strong-color: $text-strong !default
 $strong-weight: $weight-bold !default
 
 $pre-font-size: 0.875em !default
@@ -83,14 +81,12 @@ a
     color: $link-hover
 
 code
-  background-color: $code-background
   color: $code
   font-size: $code-size
   font-weight: $code-weight
   padding: $code-padding
 
 hr
-  background-color: $hr-background-color
   border: none
   display: block
   height: $hr-height
@@ -112,7 +108,6 @@ span
   font-weight: inherit
 
 strong
-  color: $strong-color
   font-weight: $strong-weight
 
 // Block
@@ -122,7 +117,6 @@ fieldset
 
 pre
   +overflow-touch
-  background-color: $pre-background
   color: $pre
   font-size: $pre-font-size
   overflow-x: auto
@@ -141,5 +135,3 @@ table
     vertical-align: top
     &:not([align])
       text-align: inherit
-  th
-    color: $text-strong

@@ -3,20 +3,21 @@
 // Reset
 @import 'vocabulary/minireset.sass';
 
-// Tokens
-@import 'vocabulary/color.scss';
-@import 'vocabulary/color_overrides.scss';
-
+// Bulma
 @import 'vocabulary/spacing.scss';
 @import 'vocabulary/spacing_overrides.scss';
-
-@import 'vocabulary/typography.scss';
-@import 'vocabulary/typography_overrides.scss';
-
-// Bulma
 @import 'bulma_utilities/_all.sass';
 @import 'bulma_helpers/_all.sass';
 @import 'bulma_base/generic.sass';
+
+// Tokens
+@import 'vocabulary/color.scss';
+
+//@import 'vocabulary/spacing.scss';
+//@import 'vocabulary/spacing_overrides.scss';
+
+@import 'vocabulary/typography.scss';
+
 
 //// Elements
 @import 'vocabulary/button.scss';

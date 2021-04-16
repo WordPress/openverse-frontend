@@ -1,35 +1,5 @@
-@import url('https://unpkg.com/@creativecommons/fonts@2020.9.3/css/fonts.css');
-
-// Families
-$family-roboto-condensed: 'Roboto Condensed', sans-serif;
-$family-source-sans-pro: 'Source Sans Pro', sans-serif;
-$family-jetbrains-mono: 'JetBrains Mono', monospace;
-$family-vocabulary-icons: 'Vocabulary Icons';
-$family-system: BlinkMacSystemFont, -apple-system, 'Segoe UI', 'Roboto',
-  'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-  'Helvetica', 'Arial', sans-serif;
-
-$family-heading: $family-roboto-condensed;
-$family-body: $family-source-sans-pro;
-$family-code: $family-jetbrains-mono;
-$family-icons: $family-vocabulary-icons;
-
-// Sizes
-$font-size-h1: 3.56rem;
-$font-size-h2: 2.25rem;
-$font-size-h3: 1.75rem;
-$font-size-h4: 1.43rem;
-$font-size-h5: 1.25rem;
-$font-size-h6: 1.15rem; // Not in Figma, extrapolated
-
-$font-size-value: 4.37rem;
-
-$font-size-body-bigger: 1.43rem;
-$font-size-body-big: 1.12rem;
-$font-size-body-normal: 1rem;
-$font-size-body-list: 1rem;
-
-$font-size-caption: 0.8rem;
+@import "../bulma_utilities/initial-variables";
+@import "../bulma_utilities/derived-variables";
 
 // Classes
 $body-font-sizes: (
@@ -124,6 +94,6 @@ body {
   font-size: $font-size-body-normal;
 }
 
-a:hover {
+a:hover:not(.button) {
   text-decoration: underline;
 }

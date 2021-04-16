@@ -3,24 +3,24 @@ $button-family: $family-secondary;
 
 //@import "bulma/sass/elements/button.sass";
 
-$button-color: $text-strong;
+//$button-color: $text-strong;
 
 $button-border-width: $control-border-width;
 
 $button-padding-horizontal: 1em;
 
-$button-focus-color: $link-focus;
+//$button-focus-color: $link-focus;
 $button-focus-border-color: $link-focus-border;
 $button-focus-box-shadow-size: 0 0 0 0.125em;
 $button-focus-box-shadow-color: bulmaRgba($link, 0.25);
 
-$button-active-color: $link-active;
+//$button-active-color: $link-active;
 $button-active-border-color: $link-active-border;
 
 $button-text-color: $text;
 $button-text-decoration: underline;
 $button-text-hover-background-color: transparent;
-$button-text-hover-color: $text-strong;
+//$button-text-hover-color: $text-strong;
 
 $button-disabled-background-color: $scheme-main;
 $button-disabled-border-color: $border;
@@ -28,7 +28,7 @@ $button-disabled-shadow: none;
 $button-disabled-opacity: 0.5;
 
 $button-static-color: $text-light;
-$button-static-background-color: $scheme-main-ter;
+//$button-static-background-color: $scheme-main-ter;
 $button-static-border-color: $border;
 
 $button-colors: $colors;
@@ -112,7 +112,7 @@ $button-colors: $colors;
     outline: none;
 
     border-color: $button-focus-border-color;
-    color: $button-focus-color;
+    //color: $button-focus-color;
 
     &:not(:active) {
       box-shadow: $button-focus-box-shadow-size $button-focus-box-shadow-color;
@@ -123,7 +123,7 @@ $button-colors: $colors;
   &.is-active {
     outline: none;
     border-color: $button-active-border-color;
-    color: $button-active-color;
+    //color: $button-active-color;
   }
   // Colors
   &.is-text {
@@ -142,7 +142,7 @@ $button-colors: $colors;
     &:focus,
     &.is-focused {
       background-color: $button-text-hover-background-color;
-      color: $button-text-hover-color;
+      //color: $button-text-hover-color;
       border-color: transparent;
       box-shadow: none;
       text-decoration: underline;
@@ -151,7 +151,7 @@ $button-colors: $colors;
     &:active,
     &.is-active {
       background-color: bulmaDarken($button-text-hover-background-color, 5%);
-      color: $button-text-hover-color;
+      //color: $button-text-hover-color;
     }
 
     &[disabled] {
@@ -379,14 +379,6 @@ $button-colors: $colors;
       left: calc(50% - (1em / 2));
       top: calc(50% - (1em / 2));
     }
-  }
-
-  &.is-static {
-    background-color: $button-static-background-color;
-    border-color: $button-static-border-color;
-    color: $button-static-color;
-    box-shadow: none;
-    pointer-events: none;
   }
 
   &.is-rounded {
