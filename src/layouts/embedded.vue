@@ -7,12 +7,29 @@
   </div>
 </template>
 <script>
-const defaultPage = {
-  name: 'default',
-  layout: 'default',
+const embedded = {
+  name: 'embedded',
+  layout: 'embedded',
   head() {
-    return this.$nuxtI18nHead({ addSeoAttributes: true })
+    const i18nHead = this.$nuxtI18nHead({ addSeoAttributes: true })
+    return {
+      htmlAttrs: { ...i18nHead.htmlAttrs },
+      link: [...i18nHead.link],
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.$t('seo.meta.description'),
+        },
+        {
+          hid: 'og:description',
+          name: 'og:description',
+          content: this.$t('seo.meta.description'),
+        },
+        ...i18nHead.meta,
+      ],
+    }
   },
 }
-export default defaultPage
+export default embedded
 </script>

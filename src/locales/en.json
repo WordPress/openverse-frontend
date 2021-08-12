@@ -548,6 +548,9 @@
       "extension": "Download the Openverse Browser Extension: search and use open-licensed and public domain images",
       "singlePhoto": "{title} by {creator} | Free Image on Openverse",
       "search": "{media} results for \"{query}\" on Openverse"
+    },
+    "meta": {
+      "description": "The search engine for openly-licensed content, including Creative Commons licensed images, audio, and more."
     }
   }
 }
