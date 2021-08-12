@@ -9,8 +9,10 @@ import iframeHeight from '~/mixins/iframeHeight'
 const HomePage = {
   name: 'home-page',
   mixins: [iframeHeight],
-  head: {
-    title: `Search for openly-licensed media on Openverse`,
+  head() {
+    return {
+      title: this.$t('seo.titles.home'),
+    }
   },
   layout({ store }) {
     return store.state.isEmbedded ? 'embedded' : 'default'

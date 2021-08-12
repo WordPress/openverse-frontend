@@ -2,7 +2,7 @@
   "hero": {
     "brand": "Openverse",
     "title": "Search for content to reuse",
-    "subtitle": "Browse over 500 million images, available for reuse",
+    "subtitle": "Browse over 500 million openly-licensed images, audio tracks, and videos.",
     "search": {
       "placeholder": "Search all content",
       "button": "Search"
@@ -547,7 +547,11 @@
       "about": "About Openverse: The search engine for openly-licensed images, audio, and more",
       "extension": "Download the Openverse Browser Extension: search and use open-licensed and public domain images",
       "singlePhoto": "{title} by {creator} | Free Image on Openverse",
-      "search": "{media} results for \"{query}\" on Openverse"
+      "search": "{media} results for \"{query}\" on Openverse",
+      "home": "Openverse: Openly-licensed Images, Audio, & More"
+    },
+    "descriptions": {
+      "extension": "The Openverse Browser Extension allows users to search, bookmark, and site Creative Commons licensed images."
     }
   }
 }

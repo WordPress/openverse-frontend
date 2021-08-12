@@ -91,6 +91,7 @@ const AboutPage = {
   head() {
     return {
       title: this.$t('seo.titles.extension'),
+      description: this.$t('seo.descriptions.extension'),
     }
   },
   data() {
