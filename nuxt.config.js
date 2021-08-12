@@ -21,22 +21,25 @@ export const env = {
 const meta = [
   { charset: 'utf-8' },
   {
+    hid: 'description',
     name: 'description',
     content:
-      'A new Openverse search tool for creators seeking to discover and reuse free resources with greater ease.',
+      'The search engine for openly-licensed content, including Creative Commons licensed images, audio, and more.',
   },
   { name: 'viewport', content: 'width=device-width,initial-scale=1' },
   { name: 'twitter:card', content: 'summary_large_image' },
-  { name: 'twitter:site', content: '@creativecommons' },
+  { name: 'twitter:site', content: '@wordpress' },
   { name: 'og:title', content: 'Openverse' },
   {
+    hid: 'og:image',
     name: 'og:image',
     content: '/cclogo-shared-image.jpg',
   },
   {
+    hid: 'og:description',
     name: 'og:description',
     content:
-      'Empowering the world to share through 6 simple licenses + a global community of advocates for open.',
+      'The search engine for openly-licensed content, including Creative Commons licensed images, audio, and more.',
   },
   {
     name: 'og:url',
@@ -44,7 +47,7 @@ const meta = [
   },
   {
     name: 'og:site_name',
-    content: 'Creative Search',
+    content: 'Openverse',
   },
   {
     vmid: 'monetization',

@@ -62,15 +62,45 @@ const PhotoDetailPage = {
       socialSharingEnabled: featureFlags.socialSharing,
     }
   },
-  computed: mapState({
-    relatedImages: 'relatedImages',
-    filter: 'query.filter',
-    images: 'images',
-    imagesCount: 'imagesCount',
-    query: 'query',
-    tags: 'image.tags',
-    image: 'image',
-  }),
+  computed: {
+    fullLicenseName() {
+      const license = this.image.license
+      const version = this.image.license_version
+
+      if (license) {
+        return license.toLowerCase() === 'cc0'
+          ? `${license} ${version}`
+          : `CC ${license} ${version}`
+      }
+      return ''
+    },
+    ...mapState({
+      relatedImages: 'relatedImages',
+      filter: 'query.filter',
+      images: 'images',
+      imagesCount: 'imagesCount',
+      query: 'query',
+      tags: 'image.tags',
+      image: 'image',
+    }),
+  },
+  head() {
+    return {
+      title: `${this.image.title} by ${this.image.creator} | Free Image on Openverse`,
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: `Download this free ${this.fullLicenseName} photo "${this.image.title}" by ${this.image.creator} `,
+        },
+        {
+          hid: 'og:image',
+          name: 'og:image',
+          content: this.image.url ?? '/cclogo-shared-image.jpg',
+        },
+      ],
+    }
+  },
   watch: {
     image() {
       this.getRelatedImages()
