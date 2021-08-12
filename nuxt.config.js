@@ -20,12 +20,6 @@ export const env = {
  */
 const meta = [
   { charset: 'utf-8' },
-  {
-    hid: 'description',
-    name: 'description',
-    content:
-      'The search engine for openly-licensed content, including Creative Commons licensed images, audio, and more.',
-  },
   { name: 'viewport', content: 'width=device-width,initial-scale=1' },
   { name: 'twitter:card', content: 'summary_large_image' },
   { name: 'twitter:site', content: '@wordpress' },
@@ -34,12 +28,6 @@ const meta = [
     hid: 'og:image',
     name: 'og:image',
     content: '/cclogo-shared-image.jpg',
-  },
-  {
-    hid: 'og:description',
-    name: 'og:description',
-    content:
-      'The search engine for openly-licensed content, including Creative Commons licensed images, audio, and more.',
   },
   {
     name: 'og:url',

@@ -538,13 +538,14 @@
   },
   "seo": {
     "titles": {
+      "default": "Openverse: Openly-licensed Images, Audio, & other Content",
       "about": "About Openverse: The search engine for openly-licensed images, audio, and more",
       "extension": "Download the Openverse Browser Extension: search and use open-licensed and public domain images",
       "singlePhoto": "{title} by {creator} | Free Image on Openverse",
-      "search": "{media} results for \"{query}\" on Openverse",
-      "home": "Openverse: Openly-licensed Images, Audio, & More"
+      "search": "{media} results for \"{query}\" on Openverse"
     },
     "descriptions": {
+      "default": "The search engine for openly-licensed content, including Creative Commons licensed images, audio, and more.",
       "extension": "The Openverse browser extension allows users to search, bookmark, and cite Creative Commons licensed images."
     }
   }

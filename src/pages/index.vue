@@ -11,7 +11,7 @@ const HomePage = {
   mixins: [iframeHeight],
   head() {
     return {
-      title: this.$t('seo.titles.home'),
+      title: this.$t('seo.titles.default'),
     }
   },
   layout({ store }) {
