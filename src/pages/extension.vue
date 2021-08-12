@@ -88,6 +88,11 @@ const AboutPage = {
       ? 'embedded-with-nav-search'
       : 'with-nav-search'
   },
+  head() {
+    return {
+      title: this.$t('seo.titles.extension'),
+    }
+  },
   data() {
     const features = [
       { key: 'search', image: feature1 },

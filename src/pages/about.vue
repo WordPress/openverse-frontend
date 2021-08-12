@@ -101,6 +101,11 @@ import iframeHeight from '~/mixins/iframeHeight'
 
 const AboutPage = {
   name: 'about-page',
+  head() {
+    return {
+      title: this.$t('seo.titles.about'),
+    }
+  },
   mixins: [iframeHeight],
   layout({ store }) {
     return store.state.isEmbedded

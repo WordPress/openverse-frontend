@@ -12,7 +12,10 @@ export default {
   name: 'ImageSearch',
   head() {
     return {
-      title: `Image results for "${this.$store.state.query.q}" on Openverse`,
+      title: this.$t('seo.titles.search', {
+        media: this.$t('media-types.image'),
+        query: this.$store.state.query.q,
+      }),
     }
   },
   methods: {

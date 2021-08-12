@@ -12,7 +12,10 @@ export default {
   name: 'AudioSearch',
   head() {
     return {
-      title: `Audio results for "${this.$store.state.query.q}" on Openverse`,
+      title: this.$t('seo.titles.search', {
+        media: this.$t('media-types.audio'),
+        query: this.$store.state.query.q,
+      }),
     }
   },
 }

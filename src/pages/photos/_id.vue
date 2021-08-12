@@ -86,7 +86,10 @@ const PhotoDetailPage = {
   },
   head() {
     return {
-      title: `${this.image.title} by ${this.image.creator} | Free Image on Openverse`,
+      title: this.$t('seo.titles.singlePhoto', {
+        title: this.image.title,
+        creator: this.image.creator,
+      }),
       meta: [
         {
           hid: 'description',

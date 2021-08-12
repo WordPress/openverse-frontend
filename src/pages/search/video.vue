@@ -12,7 +12,10 @@ export default {
   name: 'VideoSearch',
   head() {
     return {
-      title: `Video results for "${this.$store.state.query.q}" on Openverse`,
+      title: this.$t('seo.titles.search', {
+        media: this.$t('media-types.video'),
+        query: this.$store.state.query.q,
+      }),
     }
   },
 }

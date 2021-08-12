@@ -12,7 +12,10 @@ export default {
   name: 'SearchIndex',
   head() {
     return {
-      title: `All results for "${this.$store.state.query.q}" on Openverse`,
+      title: this.$t('seo.titles.search', {
+        media: this.$t('media-types.all'),
+        query: this.$store.state.query.q,
+      }),
     }
   },
   methods: {

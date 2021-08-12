@@ -300,7 +300,8 @@
     "occurred": "An error occurred",
     "image-not-found": "Couldn't find image with id {id}"
   },
-  "search-tab": {
+  "media-types": {
+    "all": "All",
     "image": "Image",
     "audio": "Audio",
     "video": "Video"
@@ -540,5 +541,13 @@
     "firefox": "Firefox",
     "opera": "Opera",
     "edge": "Edge"
+  },
+  "seo": {
+    "titles": {
+      "about": "About Openverse: The search engine for openly-licensed images, audio, and more",
+      "extension": "Download the Openverse Browser Extension: search and use open-licensed and public domain images",
+      "singlePhoto": "{title} by {creator} | Free Image on Openverse",
+      "search": "{media} results for \"{query}\" on Openverse"
+    }
   }
 }
