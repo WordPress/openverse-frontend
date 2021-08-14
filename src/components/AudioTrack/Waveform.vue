@@ -146,7 +146,6 @@ export default {
     },
     clearPreviewProgress() {
       this.previewPercentage = 0
-      console.log('mouseleave!')
     },
   },
 }
