@@ -28,8 +28,8 @@ export const mediaFilterKeys = {
   image: [
     'licenses',
     'licenseTypes',
-    'categories',
-    'extensions',
+    'imageCategories',
+    'imageExtensions',
     'aspectRatios',
     'sizes',
     'imageProviders',
@@ -52,8 +52,8 @@ export const mediaFilterKeys = {
 export const mediaSpecificFilters = {
   all: ['licenses', 'licenseTypes', 'searchBy', 'mature'],
   image: [
-    'categories',
-    'extensions',
+    'imageCategories',
+    'imageExtensions',
     'aspectRatios',
     'sizes',
     'imageProviders',
@@ -102,20 +102,20 @@ export const filterData = {
       checked: false,
     },
   ],
-  categories: [
+  imageCategories: [
     {
       code: 'photograph',
-      name: 'filters.categories.photograph',
+      name: 'filters.image-categories.photograph',
       checked: false,
     },
     {
       code: 'illustration',
-      name: 'filters.categories.illustration',
+      name: 'filters.image-categories.illustration',
       checked: false,
     },
     {
       code: 'digitized_artwork',
-      name: 'filters.categories.digitized-artwork',
+      name: 'filters.image-categories.digitized-artwork',
       checked: false,
     },
   ],
@@ -124,11 +124,11 @@ export const filterData = {
     { code: 'ogg', name: 'filters.audio-extensions.ogg', checked: false },
     { code: 'flac', name: 'filters.audio-extensions.flac', checked: false },
   ],
-  extensions: [
-    { code: 'jpg', name: 'filters.extensions.jpg', checked: false },
-    { code: 'png', name: 'filters.extensions.png', checked: false },
-    { code: 'gif', name: 'filters.extensions.gif', checked: false },
-    { code: 'svg', name: 'filters.extensions.svg', checked: false },
+  imageExtensions: [
+    { code: 'jpg', name: 'filters.image-extensions.jpg', checked: false },
+    { code: 'png', name: 'filters.image-extensions.png', checked: false },
+    { code: 'gif', name: 'filters.image-extensions.gif', checked: false },
+    { code: 'svg', name: 'filters.image-extensions.svg', checked: false },
   ],
   aspectRatios: [
     { code: 'tall', name: 'filters.aspect-ratios.tall', checked: false },
@@ -271,7 +271,9 @@ function replaceFilters(state, filterData) {
         const idx = state.filters[filterType].findIndex(
           (p) => p.code === provider.code
         )
-        state.filters[filterType][idx].checked = provider.checked
+        if (idx > -1) {
+          state.filters[filterType][idx].checked = provider.checked
+        }
       })
     } else {
       state.filters[filterType] = filterData[filterType]

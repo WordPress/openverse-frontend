@@ -337,7 +337,7 @@
       "sound-effects": "Sound Effects",
       "podcast": "Podcast"
     },
-    "categories": {
+    "image-categories": {
       "title": "Image Type",
       "photograph": "Photographs",
       "illustration": "Illustrations",
@@ -349,7 +349,7 @@
       "ogg": "OGGs",
       "flac": "FLACs"
     },
-    "extensions": {
+    "image-extensions": {
       "title": "File Type",
       "jpg": "JPEGs",
       "png": "PNGs",
