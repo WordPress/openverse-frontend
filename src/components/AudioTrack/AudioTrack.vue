@@ -1,7 +1,8 @@
 <template>
-  <div class="audio-track">
+  <div class="audio-track relative">
     <div class="waveform-section bg-dark-charcoal-04">
       <Waveform
+        aria-hidden="true"
         class="h-30 w-full"
         :is-ready="isReady"
         :current-time="currentTime"
@@ -12,6 +13,7 @@
     </div>
     <div class="info-section flex flex-row">
       <PlayPause
+        aria-hidden="true"
         class="self-start flex-shrink-0"
         :is-playing="isPlaying"
         :disabled="!isReady"
@@ -38,8 +40,8 @@
 
     <!-- eslint-disable vuejs-accessibility/media-has-caption -->
     <audio
-      v-show="false"
       ref="audio"
+      class="absolute top-0 left-0 opacity-0 pointer-events-none"
       controls
       :src="audio.url"
       crossorigin="anonymous"
@@ -49,6 +51,7 @@
       "
       @play="setIsPlaying(true)"
       @pause="setIsPlaying(false)"
+      @timeupdate="syncTime()"
     />
     <!-- eslint-enable vuejs-accessibility/media-has-caption -->
   </div>
