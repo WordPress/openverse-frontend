@@ -5,8 +5,8 @@
 const { writeFile } = require('fs/promises')
 const os = require('os')
 const axios = require('axios')
+const JSSoup = require('jssoup').default
 const ngxJsonToJson = require('./ngx-json-to-json')
-const localeJSON = require('./localesList.json')
 
 /**
  *
@@ -104,8 +104,33 @@ const fetchAndConvertNGXTranslations = (locales) => {
     .then(writeLocaleFiles)
 }
 
-fetchAndConvertNGXTranslations(Object.values(localeJSON).map((i) => i.slug))
-  .then((res) => {
-    console.log(`Successfully saved ${res.length} translations.`)
+const MIN_TRANSLATED = 70 // translation threshold after which we download
+const fetchTranslatedLocalesList = () =>
+  axios.get(baseUrl).then((res) => {
+    const soup = new JSSoup(res.data)
+    const rows = soup.find('tbody').findAll('tr')
+    return rows
+      .map((row) => {
+        const cells = row.findAll('td').splice(0, 2)
+        //  href is like /projects/meta/openverse/es-ve/default/
+        const languageSlug = cells[0].find('a').attrs.href.split('/')[4]
+        const translatedPercentage = parseInt(
+          cells[1].text.replace('%', '').trim()
+        )
+        return { languageSlug, translatedPercentage }
+      })
+      .filter((row) => {
+        return row.translatedPercentage > MIN_TRANSLATED
+      })
+      .map((row) => {
+        return row.languageSlug
+      })
   })
-  .catch(console.error)
+
+fetchTranslatedLocalesList().then((translatedLocales) => {
+  fetchAndConvertNGXTranslations(translatedLocales)
+    .then((res) => {
+      console.log(`Successfully saved ${res.length} translations.`)
+    })
+    .catch(console.error)
+})
