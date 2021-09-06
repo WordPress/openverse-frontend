@@ -9,7 +9,9 @@
     aria-valuemin="0"
     :aria-valuemax="duration"
     :aria-valuenow="currentTime"
-    :aria-valuetext="currentTimeText"
+    :aria-valuetext="
+      $t('waveform.current-time', { time: timeFmt(currentTime) })
+    "
     @mousedown="handleMouseDown"
     @mousemove="handleMouseMove"
     @mouseup="handleMouseUp"
@@ -359,16 +361,6 @@ const handleArrows = (event) => {
  */
 export default {
   name: 'Waveform',
-  computed: {
-    /**
-     * the waveform current time as a text string; This function was placed
-     * outside because `this` is not accessible inside the `setup`.
-     */
-    currentTimeText() {
-      const time = this.timeFmt(this.currentTime)
-      return this.$t('waveform.current-time', { time })
-    },
-  },
 }
 </script>
 
