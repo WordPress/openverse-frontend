@@ -367,9 +367,7 @@ const handleArrowKeys = (event) => {
   } else {
     clearSeekProgress()
     const direction = key.includes('Left') ? -1 : 1
-    const magnitude = shiftKey
-      ? modSeekDeltaFrac.value
-      : seekDeltaFrac.value
+    const magnitude = shiftKey ? modSeekDeltaFrac.value : seekDeltaFrac.value
     const delta = magnitude * direction
     emit('seeked', currentFrac.value + delta)
   }
