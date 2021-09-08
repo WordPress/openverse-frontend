@@ -1,7 +1,7 @@
 <template>
   <div
     ref="el"
-    class="waveform relative bg-dark-charcoal-04 overflow-hidden focus:outline-none"
+    class="waveform relative bg-dark-charcoal-04 overflow-hidden rounded-sm focus:outline-none focus-visible:ring focus-visible:ring-offset-2 focus-visible:ring-pink"
     tabIndex="0"
     role="slider"
     :aria-label="$t('waveform.label')"
@@ -16,8 +16,10 @@
     @mousemove="handleMouseMove"
     @mouseup="handleMouseUp"
     @mouseleave="handleMouseLeave"
-    @keydown.arrow-left="handleArrows"
-    @keydown.arrow-right="handleArrows"
+    @keydown.arrow-left.prevent="handleArrowKeys"
+    @keydown.arrow-right.prevent="handleArrowKeys"
+    @keydown.home.prevent="handlePosKeys(0)"
+    @keydown.end.prevent="handlePosKeys(1)"
   >
     <svg
       class="w-full h-full"
@@ -351,6 +353,26 @@ const handleArrows = (event) => {
   const direction = key.includes('Left') ? -1 : 1
   const delta = magnitude * direction
   emit('seeked', currentFrac.value + delta)
+}
+
+const handlePosKeys = (frac) => {
+  clearSeekProgress()
+  emit('seeked', frac)
+}
+const handleArrowKeys = (event) => {
+  const { key, shiftKey, metaKey } = event
+  if (metaKey) {
+    // Always false on Windows
+    handlePosKeys(key.includes('Left') ? 0 : 1)
+  } else {
+    clearSeekProgress()
+    const direction = key.includes('Left') ? -1 : 1
+    const magnitude = shiftKey
+      ? modSeekDeltaFrac.value
+      : seekDeltaFrac.value
+    const delta = magnitude * direction
+    emit('seeked', currentFrac.value + delta)
+  }
 }
 </script>
 
