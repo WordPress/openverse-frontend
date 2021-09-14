@@ -52,62 +52,71 @@
         </form>
       </div>
       <div class="navbar-end">
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link is-arrowless">
-            {{ $t('header.about-tab') }}
-            <i class="icon caret-down" />
+        <Dropdown v-slot="{ onFocus }" :text="$t('header.about-tab')">
+          <NuxtLink
+            class="navbar-item"
+            :to="localePath('/about')"
+            @focus="onFocus()"
+          >
+            {{ $t('header.about-nav-item') }}
+          </NuxtLink>
+          <NuxtLink
+            class="navbar-item"
+            :to="localePath('/sources')"
+            @focus="onFocus()"
+          >
+            {{ $t('header.source-nav-item') }}
+          </NuxtLink>
+          <a
+            href="https://creativecommons.org/about/cclicenses/"
+            target="_blank"
+            rel="noopener"
+            class="navbar-item"
+            @focus="onFocus()"
+            >{{ $t('header.licenses-nav-item') }}
+            <i class="icon external-link" />
           </a>
-          <div class="navbar-dropdown">
-            <NuxtLink class="navbar-item" :to="localePath('/about')">
-              {{ $t('header.about') }}
-            </NuxtLink>
-            <NuxtLink class="navbar-item" :to="localePath('/sources')">
-              {{ $t('header.source') }}
-            </NuxtLink>
-            <a
-              href="https://creativecommons.org/about/cclicenses/"
-              target="_blank"
-              rel="noopener"
-              class="navbar-item"
-              >{{ $t('header.licenses') }}
-              <i class="icon external-link" />
-            </a>
-          </div>
-        </div>
+        </Dropdown>
 
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link is-arrowless">
-            {{ $t('header.resources-tab') }}
-            <i class="icon caret-down" />
+        <Dropdown v-slot="{ onFocus }" :text="$t('header.resources-tab')">
+          <NuxtLink
+            class="navbar-item"
+            :to="localePath('/search-help')"
+            @focus="onFocus()"
+          >
+            {{ $t('header.search-guide-nav-item') }}
+          </NuxtLink>
+          <NuxtLink
+            class="navbar-item"
+            :to="localePath('/meta-search')"
+            @focus="onFocus()"
+          >
+            {{ $t('header.meta-search-nav-item') }}
+          </NuxtLink>
+          <NuxtLink
+            class="navbar-item"
+            :to="localePath('/feedback')"
+            @focus="onFocus()"
+          >
+            {{ $t('header.feedback-nav-item') }}
+          </NuxtLink>
+          <a
+            href="https://api.creativecommons.engineering/"
+            target="_blank"
+            rel="noopener"
+            class="navbar-item"
+            @focus="onFocus()"
+            >{{ $t('header.api-nav-item') }}
+            <i class="icon external-link" />
           </a>
-          <div class="navbar-dropdown">
-            <NuxtLink class="navbar-item" :to="localePath('/search-help')">
-              {{ $t('header.search-guide') }}
-            </NuxtLink>
-            <NuxtLink class="navbar-item" :to="localePath('/meta-search')">
-              {{ $t('header.meta-search') }}
-            </NuxtLink>
-            <NuxtLink class="navbar-item" :to="localePath('/feedback')">
-              {{ $t('header.feedback') }}
-            </NuxtLink>
-            <a
-              href="https://api.creativecommons.engineering/"
-              target="_blank"
-              rel="noopener"
-              class="navbar-item"
-              >{{ $t('header.api') }}
-              <i class="icon external-link" />
-            </a>
-          </div>
-        </div>
+        </Dropdown>
 
         <a
-          :aria-label="$t('header.aria.extension')"
           class="navbar-item"
           href="https://opensource.creativecommons.org/ccsearch-browser-extension/"
           target="_blank"
         >
-          {{ $t('header.extension') }}
+          {{ $t('header.extension-nav-item') }}
           <i class="icon external-link" />
         </a>
       </div>
@@ -117,9 +126,11 @@
 
 <script>
 import { SET_QUERY } from '~/store-modules/mutation-types'
+import Dropdown from '~/components/Dropdown'
 
 export default {
   name: 'NavSection',
+  components: { Dropdown },
   props: {
     showNavSearch: {
       default: false,

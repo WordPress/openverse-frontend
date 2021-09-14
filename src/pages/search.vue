@@ -8,40 +8,39 @@
       </div>
       <aside
         v-if="isFilterVisible"
-        class="column is-narrow grid-sidebar p-0 hidden desk:block full-height-sticky"
+        class="column is-narrow grid-sidebar is-hidden-touch"
       >
         <SearchGridFilter @onSearchFilterChanged="onSearchFormSubmit" />
       </aside>
       <div class="column search-grid-ctr">
         <SearchGridForm @onSearchFormSubmit="onSearchFormSubmit" />
         <SearchTypeTabs />
-        <FilterDisplay
-          v-if="$route.path === '/search/' || $route.path === '/search/image'"
-        />
-        <NuxtChild
-          :key="$route.path"
-          :query="query"
-          @onLoadMoreImages="onLoadMoreImages"
-        />
+        <FilterDisplay v-if="shouldShowFilterTags" />
+        <NuxtChild :key="$route.path" @onLoadMoreItems="onLoadMoreItems" />
       </div>
     </div>
   </div>
 </template>
 <script>
-import { FETCH_IMAGES } from '~/store-modules/action-types'
+import {
+  FETCH_MEDIA,
+  SET_SEARCH_TYPE_FROM_URL,
+} from '~/store-modules/action-types'
 import {
   SET_QUERY,
   SET_FILTER_IS_VISIBLE,
   SET_FILTERS_FROM_URL,
 } from '~/store-modules/mutation-types'
-import { queryStringToQueryData } from '~/utils/searchQueryTransform'
+import { queryStringToQueryData } from '~/utils/search-query-transform'
 import local from '~/utils/local'
-import { screenWidth } from '~/utils/getBrowserInfo'
-import iframeHeight from '~/mixins/iframeHeight'
+import { screenWidth } from '~/utils/get-browser-info'
+import iframeHeight from '~/mixins/iframe-height'
+import i18nSync from '~/mixins/i18n-sync'
+import { ALL_MEDIA, IMAGE } from '~/constants/media'
 
 const BrowsePage = {
   name: 'browse-page',
-  mixins: [iframeHeight],
+  mixins: [iframeHeight, i18nSync],
   layout({ store }) {
     return store.state.isEmbedded ? 'embedded' : 'default'
   },
@@ -51,10 +50,10 @@ const BrowsePage = {
       const query = queryStringToQueryData(this.$route.fullPath)
       this.$store.commit(SET_QUERY, { query })
     }
+    await this.$store.dispatch(SET_SEARCH_TYPE_FROM_URL, {
+      url: this.$route.fullPath,
+    })
     this.$store.commit(SET_FILTERS_FROM_URL, { url: this.$route.fullPath })
-    if (!this.$store.state.images.length) {
-      await this.$store.dispatch(FETCH_IMAGES, this.$store.state.query)
-    }
   },
   mounted() {
     const localFilterState = () =>
@@ -77,13 +76,19 @@ const BrowsePage = {
     isFilterVisible() {
       return this.$store.state.isFilterVisible
     },
+    mediaType() {
+      // Default to IMAGE until media search/index is generalized
+      return this.$store.state.searchType != ALL_MEDIA
+        ? this.$store.state.searchType
+        : IMAGE
+    },
   },
   methods: {
-    getImages(params) {
-      this.$store.dispatch(FETCH_IMAGES, params)
+    getMediaItems(params, mediaType) {
+      this.$store.dispatch(FETCH_MEDIA, { ...params, mediaType })
     },
-    onLoadMoreImages(searchParams) {
-      this.getImages(searchParams)
+    onLoadMoreItems(searchParams) {
+      this.getMediaItems(searchParams, this.mediaType)
     },
     onSearchFormSubmit(searchParams) {
       this.$store.commit(SET_QUERY, searchParams)
@@ -92,6 +97,11 @@ const BrowsePage = {
       this.$store.commit(SET_FILTER_IS_VISIBLE, {
         isFilterVisible: !this.isFilterVisible,
       })
+    },
+    shouldShowFilterTags() {
+      return (
+        this.$route.path === '/search/' || this.$route.path === '/search/image'
+      )
     },
   },
   watch: {
@@ -102,7 +112,7 @@ const BrowsePage = {
           query: this.$store.state.query,
         })
         this.$router.push(newPath)
-        this.getImages(newQuery)
+        this.getMediaItems(newQuery, this.mediaType)
       }
     },
   },

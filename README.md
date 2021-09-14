@@ -18,6 +18,9 @@ Run the following commands in order to have the code up and running on your mach
 # installs dependencies
 npm install
 
+# sets up required i18n files
+npm run i18n:get-translations
+
 # Builds and serves assets with hot-reload
 npm run dev
 ```
@@ -69,6 +72,10 @@ ngrok http 8443 -host-header="localhost:8443"
 The code in this repository is formatted using `prettier`. If you have prettier setup in your code editor it should work out of the box; otherwise you can use the `npm run lintfix` script to format and fix lint errors in your code. Checks are run to lint your code and validate the formatting on git precommit using [husky](https://github.com/typicode/husky).
 
 You will need to fix any linting issues before committing. We recommend formatting your JavaScript files on save in your text editor. You can learn how to do this in Visual Studio Code [here](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode#format-on-save).
+
+### File name conventions
+
+All files and folders should be written in `kebab-case`, with the exception of Vue single file components. If it ends in `.vue`, please use `PascalCase`. This distinction makes our component files stand out clearly and is [reccommended by the Vue community](https://vuejs.org/v2/style-guide/#Single-file-component-filename-casing-strongly-recommended).
 
 ## Contributing
 

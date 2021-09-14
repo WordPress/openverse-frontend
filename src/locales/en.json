@@ -24,27 +24,26 @@
     }
   },
   "header": {
-    "about": "Our Story",
-    "source": "Sources",
-    "search-guide": "Search Guide",
-    "meta-search": "Meta Search",
-    "feedback": "Feedback",
-    "support": "Support Us",
-    "extension": "Web extension",
+    "about-nav-item": "Our Story",
+    "source-nav-item": "Sources",
+    "search-guide-nav-item": "Search Guide",
+    "meta-search-nav-item": "Meta Search",
+    "feedback-nav-item": "Feedback",
+    "support-nav-item": "Support Us",
+    "extension-nav-item": "Web extension",
     "placeholder": "Search all content",
     "aria": {
       "primary": "primary",
       "menu": "menu",
       "search": "search",
-      "sr-search": "sr search button",
-      "extension": "extension"
+      "sr-search": "sr search button"
     },
-    "licenses": "The Licenses",
+    "licenses-nav-item": "The Licenses",
     "about-tab": "About",
     "resources-tab": "Resources",
-    "api": "API",
+    "api-nav-item": "API",
     "notification": {
-      "text": "Example notification text",
+      "text": "{example_notification_text}",
       "dismiss": "Dismiss",
       "okay": "OK"
     }
@@ -104,7 +103,7 @@
       "projects": "Openverse projects",
       "community": "Make Wordpress community",
       "terms": "Openverse terms of use",
-      "sources": "sources table",
+      "sources-table": "sources table",
       "creative-commons": "Creative Commons",
       "wordpress": "WordPress",
       "search": "Openverse",
@@ -172,7 +171,7 @@
       "content": "For many years, CC has offered its users a dedicated search portal for searching platforms that have CC licensing filters built in. These platforms included Europeana, Google Images, Flickr, Jamendo, Open Clip Art Library, SpinXpress, Wikimedia Commons, YouTube, ccMixter, and SoundCloud. The search experience looked like this:",
       "new": "For users of the legacy CC Meta Search site, the Meta Search feature on Openverse will look familiar. The goal was to ensure that the functionality is not lost, but is updated and embedded within our new search engine for openly licensed content. In addition, the Meta Search feature builds on this functionality, allowing us to quickly add new sources to Meta Search as we discover them, and support new content types in the future, as we expand.",
       "aria-label": "feedback",
-      "feedback": "We hope you enjoy, and if you have suggestions for improvement, leave us {feedback}.",
+      "feedback-suggestions": "We hope you enjoy, and if you have suggestions for improvement, leave us {feedback}.",
       "feedback-link": "feedback"
     }
   },
@@ -303,6 +302,7 @@
   "filters": {
     "title": "Filters",
     "filter-by": "Filter By",
+    "filter-tag-aria": "{filterLabel} filter",
     "licenses": {
       "title": "License or Public Domain",
       "cc0": "CC0",
@@ -319,16 +319,31 @@
       "commercial": "Use commercially",
       "modification": "Modify or adapt"
     },
-    "providers": {
+    "image-providers": {
       "title": "Source"
     },
-    "categories": {
+    "audio-providers": {
+      "title": "Source"
+    },
+    "audio-categories": {
+      "title": "Audio Category",
+      "music": "Music",
+      "sound-effects": "Sound Effects",
+      "podcast": "Podcast"
+    },
+    "image-categories": {
       "title": "Image Type",
       "photograph": "Photographs",
       "illustration": "Illustrations",
       "digitized-artwork": "Digitized Artworks"
     },
-    "extensions": {
+    "audio-extensions": {
+      "title": "File Type",
+      "mp3": "MP3s",
+      "ogg": "OGGs",
+      "flac": "FLACs"
+    },
+    "image-extensions": {
       "title": "File Type",
       "jpg": "JPEGs",
       "png": "PNGs",
@@ -351,6 +366,12 @@
       "title": "Search Settings",
       "enable": "Enable Mature Content"
     },
+    "durations": {
+      "title": "Durations",
+      "short": "Short",
+      "medium": "Medium",
+      "long": "Long"
+    },
     "creator": {
       "title": "Search by Creator"
     },
@@ -368,25 +389,35 @@
     "filter-by": "Filter results by",
     "hide": "Hide filters",
     "clear": "Clear filters",
-    "show": "Show results"
+    "show": "Show results",
+    "category-aria": "filters list for {categoryName} category"
   },
   "browse-page": {
-    "audio-result-count": "no audios | {localeCount} audio | {localeCount} audios",
-    "image-result-count": "no images | {localeCount} image | {localeCount} images",
-    "result-count": "{count} images",
-    "result-count-more": "Over {count} images",
-    "no-more": "No more images :(",
+    "all-no-results": "No results",
+    "audio-no-results": "No audio results",
+    "image-no-results": "No image results",
+    "all-result-count": "{localeCount} result|{localeCount} results",
+    "audio-result-count": "{localeCount} audio result|{localeCount} audio results",
+    "image-result-count": "{localeCount} image result|{localeCount} image results",
+    "all-result-count-more": "Over {localeCount} results",
+    "audio-result-count-more": "Over {localeCount} audio results",
+    "image-result-count-more": "Over {localeCount} image results",
+    "no-more": "No more {type} :(",
     "load": "Load more results",
-    "error": "Error fetching images:",
+    "fetching-error": "Error fetching {type}:",
     "other-source": "Not finding what you need? Search other sources",
     "search-rating": {
       "content": "Are these results relevant?",
       "yes": "Yes",
       "no": "No",
-      "feedback": "Thank you for the feedback!"
+      "feedback-thanks": "Thank you for the feedback!"
     },
     "search-form": {
       "placeholder": "Search all {type}",
+      "image": "images",
+      "audio": "audio",
+      "video": "videos",
+      "all": "content",
       "collection-placeholder": "Search this collection",
       "button": "Search"
     },
@@ -417,17 +448,16 @@
       "creator": "search by creator"
     }
   },
-  "photo-details": {
-    "back": "Back to search results",
-    "creator": "by {name}",
+  "media-details": {
     "reuse": {
-      "title": "Reuse",
-      "license-header": "License",
-      "tool-header": "Public Domain",
       "image": "Image",
-      "attribution": {
-        "main": "This image was marked with a {link} license.",
-        "license": "license."
+      "license": {
+        "content": "Read more about the license {link}",
+        "link": "here"
+      },
+      "tool": {
+        "content": "Read more about the tool {link}",
+        "link": "here"
       },
       "credit": {
         "text": "{title}{creator}{marked-licensed}{license}{view-legal}",
@@ -438,20 +468,25 @@
         "terms-text": "the terms,",
         "copy-text": "a copy of this license,"
       },
-      "license": {
-        "content": "Read more about the license {link}",
-        "link": "here"
-      },
-      "tool": {
-        "content": "Read more about the tool {link}",
-        "link": "here"
-      },
       "copy-license": {
         "title": "Credit the Creator",
         "rich": "Rich Text",
         "html": "HTML",
         "plain": "Plain text"
+      },
+      "license-header": "License",
+      "tool-header": "Public Domain",
+      "attribution": {
+        "main": "This image was marked with a {link} license.",
+        "license": "license."
       }
+    }
+  },
+  "photo-details": {
+    "back": "Back to search results",
+    "creator": "by {name}",
+    "reuse": {
+      "title": "Reuse"
     },
     "information": {
       "title": "Information",
@@ -491,8 +526,9 @@
         "content": "You must fill out this {link} to report copyright infringement. No action will be taken until the form is filled out and submitted.",
         "provider": "We recommend doing the same at the source, {link}.",
         "thanks": "Thank you for reporting an issue with the results of Openverse!",
-        "error": "There was an error with the report submission. Please try again.",
-        "link": "DMCA form"
+        "submission-error": "There was an error with the report submission. Please try again.",
+        "link": "DMCA form",
+        "aria-form": "{provider} form"
       }
     },
     "aria": {
@@ -509,11 +545,12 @@
         "pinterest": "share on pinterest"
       },
       "main": "main content",
-      "related": "related images"
+      "related": "related images",
+      "provider-report-form": "{provider} form",
+      "creator-url": "author {creator}"
     }
   },
   "meta-search": {
-    "sources": "Sources",
     "caption": "Openverse does not currently index the sources listed above, but through this interface is offering convenient access to search services provided by other independent organizations. Openverse has no control over the results that are returned. Do not assume that the results displayed in this search portal are under a CC license. Always verify that the work is actually under a CC license by following the link. If you are in doubt, you should contact the copyright holder directly, or try to contact the site where you found the content.",
     "card": {
       "search": "Not finding what you're looking for? Try additional sources",
@@ -535,6 +572,30 @@
     "firefox": "Firefox",
     "opera": "Opera",
     "edge": "Edge"
+  },
+  "waveform": {
+    "label": "Audio seek bar",
+    "current-time": "{time} seconds"
+  },
+  "audio-track": {
+    "title": "{title} by {creator}",
+    "aria-label": "Audio Player",
+    "messages": {
+      "err_aborted": "You aborted playback.",
+      "err_network": "A network error occurred.",
+      "err_decode": "Could not decode audio.",
+      "err_unsupported": "This audio format is not supported by your browser.",
+      "loading": "Loading..."
+    }
+  },
+  "play-pause": {
+    "play": "Play",
+    "pause": "Pause"
+  },
+  "dropdown-button": {
+    "aria": {
+      "arrow-label": "Dropdown"
+    }
   },
   "seo": {
     "titles": {

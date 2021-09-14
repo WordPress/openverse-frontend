@@ -8,6 +8,8 @@
 </template>
 
 <script>
+import { UPDATE_SEARCH_TYPE } from '~/store-modules/action-types'
+import { VIDEO } from '~/constants/media'
 export default {
   name: 'VideoSearch',
   head() {
@@ -17,6 +19,9 @@ export default {
         query: this.$store.state.query.q,
       }),
     }
+  },
+  async mounted() {
+    await this.$store.dispatch(UPDATE_SEARCH_TYPE, { searchType: VIDEO })
   },
 }
 </script>

@@ -8,6 +8,9 @@
 </template>
 
 <script>
+import { UPDATE_SEARCH_TYPE } from '~/store-modules/action-types'
+import { IMAGE } from '~/constants/media'
+
 export default {
   name: 'ImageSearch',
   head() {
@@ -18,9 +21,12 @@ export default {
       }),
     }
   },
+  async mounted() {
+    await this.$store.dispatch(UPDATE_SEARCH_TYPE, { searchType: IMAGE })
+  },
   methods: {
     onLoadMoreImages(searchParams) {
-      this.$emit('onLoadMoreImages', searchParams)
+      this.$emit('onLoadMoreItems', searchParams)
     },
   },
 }

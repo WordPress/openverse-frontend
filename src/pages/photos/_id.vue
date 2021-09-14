@@ -15,29 +15,29 @@
     <div class="p-4 my-6">
       <PhotoTags :tags="tags" :show-header="true" />
     </div>
-    <aside :aria-label="$t('photo-details.aria.related')" class="p-4 my-6">
-      <RelatedImages
-        :related-images="relatedImages"
-        :images-count="imagesCount"
-        :query="query"
-        :filter="filter"
-        :is-primary-image-loaded="isPrimaryImageLoaded"
-      />
-    </aside>
+    <RelatedImages
+      :related-images="relatedImages"
+      :images-count="relatedImagesCount"
+      :query="query"
+      :filter="filter"
+      :is-primary-image-loaded="isPrimaryImageLoaded"
+    />
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 import { mapActions, mapMutations, mapState } from 'vuex'
-import featureFlags from '~/featureFlags'
-import { FETCH_IMAGE, FETCH_RELATED_IMAGES } from '~/store-modules/action-types'
-import { SET_IMAGE, SET_RELATED_IMAGES } from '~/store-modules/mutation-types'
-import iframeHeight from '~/mixins/iframeHeight'
+import featureFlags from '~/feature-flags'
+import { FETCH_IMAGE, FETCH_RELATED_MEDIA } from '~/store-modules/action-types'
+import { SET_IMAGE, SET_RELATED_MEDIA } from '~/store-modules/mutation-types'
+import iframeHeight from '~/mixins/iframe-height'
+import i18nSync from '~/mixins/i18n-sync'
+import { IMAGE } from '~/constants/media'
 
 const PhotoDetailPage = {
   name: 'PhotoDetailPage',
-  mixins: [iframeHeight],
+  mixins: [iframeHeight, i18nSync],
   layout({ store }) {
     return store.state.isEmbedded
       ? 'embedded-with-nav-search'
@@ -53,7 +53,6 @@ const PhotoDetailPage = {
     return {
       breadCrumbURL: '',
       hasClarifaiTags: false,
-      imagecountseparator: 'of',
       isPrimaryImageLoaded: false,
       shouldShowBreadcrumb: false,
       imageWidth: 0,
@@ -75,14 +74,18 @@ const PhotoDetailPage = {
       return ''
     },
     ...mapState({
-      relatedImages: 'relatedImages',
       filter: 'query.filter',
       images: 'images',
-      imagesCount: 'imagesCount',
       query: 'query',
       tags: 'image.tags',
       image: 'image',
     }),
+    relatedImagesCount() {
+      return this.$store.state.related.images.length
+    },
+    relatedImages() {
+      return this.$store.state.related.images
+    },
   },
   head() {
     return {
@@ -114,17 +117,20 @@ const PhotoDetailPage = {
   },
   async fetch({ store, route, error, app }) {
     // Clear related images if present
-    if (store.state.relatedImages && store.state.relatedImages.length > 0) {
-      await store.dispatch(SET_RELATED_IMAGES, {
-        relatedImages: [],
-        relatedImageCount: 0,
+    if (store.state.related.images && store.state.related.images.length > 0) {
+      await store.dispatch(SET_RELATED_MEDIA, {
+        mediaType: IMAGE,
+        relatedMedia: [],
       })
     }
     try {
       // Load the image + related images in parallel
       await Promise.all([
         store.dispatch(FETCH_IMAGE, { id: route.params.id }),
-        store.dispatch(FETCH_RELATED_IMAGES, { id: route.params.id }),
+        store.dispatch(FETCH_RELATED_MEDIA, {
+          mediaType: IMAGE,
+          id: route.params.id,
+        }),
       ])
     } catch (err) {
       error({
@@ -142,8 +148,8 @@ const PhotoDetailPage = {
     })
   },
   methods: {
-    ...mapActions([FETCH_RELATED_IMAGES, FETCH_IMAGE]),
-    ...mapMutations([SET_IMAGE, SET_RELATED_IMAGES]),
+    ...mapActions([FETCH_RELATED_MEDIA, FETCH_IMAGE]),
+    ...mapMutations([SET_IMAGE]),
     onImageLoaded(event) {
       this.imageWidth = event.target.naturalWidth
       this.imageHeight = event.target.naturalHeight
@@ -154,7 +160,7 @@ const PhotoDetailPage = {
     },
     getRelatedImages() {
       if (this.image && this.image.id) {
-        this[FETCH_RELATED_IMAGES]({ id: this.image.id })
+        this[FETCH_RELATED_MEDIA]({ mediaType: IMAGE, id: this.image.id })
       }
     },
   },

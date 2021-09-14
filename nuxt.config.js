@@ -1,4 +1,5 @@
 import pkg from './package.json'
+import locales from './src/locales/scripts/valid-locales.json'
 
 /**
  * Default environment variables are set on this key. Defaults are fallbacks to existing env vars.
@@ -115,6 +116,7 @@ export default {
       '~/components/ContentReport',
       '~/components/Filters',
       '~/components/ImageDetails',
+      '~/components/MediaInfo',
       '~/components/MetaSearch',
     ],
   },
@@ -132,6 +134,7 @@ export default {
   env,
   dev: process.env.NODE_ENV !== 'production',
   buildModules: [
+    '@nuxtjs/composition-api/module',
     '@nuxtjs/tailwindcss',
     '@nuxtjs/style-resources',
     '@nuxtjs/svg',
@@ -150,17 +153,24 @@ export default {
     '@nuxtjs/i18n',
   ],
   i18n: {
-    locales: [{ code: 'en', iso: 'en', name: 'English', file: 'en.json' }],
+    locales: [
+      {
+        code: 'en',
+        name: 'English',
+        iso: 'en',
+        file: 'en.json',
+      },
+      ...(locales ?? []),
+    ],
     lazy: true,
     langDir: 'locales',
-    strategy: 'prefix_and_default',
+    strategy: 'no_prefix',
     defaultLocale: 'en',
     detectBrowserLanguage: {
       useCookie: true,
       cookieKey: 'i18n_redirected',
       alwaysRedirect: true,
     },
-    // TODO: change this to the production URL
     baseUrl: 'http://localhost:8443',
     vueI18n: '~/plugins/vue-i18n.js',
   },
@@ -173,5 +183,26 @@ export default {
   tailwindcss: {
     // https://github.com/nuxt-community/tailwindcss-module/issues/114#issuecomment-698885369
     configPath: '~~/tailwind.config.js',
+  },
+  storybook: {
+    port: 6006, // standard port for Storybook
+    stories: ['~/**/*.stories.@(mdx|js)'],
+    addons: [
+      {
+        name: '@storybook/addon-essentials',
+        options: {
+          backgrounds: false,
+          viewport: false,
+          toolbars: false,
+        },
+      },
+    ],
+    parameters: {
+      options: {
+        storySort: {
+          order: ['Introduction', ['Openverse UI']],
+        },
+      },
+    },
   },
 }

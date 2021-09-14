@@ -3,7 +3,7 @@
   <form
     role="search"
     method="post"
-    class="search-form p-4"
+    class="search-form p-4 z-30"
     @submit.prevent="onSubmit"
   >
     <button
@@ -61,13 +61,15 @@
 
 <script>
 import { SET_FILTER_IS_VISIBLE } from '~/store-modules/mutation-types'
+import { queryStringToSearchType } from '~/utils/search-query-transform'
+import { VIDEO } from '~/constants/media'
 
 export default {
   name: 'SearchGridForm',
   data: () => ({ searchTermsModel: null }),
   computed: {
     activeTab() {
-      return this.$route.path.split('search/')[1] || 'image'
+      return queryStringToSearchType(this.$route.path)
     },
     searchTerms() {
       return this.$store.state.query.q
@@ -76,11 +78,12 @@ export default {
       return this.$store.state.isFilterVisible
     },
     isFilterApplied() {
-      return this.$store.state.isFilterApplied
+      return this.$store.getters.isAnyFilterApplied
     },
     searchBoxPlaceholder() {
-      const type = this.$route.path.split('search/')[1] || 'image'
-      return `Search all ${type}s`
+      return this.$t('browse-page.search-form.placeholder', {
+        type: this.$t(`browse-page.search-form.${this.activeTab}`),
+      })
     },
   },
   watch: {
@@ -103,8 +106,7 @@ export default {
     },
     onInput(e) {
       this.searchTermsModel = e.target.value
-
-      if (this.activeTab === 'video' || this.activeTab === 'audio') {
+      if (this.activeTab === VIDEO) {
         this.$emit('onSearchFormSubmit', {
           query: { q: this.searchTermsModel },
         })
@@ -145,7 +147,6 @@ export default {
   top: 0;
   position: sticky;
   background-color: white;
-  z-index: 10;
   display: flex;
 }
 

@@ -91,7 +91,7 @@
       <p class="my-2">
         {{ $t('meta-search-page.why.new') }}
       </p>
-      <i18n path="meta-search-page.why.feedback" tag="p">
+      <i18n path="meta-search-page.why.feedback-suggestions" tag="p">
         <template #feedback>
           <NuxtLink
             :aria-label="$t('meta-search-page.why.aria-label')"
@@ -106,11 +106,12 @@
 
 <script>
 import { mapState } from 'vuex'
-import iframeHeight from '~/mixins/iframeHeight'
+import iframeHeight from '~/mixins/iframe-height'
+import i18nSync from '~/mixins/i18n-sync'
 
 export default {
   name: 'MetaSearchPage',
-  mixins: [iframeHeight],
+  mixins: [iframeHeight, i18nSync],
   layout({ store }) {
     return store.state.isEmbedded
       ? 'embedded-with-nav-search'

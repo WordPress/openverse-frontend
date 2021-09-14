@@ -4,16 +4,17 @@
 
 <script>
 import { CLEAR_FILTERS } from '~/store-modules/mutation-types'
-import iframeHeight from '~/mixins/iframeHeight'
+import iframeHeight from '~/mixins/iframe-height'
+import i18nSync from '~/mixins/i18n-sync'
 
 const HomePage = {
   name: 'home-page',
-  mixins: [iframeHeight],
   head() {
     return {
       title: this.$t('seo.titles.default'),
     }
   },
+  mixins: [iframeHeight, i18nSync],
   layout({ store }) {
     return store.state.isEmbedded ? 'embedded' : 'default'
   },

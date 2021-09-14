@@ -1,13 +1,16 @@
 <template>
   <SearchGrid
-    id="tab-image"
+    id="tab-all"
     role="tabpanel"
-    aria-labelledby="image"
+    aria-labelledby="all"
     @onLoadMoreImages="onLoadMoreImages"
   />
 </template>
 
 <script>
+import { UPDATE_SEARCH_TYPE } from '~/store-modules/action-types'
+import { ALL_MEDIA } from '~/constants/media'
+
 export default {
   name: 'SearchIndex',
   head() {
@@ -18,9 +21,12 @@ export default {
       }),
     }
   },
+  async mounted() {
+    await this.$store.dispatch(UPDATE_SEARCH_TYPE, { searchType: ALL_MEDIA })
+  },
   methods: {
     onLoadMoreImages(searchParams) {
-      this.$emit('onLoadMoreImages', searchParams)
+      this.$emit('onLoadMoreItems', searchParams)
     },
   },
 }

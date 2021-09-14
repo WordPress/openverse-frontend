@@ -82,7 +82,7 @@
         </template>
       </i18n>
       <table
-        :aria-label="$t('about.aria.sources')"
+        :aria-label="$t('about.aria.sources-table')"
         role="region"
         class="table is-striped mt-4 mb-10"
       >
@@ -114,18 +114,12 @@
         <tbody>
           <tr v-for="(imageProvider, index) in sortedProviders" :key="index">
             <td class="bold-cell">
-              <a
-                :aria-label="imageProvider.display_name"
-                :href="`/search?source=${imageProvider.source_name}`"
-              >
+              <a :href="`/search?source=${imageProvider.source_name}`">
                 {{ imageProvider.display_name }}
               </a>
             </td>
             <td class="bold-cell">
-              <a
-                :aria-label="imageProvider.display_name"
-                :href="imageProvider.source_url"
-              >
+              <a :href="imageProvider.source_url">
                 {{ imageProvider.source_url }}
               </a>
             </td>
@@ -142,11 +136,12 @@
 <script>
 import sortBy from 'lodash.sortby'
 import { mapState } from 'vuex'
-import iframeHeight from '~/mixins/iframeHeight'
+import iframeHeight from '~/mixins/iframe-height'
+import i18nSync from '~/mixins/i18n-sync'
 
 const SourcePage = {
   name: 'source-page',
-  mixins: [iframeHeight],
+  mixins: [iframeHeight, i18nSync],
   layout({ store }) {
     return store.state.isEmbedded
       ? 'embedded-with-nav-search'
