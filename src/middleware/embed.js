@@ -1,4 +1,4 @@
-import { SET_EMBEDDED } from '~/store-modules/mutation-types'
+import { SET_EMBEDDED } from '~/constants/mutation-types'
 import { sendWindowMessage } from '~/utils/send-message'
 import config from '../../nuxt.config.js'
 

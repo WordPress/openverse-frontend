@@ -29,17 +29,18 @@
 import axios from 'axios'
 import { mapActions, mapMutations, mapState } from 'vuex'
 import featureFlags from '~/feature-flags'
-import { FETCH_IMAGE, FETCH_RELATED_MEDIA } from '~/store-modules/action-types'
-import { SET_IMAGE, SET_RELATED_MEDIA } from '~/store-modules/mutation-types'
+import { FETCH_IMAGE, FETCH_RELATED_MEDIA } from '~/constants/action-types'
+import { SET_IMAGE, SET_RELATED_MEDIA } from '~/constants/mutation-types'
 import iframeHeight from '~/mixins/iframe-height'
 import i18nSync from '~/mixins/i18n-sync'
 import { IMAGE } from '~/constants/media'
+import { RELATED, SEARCH } from '~/constants/store-modules'
 
 const PhotoDetailPage = {
   name: 'PhotoDetailPage',
   mixins: [iframeHeight, i18nSync],
   layout({ store }) {
-    return store.state.isEmbedded
+    return store.state.nav.isEmbedded
       ? 'embedded-with-nav-search'
       : 'with-nav-search'
   },
@@ -62,19 +63,17 @@ const PhotoDetailPage = {
     }
   },
   computed: {
-    ...mapState({
-      filter: 'query.filter',
-      images: 'images',
-      query: 'query',
-      tags: 'image.tags',
-      image: 'image',
+    ...mapState('search', {
+      filter: (state) => state.query.filter,
+      images: (state) => state.images,
+      query: (state) => state.query,
+      tags: (state) => state.image.tags,
+      image: (state) => state.image,
     }),
-    relatedImagesCount() {
-      return this.$store.state.related.images.length
-    },
-    relatedImages() {
-      return this.$store.state.related.images
-    },
+    ...mapState('related', {
+      relatedImagesCount: (state) => state.images.length,
+      relatedImages: (state) => state.images,
+    }),
   },
   watch: {
     image() {
@@ -87,7 +86,7 @@ const PhotoDetailPage = {
   async fetch({ store, route, error, app }) {
     // Clear related images if present
     if (store.state.related.images && store.state.related.images.length > 0) {
-      await store.dispatch(SET_RELATED_MEDIA, {
+      await store.dispatch(`${RELATED}/${SET_RELATED_MEDIA}`, {
         mediaType: IMAGE,
         relatedMedia: [],
       })
@@ -95,8 +94,8 @@ const PhotoDetailPage = {
     try {
       // Load the image + related images in parallel
       await Promise.all([
-        store.dispatch(FETCH_IMAGE, { id: route.params.id }),
-        store.dispatch(FETCH_RELATED_MEDIA, {
+        store.dispatch(`${SEARCH}/${FETCH_IMAGE}`, { id: route.params.id }),
+        store.dispatch(`${RELATED}/${FETCH_RELATED_MEDIA}`, {
           mediaType: IMAGE,
           id: route.params.id,
         }),
@@ -117,8 +116,9 @@ const PhotoDetailPage = {
     })
   },
   methods: {
-    ...mapActions([FETCH_RELATED_MEDIA, FETCH_IMAGE]),
-    ...mapMutations([SET_IMAGE]),
+    ...mapActions('related', [FETCH_RELATED_MEDIA]),
+    ...mapActions('search', [FETCH_IMAGE]),
+    ...mapMutations('search', [SET_IMAGE]),
     onImageLoaded(event) {
       this.imageWidth = event.target.naturalWidth
       this.imageHeight = event.target.naturalHeight

@@ -60,9 +60,10 @@
 </template>
 
 <script>
-import { SET_FILTER_IS_VISIBLE } from '~/store-modules/mutation-types'
+import { SET_FILTER_IS_VISIBLE } from '~/constants/mutation-types'
 import { queryStringToSearchType } from '~/utils/search-query-transform'
 import { VIDEO } from '~/constants/media'
+import { FILTER } from '~/constants/store-modules'
 
 export default {
   name: 'SearchGridForm',
@@ -72,13 +73,10 @@ export default {
       return queryStringToSearchType(this.$route.path)
     },
     searchTerms() {
-      return this.$store.state.query.q
+      return this.$store.state.search.query.q
     },
     isFilterVisible() {
-      return this.$store.state.isFilterVisible
-    },
-    isFilterApplied() {
-      return this.$store.getters.isAnyFilterApplied
+      return this.$store.state.filter.visible
     },
     searchBoxPlaceholder() {
       return this.$t('browse-page.search-form.placeholder', {
@@ -113,7 +111,7 @@ export default {
       }
     },
     onToggleSearchGridFilter() {
-      this.$store.commit(SET_FILTER_IS_VISIBLE, {
+      this.$store.commit(`${FILTER}/${SET_FILTER_IS_VISIBLE}`, {
         isFilterVisible: !this.isFilterVisible,
       })
     },

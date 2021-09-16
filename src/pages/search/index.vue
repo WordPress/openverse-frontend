@@ -8,13 +8,16 @@
 </template>
 
 <script>
-import { UPDATE_SEARCH_TYPE } from '~/store-modules/action-types'
+import { UPDATE_SEARCH_TYPE } from '~/constants/action-types'
 import { ALL_MEDIA } from '~/constants/media'
+import { SEARCH } from '~/constants/store-modules'
 
 export default {
   name: 'SearchIndex',
   async mounted() {
-    await this.$store.dispatch(UPDATE_SEARCH_TYPE, { searchType: ALL_MEDIA })
+    await this.$store.dispatch(`${SEARCH}/${UPDATE_SEARCH_TYPE}`, {
+      searchType: ALL_MEDIA,
+    })
   },
   methods: {
     onLoadMoreImages(searchParams) {

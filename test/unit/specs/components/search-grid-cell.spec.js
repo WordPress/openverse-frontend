@@ -14,7 +14,7 @@ describe('SearchGridCell', () => {
   }
   const options = {
     propsData: props,
-    stubs: { RouterLink: true },
+    stubs: { RouterLink: true, NuxtLink: true },
   }
 
   it('should render correct contents', () => {

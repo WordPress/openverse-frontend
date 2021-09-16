@@ -19,7 +19,7 @@ export default {
   }),
   computed: {
     query() {
-      return this.$store.state.query
+      return this.$store.state.search.query
     },
   },
   mounted() {
@@ -33,8 +33,7 @@ export default {
       this.$emit('onLoadMoreImages', searchParams)
     },
     checkScrollLength() {
-      if (window.scrollY > 70) this.showScrollButton = true
-      else this.showScrollButton = false
+      this.showScrollButton = window.scrollY > 70
     },
   },
 }

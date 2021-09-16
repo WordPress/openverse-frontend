@@ -85,7 +85,7 @@ const AboutPage = {
   components: { ExtensionBrowsers },
   mixins: [iframeHeight, i18nSync],
   layout({ store }) {
-    return store.state.isEmbedded
+    return store.state.nav.isEmbedded
       ? 'embedded-with-nav-search'
       : 'with-nav-search'
   },

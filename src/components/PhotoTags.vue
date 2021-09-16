@@ -19,7 +19,8 @@
 </template>
 
 <script>
-import { SET_QUERY } from '~/store-modules/mutation-types'
+import { SET_QUERY } from '~/constants/mutation-types'
+import { SEARCH } from '~/constants/store-modules'
 
 export default {
   name: 'PhotoTags',
@@ -34,7 +35,7 @@ export default {
       return provider === 'clarifai'
     },
     searchByTagName(query) {
-      this.$store.commit(SET_QUERY, { query: { q: query } })
+      this.$store.commit(`${SEARCH}/${SET_QUERY}`, { query: { q: query } })
     },
     getValidTags() {
       return this.$props.tags.filter((tag) => !!tag.name)

@@ -41,7 +41,9 @@
 
 <script>
 import { FocusTrap } from 'focus-trap-vue'
-import { TOGGLE_FILTER } from '~/store-modules/action-types'
+import { TOGGLE_FILTER } from '~/constants/action-types'
+import { FILTER } from '~/constants/store-modules'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'SaferBrowsing',
@@ -55,10 +57,11 @@ export default {
   },
   computed: {
     mature() {
-      return this.$store.state.filters.mature
+      return this.$store.state.filter.filters.mature
     },
   },
   methods: {
+    ...mapActions({ toggleFilter: `${FILTER}/${TOGGLE_FILTER}` }),
     toggleShowForm() {
       this.showForm = !this.showForm
     },
@@ -66,7 +69,7 @@ export default {
       this.showForm = false
     },
     toggleMature() {
-      this.$store.dispatch(TOGGLE_FILTER, { filterType: 'mature' })
+      this.toggleFilter({ filterType: 'mature' })
     },
   },
 }

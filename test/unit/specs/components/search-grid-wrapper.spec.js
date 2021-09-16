@@ -6,7 +6,7 @@ const options = {
     ScrollButton: true,
     SearchGridManualLoad: true,
   },
-  mocks: { $store: { state: { query: { q: 'foo' } } } },
+  mocks: { $store: { state: { search: { query: { q: 'foo' } } } } },
 }
 
 describe('Search Grid Wrapper', () => {

@@ -2,7 +2,7 @@
   <FiltersList
     :class="{
       'search-filters': true,
-      'search-filters__visible': isFilterVisible,
+      visible: isFilterVisible,
     }"
     @onUpdateFilter="onUpdateFilter"
     @onToggleSearchGridFilter="onToggleSearchGridFilter"
@@ -11,21 +11,18 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import {
-  SET_FILTER_IS_VISIBLE,
-  CLEAR_FILTERS,
-} from '~/store-modules/mutation-types'
-import { TOGGLE_FILTER } from '~/store-modules/action-types'
-import FiltersList from './FiltersList'
+import { mapActions, mapMutations, mapState } from 'vuex'
+import { SET_FILTER_IS_VISIBLE } from '~/constants/mutation-types'
+import { TOGGLE_FILTER, RESET_FILTERS } from '~/constants/action-types'
+import { FILTER } from '~/constants/store-modules'
 
 export default {
   name: 'SearchGridFilter',
-  components: {
-    FiltersList,
-  },
   computed: {
-    ...mapState(['filters', 'isFilterVisible']),
+    ...mapState({
+      filters: (state) => state.filter.filters,
+      isFilterVisible: (state) => state.filter.visible,
+    }),
     /**
      * Show filters expanded by default
      * @todo: The A/B test is over and we're going with the expanded view. Can remove a lot of this old test logic
@@ -36,17 +33,21 @@ export default {
     },
   },
   methods: {
+    ...mapActions({
+      toggleFilter: `${FILTER}/${TOGGLE_FILTER}`,
+      resetFilters: `${FILTER}/${RESET_FILTERS}`,
+    }),
+    ...mapMutations({
+      setFilterVisible: `${FILTER}/${SET_FILTER_IS_VISIBLE}`,
+    }),
     onUpdateFilter({ code, filterType }) {
-      this.$store.dispatch(TOGGLE_FILTER, {
-        code,
-        filterType,
-      })
+      this.toggleFilter({ code, filterType })
     },
     onClearFilters() {
-      this.$store.commit(CLEAR_FILTERS, {})
+      this.resetFilters()
     },
     onToggleSearchGridFilter() {
-      this.$store.commit(SET_FILTER_IS_VISIBLE, {
+      this.setFilterVisible({
         isFilterVisible: !this.isFilterVisible,
       })
     },
@@ -73,7 +74,7 @@ export default {
   }
 }
 
-.search-filters__visible {
+.search-filters.visible {
   display: block;
 }
 </style>

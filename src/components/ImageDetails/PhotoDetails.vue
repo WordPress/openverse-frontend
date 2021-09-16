@@ -184,13 +184,14 @@
 </template>
 
 <script>
-import { TOGGLE_REPORT_FORM_VISIBILITY } from '~/store-modules/mutation-types'
+import { TOGGLE_REPORT_FORM_VISIBILITY } from '~/constants/mutation-types'
 import {
   SEND_DETAIL_PAGE_EVENT,
   DETAIL_PAGE_EVENTS,
-} from '~/store-modules/usage-data-analytics-types'
+} from '~/store/usage-data-analytics-types'
 import attributionHtml from '~/utils/attribution-html'
 import { getFullLicenseName } from '~/utils/license'
+import { REPORT_CONTENT, USAGE_DATA } from '~/constants/store-modules'
 
 export default {
   name: 'PhotoDetails',
@@ -228,7 +229,7 @@ export default {
         .split('/')[0]
     },
     isReportFormVisible() {
-      return this.$store.state.isReportFormVisible
+      return this.$store.state['report-content/isReportFormVisible']
     },
     fullLicenseName() {
       return this.image
@@ -260,16 +261,16 @@ export default {
       return attributionHtml(this.image, licenseURL, this.fullLicenseName)
     },
     toggleReportFormVisibility() {
-      this.$store.commit(TOGGLE_REPORT_FORM_VISIBILITY)
+      this.$store.commit(`${REPORT_CONTENT}/${TOGGLE_REPORT_FORM_VISIBILITY}`)
     },
     onPhotoSourceLinkClicked() {
-      this.$store.dispatch(SEND_DETAIL_PAGE_EVENT, {
+      this.$store.dispatch(`${USAGE_DATA}/${SEND_DETAIL_PAGE_EVENT}`, {
         eventType: DETAIL_PAGE_EVENTS.SOURCE_CLICKED,
         resultUuid: this.$props.image.id,
       })
     },
     onPhotoCreatorLinkClicked() {
-      this.$store.dispatch(SEND_DETAIL_PAGE_EVENT, {
+      this.$store.dispatch(`${USAGE_DATA}/${SEND_DETAIL_PAGE_EVENT}`, {
         eventType: DETAIL_PAGE_EVENTS.CREATOR_CLICKED,
         resultUuid: this.$props.image.id,
       })

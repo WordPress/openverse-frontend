@@ -1,5 +1,7 @@
 import SearchGrid from '~/components/SearchGridManualLoad'
 import render from '../../test-utils/render'
+import { SEARCH } from '~/constants/store-modules'
+import { SET_MEDIA } from '~/constants/mutation-types'
 describe('SearchGrid', () => {
   let options = {}
   let commitMock = null
@@ -11,6 +13,7 @@ describe('SearchGrid', () => {
         SearchRating: true,
         SaferBrowsing: true,
         LoadingIcon: true,
+        MetaSearchForm: true,
       },
       propsData: {
         query: { q: 'foo' },
@@ -19,17 +22,19 @@ describe('SearchGrid', () => {
       mocks: {
         $store: {
           state: {
-            isFetching: {
-              images: false,
+            search: {
+              isFetching: {
+                images: false,
+              },
+              isFetchingError: {
+                images: false,
+              },
+              pageCount: {
+                images: 5,
+              },
+              imagesCount: 100,
+              imagePage: 1,
             },
-            isFetchingError: {
-              images: false,
-            },
-            pageCount: {
-              images: 5,
-            },
-            imagesCount: 100,
-            imagePage: 1,
           },
           commit: commitMock,
         },
@@ -49,13 +54,13 @@ describe('SearchGrid', () => {
   })
 
   it("doesn't render load more button if is loading images", () => {
-    options.mocks.$store.state.isFetching.images = true
+    options.mocks.$store.state.search.isFetching.images = true
     const wrapper = render(SearchGrid, options)
     expect(wrapper.find('.load-more').vm).not.toBeDefined()
   })
 
   it('shows loading icon if is loading images', () => {
-    options.mocks.$store.state.isFetching.images = true
+    options.mocks.$store.state.search.isFetching.images = true
 
     const wrapper = render(SearchGrid, options)
     expect(wrapper.findComponent({ name: 'LoadingIcon' })).toBeDefined()
@@ -79,7 +84,7 @@ describe('SearchGrid', () => {
     const wrapper = render(SearchGrid, options)
     wrapper.vm.searchChanged()
 
-    expect(commitMock).toHaveBeenCalledWith('SET_MEDIA', {
+    expect(commitMock).toHaveBeenCalledWith(`${SEARCH}/${SET_MEDIA}`, {
       media: [],
       page: 1,
     })

@@ -3,15 +3,18 @@ import isEmpty from 'lodash.isempty'
 import findIndex from 'lodash.findindex'
 import prepareSearchQueryParams from '~/utils/prepare-search-query-params'
 import decodeMediaData from '~/utils/decode-media-data'
+import AudioService from '~/data/audio-service'
+import ImageService from '~/data/image-service'
 import {
-  FETCH_MEDIA,
-  FETCH_IMAGE,
   FETCH_COLLECTION_IMAGES,
-  HANDLE_NO_MEDIA,
+  FETCH_IMAGE,
+  FETCH_MEDIA,
   HANDLE_MEDIA_ERROR,
-  UPDATE_SEARCH_TYPE,
+  HANDLE_NO_MEDIA,
+  SET_QUERY_FROM_FILTERS_DATA,
   SET_SEARCH_TYPE_FROM_URL,
-} from './action-types'
+  UPDATE_SEARCH_TYPE,
+} from '~/constants/action-types'
 import {
   FETCH_END_MEDIA,
   FETCH_MEDIA_ERROR,
@@ -24,12 +27,15 @@ import {
   SET_QUERY,
   SET_SEARCH_TYPE,
   UPDATE_FILTERS,
-} from './mutation-types'
+} from '~/constants/mutation-types'
 import {
-  SEND_SEARCH_QUERY_EVENT,
   SEND_RESULT_CLICKED_EVENT,
-} from './usage-data-analytics-types'
-import { queryStringToSearchType } from '~/utils/search-query-transform'
+  SEND_SEARCH_QUERY_EVENT,
+} from '~/store/usage-data-analytics-types'
+import {
+  filtersToQueryData,
+  queryStringToSearchType,
+} from '~/utils/search-query-transform'
 import { ALL_MEDIA, AUDIO, IMAGE } from '~/constants/media'
 
 // const getSearchPath = () =>
@@ -108,17 +114,9 @@ const handleSearchResponse = async (
   return dispatch(HANDLE_NO_MEDIA, mediaType)
 }
 
-/**
- * @type {{ audios: import('./types').AudioDetail[],
- * audiosCount: number, audioPage:number,
- * images: import('./types').ImageDetail[],
- * imagePage: number, imagesCount: number, query: {},
- * pageCount: {images: number, audios: number},
- * isFetching: {images: boolean, audios: boolean},
- * isFetchingError: {images: boolean, audios: boolean},
- * errorMessage: null, searchType: string, }}
- */
-const state = {
+export const state = () => ({
+  image: {},
+  audio: {},
   audios: [],
   audiosCount: 0,
   audioPage: 1,
@@ -140,34 +138,34 @@ const state = {
   errorMessage: null,
   searchType: ALL_MEDIA,
   query: {},
-}
+})
 
-/**
- * @param {Object} AudioService
- * @param {Object} ImageService
- */
-const actions = (AudioService, ImageService) => ({
+const services = {
+  AUDIO: AudioService,
+  IMAGE: ImageService,
+}
+export const actionsCreator = (services) => ({
   [FETCH_MEDIA]({ commit, dispatch, state }, params) {
     // does not send event if user is paginating for more results
     const { page, mediaType, q } = params
     if (!page) {
-      dispatch(SEND_SEARCH_QUERY_EVENT, {
-        query: q,
-        sessionId: state.usageSessionId,
-      })
+      dispatch(
+        `usage-data/${SEND_SEARCH_QUERY_EVENT}`,
+        {
+          query: q,
+          sessionId: state.usageSessionId,
+        },
+        { root: true }
+      )
     }
 
     commit(FETCH_START_MEDIA, { mediaType })
     hideSearchResultsOnNewSearch(commit, page)
     const queryParams = prepareSearchQueryParams(params)
-    let service
-    if (mediaType === IMAGE) {
-      service = ImageService
-    } else if (mediaType === AUDIO) {
-      service = AudioService
-    } else {
-      throw new Error(`Cannot fetch unknown media type "${mediaType}"`)
+    if (!Object.keys(services).includes(mediaType)) {
+      throw new Error(`Unsupported media type ${mediaType} for fetch_media`)
     }
+    const service = services[mediaType]
     return service
       .search(queryParams)
       .then(
@@ -180,16 +178,20 @@ const actions = (AudioService, ImageService) => ({
   },
   // eslint-disable-next-line no-unused-vars
   [FETCH_IMAGE]({ commit, dispatch, state }, params) {
-    dispatch(SEND_RESULT_CLICKED_EVENT, {
-      query: state.query.q,
-      resultUuid: params.id,
-      resultRank: findIndex(state.images, (img) => img.id === params.id),
-      sessionId: state.usageSessionId,
-    })
+    dispatch(
+      `usage-data/${SEND_RESULT_CLICKED_EVENT}`,
+      {
+        query: state.query.q,
+        resultUuid: params.id,
+        resultRank: findIndex(state.images, (img) => img.id === params.id),
+        sessionId: state.usageSessionId,
+      },
+      { root: true }
+    )
 
     commit(FETCH_START_MEDIA, { mediaType: IMAGE })
     commit(SET_IMAGE, { image: {} })
-    return ImageService.getMediaDetail(params)
+    return services[IMAGE].getMediaDetail(params)
       .then(({ data }) => {
         commit(FETCH_END_MEDIA, { mediaType: IMAGE })
         commit(SET_IMAGE, { image: data })
@@ -204,7 +206,7 @@ const actions = (AudioService, ImageService) => ({
   },
   [FETCH_COLLECTION_IMAGES]({ commit, dispatch }, params) {
     commit(FETCH_START_MEDIA, { mediaType: IMAGE })
-    return fetchCollectionImages(commit, params, ImageService)
+    return fetchCollectionImages(commit, params, services[IMAGE])
       .then(
         async ({ data }) =>
           await handleSearchResponse(commit, dispatch, data, params)
@@ -233,28 +235,24 @@ const actions = (AudioService, ImageService) => ({
       })
     }
   },
-  [SET_SEARCH_TYPE_FROM_URL]({ commit }, params) {
+  [SET_SEARCH_TYPE_FROM_URL]({ commit, dispatch }, params) {
     commit(SET_SEARCH_TYPE, { searchType: queryStringToSearchType(params.url) })
-    commit(UPDATE_FILTERS)
+    dispatch(`filter/${UPDATE_FILTERS}`, {}, { root: true })
   },
-  [UPDATE_SEARCH_TYPE]({ commit }, params) {
+  [UPDATE_SEARCH_TYPE]({ commit, dispatch }, params) {
     commit(SET_SEARCH_TYPE, { searchType: params.searchType })
-    commit(UPDATE_FILTERS)
+    dispatch(`filter/${UPDATE_FILTERS}`, {}, { root: true })
+  },
+  [SET_QUERY_FROM_FILTERS_DATA]({ commit, state }, params) {
+    const { filters } = params
+    const filtersQuery = filtersToQueryData(filters, state.searchType)
+    commit(SET_QUERY, { query: filtersQuery })
   },
 })
 
-function setQuery(_state, params) {
-  const query = Object.assign({}, _state.query, params.query)
-  _state.query = query
-  _state.images = []
-
-  // if (params.shouldNavigate === true) {
-  //   redirect({ path, query })
-  // }
-}
-
+export const actions = actionsCreator(services)
 /* eslint no-param-reassign: ["error", { "props": false }] */
-const mutations = {
+export const mutations = {
   [FETCH_START_MEDIA](_state, { mediaType }) {
     if (mediaType === IMAGE) {
       _state.isFetching.images = true
@@ -322,8 +320,17 @@ const mutations = {
   },
 }
 
+function setQuery(_state, params) {
+  _state.query = Object.assign({}, _state.query, params.query)
+  _state.images = []
+
+  // if (params.shouldNavigate === true) {
+  //   redirect({ path, query })
+  // }
+}
+
 export default {
   state,
-  actions,
   mutations,
+  actions,
 }

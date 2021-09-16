@@ -1,5 +1,7 @@
 import FilterChecklist from '~/components/Filters/FilterChecklist'
 import render from '../../test-utils/render'
+import { state as filterState } from '~/store/filter'
+// `search/${SET_QUERY}`
 
 describe('FilterChecklist', () => {
   let options = {}
@@ -14,7 +16,7 @@ describe('FilterChecklist', () => {
     }
     options = {
       propsData: props,
-      mocks: { $store: { state: {} } },
+      mocks: { $store: { state: { filter: filterState() } } },
     }
   })
 

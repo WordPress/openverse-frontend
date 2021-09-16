@@ -2,6 +2,34 @@ import render from '../../test-utils/render'
 import FilterDisplay from '~/components/Filters/FilterDisplay'
 import FilterTag from '~/components/Filters/FilterTag'
 
+import Vuex from 'vuex'
+const testStore = new Vuex.Store({
+  modules: {
+    filter: {
+      namespaced: true,
+      state: () => {},
+      getters: {
+        isAnyFilterApplied: () => true,
+        appliedFilterTags: () => [
+          {
+            code: 'cc0',
+            filterType: 'license',
+            name: 'filters.licenses.cc0',
+          },
+        ],
+      },
+      dispatch: jest.fn(),
+    },
+    search: {
+      namespaced: true,
+      query: {
+        q: 'foo',
+        provider: 'foo',
+      },
+    },
+  },
+})
+
 describe('FilterDisplay', () => {
   let options = null
   let filters = null
@@ -19,26 +47,7 @@ describe('FilterDisplay', () => {
     }
     options = {
       mocks: {
-        $store: {
-          state: {
-            query: {
-              q: 'foo',
-              provider: 'foo',
-            },
-            filters,
-          },
-          dispatch: jest.fn(),
-          getters: {
-            isAnyFilterApplied: true,
-            appliedFilterTags: [
-              {
-                code: 'cc0',
-                filterType: 'license',
-                name: 'filters.licenses.cc0',
-              },
-            ],
-          },
-        },
+        $store: testStore,
       },
     }
   })

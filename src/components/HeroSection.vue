@@ -59,16 +59,17 @@
 </template>
 
 <script>
-import { SET_QUERY } from '~/store-modules/mutation-types'
+import { SET_QUERY } from '~/constants/mutation-types'
 import { filtersToQueryData } from '~/utils/search-query-transform'
 import { mapState } from 'vuex'
 import { ALL_MEDIA } from '~/constants/media'
+import { SEARCH } from '~/constants/store-modules'
 
 export default {
   name: 'HeroSection',
   data: () => ({ form: { searchTerm: '' } }),
   computed: {
-    ...mapState(['isEmbedded']),
+    ...mapState({ isEmbedded: (state) => state.nav.isEmbedded }),
   },
   mounted() {
     if (document.querySelector('#searchTerm')) {
@@ -77,12 +78,14 @@ export default {
   },
   methods: {
     onSubmit() {
-      this.$store.commit(SET_QUERY, { query: { q: this.form.searchTerm } })
+      this.$store.commit(`${SEARCH}/${SET_QUERY}`, {
+        query: { q: this.form.searchTerm },
+      })
       const newPath = this.localePath({
         path: '/search',
         query: {
           q: this.form.searchTerm,
-          ...filtersToQueryData(this.$store.state.filters, ALL_MEDIA),
+          ...filtersToQueryData(this.$store.state.filter.filters, ALL_MEDIA),
         },
       })
       this.$router.push(newPath)

@@ -22,38 +22,36 @@
   </div>
 </template>
 <script>
-import {
-  FETCH_MEDIA,
-  SET_SEARCH_TYPE_FROM_URL,
-} from '~/store-modules/action-types'
+import { FETCH_MEDIA, SET_SEARCH_TYPE_FROM_URL } from '~/constants/action-types'
 import {
   SET_QUERY,
   SET_FILTER_IS_VISIBLE,
   SET_FILTERS_FROM_URL,
-} from '~/store-modules/mutation-types'
+} from '~/constants/mutation-types'
 import { queryStringToQueryData } from '~/utils/search-query-transform'
 import local from '~/utils/local'
 import { screenWidth } from '~/utils/get-browser-info'
 import iframeHeight from '~/mixins/iframe-height'
 import i18nSync from '~/mixins/i18n-sync'
 import { ALL_MEDIA, IMAGE } from '~/constants/media'
+import { mapActions, mapMutations } from 'vuex'
+import { FILTER, SEARCH } from '~/constants/store-modules'
 
 const BrowsePage = {
   name: 'browse-page',
   mixins: [iframeHeight, i18nSync],
   layout({ store }) {
-    return store.state.isEmbedded ? 'embedded' : 'default'
+    return store.state.nav.isEmbedded ? 'embedded' : 'default'
   },
   scrollToTop: false,
   async fetch() {
+    const url = this.$route.fullPath
     if (process.server) {
-      const query = queryStringToQueryData(this.$route.fullPath)
-      this.$store.commit(SET_QUERY, { query })
+      const query = queryStringToQueryData(url)
+      this.setQuery({ query })
     }
-    await this.$store.dispatch(SET_SEARCH_TYPE_FROM_URL, {
-      url: this.$route.fullPath,
-    })
-    this.$store.commit(SET_FILTERS_FROM_URL, { url: this.$route.fullPath })
+    await this.setSearchTypeFromUrl({ url })
+    await this.setFiltersFromUrl({ url })
   },
   mounted() {
     const localFilterState = () =>
@@ -64,37 +62,45 @@ const BrowsePage = {
     const MIN_SCREEN_WIDTH_FILTER_VISIBLE_BY_DEFAULT = 800
     const isDesktop = () =>
       screenWidth() > MIN_SCREEN_WIDTH_FILTER_VISIBLE_BY_DEFAULT
-
-    this.$store.commit(SET_FILTER_IS_VISIBLE, {
+    this.setFilterVisibility({
       isFilterVisible: isDesktop() ? localFilterState() : false,
     })
   },
   computed: {
     query() {
-      return this.$store.state.query
+      return this.$store.state.search.query
     },
     isFilterVisible() {
-      return this.$store.state.isFilterVisible
+      return this.$store.state.filter.visible
     },
     mediaType() {
       // Default to IMAGE until media search/index is generalized
-      return this.$store.state.searchType != ALL_MEDIA
+      return this.$store.state.searchType !== ALL_MEDIA
         ? this.$store.state.searchType
         : IMAGE
     },
   },
   methods: {
+    ...mapActions({
+      fetchMedia: `${SEARCH}/${FETCH_MEDIA}`,
+      setSearchTypeFromUrl: `${SEARCH}/${SET_SEARCH_TYPE_FROM_URL}`,
+      setFiltersFromUrl: `${FILTER}/${SET_FILTERS_FROM_URL}`,
+    }),
+    ...mapMutations({
+      setQuery: `${SEARCH}/${SET_QUERY}`,
+      setFilterVisibility: `${FILTER}/${SET_FILTER_IS_VISIBLE}`,
+    }),
     getMediaItems(params, mediaType) {
-      this.$store.dispatch(FETCH_MEDIA, { ...params, mediaType })
+      this.fetchMedia({ ...params, mediaType })
     },
     onLoadMoreItems(searchParams) {
       this.getMediaItems(searchParams, this.mediaType)
     },
     onSearchFormSubmit(searchParams) {
-      this.$store.commit(SET_QUERY, searchParams)
+      this.setQuery(searchParams)
     },
     onToggleSearchGridFilter() {
-      this.$store.commit(SET_FILTER_IS_VISIBLE, {
+      this.setFilterVisibility({
         isFilterVisible: !this.isFilterVisible,
       })
     },
@@ -109,7 +115,7 @@ const BrowsePage = {
       if (newQuery) {
         const newPath = this.localePath({
           path: this.$route.path,
-          query: this.$store.state.query,
+          query: this.$store.state.search.query,
         })
         this.$router.push(newPath)
         this.getMediaItems(newQuery, this.mediaType)

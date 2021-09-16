@@ -1,14 +1,16 @@
-import store from '~/store-modules/attribution-store'
+import { actionsCreator } from '~/store/attribution'
 import { CopyAttribution } from '~/analytics/events'
 
 describe('Attribution Store', () => {
   describe('actions', () => {
     let gaInstance = null
     let googleAnalyticsMock = null
+    let actions = null
 
     beforeEach(() => {
       gaInstance = { sendEvent: jest.fn() }
       googleAnalyticsMock = jest.fn(() => gaInstance)
+      actions = actionsCreator(googleAnalyticsMock)
     })
 
     it('COPY_ATTRIBUTION sends copy event', () => {
@@ -16,7 +18,7 @@ describe('Attribution Store', () => {
         type: 'HTML Whatever',
         content: '<div>foo</div>',
       }
-      store.actions(googleAnalyticsMock).COPY_ATTRIBUTION({}, data)
+      actions.COPY_ATTRIBUTION({}, data)
 
       expect(googleAnalyticsMock().sendEvent).toHaveBeenCalledWith(
         new CopyAttribution(data.type, data.content)

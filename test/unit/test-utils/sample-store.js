@@ -1,8 +1,38 @@
-import SearchStore from '~/store-modules/search-store'
-import MediaProviderStore from '~/store-modules/media-provider-store'
+import {
+  state as SearchState,
+  // actions as SearchActions,
+  mutations as SearchMutations,
+} from '~/store/search'
+import {
+  state as ProviderState,
+  // actions as ProviderActions,
+  // mutations as ProviderMutations,
+} from '~/store/provider'
+import {
+  state as FilterState,
+  actions as FilterActions,
+  mutations as FilterMutations,
+} from '~/store/filter'
+import { IMAGE } from '~/constants/media'
 
 const store = {
-  state: Object.assign(SearchStore.state, MediaProviderStore.state),
+  state: {
+    searchType: IMAGE,
+  },
+  modules: {
+    search: {
+      state: SearchState(),
+      mutations: SearchMutations,
+    },
+    provider: {
+      state: ProviderState(),
+    },
+    filter: {
+      state: FilterState(),
+      mutations: FilterMutations,
+      actions: FilterActions,
+    },
+  },
   dispatch: jest.fn(),
   commit: jest.fn(),
 }

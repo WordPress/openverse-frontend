@@ -99,8 +99,10 @@ import dmcaNotice from './DmcaNotice'
 import OtherIssueForm from './OtherIssueForm'
 import DoneMessage from './DoneMessage'
 import ReportError from './ReportError'
-import { SEND_CONTENT_REPORT } from '~/store-modules/action-types'
-import { REPORT_FORM_CLOSED } from '~/store-modules/mutation-types'
+import { SEND_CONTENT_REPORT } from '~/constants/action-types'
+import { REPORT_FORM_CLOSED } from '~/constants/mutation-types'
+import { REPORT_CONTENT } from '~/constants/store-modules'
+import { mapState } from 'vuex'
 
 const dmcaFormUrl =
   'https://docs.google.com/forms/d/e/1FAIpQLSd0I8GsEbGQLdaX4K_F6V2NbHZqN137WMZgnptUpzwd-kbDKA/viewform'
@@ -123,15 +125,13 @@ export default {
     }
   },
   computed: {
-    isReportSent() {
-      return this.$store.state.isReportSent
-    },
-    reportFailed() {
-      return this.$store.state.reportFailed
-    },
+    ...mapState({
+      isReportSent: (state) => state['report-content/isReportSent'],
+      reportFailed: (state) => state['report-content/reportFailed'],
+    }),
     providerName() {
       return getProviderName(
-        this.$store.state.imageProviders,
+        this.$store.state.provider.imageProviders,
         this.image.provider
       )
     },
@@ -151,14 +151,14 @@ export default {
       this.selectedCopyright = false
     },
     sendContentReport(description = '') {
-      this.$store.dispatch(SEND_CONTENT_REPORT, {
+      this.$store.dispatch(`${REPORT_CONTENT}/${SEND_CONTENT_REPORT}`, {
         identifier: this.$props.image.id,
         reason: this.selectedReason,
         description,
       })
     },
     closeForm() {
-      this.$store.commit(REPORT_FORM_CLOSED)
+      this.$store.commit(`${REPORT_CONTENT}/${REPORT_FORM_CLOSED}`)
     },
   },
 }

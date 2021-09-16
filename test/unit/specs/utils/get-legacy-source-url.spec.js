@@ -1,6 +1,7 @@
 import getLegacySourceUrl, {
   legacySourceMap,
 } from '~/utils/get-legacy-source-url'
+import { IMAGE } from '~/constants/media'
 
 /**
  * Note: this does not test the health or uptime of URLS, only that
@@ -38,7 +39,7 @@ describe('getLegacySourceUrl', () => {
     const audioSources = Object.keys(legacySourceMap).filter(
       (sourceName) => legacySourceMap[sourceName].image
     )
-    const getImageSourceUrl = getLegacySourceUrl('image')
+    const getImageSourceUrl = getLegacySourceUrl(IMAGE)
     const urls = audioSources.map((sourceName) =>
       getImageSourceUrl(sourceName, search)
     )
@@ -48,7 +49,7 @@ describe('getLegacySourceUrl', () => {
 
   it('throws an error for invalid sources', () => {
     const search = { q: 'dogs' }
-    const getImageSourceUrl = getLegacySourceUrl('image')
+    const getImageSourceUrl = getLegacySourceUrl(IMAGE)
 
     expect(() => {
       getImageSourceUrl('Fake Source', search)

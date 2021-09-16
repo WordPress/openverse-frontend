@@ -35,20 +35,27 @@
 
 <script>
 import { mapState } from 'vuex'
+import { SET_SHOW_NOTIFICATION } from '~/constants/mutation-types'
+import { NOTIFICATION_ACTION } from '~/constants/action-types'
+import { NOTIFICATION } from '~/constants/store-modules'
 
 export default {
   name: 'NotificationBanner',
-  computed: mapState([
-    'notificationText',
-    'notificationDismiss',
-    'notificationOkay',
-  ]),
+  computed: {
+    ...mapState('notification', {
+      text: (state) => state.text,
+      dismissLabel: (state) => state.dismissLabel,
+      okayLabel: (state) => state.okayLabel,
+    }),
+  },
   methods: {
     handleDismissClick() {
-      this.$store.commit('SET_SHOW_NOTIFICATION', { showNotification: false })
+      this.$store.commit(`${NOTIFICATION}/${SET_SHOW_NOTIFICATION}`, {
+        showNotification: false,
+      })
     },
     handleOkayClick() {
-      this.$store.dispatch('NOTIFICATION_ACTION')
+      this.$store.dispatch(`${NOTIFICATION}/${NOTIFICATION_ACTION}`)
     },
   },
 }

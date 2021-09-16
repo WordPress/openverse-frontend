@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import Vuex from 'vuex'
 import VueI18n from 'vue-i18n'
-import { shallowMount, createLocalVue } from '@vue/test-utils'
+import { createLocalVue, shallowMount } from '@vue/test-utils'
 import sampleStore from './sample-store'
 
 const localVue = createLocalVue()
@@ -17,8 +17,7 @@ const i18n = new VueI18n({
 
 const render = (Component, options = { localVue, i18n }) => {
   if (!options.store) {
-    const store = new Vuex.Store(sampleStore)
-    options.store = store
+    options.store = new Vuex.Store(sampleStore)
   }
   if (!options.i18n) {
     options.i18n = i18n

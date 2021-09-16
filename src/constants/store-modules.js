@@ -1,0 +1,8 @@
+export const FILTER = 'filter'
+export const SEARCH = 'search'
+export const USAGE_DATA = 'usage-data'
+export const REPORT_CONTENT = 'report-content'
+export const ATTRIBUTION = 'attribution'
+export const NOTIFICATION = 'notification'
+export const RELATED = 'related'
+export const PROVIDER = 'provider'

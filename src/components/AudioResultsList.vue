@@ -44,8 +44,10 @@
 </template>
 
 <script>
-import { FETCH_MEDIA } from '~/store-modules/action-types'
+import { FETCH_MEDIA } from '~/constants/action-types'
 import { AUDIO } from '~/constants/media'
+import { mapActions, mapState } from 'vuex'
+import { SEARCH } from '~/constants/store-modules'
 
 export default {
   name: 'AudioResultsList',
@@ -56,19 +58,24 @@ export default {
     },
   },
   async fetch() {
-    if (!this.$store.state.audios.length) {
-      await this.$store.dispatch(FETCH_MEDIA, {
-        ...this.$store.state.query,
+    if (!this.audios.length) {
+      await this.fetchMedia({
+        ...this.$store.state.search.query,
         mediaType: AUDIO,
       })
     }
   },
   computed: {
-    audios() {
-      return this.$store.state.audios
-    },
+    ...mapState('search', {
+      audios: (state) => state.audios,
+      audiosCount: (state) => state.audiosCount,
+      currentPage: (state) => state.audioPage,
+      isFetchingAudios: (state) => state.isFetching.audios,
+      isFetchingAudiosError: (state) => state.isFetchingError.audios,
+      errorMessage: (state) => state.errorMessage,
+    }),
     audiosCount() {
-      const count = this.$store.state.audiosCount
+      const count = this.audiosCount
       if (count === 0) {
         return this.$t('browse-page.audio-no-results')
       }
@@ -80,23 +87,15 @@ export default {
             localeCount: count.toLocaleString(this.$i18n.locale),
           })
     },
-    currentPage() {
-      return this.$store.state.audioPage
-    },
-    isFetchingAudiosError() {
-      return this.$store.state.isFetchingError.audios
-    },
-    isFetchingAudios() {
-      return this.$store.state.isFetching.audios
-    },
+
     isFinished() {
-      return this.currentPage >= this.$store.state.pageCount.audios
-    },
-    errorMessage() {
-      return this.$store.state.errorMessage
+      return this.currentPage >= this.$store.state.search.pageCount.audios
     },
   },
   methods: {
+    ...mapActions({
+      fetchMedia: `${SEARCH}/${FETCH_MEDIA}`,
+    }),
     onLoadMoreAudios() {
       const searchParams = {
         page: this.currentPage + 1,

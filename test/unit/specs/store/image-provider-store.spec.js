@@ -1,18 +1,20 @@
-import store from '~/store-modules/media-provider-store'
+import store, { actionsCreator } from '~/store/provider'
 import {
   FETCH_MEDIA_PROVIDERS_END,
   FETCH_MEDIA_PROVIDERS_START,
   SET_MEDIA_PROVIDERS,
   SET_PROVIDER_FETCH_ERROR,
-} from '~/store-modules/mutation-types'
-import { FETCH_MEDIA_TYPE_PROVIDERS } from '~/store-modules/action-types'
+} from '~/constants/mutation-types'
+import { FETCH_MEDIA_TYPE_PROVIDERS } from '~/constants/action-types'
+import { IMAGE } from '~/constants/media'
 
 describe('Image Provider Store', () => {
   describe('state', () => {
     it('exports default state', () => {
-      expect(store.state.imageProviders).toHaveLength(0)
-      expect(store.state.isFetchingImageProvidersError).toBeFalsy()
-      expect(store.state.isFetchingImageProviders).toBeFalsy()
+      const state = store.state()
+      expect(state.imageProviders).toHaveLength(0)
+      expect(state.isFetchingImageProvidersError).toBeFalsy()
+      expect(state.isFetchingImageProviders).toBeFalsy()
     })
   })
 
@@ -25,21 +27,21 @@ describe('Image Provider Store', () => {
 
     it('FETCH_MEDIA_PROVIDERS_START sets isFetchingImageProviders to true', () => {
       store.mutations[FETCH_MEDIA_PROVIDERS_START](state, {
-        mediaType: 'image',
+        mediaType: IMAGE,
       })
 
       expect(state.isFetchingImageProviders).toBeTruthy()
     })
 
     it('FETCH_MEDIA_PROVIDERS_END sets isFetchingImageProviders to false', () => {
-      store.mutations[FETCH_MEDIA_PROVIDERS_END](state, { mediaType: 'image' })
+      store.mutations[FETCH_MEDIA_PROVIDERS_END](state, { mediaType: IMAGE })
 
       expect(state.isFetchingImageProviders).toBeFalsy()
     })
 
     it('SET_PROVIDER_FETCH_ERROR sets isFetchingImageProvidersError', () => {
       const params = {
-        mediaType: 'image',
+        mediaType: IMAGE,
         error: true,
       }
       store.mutations[SET_PROVIDER_FETCH_ERROR](state, params)
@@ -49,7 +51,7 @@ describe('Image Provider Store', () => {
 
     it('SET_IMAGE_PROVIDERS sets imageProviders', () => {
       const params = {
-        mediaType: 'image',
+        mediaType: IMAGE,
         providers: [{ name: 'testProvider' }],
       }
       store.mutations[SET_MEDIA_PROVIDERS](state, params)
@@ -66,26 +68,25 @@ describe('Image Provider Store', () => {
     const commit = jest.fn()
     const dispatch = jest.fn()
     it('FETCH_MEDIA_TYPE_PROVIDERS on success', (done) => {
-      const action = store.actions(
-        imageProviderServiceMock,
-        imageProviderServiceMock
-      )[FETCH_MEDIA_TYPE_PROVIDERS]
-      action({ commit, dispatch }, { mediaType: 'image' }).then(() => {
+      const action = actionsCreator({
+        [IMAGE]: imageProviderServiceMock,
+      })[FETCH_MEDIA_TYPE_PROVIDERS]
+      action({ commit, dispatch }, { mediaType: IMAGE }).then(() => {
         expect(commit).toBeCalledWith(SET_PROVIDER_FETCH_ERROR, {
           error: false,
-          mediaType: 'image',
+          mediaType: IMAGE,
         })
         expect(commit).toBeCalledWith(FETCH_MEDIA_PROVIDERS_START, {
-          mediaType: 'image',
+          mediaType: IMAGE,
         })
 
         expect(imageProviderServiceMock.getProviderStats).toBeCalled()
 
         expect(commit).toBeCalledWith(FETCH_MEDIA_PROVIDERS_END, {
-          mediaType: 'image',
+          mediaType: IMAGE,
         })
         expect(commit).toBeCalledWith(SET_MEDIA_PROVIDERS, {
-          mediaType: 'image',
+          mediaType: IMAGE,
           providers: data,
         })
         done()

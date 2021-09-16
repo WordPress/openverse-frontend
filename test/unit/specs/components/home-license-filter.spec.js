@@ -1,5 +1,7 @@
 import HomeLicenseFilter from '~/components/HomeLicenseFilter'
 import render from '../../test-utils/render'
+import { FILTER } from '~/constants/store-modules'
+import { TOGGLE_FILTER } from '~/constants/action-types'
 
 describe('HomeLicenseFilter', () => {
   let options = {}
@@ -12,11 +14,13 @@ describe('HomeLicenseFilter', () => {
         $store: {
           dispatch: dispatchMock,
           state: {
-            filters: {
-              licenseTypes: [
-                { code: 'commercial', name: 'Commercial usage' },
-                { code: 'modification', name: 'Allows modification' },
-              ],
+            filter: {
+              filters: {
+                licenseTypes: [
+                  { code: 'commercial', name: 'Commercial usage' },
+                  { code: 'modification', name: 'Allows modification' },
+                ],
+              },
             },
           },
         },
@@ -35,7 +39,7 @@ describe('HomeLicenseFilter', () => {
     const commercialChk = wrapper.find('#commercial')
 
     await commercialChk.setChecked(true)
-    expect(dispatchMock).toHaveBeenCalledWith('TOGGLE_FILTER', {
+    expect(dispatchMock).toHaveBeenCalledWith(`${FILTER}/${TOGGLE_FILTER}`, {
       code: 'commercial',
       filterType: 'licenseTypes',
     })

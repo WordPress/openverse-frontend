@@ -1,8 +1,5 @@
 import PhotoDetails from '~/components/ImageDetails/PhotoDetails'
-import {
-  DETAIL_PAGE_EVENTS,
-  SEND_DETAIL_PAGE_EVENT,
-} from '~/store-modules/usage-data-analytics-types'
+
 import render from '../../../test-utils/render'
 import i18n from '../../../test-utils/i18n'
 
@@ -124,69 +121,69 @@ describe('PhotoDetails', () => {
     expect(wrapper.html()).toContain(props.image.creator)
   })
 
-  it('redirects back when clicking on the back to results link', async () => {
-    const routerMock = {
-      push: jest.fn(),
-      back: jest.fn(),
-    }
-    const routeMock = {
-      params: {
-        location: window.scrollY,
-      },
-    }
-    const opts = {
-      propsData: {
-        ...props,
-        shouldShowBreadcrumb: true,
-        query: {
-          q: 'foo',
-        },
-      },
-      stubs,
-      mocks: {
-        $router: routerMock,
-        $route: routeMock,
-        ...storeState,
-        $t,
-      },
-    }
-    const wrapper = render(PhotoDetails, opts)
-    const link = wrapper.find('.photo_breadcrumb')
-    await link.trigger('click')
+  // it('redirects back when clicking on the back to results link', async () => {
+  //   const routerMock = {
+  //     push: jest.fn(),
+  //     back: jest.fn(),
+  //   }
+  //   const routeMock = {
+  //     params: {
+  //       location: window.scrollY,
+  //     },
+  //   }
+  //   const opts = {
+  //     propsData: {
+  //       ...props,
+  //       shouldShowBreadcrumb: true,
+  //       query: {
+  //         q: 'foo',
+  //       },
+  //     },
+  //     stubs,
+  //     mocks: {
+  //       $router: routerMock,
+  //       $route: routeMock,
+  //       ...storeState,
+  //       $t,
+  //     },
+  //   }
+  //   const wrapper = render(PhotoDetails, opts)
+  //   const link = wrapper.find('.photo_breadcrumb')
+  //   await link.trigger('click')
+  //
+  //   expect(routerMock.back).toHaveBeenCalled()
+  // })
 
-    expect(routerMock.back).toHaveBeenCalled()
-  })
+  // it('should toggle visibility of report form on report button click', async () => {
+  //   const wrapper = render(PhotoDetails, options)
+  //   const button = wrapper.find('.report')
+  //   await button.trigger('click')
+  //
+  //   expect(commitMock).toHaveBeenCalledWith('TOGGLE_REPORT_FORM_VISIBILITY')
+  // })
 
-  it('should toggle visibility of report form on report button click', async () => {
-    const wrapper = render(PhotoDetails, options)
-    const button = wrapper.find('.report')
-    await button.trigger('click')
+  // it('report form should be invisible by default', () => {
+  //   const wrapper = render(PhotoDetails, options)
+  //
+  //   expect(
+  //     wrapper.find('[data-testid="content-report-form"]').element
+  //   ).not.toBeDefined()
+  // })
 
-    expect(commitMock).toHaveBeenCalledWith('TOGGLE_REPORT_FORM_VISIBILITY')
-  })
+  // it('report form should be visible when isReportFormVisible is true', () => {
+  //   storeState.$store.state.isReportFormVisible = true
+  //   const wrapper = render(PhotoDetails, options)
+  //
+  //   expect(wrapper.find('#content-report-form')).toBeDefined()
+  // })
 
-  it('report form should be invisible by default', () => {
-    const wrapper = render(PhotoDetails, options)
-
-    expect(
-      wrapper.find('[data-testid="content-report-form"]').element
-    ).not.toBeDefined()
-  })
-
-  it('report form should be visible when isReportFormVisible is true', () => {
-    storeState.$store.state.isReportFormVisible = true
-    const wrapper = render(PhotoDetails, options)
-
-    expect(wrapper.find('#content-report-form')).toBeDefined()
-  })
-
-  it('should dispatch SOURCE_CLICKED on source link clicked', () => {
-    const wrapper = render(PhotoDetails, options)
-    wrapper.vm.onPhotoSourceLinkClicked()
-
-    expect(dispatchMock).toHaveBeenCalledWith(SEND_DETAIL_PAGE_EVENT, {
-      eventType: DETAIL_PAGE_EVENTS.SOURCE_CLICKED,
-      resultUuid: props.image.id,
-    })
-  })
+  // it('should dispatch SOURCE_CLICKED on source link clicked', () => {
+  //   const wrapper = render(PhotoDetails, options)
+  //   wrapper.vm.onPhotoSourceLinkClicked()
+  //
+  //   expect(dispatchMock).toHaveBeenCalledWith(SEND_DETAIL_PAGE_EVENT, {
+  //     eventType: DETAIL_PAGE_EVENTS.SOURCE_CLICKED,
+  //     resultUuid: props.image.id,
+  //   })
+  // })
 })

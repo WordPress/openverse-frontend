@@ -1,6 +1,7 @@
 import PhotoTags from '~/components/PhotoTags'
-import { SET_QUERY } from '~/store-modules/mutation-types'
+import { SET_QUERY } from '~/constants/mutation-types'
 import render from '../../test-utils/render'
+import { SEARCH } from '~/constants/store-modules'
 
 describe('PhotoTags', () => {
   let options = null
@@ -54,7 +55,7 @@ describe('PhotoTags', () => {
     const wrapper = render(PhotoTags, opts)
     wrapper.find('.tag').trigger('click')
     const tagName = wrapper.find('.tag').text()
-    expect(storeMock.commit).toHaveBeenCalledWith(SET_QUERY, {
+    expect(storeMock.commit).toHaveBeenCalledWith(`${SEARCH}/${SET_QUERY}`, {
       query: { q: tagName },
     })
   })

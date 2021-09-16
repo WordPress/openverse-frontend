@@ -1,4 +1,4 @@
-import store from '~/store-modules/search-store'
+import store, { actionsCreator } from '~/store/search'
 import {
   SET_IMAGE,
   SET_IMAGE_PAGE,
@@ -8,18 +8,22 @@ import {
   FETCH_START_MEDIA,
   FETCH_END_MEDIA,
   FETCH_MEDIA_ERROR,
-} from '~/store-modules/mutation-types'
+} from '~/constants/mutation-types'
 import {
   FETCH_IMAGE,
   FETCH_COLLECTION_IMAGES,
   FETCH_MEDIA,
-} from '~/store-modules/action-types'
+} from '~/constants/action-types'
 import { IMAGE } from '~/constants/media'
+import {
+  SEND_RESULT_CLICKED_EVENT,
+  SEND_SEARCH_QUERY_EVENT,
+} from '~/store/usage-data-analytics-types'
 
 describe('Search Store', () => {
   describe('state', () => {
     it('exports default state', () => {
-      const state = store.state
+      const state = store.state()
       expect(state.audios).toHaveLength(0)
       expect(state.audiosCount).toBe(0)
       expect(state.audioPage).toBe(1)
@@ -155,7 +159,6 @@ describe('Search Store', () => {
   describe('actions', () => {
     const searchData = { results: ['foo'], result_count: 1 }
     const imageDetailData = 'imageDetails'
-    let audioServiceMock = null
     let imageServiceMock = null
     let commit = null
     let dispatch = null
@@ -163,15 +166,6 @@ describe('Search Store', () => {
 
     beforeEach(() => {
       imageServiceMock = {
-        search: jest.fn(() => Promise.resolve({ data: searchData })),
-        getProviderCollection: jest.fn(() =>
-          Promise.resolve({ data: searchData })
-        ),
-        getMediaDetail: jest.fn(() =>
-          Promise.resolve({ data: imageDetailData })
-        ),
-      }
-      audioServiceMock = {
         search: jest.fn(() => Promise.resolve({ data: searchData })),
         getProviderCollection: jest.fn(() =>
           Promise.resolve({ data: searchData })
@@ -196,9 +190,7 @@ describe('Search Store', () => {
         shouldPersistMedia: false,
         mediaType: IMAGE,
       }
-      const action = store.actions(audioServiceMock, imageServiceMock)[
-        FETCH_MEDIA
-      ]
+      const action = actionsCreator({ [IMAGE]: imageServiceMock })[FETCH_MEDIA]
       action({ commit, dispatch, state }, params).then(() => {
         expect(commit).toBeCalledWith(FETCH_START_MEDIA, { mediaType: IMAGE })
         expect(commit).toBeCalledWith(FETCH_END_MEDIA, { mediaType: IMAGE })
@@ -219,15 +211,17 @@ describe('Search Store', () => {
 
     it('FETCH_MEDIA dispatches SEND_SEARCH_QUERY_EVENT', () => {
       const params = { q: 'foo', shouldPersistMedia: false, mediaType: IMAGE }
-      const action = store.actions(audioServiceMock, imageServiceMock)[
-        FETCH_MEDIA
-      ]
+      const action = actionsCreator({ [IMAGE]: imageServiceMock })[FETCH_MEDIA]
       action({ commit, dispatch, state }, params)
 
-      expect(dispatch).toHaveBeenLastCalledWith('SEND_SEARCH_QUERY_EVENT', {
-        query: params.q,
-        sessionId: state.usageSessionId,
-      })
+      expect(dispatch).toHaveBeenLastCalledWith(
+        `usage-data/${SEND_SEARCH_QUERY_EVENT}`,
+        {
+          query: params.q,
+          sessionId: state.usageSessionId,
+        },
+        { root: true }
+      )
     })
 
     it('does not dispatch SEND_SEARCH_QUERY_EVENT if page param is available', () => {
@@ -237,9 +231,7 @@ describe('Search Store', () => {
         shouldPersistMedia: false,
         mediaType: IMAGE,
       }
-      const action = store.actions(audioServiceMock, imageServiceMock)[
-        FETCH_MEDIA
-      ]
+      const action = actionsCreator({ [IMAGE]: imageServiceMock })[FETCH_MEDIA]
       action({ commit, dispatch, state }, params)
 
       expect(dispatch).not.toHaveBeenLastCalledWith('SEND_SEARCH_QUERY_EVENT', {
@@ -255,7 +247,7 @@ describe('Search Store', () => {
         shouldPersistMedia: false,
         mediaType: IMAGE,
       }
-      const action = store.actions(audioServiceMock, imageServiceMock)[
+      const action = actionsCreator({ [IMAGE]: imageServiceMock })[
         FETCH_COLLECTION_IMAGES
       ]
       action({ commit, dispatch }, params).then(() => {
@@ -285,7 +277,7 @@ describe('Search Store', () => {
         shouldPersistMedia: false,
         mediaType: IMAGE,
       }
-      const action = store.actions(audioServiceMock, imageServiceMock)[
+      const action = actionsCreator({ [IMAGE]: imageServiceMock })[
         FETCH_COLLECTION_IMAGES
       ]
       action({ commit, dispatch }, params).then(() => {
@@ -305,7 +297,7 @@ describe('Search Store', () => {
         shouldPersistMedia: false,
         mediaType: IMAGE,
       }
-      const action = store.actions(audioServiceMock, imageServiceMock)[
+      const action = actionsCreator({ [IMAGE]: imageServiceMock })[
         FETCH_COLLECTION_IMAGES
       ]
       action({ commit, dispatch }, params).then(() => {
@@ -325,7 +317,7 @@ describe('Search Store', () => {
         shouldPersistMedia: false,
         mediaType: IMAGE,
       }
-      const action = store.actions(audioServiceMock, imageServiceMock)[
+      const action = actionsCreator({ [IMAGE]: imageServiceMock })[
         FETCH_COLLECTION_IMAGES
       ]
       action({ commit, dispatch }, params).then(() => {
@@ -345,7 +337,7 @@ describe('Search Store', () => {
         shouldPersistMedia: false,
         mediaType: IMAGE,
       }
-      const action = store.actions(audioServiceMock, imageServiceMock)[
+      const action = actionsCreator({ [IMAGE]: imageServiceMock })[
         FETCH_COLLECTION_IMAGES
       ]
       action({ commit, dispatch }, params).then(() => {
@@ -367,7 +359,7 @@ describe('Search Store', () => {
         shouldPersistMedia: false,
         mediaType: IMAGE,
       }
-      const action = store.actions(failedMock, failedMock)[FETCH_MEDIA]
+      const action = actionsCreator({ [IMAGE]: failedMock })[FETCH_MEDIA]
       action({ commit, dispatch, state }, params).catch((error) => {
         expect(commit).toBeCalledWith(FETCH_START_MEDIA, { mediaType: IMAGE })
         expect(dispatch).toBeCalledWith('HANDLE_IMAGE_ERROR', error)
@@ -386,9 +378,10 @@ describe('Search Store', () => {
         shouldPersistMedia: false,
         mediaType: IMAGE,
       }
-      const action = store.actions(failedMock, failedMock)[
+      const action = actionsCreator({ [IMAGE]: failedMock })[
         FETCH_COLLECTION_IMAGES
       ]
+
       action({ commit, dispatch }, params).catch((error) => {
         expect(commit).toBeCalledWith(FETCH_START_MEDIA, { mediaType: IMAGE })
         expect(dispatch).toBeCalledWith('HANDLE_IMAGE_ERROR', error)
@@ -403,9 +396,7 @@ describe('Search Store', () => {
         shouldPersistMedia: false,
         mediaType: IMAGE,
       }
-      const action = store.actions(audioServiceMock, imageServiceMock)[
-        FETCH_MEDIA
-      ]
+      const action = actionsCreator({ [IMAGE]: imageServiceMock })[FETCH_MEDIA]
       action({ commit, dispatch, state }, params).then(() => {
         expect(commit).toBeCalledWith(FETCH_START_MEDIA, {
           mediaType: IMAGE,
@@ -430,9 +421,8 @@ describe('Search Store', () => {
         shouldPersistMedia: false,
         mediaType: IMAGE,
       }
-      const action = store.actions(audioServiceMock, imageServiceMock)[
-        FETCH_MEDIA
-      ]
+      const action = actionsCreator({ [IMAGE]: imageServiceMock })[FETCH_MEDIA]
+
       action({ commit, dispatch, state }, params).then(() => {
         expect(commit).not.toBeCalledWith(SET_MEDIA, { media: [] })
         done()
@@ -441,9 +431,8 @@ describe('Search Store', () => {
 
     it('FETCH_IMAGE on success', (done) => {
       const params = { id: 'foo' }
-      const action = store.actions(audioServiceMock, imageServiceMock)[
-        FETCH_IMAGE
-      ]
+      const action = actionsCreator({ [IMAGE]: imageServiceMock })[FETCH_IMAGE]
+
       action({ commit, dispatch, state }, params).then(() => {
         expect(commit).toBeCalledWith(FETCH_START_MEDIA, { mediaType: IMAGE })
         expect(commit).toBeCalledWith(SET_IMAGE, { image: {} })
@@ -459,17 +448,20 @@ describe('Search Store', () => {
 
     it('FETCH_IMAGE dispatches SEND_RESULT_CLICKED_EVENT', () => {
       const params = { id: 'foo' }
-      const action = store.actions(audioServiceMock, imageServiceMock)[
-        FETCH_IMAGE
-      ]
+      const action = actionsCreator({ [IMAGE]: imageServiceMock })[FETCH_IMAGE]
+
       action({ commit, dispatch, state }, params)
 
-      expect(dispatch).toHaveBeenLastCalledWith('SEND_RESULT_CLICKED_EVENT', {
-        query: state.query.q,
-        resultUuid: 'foo',
-        resultRank: 0,
-        sessionId: state.usageSessionId,
-      })
+      expect(dispatch).toHaveBeenLastCalledWith(
+        `usage-data/${SEND_RESULT_CLICKED_EVENT}`,
+        {
+          query: state.query.q,
+          resultUuid: 'foo',
+          resultRank: 0,
+          sessionId: state.usageSessionId,
+        },
+        { root: true }
+      )
     })
 
     it('FETCH_IMAGE on error', (done) => {
@@ -477,7 +469,7 @@ describe('Search Store', () => {
         getMediaDetail: jest.fn(() => Promise.reject('error')),
       }
       const params = { id: 'foo' }
-      const action = store.actions(failedMock, failedMock)[FETCH_IMAGE]
+      const action = actionsCreator({ [IMAGE]: failedMock })[FETCH_IMAGE]
       action({ commit, dispatch, state }, params).catch((error) => {
         expect(commit).toBeCalledWith(FETCH_START_MEDIA, { mediaType: IMAGE })
         expect(dispatch).toBeCalledWith('HANDLE_IMAGE_ERROR', error)
@@ -492,7 +484,7 @@ describe('Search Store', () => {
         ),
       }
       const params = { id: 'foo' }
-      const action = store.actions(failedMock, failedMock)[FETCH_IMAGE]
+      const action = actionsCreator({ [IMAGE]: failedMock })[FETCH_IMAGE]
       action({ commit, dispatch, state }, params).then(() => {
         expect(commit).toBeCalledWith(FETCH_START_MEDIA, { mediaType: IMAGE })
         expect(commit).toBeCalledWith(IMAGE_NOT_FOUND)
