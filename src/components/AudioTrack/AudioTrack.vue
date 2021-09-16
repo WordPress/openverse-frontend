@@ -40,6 +40,7 @@ import AudioController from '~/components/AudioTrack/AudioController.vue'
 
 import Full from '~/components/AudioTrack/layouts/Full.vue'
 import Row from '~/components/AudioTrack/layouts/Row.vue'
+import Box from '~/components/AudioTrack/layouts/Box.vue'
 import Global from '~/components/AudioTrack/layouts/Global.vue'
 
 /**
@@ -55,6 +56,7 @@ export default {
     // Layouts
     Full,
     Row,
+    Box,
     Global,
   },
   props: {
@@ -119,6 +121,7 @@ export default {
     const layoutMappings = {
       full: 'Full',
       row: 'Row',
+      box: 'Box',
       global: 'Global',
     }
     const layoutComponent = computed(() => layoutMappings[props.layout])
