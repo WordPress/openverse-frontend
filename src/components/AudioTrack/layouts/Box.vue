@@ -39,6 +39,14 @@ export default {
   @apply bg-yellow text-dark-charcoal flex-shrink-0;
 }
 
+.box-track .waveform {
+  @apply bg-tx;
+}
+
+.box-track .progress.timestamp {
+  @apply bg-yellow;
+}
+
 .box-track.size-m .play-pause {
   @apply h-14 w-14;
 }
