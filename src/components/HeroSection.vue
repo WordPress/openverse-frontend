@@ -123,6 +123,7 @@ $hero-height: 55vh;
   }
   &__control {
     display: flex;
+    justify-content: center;
   }
   &__input {
     margin-right: -1px;
