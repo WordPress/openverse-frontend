@@ -37,6 +37,9 @@ import wavWaveform from './wav-waveform.json'
       options: ['regular', 'wide'],
       control: 'select',
     },
+    style: {
+      control: false,
+    },
     audio: {
       control: false,
     },
@@ -88,9 +91,14 @@ export const formatExamples = {
 }
 
 export const Template = (args, { argTypes }) => ({
-  template: `<AudioTrack v-bind="$props" :audio="audioObj"/>`,
+  template: `<AudioTrack :style="style" v-bind="$props" :audio="audioObj"/>`,
   components: { AudioTrack },
-  props: Object.keys(argTypes),
+  props: Object.keys(argTypes).filter(
+    (key) => !['style', 'class'].includes(key)
+  ),
+  data() {
+    return { style: args.style }
+  },
   computed: {
     audioObj() {
       return {
@@ -113,19 +121,23 @@ export const Template = (args, { argTypes }) => ({
 
 ## Layouts
 
-The component can be rendered in a multiple different layouts, by
-specifying a `layout`. The layout can further be customised by the `size` and
-`aspect` props.
+The component can be rendered in a multiple different layouts, by specifying the
+`layout` prop. The layout can further be customised by the `size` and `aspect`
+props.
 
 ### Full (default)
+
+**Size:** unsupported
+**Aspect:** unsupported
 
 <Canvas>
   <Story name="Full">{Template.bind({})}</Story>
 </Canvas>
 
-### Row
+### Row layout
 
 **Sizes:** S (small) and M (medium)
+**Aspect:** unsupported
 
 <Canvas>
   <Story
@@ -148,7 +160,49 @@ specifying a `layout`. The layout can further be customised by the `size` and
   </Story>
 </Canvas>
 
-### Global
+### Box layout
+
+**Sizes:** M (medium) and L (large)
+**Aspects:** wide (only on size M)
+
+<Canvas>
+  <Story
+    name="Box (medium)"
+    args={{
+      layout: 'box',
+      size: 'm',
+      style: { width: '256px' },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+  <Story
+    name="Box (medium, wide)"
+    args={{
+      layout: 'box',
+      size: 'm',
+      aspect: 'wide',
+      style: { width: '512px' },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+  <Story
+    name="Box (large)"
+    args={{
+      layout: 'box',
+      size: 'l',
+      style: { width: '512px' },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Global layout
+
+**Size:** unsupported
+**Aspect:** unsupported
 
 <Canvas>
   <Story
