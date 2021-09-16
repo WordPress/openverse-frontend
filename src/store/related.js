@@ -10,6 +10,7 @@ import {
 } from '~/constants/action-types'
 import AudioService from '~/data/audio-service'
 import ImageService from '~/data/image-service'
+import { SEARCH } from '~/constants/store-modules'
 
 export const state = () => ({
   images: [],
@@ -19,7 +20,7 @@ export const state = () => ({
 export const actionsCreator = (services) => ({
   [FETCH_RELATED_MEDIA]({ commit, dispatch }, params) {
     const { mediaType } = params
-    commit(FETCH_START_MEDIA, { mediaType })
+    commit(`${SEARCH}/${FETCH_START_MEDIA}`, { mediaType }, { root: true })
     if (!Object.keys(services).includes(mediaType)) {
       throw new Error(
         `Unsupported media type ${mediaType} for related media fetching`
@@ -29,21 +30,29 @@ export const actionsCreator = (services) => ({
     return service
       .getRelatedMedia(params)
       .then(({ data }) => {
-        commit(FETCH_END_MEDIA, { mediaType })
+        commit(`${SEARCH}/${FETCH_END_MEDIA}`, { mediaType }, { root: true })
         commit(SET_RELATED_MEDIA, {
           mediaType,
           relatedMedia: data.results,
         })
-        dispatch(HANDLE_NO_MEDIA, {
-          mediaCount: data.results.length,
-          mediaType,
-        })
+        dispatch(
+          `${SEARCH}/${HANDLE_NO_MEDIA}`,
+          {
+            mediaCount: data.results.length,
+            mediaType,
+          },
+          { root: true }
+        )
       })
       .catch((error) => {
-        dispatch(HANDLE_MEDIA_ERROR, {
-          mediaType,
-          error,
-        })
+        dispatch(
+          `${SEARCH}/${HANDLE_MEDIA_ERROR}`,
+          {
+            mediaType,
+            error,
+          },
+          { root: true }
+        )
       })
   },
 })

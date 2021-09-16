@@ -6,6 +6,7 @@ import {
 } from '~/constants/mutation-types'
 import { FETCH_RELATED_MEDIA } from '~/constants/action-types'
 import { IMAGE } from '~/constants/media'
+import { SEARCH } from '~/constants/store-modules'
 
 describe('Related Images Store', () => {
   describe('state', () => {
@@ -55,8 +56,20 @@ describe('Related Images Store', () => {
       })
       const action = actions[FETCH_RELATED_MEDIA]
       action({ commit, dispatch }, params).then(() => {
-        expect(commit).toBeCalledWith(FETCH_START_MEDIA, { mediaType: IMAGE })
-        expect(commit).toBeCalledWith(FETCH_END_MEDIA, { mediaType: IMAGE })
+        expect(commit).toBeCalledWith(
+          `${SEARCH}/${FETCH_START_MEDIA}`,
+          {
+            mediaType: IMAGE,
+          },
+          { root: true }
+        )
+        expect(commit).toBeCalledWith(
+          `${SEARCH}/${FETCH_END_MEDIA}`,
+          {
+            mediaType: IMAGE,
+          },
+          { root: true }
+        )
 
         expect(commit).toBeCalledWith(SET_RELATED_MEDIA, {
           mediaType: IMAGE,

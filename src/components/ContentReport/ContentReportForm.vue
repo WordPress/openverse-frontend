@@ -128,12 +128,11 @@ export default {
     ...mapState({
       isReportSent: (state) => state['report-content/isReportSent'],
       reportFailed: (state) => state['report-content/reportFailed'],
+      imageProviders: (state) => state.provider.imageProviders,
+      audioProviders: (state) => state.provider.audioProviders,
     }),
     providerName() {
-      return getProviderName(
-        this.$store.state.provider.imageProviders,
-        this.image.provider
-      )
+      return getProviderName(this.imageProviders, this.image.provider)
     },
   },
   methods: {

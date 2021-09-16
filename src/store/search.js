@@ -37,6 +37,7 @@ import {
   queryStringToSearchType,
 } from '~/utils/search-query-transform'
 import { ALL_MEDIA, AUDIO, IMAGE } from '~/constants/media'
+import { FILTER, USAGE_DATA } from '~/constants/store-modules'
 
 // const getSearchPath = () =>
 //   window.location.pathname && window.location.pathname.includes('search')
@@ -150,7 +151,7 @@ export const actionsCreator = (services) => ({
     const { page, mediaType, q } = params
     if (!page) {
       dispatch(
-        `usage-data/${SEND_SEARCH_QUERY_EVENT}`,
+        `${USAGE_DATA}/${SEND_SEARCH_QUERY_EVENT}`,
         {
           query: q,
           sessionId: state.usageSessionId,
@@ -179,7 +180,7 @@ export const actionsCreator = (services) => ({
   // eslint-disable-next-line no-unused-vars
   [FETCH_IMAGE]({ commit, dispatch, state }, params) {
     dispatch(
-      `usage-data/${SEND_RESULT_CLICKED_EVENT}`,
+      `${USAGE_DATA}/${SEND_RESULT_CLICKED_EVENT}`,
       {
         query: state.query.q,
         resultUuid: params.id,
@@ -237,11 +238,11 @@ export const actionsCreator = (services) => ({
   },
   [SET_SEARCH_TYPE_FROM_URL]({ commit, dispatch }, params) {
     commit(SET_SEARCH_TYPE, { searchType: queryStringToSearchType(params.url) })
-    dispatch(`filter/${UPDATE_FILTERS}`, {}, { root: true })
+    dispatch(`${FILTER}/${UPDATE_FILTERS}`, {}, { root: true })
   },
   [UPDATE_SEARCH_TYPE]({ commit, dispatch }, params) {
     commit(SET_SEARCH_TYPE, { searchType: params.searchType })
-    dispatch(`filter/${UPDATE_FILTERS}`, {}, { root: true })
+    dispatch(`${FILTER}/${UPDATE_FILTERS}`, {}, { root: true })
   },
   [SET_QUERY_FROM_FILTERS_DATA]({ commit, state }, params) {
     const { filters } = params
@@ -310,7 +311,12 @@ export const mutations = {
     _state.pageCount[mediaPlural] = pageCount
   },
   [SET_QUERY](_state, params) {
-    setQuery(_state, params)
+    _state.query = Object.assign({}, _state.query, params.query)
+    _state.images = []
+
+    // if (params.shouldNavigate === true) {
+    //   redirect({ path, query })
+    // }
   },
   [IMAGE_NOT_FOUND]() {
     throw new Error('Image not found')
@@ -318,15 +324,6 @@ export const mutations = {
   [SET_SEARCH_TYPE](_state, params) {
     _state.searchType = params.searchType
   },
-}
-
-function setQuery(_state, params) {
-  _state.query = Object.assign({}, _state.query, params.query)
-  _state.images = []
-
-  // if (params.shouldNavigate === true) {
-  //   redirect({ path, query })
-  // }
 }
 
 export default {
