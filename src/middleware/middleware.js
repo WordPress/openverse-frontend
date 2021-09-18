@@ -1,4 +1,4 @@
-import { SET_EMBEDDED } from '~/constants/mutation-types'
+import { SET_EMBEDDED, SET_REFERRED } from '~/constants/mutation-types'
 import { sendWindowMessage } from '~/utils/send-message'
 import config from '../../nuxt.config.js'
 
@@ -27,5 +27,9 @@ export default function ({ store, query, route }) {
       type: 'urlChange',
       value: { path: route.fullPath, title: document.title },
     })
+  }
+
+  if (store.state.isReferredFromCc) {
+    store.commit(SET_REFERRED, { isReferredFromCc: false })
   }
 }

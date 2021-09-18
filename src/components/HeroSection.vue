@@ -82,7 +82,7 @@ export default {
         query: { q: this.form.searchTerm },
       })
       const newPath = this.localePath({
-        path: '/search',
+        path: process.env.allMediaFeature ? '/search' : '/search/image',
         query: {
           q: this.form.searchTerm,
           ...filtersToQueryData(this.$store.state.filter.filters, ALL_MEDIA),

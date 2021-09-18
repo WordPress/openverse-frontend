@@ -39,16 +39,18 @@ export const mediaFilterKeys = {
     'searchBy',
     'mature',
   ],
-  audio: [
-    'licenses',
-    'licenseTypes',
-    'audioCategories',
-    'audioExtensions',
-    'durations',
-    'audioProviders',
-    'searchBy',
-    'mature',
-  ],
+  audio: process.env.allMediaFeature
+    ? [
+        'licenses',
+        'licenseTypes',
+        'audioCategories',
+        'audioExtensions',
+        'durations',
+        'audioProviders',
+        'searchBy',
+        'mature',
+      ]
+    : [],
   video: [],
   all: ['licenses', 'licenseTypes', 'searchBy', 'mature'],
 }
@@ -61,7 +63,9 @@ export const mediaSpecificFilters = {
     'sizes',
     'imageProviders',
   ],
-  audio: ['audioCategories', 'audioExtensions', 'durations', 'audioProviders'],
+  audio: process.env.allMediaFeature
+    ? ['audioCategories', 'audioExtensions', 'durations', 'audioProviders']
+    : [],
   video: [],
 }
 
