@@ -53,7 +53,7 @@
         </div>
         <MetaSearchForm
           type="image"
-          :noresult="imagesCount === 0"
+          :noresult="storeImagesCount === 0"
           :query="query"
           :supported="true"
         />
