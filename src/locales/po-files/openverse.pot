@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2021-09-28T20:27:14+00:00\n"
+"POT-Creation-Date: 2021-09-28T03:53:18+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -17,43 +17,43 @@ msgctxt "hero.brand"
 msgid "Openverse"
 msgstr ""
 
-#: src/components/HeroSection.vue:6
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:6
 msgctxt "hero.title"
 msgid "Search for content to reuse"
 msgstr ""
 
-#: src/components/HeroSection.vue:9
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:9
 msgctxt "hero.subtitle"
 msgid "Browse over 500 million images, available for reuse"
 msgstr ""
 
-#: src/components/HeroSection.vue:28
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:28
 msgctxt "hero.search.placeholder"
 msgid "Search all content"
 msgstr ""
 
-#: src/components/HeroSection.vue:32
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:32
 msgctxt "hero.search.button"
 msgid "Search"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/HeroSection.vue:36
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:36
 msgctxt "hero.caption.content"
 msgid "All our content is under Creative Commons licenses or in the public domain. ###link### about CC licenses and tools."
 msgstr ""
 
-#: src/components/HeroSection.vue:44
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:44
 msgctxt "hero.caption.link"
 msgid "Learn more"
 msgstr ""
 
-#: src/components/HomeLicenseFilter.vue:4
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HomeLicenseFilter.vue:4
 msgctxt "hero.license-filter.label"
 msgid "I want something I can"
 msgstr ""
 
-#: src/components/HomeLicenseFilter.vue:4
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HomeLicenseFilter.vue:4
 msgctxt "hero.license-filter.label"
 msgid "Languages available"
 msgstr ""
@@ -70,27 +70,27 @@ msgctxt "hero.caption"
 msgid "about cc licenses"
 msgstr ""
 
-#: src/components/EmbeddedNavSection.vue:59
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/EmbeddedNavSection.vue:59
 msgctxt "header.about-nav-item"
 msgid "Our Story"
 msgstr ""
 
-#: src/components/EmbeddedNavSection.vue:67
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/EmbeddedNavSection.vue:67
 msgctxt "header.source-nav-item"
 msgid "Sources"
 msgstr ""
 
-#: src/components/EmbeddedNavSection.vue:88
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/EmbeddedNavSection.vue:88
 msgctxt "header.search-guide-nav-item"
 msgid "Search Guide"
 msgstr ""
 
-#: src/components/EmbeddedNavSection.vue:96
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/EmbeddedNavSection.vue:96
 msgctxt "header.meta-search-nav-item"
 msgid "Meta Search"
 msgstr ""
 
-#: src/components/EmbeddedNavSection.vue:104
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/EmbeddedNavSection.vue:104
 msgctxt "header.feedback-nav-item"
 msgid "Feedback"
 msgstr ""
@@ -99,22 +99,22 @@ msgctxt "header.support-nav-item"
 msgid "Support Us"
 msgstr ""
 
-#: src/components/EmbeddedNavSection.vue:119
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/EmbeddedNavSection.vue:119
 msgctxt "header.extension-nav-item"
 msgid "Web extension"
 msgstr ""
 
-#: src/components/HeroSection.vue:28
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:28
 msgctxt "hero.search.placeholder"
 msgid "Search all content"
 msgstr ""
 
-#: src/components/EmbeddedNavSection.vue:2
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/EmbeddedNavSection.vue:2
 msgctxt "header.aria.primary"
 msgid "primary"
 msgstr ""
 
-#: src/components/EmbeddedNavSection.vue:16
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/EmbeddedNavSection.vue:16
 msgctxt "header.aria.menu"
 msgid "menu"
 msgstr ""
@@ -123,27 +123,27 @@ msgctxt "hero.search"
 msgid "search"
 msgstr ""
 
-#: src/components/EmbeddedNavSection.vue:43
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/EmbeddedNavSection.vue:43
 msgctxt "header.aria.sr-search"
 msgid "sr search button"
 msgstr ""
 
-#: src/components/EmbeddedNavSection.vue:76
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/EmbeddedNavSection.vue:76
 msgctxt "header.licenses-nav-item"
 msgid "The Licenses"
 msgstr ""
 
-#: src/components/EmbeddedNavSection.vue:52
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/EmbeddedNavSection.vue:52
 msgctxt "header.about-tab"
 msgid "About"
 msgstr ""
 
-#: src/components/EmbeddedNavSection.vue:81
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/EmbeddedNavSection.vue:81
 msgctxt "header.resources-tab"
 msgid "Resources"
 msgstr ""
 
-#: src/components/EmbeddedNavSection.vue:113
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/EmbeddedNavSection.vue:113
 msgctxt "header.api-nav-item"
 msgid "API"
 msgstr ""
@@ -177,32 +177,32 @@ msgid "Terms"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/HomeLicenseFilter.vue:4
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HomeLicenseFilter.vue:4
 msgctxt "hero.license-filter.label"
 msgid "Except where otherwise ###noted###, content on this site is licensed under a ###attribution###. ###icons###"
 msgstr ""
 
-#: src/components/FooterSection.vue:23
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/FooterSection.vue:23
 msgctxt "footer.caption.noted"
 msgid "noted"
 msgstr ""
 
-#: src/components/FooterSection.vue:32
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/FooterSection.vue:32
 msgctxt "footer.caption.attribution"
 msgid "Creative Commons Attribution 4.0 International license"
 msgstr ""
 
-#: src/components/FooterSection.vue:42
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/FooterSection.vue:42
 msgctxt "footer.caption.icons"
 msgid "Icons by Font Awesome."
 msgstr ""
 
-#: src/components/FooterSection.vue:59
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/FooterSection.vue:59
 msgctxt "footer.donate.work"
 msgid "Our work relies on you!"
 msgstr ""
 
-#: src/components/FooterSection.vue:61
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/FooterSection.vue:61
 msgctxt "footer.donate.help"
 msgid "Help us keep the internet free and open."
 msgstr ""
@@ -215,34 +215,34 @@ msgctxt "footer.donate"
 msgid "donate section"
 msgstr ""
 
-#: src/components/HeroSection.vue:6
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:6
 msgctxt "hero.title"
 msgid "About Openverse"
 msgstr ""
 
-#: src/components/HeroSection.vue:36
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:36
 msgctxt "hero.caption.content"
 msgid "Openverse is a tool that allows openly licensed and public domain works to be discovered and used by everyone."
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/HeroSection.vue:36
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:36
 msgctxt "hero.caption.content"
 msgid "Openverse searches across more than 300 million images from open APIs and the ###common-crawl### dataset. It goes beyond simple search to aggregate results across multiple public repositories into a single catalog, and facilitates reuse through features like machine-generated tags and one-click attribution."
 msgstr ""
 
-#: src/pages/about.vue:16
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/about.vue:16
 msgctxt "about.collection.common-crawl"
 msgid "Common Crawl"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/HeroSection.vue:36
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:36
 msgctxt "hero.caption.content"
 msgid "Currently Openverse only searches images, with search for audio and video provided through ###meta###. But we plan to add additional media types such as open texts and audio, with the ultimate goal of providing access to all 1.4 billion CC licensed and public domain works on the web. All of our code is open source (###search###, ###api###, ###catalog###) and we ###community###. You can see what ###working###."
 msgstr ""
 
-#: src/pages/about.vue:26
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/about.vue:26
 msgctxt "about.planning.meta"
 msgid "Meta Search"
 msgstr ""
@@ -251,44 +251,44 @@ msgctxt "hero.search"
 msgid "Openverse"
 msgstr ""
 
-#: src/pages/about.vue:40
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/about.vue:40
 msgctxt "about.planning.api"
 msgid "Openverse API"
 msgstr ""
 
-#: src/pages/about.vue:47
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/about.vue:47
 msgctxt "about.planning.catalog"
 msgid "Openverse Catalog"
 msgstr ""
 
-#: src/pages/about.vue:54
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/about.vue:54
 msgctxt "about.planning.community"
 msgid "welcome community contribution"
 msgstr ""
 
-#: src/pages/about.vue:61
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/about.vue:61
 msgctxt "about.planning.working"
 msgid "we’re currently working on"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/HeroSection.vue:36
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:36
 msgctxt "hero.caption.content"
 msgid "Openverse is the successor to CC Search which was launched by Creative Commons in 2019, after its migration to WordPress in 2021. You can read more about this transition in the official announcements from ###creative-commons### and ###wordpress###. We remain committed to our goal of tackling discoverability and accessibility of open access media."
 msgstr ""
 
-#: src/pages/about.vue:71
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/about.vue:71
 msgctxt "about.transfer.creative-commons"
 msgid "Creative Commons"
 msgstr ""
 
-#: src/pages/about.vue:78
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/about.vue:78
 msgctxt "about.transfer.wordpress"
 msgid "WordPress"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/HeroSection.vue:36
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:36
 msgctxt "hero.caption.content"
 msgid "Please note that Openverse does not verify whether the images are properly CC licensed, or whether the attribution and other licensing information we have aggregated is accurate or complete. Please independently verify the licensing status and attribution information before reusing the content. For more details, read the ###terms###."
 msgstr ""
@@ -297,22 +297,22 @@ msgctxt "footer.navigation.terms"
 msgid "Openverse Terms of Use"
 msgstr ""
 
-#: src/pages/about.vue:16
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/about.vue:16
 msgctxt "about.collection.common-crawl"
 msgid "Common Crawl"
 msgstr ""
 
-#: src/pages/about.vue:26
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/about.vue:26
 msgctxt "about.planning.meta"
 msgid "meta search"
 msgstr ""
 
-#: src/pages/about.vue:59
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/about.vue:59
 msgctxt "about.aria.projects"
 msgid "Openverse projects"
 msgstr ""
 
-#: src/pages/about.vue:54
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/about.vue:54
 msgctxt "about.planning.community"
 msgid "Make WordPress community"
 msgstr ""
@@ -321,17 +321,17 @@ msgctxt "footer.navigation.terms"
 msgid "Openverse terms of use"
 msgstr ""
 
-#: src/pages/sources.vue:85
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/sources.vue:85
 msgctxt "about.aria.sources-table"
 msgid "sources table"
 msgstr ""
 
-#: src/pages/about.vue:71
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/about.vue:71
 msgctxt "about.transfer.creative-commons"
 msgid "Creative Commons"
 msgstr ""
 
-#: src/pages/about.vue:78
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/about.vue:78
 msgctxt "about.transfer.wordpress"
 msgid "WordPress"
 msgstr ""
@@ -340,229 +340,229 @@ msgctxt "hero.search"
 msgid "Openverse"
 msgstr ""
 
-#: src/pages/about.vue:40
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/about.vue:40
 msgctxt "about.planning.api"
 msgid "Openverse API"
 msgstr ""
 
-#: src/pages/about.vue:47
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/about.vue:47
 msgctxt "about.planning.catalog"
 msgid "Openverse Catalog"
 msgstr ""
 
-#: src/components/HeroSection.vue:6
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:6
 msgctxt "hero.title"
 msgid "Sources"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/sources.vue:77
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/sources.vue:77
 msgctxt "sources.detail"
 msgid "Clicking on a ###single-name### allows you to browse and filter items within that source."
 msgstr ""
 
-#: src/pages/sources.vue:80
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/sources.vue:80
 msgctxt "sources.single-name"
 msgid "Source"
 msgstr ""
 
-#: src/pages/sources.vue:97
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/sources.vue:97
 msgctxt "sources.providers.source"
 msgid "Source"
 msgstr ""
 
-#: src/pages/sources.vue:101
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/sources.vue:101
 msgctxt "sources.providers.domain"
 msgid "Domain"
 msgstr ""
 
-#: src/pages/sources.vue:108
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/sources.vue:108
 msgctxt "sources.providers.item"
 msgid "Total items"
 msgstr ""
 
-#: src/pages/sources.vue:10
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/sources.vue:10
 msgctxt "sources.cc-content.where"
 msgid "Where does the content on Openverse come from?"
 msgstr ""
 
-#: src/components/HeroSection.vue:36
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:36
 msgctxt "hero.caption.content"
 msgid "There is openly licensed content hosted on millions of domains across the breadth of the internet. Our team systematically identifies providers hosting CC-licensed content. If it’s a good fit, we index that content and make it discoverable through Openverse."
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/sources.vue:15
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/sources.vue:15
 msgctxt "sources.cc-content.provider"
 msgid "Some providers have multiple different groupings of content within them. ###flickr### has sources ranging from NASA to personal photography. The ###smithsonian### comprises a dozen, diverse collections. Wikimedia Commons runs the gamut in terms of content, and is used by several Galleries, Libraries, Archives, and Museums highlighting some or all of their digitized collections."
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/sources.vue:27
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/sources.vue:27
 msgctxt "sources.cc-content.europeana"
 msgid "Openverse is especially grateful for the work of ###link###, an organization that works to digitize and make discoverable cultural heritage works across Europe. Openverse is able to index hundreds of valuable sources, through a single integration with the ###link-api###."
 msgstr ""
 
-#: src/pages/sources.vue:30
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/sources.vue:30
 msgctxt "sources.cc-content.europeana-link"
 msgid "Europeana"
 msgstr ""
 
-#: src/pages/sources.vue:37
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/sources.vue:37
 msgctxt "sources.cc-content.europeana-api"
 msgid "Europeana API"
 msgstr ""
 
-#: src/pages/sources.vue:23
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/sources.vue:23
 msgctxt "sources.cc-content.smithsonian"
 msgid "Smithsonian Institute"
 msgstr ""
 
-#: src/pages/sources.vue:18
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/sources.vue:18
 msgctxt "sources.cc-content.flickr"
 msgid "Flickr"
 msgstr ""
 
-#: src/pages/sources.vue:44
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/sources.vue:44
 msgctxt "sources.new-content.next"
 msgid "How do we decide what sources to add next?"
 msgstr ""
 
-#: src/pages/sources.vue:47
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/sources.vue:47
 msgctxt "sources.new-content.integrate"
 msgid "We have a never ending list of possible sources to research prior to integration. We ask ourselves questions like:"
 msgstr ""
 
-#: src/pages/sources.vue:52
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/sources.vue:52
 msgctxt "sources.new-content.impact"
 msgid " What is the impact or importance of this source to our users? If it exists within a provider like Wikimedia Commons, is it valuable for our users to be able to filter by this source directly?"
 msgstr ""
 
-#: src/pages/sources.vue:55
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/sources.vue:55
 msgctxt "sources.new-content.reuse"
 msgid "Is licensing and attribution information clearly displayed to enable confident reuse?"
 msgstr ""
 
-#: src/pages/sources.vue:58
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/sources.vue:58
 msgctxt "sources.new-content.total-items"
 msgid "How many new total items or new types of items can we bring to our users through this integration? Some sources are direct integrations, while others may be a source within a source."
 msgstr ""
 
-#: src/pages/sources.vue:65
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/sources.vue:65
 msgctxt "sources.suggestions"
 msgid "We appreciate suggestions for new sources from our community of users."
 msgstr ""
 
-#: src/pages/sources.vue:73
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/sources.vue:73
 msgctxt "sources.issue-button"
 msgid "Suggest a new source"
 msgstr ""
 
-#: src/components/HeroSection.vue:6
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:6
 msgctxt "hero.title"
 msgid "Meta Search"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/meta-search.vue:10
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/meta-search.vue:10
 msgctxt "meta-search-page.intro"
 msgid "Openverse is built on top of a catalog that indexes CC-licensed and public domain content from selected sources. Learn more about our ###link###."
 msgstr ""
 
-#: src/components/HeroSection.vue:44
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:44
 msgctxt "hero.caption.link"
 msgid "sources"
 msgstr ""
 
-#: src/pages/meta-search.vue:17
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/meta-search.vue:17
 msgctxt "meta-search-page.license"
 msgid "The internet is a big place! There are plenty of search portals and collections, hosting CC-licensed and public domain content, which we aren’t able to index or surface results from within the Openverse interface. These are important sources of CC-licensed and public domain content, and we want to make sure that you are able to find the best openly licensed materials possible, regardless of where they are located."
 msgstr ""
 
-#: src/components/HeroSection.vue:36
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:36
 msgctxt "hero.caption.content"
 msgid "What content types can I search for using the Meta Search feature?"
 msgstr ""
 
-#: src/pages/meta-search.vue:21
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/meta-search.vue:21
 msgctxt "meta-search-page.content-types"
 msgid "Meta Search on Openverse currently supports image, audio, and video search on external sites."
 msgstr ""
 
-#: src/pages/meta-search.vue:38
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/meta-search.vue:38
 msgctxt "meta-search-page.use"
 msgid " Use "
 msgstr ""
 
-#: src/components/HeroSection.vue:6
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:6
 msgctxt "hero.title"
 msgid "How does the Meta Search feature work for Images?"
 msgstr ""
 
-#: src/components/HeroSection.vue:36
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:36
 msgctxt "hero.caption.content"
 msgid "Openverse supports built-in image search. When you enter a query on the Openverse homepage, a page of results will be displayed. Scrolling to the bottom of the page, you have two choices:"
 msgstr ""
 
-#: src/pages/meta-search.vue:29
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/meta-search.vue:29
 msgctxt "meta-search-page.images.continue"
 msgid "Load more results, and continue browsing in Openverse."
 msgstr ""
 
-#: src/pages/meta-search.vue:32
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/meta-search.vue:32
 msgctxt "meta-search-page.images.not-finding"
 msgid "Click on the link that says “Not finding what you need?” below the image results."
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/meta-search.vue:36
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/meta-search.vue:36
 msgctxt "meta-search-page.images.info"
 msgid "When you click on “Not finding what you need?” a modal will load with other sources of CC-licensed and public domain content. Your search query will be preloaded, and if supported, you can select a ###use### filter to proactively filter your results. Click on the button for the external source you’d like to search, and your results will open in a new tab."
 msgstr ""
 
-#: src/components/HeroSection.vue:6
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:6
 msgctxt "hero.title"
 msgid "How does the Meta Search feature work for Audio and Video?"
 msgstr ""
 
-#: src/components/HeroSection.vue:36
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:36
 msgctxt "hero.caption.content"
 msgid "Openverse does not yet support built-in audio and video search. For Audio and Video, simply click on the appropriate tab, and you’ll see what sources you can find CC-licensed content on."
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/meta-search.vue:51
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/meta-search.vue:51
 msgctxt "meta-search-page.audio-video.filter"
 msgid "The Filters bar on the left includes the ###use### filter, which may be supported by some meta search sources. Apply these before clicking on the button for the external source you’d like to search."
 msgstr ""
 
-#: src/components/HeroSection.vue:6
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:6
 msgctxt "hero.title"
 msgid "Can I suggest new sources for Meta Search?"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/HeroSection.vue:36
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:36
 msgctxt "hero.caption.content"
 msgid "Yes, please! Create an ###issue### in our GitHub repository or send us an ###email### and tell us about the new sources you’d like to see included."
 msgstr ""
 
-#: src/pages/meta-search.vue:70
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/meta-search.vue:70
 msgctxt "meta-search-page.new.issue"
 msgid "issue"
 msgstr ""
 
-#: src/pages/meta-search.vue:77
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/meta-search.vue:77
 msgctxt "meta-search-page.new.email"
 msgid "email"
 msgstr ""
 
-#: src/components/HeroSection.vue:6
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:6
 msgctxt "hero.title"
 msgid "Why did you build this?"
 msgstr ""
 
-#: src/components/HeroSection.vue:36
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:36
 msgctxt "hero.caption.content"
 msgid "For many years, CC has offered its users a dedicated search portal for searching platforms that have CC licensing filters built in. These platforms included Europeana, Google Images, Flickr, Jamendo, Open Clip Art Library, SpinXpress, Wikimedia Commons, YouTube, ccMixter, and SoundCloud. The search experience looked like this:"
 msgstr ""
@@ -571,54 +571,54 @@ msgctxt "meta-search-page.new"
 msgid "For users of the legacy CC Meta Search site, the Meta Search feature on Openverse will look familiar. The goal was to ensure that the functionality is not lost, but is updated and embedded within our new search engine for openly licensed content. In addition, the Meta Search feature builds on this functionality, allowing us to quickly add new sources to Meta Search as we discover them, and support new content types in the future, as we expand."
 msgstr ""
 
-#: src/pages/meta-search.vue:97
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/meta-search.vue:97
 msgctxt "meta-search-page.why.aria-label"
 msgid "feedback"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/meta-search.vue:94
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/meta-search.vue:94
 msgctxt "meta-search-page.why.feedback-suggestions"
 msgid "We hope you enjoy, and if you have suggestions for improvement, leave us ###feedback###."
 msgstr ""
 
-#: src/pages/meta-search.vue:99
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/meta-search.vue:99
 msgctxt "meta-search-page.why.feedback-link"
 msgid "feedback"
 msgstr ""
 
-#: src/components/HeroSection.vue:6
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:6
 msgctxt "hero.title"
 msgid "Openverse Syntax Guide"
 msgstr ""
 
-#: src/pages/meta-search.vue:10
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/meta-search.vue:10
 msgctxt "meta-search-page.intro"
 msgid "When you search, you can enter special symbols or words to your search term to make your search results more precise."
 msgstr ""
 
-#: src/components/HeroSection.vue:6
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:6
 msgctxt "hero.title"
 msgid "Search for an exact match"
 msgstr ""
 
-#: src/pages/meta-search.vue:97
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/meta-search.vue:97
 msgctxt "meta-search-page.why.aria-label"
 msgid "quote unquote Claude Monet"
 msgstr ""
 
-#: src/pages/search-help.vue:22
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/search-help.vue:22
 msgctxt "search-guide.exact.claude-monet"
 msgid "\"Claude Monet\""
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/HeroSection.vue:36
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:36
 msgctxt "hero.caption.content"
 msgid "Put a word or phrase inside quotes. For example, ###link###."
 msgstr ""
 
-#: src/components/HeroSection.vue:6
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:6
 msgctxt "hero.title"
 msgid "Combining terms"
 msgstr ""
@@ -628,72 +628,71 @@ msgid "If you want to combine terms, you can use the following operators to perf
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/search-help.vue:37
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/search-help.vue:37
 msgctxt "search-guide.combine.and"
 msgid "###symbol### signifies AND operation"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/search-help.vue:46
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/search-help.vue:46
 msgctxt "search-guide.combine.or"
 msgid "###symbol### signifies OR operation"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/search-help.vue:57
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/search-help.vue:57
 msgctxt "search-guide.combine.negate"
 msgid "###symbol### negates a single token"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/search-help.vue:66
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/search-help.vue:66
 msgctxt "search-guide.combine.prefix"
 msgid "###symbol### at the end of a term signifies a prefix query"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/search-help.vue:75
 msgctxt "search-guide.combine.precedence"
 msgid "###open### and ###close### signify precedence"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/search-help.vue:95
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/search-help.vue:95
 msgctxt "search-guide.combine.fuzziness"
 msgid "###symbol### after a word signifies edit distance (fuzziness)"
 msgstr ""
 
-#: src/pages/search-help.vue:95
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/search-help.vue:95
 msgctxt "search-guide.combine.fuzziness"
 msgid "tilde N"
 msgstr ""
 
-#: src/pages/search-help.vue:82
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/search-help.vue:82
 msgctxt "search-guide.combine.aria-labels.open"
 msgid "open parenthesis"
 msgstr ""
 
-#: src/pages/search-help.vue:89
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/search-help.vue:89
 msgctxt "search-guide.combine.aria-labels.close"
 msgid "close parenthesis"
 msgstr ""
 
-#: src/pages/search-help.vue:69
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/search-help.vue:69
 msgctxt "search-guide.combine.aria-labels.star"
 msgid "star symbol"
 msgstr ""
 
-#: src/pages/search-help.vue:60
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/search-help.vue:60
 msgctxt "search-guide.combine.aria-labels.minus"
 msgid "minus symbol"
 msgstr ""
 
-#: src/pages/search-help.vue:40
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/search-help.vue:40
 msgctxt "search-guide.combine.aria-labels.plus"
 msgid "plus symbol"
 msgstr ""
 
-#: src/pages/search-help.vue:50
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/search-help.vue:50
 msgctxt "search-guide.combine.aria-labels.vertical-bar"
 msgid "vertical bar symbol"
 msgstr ""
@@ -703,7 +702,7 @@ msgctxt "about.description"
 msgid "Example: ###link######br### This will search for images related to both dog and cat."
 msgstr ""
 
-#: src/pages/meta-search.vue:97
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/meta-search.vue:97
 msgctxt "meta-search-page.why.aria-label"
 msgid "dog plus cat"
 msgstr ""
@@ -717,7 +716,7 @@ msgctxt "about.description"
 msgid "Example: ###link######br### This will search for images related to dog or cat, but not necessarily both."
 msgstr ""
 
-#: src/pages/meta-search.vue:97
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/meta-search.vue:97
 msgctxt "meta-search-page.why.aria-label"
 msgid "dog vertical bar cat"
 msgstr ""
@@ -731,17 +730,17 @@ msgctxt "about.description"
 msgid "You can use the ###operator### to exclude a search term from the results."
 msgstr ""
 
-#: src/pages/search-help.vue:144
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/search-help.vue:144
 msgctxt "search-guide.example.negate.operator-name"
 msgid "operator (signifies NOT)"
 msgstr ""
 
-#: src/pages/search-help.vue:142
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/search-help.vue:142
 msgctxt "search-guide.example.negate.operator-aria-label"
 msgid "minus operator (signifies NOT)"
 msgstr ""
 
-#: src/pages/meta-search.vue:97
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/meta-search.vue:97
 msgctxt "meta-search-page.why.aria-label"
 msgid "dog minus pug"
 msgstr ""
@@ -751,7 +750,7 @@ msgid "dog -pug"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/HeroSection.vue:36
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:36
 msgctxt "hero.caption.content"
 msgid "Example: ###link######br### This will search for images related to dog but won't include results related to 'pug'"
 msgstr ""
@@ -761,17 +760,17 @@ msgctxt "about.description"
 msgid "You can use the ###operator-name### to mark a prefix term. This will match anything after the *."
 msgstr ""
 
-#: src/pages/search-help.vue:144
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/search-help.vue:144
 msgctxt "search-guide.example.negate.operator-name"
 msgid "operator (wildcard)"
 msgstr ""
 
-#: src/pages/search-help.vue:142
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/search-help.vue:142
 msgctxt "search-guide.example.negate.operator-aria-label"
 msgid "star operator (wildcard)"
 msgstr ""
 
-#: src/pages/meta-search.vue:97
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/meta-search.vue:97
 msgctxt "meta-search-page.why.aria-label"
 msgid "net star symbol"
 msgstr ""
@@ -781,7 +780,7 @@ msgid "net*"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/HeroSection.vue:36
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:36
 msgctxt "hero.caption.content"
 msgid "Example: ###link######br### This will search for images matching anything with 'net'. This might include 'network', 'Netflix', 'Netherlands', etc.."
 msgstr ""
@@ -791,7 +790,7 @@ msgctxt "about.description"
 msgid "You can use parentheses ###highlight### to specify precedence of terms or combine more complex queries."
 msgstr ""
 
-#: src/pages/meta-search.vue:97
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/meta-search.vue:97
 msgctxt "meta-search-page.why.aria-label"
 msgid "dogs plus open parenthesis corgis vertical bar labrador close parenthesis"
 msgstr ""
@@ -801,7 +800,7 @@ msgid "dogs + (corgis | labrador)"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/HeroSection.vue:36
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:36
 msgctxt "hero.caption.content"
 msgid "Example: ###link######br### This will search for images that match dogs that are either corgis or labrador."
 msgstr ""
@@ -811,12 +810,12 @@ msgctxt "about.description"
 msgid "You can use ###highlight### to specify some fuzzy logic to the term according to the ###link### — the number of one character changes that need to be made to one string to make it the same as another string."
 msgstr ""
 
-#: src/pages/search-help.vue:227
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/search-help.vue:227
 msgctxt "search-guide.example.fuzziness.link-text"
 msgid "Levenshtein Edit Distance"
 msgstr ""
 
-#: src/pages/meta-search.vue:97
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/meta-search.vue:97
 msgctxt "meta-search-page.why.aria-label"
 msgid "theatre tilde 1"
 msgstr ""
@@ -826,28 +825,28 @@ msgid "theatre~1"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/HeroSection.vue:36
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:36
 msgctxt "hero.caption.content"
 msgid "Example: ###link######br### This will search for images that match strings close to the term 'theatre' with a difference of one character. Results might include terms with different spellings like 'theater'."
 msgstr ""
 
-#: src/components/HeroSection.vue:6
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:6
 msgctxt "hero.title"
 msgid "Feedback"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/HeroSection.vue:36
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:36
 msgctxt "hero.caption.content"
 msgid "Thank you for using Openverse! We welcome your ideas for improving the tool below. To provide regular feedback, join the ###openverse### channel in the ###making-wordpress### Slack workspace."
 msgstr ""
 
-#: src/pages/feedback.vue:14
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/feedback.vue:14
 msgctxt "feedback.description.openverse"
 msgid "#openverse"
 msgstr ""
 
-#: src/pages/feedback.vue:19
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/feedback.vue:19
 msgctxt "feedback.description.making-wordpress"
 msgid "Making WordPress"
 msgstr ""
@@ -860,7 +859,7 @@ msgctxt "feedback.report"
 msgid "Report a Bug"
 msgstr ""
 
-#: src/pages/feedback.vue:54
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/feedback.vue:54
 msgctxt "feedback.loading"
 msgid "Loading..."
 msgstr ""
@@ -877,12 +876,12 @@ msgctxt "feedback.report"
 msgid "report a bug form"
 msgstr ""
 
-#: src/components/HeroSection.vue:6
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:6
 msgctxt "hero.title"
 msgid "Web extension"
 msgstr ""
 
-#: src/pages/meta-search.vue:10
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/meta-search.vue:10
 msgctxt "meta-search-page.intro"
 msgid "A browser extension that lets you search and use open-licensed and public domain images."
 msgstr ""
@@ -891,7 +890,7 @@ msgctxt "extension.features.search.heading"
 msgid "Search and filter openly-licensed and public domain content"
 msgstr ""
 
-#: src/components/HeroSection.vue:36
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:36
 msgctxt "hero.caption.content"
 msgid "Browse through millions of content and use filters to find what best meets your needs."
 msgstr ""
@@ -900,7 +899,7 @@ msgctxt "extension.features.search.heading"
 msgid "Bookmark your favorite images without breaking your navigation"
 msgstr ""
 
-#: src/components/HeroSection.vue:36
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:36
 msgctxt "hero.caption.content"
 msgid "Add images to your bookmarks and use them whenever you want without interrupting your navigation. "
 msgstr ""
@@ -909,17 +908,17 @@ msgctxt "extension.features.search.heading"
 msgid "Use the image and give attribution to the creator easily"
 msgstr ""
 
-#: src/components/HeroSection.vue:36
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:36
 msgctxt "hero.caption.content"
 msgid "Download the image and paste the attribution information on compatible formats."
 msgstr ""
 
-#: src/pages/extension.vue:65
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/extension.vue:65
 msgctxt "extension.conclusion"
 msgid "Have your favourite content while browsing the web"
 msgstr ""
 
-#: src/components/HeroSection.vue:6
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:6
 msgctxt "hero.title"
 msgid "Browse collections"
 msgstr ""
@@ -937,24 +936,24 @@ msgctxt "collections.collection-size"
 msgid "Collection size: ###count### images"
 msgstr ""
 
-#: src/layouts/error.vue:5
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/layouts/error.vue:5
 msgctxt "error.not-found"
 msgid "Page Not Found"
 msgstr ""
 
-#: src/layouts/error.vue:7
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/layouts/error.vue:7
 msgctxt "error.occurred"
 msgid "An error occurred"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/photos/_id.vue:100
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/photos/_id.vue:103
 msgctxt "error.image-not-found"
 msgid "Couldn't find image with id ###id###"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/audio/_id.vue:96
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/audio/_id.vue:98
 msgctxt "error.media-not-found"
 msgid "Couldn't find ###mediaType### with id ###id###"
 msgstr ""
@@ -983,23 +982,23 @@ msgctxt "search-tab.video"
 msgid "Video"
 msgstr ""
 
-#: src/components/HeroSection.vue:6
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:6
 msgctxt "hero.title"
 msgid "Filters"
 msgstr ""
 
-#: src/components/Filters/FilterDisplay.vue:4
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/Filters/FilterDisplay.vue:4
 msgctxt "filters.filter-by"
 msgid "Filter By"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/Filters/FilterTag.vue:4
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/Filters/FilterTag.vue:4
 msgctxt "filters.filter-tag-aria"
 msgid "###filterLabel### filter"
 msgstr ""
 
-#: src/components/HeroSection.vue:6
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:6
 msgctxt "hero.title"
 msgid "License or Public Domain"
 msgstr ""
@@ -1036,7 +1035,7 @@ msgctxt "filters.licenses.by-nc-nd"
 msgid "BY-NC-ND"
 msgstr ""
 
-#: src/components/HeroSection.vue:6
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:6
 msgctxt "hero.title"
 msgid "Use"
 msgstr ""
@@ -1049,17 +1048,17 @@ msgctxt "filters.license-types.modification"
 msgid "Modify or adapt"
 msgstr ""
 
-#: src/components/HeroSection.vue:6
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:6
 msgctxt "hero.title"
 msgid "Source"
 msgstr ""
 
-#: src/components/HeroSection.vue:6
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:6
 msgctxt "hero.title"
 msgid "Source"
 msgstr ""
 
-#: src/components/HeroSection.vue:6
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:6
 msgctxt "hero.title"
 msgid "Audio Category"
 msgstr ""
@@ -1076,7 +1075,7 @@ msgctxt "filters.audio-categories.podcast"
 msgid "Podcast"
 msgstr ""
 
-#: src/components/HeroSection.vue:6
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:6
 msgctxt "hero.title"
 msgid "Image Type"
 msgstr ""
@@ -1093,7 +1092,7 @@ msgctxt "filters.image-categories.digitized-artwork"
 msgid "Digitized Artworks"
 msgstr ""
 
-#: src/components/HeroSection.vue:6
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:6
 msgctxt "hero.title"
 msgid "File Type"
 msgstr ""
@@ -1110,7 +1109,7 @@ msgctxt "filters.audio-extensions.flac"
 msgid "FLACs"
 msgstr ""
 
-#: src/components/HeroSection.vue:6
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:6
 msgctxt "hero.title"
 msgid "File Type"
 msgstr ""
@@ -1131,7 +1130,7 @@ msgctxt "filters.image-extensions.svg"
 msgid "SVGs"
 msgstr ""
 
-#: src/components/HeroSection.vue:6
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:6
 msgctxt "hero.title"
 msgid "Aspect Ratio"
 msgstr ""
@@ -1148,7 +1147,7 @@ msgctxt "filters.aspect-ratios.square"
 msgid "Square"
 msgstr ""
 
-#: src/components/HeroSection.vue:6
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:6
 msgctxt "hero.title"
 msgid "Image Size"
 msgstr ""
@@ -1165,7 +1164,7 @@ msgctxt "filters.sizes.large"
 msgid "Large"
 msgstr ""
 
-#: src/components/HeroSection.vue:6
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:6
 msgctxt "hero.title"
 msgid "Search Settings"
 msgstr ""
@@ -1174,7 +1173,7 @@ msgctxt "filters.mature.enable"
 msgid "Enable Mature Content"
 msgstr ""
 
-#: src/components/HeroSection.vue:6
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:6
 msgctxt "hero.title"
 msgid "Durations"
 msgstr ""
@@ -1191,12 +1190,12 @@ msgctxt "filters.durations.long"
 msgid "Long"
 msgstr ""
 
-#: src/components/HeroSection.vue:6
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:6
 msgctxt "hero.title"
 msgid "Search by Creator"
 msgstr ""
 
-#: src/components/HeroSection.vue:6
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:6
 msgctxt "hero.title"
 msgid "Search By"
 msgstr ""
@@ -1206,44 +1205,43 @@ msgid "Creator"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/Filters/LicenseExplanationTooltip.vue:8
 msgctxt "filters.license-explanation.tool"
 msgid "Read more about the tool ###link###"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/meta-search.vue:17
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/meta-search.vue:17
 msgctxt "meta-search-page.license"
 msgid "Read more about the license ###link###"
 msgstr ""
 
-#: src/components/HeroSection.vue:44
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:44
 msgctxt "hero.caption.link"
 msgid "here"
 msgstr ""
 
-#: src/components/Filters/FilterDisplay.vue:4
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/Filters/FilterDisplay.vue:4
 msgctxt "filters.filter-by"
 msgid "Filter results by"
 msgstr ""
 
-#: src/components/Filters/FiltersList.vue:15
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/Filters/FiltersList.vue:15
 msgctxt "filter-list.hide"
 msgid "Hide filters"
 msgstr ""
 
-#: src/components/Filters/FiltersList.vue:39
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/Filters/FiltersList.vue:39
 msgctxt "filter-list.clear"
 msgid "Clear filters"
 msgstr ""
 
-#: src/components/Filters/FiltersList.vue:45
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/Filters/FiltersList.vue:45
 msgctxt "filter-list.show"
 msgid "Show results"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/Filters/FilterChecklist.vue:16
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/Filters/FilterChecklist.vue:16
 msgctxt "filter-list.category-aria"
 msgid "filters list for ###categoryName### category"
 msgstr ""
@@ -1252,12 +1250,12 @@ msgctxt "browse-page.all-no-results"
 msgid "No results"
 msgstr ""
 
-#: src/components/AudioResultsList.vue:80
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/AudioResultsList.vue:81
 msgctxt "browse-page.audio-no-results"
 msgid "No audio results"
 msgstr ""
 
-#: src/components/SearchGridManualLoad.vue:125
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/SearchGridManualLoad.vue:124
 msgctxt "browse-page.image-no-results"
 msgid "No image results"
 msgstr ""
@@ -1270,7 +1268,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. Do not translate words between ### ###.
-#: src/components/AudioResultsList.vue:86
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/AudioResultsList.vue:87
 msgctxt "browse-page.audio-result-count"
 msgid "###localeCount### audio result"
 msgid_plural "###localeCount### audio results"
@@ -1278,7 +1276,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. Do not translate words between ### ###.
-#: src/components/SearchGridManualLoad.vue:131
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/SearchGridManualLoad.vue:130
 msgctxt "browse-page.image-result-count"
 msgid "###localeCount### image result"
 msgid_plural "###localeCount### image results"
@@ -1293,7 +1291,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. Do not translate words between ### ###.
-#: src/components/AudioResultsList.vue:83
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/AudioResultsList.vue:84
 msgctxt "browse-page.audio-result-count-more"
 msgid "Over ###localeCount### audio results"
 msgid_plural "Over ###localeCount### audio results"
@@ -1301,7 +1299,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. Do not translate words between ### ###.
-#: src/components/SearchGridManualLoad.vue:128
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/SearchGridManualLoad.vue:127
 msgctxt "browse-page.image-result-count-more"
 msgid "Over ###localeCount### image results"
 msgid_plural "Over ###localeCount### image results"
@@ -1309,18 +1307,18 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. Do not translate words between ### ###.
-#: src/components/AudioResultsList.vue:26
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/AudioResultsList.vue:25
 msgctxt "browse-page.no-more"
 msgid "No more ###type### :("
 msgstr ""
 
-#: src/components/AudioResultsList.vue:30
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/AudioResultsList.vue:29
 msgctxt "browse-page.load"
 msgid "Load more results"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/AudioResultsList.vue:37
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/AudioResultsList.vue:36
 msgctxt "browse-page.fetching-error"
 msgid "Error fetching ###type###:"
 msgstr ""
@@ -1329,28 +1327,28 @@ msgctxt "browse-page.other-source"
 msgid "Not finding what you need? Search other sources"
 msgstr ""
 
-#: src/components/HeroSection.vue:36
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:36
 msgctxt "hero.caption.content"
 msgid "Are these results relevant?"
 msgstr ""
 
-#: src/components/SearchRating.vue:12
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/SearchRating.vue:12
 msgctxt "browse-page.search-rating.yes"
 msgid "Yes"
 msgstr ""
 
-#: src/components/SearchRating.vue:21
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/SearchRating.vue:21
 msgctxt "browse-page.search-rating.no"
 msgid "No"
 msgstr ""
 
-#: src/components/SearchRating.vue:26
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/SearchRating.vue:26
 msgctxt "browse-page.search-rating.feedback-thanks"
 msgid "Thank you for the feedback!"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/HeroSection.vue:28
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:28
 msgctxt "hero.search.placeholder"
 msgid "Search all ###type###"
 msgstr ""
@@ -1375,12 +1373,12 @@ msgctxt "browse-page.search-form.collection-placeholder"
 msgid "Search this collection"
 msgstr ""
 
-#: src/components/HeroSection.vue:32
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:32
 msgctxt "hero.search.button"
 msgid "Search"
 msgstr ""
 
-#: src/components/HeroSection.vue:6
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:6
 msgctxt "hero.title"
 msgid "License CC"
 msgstr ""
@@ -1409,7 +1407,7 @@ msgctxt "filters.licenses.pdm"
 msgid "This work is marked as being in the public domain."
 msgstr ""
 
-#: src/components/HeroSection.vue:6
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:6
 msgctxt "hero.title"
 msgid "Safer Browsing"
 msgstr ""
@@ -1418,17 +1416,17 @@ msgctxt "hero.caption"
 msgid "By default, search results will not include results that have been reported as mature by users and sources."
 msgstr ""
 
-#: src/components/HomeLicenseFilter.vue:4
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HomeLicenseFilter.vue:4
 msgctxt "hero.license-filter.label"
 msgid "Show Mature Content"
 msgstr ""
 
-#: src/pages/search-help.vue:89
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/search-help.vue:89
 msgctxt "search-guide.combine.aria-labels.close"
 msgid "close"
 msgstr ""
 
-#: src/components/ScrollButton.vue:4
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/ScrollButton.vue:4
 msgctxt "browse-page.aria.scroll"
 msgid "scroll to top"
 msgstr ""
@@ -1437,12 +1435,12 @@ msgctxt "hero.search"
 msgid "search"
 msgstr ""
 
-#: src/components/SearchRating.vue:12
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/SearchRating.vue:12
 msgctxt "browse-page.search-rating.yes"
 msgid "relevant result? answer: yes"
 msgstr ""
 
-#: src/components/SearchRating.vue:21
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/SearchRating.vue:21
 msgctxt "browse-page.search-rating.no"
 msgid "relevant result? answer: no"
 msgstr ""
@@ -1459,7 +1457,7 @@ msgctxt "filters.creator"
 msgid "search by creator"
 msgstr ""
 
-#: src/components/HeroSection.vue:6
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:6
 msgctxt "hero.title"
 msgid "Reuse content"
 msgstr ""
@@ -1481,23 +1479,23 @@ msgid "Image"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/HeroSection.vue:36
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:36
 msgctxt "hero.caption.content"
 msgid "Read more about the license ###link###"
 msgstr ""
 
-#: src/components/HeroSection.vue:44
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:44
 msgctxt "hero.caption.link"
 msgid "here"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/HeroSection.vue:36
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:36
 msgctxt "hero.caption.content"
 msgid "Read more about the tool ###link###"
 msgstr ""
 
-#: src/components/HeroSection.vue:44
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:44
 msgctxt "hero.caption.link"
 msgid "here"
 msgstr ""
@@ -1508,38 +1506,37 @@ msgid "###title######creator######marked-licensed######license######view-legal##
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/MediaInfo/CopyLicense.vue:49
 msgctxt "media-details.reuse.credit.creator-text"
 msgid " by ###creator-name###"
 msgstr ""
 
-#: src/components/MediaInfo/CopyLicense.vue:71
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/MediaInfo/CopyLicense.vue:71
 msgctxt "media-details.reuse.credit.marked"
 msgid "is marked with"
 msgstr ""
 
-#: src/components/MediaInfo/CopyLicense.vue:72
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/MediaInfo/CopyLicense.vue:72
 msgctxt "media-details.reuse.credit.licensed"
 msgid "is licensed under"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/MediaInfo/CopyLicense.vue:150
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/MediaInfo/CopyLicense.vue:150
 msgctxt "media-details.reuse.credit.view-legal-text"
 msgid ". To view ###terms-copy###visit ###URL###"
 msgstr ""
 
-#: src/components/MediaInfo/CopyLicense.vue:154
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/MediaInfo/CopyLicense.vue:154
 msgctxt "media-details.reuse.credit.terms-text"
 msgid "the terms,"
 msgstr ""
 
-#: src/components/MediaInfo/CopyLicense.vue:155
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/MediaInfo/CopyLicense.vue:155
 msgctxt "media-details.reuse.credit.copy-text"
 msgid "a copy of this license,"
 msgstr ""
 
-#: src/components/HeroSection.vue:6
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:6
 msgctxt "hero.title"
 msgid "Credit the Creator"
 msgstr ""
@@ -1557,12 +1554,11 @@ msgid "Plain text"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/MediaInfo/MediaLicense.vue:7
 msgctxt "media-details.reuse.attribution.main"
 msgid "This image was marked with a ###link### license."
 msgstr ""
 
-#: src/pages/meta-search.vue:17
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/meta-search.vue:17
 msgctxt "meta-search-page.license"
 msgid "license."
 msgstr ""
@@ -1575,12 +1571,12 @@ msgctxt "media-details.source-label"
 msgid "Source"
 msgstr ""
 
-#: src/pages/feedback.vue:54
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/feedback.vue:54
 msgctxt "feedback.loading"
 msgid "Loading..."
 msgstr ""
 
-#: src/components/ImageDetails/PhotoDetails.vue:12
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/ImageDetails/PhotoDetails.vue:12
 msgctxt "photo-details.back"
 msgid "Back to search results"
 msgstr ""
@@ -1590,77 +1586,82 @@ msgctxt "filters.creator"
 msgid "by ###name###"
 msgstr ""
 
-#: src/components/HeroSection.vue:6
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:6
 msgctxt "hero.title"
 msgid "Reuse"
 msgstr ""
 
-#: src/components/HeroSection.vue:6
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:6
 msgctxt "hero.title"
 msgid "Information"
 msgstr ""
 
-#: src/components/ImageDetails/ImageInfo.vue:6
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/ImageDetails/ImageInfo.vue:6
 msgctxt "photo-details.information.type"
 msgid "Type:"
 msgstr ""
 
-#: src/pages/sources.vue:15
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/sources.vue:15
 msgctxt "sources.cc-content.provider"
 msgid "Provider:"
 msgstr ""
 
-#: src/components/ImageDetails/ImageInfo.vue:10
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/ImageDetails/ImageInfo.vue:10
 msgctxt "photo-details.information.dimensions"
 msgid "Dimensions:"
 msgstr ""
 
-#: src/pages/sources.vue:97
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/sources.vue:97
 msgctxt "sources.providers.source"
 msgid "Source:"
 msgstr ""
 
-#: src/pages/meta-search.vue:17
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/meta-search.vue:17
 msgctxt "meta-search-page.license"
 msgid "License"
 msgstr ""
 
-#: src/components/ImageDetails/ImageInfo.vue:42
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/ImageDetails/ImageInfo.vue:42
 msgctxt "photo-details.information.tags"
 msgid "Tags"
 msgstr ""
 
-#: src/components/ImageDetails/ImageInfo.vue:16
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/ImageDetails/ImageInfo.vue:16
 msgctxt "photo-details.information.pixels"
 msgid "pixels"
 msgstr ""
 
-#: src/components/HeroSection.vue:36
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/ImageDetails/PhotoDetails.vue:115
+msgctxt "photo-details.share"
+msgid "Share"
+msgstr ""
+
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:36
 msgctxt "hero.caption.content"
 msgid "How are you using this image?"
 msgstr ""
 
-#: src/components/HeroSection.vue:44
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:44
 msgctxt "hero.caption.link"
 msgid "Let us know"
 msgstr ""
 
-#: src/components/ImageDetails/ReuseSurvey.vue:13
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/ImageDetails/ReuseSurvey.vue:13
 msgctxt "photo-details.survey.answer"
 msgid "by answering a few questions."
 msgstr ""
 
-#: src/components/ImageDetails/PhotoDetails.vue:151
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/ImageDetails/PhotoDetails.vue:176
 msgctxt "photo-details.weblink"
 msgid "Go to image's website"
 msgstr ""
 
-#: src/components/ImageDetails/LegalDisclaimer.vue:4
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/ImageDetails/LegalDisclaimer.vue:4
 msgctxt "photo-details.legal-disclaimer"
 msgid "Openverse aggregates data from publicly available repositories of open content. Openverse does not host the content and does not verify that the content is properly CC-licensed or that the attribution information is accurate or complete. Please follow the link to the source of the content to independently verify before reuse."
 msgstr ""
 
-#: src/components/RelatedImages.vue:7
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/RelatedImages.vue:7
 msgctxt "photo-details.related-images"
 msgid "Related Images"
 msgstr ""
@@ -1669,27 +1670,27 @@ msgctxt "photo-details.copy"
 msgid "Copy"
 msgstr ""
 
-#: src/components/CopyButton.vue:14
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/CopyButton.vue:14
 msgctxt "photo-details.copy.copied"
 msgid "Copied!"
 msgstr ""
 
-#: src/components/HeroSection.vue:6
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:6
 msgctxt "hero.title"
 msgid "Report this content"
 msgstr ""
 
-#: src/pages/meta-search.vue:70
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/meta-search.vue:70
 msgctxt "meta-search-page.new.issue"
 msgid "What's the issue?"
 msgstr ""
 
-#: src/components/ContentReport/OtherIssueForm.vue:7
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/ContentReport/OtherIssueForm.vue:7
 msgctxt "photo-details.content-report.issue-description"
 msgid "Please describe the issue for us"
 msgstr ""
 
-#: src/components/ContentReport/ContentReportForm.vue:48
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/ContentReport/ContentReportForm.vue:48
 msgctxt "photo-details.content-report.copyright"
 msgid "Infringes Copyright"
 msgstr ""
@@ -1706,44 +1707,44 @@ msgctxt "hero.caption"
 msgid "For security purposes, Openverse collects and retains anonymized IP addresses of those who complete and submit this form."
 msgstr ""
 
-#: src/pages/sources.vue:44
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/sources.vue:44
 msgctxt "sources.new-content.next"
 msgid "Next"
 msgstr ""
 
-#: src/components/ImageDetails/PhotoDetails.vue:12
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/ImageDetails/PhotoDetails.vue:12
 msgctxt "photo-details.back"
 msgid "Back"
 msgstr ""
 
-#: src/components/ContentReport/OtherIssueForm.vue:36
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/ContentReport/OtherIssueForm.vue:36
 msgctxt "photo-details.content-report.submit"
 msgid "Submit"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/HeroSection.vue:36
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:36
 msgctxt "hero.caption.content"
 msgid "You must fill out this ###link### to report copyright infringement. No action will be taken until the form is filled out and submitted."
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/sources.vue:15
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/sources.vue:15
 msgctxt "sources.cc-content.provider"
 msgid "We recommend doing the same at the source, ###link###."
 msgstr ""
 
-#: src/components/ContentReport/DoneMessage.vue:4
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/ContentReport/DoneMessage.vue:4
 msgctxt "photo-details.content-report.dmca.thanks"
 msgid "Thank you for reporting an issue with the results of Openverse!"
 msgstr ""
 
-#: src/components/ContentReport/ReportError.vue:4
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/ContentReport/ReportError.vue:4
 msgctxt "photo-details.content-report.dmca.submission-error"
 msgid "There was an error with the report submission. Please try again."
 msgstr ""
 
-#: src/components/HeroSection.vue:44
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:44
 msgctxt "hero.caption.link"
 msgid "DMCA form"
 msgstr ""
@@ -1753,7 +1754,7 @@ msgctxt "photo-details.content-report.dmca.aria-form"
 msgid "###provider### form"
 msgstr ""
 
-#: src/components/ContentReport/ContentReportForm.vue:4
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/ContentReport/ContentReportForm.vue:4
 msgctxt "photo-details.aria.close-form"
 msgid "close form"
 msgstr ""
@@ -1762,39 +1763,52 @@ msgctxt "photo-details.content-report.dmca"
 msgid "dmca form"
 msgstr ""
 
-#: src/pages/meta-search.vue:17
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/meta-search.vue:17
 msgctxt "meta-search-page.license"
 msgid "read more about the license"
 msgstr ""
 
-#: src/components/Filters/LicenseExplanationTooltip.vue:8
 msgctxt "filters.license-explanation.tool"
 msgid "read more about the tool"
 msgstr ""
 
-#: src/components/ImageDetails/PhotoDetails.vue:52
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/ImageDetails/PhotoDetails.vue:52
 msgctxt "photo-details.aria.details"
 msgid "image details"
 msgstr ""
 
-#: src/components/MediaInfo/MediaLicense.vue:7
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/ImageDetails/SocialShareButtons.vue:5
+msgctxt "photo-details.aria.share.facebook"
+msgid "share on facebook"
+msgstr ""
+
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/ImageDetails/SocialShareButtons.vue:15
+msgctxt "photo-details.aria.share.twitter"
+msgid "share on twitter"
+msgstr ""
+
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/ImageDetails/SocialShareButtons.vue:25
+msgctxt "photo-details.aria.share.pinterest"
+msgid "share on pinterest"
+msgstr ""
+
 msgctxt "media-details.reuse.attribution.main"
 msgid "main content"
 msgstr ""
 
-#: src/components/AudioDetails/Related.vue:2
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/AudioDetails/Related.vue:2
 msgctxt "photo-details.aria.related"
 msgid "related images"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/ContentReport/DmcaNotice.vue:27
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/ContentReport/DmcaNotice.vue:27
 msgctxt "photo-details.aria.provider-report-form"
 msgid "###provider### form"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/ImageDetails/PhotoDetails.vue:69
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/ImageDetails/PhotoDetails.vue:69
 msgctxt "photo-details.aria.creator-url"
 msgid "author ###creator###"
 msgstr ""
@@ -1803,42 +1817,42 @@ msgctxt "audio-details.genre-label"
 msgid "Genre"
 msgstr ""
 
-#: src/components/AudioDetails/Related.vue:4
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/AudioDetails/Related.vue:4
 msgctxt "audio-details.related-audios"
 msgid "Related audios"
 msgstr ""
 
-#: src/components/AudioDetails/Table.vue:16
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/AudioDetails/Table.vue:16
 msgctxt "audio-details.table.album"
 msgid "Album"
 msgstr ""
 
-#: src/components/AudioDetails/Table.vue:22
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/AudioDetails/Table.vue:22
 msgctxt "audio-details.table.category"
 msgid "Type"
 msgstr ""
 
-#: src/components/AudioDetails/Table.vue:29
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/AudioDetails/Table.vue:29
 msgctxt "audio-details.table.sample-rate"
 msgid "Sample Rate"
 msgstr ""
 
-#: src/components/AudioDetails/Table.vue:37
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/AudioDetails/Table.vue:37
 msgctxt "audio-details.table.filetype"
 msgid "Format"
 msgstr ""
 
-#: src/pages/sources.vue:15
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/sources.vue:15
 msgctxt "sources.cc-content.provider"
 msgid "Provider"
 msgstr ""
 
-#: src/pages/sources.vue:97
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/sources.vue:97
 msgctxt "sources.providers.source"
 msgid "Source"
 msgstr ""
 
-#: src/components/AudioDetails/Table.vue:61
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/AudioDetails/Table.vue:61
 msgctxt "audio-details.table.genre"
 msgid "Genre"
 msgstr ""
@@ -1856,7 +1870,7 @@ msgctxt "hero.caption"
 msgid "Click on a source below to directly search other collections of CC-licensed images.###break###Please note that Use filters are not supported for Open Clip Art Library or Nappy."
 msgstr ""
 
-#: src/components/HeroSection.vue:6
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:6
 msgctxt "hero.title"
 msgid "Use"
 msgstr ""
@@ -1880,6 +1894,12 @@ msgid "Not finding what you're looking for? Try additional ###type### sources."
 msgstr ""
 
 #. Do not translate words between ### ###.
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/MetaSearch/MetaSearchForm.vue:4
+msgctxt "meta-search.form.no-results-title"
+msgid "No ###type### results for \"###query###\"."
+msgstr ""
+
+#. Do not translate words between ### ###.
 msgctxt "hero.caption"
 msgid "Click on a source below to directly search other collections of CC-licensed ###type###.###break###Please note that Use filters are not supported for ###filter###."
 msgstr ""
@@ -1900,18 +1920,18 @@ msgctxt "browsers.edge"
 msgid "Edge"
 msgstr ""
 
-#: src/components/HomeLicenseFilter.vue:4
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HomeLicenseFilter.vue:4
 msgctxt "hero.license-filter.label"
 msgid "Audio seek bar"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/AudioTrack/Waveform.vue:420
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/AudioTrack/Waveform.vue:420
 msgctxt "waveform.current-time"
 msgid "###time### seconds"
 msgstr ""
 
-#: src/pages/meta-search.vue:97
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/meta-search.vue:97
 msgctxt "meta-search-page.why.aria-label"
 msgid "Audio Player"
 msgstr ""
@@ -1932,7 +1952,7 @@ msgctxt "audio-track.messages.err_unsupported"
 msgid "This audio format is not supported by your browser."
 msgstr ""
 
-#: src/pages/feedback.vue:54
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/feedback.vue:54
 msgctxt "feedback.loading"
 msgid "Loading..."
 msgstr ""
@@ -1950,7 +1970,7 @@ msgctxt "play-pause.pause"
 msgid "Pause"
 msgstr ""
 
-#: src/components/HeroSection.vue:6
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/HeroSection.vue:6
 msgctxt "hero.title"
 msgid "Audio Category"
 msgstr ""
@@ -1999,23 +2019,23 @@ msgctxt "filters.licenses.by-nc-nd"
 msgid "BY-NC-ND"
 msgstr ""
 
-#: src/components/DropdownButton.vue:66
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/DropdownButton.vue:17
 msgctxt "dropdown-button.aria.arrow-label"
 msgid "Dropdown"
 msgstr ""
 
-#: src/pages/meta-search.vue:10
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/pages/meta-search.vue:10
 msgctxt "meta-search-page.intro"
 msgid "CC Search is now called Openverse and joins WordPress as an open source project."
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/MigrationNotice.vue:4
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/MigrationNotice.vue:4
 msgctxt "migration-notice.more"
 msgid "###read-more### about this announcement."
 msgstr ""
 
-#: src/components/MigrationNotice.vue:10
+#: C:/Users/kevan/Desktop/test/openverse-frontend/src/components/MigrationNotice.vue:10
 msgctxt "migration-notice.read"
 msgid "Read more"
 msgstr ""
