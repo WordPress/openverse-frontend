@@ -6,28 +6,51 @@
     <h3 class="b-header">
       {{ $t('photo-details.related-images') }}
     </h3>
-    <SearchGridManualLoad
-      v-if="isPrimaryImageLoaded === true"
-      :images-count="imagesCount"
-      :images="relatedImages"
-      :query="query"
-      :filter="filter"
-      :include-analytics="false"
-      :use-infinite-scroll="false"
-      :include-add-to-list="false"
+    <ImageGrid
+      :images="images"
+      :can-load-more="false"
+      :is-fetching="isFetching"
+      :fetching-error="fetchingError"
+      :error-message-text="null"
     />
   </aside>
 </template>
 
 <script>
+import ImageService from '~/data/image-service'
+
 export default {
   name: 'RelatedImages',
-  props: [
-    'relatedImages',
-    'imagesCount',
-    'query',
-    'filter',
-    'isPrimaryImageLoaded',
-  ],
+  props: {
+    imageId: {
+      type: String,
+      default: null,
+    },
+  },
+  data: () => ({
+    images: [],
+    service: ImageService,
+  }),
+  fetch() {
+    const mainImageId = this.$props.imageId
+      ? this.$props.imageId
+      : this.$route.params.id
+    this.service
+      .getRelatedMedia({ id: mainImageId })
+      .then(({ data }) => {
+        this.images = data.results
+      })
+      .catch((err) => {
+        console.log('Error', err)
+      })
+  },
+  computed: {
+    isFetching() {
+      return !this.$fetchState.pending
+    },
+    fetchingError() {
+      return this.$fetchState.error
+    },
+  },
 }
 </script>
