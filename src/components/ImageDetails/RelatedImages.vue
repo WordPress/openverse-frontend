@@ -1,0 +1,52 @@
+<template>
+  <aside
+    :aria-label="$t('photo-details.aria.related')"
+    class="p-4 my-6 photo_related-images"
+  >
+    <h3 class="b-header">
+      {{ $t('photo-details.related-images') }}
+    </h3>
+    <ImageGrid
+      :images="images"
+      :can-load-more="false"
+      :is-fetching="$fetchState.pending"
+      :fetching-error="$fetchState.error"
+      :error-message-text="null"
+    />
+  </aside>
+</template>
+
+<script>
+import { ref } from '@nuxtjs/composition-api'
+import useRelated from '~/composables/use-related'
+import { IMAGE } from '~/constants/media'
+
+export default {
+  name: 'RelatedImages',
+  props: {
+    imageId: {
+      type: String,
+      default: null,
+    },
+    service: {},
+  },
+  /**
+   * Fetches related images on `imageId` change
+   * @param props
+   * @return {{images: (Ref<UnwrapRef<[]>>|Ref<ImageDetail[]>)}}
+   */
+  setup(props) {
+    const mainImageId = ref(props.imageId)
+    const relatedOptions = {
+      mediaType: IMAGE,
+      mediaId: mainImageId,
+    }
+    // Using service prop to be able to mock when testing
+    if (props.service) {
+      relatedOptions.service = props.service
+    }
+    const { media: images } = useRelated(relatedOptions)
+    return { images }
+  },
+}
+</script>

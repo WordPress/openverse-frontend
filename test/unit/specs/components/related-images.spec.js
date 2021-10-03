@@ -1,6 +1,8 @@
-import RelatedImages from '~/components/RelatedImages'
+import RelatedImages from '~/components/ImageDetails/RelatedImages'
 import render from '../../test-utils/render'
-import { mount } from '@vue/test-utils'
+import { createLocalVue, mount } from '@vue/test-utils'
+import Vuex from 'vuex'
+import VueI18n from 'vue-i18n'
 
 const serviceMock = {
   getRelatedMedia: jest.fn(() =>
@@ -8,32 +10,36 @@ const serviceMock = {
   ),
 }
 
+const localVue = createLocalVue()
+localVue.use(Vuex)
+localVue.use(VueI18n)
+localVue.prototype.$nuxt = {
+  nbFetching: 0,
+}
+
 const doRender = async () => {
-  const wrapper = render(
+  return render(
     RelatedImages,
     {
-      propsData: { imageId: 'foo' },
+      localVue,
+      propsData: { imageId: 'foo', service: serviceMock },
       mocks: { $fetchState: { pending: false, error: null, timestamp: null } },
-      stubs: { GridImageGrid: true },
-      data: () => ({
-        service: serviceMock,
-      }),
+      stubs: { ImageGrid: true },
     },
     mount
   )
-  await RelatedImages.fetch.call(wrapper.vm)
-  return wrapper
 }
 
 describe('RelatedImage', () => {
   it('should render content when finished loading related images', async () => {
     const wrapper = await doRender()
-    const relatedElement = wrapper.find('aside')
-    expect(relatedElement).toBeDefined()
+
     const header = wrapper.find('h3').text()
     expect(header).toEqual('photo-details.related-images')
-    const imageGridStub = wrapper.find('gridiagegrid-stub')
-    expect(imageGridStub).toBeDefined()
-    expect(serviceMock.getRelatedMedia).toHaveBeenCalledWith({ id: 'foo' })
+
+    const imageGridStub = wrapper.find('imagegrid-stub')
+    expect(imageGridStub.attributes().images).toEqual('img1,img2')
+
+    expect(serviceMock.getRelatedMedia).toHaveBeenCalledTimes(1)
   })
 })
