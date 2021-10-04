@@ -60,18 +60,18 @@ export default {
      * @param {AudioDetail} audio
      */
     const getFormats = (audio) => {
+      // TODO: finalize the property names in
+      //  formats objects and alt_files objects
       let formats = [
         { extension_name: audio.filetype, download_url: audio.url },
       ]
       if (audio.alt_files) {
-        console.log('audio has alt_files')
         formats = formats.concat(
           audio.alt_files.map((altFile) => ({
             extension_name: altFile.extension,
             download_url: altFile.url,
           }))
         )
-        console.log('formats: ', formats)
       }
       return formats
     }
