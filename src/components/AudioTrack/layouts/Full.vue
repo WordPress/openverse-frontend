@@ -2,7 +2,7 @@
   <div class="full-track w-full">
     <slot name="controller" />
 
-    <div class="flex flex-row space-between mx-16 my-6">
+    <div class="flex flex-row justify-between mx-16 my-6">
       <div class="left-content flex flex-row items-center gap-6">
         <slot name="play-pause" />
 
@@ -28,8 +28,10 @@
         </div>
       </div>
 
-      <!-- TODO: Download dropdown -->
-      <div class="right-content bg-pink h-12 w-30 rounded-sm ml-auto" />
+      <DownloadButton
+        class="right-content h-14 flex"
+        :formats="getFormats(audio)"
+      />
     </div>
   </div>
 </template>
@@ -52,9 +54,30 @@ export default {
       }
       return '--:--'
     }
-
+    /**
+     * Creates a list of { extension_name, download_url } objects
+     * for DownloadButton
+     * @param {AudioDetail} audio
+     */
+    const getFormats = (audio) => {
+      let formats = [
+        { extension_name: audio.filetype, download_url: audio.url },
+      ]
+      if (audio.alt_files) {
+        console.log('audio has alt_files')
+        formats = formats.concat(
+          audio.alt_files.map((altFile) => ({
+            extension_name: altFile.extension,
+            download_url: altFile.url,
+          }))
+        )
+        console.log('formats: ', formats)
+      }
+      return formats
+    }
     return {
       timeFmt,
+      getFormats,
     }
   },
 }

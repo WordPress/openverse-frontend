@@ -1,5 +1,5 @@
 <template>
-  <div class="relative block max-w-min">
+  <div class="relative flex max-w-min">
     <!-- rounded-X-none is required to fight Edge UA styles that apply a 2px border radius to all `button` elements -->
     <div class="flex">
       <slot
@@ -11,7 +11,7 @@
       <button
         ref="dropdownButton"
         type="button"
-        class="dropdown-button ml-1 rounded-r-sm rounded-l-none"
+        class="dropdown-button ml-1 rounded-r-sm rounded-l-none w-14"
         :class="{ 'dropdown-button-active': isOpen }"
         aria-haspopup="menu"
         :aria-label="safeDropdownAriaLabel"
