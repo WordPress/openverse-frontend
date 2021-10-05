@@ -14,7 +14,9 @@
       />
       <LoadingIcon v-show="$fetchState.pending" />
     </template>
-    <p v-show="!!$fetchState.error">{{ errorMessage }}</p>
+    <p v-show="!!$fetchState.error">
+      {{ $t('media-details.related-error') }}
+    </p>
   </aside>
 </template>
 
@@ -34,10 +36,10 @@ export default {
   },
   /**
    * Fetches related audios on `audioId` change
-   * @param props
+   * @param {object} props
    * @param {string} props.audioId
    * @param {any} props.service
-   * @return {{audios: (Ref<UnwrapRef<[]>>|Ref<AudioDetail[]>)}}
+   * @return {{ audios: Ref<AudioDetail[]> }}
    */
   setup(props) {
     const mainAudioId = ref(props.audioId)
@@ -51,11 +53,6 @@ export default {
     }
     const { media: audios } = useRelated(relatedOptions)
     return { audios }
-  },
-  computed: {
-    errorMessage() {
-      return this.$t('media-details.related-error')
-    },
   },
 }
 </script>

@@ -12,7 +12,8 @@ export default function useRelated({
 }) {
   const media = ref([])
   // fetch and fetchState are available as this.$fetch and this.$fetchState
-  // in components, so there's no need to export them
+  // in components, so there's no need to export them,
+  // see https://composition-api.nuxtjs.org/lifecycle/usefetch/
   // eslint-disable-next-line no-unused-vars
   const { fetch, fetchState } = useFetch(async () => {
     const response = await service.getRelatedMedia({

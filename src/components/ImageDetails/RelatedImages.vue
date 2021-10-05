@@ -32,8 +32,8 @@ export default {
   },
   /**
    * Fetches related images on `imageId` change
-   * @param props
-   * @return {{images: (Ref<UnwrapRef<[]>>|Ref<ImageDetail[]>)}}
+   * @param {object} props
+   * @return {{ images: Ref<ImageDetail[]> }}
    */
   setup(props) {
     const mainImageId = ref(props.imageId)
@@ -46,6 +46,7 @@ export default {
       relatedOptions.service = props.service
     }
     const { media: images } = useRelated(relatedOptions)
+
     return { images }
   },
 }

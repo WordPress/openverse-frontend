@@ -23,7 +23,6 @@ const doRender = async () => {
     {
       localVue,
       propsData: { imageId: 'foo', service: serviceMock },
-      mocks: { $fetchState: { pending: false, error: null, timestamp: null } },
       stubs: { ImageGrid: true },
     },
     mount
@@ -36,10 +35,11 @@ describe('RelatedImage', () => {
 
     const header = wrapper.find('h3').text()
     expect(header).toEqual('photo-details.related-images')
+    console.log(wrapper.html())
+
+    expect(serviceMock.getRelatedMedia).toHaveBeenCalledTimes(1)
 
     const imageGridStub = wrapper.find('imagegrid-stub')
     expect(imageGridStub.attributes().images).toEqual('img1,img2')
-
-    expect(serviceMock.getRelatedMedia).toHaveBeenCalledTimes(1)
   })
 })
