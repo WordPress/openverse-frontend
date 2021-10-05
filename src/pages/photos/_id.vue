@@ -11,7 +11,7 @@
       :image-type="imageType"
       @onImageLoaded="onImageLoaded"
     />
-    <RelatedImages :image-id="id" />
+    <RelatedImages :image-id="imageId" />
   </div>
 </template>
 
