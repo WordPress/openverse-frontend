@@ -28,9 +28,7 @@
         </div>
       </div>
 
-      <DownloadButton
-        :formats="getFormats(audio)"
-      />
+      <DownloadButton :formats="getFormats(audio)" />
     </div>
   </div>
 </template>
