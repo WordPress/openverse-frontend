@@ -252,14 +252,16 @@
       "name": "Distance & Temps",
       "url": "https://www.jamendo.com/album/1290/distance-and-temps"
     },
-    "alt_files": [{
-      "extension": "flac",
-      "url": "https://mp3d.jamendo.com/download/track/8561/flac"
+    "alt_files": [
+      {
+        "extension": "flac",
+        "url": "https://mp3d.jamendo.com/download/track/8561/flac"
       },
       {
-      "extension": "mp31",
-      "url": "https://mp3d.jamendo.com/download/track/8561/mp31"
-    }],
+        "extension": "mp31",
+        "url": "https://mp3d.jamendo.com/download/track/8561/mp31"
+      }
+    ],
     "duration": 248000,
     "detail_url": "http://localhost:8000/v1/audio/242c1a4c-0623-436c-a600-7847412d28b6",
     "related_url": "http://localhost:8000/v1/audio/242c1a4c-0623-436c-a600-7847412d28b6/recommendations"
