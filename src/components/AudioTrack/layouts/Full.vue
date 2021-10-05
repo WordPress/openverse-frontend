@@ -29,7 +29,6 @@
       </div>
 
       <DownloadButton
-        class="right-content h-14 flex"
         :formats="getFormats(audio)"
       />
     </div>
