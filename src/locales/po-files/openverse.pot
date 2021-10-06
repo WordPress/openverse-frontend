@@ -1922,6 +1922,12 @@ msgctxt "waveform.current-time"
 msgid "###time### seconds"
 msgstr ""
 
+#. Do not translate words between ### ###.
+#: src/components/AudioThumbnail/AudioThumbnail.vue:33
+msgctxt "audio-thumbnail.alt"
+msgid "Cover art for \"###title###\" by ###creator###"
+msgstr ""
+
 #: src/pages/meta-search.vue:97
 msgctxt "meta-search-page.why.aria-label"
 msgid "Audio Player"
