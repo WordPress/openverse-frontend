@@ -21,6 +21,13 @@
     "file": "en-au.json"
   },
   {
+    "code": "en-ca",
+    "name": "English (Canada)",
+    "iso": "en",
+    "wpLocale": "en_CA",
+    "file": "en-ca.json"
+  },
+  {
     "code": "en-gb",
     "name": "English (UK)",
     "iso": "en",
@@ -61,6 +68,13 @@
     "iso": "es",
     "wpLocale": "es_EC",
     "file": "es-ec.json"
+  },
+  {
+    "code": "es-mx",
+    "name": "Spanish (Mexico)",
+    "iso": "es",
+    "wpLocale": "es_MX",
+    "file": "es-mx.json"
   },
   {
     "code": "es-ve",
@@ -152,5 +166,12 @@
     "iso": "zh",
     "wpLocale": "zh_CN",
     "file": "zh-cn.json"
+  },
+  {
+    "code": "zh-tw",
+    "name": "Chinese (Taiwan)",
+    "iso": "zh",
+    "wpLocale": "zh_TW",
+    "file": "zh-tw.json"
   }
 ]
