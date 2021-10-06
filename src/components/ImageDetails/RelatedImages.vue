@@ -26,7 +26,7 @@ export default {
   props: {
     imageId: {
       type: String,
-      default: null,
+      required: true,
     },
     service: {},
   },
