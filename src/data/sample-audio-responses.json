@@ -222,7 +222,7 @@
     "provider": "jamendo",
     "source": "jamendo",
     "category": "music",
-    "filetype": "mp3",
+    "filetype": "mp32",
     "sample_rate": "1.67",
     "description": "",
     "tags": [
@@ -254,11 +254,11 @@
     },
     "alt_files": [
       {
-        "extension": "flac",
+        "filetype": "flac",
         "url": "https://mp3d.jamendo.com/download/track/8561/flac"
       },
       {
-        "extension": "mp31",
+        "filetype": "mp31",
         "url": "https://mp3d.jamendo.com/download/track/8561/mp31"
       }
     ],
