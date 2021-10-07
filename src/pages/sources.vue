@@ -95,7 +95,7 @@
             >
               <span class="table-header-inner">
                 {{ $t('sources.providers.source') }}
-                <span class="icon"><i class="icon sort" /></span>
+                <TableSortIcon :active="sort.field === 'display_name'" />
               </span>
             </th>
             <th>{{ $t('sources.providers.domain') }}</th>
@@ -106,7 +106,7 @@
             >
               <span class="table-header-inner">
                 {{ $t('sources.providers.item') }}
-                <span class="icon"><i class="icon sort" /></span>
+                <TableSortIcon :active="sort.field === 'image_count'" />
               </span>
             </th>
           </tr>
