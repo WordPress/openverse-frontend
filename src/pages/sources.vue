@@ -183,7 +183,7 @@ export default SourcePage
 @import '~/styles/text-only-page.scss';
 
 $table-border: 1px solid $color-light-gray;
-$table-border-radius: 4px;
+$table-border-radius: 2px;
 
 .button.is-primary {
   font-size: 1.1875rem;
