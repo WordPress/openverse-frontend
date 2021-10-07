@@ -1,24 +1,19 @@
 import ImageGrid from '~/components/ImageGrid/ImageGrid'
 import { render, screen } from '@testing-library/vue'
 
+const propsData = {
+  images: [
+    { id: 'i1', url: 'http://localhost:8080/i1.png', title: 'image1' },
+    { id: 'i2', url: 'http://localhost:8080/i2.jpg', title: 'image2' },
+    { id: 'i3', url: 'http://localhost:8080/i3.svg', title: 'image3' },
+  ],
+  canLoadMore: false,
+}
+const options = {
+  props: propsData,
+  stubs: ['NuxtLink', 'LicenseIcons'],
+}
 describe('ImageGrid', () => {
-  let propsData = null
-  let options = null
-  beforeEach(() => {
-    propsData = {
-      images: [
-        { id: 'i1', url: 'http://localhost:8080/i1.png', title: 'image1' },
-        { id: 'i2', url: 'http://localhost:8080/i2.jpg', title: 'image2' },
-        { id: 'i3', url: 'http://localhost:8080/i3.svg', title: 'image3' },
-      ],
-      canLoadMore: false,
-    }
-    options = {
-      props: propsData,
-      stubs: ['NuxtLink', 'LicenseIcons'],
-    }
-  })
-
   it('renders images without load more button if canLoadMore is false', () => {
     options.props.canLoadMore = false
     render(ImageGrid, options)
