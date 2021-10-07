@@ -113,17 +113,17 @@
         </thead>
         <tbody>
           <tr v-for="(imageProvider, index) in sortedProviders" :key="index">
-            <td class="bold-cell">
+            <td class="font-semibold">
               <a :href="`/search?source=${imageProvider.source_name}`">
                 {{ imageProvider.display_name }}
               </a>
             </td>
-            <td class="bold-cell">
+            <td class="font-semibold">
               <a :href="imageProvider.source_url">
                 {{ imageProvider.source_url }}
               </a>
             </td>
-            <td class="number-cell">
+            <td class="number-cell font-semibold">
               {{ getProviderImageCount(imageProvider.image_count) }}
             </td>
           </tr>
@@ -243,13 +243,5 @@ $table-border-radius: 4px;
   tr td:last-child {
     border-right: $table-border;
   }
-}
-
-.bold-cell {
-  font-weight: 600;
-}
-
-.number-cell {
-  font-weight: 500;
 }
 </style>
