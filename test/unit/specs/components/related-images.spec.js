@@ -1,45 +1,60 @@
-import RelatedImages from '~/components/ImageDetails/RelatedImages'
-import render from '../../test-utils/render'
-import { createLocalVue, mount } from '@vue/test-utils'
 import Vuex from 'vuex'
 import VueI18n from 'vue-i18n'
+import { createLocalVue } from '@vue/test-utils'
+import { render, screen } from '@testing-library/vue'
+import RelatedImages from '~/components/ImageDetails/RelatedImages'
 
-const serviceMock = {
-  getRelatedMedia: jest.fn(() =>
-    Promise.resolve({ data: { results: ['img1', 'img2'] } })
-  ),
-}
+const serviceMock = jest.fn(() =>
+  Promise.resolve({
+    data: {
+      results: [
+        { id: 'img1', url: 'https://wp.org/img1.jpg' },
+        { id: 'img2', url: 'https://wp.org/img2.jpg' },
+      ],
+    },
+  })
+)
+const failedMock = jest.fn(() => Promise.reject('No result'))
 
 const localVue = createLocalVue()
 localVue.use(Vuex)
 localVue.use(VueI18n)
+// without nbFetching property on $nuxt, Nuxt's `fetch` hook throws an error:
+//  [Vue warn]: Error in beforeMount hook (Promise/async):
+//  "TypeError: Cannot read property 'nbFetching' of undefined"
 localVue.prototype.$nuxt = {
   nbFetching: 0,
 }
 
-const doRender = async () => {
-  return render(
-    RelatedImages,
-    {
-      localVue,
-      propsData: { imageId: 'foo', service: serviceMock },
-      stubs: { ImageGrid: true },
-    },
-    mount
-  )
-}
-
 describe('RelatedImage', () => {
-  it('should render content when finished loading related images', async () => {
-    const wrapper = await doRender()
+  let props = null
+  let options = null
+  beforeEach(() => {
+    props = {
+      imageId: 'foo',
+      service: { getRelatedMedia: serviceMock },
+    }
+    options = {
+      localVue,
+      propsData: props,
+      stubs: ['LicenseIcons', 'NuxtLink'],
+    }
+  })
+  it('should render an image grid', async () => {
+    await render(RelatedImages, options)
+    expect(screen.getByRole('heading').textContent).toContain(
+      'photo-details.related-images'
+    )
+    expect(screen.queryAllByRole('img').length).toEqual(2)
+    expect(screen.queryAllByRole('figure').length).toEqual(2)
+  })
 
-    const header = wrapper.find('h3').text()
-    expect(header).toEqual('photo-details.related-images')
-    console.log(wrapper.html())
-
-    expect(serviceMock.getRelatedMedia).toHaveBeenCalledTimes(1)
-
-    const imageGridStub = wrapper.find('imagegrid-stub')
-    expect(imageGridStub.attributes().images).toEqual('img1,img2')
+  it('should not render data service rejects with an error', async () => {
+    options.propsData.service.getRelatedMedia = failedMock
+    await render(RelatedImages, options)
+    expect(screen.getByRole('heading').textContent).toContain(
+      'photo-details.related-images'
+    )
+    expect(screen.queryAllByRole('img').length).toEqual(0)
   })
 })

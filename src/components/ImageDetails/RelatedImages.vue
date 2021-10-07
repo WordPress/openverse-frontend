@@ -20,9 +20,11 @@
 import { ref } from '@nuxtjs/composition-api'
 import useRelated from '~/composables/use-related'
 import { IMAGE } from '~/constants/media'
+import ImageGrid from '~/components/ImageGrid/ImageGrid'
 
 export default {
   name: 'RelatedImages',
+  components: { ImageGrid },
   props: {
     imageId: {
       type: String,
