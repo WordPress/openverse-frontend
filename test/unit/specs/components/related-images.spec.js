@@ -41,6 +41,7 @@ describe('RelatedImage', () => {
     }
   })
   it('should render an image grid', async () => {
+    // await `render` to get the component after Nuxt's `fetch` call
     await render(RelatedImages, options)
     expect(screen.getByRole('heading').textContent).toContain(
       'photo-details.related-images'
@@ -51,6 +52,7 @@ describe('RelatedImage', () => {
 
   it('should not render data service rejects with an error', async () => {
     options.propsData.service.getRelatedMedia = failedMock
+    // await `render` to get the component after Nuxt's `fetch` call
     await render(RelatedImages, options)
     expect(screen.getByRole('heading').textContent).toContain(
       'photo-details.related-images'
