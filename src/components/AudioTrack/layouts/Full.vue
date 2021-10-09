@@ -98,6 +98,9 @@ export default {
 </script>
 
 <style>
+.full-track {
+  --download-button-height: 3.5rem;
+}
 .full-track .waveform {
   @apply h-30 rounded-sm;
 }
