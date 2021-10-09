@@ -646,11 +646,12 @@
   },
   "seo": {
     "titles": {
-      "default": "Openverse: Openly-licensed Images, Audio, & other Content",
+      "default": "Openverse: Openly-licensed Images, Audio, & other Media",
       "about": "About Openverse: The search engine for openly-licensed images, audio, and more",
       "extension": "Download the Openverse Browser Extension: search and use open-licensed and public domain images",
       "singlePhoto": "{title} by {creator} | Free Image on Openverse",
-      "search": "{media} results for \"{query}\" on Openverse"
+      "search": "{media} results for \"{query}\" on Openverse",
+      "sources": "Openverse Sources of free, openly-licensed media."
     },
     "descriptions": {
       "default": "The search engine for openly-licensed content, including Creative Commons licensed images, audio, and more.",

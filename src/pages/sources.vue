@@ -152,6 +152,23 @@ const SourcePage = {
       },
     }
   },
+  head() {
+    return {
+      title: this.$t('seo.titles.sources'),
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: `Download this free ${this.fullLicenseName} photo "${this.image.title}" by ${this.image.creator} `,
+        },
+        {
+          hid: 'og:image',
+          name: 'og:image',
+          content: this.image.url ?? '/cclogo-shared-image.jpg',
+        },
+      ],
+    }
+  },
   computed: {
     ...mapState('nav', ['isEmbedded']),
     ...mapState('provider', ['imageProviders']),
