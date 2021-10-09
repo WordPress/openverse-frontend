@@ -7,7 +7,7 @@
     @submit.prevent="onSubmit"
   >
     <button
-      v-if="!isFilterVisible"
+      v-show="!isFilterVisible"
       class="button filter-toggle"
       type="button"
       @click.prevent="onToggleSearchGridFilter()"
@@ -113,9 +113,6 @@ export default {
       this.$store.commit(SET_FILTER_IS_VISIBLE, {
         isFilterVisible: !this.isFilterVisible,
       })
-    },
-    onSearchFilterChanged(query) {
-      this.$emit('onSearchFormSubmit', query)
     },
     setFormInput() {
       this.searchTermsModel = this.searchTerms
