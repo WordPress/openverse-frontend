@@ -106,12 +106,12 @@ const AboutPage = {
     }
   },
   layout({ store }) {
-    return store.state.isEmbedded
+    return store.state.nav.isEmbedded
       ? 'embedded-with-nav-search'
       : 'with-nav-search'
   },
   computed: {
-    ...mapState(['isEmbedded']),
+    ...mapState('nav', ['isEmbedded']),
   },
 }
 

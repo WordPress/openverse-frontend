@@ -13,7 +13,7 @@ import {
   VIDEO,
   supportedMediaTypes,
 } from '~/constants/media'
-import { TOGGLE_FILTER } from '~/store-modules/action-types'
+import { TOGGLE_FILTER } from '~/constants/action-types'
 import {
   SET_FILTER,
   SET_PROVIDERS_FILTERS,
@@ -21,7 +21,7 @@ import {
   SET_FILTERS_FROM_URL,
   SET_FILTER_IS_VISIBLE,
   UPDATE_FILTERS,
-} from '~/store-modules/mutation-types'
+} from '~/constants/mutation-types'
 
 // The order of the keys here is the same as in the side filter display
 export const mediaFilterKeys = {
@@ -36,16 +36,18 @@ export const mediaFilterKeys = {
     'searchBy',
     'mature',
   ],
-  audio: [
-    'licenses',
-    'licenseTypes',
-    'audioCategories',
-    'audioExtensions',
-    'durations',
-    'audioProviders',
-    'searchBy',
-    'mature',
-  ],
+  audio: process.env.enableAudio
+    ? [
+        'licenses',
+        'licenseTypes',
+        'audioCategories',
+        'audioExtensions',
+        'durations',
+        'audioProviders',
+        'searchBy',
+        'mature',
+      ]
+    : [],
   video: [],
   all: ['licenses', 'licenseTypes', 'searchBy', 'mature'],
 }
@@ -58,7 +60,9 @@ export const mediaSpecificFilters = {
     'sizes',
     'imageProviders',
   ],
-  audio: ['audioCategories', 'audioExtensions', 'durations', 'audioProviders'],
+  audio: process.env.enableAudio
+    ? ['audioCategories', 'audioExtensions', 'durations', 'audioProviders']
+    : [],
   video: [],
 }
 

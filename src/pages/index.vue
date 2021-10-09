@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { CLEAR_FILTERS } from '~/store-modules/mutation-types'
+import { CLEAR_FILTERS } from '~/constants/mutation-types'
 
 const HomePage = {
   name: 'home-page',
@@ -13,7 +13,7 @@ const HomePage = {
     }
   },
   layout({ store }) {
-    return store.state.isEmbedded ? 'embedded' : 'default'
+    return store.state.nav.isEmbedded ? 'embedded' : 'default'
   },
   beforeMount() {
     this.$store.commit(CLEAR_FILTERS)

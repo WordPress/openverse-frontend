@@ -104,7 +104,7 @@
             {{ $t('header.feedback-nav-item') }}
           </NuxtLink>
           <a
-            href="https://api.creativecommons.engineering/"
+            href="https://api.openverse.engineering/v1/"
             target="_blank"
             rel="noopener"
             role="menuitem"
@@ -124,7 +124,7 @@
 </template>
 
 <script>
-import { SET_QUERY } from '~/store-modules/mutation-types'
+import { SET_QUERY } from '~/constants/mutation-types'
 import Dropdown from '~/components/Dropdown'
 
 export default {

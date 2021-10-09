@@ -1,4 +1,10 @@
-# openverse-frontend
+<img src="https://github.com/WordPress/openverse/raw/main/brand/banner.svg" width="100%"/>
+
+<p align="center">
+  <a href="https://github.com/orgs/WordPress/projects/3">Project Board</a> | <a href="https://make.wordpress.org/openverse/">Community Site</a> | <a href="https://make.wordpress.org/chat/">#openverse @ Slack</a> | <a href="https://make.wordpress.org/openverse/handbook/openverse-handbook/">Handbook</a> | <a href="https://www.figma.com/files/project/31962071/Openverse?fuid=979162431688906882">Figma</a>
+</p>
+
+# Openverse Frontend
 
 ![openverse-frontend-ci](https://github.com/wordpress/openverse-frontend/workflows/openverse-frontend-ci/badge.svg)
 
@@ -35,7 +41,7 @@ docker-compose up
 
 You should now have the application running and accessible at http://localhost:8443.
 
-You don't need to have the Openverse API running locally to be able to run the frontend application. It's configured to communicate, by default, with the [API](https://api.creativecommons.engineering) that's already publicly available. If you wish, you can change the URL of the API that's used during development by setting the `API_URL` environment variable.
+You don't need to have the Openverse API running locally to be able to run the frontend application. It's configured to communicate, by default, with the [API](https://api.openverse.engineering) that's already publicly available. If you wish, you can change the URL of the API that's used during development by setting the `API_URL` environment variable.
 
 ### Standalone and embedded modes
 

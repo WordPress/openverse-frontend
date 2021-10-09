@@ -1,17 +1,22 @@
 import pkg from './package.json'
 import locales from './src/locales/scripts/valid-locales.json'
+import stringToBoolean from './src/utils/string-to-boolean'
 
 /**
  * Default environment variables are set on this key. Defaults are fallbacks to existing env vars.
+ * All boolean values should be designed to be false by default.
  */
 export const env = {
-  apiUrl: process.env.API_URL || 'https://api.creativecommons.engineering/v1/',
-  socialSharing: process.env.SOCIAL_SHARING || true,
-  enableGoogleAnalytics: process.env.ENABLE_GOOGLE_ANALYTICS || false,
-  googleAnalyticsUA: process.env.GOOGLE_ANALYTICS_UA || 'UA-2010376-36',
+  apiUrl: process.env.API_URL ?? 'https://api.openverse.engineering/v1/',
+  enableGoogleAnalytics: stringToBoolean(process.env.ENABLE_GOOGLE_ANALYTICS),
+  googleAnalyticsUA: process.env.GOOGLE_ANALYTICS_UA ?? 'UA-2010376-36',
   filterStorageKey: 'openverse-filter-visibility',
   notificationStorageKey: 'openverse-show-notification',
-  enableInternalAnalytics: process.env.ENABLE_INTERNAL_ANALYTICS || false,
+  enableInternalAnalytics: stringToBoolean(
+    process.env.ENABLE_INTERNAL_ANALYTICS
+  ),
+  /** Feature flag to enable non-image media */
+  enableAudio: stringToBoolean(process.env.ENABLE_AUDIO),
 }
 
 /**
@@ -108,7 +113,7 @@ export default {
   modern: 'client',
   server: { port: process.env.PORT || 8443 },
   router: {
-    middleware: 'embed',
+    middleware: 'middleware',
   },
   components: {
     dirs: [
@@ -116,14 +121,17 @@ export default {
       '~/components/ContentReport',
       '~/components/Filters',
       '~/components/ImageDetails',
+      '~/components/ImageGrid',
       '~/components/MediaInfo',
       '~/components/MetaSearch',
+      '~/components/MediaTag',
     ],
   },
   plugins: [
     { src: '~/plugins/ab-test-init.js', mode: 'client' },
     { src: '~/plugins/ga.js', mode: 'client' },
-    { src: '~/plugins/message.js' },
+    { src: '~/plugins/url-change.js' },
+    { src: '~/plugins/migration-notice.js' },
   ],
   css: [
     '~/assets/fonts.css',
@@ -166,10 +174,16 @@ export default {
     langDir: 'locales',
     strategy: 'no_prefix',
     defaultLocale: 'en',
+    /**
+     * This section is critical for the current, iframed production environment
+     * {@link https://i18n.nuxtjs.org/options-reference/#detectbrowserlanguage}
+     * */
     detectBrowserLanguage: {
       useCookie: true,
       cookieKey: 'i18n_redirected',
       alwaysRedirect: true,
+      cookieCrossOrigin: true,
+      cookieSecure: true,
     },
     baseUrl: 'http://localhost:8443',
     vueI18n: '~/plugins/vue-i18n.js',
