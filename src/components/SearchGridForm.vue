@@ -7,7 +7,7 @@
     @submit.prevent="onSubmit"
   >
     <button
-      v-show="!isFilterVisible"
+      v-if="!isFilterVisible"
       class="button filter-toggle"
       type="button"
       @click.prevent="onToggleSearchGridFilter()"
