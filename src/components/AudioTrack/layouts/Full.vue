@@ -2,7 +2,7 @@
   <div class="full-track w-full">
     <slot name="controller" />
 
-    <div class="flex flex-row justify-between mx-16 my-6">
+    <div class="flex flex-row justify-between mx-16 my-6 h-14">
       <div class="left-content flex flex-row items-center gap-6">
         <slot name="play-pause" />
 
@@ -28,7 +28,7 @@
         </div>
       </div>
 
-      <DownloadButton :formats="getFormats(audio)" dropdown-position="top-14" />
+      <DownloadButton :formats="getFormats(audio)" />
     </div>
   </div>
 </template>

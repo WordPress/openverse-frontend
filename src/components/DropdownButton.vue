@@ -1,7 +1,7 @@
 <template>
-  <div class="relative flex max-w-min">
+  <div class="relative block max-w-min h-full">
     <!-- rounded-X-none is required to fight Edge UA styles that apply a 2px border radius to all `button` elements -->
-    <div class="flex">
+    <div class="flex h-full">
       <slot
         :button-props="{
           class: 'dropdown-button rounded-l-sm rounded-r-none',
@@ -28,7 +28,7 @@
     <div
       ref="dropdownContainer"
       class="dropdown-container"
-      :class="{ hidden: !isOpen, [top]: true }"
+      :class="{ hidden: !isOpen }"
       role="menu"
       :aria-hidden="!isOpen"
       @focusout="onFocusout"
@@ -54,12 +54,6 @@ const DropdownButton = {
     dropdownAriaLabel: {
       type: String,
       required: false,
-    },
-    /**
-     * Tailwind class specifying dropdown positioning
-     */
-    top: {
-      type: String,
     },
   },
   data() {

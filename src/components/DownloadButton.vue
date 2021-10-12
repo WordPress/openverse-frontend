@@ -2,7 +2,6 @@
   <DropdownButton
     v-if="filesizes"
     :dropdown-aria-label="$t('download-button.aria.dropdown-label')"
-    :top="dropdownPosition"
   >
     <template #default="{ buttonProps }">
       <a
@@ -76,10 +75,6 @@ export default {
         const properties = ['extension_name', 'download_url']
         return formats.every((format) => properties.every((p) => p in format))
       },
-    },
-    dropdownPosition: {
-      type: String,
-      default: 'top-14',
     },
   },
   data() {
