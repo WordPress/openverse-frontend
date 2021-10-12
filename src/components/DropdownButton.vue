@@ -1,7 +1,7 @@
 <template>
-  <div class="relative block max-w-min h-full">
+  <div class="relative block max-w-min">
     <!-- rounded-X-none is required to fight Edge UA styles that apply a 2px border radius to all `button` elements -->
-    <div class="flex h-full">
+    <div class="flex">
       <slot
         :button-props="{
           class: 'dropdown-button rounded-l-sm rounded-r-none',
