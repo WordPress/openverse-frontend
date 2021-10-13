@@ -9,6 +9,7 @@
         }"
       />
       <button
+        v-if="!isSingleItem"
         ref="dropdownButton"
         type="button"
         class="dropdown-button ml-1 rounded-r-sm rounded-l-none w-14"
@@ -53,6 +54,10 @@ const DropdownButton = {
   props: {
     dropdownAriaLabel: {
       type: String,
+      required: false,
+    },
+    isSingleItem: {
+      type: Boolean,
       required: false,
     },
   },
