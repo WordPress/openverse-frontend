@@ -25,7 +25,8 @@
     },
     "search-type": {
       "audio": "Audio",
-      "image": "Image"
+      "image": "Image",
+      "prompt": "I would like to find:"
     }
   },
   "header": {

@@ -32,6 +32,12 @@
             {{ $t('hero.search.button') }}
           </button>
         </div>
+
+        <div v-if="showSearchType" class="flex flex-col items-center">
+          <p class="py-2">{{ $t('hero.search-type.prompt') }}</p>
+          <SearchTypeToggle v-model.lazy="form.searchType" />
+        </div>
+
         <div class="text-sm mt-6 font-medium">
           <i18n path="hero.caption.content" tag="p">
             <template #link>
@@ -65,17 +71,25 @@ import { ALL_MEDIA } from '~/constants/media'
 
 export default {
   name: 'HeroSection',
-  data: () => ({ form: { searchTerm: '' } }),
+  data: () => ({
+    form: { searchTerm: '', searchType: 'image' },
+    showSearchType: process.env.enableAudio,
+  }),
   mounted() {
     if (document.querySelector('#searchTerm')) {
       document.querySelector('#searchTerm').focus()
     }
   },
   methods: {
+    getPath() {
+      if (!process.env.enableAudio) return '/search'
+
+      return `/search/${this.form.searchType}`
+    },
     onSubmit() {
       this.$store.commit(SET_QUERY, { query: { q: this.form.searchTerm } })
       const newPath = this.localePath({
-        path: process.env.enableAudio ? '/search' : '/search/image',
+        path: this.getPath(),
         query: {
           q: this.form.searchTerm,
           ...filtersToQueryData(this.$store.state.filters, ALL_MEDIA),
