@@ -25,7 +25,7 @@
     },
     "search-type": {
       "audio": "Audio",
-      "image": "Image",
+      "image": "Images",
       "prompt": "I would like to find:"
     }
   },
