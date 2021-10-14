@@ -1,4 +1,4 @@
-const set = require('lodash/set')
+import set from 'lodash/set.js'
 
 /**
  * Convert an NGX-Translate object to a nested JSON object
@@ -44,4 +44,4 @@ function ngxJsonToJson(ngxObject) {
 //   )
 // )
 
-module.exports = ngxJsonToJson
+export default ngxJsonToJson

@@ -1,11 +1,13 @@
 // This implementation is loosely copied from vue-i18n-extract
 // https://github.com/pixari/vue-i18n-extract
+import fs from 'fs'
+import path, { dirname } from 'path'
+import glob from 'glob'
+import { fileURLToPath } from 'url'
 
-const fs = require('fs')
-const path = require('path')
-const glob = require('glob')
+const __filename = fileURLToPath(import.meta.url)
 
-const BASE_PATH = path.dirname(path.dirname(__dirname))
+const BASE_PATH = dirname(dirname(dirname(__filename)))
 
 function readVueFiles(src) {
   const targetFiles = glob.sync(src)
@@ -113,9 +115,7 @@ function parseVueFiles(vueFilesPath) {
  * from the BASE_PATH (`openverse-frontend/src`)
  * @return {Array<Object>}
  */
-const getParsedVueFiles = (vueFiles) => {
+export const getParsedVueFiles = (vueFiles) => {
   const resolvedVueFiles = path.resolve(BASE_PATH, vueFiles)
   return parseVueFiles(resolvedVueFiles)
 }
-
-module.exports = getParsedVueFiles

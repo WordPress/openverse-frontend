@@ -29,9 +29,9 @@
     "vue-i18n-extract": "vue-i18n-extract report -v './src/**/*.?(js|vue)' -l './src/locales/*.?(json)'",
     "postinstall": "patch-package",
     "prepare": "husky install",
-    "i18n:get-translations": "node src/locales/scripts/get-translations && node src/locales/scripts/get-validated-locales",
-    "i18n:generate-pot": "node src/locales/scripts/json-to-pot",
-    "i18n:update-locales": "node src/locales/scripts/update-locale-list"
+    "i18n:get-translations": "node src/locales/scripts/get-translations.mjs && node src/locales/scripts/get-validated-locales.mjs",
+    "i18n:generate-pot": "node src/locales/scripts/json-to-pot.mjs",
+    "i18n:update-locales": "node src/locales/scripts/update-locale-list.mjs"
   },
   "dependencies": {
     "@nuxt/components": "^2.1.6",
@@ -52,6 +52,7 @@
     "filesize": "^8.0.2",
     "focus-trap": "^5.1.0",
     "focus-trap-vue": "0.0.6",
+    "fs-extra": "^10.0.0",
     "js-cookie": "^2.2.1",
     "lodash.clonedeep": "^4.5.0",
     "lodash.debounce": "^4.0.8",
