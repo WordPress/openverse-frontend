@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2021-10-14T18:24:51+00:00\n"
+"POT-Creation-Date: 2021-10-14T18:25:11+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2024,7 +2024,7 @@ msgstr ""
 
 #: src/components/SearchTypeToggle.vue:10
 msgctxt "hero.search-type.image"
-msgid "Image"
+msgid "Images"
 msgstr ""
 
 #: src/components/HeroSection.vue:37
