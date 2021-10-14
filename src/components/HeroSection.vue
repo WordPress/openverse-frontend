@@ -65,12 +65,15 @@
 </template>
 
 <script>
-import { SET_QUERY } from '~/constants/mutation-types'
+import { SET_QUERY, SET_SEARCH_TYPE } from '~/constants/mutation-types'
 import { filtersToQueryData } from '~/utils/search-query-transform'
 import { ALL_MEDIA } from '~/constants/media'
 
 export default {
   name: 'HeroSection',
+  /**
+   * @return {{ form: { searchTerm: string, searchType: 'image' | 'audio' }, showSearchType: boolean }}
+   */
   data: () => ({
     form: { searchTerm: '', searchType: 'image' },
     showSearchType: process.env.enableAudio,
@@ -86,13 +89,25 @@ export default {
 
       return `/search/${this.form.searchType}`
     },
+    getMediaType() {
+      if (!process.env.enableAudio) return ALL_MEDIA
+
+      return this.form.searchType
+    },
     onSubmit() {
       this.$store.commit(SET_QUERY, { query: { q: this.form.searchTerm } })
+
+      if (process.env.enableAudio) {
+        this.$store.commit(SET_SEARCH_TYPE, {
+          searchType: this.form.searchType,
+        })
+      }
+
       const newPath = this.localePath({
         path: this.getPath(),
         query: {
           q: this.form.searchTerm,
-          ...filtersToQueryData(this.$store.state.filters, ALL_MEDIA),
+          ...filtersToQueryData(this.$store.state.filters, this.getMediaType()),
         },
       })
       this.$router.push(newPath)
