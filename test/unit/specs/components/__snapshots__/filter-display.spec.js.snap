@@ -15,7 +15,7 @@ exports[`FilterDisplay should render correct contents 1`] = `
    
   <button
     aria-label="filters.filter-tag-aria"
-    class="filter-block button tiny tag mx-1 mb-2"
+    class="button tiny tag mx-1 mb-2 ml-2"
   >
     <span>
       filters.licenses.cc0

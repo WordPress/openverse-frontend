@@ -1,6 +1,6 @@
 <template>
   <button
-    class="filter-block button tiny tag mx-1 mb-2"
+    class="button tiny tag mx-1 mb-2 ml-2"
     :aria-label="$t('filters.filter-tag-aria', { filterLabel: filterLabel })"
   >
     <span>{{ filterLabel }}</span>
@@ -43,8 +43,3 @@ export default {
   },
 }
 </script>
-<style lang="scss" scoped>
-.filter-block {
-  margin-left: 0.5rem;
-}
-</style>
