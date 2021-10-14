@@ -11,10 +11,7 @@
  msgid untranslated-string
  msgstr translated-string
  */
-import {
-  getAllPaths,
-  getKeyValue,
-} from './json-helpers.mjs'
+import { getAllPaths, getKeyValue } from './json-helpers.mjs'
 import { getParsedVueFiles } from './parse-vue-files.mjs'
 import fs from 'fs-extra'
 

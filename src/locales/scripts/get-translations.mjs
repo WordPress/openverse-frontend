@@ -11,7 +11,6 @@ import fs from 'fs-extra'
 const localeFilename = process.cwd() + '/src/locales/scripts/locales-list.json'
 const localeJSON = fs.readJsonSync(localeFilename)
 
-
 /**
  *
  * @typedef {"json"|"jed1x"|"ngx"} JSONFormat
