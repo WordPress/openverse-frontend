@@ -84,7 +84,7 @@
       <table
         :aria-label="$t('about.aria.sources-table')"
         role="region"
-        class="table is-striped mt-4 mb-10"
+        class="table is-striped mt-4 mb-10 border border-admin-gray"
       >
         <thead>
           <tr>
@@ -225,9 +225,6 @@ $table-border-radius: 2px;
   }
 
   tr:last-child {
-    td {
-      border-bottom: $table-border;
-    }
     td:first-child {
       border-bottom-left-radius: $table-border-radius;
     }
@@ -236,12 +233,9 @@ $table-border-radius: 2px;
     }
   }
 
-  td {
+  th:not(:first-child),
+  td:not(:first-child) {
     border-left: $table-border;
-  }
-
-  tr td:last-child {
-    border-right: $table-border;
   }
 }
 </style>
