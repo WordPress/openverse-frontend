@@ -11,9 +11,10 @@
  msgid untranslated-string
  msgstr translated-string
  */
-import { getAllPaths, getKeyValue } from './json-helpers.mjs'
-import { getParsedVueFiles } from './parse-vue-files.mjs'
-import fs from 'fs-extra'
+const { getAllPaths, getKeyValue } = require('./json-helpers')
+const { getParsedVueFiles } = require('./parse-vue-files')
+const json = require('../en.json')
+const fs = require('fs')
 
 const curlyRegex = new RegExp('{[a-zA-Z-]*}')
 const containsCurlyWord = (string) => curlyRegex.test(string)
@@ -27,7 +28,7 @@ const checkStringForVars = (string) =>
  * @param string
  * @return {string}
  */
-export const replaceVarsPlaceholders = (string) => {
+const replaceVarsPlaceholders = (string) => {
   if (!containsCurlyWord(string)) {
     return string
   }
@@ -95,7 +96,7 @@ msgstr ""
 // msgid untranslated-string
 // msgstr translated-string
 
-export function potTime(json) {
+function potTime(json) {
   let potFileString = ''
   const jsonKeys = getAllPaths(json)
   jsonKeys.forEach((key) => {
@@ -129,8 +130,8 @@ msgstr[1] ""`
   return potFileString
 }
 
-const enFileName = process.cwd() + '/src/locales/en.json'
-const json = fs.readJsonSync(enFileName)
+// const enFileName = process.cwd() + '/src/locales/en.json'
+// const json = fs.readJsonSync(enFileName)
 
 const potFile = `${POT_FILE_META}${potTime(json)}\n`
 try {
@@ -140,3 +141,4 @@ try {
 } catch (err) {
   console.error(err)
 }
+module.exports = { replaceVarsPlaceholders, potTime }

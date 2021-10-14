@@ -1,6 +1,5 @@
-import fs from 'fs-extra'
-const localesListFile = process.cwd() + '/src/locales/scripts/locales-list.json'
-const localesList = fs.readJsonSync(localesListFile)
+const fs = require('fs')
+const localesList = require('./locales-list.json')
 
 const getValidatedLocales = () => {
   return Object.values(localesList)
@@ -14,6 +13,8 @@ const getValidatedLocales = () => {
     }))
     .filter((i) => fs.existsSync(process.cwd() + `/src/locales/${i.file}`))
 }
+
+console.log(process.cwd())
 
 try {
   let locales = getValidatedLocales()

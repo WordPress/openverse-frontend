@@ -1,8 +1,9 @@
 // locales.py
 // This script extracts data for locales available in GlotPress, and
 // saves it to `locales-list.json`
-import axios from 'axios'
-import fs from 'fs'
+
+const axios = require('axios')
+const fs = require('fs')
 
 const base_url =
   'https://raw.githubusercontent.com/GlotPress/GlotPress-WP/develop/locales/locales.php'

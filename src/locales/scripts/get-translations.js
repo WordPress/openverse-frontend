@@ -2,14 +2,11 @@
  * Fetch the NGX-Translate JSON file for each supported language,
  * convert to our JSON format, and save in the correct folder.
  */
-import { writeFile } from 'fs/promises'
-import os from 'os'
-import axios from 'axios'
-import ngxJsonToJson from './ngx-json-to-json.mjs'
-import fs from 'fs-extra'
-
-const localeFilename = process.cwd() + '/src/locales/scripts/locales-list.json'
-const localeJSON = fs.readJsonSync(localeFilename)
+const { writeFile } = require('fs/promises')
+const os = require('os')
+const axios = require('axios')
+const ngxJsonToJson = require('./ngx-json-to-json')
+const localeJSON = require('./locales-list.json')
 
 /**
  *

@@ -1,10 +1,4 @@
-import {
-  potTime,
-  replaceVarsPlaceholders,
-} from '~/locales/scripts/json-to-pot.mjs'
-
-import clonedeep from 'lodash.clonedeep'
-import { getKeyValue } from '~/locales/scripts/json-helpers.mjs'
+import { replaceVarsPlaceholders } from '~/locales/scripts/json-to-pot.js'
 
 describe('replaceVarsPlaceholders', () => {
   it('replaces lower case placeholders', () => {

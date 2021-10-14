@@ -6,7 +6,7 @@ const isEmptyObject = (a) => !Object.keys(a).length
 const isSimple = (a) => !a || !isObject(a) || isEmptyObject(a)
 const pop = (a) => a.pop() || []
 
-export function getAllPaths(obj) {
+function getAllPaths(obj) {
   const result = []
   const [currentResult, stack] = readPaths(obj)
   result.push(...currentResult)
@@ -40,7 +40,7 @@ function readPaths(obj, path = '') {
   }
   return [result, stack]
 }
-export const getKeyValue = (key, value) => {
+const getKeyValue = (key, value) => {
   const selects = key.split('.')
   selects.some((name, i) => {
     const nestedName = selects.slice(i).join('.')
@@ -59,3 +59,4 @@ export const getKeyValue = (key, value) => {
 
   return value
 }
+module.exports = { getAllPaths, getKeyValue }
