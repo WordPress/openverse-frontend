@@ -1,8 +1,8 @@
 <template>
-  <div class="filter-display" aria-live="polite">
-    <span v-if="isAnyFilterApplied" class="caption font-semibold">{{
-      $t('filters.filter-by')
-    }}</span>
+  <div class="flex flex-wrap items-center p-4" aria-live="polite">
+    <span v-if="isAnyFilterApplied" class="mr-2 font-semibold">
+      {{ $t('filters.filter-by') }}
+    </span>
     <FilterTag
       v-for="filter in appliedFilterTags"
       :key="filter.code"
@@ -13,6 +13,7 @@
     />
   </div>
 </template>
+
 <script>
 import { TOGGLE_FILTER } from '~/constants/action-types'
 import FilterTag from '~/components/Filters/FilterTag'
@@ -31,13 +32,3 @@ export default {
   },
 }
 </script>
-<style lang="scss" scoped>
-.filter-display {
-  display: flex;
-  align-items: center;
-  padding: 1rem;
-  .caption {
-    margin-right: 0.5rem;
-  }
-}
-</style>

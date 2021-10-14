@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FilterDisplay should render correct contents 1`] = `
+<div
+  aria-live="polite"
+  class="flex flex-wrap items-center p-4"
+>
+  <span
+    class="mr-2 font-semibold"
+  >
+    
+    filters.filter-by
+  
+  </span>
+   
+  <button
+    aria-label="filters.filter-tag-aria"
+    class="filter-block button tiny tag mx-1 mb-2"
+  >
+    <span>
+      filters.licenses.cc0
+    </span>
+     
+    <span
+      class="close ml-2 p-2"
+      tabindex="0"
+    >
+      <i
+        class="icon cross"
+      />
+    </span>
+  </button>
+</div>
+`;
