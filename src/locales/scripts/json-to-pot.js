@@ -130,9 +130,6 @@ msgstr[1] ""`
   return potFileString
 }
 
-// const enFileName = process.cwd() + '/src/locales/en.json'
-// const json = fs.readJsonSync(enFileName)
-
 const potFile = `${POT_FILE_META}${potTime(json)}\n`
 try {
   const fileName = process.cwd() + '/src/locales/po-files/openverse.pot'
