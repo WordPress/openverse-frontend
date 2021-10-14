@@ -15,6 +15,7 @@ export function getAllPaths(obj) {
     const [currentResult, currentStack] = readPaths(current, key)
     result.push(...currentResult)
     stack.push(...currentStack)
+    // [key, current] = pop(stack) - doesn't work, cannot create property '[object Object]'
     const values = pop(stack)
     key = values[0]
     current = values[1]
