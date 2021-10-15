@@ -13,8 +13,8 @@ exports[`FilterDisplay should render correct contents 1`] = `
   
   </span>
    
-  <div
-    aria-label="filters.filter-tag-aria"
+  <button
+    aria-label="filters.aria.remove-filter"
     class="button tiny tag mx-1 mb-2 ml-2"
   >
     <span>
@@ -23,13 +23,11 @@ exports[`FilterDisplay should render correct contents 1`] = `
      
     <span
       class="close ml-2 p-2"
-      role="button"
-      tabindex="0"
     >
       <i
         class="icon cross"
       />
     </span>
-  </div>
+  </button>
 </div>
 `;

@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`FilterTag should render correct contents 1`] = `
-<div
-  aria-label="filters.filter-tag-aria"
+<button
+  aria-label="filters.aria.remove-filter"
   class="button tiny tag"
 >
   <span>
@@ -11,12 +11,10 @@ exports[`FilterTag should render correct contents 1`] = `
    
   <span
     class="close ml-2 p-2"
-    role="button"
-    tabindex="0"
   >
     <i
       class="icon cross"
     />
   </span>
-</div>
+</button>
 `;
