@@ -6,14 +6,14 @@ exports[`FilterDisplay should render correct contents 1`] = `
   class="flex flex-wrap items-center p-4"
 >
   <span
-    class="mr-2 font-semibold"
+    class="mr-2 font-semibold mb-2"
   >
     
     filters.filter-by
   
   </span>
    
-  <button
+  <div
     aria-label="filters.filter-tag-aria"
     class="button tiny tag mx-1 mb-2 ml-2"
   >
@@ -23,12 +23,13 @@ exports[`FilterDisplay should render correct contents 1`] = `
      
     <span
       class="close ml-2 p-2"
+      role="button"
       tabindex="0"
     >
       <i
         class="icon cross"
       />
     </span>
-  </button>
+  </div>
 </div>
 `;

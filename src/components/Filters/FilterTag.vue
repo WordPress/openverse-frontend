@@ -1,17 +1,18 @@
 <template>
-  <button
+  <div
     class="button tiny tag"
     :aria-label="$t('filters.filter-tag-aria', { filterLabel: filterLabel })"
   >
     <span>{{ filterLabel }}</span>
     <span
+      role="button"
       class="close ml-2 p-2"
       tabindex="0"
       @click="onClick"
       @keyup.enter="onClick"
       ><i class="icon cross"
     /></span>
-  </button>
+  </div>
 </template>
 <script>
 export default {
