@@ -1,10 +1,9 @@
 const { nuxifyStorybook } = require('../.nuxt-storybook/storybook/main.js')
 
 module.exports = nuxifyStorybook({
-  webpackFinal (config, options) {
-
+  webpackFinal(config) {
     // extend config here
-    
+
     return config
   },
   stories: [
@@ -12,5 +11,5 @@ module.exports = nuxifyStorybook({
   ],
   addons: [
     // Add your addons here
-  ]
+  ],
 })
