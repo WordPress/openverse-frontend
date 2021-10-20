@@ -30,6 +30,7 @@
 
       <div class="mb-1 text-left">
         <button
+          type="button"
           class="button is-text tiny p-0 report mt-2"
           @click="toggleReportFormVisibility"
         >
