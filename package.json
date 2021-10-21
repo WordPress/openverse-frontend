@@ -66,6 +66,7 @@
     "vue-i18n": "^8.26.5"
   },
   "devDependencies": {
+    "@babel/preset-typescript": "^7.15.0",
     "@babel/runtime-corejs3": "^7.15.3",
     "@intlify/eslint-plugin-vue-i18n": "^0.11.1",
     "@nuxt/bridge": "npm:@nuxt/bridge-edge@^3.0.0-27246961.9d40a27",

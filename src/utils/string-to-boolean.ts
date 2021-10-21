@@ -1,4 +1,4 @@
-function stringToBoolean(string: string): boolean {
+function stringToBoolean(string?: string): boolean {
   // In case the string is already a boolean, bail and return the boolean.
   // This isn't *awesome*, but sometimes .env vars are auto-cast to booleans
   // and this will catch that.
