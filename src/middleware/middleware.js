@@ -1,6 +1,6 @@
 import { SET_EMBEDDED, SET_REFERRED } from '~/constants/mutation-types'
 import { sendWindowMessage } from '~/utils/send-message'
-import { dev } from '../../dev.js'
+import { dev } from '../../dev'
 import { NAV } from '~/constants/store-modules'
 
 /**

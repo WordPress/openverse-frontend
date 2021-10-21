@@ -1,4 +1,4 @@
-import { defineNuxtConfig } from '@nuxt/bridge'
+import { defineNuxtConfig, NuxtConfig } from '@nuxt/bridge'
 import pkg from './package.json'
 import locales from './src/locales/scripts/valid-locales.json'
 import stringToBoolean from './src/utils/string-to-boolean'
@@ -26,7 +26,7 @@ export const env = {
  * See the Nuxt.js docs for more info.
  * {@link https://nuxtjs.org/guides/features/meta-tags-seo Nuxt.js Docs}
  */
-const meta = [
+const meta: NuxtConfig['head']['meta'] = [
   { charset: 'utf-8' },
   {
     name: 'description',
@@ -65,7 +65,11 @@ if (process.env.NODE_ENV === 'production') {
   meta.push({
     'http-equiv': 'Content-Security-Policy',
     content: 'upgrade-insecure-requests',
-  })
+    // This case is ugly and I have no idea why it's necessary as the error
+    // seems to come from an unrelated package.
+    // NuxtConfig['head']['meta'] should resolve to `any[]` so this is basically
+    // an alias for that but it's the safest cast I could think of (and it resolves the error)
+  } as NuxtConfig['head']['meta'][number])
 }
 
 // Default html head
@@ -122,9 +126,9 @@ export default defineNuxtConfig({
   },
   srcDir: 'src/',
   modern: 'client',
-  server: { port: process.env.PORT || 8443 },
+  server: { port: process.env.PORT ? parseInt(process.env.PORT, 10) : 8443 },
   router: {
-    middleware: 'middleware',
+    middleware: ['middleware'],
   },
   components: {
     dirs: [

@@ -1,5 +1,5 @@
 import ApiService from './api-service'
-import { dev } from '../../dev.js'
+import { dev } from '../../dev'
 import sampleAudioResponses from './sample-audio-responses.json'
 
 // TODO: Remove sample responses when Audio API is available

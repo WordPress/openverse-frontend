@@ -1,5 +1,5 @@
 import { sendWindowMessage } from '~/utils/send-message'
-import { dev } from '../../dev.js'
+import { dev } from '../../dev'
 /**
  * In embedded mode, we need to notify the outer window of the current URL.
  * Normally, the `src/middleware/embed.js` middleware does this on every

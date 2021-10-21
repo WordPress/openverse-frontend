@@ -1,5 +1,5 @@
 import { sendWindowMessage } from '~/utils/send-message.js'
-import { dev } from '../../dev.js'
+import { dev } from '../../dev'
 
 export default {
   methods: {
