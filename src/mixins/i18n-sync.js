@@ -1,5 +1,5 @@
 import { sendWindowMessage } from '~/utils/send-message.js'
-import config from '../../nuxt.config.js'
+import { dev } from '../../dev.js'
 
 export default {
   methods: {
@@ -25,7 +25,7 @@ export default {
   mounted() {
     window.addEventListener('message', this.localeMsgHandler)
     sendWindowMessage({
-      debug: config.dev,
+      debug: dev,
       type: 'localeGet',
       value: {},
     })

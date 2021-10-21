@@ -1,6 +1,8 @@
+import { defineNuxtConfig } from '@nuxt/bridge'
 import pkg from './package.json'
 import locales from './src/locales/scripts/valid-locales.json'
 import stringToBoolean from './src/utils/string-to-boolean'
+import { dev } from './dev'
 
 /**
  * Default environment variables are set on this key. Defaults are fallbacks to existing env vars.
@@ -107,7 +109,7 @@ const head = {
   ],
 }
 
-export default {
+export default defineNuxtConfig({
   // eslint-disable-next-line no-undef
   version: pkg.version, // used to purge cache :)
   cache: {
@@ -150,9 +152,8 @@ export default {
   ],
   head,
   env,
-  dev: process.env.NODE_ENV !== 'production',
+  dev,
   buildModules: [
-    '@nuxtjs/composition-api/module',
     '@nuxtjs/tailwindcss',
     '@nuxtjs/style-resources',
     '@nuxtjs/svg',
@@ -207,6 +208,8 @@ export default {
   tailwindcss: {
     // https://github.com/nuxt-community/tailwindcss-module/issues/114#issuecomment-698885369
     configPath: '~~/tailwind.config.js',
+    // https://github.com/nuxt/framework/issues/865#issuecomment-941863883
+    viewer: false,
   },
   storybook: {
     port: 6006, // standard port for Storybook
@@ -229,4 +232,4 @@ export default {
       },
     },
   },
-}
+})

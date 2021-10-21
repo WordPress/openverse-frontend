@@ -1,5 +1,5 @@
 import ApiService from './api-service'
-import config from '../../nuxt.config.js'
+import { dev } from '../../dev.js'
 import sampleAudioResponses from './sample-audio-responses.json'
 
 // TODO: Remove sample responses when Audio API is available
@@ -10,7 +10,7 @@ const AudioService = {
    * @return {Promise<{data: any}>}
    */
   search(params) {
-    return config.dev
+    return dev
       ? Promise.resolve({ data: sampleAudioResponses.search })
       : ApiService.query('audios', params)
   },
@@ -33,7 +33,7 @@ const AudioService = {
       )
     }
 
-    return config.dev
+    return dev
       ? Promise.resolve({ data: sampleAudioResponses.detail })
       : ApiService.get('audios', params.id)
   },
@@ -50,7 +50,7 @@ const AudioService = {
         '[RWV] AudioService.getRelatedMedia() id parameter required to retrieve related audios.'
       )
     }
-    return config.dev
+    return dev
       ? Promise.resolve({ data: sampleAudioResponses.related })
       : ApiService.get('recommendations/audios', params.id)
   },
