@@ -27,4 +27,4 @@ src/locales/*.json
 storybook-static
 .vercel
 .output
-
+.nuxt.d.ts

@@ -28,7 +28,7 @@
 
 <script>
 import Waveform from '~/components/AudioTrack/Waveform'
-import { computed, ref, useStore, watch } from '@nuxtjs/composition-api'
+import { computed, ref, useStore, watch } from '#app'
 import {
   SET_ACTIVE_MEDIA_ITEM,
   UNSET_ACTIVE_MEDIA_ITEM,

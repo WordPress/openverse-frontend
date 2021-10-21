@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import { computed } from '@nuxtjs/composition-api'
+import { computed } from '#app'
 import AudioThumbnail from '~/components/AudioThumbnail/AudioThumbnail.vue'
 import License from '~/components/License/License.vue'
 

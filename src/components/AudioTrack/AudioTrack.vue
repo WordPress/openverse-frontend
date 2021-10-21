@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { computed, ref } from '@nuxtjs/composition-api'
+import { computed, ref } from '#app'
 
 import PlayPause from '~/components/AudioTrack/PlayPause.vue'
 import AudioController from '~/components/AudioTrack/AudioController.vue'

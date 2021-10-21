@@ -1,5 +1,6 @@
 import stringToBoolean from './src/utils/string-to-boolean'
 
+// https://github.com/nuxt/framework/issues/1320#issuecomment-948761507
 /**
  * Default environment variables are set on this key. Defaults are fallbacks to existing env vars.
  * All boolean values should be designed to be false by default.

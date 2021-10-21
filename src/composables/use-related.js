@@ -1,6 +1,6 @@
 import AudioService from '~/data/audio-service'
 import ImageService from '~/data/image-service'
-import { ref, useFetch } from '@nuxtjs/composition-api'
+import { ref, useFetch } from '#app'
 import { AUDIO, IMAGE } from '~/constants/media'
 
 const services = { [AUDIO]: AudioService, [IMAGE]: ImageService }

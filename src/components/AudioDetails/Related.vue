@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { ref } from '@nuxtjs/composition-api'
+import { ref } from '#app'
 import { AUDIO } from '~/constants/media'
 import useRelated from '~/composables/use-related'
 

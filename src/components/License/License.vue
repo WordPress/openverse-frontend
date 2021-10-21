@@ -35,7 +35,7 @@ import {
   CC_LICENSES,
   LICENSE_ICON_MAPPING,
 } from '~/constants/license.js'
-import { computed } from '@nuxtjs/composition-api'
+import { computed } from '#app'
 
 import by from '~/assets/licenses/by.svg'
 import cc0 from '~/assets/licenses/cc0.svg'

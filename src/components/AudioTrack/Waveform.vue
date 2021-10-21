@@ -108,12 +108,7 @@
 </template>
 
 <script>
-import {
-  computed,
-  onBeforeUnmount,
-  onMounted,
-  ref,
-} from '@nuxtjs/composition-api'
+import { computed, onBeforeUnmount, onMounted, ref } from '#app'
 import { downsampleArray, upsampleArray } from '~/utils/resampling'
 
 /**

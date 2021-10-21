@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { ref } from '@nuxtjs/composition-api'
+import { ref } from '#app'
 import useRelated from '~/composables/use-related'
 import { IMAGE } from '~/constants/media'
 import ImageGrid from '~/components/ImageGrid/ImageGrid'
