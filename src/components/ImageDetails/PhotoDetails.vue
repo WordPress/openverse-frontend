@@ -46,9 +46,11 @@
       </div>
       <ContentReportForm
         v-if="isReportFormVisible"
+        :image-id="image.id"
         :image="image"
         data-testid="content-report-form"
         class="mt-2 text-left"
+        @close-form="onCloseReportForm"
       />
     </div>
     <div
@@ -107,7 +109,6 @@
             {{ $t('photo-details.information.title') }}
           </button>
         </div>
-
         <div
           id="tab-reuse"
           role="tabpanel"
@@ -160,13 +161,12 @@
 </template>
 
 <script>
-import { TOGGLE_REPORT_FORM_VISIBILITY } from '~/constants/mutation-types'
 import {
   SEND_DETAIL_PAGE_EVENT,
   DETAIL_PAGE_EVENTS,
 } from '~/constants/usage-data-analytics-types'
 import { getFullLicenseName } from '~/utils/license'
-import { REPORT_CONTENT, USAGE_DATA } from '~/constants/store-modules'
+import { USAGE_DATA } from '~/constants/store-modules'
 
 export default {
   name: 'PhotoDetails',
@@ -183,12 +183,10 @@ export default {
     return {
       sketchFabfailure: false,
       activeTab: 0,
+      isReportFormVisible: false,
     }
   },
   computed: {
-    isReportFormVisible() {
-      return this.$store.state[REPORT_CONTENT].isReportFormVisible
-    },
     imgUrl() {
       return this.image && this.image.url ? this.image.url : this.thumbnail
     },
@@ -236,8 +234,15 @@ export default {
     setActiveTab(tabIdx) {
       this.activeTab = tabIdx
     },
+    attributionHtml() {
+      const licenseUrl = `${this.licenseUrl}&atype=html`
+      return attributionHtml(this.image, licenseUrl, this.fullLicenseName)
+    },
+    onCloseReportForm() {
+      this.isReportFormVisible = false
+    },
     toggleReportFormVisibility() {
-      this.$store.commit(`${REPORT_CONTENT}/${TOGGLE_REPORT_FORM_VISIBILITY}`)
+      this.isReportFormVisible = !this.isReportFormVisible
     },
     onPhotoSourceLinkClicked() {
       this.sendEvent(DETAIL_PAGE_EVENTS.SOURCE_CLICKED)

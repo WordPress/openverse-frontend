@@ -3,8 +3,8 @@
     <button
       :aria-label="$t('photo-details.aria.close-form')"
       class="button close-button is-text tiny float-right block bg-white"
+      type="button"
       @click="closeForm()"
-      @keyup.enter="closeForm()"
     >
       <i class="icon cross" />
     </button>
@@ -20,7 +20,7 @@
       :image-u-r-l="image.url"
       :provider-name="providerName"
     />
-    <ReportError v-else-if="reportFailed" />
+    <ReportError v-else-if="reportFailed" @back-click="backToReportStart" />
 
     <OtherIssueForm
       v-else-if="selectedOther"
@@ -94,15 +94,13 @@
 </template>
 
 <script>
-import getProviderName from '~/utils/get-provider-name'
 import dmcaNotice from './DmcaNotice'
 import OtherIssueForm from './OtherIssueForm'
 import DoneMessage from './DoneMessage'
 import ReportError from './ReportError'
-import { SEND_CONTENT_REPORT } from '~/constants/action-types'
-import { REPORT_FORM_CLOSED } from '~/constants/mutation-types'
-import { PROVIDER, REPORT_CONTENT } from '~/constants/store-modules'
-import { mapActions, mapMutations, mapState } from 'vuex'
+import { PROVIDER } from '~/constants/store-modules'
+import { mapGetters } from 'vuex'
+import ReportService from '~/data/report-service'
 
 const dmcaFormUrl =
   'https://docs.google.com/forms/d/e/1FAIpQLSd0I8GsEbGQLdaX4K_F6V2NbHZqN137WMZgnptUpzwd-kbDKA/viewform'
@@ -115,25 +113,24 @@ export default {
     ReportError,
     OtherIssueForm,
   },
-  props: ['image'],
+  props: ['image', 'imageId'],
   data() {
     return {
       selectedReason: null,
       selectedOther: false,
       selectedCopyright: false,
       dmcaFormUrl,
+      isReportSent: false,
+      reportFailed: false,
     }
   },
   computed: {
-    ...mapState(REPORT_CONTENT, ['isReportSent', 'reportFailed']),
-    ...mapState(PROVIDER, ['imageProviders']),
+    ...mapGetters(PROVIDER, ['getProviderName']),
     providerName() {
-      return getProviderName(this.imageProviders, this.image.provider)
+      return this.getProviderName(this.image.provider)
     },
   },
   methods: {
-    ...mapActions(REPORT_CONTENT, { sendReport: SEND_CONTENT_REPORT }),
-    ...mapMutations(REPORT_CONTENT, { closeReportForm: REPORT_FORM_CLOSED }),
     onIssueSelected() {
       if (this.selectedReason === 'other') {
         this.selectedOther = true
@@ -147,15 +144,27 @@ export default {
       this.selectedOther = false
       this.selectedCopyright = false
     },
-    sendContentReport(description = '') {
-      this.sendReport({
-        identifier: this.$props.image.id,
-        reason: this.selectedReason,
-        description,
-      })
+    backToReportStart() {
+      this.reportFailed = false
+      this.isReportSent = false
+    },
+    async sendContentReport(description = '') {
+      try {
+        console.log(this.$props.image, this.$props.imageId)
+        await ReportService.sendReport({
+          identifier: this.$props.imageId,
+          reason: this.selectedReason,
+          description,
+        })
+        this.isReportSent = true
+      } catch (error) {
+        this.reportFailed = true
+      }
     },
     closeForm() {
-      this.closeReportForm
+      this.isReportSent = false
+      this.reportFailed = false
+      this.$emit('close-form')
     },
   },
 }
