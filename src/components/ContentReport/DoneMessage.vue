@@ -1,10 +1,10 @@
 <template>
   <div class="my-10">
     <span class="block px-6 text-center">
-      {{ $t('photo-details.content-report.dmca.thanks') }}
+      {{ $t('photo-details.content-report.thanks') }}
     </span>
     <i18n
-      path="photo-details.content-report.dmca.provider"
+      path="photo-details.content-report.provider"
       tag="span"
       class="block px-6 mt-10 text-center"
     >

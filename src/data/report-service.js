@@ -1,8 +1,10 @@
-import ApiService from './api-service'
+// import ApiService from './api-service'
 
 const ReportService = {
-  sendReport(params) {
-    return ApiService.post(`/images/${params.identifier}/report`, params)
+  sendReport() {
+    // return Promise.reject('report sent')
+    return Promise.resolve('report sent')
+    // return ApiService.post(`/images/${params.identifier}/report`, params)
   },
 }
 

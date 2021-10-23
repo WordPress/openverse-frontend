@@ -314,12 +314,12 @@ msgid "Back to search results"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/ImageDetails/PhotoDetails.vue:63
+#: src/components/ImageDetails/PhotoDetails.vue:61
 msgctxt "photo-details.creator"
 msgid "by ###name###"
 msgstr ""
 
-#: src/components/ImageDetails/PhotoDetails.vue:153
+#: src/components/ImageDetails/PhotoDetails.vue:152
 msgctxt "photo-details.weblink"
 msgid "Go to image's website"
 msgstr ""
@@ -344,7 +344,7 @@ msgctxt "photo-details.aria.dmca"
 msgid "dmca form"
 msgstr ""
 
-#: src/components/ImageDetails/PhotoDetails.vue:56
+#: src/components/ImageDetails/PhotoDetails.vue:54
 msgctxt "photo-details.aria.details"
 msgid "image details"
 msgstr ""
@@ -366,7 +366,7 @@ msgid "###provider### form"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/ImageDetails/PhotoDetails.vue:73
+#: src/components/ImageDetails/PhotoDetails.vue:71
 msgctxt "photo-details.aria.creator-url"
 msgid "author ###creator###"
 msgstr ""
@@ -394,27 +394,24 @@ msgctxt "photo-details.content-report.issue-description"
 msgid "Please describe the issue for us"
 msgstr ""
 
-#: src/components/ContentReport/ContentReportForm.vue:48
-msgctxt "photo-details.content-report.copyright"
+msgctxt "photo-details.content-report.dmca"
 msgid "Infringes Copyright"
 msgstr ""
 
-#: src/components/ContentReport/ContentReportForm.vue:61
 msgctxt "photo-details.content-report.mature"
 msgid "Contains mature content"
 msgstr ""
 
-#: src/components/ContentReport/ContentReportForm.vue:74
 msgctxt "photo-details.content-report.other"
 msgid "Other"
 msgstr ""
 
-#: src/components/ContentReport/ContentReportForm.vue:80
+#: src/components/ContentReport/ContentReportForm.vue:56
 msgctxt "photo-details.content-report.caption"
 msgid "For security purposes, Openverse collects and retains anonymized IP addresses of those who complete and submit this form."
 msgstr ""
 
-#: src/components/ContentReport/ContentReportForm.vue:90
+#: src/components/ContentReport/ContentReportForm.vue:66
 msgctxt "photo-details.content-report.next"
 msgid "Next"
 msgstr ""
@@ -424,44 +421,44 @@ msgctxt "photo-details.content-report.back"
 msgid "Back"
 msgstr ""
 
-#: src/components/ContentReport/OtherIssueForm.vue:36
+#: src/components/ContentReport/OtherIssueForm.vue:35
 msgctxt "photo-details.content-report.submit"
 msgid "Submit"
 msgstr ""
 
-#. Do not translate words between ### ###.
-#: src/components/ContentReport/DmcaNotice.vue:3
-msgctxt "photo-details.content-report.dmca.content"
-msgid "You must fill out this ###link### to report copyright infringement. No action will be taken until the form is filled out and submitted."
+#: src/components/ContentReport/DoneMessage.vue:4
+msgctxt "photo-details.content-report.thanks"
+msgid "Thank you for reporting an issue with the results of Openverse!"
 msgstr ""
 
 #. Do not translate words between ### ###.
 #: src/components/ContentReport/DmcaNotice.vue:19
-msgctxt "photo-details.content-report.dmca.provider"
+msgctxt "photo-details.content-report.provider"
 msgid "We recommend doing the same at the source, ###link###."
 msgstr ""
 
-#: src/components/ContentReport/DoneMessage.vue:4
-msgctxt "photo-details.content-report.dmca.thanks"
-msgid "Thank you for reporting an issue with the results of Openverse!"
-msgstr ""
-
-#: src/components/ContentReport/ReportError.vue:4
-msgctxt "photo-details.content-report.dmca.submission-error"
-msgid "There was an error with the report submission. Please try again."
-msgstr ""
-
 #: src/components/ContentReport/DmcaNotice.vue:14
-msgctxt "photo-details.content-report.dmca.link"
+msgctxt "photo-details.content-report.link"
 msgid "DMCA form"
 msgstr ""
 
 #. Do not translate words between ### ###.
-msgctxt "photo-details.content-report.dmca.aria-form"
+msgctxt "photo-details.content-report.aria-form"
 msgid "###provider### form"
 msgstr ""
 
-#: src/components/CopyButton.vue:9
+#: src/components/ContentReport/ReportError.vue:4
+msgctxt "photo-details.content-report.submission-error"
+msgid "There was an error with the report submission. Please try again."
+msgstr ""
+
+#. Do not translate words between ### ###.
+#: src/components/ContentReport/DmcaNotice.vue:3
+msgctxt "photo-details.content-report.dmca-content"
+msgid "You must fill out this ###link### to report copyright infringement. No action will be taken until the form is filled out and submitted."
+msgstr ""
+
+#: src/components/CopyButton.vue:10
 msgctxt "photo-details.copy.copy"
 msgid "Copy"
 msgstr ""
@@ -486,7 +483,7 @@ msgctxt "photo-details.survey.answer"
 msgid "by answering a few questions."
 msgstr ""
 
-#: src/components/ImageDetails/PhotoDetails.vue:107
+#: src/components/ImageDetails/PhotoDetails.vue:105
 msgctxt "photo-details.information.title"
 msgid "Information"
 msgstr ""
@@ -525,7 +522,7 @@ msgctxt "photo-details.information.pixels"
 msgid "pixels"
 msgstr ""
 
-#: src/components/ImageDetails/PhotoDetails.vue:96
+#: src/components/ImageDetails/PhotoDetails.vue:94
 msgctxt "photo-details.reuse.title"
 msgid "Reuse"
 msgstr ""
@@ -660,10 +657,12 @@ msgctxt "browse-page.all-no-results"
 msgid "No results"
 msgstr ""
 
+#: src/components/AudioResultsList.vue:77
 msgctxt "browse-page.audio-no-results"
 msgid "No audio results"
 msgstr ""
 
+#: src/components/SearchGridManualLoad.vue:110
 msgctxt "browse-page.image-no-results"
 msgid "No image results"
 msgstr ""
@@ -676,6 +675,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. Do not translate words between ### ###.
+#: src/components/AudioResultsList.vue:83
 msgctxt "browse-page.audio-result-count"
 msgid "###localeCount### audio result"
 msgid_plural "###localeCount### audio results"
@@ -683,6 +683,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. Do not translate words between ### ###.
+#: src/components/SearchGridManualLoad.vue:116
 msgctxt "browse-page.image-result-count"
 msgid "###localeCount### image result"
 msgid_plural "###localeCount### image results"
@@ -697,6 +698,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. Do not translate words between ### ###.
+#: src/components/AudioResultsList.vue:80
 msgctxt "browse-page.audio-result-count-more"
 msgid "Over ###localeCount### audio results"
 msgid_plural "Over ###localeCount### audio results"
@@ -704,6 +706,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. Do not translate words between ### ###.
+#: src/components/SearchGridManualLoad.vue:113
 msgctxt "browse-page.image-result-count-more"
 msgid "Over ###localeCount### image results"
 msgid_plural "Over ###localeCount### image results"
@@ -810,7 +813,7 @@ msgid "This work is marked as being in the public domain."
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/SearchGridForm.vue:79
+#: src/components/SearchGridForm.vue:82
 msgctxt "browse-page.search-form.placeholder"
 msgid "Search all ###type###"
 msgstr ""
@@ -1140,13 +1143,13 @@ msgid "An error occurred"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/image/_id.vue:54
+#: src/pages/photos/_id.vue:68
 msgctxt "error.image-not-found"
 msgid "Couldn't find image with id ###id###"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/audio/_id.vue:70
+#: src/pages/audio/_id.vue:77
 msgctxt "error.media-not-found"
 msgid "Couldn't find ###mediaType### with id ###id###"
 msgstr ""
@@ -1995,7 +1998,7 @@ msgctxt "header.extension-nav-item"
 msgid "Web extension"
 msgstr ""
 
-#: src/components/NavSection.vue:173
+#: src/components/EmbeddedNavSection.vue:143
 msgctxt "header.placeholder"
 msgid "Search all content"
 msgstr ""

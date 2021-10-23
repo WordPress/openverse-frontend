@@ -1,7 +1,7 @@
 <template>
   <div>
     <i18n
-      path="photo-details.content-report.dmca.content"
+      path="photo-details.content-report.dmca-content"
       tag="p"
       class="block px-6 mt-10 text-center"
     >
@@ -11,13 +11,13 @@
           :href="dmcaFormUrl"
           target="_blank"
           rel="noopener"
-          >{{ $t('photo-details.content-report.dmca.link') }}</a
+          >{{ $t('photo-details.content-report.link') }}</a
         >
       </template>
     </i18n>
 
     <i18n
-      path="photo-details.content-report.dmca.provider"
+      path="photo-details.content-report.provider"
       tag="p"
       class="block px-6 mt-4 text-center"
     >

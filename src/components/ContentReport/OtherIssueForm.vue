@@ -3,17 +3,16 @@
     <h4 class="b-header">
       {{ $t('photo-details.content-report.title') }}
     </h4>
-    <legend class="mb-2">
+    <label for="description" class="mb-2">
       {{ $t('photo-details.content-report.issue-description') }}
-    </legend>
-    <label for="issue">
       <textarea
-        id="issue"
+        id="description"
         v-model="otherReasonDescription"
         class="reason p-2 font-semibold"
         placeholder="Issue description required (with at least 20 characters)"
       />
     </label>
+
     <div>
       <button
         class="button other-back-button is-text tiny mt-4 bg-white"
@@ -29,7 +28,7 @@
       <button
         type="button"
         :disabled="!descriptionHasMoreThan20Chars"
-        class="button submit-other-button tiny is-success mt-4 float-right"
+        class="float-right bg-trans-blue text-white py-2 px-4 font-semibold border-2 border-tx rounded-sm disabled:opacity-50"
         @click="sendContentReport()"
         @keyup.enter="sendContentReport()"
       >
@@ -57,7 +56,9 @@ export default {
       this.$emit('onBackClick')
     },
     sendContentReport() {
-      this.$emit('sendContentReport', this.otherReasonDescription)
+      this.$emit('sendContentReport', {
+        description: this.otherReasonDescription,
+      })
     },
   },
 }
