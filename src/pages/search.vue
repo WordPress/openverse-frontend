@@ -17,6 +17,10 @@
         <SearchTypeTabs />
         <FilterDisplay v-if="shouldShowFilterTags" />
         <NuxtChild :key="$route.path" @onLoadMoreItems="onLoadMoreItems" />
+        <ScrollButton
+          data-testid="scroll-button"
+          :show-btn="showScrollButton"
+        />
       </div>
     </div>
   </div>
@@ -49,6 +53,9 @@ const BrowsePage = {
     await this.setSearchTypeFromUrl({ url })
     await this.setFiltersFromUrl({ url })
   },
+  data: () => ({
+    showScrollButton: false,
+  }),
   mounted() {
     const localFilterState = () =>
       local.get(process.env.filterStorageKey)
@@ -58,9 +65,11 @@ const BrowsePage = {
     const MIN_SCREEN_WIDTH_FILTER_VISIBLE_BY_DEFAULT = 800
     const isDesktop = () =>
       screenWidth() > MIN_SCREEN_WIDTH_FILTER_VISIBLE_BY_DEFAULT
-    this.setFilterVisibility({
-      isFilterVisible: isDesktop() ? localFilterState() : false,
-    })
+    this.isFilterVisible = isDesktop() ? localFilterState() : false
+    document.addEventListener('scroll', this.checkScrollLength)
+  },
+  beforeDestroy() {
+    document.removeEventListener('scroll', this.checkScrollLength)
   },
   computed: {
     query() {
@@ -104,6 +113,9 @@ const BrowsePage = {
       return (
         this.$route.path === '/search/' || this.$route.path === '/search/image'
       )
+    },
+    checkScrollLength() {
+      this.showScrollButton = window.scrollY > 70
     },
   },
   watch: {
