@@ -17,12 +17,12 @@
 </template>
 
 <script>
-import { ref } from '#app'
-import useRelated from '~/composables/use-related'
+import { defineComponent } from '#app'
 import { IMAGE } from '~/constants/media'
 import ImageGrid from '~/components/ImageGrid/ImageGrid'
+import { fetchRelated } from '~/data/fetch-related'
 
-export default {
+export default defineComponent({
   name: 'RelatedImages',
   components: { ImageGrid },
   props: {
@@ -32,26 +32,14 @@ export default {
     },
     service: {},
   },
-  /**
-   * Fetches related images on `imageId` change
-   * @param {object} props
-   * @param {string} props.imageId
-   * @param {any} props.service
-   * @return {{ images: Ref<ImageDetail[]> }}
-   */
-  setup(props) {
-    const mainImageId = ref(props.imageId)
-    const relatedOptions = {
-      mediaType: IMAGE,
-      mediaId: mainImageId,
-    }
-    // Using service prop to be able to mock when testing
-    if (props.service) {
-      relatedOptions.service = props.service
-    }
-    const { media: images } = useRelated(relatedOptions)
-
-    return { images }
+  data() {
+    return { images: [] }
   },
-}
+  fetch() {
+    fetchRelated(this, 'images', {
+      mediaType: IMAGE,
+      mediaId: this.$props.imageId,
+    })
+  },
+})
 </script>

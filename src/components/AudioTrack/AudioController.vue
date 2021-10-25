@@ -28,11 +28,8 @@
 
 <script>
 import Waveform from '~/components/AudioTrack/Waveform'
-import { computed, ref, useStore, watch } from '#app'
-import {
-  SET_ACTIVE_MEDIA_ITEM,
-  UNSET_ACTIVE_MEDIA_ITEM,
-} from '~/constants/mutation-types'
+import { computed, watch, inject, ref } from '#app'
+import { activeMediaStateKey } from '~/components/ActiveMediaItemStateProvider.vue'
 
 /**
  * Controls the interaction between the parent Vue component, the underlying
@@ -70,17 +67,26 @@ export default {
     waveformClasses: {},
   },
   setup(props, { emit }) {
-    const store = useStore()
+    const activeMediaState = inject(activeMediaStateKey)
+
+    if (typeof activeMediaState === 'undefined') {
+      throw new Error(
+        'AudioController must only be used in the context of the ActiveMediaStateProvider'
+      )
+    }
 
     const audioEl = ref(null) // template ref
 
     /* Status */
 
-    const isActiveTrack = computed(
-      () =>
-        store.state.active.type === 'audio' &&
-        store.state.active.id === props.audio.id
-    )
+    const isActiveTrack = computed(() => {
+      const {
+        activeMedia: { value: activeMedia },
+      } = activeMediaState
+
+      return activeMedia.type === 'audio' && activeMedia.id === props.audio.id
+    })
+
     // Sync status from parent to player and store
     watch(
       () => props.status,
@@ -95,7 +101,7 @@ export default {
         switch (status) {
           case 'playing':
             audioEl.value.play()
-            store.commit(SET_ACTIVE_MEDIA_ITEM, {
+            activeMediaState.setActiveMedia({
               type: 'audio',
               id: props.audio.id,
             })
@@ -104,7 +110,7 @@ export default {
           case 'paused':
             audioEl.value.pause()
             if (isActiveTrack.value) {
-              store.commit(UNSET_ACTIVE_MEDIA_ITEM)
+              activeMediaState.unsetActiveMedia()
             }
             break
         }
@@ -112,7 +118,10 @@ export default {
     )
     // Sync status from store to parent
     watch(
-      () => [store.state.active.type, store.state.active.id],
+      () => [
+        activeMediaState.activeMedia.value.type,
+        activeMediaState.activeMedia.value.id,
+      ],
       () => {
         const status = isActiveTrack.value ? 'playing' : 'paused'
         emit('change', status)

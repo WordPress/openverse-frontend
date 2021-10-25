@@ -13,12 +13,19 @@ module.exports = {
     // https://github.com/vuejs/eslint-plugin-vue#priority-a-essential-error-prevention
     // consider switching to `plugin:vue/strongly-recommended` or `plugin:vue/recommended` for stricter rules.
     'plugin:vue/recommended',
-    'plugin:prettier/recommended',
     'plugin:vuejs-accessibility/recommended',
     'plugin:@intlify/vue-i18n/recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:prettier/recommended',
   ],
   // required to lint *.vue files
-  plugins: ['vue', 'cypress', 'vuejs-accessibility', 'unicorn'],
+  plugins: [
+    'vue',
+    'cypress',
+    'vuejs-accessibility',
+    'unicorn',
+    '@typescript-eslint',
+  ],
   // add your custom rules here
   rules: {
     semi: [2, 'never'],

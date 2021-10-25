@@ -21,11 +21,11 @@
 </template>
 
 <script>
-import { ref } from '#app'
+import { defineComponent } from '#app'
 import { AUDIO } from '~/constants/media'
-import useRelated from '~/composables/use-related'
+import { fetchRelated } from '~/data/fetch-related'
 
-export default {
+export default defineComponent({
   name: 'RelatedAudios',
   props: {
     audioId: {
@@ -34,25 +34,14 @@ export default {
     },
     service: {},
   },
-  /**
-   * Fetches related audios on `audioId` change
-   * @param {object} props
-   * @param {string} props.audioId
-   * @param {any} props.service
-   * @return {{ audios: Ref<AudioDetail[]> }}
-   */
-  setup(props) {
-    const mainAudioId = ref(props.audioId)
-    const relatedOptions = {
-      mediaType: AUDIO,
-      mediaId: mainAudioId,
-    }
-    // Using service prop to be able to mock when testing
-    if (props.service) {
-      relatedOptions.service = props.service
-    }
-    const { media: audios } = useRelated(relatedOptions)
-    return { audios }
+  data() {
+    return { audios: [] }
   },
-}
+  fetch() {
+    fetchRelated(this, 'audios', {
+      mediaType: AUDIO,
+      mediaId: this.$props.audioId,
+    })
+  },
+})
 </script>

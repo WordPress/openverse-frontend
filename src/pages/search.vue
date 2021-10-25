@@ -1,5 +1,5 @@
 <template>
-  <div class="browse-page">
+  <ActiveMediaItemStateProvider class="browse-page">
     <div class="search columns">
       <div class="desk:hidden">
         <AppModal v-if="isFilterVisible" @close="onToggleSearchGridFilter">
@@ -19,7 +19,7 @@
         <NuxtChild :key="$route.path" @onLoadMoreItems="onLoadMoreItems" />
       </div>
     </div>
-  </div>
+  </ActiveMediaItemStateProvider>
 </template>
 <script>
 import { FETCH_MEDIA, SET_SEARCH_TYPE_FROM_URL } from '~/constants/action-types'
@@ -33,6 +33,7 @@ import local from '~/utils/local'
 import { screenWidth } from '~/utils/get-browser-info'
 import { ALL_MEDIA, IMAGE } from '~/constants/media'
 import { mapActions, mapMutations } from 'vuex'
+
 
 const BrowsePage = {
   name: 'browse-page',

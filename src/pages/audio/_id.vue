@@ -1,5 +1,5 @@
 <template>
-  <div :aria-label="$t('photo-details.aria.main')" class="audio-page">
+  <ActiveMediaItemStateProvider :aria-label="$t('photo-details.aria.main')" class="audio-page">
     <AudioTrack :audio="audio" class="main-track" />
     <MediaReuse
       data-testid="audio-attribution"
@@ -19,7 +19,7 @@
       class="my-16 px-4 desk:px-0"
       :audio-id="audio.id"
     />
-  </div>
+  </ActiveMediaItemStateProvider>
 </template>
 
 <script>
