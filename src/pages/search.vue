@@ -37,6 +37,7 @@ import local from '~/utils/local'
 import { screenWidth } from '~/utils/get-browser-info'
 import { ALL_MEDIA, IMAGE } from '~/constants/media'
 import { mapActions, mapMutations } from 'vuex'
+import debounce from 'lodash.debounce'
 
 const BrowsePage = {
   name: 'browse-page',
@@ -66,7 +67,7 @@ const BrowsePage = {
     const isDesktop = () =>
       screenWidth() > MIN_SCREEN_WIDTH_FILTER_VISIBLE_BY_DEFAULT
     this.isFilterVisible = isDesktop() ? localFilterState() : false
-    document.addEventListener('scroll', this.checkScrollLength)
+    document.addEventListener('scroll', debounce(this.checkScrollLength, 100))
   },
   beforeDestroy() {
     document.removeEventListener('scroll', this.checkScrollLength)
