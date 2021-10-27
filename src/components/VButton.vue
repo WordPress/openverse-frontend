@@ -9,6 +9,7 @@
       active && $style[`${variant}-active`],
       $style[`size-${size}`],
     ]"
+    v-on="$listeners"
   >
     <slot />
   </Component>

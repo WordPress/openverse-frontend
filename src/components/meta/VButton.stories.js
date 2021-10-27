@@ -21,9 +21,14 @@ export default {
 }
 
 const VButtonStory = (args, { argTypes }) => ({
-  template: `<VButton v-bind="$props">Code is Poetry</VButton>`,
+  template: `<VButton v-bind="$props" @click="onClick">Code is Poetry</VButton>`,
   components: { VButton },
   props: Object.keys(argTypes),
+  methods: {
+    onClick() {
+      window.alert('hello!')
+    },
+  },
 })
 
 export const Default = VButtonStory.bind({})
