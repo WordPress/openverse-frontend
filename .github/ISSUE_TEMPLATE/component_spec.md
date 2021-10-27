@@ -49,3 +49,6 @@ title: "<Replace this with the component name>"
 <!-- Place a link to the Figma node of the component from the Design Library: https://www.figma.com/file/GIIQ4sDbaToCfFQyKMvzr8/Openverse-Design-Library -->
 - **Figma:**
 
+## Implementation
+<!-- Replace the [ ] with [x] to check the box. -->
+- [ ] 🙋 I would be interested in implementing this component.
