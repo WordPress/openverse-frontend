@@ -10,10 +10,31 @@
       /></Component>
       <div class="column search-grid-ctr">
         <SearchGridForm @onSearchFormSubmit="onSearchFormSubmit" />
-        <SearchTypeTabs />
+        <SearchTypeTabs class="mb-4" />
         <FilterDisplay v-show="shouldShowFilterTags" />
         <NuxtChild :key="$route.path" @onLoadMoreItems="onLoadMoreItems" />
         <ScrollButton :show-btn="showScrollButton" />
+        <SearchGrid
+          :id="`tab-${searchType}`"
+          role="tabpanel"
+          :aria-labelledby="searchType"
+          data-testid="search-grid"
+        >
+          <template #media>
+            <NuxtChild
+              :key="$route.path"
+              :media-results="results"
+              :fetch-state="fetchState"
+              :is-finished="isFinished"
+              :is-filter-visible="isFilterVisible"
+              @load-more="fetchMedia"
+            />
+          </template>
+        </SearchGrid>
+        <ScrollButton
+          data-testid="scroll-button"
+          :show-btn="showScrollButton"
+        />
       </div>
     </div>
   </div>
@@ -84,7 +105,7 @@ const BrowsePage = {
   computed: {
     ...mapState(SEARCH, ['query', 'isFilterVisible', 'searchType']),
     ...mapGetters(SEARCH, ['searchQueryParams', 'isAnyFilterApplied']),
-    ...mapGetters(MEDIA, ['results']),
+    ...mapGetters(MEDIA, ['results', 'fetchState', 'isFinished']),
     mediaType() {
       // Default to IMAGE until media search/index is generalized
       return this.searchType !== ALL_MEDIA ? this.searchType : IMAGE

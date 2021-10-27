@@ -1,13 +1,13 @@
-import SearchGrid from '~/components/SearchGridManualLoad'
-import render from '../../test-utils/render'
-
 import Vuex from 'vuex'
+import { render, screen } from '@testing-library/vue'
 import { IMAGE } from '~/constants/media'
 import { createLocalVue } from '@vue/test-utils'
 import VueI18n from 'vue-i18n'
 import messages from '~/locales/en.json'
+import SearchGrid from '~/components/SearchGrid'
 import SaferBrowsing from '~/components/SaferBrowsing'
 import SearchGridCell from '~/components/SearchGridCell'
+
 describe('SearchGrid', () => {
   let options = {}
   const localVue = createLocalVue()
@@ -93,15 +93,18 @@ describe('SearchGrid', () => {
     }
   })
 
-  it('should render correct contents', () => {
-    const wrapper = render(SearchGrid, options)
-    expect(wrapper.find('section').element).toBeDefined()
-    expect(wrapper.find('.load-more').element).toBeDefined()
-  })
+  it('should render correct contents', async () => {
+    render(SearchGrid, options)
 
-  it("doesn't render load more button if not loading images", () => {
-    const wrapper = render(SearchGrid, options)
-    expect(wrapper.find('.load-more').element).toBeDefined()
+    // Meta information
+    // Result count
+    screen.getByText(/40 image results/)
+    // Search rating
+    screen.getByText(/search-rating.content/)
+    screen.getAllByRole('button', { text: /yes/i })
+    screen.getAllByRole('button', { text: /no/i })
+    // Safer browsing
+    screen.getAllByRole('button', { text: /safer-browsing/i })
   })
   // Fetching states should be tested with e2e tests
 })

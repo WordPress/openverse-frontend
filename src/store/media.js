@@ -45,7 +45,7 @@ export const state = () => ({
       items: {},
     },
   },
-  fetchingState: {
+  fetchState: {
     audio: {
       isFetching: false,
       fetchingError: null,
@@ -231,10 +231,10 @@ export const getters = {
    * @param {import('./types').MediaState} state
    * @param getters
    * @param rootState
-   * @returns {import('./types').FetchingState}
+   * @returns {import('./types').fetchState}
    */
-  fetchingState(state, getters, rootState) {
-    return state.fetchingState[rootState.search.query.mediaType]
+  fetchState(state, getters, rootState) {
+    return state.fetchState[rootState.search.query.mediaType]
   },
   /**
    * Returns true if all pages from the search result have been shown.
@@ -253,16 +253,16 @@ export const getters = {
 
 export const mutations = {
   [FETCH_START_MEDIA](_state, { mediaType }) {
-    _state.fetchingState[mediaType].isFetching = true
-    _state.fetchingState[mediaType].fetchingError = null
+    _state.fetchState[mediaType].isFetching = true
+    _state.fetchState[mediaType].fetchingError = null
   },
   [FETCH_END_MEDIA](_state, { mediaType }) {
-    _state.fetchingState[mediaType].isFetching = false
+    _state.fetchState[mediaType].isFetching = false
   },
   [FETCH_MEDIA_ERROR](_state, params) {
     const { mediaType, errorMessage } = params
-    _state.fetchingState[mediaType].isFetching = false
-    _state.fetchingState[mediaType].fetchingError = errorMessage
+    _state.fetchState[mediaType].isFetching = false
+    _state.fetchState[mediaType].fetchingError = errorMessage
   },
   [SET_AUDIO](_state, params) {
     _state.audio = decodeMediaData(params.audio, AUDIO)

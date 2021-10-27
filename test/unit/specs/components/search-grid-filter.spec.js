@@ -27,6 +27,7 @@ const initialFilters = {
   audioProviders: [{ code: 'jamendo', name: 'Jamendo', checked: false }],
   sizes: [{ code: 'small', name: 'small', checked: false }],
   aspectRatios: [],
+  sizes: [{ code: 'small', name: 'small', checked: false }],
   searchBy: [{ code: 'creator', checked: false }],
   mature: false,
 }

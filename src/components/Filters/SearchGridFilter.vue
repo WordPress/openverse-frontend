@@ -86,7 +86,7 @@ export default {
       clearFilters: CLEAR_FILTERS,
     }),
     ...mapMutations(SEARCH, {
-      setFilterVisible: SET_FILTER_IS_VISIBLE,
+      setFilterVisibility: SET_FILTER_IS_VISIBLE,
     }),
     filterTypeTitle(filterType) {
       if (filterType === 'searchBy') {
@@ -101,7 +101,7 @@ export default {
       this.clearFilters()
     },
     onToggleSearchGridFilter() {
-      this.setFilterVisible({
+      this.setFilterVisibility({
         isFilterVisible: !this.isFilterVisible,
       })
     },
