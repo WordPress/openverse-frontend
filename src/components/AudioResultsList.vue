@@ -45,16 +45,13 @@
 </template>
 
 <script>
+import { mapActions, mapGetters, mapState } from 'vuex'
 import { FETCH_MEDIA } from '~/constants/action-types'
 import { AUDIO } from '~/constants/media'
-import { mapActions, mapGetters, mapState } from 'vuex'
 import { FILTER, SEARCH } from '~/constants/store-modules'
 
 export default {
   name: 'AudioResultsList',
-  props: {
-    query: {},
-  },
   async fetch() {
     if (!this.audios.length) {
       await this.fetchMedia({

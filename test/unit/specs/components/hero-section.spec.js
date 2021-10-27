@@ -5,6 +5,14 @@ import store from '~/store/search'
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import clonedeep from 'lodash.clonedeep'
+import VueI18n from 'vue-i18n'
+import messages from '~/locales/en.json'
+
+const i18n = new VueI18n({
+  locale: 'en',
+  fallbackLocale: 'en',
+  messages: { en: messages },
+})
 
 describe('HeroSection', () => {
   let options = {}
@@ -15,6 +23,7 @@ describe('HeroSection', () => {
 
   beforeEach(() => {
     localVue = createLocalVue()
+    localVue.use(VueI18n)
     localVue.use(Vuex)
     filters = clonedeep(filterData)
     storeMock = new Vuex.Store({
@@ -38,6 +47,7 @@ describe('HeroSection', () => {
         $router: routerMock,
         $store: storeMock,
       },
+      i18n,
     }
   })
   it('should render correct contents', () => {
