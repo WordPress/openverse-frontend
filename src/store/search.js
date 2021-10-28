@@ -40,11 +40,6 @@ import { FILTER, USAGE_DATA } from '~/constants/store-modules'
 import AudioService from '~/data/audio-service'
 import ImageService from '~/data/image-service'
 
-// const getSearchPath = () =>
-//   window.location.pathname && window.location.pathname.includes('search')
-//     ? window.location.pathname
-//     : '/search'
-
 /**
  * @type {{ audios: import('./types').AudioDetail[],
  * audiosCount: number, audioPage:number,
