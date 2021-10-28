@@ -81,6 +81,7 @@ module.exports = {
     },
     ringWidth: {
       DEFAULT: '1.5px',
+      0: 0,
     },
     ringOffsetWidth: {
       2: '2px',
