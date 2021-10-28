@@ -14,7 +14,7 @@ export default {
     },
     active: 'boolean',
     size: {
-      options: ['default', 'small'],
+      options: ['large', 'medium', 'small'],
       control: { type: 'radio' },
     },
   },

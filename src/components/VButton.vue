@@ -51,8 +51,8 @@ const VButton = defineComponent({
     },
     size: {
       type: String,
-      default: 'default',
-      validate: (v) => ['default', 'small'].includes(v),
+      default: 'medium',
+      validate: (v) => ['large', 'medium', 'small'].includes(v),
     },
   },
   // eslint-disable-next-line no-unused-vars
@@ -69,12 +69,16 @@ export default VButton
   @apply flex max-w-max items-center rounded-sm justify-center transition-shadow duration-100 ease-linear disabled:opacity-70 focus:outline-none focus-visible:ring focus-visible:ring-offset-2 no-underline appearance-none;
 }
 
-.size-default {
+.size-small {
+  @apply py-1 px-2;
+}
+
+.size-medium {
   @apply py-2 px-4;
 }
 
-.size-small {
-  @apply py-1 px-2;
+.size-large {
+  @apply py-6 px-8;
 }
 
 a.button {
@@ -99,5 +103,9 @@ a.button {
 
 .tertiary {
   @apply bg-white text-black hover:bg-dark-charcoal hover:text-white border border-dark-charcoal-20 hover:border-tx focus-visible:ring-pink;
+}
+
+.tertiary-active {
+  @apply bg-dark-charcoal text-white border-tx;
 }
 </style>
