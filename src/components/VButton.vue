@@ -6,7 +6,7 @@
     :class="[
       $style.button,
       $style[variant],
-      active && $style[`${variant}-active`],
+      pressed && $style[`${variant}-pressed`],
       $style[`size-${size}`],
     ]"
     v-on="$listeners"
@@ -39,13 +39,20 @@ const VButton = defineComponent({
     variant: {
       type: String,
       default: 'primary',
-      validate: (v) => ['primary', 'secondary', 'tertiary'].includes(v),
+      validate: (v) =>
+        [
+          'primary',
+          'secondary',
+          'tertiary',
+          'action-menu',
+          'action-menu-muted',
+        ].includes(v),
     },
     /**
-     * Allows for programmatically setting the active state of a button,
+     * Allows for programmatically setting the pressed state of a button,
      * i.e., in the case of a button opening a menu.
      */
-    active: {
+    pressed: {
       type: Boolean,
       default: false,
     },
@@ -56,7 +63,7 @@ const VButton = defineComponent({
     },
   },
   // eslint-disable-next-line no-unused-vars
-  setup({ as, variant, active, size, ...filteredProps }) {
+  setup({ as, variant, pressed, size, ...filteredProps }) {
     return { filteredProps }
   },
 })
@@ -89,7 +96,7 @@ a.button {
   @apply bg-pink text-white focus-visible:ring-pink hover:bg-dark-pink hover:text-white;
 }
 
-.primary-active {
+.primary-pressed {
   @apply bg-dark-pink;
 }
 
@@ -97,7 +104,7 @@ a.button {
   @apply bg-dark-charcoal text-white font-bold focus-visible:ring-pink hover:bg-dark-charcoal-80 hover:text-white;
 }
 
-.secondary-active {
+.secondary-pressed {
   @apply bg-dark-charcoal-80;
 }
 
@@ -105,7 +112,23 @@ a.button {
   @apply bg-white text-black hover:bg-dark-charcoal hover:text-white border border-dark-charcoal-20 hover:border-tx focus-visible:ring-pink;
 }
 
-.tertiary-active {
+.tertiary-pressed {
   @apply bg-dark-charcoal text-white border-tx;
+}
+
+.action-menu {
+  @apply bg-white text-black border border-tx hover:border-dark-charcoal-20 focus-visible:ring-pink;
+}
+
+.action-menu-pressed {
+  @apply border-tx bg-dark-charcoal text-white;
+}
+
+.action-menu-muted {
+  @apply bg-dark-charcoal-10 text-black border border-tx hover:border-dark-charcoal-20 focus-visible:ring-pink;
+}
+
+.action-menu-muted-pressed {
+  @apply border-tx bg-dark-charcoal text-white;
 }
 </style>

@@ -5,14 +5,20 @@ export default {
   component: VButton,
   argTypes: {
     variant: {
-      options: ['primary', 'secondary', 'tertiary'],
+      options: [
+        'primary',
+        'secondary',
+        'tertiary',
+        'action-menu',
+        'action-menu-muted',
+      ],
       control: { type: 'radio' },
     },
     as: {
       options: ['button', 'a'],
       control: { type: 'radio' },
     },
-    active: 'boolean',
+    pressed: 'boolean',
     size: {
       options: ['large', 'medium', 'small'],
       control: { type: 'radio' },
