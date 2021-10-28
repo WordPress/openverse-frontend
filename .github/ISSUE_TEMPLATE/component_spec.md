@@ -5,9 +5,6 @@ labels: "🕹 aspect: interface, 🌟 goal: addition, 🚦 status: awaiting tria
 title: "<Replace this with the component name>"
 ---
 
-## Component: Title
-<!-- Replace 'Title' above with the actual component title. -->
-
 ## Description
 <!-- Describe the component, including different states. Do not include screenshots. -->
 
@@ -42,6 +39,9 @@ title: "<Replace this with the component name>"
 
 ## Code samples
 <!-- Share pseudocode templates or high-level implementation code; or delete the section entirely. -->
+
+## Dependencies
+<!-- Name the components that this component depends on, including issues or PRs; or delete the section entirely if the component is independent. -->
 
 ## References
 <!-- Include as many references to prior art as you deem necessary or helpful. -->
