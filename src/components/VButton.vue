@@ -42,7 +42,7 @@ const VButton = defineComponent({
       validate: (v) => ['primary', 'secondary', 'tertiary'].includes(v),
     },
     /**
-     * Allows for programatically setting the active state of a button,
+     * Allows for programmatically setting the active state of a button,
      * i.e., in the case of a button opening a menu.
      */
     active: {
