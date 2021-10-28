@@ -2,7 +2,7 @@
 name: Component spec
 about: Describe a new component to be developed for the design system
 labels: "🕹 aspect: interface, 🌟 goal: addition, 🚦 status: awaiting triage, 🟨 priority: medium"
-title: "<Replace this with the component name>"
+title: "Component: <Replace this with the component name>"
 ---
 
 ## Description
