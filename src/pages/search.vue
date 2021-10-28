@@ -57,6 +57,9 @@ const BrowsePage = {
   data: () => ({
     showScrollButton: false,
   }),
+  created() {
+    this.debounceScrollHandling = debounce(this.checkScrollLength, 100)
+  },
   mounted() {
     const localFilterState = () =>
       local.get(process.env.filterStorageKey)
@@ -66,11 +69,13 @@ const BrowsePage = {
     const MIN_SCREEN_WIDTH_FILTER_VISIBLE_BY_DEFAULT = 800
     const isDesktop = () =>
       screenWidth() > MIN_SCREEN_WIDTH_FILTER_VISIBLE_BY_DEFAULT
-    this.isFilterVisible = isDesktop() ? localFilterState() : false
-    document.addEventListener('scroll', debounce(this.checkScrollLength, 100))
+    this.setFilterVisibility({
+      isFilterVisible: isDesktop() ? localFilterState() : false,
+    })
+    window.addEventListener('scroll', this.debounceScrollHandling)
   },
   beforeDestroy() {
-    document.removeEventListener('scroll', this.checkScrollLength)
+    window.removeEventListener('scroll', this.debounceScrollHandling)
   },
   computed: {
     query() {

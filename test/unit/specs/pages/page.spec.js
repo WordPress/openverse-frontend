@@ -13,7 +13,10 @@ const options = {
     SearchGridManualLoad: true,
   },
   mocks: {
-    $store: { state: { query: { q: 'foo' } } },
+    $store: {
+      commit: jest.fn(),
+      state: { query: { q: 'foo' }, isFilterVisible: false },
+    },
     $router: { path: { name: 'search-image' } },
     $route: { path: '/search/image' },
   },
