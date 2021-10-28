@@ -28,7 +28,7 @@
 <script>
 import {
   FETCH_MEDIA,
-  SET_FILTER_FROM_URL,
+  SET_FILTERS_FROM_URL,
   SET_SEARCH_TYPE_FROM_URL,
   UPDATE_SEARCH_TYPE,
 } from '~/constants/action-types'
@@ -100,7 +100,7 @@ const BrowsePage = {
       setQuery: SET_QUERY,
     }),
     ...mapMutations(FILTER, {
-      setFiltersFromUrl: SET_FILTER_FROM_URL,
+      setFiltersFromUrl: SET_FILTERS_FROM_URL,
       setFilterVisibility: SET_FILTER_IS_VISIBLE,
     }),
     getMediaItems(params, mediaType) {
