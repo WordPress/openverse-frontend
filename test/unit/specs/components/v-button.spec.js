@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import { render, screen } from '@testing-library/vue'
 
 import VButton from '~/components/VButton.vue'
@@ -43,6 +44,22 @@ describe('VButton', () => {
 
     expect(element).toHaveAttribute('tabindex', '-1')
   })
+
+  it.each(['button', 'submit', 'reset', 'color', 'file', 'image'])(
+    'should allow an input element that renders a button with the type %s',
+    async (type) => {
+      const TestWrapper = Vue.component('TestWrapper', {
+        components: { VButton },
+        template: `<label>Code is Poetry<VButton as="input" type="${type}" /></label>`,
+      })
+      render(TestWrapper)
+
+      const element = await screen.findByLabelText(/code is poetry/i)
+
+      expect(element.tagName).toBe('INPUT')
+      expect(element).toHaveAttribute('type', type)
+    }
+  )
 
   // @todo(sarayourfriend) fix this failing test!
   it.skip('should render an anchor with no type attribute', async () => {

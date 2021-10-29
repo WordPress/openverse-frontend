@@ -15,7 +15,7 @@ export default {
       control: { type: 'radio' },
     },
     as: {
-      options: ['button', 'a', 'div'],
+      options: ['button', 'a', 'div', 'input'],
       control: { type: 'radio' },
     },
     pressed: 'boolean',
@@ -29,7 +29,16 @@ export default {
 }
 
 const VButtonStory = (args, { argTypes }) => ({
-  template: `<VButton v-bind="$props" @click="onClick">Code is Poetry</VButton>`,
+  template: `
+    <div>
+      <VButton v-bind="$props" @click="onClick">Code is Poetry</VButton>
+
+      <label class="mt-4">
+        File button
+        <VButton as="input" type="file" />
+      </label>
+    </div>
+  `,
   components: { VButton },
   props: Object.keys(argTypes),
   methods: {

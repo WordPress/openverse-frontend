@@ -16,7 +16,6 @@
     :tabindex="tabIndex"
     v-on="$listeners"
   >
-    {{ type }}
     <slot />
   </Component>
 </template>
@@ -108,17 +107,12 @@ const VButton = defineComponent({
     // We check all this stuff against the `node` directly because `as` could be a Vue component!
     // In that case we need to know what element it ultimately renders to decide what a11y props to configure
     watch(nodeRef, (element) => {
-      if (element.tagName === 'BUTTON') {
-        typeRef.value = propsRef.type.value
-      } else {
-        typeRef.value = undefined
-      }
-
       // https://github.com/reakit/reakit/blob/41bd33be66ebcd0b4dcb63155e3ff03e1ae9dfc8/packages/reakit/src/Button/Button.ts#L34
       if (!isButton(element)) {
         if (element.tagName !== 'A') {
           roleRef.value = 'button'
         }
+        typeRef.value = undefined
       }
 
       if (!isNativeTabbable(element)) {
