@@ -15,7 +15,7 @@ export default {
       control: { type: 'radio' },
     },
     as: {
-      options: ['button', 'a'],
+      options: ['button', 'a', 'div'],
       control: { type: 'radio' },
     },
     pressed: 'boolean',
@@ -23,6 +23,8 @@ export default {
       options: ['large', 'medium', 'small'],
       control: { type: 'radio' },
     },
+    disabled: 'boolean',
+    focusable: 'boolean',
   },
 }
 

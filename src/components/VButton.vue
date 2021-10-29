@@ -1,7 +1,9 @@
 <template>
   <Component
     :is="as"
-    :type="as === 'button' ? $props.type || 'button' : undefined"
+    ref="node"
+    :type="typeValue"
+    :role="role"
     v-bind="filteredProps"
     :class="[
       $style.button,
@@ -9,14 +11,22 @@
       pressed && $style[`${variant}-pressed`],
       $style[`size-${size}`],
     ]"
+    :aria-pressed="pressed"
+    :disabled="disabledValue"
+    :tabindex="tabIndex"
     v-on="$listeners"
   >
+    {{ type }}
     <slot />
   </Component>
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, ref, watch, toRefs } from '@nuxtjs/composition-api'
+import { isButton } from 'reakit-utils'
+import { getTabIndex } from '~/utils/a11y/get-tab-index'
+import { isNativeTabbable } from '~/utils/a11y/is-native-tabbale'
+import { supportsDisabledAttribute } from '~/utils/a11y/supports-disabled-attribute'
 
 /**
  * A button component that behaves just like a regular HTML `button` element
@@ -27,7 +37,8 @@ import { defineComponent } from '@nuxtjs/composition-api'
  * most common use case for this prop is to turn the `VButton` component into
  * an `anchor` element, so that you can render a link instead of a `button`.
  *
- * This also implements basic accessibility checks.
+ * The accessibility helpers on this component are critical and are completely
+ * adapted from Reakit's Button, Clickable, and Tabbable component implementations.
  */
 const VButton = defineComponent({
   name: 'VButton',
@@ -61,10 +72,102 @@ const VButton = defineComponent({
       default: 'medium',
       validate: (v) => ['large', 'medium', 'small'].includes(v),
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
+    focusable: {
+      type: Boolean,
+      default: true,
+    },
+    type: {
+      type: String,
+      default: 'button',
+      validate: (v) => ['button', 'submit', 'reset'].includes(v),
+    },
   },
-  // eslint-disable-next-line no-unused-vars
-  setup({ as, variant, pressed, size, ...filteredProps }) {
-    return { filteredProps }
+  /* eslint-disable no-unused-vars */
+  setup(props) {
+    const propsRef = toRefs(props)
+    const disabledPropRef = propsRef.disabled
+    const disabledRef = ref(disabledPropRef.value)
+    const focusableRef = propsRef.focusable
+    /** @type {import('@nuxtjs/composition-api').Ref<Element | undefined>} */
+    const nodeRef = ref()
+    const trulyDisabledRef = ref(disabledPropRef.value && !focusableRef.value)
+    const typeRef = ref(propsRef.type.value)
+    const roleRef = ref(undefined)
+    const nativeTabbableRef = ref(true)
+    const supportsDisabledRef = ref(true)
+    const tabIndexRef = propsRef.tabindex || ref(undefined)
+
+    watch([propsRef.disabled, propsRef.focusable], ([disabled, focusable]) => {
+      trulyDisabledRef.value = disabled && !focusable
+    })
+
+    // We check all this stuff against the `node` directly because `as` could be a Vue component!
+    // In that case we need to know what element it ultimately renders to decide what a11y props to configure
+    watch(nodeRef, (element) => {
+      if (element.tagName === 'BUTTON') {
+        typeRef.value = propsRef.type.value
+      } else {
+        typeRef.value = undefined
+      }
+
+      // https://github.com/reakit/reakit/blob/41bd33be66ebcd0b4dcb63155e3ff03e1ae9dfc8/packages/reakit/src/Button/Button.ts#L34
+      if (!isButton(element)) {
+        if (element.tagName !== 'A') {
+          roleRef.value = 'button'
+        }
+      }
+
+      if (!isNativeTabbable(element)) {
+        nativeTabbableRef.value = false
+      }
+      if (!supportsDisabledAttribute(element)) {
+        supportsDisabledRef.value = false
+      }
+    })
+
+    watch(
+      [trulyDisabledRef, nativeTabbableRef, supportsDisabledRef],
+      ([trulyDisabled, nativeTabbable, supportsDisabled]) => {
+        tabIndexRef.value = getTabIndex(
+          trulyDisabled,
+          nativeTabbable,
+          supportsDisabled,
+          tabIndexRef.value
+        )
+
+        disabledRef.value = trulyDisabled && supportsDisabled ? true : undefined
+      },
+      { immediate: true }
+    )
+
+    // prevent `v-bind` from putting a bunch of nonsense props in the dom by filtering
+    // both the ones we configure ourselves (like `disabled`) and then the non-standard
+    // props like `pressed` and `focusable`
+    const {
+      as,
+      type,
+      role,
+      tabindex,
+      disabled,
+      focusable,
+      size,
+      variant,
+      pressed,
+      ...filteredProps
+    } = props
+
+    return {
+      disabledValue: disabledRef,
+      node: nodeRef,
+      typeValue: typeRef,
+      role: roleRef,
+      tabIndex: tabIndexRef,
+      filteredProps,
+    }
   },
 })
 
