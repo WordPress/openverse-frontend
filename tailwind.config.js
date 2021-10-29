@@ -39,6 +39,7 @@ module.exports = {
 
       // Semi-transparent
       'dark-charcoal-04': 'rgba(48, 39, 46, 0.04)',
+      'dark-charcoal-10': 'rgba(48, 39, 46, 0.1)',
       'dark-charcoal-20': 'rgba(48, 39, 46, 0.2)',
       'dark-charcoal-60': 'rgba(48, 39, 46, 0.6)',
       'dark-charcoal-70': 'rgba(48, 39, 46, 0.7)',
