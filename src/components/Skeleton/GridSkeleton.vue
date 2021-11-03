@@ -1,21 +1,19 @@
 <template>
-  <section>
+  <section class="px-10 pb-16">
+    <template v-if="isFor == 'audio'">
+      <AudioTrackSkeleton v-for="idx in 8" :key="idx" />
+    </template>
     <div
       v-if="isFor == 'all'"
-      class="grid gap-4 p-4 tab:grid-cols-2 desk:grid-cols-5"
+      class="grid gap-4 tab:grid-cols-2 desk:grid-cols-5"
     >
       <div v-for="idx in 10" :key="idx" class="square bg-dark-charcoal-10">
         &nbsp;
       </div>
     </div>
 
-    <div v-if="isFor == 'image'" class="masonry px-10 pb-16">
-      <div
-        v-for="idx in 15"
-        :key="idx"
-        class="bg-dark-charcoal-10 mb-4"
-        :style="{ height: `${getRandomSize()}px` }"
-      >
+    <div v-if="isFor == 'image'" class="masonry">
+      <div v-for="idx in 30" :key="idx" class="bg-dark-charcoal-10 mb-4">
         &nbsp;
       </div>
     </div>
@@ -24,22 +22,12 @@
 
 <script>
 export default {
-  name: 'SkeletonGrid',
+  name: 'GridSkeleton',
   props: {
     isFor: {
       type: String,
       default: 'image',
-      // Use supportedMediaTypes from src/constants/media.js when video is available?
       validator: (val) => ['all', 'image', 'audio'].includes(val),
-    },
-    items: {
-      type: Number,
-      default: 15,
-    },
-  },
-  methods: {
-    getRandomSize() {
-      return Math.floor(Math.random() * (200 - 30) + 200)
     },
   },
 }
@@ -60,6 +48,14 @@ export default {
 
   @screen desk {
     column-count: 5;
+  }
+
+  @for $i from 1 through 30 {
+    div:nth-child(#{$i}) {
+      $h: (random(300) + 100) + px;
+      height: $h;
+      line-height: $h;
+    }
   }
 }
 </style>
