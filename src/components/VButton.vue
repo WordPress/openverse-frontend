@@ -16,6 +16,9 @@
     :tabindex="tabIndex"
     v-on="$listeners"
   >
+    <!--
+      @slot The content of the button
+    -->
     <slot />
   </Component>
 </template>
@@ -42,10 +45,27 @@ import { supportsDisabledAttribute } from '~/utils/a11y/supports-disabled-attrib
 const VButton = defineComponent({
   name: 'VButton',
   props: {
+    /**
+     * Passed to `component :is` to allow the button to *appear* as a button but
+     * work like another element (like an `anchor` or `div`). Can be any string
+     * HTML element name or a Vue component.
+     *
+     * Note: If you pass anything other than `button` or `a` ensure that you implement
+     * accessible input behaviors. For example, only the `button` component has its
+     * `@click` event triggered by an <kbd>Enter</kbd> keypress. Any other element
+     * will need too also implement `@keypress.enter` or similar.
+     *
+     * @default 'button'
+     */
     as: {
       type: [String, Object],
       default: 'button',
     },
+    /**
+     * The variant of the button.
+     *
+     * @default 'primary'
+     */
     variant: {
       type: String,
       default: 'primary',
@@ -61,24 +81,52 @@ const VButton = defineComponent({
     /**
      * Allows for programmatically setting the pressed state of a button,
      * i.e., in the case of a button opening a menu.
+     *
+     * @default false
      */
     pressed: {
       type: Boolean,
       default: false,
     },
+    /**
+     * The size of the button.
+     *
+     * @default 'medium'
+     */
     size: {
       type: String,
       default: 'medium',
       validate: (v) => ['large', 'medium', 'small'].includes(v),
     },
+    /**
+     * Whether the button is disabled. Used alone this will only
+     * visually effect the button but will not "truly" disable the
+     * button unless the `focusable` prop is also set to `false`.
+     *
+     * @default false
+     */
     disabled: {
       type: Boolean,
       default: false,
     },
+    /**
+     * Whether the button is focusable. Should be `true` in almost
+     * all cases except when a button is disabled and should not
+     * be focusable under any circumstances (including by keyboard
+     * navigation).
+     *
+     * @default true
+     */
     focusable: {
       type: Boolean,
       default: true,
     },
+    /**
+     * The HTML `type` attribute for the button. Ignored if `as` is
+     * passed as anything other than `"button"`.
+     *
+     * @default 'button'
+     */
     type: {
       type: String,
       default: 'button',
