@@ -15,7 +15,7 @@
       v-bind="$attrs"
       :id="inputId"
       v-model="text"
-      type="text"
+      :type="type"
       class="flex-grow leading-none font-semibold bg-tx ms-4 h-full focus:outline-none"
     />
     <!-- eslint-enable vuejs-accessibility/form-control-has-label -->
@@ -65,7 +65,7 @@ export default {
       validator: (val) => val.every((item) => ['start', 'end'].includes(item)),
     },
   },
-  setup(props, { emit }) {
+  setup(props, { emit, attrs }) {
     const text = computed({
       get() {
         return props.value
@@ -75,7 +75,10 @@ export default {
       },
     })
 
+    const type = attrs['type'] ?? 'text'
+
     return {
+      type,
       text,
     }
   },
