@@ -1,7 +1,9 @@
 <template>
   <article class="flex flex-row w-full mb-14">
     <!-- Thumbnail skeleton -->
-    <div class="flex-shrink-0 h-20 w-20 mr-4 bg-dark-charcoal-10">&nbsp;</div>
+    <div class="flex-shrink-0 h-20 w-20 mr-4 bg-dark-charcoal-10 rounded">
+      &nbsp;
+    </div>
 
     <div class="flex flex-row gap-6 h-20 w-full">
       <!-- Track infor skeleton -->
@@ -10,18 +12,18 @@
           <div
             v-for="idx in 2"
             :key="idx"
-            class="row-line bg-dark-charcoal-10 h-3"
+            class="row-line bg-dark-charcoal-10 h-3 rounded"
             :style="{ width: `${getRandomSize()}px` }"
           />
           <div class="inline-flex space-x-1 gap-2">
-            <div class="row-line h-3 w-14 bg-dark-charcoal-10" />
+            <div class="h-3 w-14 bg-dark-charcoal-10 rounded" />
             <div class="rounded-full h-3 w-3 bg-dark-charcoal-10" />
-            <div class="row-line h-3 w-30 bg-dark-charcoal-10" />
+            <div class="row-line h-3 w-30 bg-dark-charcoal-10 rounded" />
           </div>
         </div>
       </div>
       <!-- Waveform skeleton -->
-      <div class="w-full bg-dark-charcoal-10" />
+      <div class="w-full bg-dark-charcoal-10 rounded" />
     </div>
   </article>
 </template>
