@@ -1,19 +1,29 @@
 <template>
   <section class="px-10 pb-16">
-    <template v-if="isFor == 'audio'">
-      <AudioTrackSkeleton v-for="idx in 8" :key="idx" />
+    <template v-if="isForTab == 'audio'">
+      <AudioTrackSkeleton v-for="idx in numElems" :key="idx" />
     </template>
+
     <div
-      v-if="isFor == 'all'"
+      v-if="isForTab == 'all'"
       class="grid gap-4 tab:grid-cols-2 desk:grid-cols-5"
     >
-      <div v-for="idx in 10" :key="idx" class="square bg-dark-charcoal-10">
+      <div
+        v-for="idx in numElems"
+        :key="idx"
+        class="square bg-dark-charcoal-10"
+      >
         &nbsp;
       </div>
     </div>
 
-    <div v-if="isFor == 'image'" class="masonry">
-      <div v-for="idx in 30" :key="idx" class="bg-dark-charcoal-10 mb-4">
+    <div v-if="isForTab == 'image'" class="masonry">
+      <div
+        v-for="idx in numElems"
+        :key="idx"
+        class="bg-dark-charcoal-10 mb-4"
+        :style="{ height: `${getRandomSize()}px` }"
+      >
         &nbsp;
       </div>
     </div>
@@ -24,10 +34,23 @@
 export default {
   name: 'GridSkeleton',
   props: {
-    isFor: {
+    isForTab: {
       type: String,
       default: 'image',
       validator: (val) => ['all', 'image', 'audio'].includes(val),
+    },
+    numElems: {
+      type: Number,
+      default: function () {
+        if (this.isForTab === 'all') return 10
+        if (this.isForTab === 'image') return 30
+        return 8
+      },
+    },
+  },
+  methods: {
+    getRandomSize(max = 300, min = 100) {
+      return Math.floor(Math.random() * (max - min) + min)
     },
   },
 }
@@ -48,14 +71,6 @@ export default {
 
   @screen desk {
     column-count: 5;
-  }
-
-  @for $i from 1 through 30 {
-    div:nth-child(#{$i}) {
-      $h: (random(300) + 100) + px;
-      height: $h;
-      line-height: $h;
-    }
   }
 }
 </style>
