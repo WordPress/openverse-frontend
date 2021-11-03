@@ -1,15 +1,16 @@
 <template>
   <div
-    class="input-field group flex flex-row items-center gap-4 pe-4 hover:bg-dark-charcoal-06 h-12 border border-dark-charcoal-20 rounded-sm overflow-hidden focus-within:ring focus-within:ring-pink focus-within:border-white"
+    class="input-field group flex flex-row items-center gap-4 hover:bg-dark-charcoal-06 h-12 p-0.5px focus-within:p-0 border focus-within:border-1.5 border-dark-charcoal-20 rounded-sm overflow-hidden focus-within:border-pink"
     :class="[
       {
-        'border-s-0 rounded-s-none': connectionSides.includes('start'),
-        'border-e-0 rounded-e-none': connectionSides.includes('end'),
+        // Padding is set to 1.5px to accommodate the border that will appear later.
+        'border-s-0 ps-1.5px rounded-s-none': connectionSides.includes('start'),
+        'border-e-0 pe-1.5px rounded-e-none': connectionSides.includes('end'),
       },
     ]"
   >
     <!-- eslint-disable vuejs-accessibility/form-control-has-label -->
-    <!-- The `inputId` prop is provided so that the user of the component can associate a label -->
+    <!-- The `inputId` prop is provided so that the user of the component can associate a label. -->
     <input
       v-bind="$attrs"
       :id="inputId"
