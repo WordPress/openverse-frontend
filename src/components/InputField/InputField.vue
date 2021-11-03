@@ -15,11 +15,11 @@
       :id="inputId"
       v-model="text"
       type="text"
-      class="flex-grow leading-none font-semibold bg-tx ps-4 h-full focus:outline-none"
+      class="flex-grow leading-none font-semibold bg-tx ms-4 h-full focus:outline-none"
     />
     <!-- eslint-enable vuejs-accessibility/form-control-has-label -->
     <div
-      class="info font-semibold text-xs text-dark-charcoal-70 group-hover:text-dark-charcoal"
+      class="info font-semibold text-xs text-dark-charcoal-70 group-hover:text-dark-charcoal me-4"
     >
       <!-- @slot Extra information goes here -->
       <slot />
