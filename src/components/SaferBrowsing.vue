@@ -7,7 +7,7 @@
     >
       <span class="text-trans-blue" style="white-space: nowrap">
         {{ $t('browse-page.safer-browsing.title') }}
-        <i class="icon flag ml-2" />
+        <i class="icon flag ms-2" />
       </span>
     </button>
     <FocusTrap :active="true">
@@ -19,7 +19,7 @@
         >
           <i class="icon cross" />
         </button>
-        <p class="caption font-semibold pr-6">
+        <p class="caption font-semibold pe-6">
           {{ $t('browse-page.safer-browsing.caption') }}
         </p>
 
@@ -43,6 +43,7 @@
 import { FocusTrap } from 'focus-trap-vue'
 import { TOGGLE_FILTER } from '~/constants/action-types'
 import { mapActions } from 'vuex'
+import { FILTER } from '~/constants/store-modules'
 
 export default {
   name: 'SaferBrowsing',
@@ -56,11 +57,11 @@ export default {
   },
   computed: {
     mature() {
-      return this.$store.state.filters.mature
+      return this.$store.state.filter.filters.mature
     },
   },
   methods: {
-    ...mapActions({ toggleFilter: TOGGLE_FILTER }),
+    ...mapActions(FILTER, { toggleFilter: TOGGLE_FILTER }),
     toggleShowForm() {
       this.showForm = !this.showForm
     },

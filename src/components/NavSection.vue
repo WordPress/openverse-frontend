@@ -26,7 +26,7 @@
       </a>
     </div>
     <div :class="{ ['navbar-menu']: true, ['is-active']: isBurgerMenuActive }">
-      <div v-if="showNavSearch" class="ml-6">
+      <div v-if="showNavSearch" class="ms-6">
         <form
           class="hero_search-form"
           role="search"
@@ -125,8 +125,10 @@
 </template>
 
 <script>
-import { SET_QUERY } from '~/constants/mutation-types'
+import { SET_Q } from '~/constants/mutation-types'
 import Dropdown from '~/components/Dropdown'
+import { SEARCH } from '~/constants/store-modules'
+import { mapMutations } from 'vuex'
 
 export default {
   name: 'NavSection',
@@ -143,11 +145,14 @@ export default {
     },
   },
   methods: {
+    ...mapMutations(SEARCH, { setSearchTerm: SET_Q }),
     onSubmit() {
-      this.$store.commit(SET_QUERY, { query: { q: this.form.searchTerm } })
+      const q = this.form.searchTerm
+      const theArgs = { q }
+      this.setSearchTerm(theArgs)
       const newPath = this.localePath({
         path: '/search',
-        query: { q: this.form.searchTerm },
+        query: { q },
       })
       this.$router.push(newPath)
     },

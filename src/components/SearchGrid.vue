@@ -1,39 +1,25 @@
 <template>
-  <div>
-    <SearchGridManualLoad
-      :query="query"
-      :search-term="query.q"
-      data-testid="search-grid"
-      @onLoadMoreImages="onLoadMoreImages"
-    />
-    <ScrollButton data-testid="scroll-button" :show-btn="showScrollButton" />
-  </div>
+  <SearchGridManualLoad
+    :query="query"
+    :search-term="query.q"
+    data-testid="search-grid"
+    @onLoadMoreImages="onLoadMoreImages"
+  />
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import { SEARCH } from '~/constants/store-modules'
+
 export default {
   name: 'SearchGrid',
   props: ['searchTerm'],
-  data: () => ({
-    showScrollButton: false,
-  }),
   computed: {
-    query() {
-      return this.$store.state.query
-    },
-  },
-  mounted() {
-    document.addEventListener('scroll', this.checkScrollLength)
-  },
-  beforeDestroy() {
-    document.removeEventListener('scroll', this.checkScrollLength)
+    ...mapState(SEARCH, ['query']),
   },
   methods: {
     onLoadMoreImages(searchParams) {
       this.$emit('onLoadMoreImages', searchParams)
-    },
-    checkScrollLength() {
-      this.showScrollButton = window.scrollY > 70
     },
   },
 }

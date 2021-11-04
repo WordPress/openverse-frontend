@@ -17,6 +17,10 @@
         <SearchTypeTabs />
         <FilterDisplay v-if="shouldShowFilterTags" />
         <NuxtChild :key="$route.path" @onLoadMoreItems="onLoadMoreItems" />
+        <ScrollButton
+          data-testid="scroll-button"
+          :show-btn="showScrollButton"
+        />
       </div>
     </div>
   </div>
@@ -24,14 +28,11 @@
 <script>
 import {
   FETCH_MEDIA,
+  SET_FILTERS_FROM_URL,
   SET_SEARCH_TYPE_FROM_URL,
   UPDATE_SEARCH_TYPE,
 } from '~/constants/action-types'
-import {
-  SET_QUERY,
-  SET_FILTER_IS_VISIBLE,
-  SET_FILTERS_FROM_URL,
-} from '~/constants/mutation-types'
+import { SET_QUERY, SET_FILTER_IS_VISIBLE } from '~/constants/mutation-types'
 import {
   queryStringToQueryData,
   queryStringToSearchType,
@@ -39,7 +40,9 @@ import {
 import local from '~/utils/local'
 import { screenWidth } from '~/utils/get-browser-info'
 import { ALL_MEDIA, IMAGE } from '~/constants/media'
-import { mapActions, mapMutations } from 'vuex'
+import { mapActions, mapMutations, mapState } from 'vuex'
+import { FILTER, SEARCH } from '~/constants/store-modules'
+import debounce from 'lodash.debounce'
 
 const BrowsePage = {
   name: 'browse-page',
@@ -56,6 +59,12 @@ const BrowsePage = {
     await this.setSearchTypeFromUrl({ url })
     await this.setFiltersFromUrl({ url })
   },
+  data: () => ({
+    showScrollButton: false,
+  }),
+  created() {
+    this.debounceScrollHandling = debounce(this.checkScrollLength, 100)
+  },
   mounted() {
     const localFilterState = () =>
       local.get(process.env.filterStorageKey)
@@ -68,31 +77,33 @@ const BrowsePage = {
     this.setFilterVisibility({
       isFilterVisible: isDesktop() ? localFilterState() : false,
     })
+    window.addEventListener('scroll', this.debounceScrollHandling)
+  },
+  beforeDestroy() {
+    window.removeEventListener('scroll', this.debounceScrollHandling)
   },
   computed: {
-    query() {
-      return this.$store.state.query
-    },
-    isFilterVisible() {
-      return this.$store.state.isFilterVisible
-    },
+    ...mapState(SEARCH, ['query', 'searchType']),
+    ...mapState(FILTER, ['isFilterVisible']),
     mediaType() {
       // Default to IMAGE until media search/index is generalized
-      return this.$store.state.searchType != ALL_MEDIA
-        ? this.$store.state.searchType
-        : IMAGE
+      return this.searchType !== ALL_MEDIA ? this.searchType : IMAGE
     },
   },
   methods: {
-    ...mapActions({
+    ...mapActions(SEARCH, {
       fetchMedia: FETCH_MEDIA,
       setSearchTypeFromUrl: SET_SEARCH_TYPE_FROM_URL,
       updateSearchType: UPDATE_SEARCH_TYPE,
     }),
-    ...mapMutations({
-      setQuery: SET_QUERY,
-      setFilterVisibility: SET_FILTER_IS_VISIBLE,
+    ...mapActions(FILTER, {
       setFiltersFromUrl: SET_FILTERS_FROM_URL,
+    }),
+    ...mapMutations(SEARCH, {
+      setQuery: SET_QUERY,
+    }),
+    ...mapMutations(FILTER, {
+      setFilterVisibility: SET_FILTER_IS_VISIBLE,
     }),
     getMediaItems(params, mediaType) {
       this.fetchMedia({ ...params, mediaType })
@@ -113,13 +124,16 @@ const BrowsePage = {
         this.$route.path === '/search/' || this.$route.path === '/search/image'
       )
     },
+    checkScrollLength() {
+      this.showScrollButton = window.scrollY > 70
+    },
   },
   watch: {
     query(newQuery) {
       if (newQuery) {
         const newPath = this.localePath({
           path: this.$route.path,
-          query: this.$store.state.query,
+          query: newQuery,
         })
         this.$router.push(newPath)
         this.getMediaItems(newQuery, this.mediaType)

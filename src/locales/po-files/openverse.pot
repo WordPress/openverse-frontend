@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2021-11-04T06:14:28+00:00\n"
+"POT-Creation-Date: 2021-11-04T12:48:40+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -618,12 +618,12 @@ msgctxt "browse-page.all-no-results"
 msgid "No results"
 msgstr ""
 
-#: src/components/AudioResultsList.vue:79
+#: src/components/AudioResultsList.vue:77
 msgctxt "browse-page.audio-no-results"
 msgid "No audio results"
 msgstr ""
 
-#: src/components/SearchGridManualLoad.vue:123
+#: src/components/SearchGridManualLoad.vue:109
 msgctxt "browse-page.image-no-results"
 msgid "No image results"
 msgstr ""
@@ -636,7 +636,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. Do not translate words between ### ###.
-#: src/components/AudioResultsList.vue:85
+#: src/components/AudioResultsList.vue:83
 msgctxt "browse-page.audio-result-count"
 msgid "###localeCount### audio result"
 msgid_plural "###localeCount### audio results"
@@ -644,7 +644,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. Do not translate words between ### ###.
-#: src/components/SearchGridManualLoad.vue:129
+#: src/components/SearchGridManualLoad.vue:115
 msgctxt "browse-page.image-result-count"
 msgid "###localeCount### image result"
 msgid_plural "###localeCount### image results"
@@ -659,7 +659,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. Do not translate words between ### ###.
-#: src/components/AudioResultsList.vue:82
+#: src/components/AudioResultsList.vue:80
 msgctxt "browse-page.audio-result-count-more"
 msgid "Over ###localeCount### audio results"
 msgid_plural "Over ###localeCount### audio results"
@@ -667,7 +667,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. Do not translate words between ### ###.
-#: src/components/SearchGridManualLoad.vue:126
+#: src/components/SearchGridManualLoad.vue:112
 msgctxt "browse-page.image-result-count-more"
 msgid "Over ###localeCount### image results"
 msgid_plural "Over ###localeCount### image results"
@@ -778,7 +778,7 @@ msgid "This work is marked as being in the public domain."
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/SearchGridForm.vue:81
+#: src/components/SearchGridForm.vue:82
 msgctxt "browse-page.search-form.placeholder"
 msgid "Search all ###type###"
 msgstr ""
@@ -1108,13 +1108,13 @@ msgid "An error occurred"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/photos/_id.vue:51
+#: src/pages/photos/_id.vue:58
 msgctxt "error.image-not-found"
 msgid "Couldn't find image with id ###id###"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/audio/_id.vue:73
+#: src/pages/audio/_id.vue:74
 msgctxt "error.media-not-found"
 msgid "Couldn't find ###mediaType### with id ###id###"
 msgstr ""
@@ -1951,7 +1951,7 @@ msgctxt "header.extension-nav-item"
 msgid "Web extension"
 msgstr ""
 
-#: src/components/EmbeddedNavSection.vue:141
+#: src/components/EmbeddedNavSection.vue:143
 msgctxt "header.placeholder"
 msgid "Search all content"
 msgstr ""
