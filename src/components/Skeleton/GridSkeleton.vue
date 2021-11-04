@@ -31,6 +31,10 @@
 </template>
 
 <script>
+/**
+ * Display placeholder elements while the actual elements are loaded in the
+ * results views.
+ */
 export default {
   name: 'GridSkeleton',
   props: {
