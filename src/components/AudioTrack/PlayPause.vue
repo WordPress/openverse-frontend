@@ -5,19 +5,13 @@
     @click="handleClick"
   >
     <span class="sr-only">{{ label }}</span>
-    <svg
-      class="h-8 w-8"
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      aria-hidden="true"
-      focusable="false"
-    >
-      <use :href="`${icon}#icon`" />
-    </svg>
+    <VIcon :icon-path="icon" />
   </button>
 </template>
 
 <script>
+import VIcon from '~/components/VIcon/VIcon.vue'
+
 import playIcon from '~/assets/icons/play.svg'
 import pauseIcon from '~/assets/icons/pause.svg'
 import replayIcon from '~/assets/icons/replay.svg'
@@ -48,6 +42,7 @@ const STATUS_TO_ICON = {
  */
 export default {
   name: 'PlayPause',
+  components: { VIcon },
   model: {
     prop: 'status',
     event: 'toggle',
