@@ -4,7 +4,7 @@
       <AudioThumbnail :audio="audio" />
     </div>
     <div
-      class="flex"
+      class="flex flex-grow"
       :class="isSmall ? 'flex-row gap-8' : 'flex-col justify-between'"
     >
       <div class="flex-shrink-0" :class="isSmall ? 'w-70' : ''">
@@ -49,7 +49,7 @@
           </div>
         </div>
       </div>
-      <div class="flex flex-row">
+      <div class="flex flex-row" :class="{ 'flex-grow': isSmall }">
         <slot name="play-pause" />
         <slot name="controller" />
       </div>
@@ -96,6 +96,10 @@ export default {
 <style>
 .row-track .play-pause {
   @apply rounded-ts-sm rounded-bs-sm flex-shrink-0;
+}
+
+.row-track .audio-controller {
+  @apply flex-grow;
 }
 
 .row-track .waveform {
