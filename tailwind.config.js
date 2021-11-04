@@ -63,6 +63,7 @@ module.exports = {
 
       // Indexed by multiples of baseline (~ `0.25rem`)
       0: '0',
+      0.5: '0.125rem',
       1: '0.25rem',
       2: '0.50rem',
       4: '1.00rem',

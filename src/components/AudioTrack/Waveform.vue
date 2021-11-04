@@ -2,6 +2,7 @@
   <div
     ref="el"
     class="waveform relative bg-dark-charcoal-06 overflow-hidden focus:outline-none focus-visible:ring focus-visible:ring-offset-2 focus-visible:ring-pink"
+    :style="{ '--unusable-height': `${Math.floor((1 - usableFrac) * 100)}%` }"
     tabIndex="0"
     role="slider"
     :aria-label="$t('waveform.label')"
@@ -19,8 +20,9 @@
     @keydown.home.prevent="handlePosKeys(0)"
     @keydown.end.prevent="handlePosKeys(1)"
   >
+    <!-- Progress bar -->
     <svg
-      class="w-full h-full"
+      class="absolute inset-0 w-full h-full"
       xmlns="http://www.w3.org/2000/svg"
       :viewBox="viewBox"
       preserveAspectRatio="none"
@@ -33,6 +35,16 @@
         :width="progressBarWidth"
         height="100%"
       />
+    </svg>
+
+    <!-- Bars -->
+    <svg
+      class="bars absolute bottom-0 w-full"
+      :style="{ '--usable-height': `${Math.floor(usableFrac * 100)}%` }"
+      xmlns="http://www.w3.org/2000/svg"
+      :viewBox="viewBox"
+      preserveAspectRatio="none"
+    >
       <rect
         v-for="(peak, index) in normalizedPeaks"
         :key="index"
@@ -100,7 +112,7 @@
     <!-- Message overlay -->
     <div
       v-else
-      class="absolute inset-x-0 inset-y-0 flex items-center justify-center loading font-bold text-xs"
+      class="absolute inset-0 flex items-center justify-center loading font-bold text-xs"
     >
       {{ message }}
     </div>
@@ -160,6 +172,14 @@ export default {
     showDuration: {
       type: Boolean,
       default: false,
+    },
+    /**
+     * the fraction of the waveform height to use for the bars and timestamp;
+     * The remaining space can be used to place other elements.
+     */
+    usableFrac: {
+      type: Number,
+      default: 1,
     },
   },
   setup(props, { emit }) {
@@ -244,17 +264,9 @@ export default {
 
     /* SVG drawing */
 
-    /**
-     * the fraction of space to reserve for the timestamps above the bars; The
-     * `viewBox` height of the waveform will be 1 + `timestampSpace`.
-     */
-    const timestampSpace = 0.33 // % of bar height
-    const viewBoxHeight = 1 + timestampSpace
-    const viewBox = computed(
-      () => `0 0 ${waveformWidth.value} ${viewBoxHeight}`
-    )
+    const viewBox = computed(() => `0 0 ${waveformWidth.value} 1`)
     const spaceBefore = (index) => index * barWidth + (index + 1) * barGap
-    const spaceAbove = (index) => viewBoxHeight - normalizedPeaks.value[index]
+    const spaceAbove = (index) => 1 - normalizedPeaks.value[index]
 
     /* Progress bar */
 
@@ -425,7 +437,12 @@ export default {
 
 <style scoped lang="css">
 .timestamp {
-  @apply absolute top-1 font-bold text-xs px-1 pointer-events-none;
+  @apply absolute font-bold text-xs px-1 pointer-events-none;
+  top: calc(var(--unusable-height) + theme('spacing[0.5]'));
+}
+
+.bars {
+  height: calc(var(--usable-height) - 1rem - 2 * theme('spacing[0.5]'));
 }
 
 .progress {
