@@ -1,7 +1,7 @@
 <template>
   <div class="audio-controller">
     <Waveform
-      :class="waveformClasses"
+      v-bind="waveformProps"
       :message="message ? $t(`audio-track.messages.${message}`) : null"
       :current-time="currentTime"
       :duration="duration"
@@ -64,10 +64,10 @@ export default {
       validator: (val) => ['playing', 'paused', 'played'].includes(val),
     },
     /**
-     * the CSS classes to apply on the waveform; This can take any form
-     * acceptable to Vue class bindings.
+     * the Vue props to pass to the waveform; This can take any form acceptable
+     * to Vue bindings.
      */
-    waveformClasses: {},
+    waveformProps: {},
   },
   setup(props, { emit }) {
     const store = useStore()
