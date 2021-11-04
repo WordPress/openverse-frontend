@@ -38,7 +38,6 @@ module.exports = {
       'admin-gray': '#dcdcde',
 
       // Dark Charcoal
-      'dark-charcoal-04': 'rgba(48, 39, 46, 0.04)', // This is a legacy opacity-based color. We should avoid it if possible
       'dark-charcoal-06': '#f3f2f2',
       'dark-charcoal-10': '#eae9ea',
       'dark-charcoal-20': '#d6d4d5',

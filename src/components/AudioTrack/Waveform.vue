@@ -1,7 +1,7 @@
 <template>
   <div
     ref="el"
-    class="waveform relative bg-dark-charcoal-04 overflow-hidden focus:outline-none focus-visible:ring focus-visible:ring-offset-2 focus-visible:ring-pink"
+    class="waveform relative bg-dark-charcoal-06 overflow-hidden focus:outline-none focus-visible:ring focus-visible:ring-offset-2 focus-visible:ring-pink"
     tabIndex="0"
     role="slider"
     :aria-label="$t('waveform.label')"
@@ -39,7 +39,7 @@
         class="transform origin-bottom transition-transform duration-500"
         :class="[
           isReady ? 'scale-y-100' : 'scale-y-0',
-          index <= seekIndex ? 'fill-black' : 'fill-dark-charcoal-20',
+          index <= seekIndex ? 'fill-black' : 'fill-dark-charcoal-20-alpha',
         ]"
         :x="spaceBefore(index)"
         :y="spaceAbove(index)"
@@ -73,7 +73,7 @@
         class="progress timestamp z-10 transform"
         :class="[
           ...(isProgressTimestampCutoff
-            ? ['bg-dark-charcoal-04-opaque']
+            ? ['bg-dark-charcoal-06']
             : ['bg-yellow', '-translate-x-full']),
         ]"
         :style="{ '--progress-time-left': `${progressBarWidth}px` }"
@@ -91,7 +91,7 @@
       </div>
       <div
         v-if="showDuration"
-        class="duration timestamp right-0 bg-dark-charcoal-04-opaque"
+        class="duration timestamp right-0 bg-dark-charcoal-06"
       >
         {{ timeFmt(duration) }}
       </div>
@@ -436,12 +436,11 @@ export default {
   left: var(--seek-time-left);
 }
 
-.bg-dark-charcoal-04-opaque {
-  /* opaque equivalent of dark-charcoal-04 on top of white */
-  background-color: rgb(247, 246, 247);
-}
-
 .waveform:focus-visible .focus-indicator {
   display: flex;
+}
+
+.fill-dark-charcoal-20-alpha {
+  fill: rgba(48, 39, 46, 0.2);
 }
 </style>
