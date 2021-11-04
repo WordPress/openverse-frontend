@@ -620,6 +620,9 @@
     "play": "Play",
     "pause": "Pause"
   },
+  "search": {
+    "search": "Search"
+  },
   "audio-categories": {
     "title": "Audio Category",
     "music": "Music",
