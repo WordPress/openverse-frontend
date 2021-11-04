@@ -2,6 +2,7 @@
   <form class="search-bar group flex flex-row" @submit.prevent="handleSearch">
     <InputField
       v-model="text"
+      v-bind="$attrs"
       class="flex-grow input-field"
       :connection-sides="['end']"
       input-id="search-bar"
@@ -31,6 +32,7 @@ export default {
     InputField,
     SearchButton,
   },
+  inheritAttrs: false,
   model: {
     prop: 'value',
     event: 'input',
