@@ -21,7 +21,10 @@ import SearchBar from '~/components/Header/SearchBar/SearchBar.vue'
 />
 
 export const Template = (args, { argTypes }) => ({
-  template: `<SearchBar v-bind="$props" v-on="$props" />`,
+  template: `
+    <SearchBar v-bind="$props" v-on="$props">
+      12,345 results
+    </SearchBar>`,
   components: { SearchBar },
   props: Object.keys(argTypes),
 })
@@ -41,7 +44,6 @@ button is clicked.
     name="Default"
     args={{
       value: 'Search query',
-      extraText: '12,345 results',
     }}
   >
     {Template.bind({})}
@@ -54,7 +56,9 @@ representing the search query.
 export const vModelTemplate = () => ({
   template: `
     <div>
-      <SearchBar v-model="text" :extra-text="text.length" />
+      <SearchBar v-model="text">
+        {{ text.length }}
+      </SearchBar>
       {{ text }}
     </div>
   `,

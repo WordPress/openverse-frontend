@@ -9,7 +9,8 @@
       type="search"
       name="q"
     >
-      {{ extraText }}
+      <!-- @slot Extra information such as loading message or result count goes here. -->
+      <slot />
     </InputField>
     <SearchButton type="submit" />
   </form>
@@ -44,13 +45,6 @@ export default {
     value: {
       type: String,
       default: '',
-    },
-    /**
-     * the extra text to display inside the text field; This can be a status
-     * message like 'Loading' or info such as the number of search results.
-     */
-    extraText: {
-      type: String,
     },
   },
   setup(props, { emit }) {
