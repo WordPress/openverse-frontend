@@ -1,5 +1,5 @@
 <template>
-  <form class="search-bar group flex flex-row">
+  <form class="search-bar group flex flex-row" @submit.prevent="handleSearch">
     <InputField
       v-model="text"
       class="flex-grow input-field"
@@ -10,7 +10,7 @@
     >
       {{ extraText }}
     </InputField>
-    <SearchButton @click="handleSearch" />
+    <SearchButton type="submit" />
   </form>
 </template>
 
@@ -62,7 +62,7 @@ export default {
     })
 
     const handleSearch = () => {
-      emit('search')
+      emit('submit')
     }
 
     return {
