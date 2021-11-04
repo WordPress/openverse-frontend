@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import { render, screen } from '@testing-library/vue'
 
 import VButton from '~/components/VButton.vue'
@@ -11,6 +10,18 @@ import VButton from '~/components/VButton.vue'
  * won't be rendered.
  */
 describe('VButton', () => {
+  let warn
+  beforeAll(() => {
+    warn = console.warn
+    console.warn = jest.fn()
+  })
+  beforeEach(() => {
+    console.warn.mockReset()
+  })
+  afterAll(() => {
+    console.warn = warn
+  })
+
   it('should render a `button` by default with type="button" and no tabindex', async () => {
     render(VButton, {
       slots: { default: 'Code is Poetry' },
@@ -34,33 +45,6 @@ describe('VButton', () => {
     expect(element).toHaveAttribute('type', 'submit')
   })
 
-  it('should allow passing in an explicit tabindex', async () => {
-    render(VButton, {
-      props: { tabindex: '-1' },
-      slots: { default: 'Code is Poetry' },
-    })
-
-    const element = await screen.findByRole('button')
-
-    expect(element).toHaveAttribute('tabindex', '-1')
-  })
-
-  it.each(['button', 'submit', 'reset', 'color', 'file', 'image'])(
-    'should allow an input element that renders a button with the type %s',
-    async (type) => {
-      const TestWrapper = Vue.component('TestWrapper', {
-        components: { VButton },
-        template: `<label>Code is Poetry<VButton as="input" type="${type}" /></label>`,
-      })
-      render(TestWrapper)
-
-      const element = await screen.findByLabelText(/code is poetry/i)
-
-      expect(element.tagName).toBe('INPUT')
-      expect(element).toHaveAttribute('type', type)
-    }
-  )
-
   // @todo(sarayourfriend) fix this failing test!
   it.skip('should render an anchor with no type attribute', async () => {
     render(VButton, {
@@ -76,22 +60,9 @@ describe('VButton', () => {
     expect(element).not.toHaveAttribute('type')
   })
 
-  it('should render as a div with role and tabindex', async () => {
+  it('should render the disabled attribute on a button when the element is explicitly unfocusableWhenDisabled and is disabled', async () => {
     render(VButton, {
-      props: { as: 'div' },
-      slots: { default: 'Code is Poetry' },
-    })
-
-    const element = await screen.findByRole('button')
-
-    expect(element.tagName).toBe('DIV')
-    expect(element).toHaveAttribute('role', 'button')
-    expect(element).toHaveAttribute('tabindex', '0')
-  })
-
-  it('should render the disabled attribute on a button when the element is explicitly unfocusable and is disabled', async () => {
-    render(VButton, {
-      props: { disabled: true, focusable: false },
+      props: { disabled: true, focusableWhenDisabled: false },
       slots: { default: 'Code is Poetry' },
     })
 
@@ -101,25 +72,49 @@ describe('VButton', () => {
     expect(element).toHaveAttribute('disabled', 'disabled')
   })
 
-  it('should not render the disabled attribute if the element is focusable', async () => {
+  it('should not render the disabled attribute if the element is focusableWhenDisabled', async () => {
     render(VButton, {
-      props: { disabled: true, focusable: true },
+      props: { disabled: true, focusableWhenDisabled: true },
       slots: { default: 'Code is Poetry' },
     })
 
     const element = await screen.findByRole('button')
 
     expect(element).not.toHaveAttribute('disabled')
+    expect(element).toHaveAttribute('aria-disabled', 'true')
   })
 
   it('should not render the disabled attribute on elements that do not support it', async () => {
     render(VButton, {
-      props: { as: 'div', disabled: true, focusable: false },
+      props: {
+        as: 'a',
+        disabled: true,
+        focusableWhenDisabled: true,
+        href: 'https://wordpress.org',
+      },
       slots: { default: 'Code is Poetry' },
     })
 
-    const element = await screen.findByRole('button')
+    const element = await screen.findByText(/code is poetry/i)
 
     expect(element).not.toHaveAttribute('disabled')
+    expect(element).toHaveAttribute('aria-disabled', 'true')
   })
+
+  it.each([undefined, '', null, '#'])(
+    'should warn if an anchor is used without a valid href: %s',
+    async (href) => {
+      render(VButton, {
+        props: { as: 'a', href },
+        slots: { default: 'Code is Poetry' },
+      })
+
+      await screen.findByText(/code is poetry/i)
+
+      expect(console.warn).toHaveBeenCalledTimes(1)
+      expect(console.warn).toHaveBeenCalledWith(
+        'Do not use anchor elements without a valid `href` attribute. Use a `button` instead.'
+      )
+    }
+  )
 })

@@ -1,10 +1,8 @@
 <template>
   <Component
     :is="as"
-    ref="node"
-    :type="typeValue"
+    :type="typeRef"
     :role="role"
-    v-bind="filteredProps"
     :class="[
       $style.button,
       $style[variant],
@@ -12,8 +10,8 @@
       $style[`size-${size}`],
     ]"
     :aria-pressed="pressed"
-    :disabled="disabledValue"
-    :tabindex="tabIndex"
+    :aria-disabled="ariaDisabledRef"
+    :disabled="disabledAttributeRef"
     v-on="$listeners"
   >
     <!--
@@ -25,10 +23,6 @@
 
 <script>
 import { defineComponent, ref, watch, toRefs } from '@nuxtjs/composition-api'
-import { isButton } from 'reakit-utils'
-import { getTabIndex } from '~/utils/a11y/get-tab-index'
-import { isNativeTabbable } from '~/utils/a11y/is-native-tabbale'
-import { supportsDisabledAttribute } from '~/utils/a11y/supports-disabled-attribute'
 
 /**
  * A button component that behaves just like a regular HTML `button` element
@@ -47,19 +41,21 @@ const VButton = defineComponent({
   props: {
     /**
      * Passed to `component :is` to allow the button to *appear* as a button but
-     * work like another element (like an `anchor` or `div`). Can be any string
-     * HTML element name or a Vue component.
+     * work like another element (like an `anchor`). May only be either `button` or `a`.
      *
-     * Note: If you pass anything other than `button` or `a` ensure that you implement
-     * accessible input behaviors. For example, only the `button` component has its
-     * `@click` event triggered by an <kbd>Enter</kbd> keypress. Any other element
-     * will need too also implement `@keypress.enter` or similar.
+     * We do not support other elements because their use cases are marginal and they
+     * add complexity that we can avoid otherwise.
+     *
+     * We also don't allow any old Vue component because Vue does not have ref-forwarding
+     * so we wouldn't be able to detect the type of the DOM node that is ultimately rendered
+     * by any Vue component passed.
      *
      * @default 'button'
      */
     as: {
-      type: [String, Object],
+      type: String,
       default: 'button',
+      validate: (v) => ['a', 'button'].includes(v),
     },
     /**
      * The variant of the button.
@@ -110,16 +106,16 @@ const VButton = defineComponent({
       default: false,
     },
     /**
-     * Whether the button is focusable. Should be `true` in almost
-     * all cases except when a button is disabled and should not
-     * be focusable under any circumstances (including by keyboard
-     * navigation).
+     * Whether the button is focusable when disabled. Should be `false`
+     * in almost all cases except when a button needs to be focusable
+     * while still being disabled (in the case of a form submit button
+     * that is disabled due to an incomplete form for example).
      *
-     * @default true
+     * @default false
      */
-    focusable: {
+    focusableWhenDisabled: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     /**
      * The HTML `type` attribute for the button. Ignored if `as` is
@@ -134,81 +130,64 @@ const VButton = defineComponent({
     },
   },
   /* eslint-disable no-unused-vars */
-  setup(props) {
+  setup(props, { attrs }) {
     const propsRef = toRefs(props)
-    const disabledPropRef = propsRef.disabled
-    const disabledRef = ref(disabledPropRef.value)
-    const focusableRef = propsRef.focusable
-    /** @type {import('@nuxtjs/composition-api').Ref<Element | undefined>} */
-    const nodeRef = ref()
-    const trulyDisabledRef = ref(disabledPropRef.value && !focusableRef.value)
+    const disabledAttributeRef = ref(propsRef.disabled.value)
+    const ariaDisabledRef = ref()
+    const trulyDisabledRef = ref()
     const typeRef = ref(propsRef.type.value)
-    const roleRef = ref(undefined)
-    const nativeTabbableRef = ref(true)
-    const supportsDisabledRef = ref(true)
-    const tabIndexRef = propsRef.tabindex || ref(undefined)
-
-    watch([propsRef.disabled, propsRef.focusable], ([disabled, focusable]) => {
-      trulyDisabledRef.value = disabled && !focusable
-    })
-
-    // We check all this stuff against the `node` directly because `as` could be a Vue component!
-    // In that case we need to know what element it ultimately renders to decide what a11y props to configure
-    watch(nodeRef, (element) => {
-      // https://github.com/reakit/reakit/blob/41bd33be66ebcd0b4dcb63155e3ff03e1ae9dfc8/packages/reakit/src/Button/Button.ts#L34
-      if (!isButton(element)) {
-        if (element.tagName !== 'A') {
-          roleRef.value = 'button'
-        }
-        typeRef.value = undefined
-      }
-
-      if (!isNativeTabbable(element)) {
-        nativeTabbableRef.value = false
-      }
-      if (!supportsDisabledAttribute(element)) {
-        supportsDisabledRef.value = false
-      }
-    })
+    const supportsDisabledAttributeRef = ref(true)
 
     watch(
-      [trulyDisabledRef, nativeTabbableRef, supportsDisabledRef],
-      ([trulyDisabled, nativeTabbable, supportsDisabled]) => {
-        tabIndexRef.value = getTabIndex(
-          trulyDisabled,
-          nativeTabbable,
-          supportsDisabled,
-          tabIndexRef.value
-        )
+      [propsRef.disabled, propsRef.focusableWhenDisabled],
+      ([disabled, focusableWhenDisabled]) => {
+        trulyDisabledRef.value = disabled && !focusableWhenDisabled
 
-        disabledRef.value = trulyDisabled && supportsDisabled ? true : undefined
+        // If disabled and focusable then use `aria-disabled` instead of the `disabled` attribute to allow
+        // the button to still be tabbed into by screen reader users
+        if (disabled && focusableWhenDisabled) {
+          ariaDisabledRef.value = true
+        } else {
+          ariaDisabledRef.value = undefined
+        }
       },
       { immediate: true }
     )
 
-    // prevent `v-bind` from putting a bunch of nonsense props in the dom by filtering
-    // both the ones we configure ourselves (like `disabled`) and then the non-standard
-    // props like `pressed` and `focusable`
-    const {
-      as,
-      type,
-      role,
-      tabindex,
-      disabled,
-      focusable,
-      size,
-      variant,
-      pressed,
-      ...filteredProps
-    } = props
+    watch(
+      propsRef.as,
+      (as) => {
+        if (as === 'a') {
+          typeRef.value = undefined
+          supportsDisabledAttributeRef.value = false
+
+          // No need to decalare `href` as an explicit prop as Vue preserves
+          // the `attrs` object reference between renders and updates the properties
+          // meaning we'll always have the latest values for the properties on the
+          // attrs object
+          if (!attrs.href || attrs.href === '#') {
+            console.warn(
+              'Do not use anchor elements without a valid `href` attribute. Use a `button` instead.'
+            )
+          }
+        }
+      },
+      { immediate: true }
+    )
+
+    watch(
+      [trulyDisabledRef, supportsDisabledAttributeRef],
+      ([trulyDisabled, supportsDisabled]) => {
+        disabledAttributeRef.value =
+          trulyDisabled && supportsDisabled ? true : undefined
+      },
+      { immediate: true }
+    )
 
     return {
-      disabledValue: disabledRef,
-      node: nodeRef,
-      typeValue: typeRef,
-      role: roleRef,
-      tabIndex: tabIndexRef,
-      filteredProps,
+      disabledAttributeRef,
+      ariaDisabledRef,
+      typeRef,
     }
   },
 })
@@ -219,6 +198,11 @@ export default VButton
 <style module>
 .button {
   @apply flex max-w-max items-center rounded-sm justify-center transition-shadow duration-100 ease-linear disabled:opacity-70 focus:outline-none focus-visible:ring focus-visible:ring-offset-2 no-underline appearance-none;
+}
+
+.button[disabled='disabled'],
+.button[aria-disabled='true'] {
+  @apply opacity-50;
 }
 
 .size-small {
