@@ -27,11 +27,14 @@
 </template>
 
 <script>
-import Waveform from '~/components/AudioTrack/Waveform'
 import { computed, ref, useStore, watch } from '@nuxtjs/composition-api'
+
+import Waveform from '~/components/AudioTrack/Waveform'
+
+import { ACTIVE } from '~/constants/store-modules.js'
 import {
+  PAUSE_ACTIVE_MEDIA_ITEM,
   SET_ACTIVE_MEDIA_ITEM,
-  UNSET_ACTIVE_MEDIA_ITEM,
 } from '~/constants/mutation-types'
 
 /**
@@ -95,16 +98,17 @@ export default {
         switch (status) {
           case 'playing':
             audioEl.value.play()
-            store.commit(SET_ACTIVE_MEDIA_ITEM, {
+            store.commit(`${ACTIVE}/${SET_ACTIVE_MEDIA_ITEM}`, {
               type: 'audio',
               id: props.audio.id,
             })
             window.requestAnimationFrame(updateTimeLoop)
             break
           case 'paused':
+          case 'played':
             audioEl.value.pause()
             if (isActiveTrack.value) {
-              store.commit(UNSET_ACTIVE_MEDIA_ITEM)
+              store.commit(`${ACTIVE}/${PAUSE_ACTIVE_MEDIA_ITEM}`)
             }
             break
         }

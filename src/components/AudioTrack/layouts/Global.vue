@@ -21,10 +21,15 @@
 </template>
 
 <script>
+import { useStore } from '@nuxtjs/composition-api'
+
 import AudioThumbnail from '~/components/AudioThumbnail/AudioThumbnail.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'
 
 import closeIcon from '~/assets/icons/close.svg'
+
+import { ACTIVE } from '~/constants/store-modules.js'
+import { STOP_ACTIVE_MEDIA_ITEM } from '~/constants/mutation-types.js'
 
 export default {
   name: 'Global',
@@ -33,9 +38,11 @@ export default {
     AudioThumbnail,
   },
   props: ['audio'],
-  setup(props, { emit }) {
+  setup() {
+    const store = useStore()
+
     const handleClose = () => {
-      emit('close')
+      store.commit(`${ACTIVE}/${STOP_ACTIVE_MEDIA_ITEM}`)
     }
 
     return {

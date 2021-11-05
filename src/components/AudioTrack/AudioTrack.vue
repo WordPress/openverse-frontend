@@ -16,7 +16,7 @@
           v-bind="controllerProps"
           :audio="audio"
           @ready="handleReady"
-          @finished="status = 'played'"
+          @finished="handleFinished"
           @seeked="handleSeeked"
         />
       </template>
@@ -103,6 +103,9 @@ export default {
         status.value = 'paused'
       }
     }
+    const handleFinished = () => {
+      status.value = 'played'
+    }
 
     /* Metadata readiness */
 
@@ -123,6 +126,7 @@ export default {
     return {
       status,
       handleSeeked,
+      handleFinished,
 
       isReady,
       handleReady,
