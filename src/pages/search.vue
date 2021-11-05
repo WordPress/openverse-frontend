@@ -8,7 +8,7 @@
       </div>
       <aside
         v-if="isFilterVisible"
-        class="column is-narrow grid-sidebar is-hidden-touch"
+        class="column is-narrow grid-sidebar is-hidden-touch max-w-full bg-white"
       >
         <SearchGridFilter />
       </aside>
@@ -150,5 +150,22 @@ export default BrowsePage
 </script>
 
 <style lang="scss" scoped>
-@import '~/styles/results-page.scss';
+.search {
+  margin: 0;
+}
+.search-grid-ctr {
+  background-color: $color-wp-gray-0;
+  min-height: 600px;
+  padding: 0;
+
+  @include mobile {
+    width: 100%;
+    flex: none;
+  }
+}
+.grid-sidebar {
+  padding: 0;
+  border-right: 1px solid $color-transition-gray;
+  width: 21.875rem;
+}
 </style>
