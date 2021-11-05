@@ -125,7 +125,7 @@ specifying a `layout`. The layout can further be customised by the `size` and
 
 ### Row
 
-**Sizes:** S (small) and M (medium)
+**Sizes:** S (small) and M (medium) and L (large)
 
 <Canvas>
   <Story
@@ -137,11 +137,26 @@ specifying a `layout`. The layout can further be customised by the `size` and
   >
     {Template.bind({})}
   </Story>
+</Canvas>
+
+<Canvas>
   <Story
     name="Row (medium)"
     args={{
       layout: 'row',
       size: 'm',
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story
+    name="Row (large)"
+    args={{
+      layout: 'row',
+      size: 'l',
     }}
   >
     {Template.bind({})}
