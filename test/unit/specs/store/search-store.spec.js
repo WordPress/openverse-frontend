@@ -1,176 +1,115 @@
-import store, { createActions } from '~/store/search'
+import store, { filterData } from '~/store/search'
 import {
-  FETCH_END_MEDIA,
-  FETCH_MEDIA_ERROR,
-  FETCH_START_MEDIA,
-  MEDIA_NOT_FOUND,
-  RESET_MEDIA,
-  SET_AUDIO,
-  SET_IMAGE,
-  SET_IMAGE_PAGE,
-  SET_MEDIA,
+  SET_FILTERS_FROM_URL,
   SET_QUERY,
-  SET_SEARCH_TYPE,
-  UPDATE_FILTERS,
-} from '~/constants/mutation-types'
-import {
-  FETCH_AUDIO,
-  FETCH_IMAGE,
-  FETCH_MEDIA,
-  HANDLE_MEDIA_ERROR,
-  HANDLE_NO_MEDIA,
   SET_SEARCH_TYPE_FROM_URL,
+  TOGGLE_FILTER,
+  UPDATE_QUERY,
   UPDATE_SEARCH_TYPE,
 } from '~/constants/action-types'
-import { ALL_MEDIA, AUDIO, IMAGE } from '~/constants/media'
 import {
-  SEND_RESULT_CLICKED_EVENT,
-  SEND_SEARCH_QUERY_EVENT,
-} from '~/constants/usage-data-analytics-types'
-import { FILTER, USAGE_DATA } from '~/constants/store-modules'
+  SET_FILTER,
+  SET_PROVIDERS_FILTERS,
+  CLEAR_FILTERS,
+  SET_FILTER_IS_VISIBLE,
+  REPLACE_FILTERS,
+  SET_SEARCH_TYPE,
+  UPDATE_FILTERS,
+  MUTATE_QUERY,
+  RESET_MEDIA,
+} from '~/constants/mutation-types'
+import { ALL_MEDIA, AUDIO, IMAGE } from '~/constants/media'
 
-describe('Search Store', () => {
+describe('Filter Store', () => {
   describe('state', () => {
-    it('exports default state', () => {
+    it('state contains licenses', () => {
+      const defaultState = store.state()
+
+      expect(defaultState.filters.licenses).toEqual(filterData.licenses)
+    })
+
+    it('state contains license types', () => {
+      const defaultState = store.state()
+
+      expect(defaultState.filters.licenseTypes).toEqual(filterData.licenseTypes)
+    })
+
+    it('state contains image types', () => {
+      const defaultState = store.state()
+
+      expect(defaultState.filters.imageCategories).toEqual(
+        filterData.imageCategories
+      )
+    })
+
+    it('state contains imageExtensions', () => {
+      const defaultState = store.state()
+
+      expect(defaultState.filters.imageExtensions).toEqual(
+        filterData.imageExtensions
+      )
+    })
+
+    it('state contains empty providers list', () => {
+      const defaultState = store.state()
+
+      expect(defaultState.filters.imageProviders).toEqual([])
+    })
+
+    it('state contains search by author', () => {
+      const defaultState = store.state()
+
+      expect(defaultState.filters.searchBy.author).toEqual(
+        filterData.searchBy.author
+      )
+    })
+
+    it('state contains mature', () => {
+      const defaultState = store.state()
+
+      expect(defaultState.filters.mature).toEqual(filterData.mature)
+    })
+
+    it('state has filter hidden', () => {
+      const defaultState = store.state()
+
+      expect(defaultState.isFilterVisible).toBeFalsy()
+    })
+
+    it('isFilterVisible should be false when innerWidth property is undefined', () => {
+      window.innerWidth = undefined
       const state = store.state()
-      expect(state.audios).toHaveLength(0)
-      expect(state.audiosCount).toBe(0)
-      expect(state.audioPage).toBe(1)
-      expect(state.images).toHaveLength(0)
-      expect(state.imagesCount).toBe(0)
-      expect(state.imagePage).toBe(1)
-      expect(state.pageCount.audios).toBe(0)
-      expect(state.pageCount.images).toBe(0)
-      expect(state.isFetching.audios).toBeFalsy()
-      expect(state.isFetching.images).toBeFalsy()
-      expect(state.isFetchingError.audios).toBeTruthy()
-      expect(state.isFetchingError.images).toBeTruthy()
-      expect(state.query.q).toBe(undefined)
-      expect(state.errorMessage).toBe(null)
+      expect(state.isFilterVisible).toBeFalsy()
+    })
+    it('isFilterVisible should be false when window width is less then 800', () => {
+      window.innerWidth = 500
+      const state = store.state()
+      expect(state.isFilterVisible).toBeFalsy()
     })
   })
 
   describe('mutations', () => {
     let state = null
-    const mutations = store.mutations
+    let mutations = null
+    let getters = null
 
     beforeEach(() => {
-      state = store.state()
-    })
-
-    it('FETCH_START_MEDIA updates state', () => {
-      mutations[FETCH_START_MEDIA](state, { mediaType: IMAGE })
-
-      expect(state.isFetching.images).toBeTruthy()
-      expect(state.isFetchingError.images).toBeFalsy()
-    })
-
-    it('FETCH_END_MEDIA updates state', () => {
-      mutations[FETCH_END_MEDIA](state, { mediaType: IMAGE })
-
-      expect(state.isFetching.images).toBeFalsy()
-    })
-
-    it('FETCH_MEDIA_ERROR updates state', () => {
-      mutations[FETCH_MEDIA_ERROR](state, {
-        mediaType: IMAGE,
-        errorMessage: 'error',
-      })
-
-      expect(state.isFetching.images).toBeFalsy()
-      expect(state.isFetchingError.images).toBeTruthy()
-      expect(state.errorMessage).toBe('error')
-    })
-
-    it('SET_AUDIO updates state', () => {
-      const params = { audio: { title: 'Foo', creator: 'bar', tags: [] } }
-      mutations[SET_AUDIO](state, params)
-
-      expect(state.audio).toEqual(params.audio)
-    })
-
-    it('SET_IMAGE updates state', () => {
-      const params = { image: { title: 'Foo', creator: 'bar', tags: [] } }
-      mutations[SET_IMAGE](state, params)
-
-      expect(state.image).toEqual(params.image)
-    })
-
-    it('SET_IMAGE_PAGE updates state', () => {
-      const params = { imagePage: 1 }
-      mutations[SET_IMAGE_PAGE](state, params)
-
-      expect(state.imagePage).toBe(params.imagePage)
-    })
-
-    it('SET_MEDIA updates state persisting images', () => {
-      const img1 = { title: 'Foo', creator: 'foo', tags: [] }
-      const img2 = { title: 'Bar', creator: 'bar', tags: [] }
-      state.images = [img1]
-      const params = {
-        media: [img2],
-        mediaCount: 2,
-        page: 2,
-        shouldPersistMedia: true,
-        mediaType: IMAGE,
+      state = {
+        search: {
+          searchType: 'image',
+          query: { q: 'foo' },
+        },
+        ...store.state(),
       }
-      mutations[SET_MEDIA](state, params)
-
-      expect(state.images).toEqual([img1, img2])
-      expect(state.imagesCount).toBe(params.mediaCount)
-      expect(state.imagePage).toBe(params.page)
+      mutations = store.mutations
+      getters = store.getters
     })
 
-    it('SET_MEDIA updates state not persisting images', () => {
-      const img = { title: 'Foo', creator: 'bar', tags: [] }
-      state.images = ['img1']
-      const params = {
-        media: [img],
-        mediaCount: 2,
-        page: 2,
-        shouldPersistMedia: false,
-        mediaType: IMAGE,
-      }
-      mutations[SET_MEDIA](state, params)
-
-      expect(state.images).toEqual([img])
-      expect(state.imagesCount).toBe(params.mediaCount)
-      expect(state.imagePage).toBe(params.page)
-    })
-
-    it('SET_MEDIA updates state with default count and page', () => {
-      const img = { title: 'Foo', creator: 'bar', tags: [] }
-      state.images = ['img1']
-      const params = { media: [img], mediaType: IMAGE }
-      mutations[SET_MEDIA](state, params)
-
-      expect(state.imagesCount).toBe(0)
-      expect(state.imagePage).toBe(1)
-    })
-
-    it('SET_QUERY updates state', () => {
+    it('MUTATE_QUERY updates state', () => {
       const params = { query: { q: 'foo' } }
-      mutations[SET_QUERY](state, params)
+      mutations[MUTATE_QUERY](state, params)
 
       expect(state.query.q).toBe(params.query.q)
-    })
-
-    it('SET_QUERY resets images to empty array', () => {
-      const params = { query: { q: 'bar' } }
-      state.query = {
-        q: 'foo',
-        images: [{ id: 'foo' }],
-      }
-      mutations[SET_QUERY](state, params)
-
-      expect(state.query.q).toBe('bar')
-      expect(state.images).toEqual([])
-    })
-
-    it('MEDIA_NOT_FOUND throws an error', () => {
-      expect(() =>
-        mutations[MEDIA_NOT_FOUND](state, { mediaType: AUDIO })
-      ).toThrow('Media of type audio not found')
     })
 
     it('SET_SEARCH_TYPE updates the state', () => {
@@ -179,395 +118,455 @@ describe('Search Store', () => {
       expect(state.searchType).toEqual(AUDIO)
     })
 
-    it('RESET_MEDIA resets the media type state', () => {
-      state = {
-        images: [{ id: 'image1' }, { id: 'image2' }],
-        imagePage: 2,
-        imagesCount: 200,
-        pageCount: {
-          images: 2,
-        },
-      }
+    it('SET_FILTER updates license state', () => {
+      mutations[SET_FILTER](state, { filterType: 'licenses', codeIdx: 0 })
 
-      mutations[RESET_MEDIA](state, { mediaType: IMAGE })
-      expect(state.images).toStrictEqual([])
-      expect(state.imagesCount).toEqual(0)
-      expect(state.imagePage).toBe(undefined)
-      expect(state.pageCount.images).toEqual(0)
+      expect(state.filters.licenses[0].checked).toBeTruthy()
+    })
+
+    it('SET_FILTER updates license type state', () => {
+      mutations[SET_FILTER](state, { filterType: 'licenseTypes', codeIdx: 0 })
+
+      expect(state.filters.licenseTypes[0].checked).toBeTruthy()
+    })
+
+    it('SET_FILTER updates imageExtensions state', () => {
+      mutations[SET_FILTER](state, {
+        filterType: 'imageExtensions',
+        codeIdx: 0,
+      })
+
+      expect(state.filters.imageExtensions[0].checked).toBeTruthy()
+    })
+
+    it('SET_FILTER updates image types state', () => {
+      mutations[SET_FILTER](state, {
+        filterType: 'imageCategories',
+        codeIdx: 0,
+      })
+
+      expect(state.filters.imageCategories[0].checked).toBeTruthy()
+    })
+
+    it('SET_FILTER updates search by creator', () => {
+      mutations[SET_FILTER](state, { filterType: 'searchBy', codeIdx: 0 })
+
+      expect(state.filters.searchBy[0].checked).toBeTruthy()
+    })
+
+    it('SET_FILTER updates mature', () => {
+      mutations[SET_FILTER](state, { filterType: 'mature' })
+
+      expect(state.filters.mature).toBeTruthy()
+    })
+
+    it('SET_FILTER toggles mature', () => {
+      state.filters.mature = true
+      mutations[SET_FILTER](state, { filterType: 'mature' })
+
+      expect(state.filters.mature).toBeFalsy()
+    })
+
+    it('SET_FILTER updates aspect ratio', () => {
+      mutations[SET_FILTER](state, { filterType: 'aspectRatios', codeIdx: 0 })
+
+      expect(state.filters.aspectRatios[0].checked).toBeTruthy()
+    })
+
+    it('SET_FILTER updates size', () => {
+      mutations[SET_FILTER](state, { filterType: 'sizes', codeIdx: 0 })
+
+      expect(state.filters.sizes[0].checked).toBeTruthy()
+    })
+
+    it('SET_FILTER updates isFilterApplied with provider', () => {
+      state.filters.imageProviders = [{ code: 'met', checked: false }]
+      mutations[SET_FILTER](state, { filterType: 'imageProviders', codeIdx: 0 })
+
+      expect(getters.isAnyFilterApplied).toBeTruthy()
+    })
+
+    it('SET_FILTER updates isFilterApplied with license type', () => {
+      mutations[SET_FILTER](state, { filterType: 'licenseTypes', codeIdx: 0 })
+
+      expect(getters.isAnyFilterApplied).toBeTruthy()
+    })
+
+    it('SET_FILTER updates mature', () => {
+      mutations[SET_FILTER](state, { filterType: 'mature' })
+
+      expect(state.filters.mature).toBeTruthy()
+    })
+
+    it('SET_PROVIDERS_FILTERS merges with existing provider filters', () => {
+      const existingProviderFilters = [{ code: 'met', checked: true }]
+
+      const providers = [
+        { source_name: 'met', display_name: 'Metropolitan' },
+        { source_name: 'flickr', display_name: 'Flickr' },
+      ]
+
+      state.filters.imageProviders = existingProviderFilters
+
+      mutations[SET_PROVIDERS_FILTERS](state, {
+        mediaType: 'image',
+        providers: providers,
+      })
+
+      expect(state.filters.imageProviders).toEqual([
+        { code: 'met', name: 'Metropolitan', checked: true },
+        { code: 'flickr', name: 'Flickr', checked: false },
+      ])
+    })
+
+    it('SET_FILTER_IS_VISIBLE updates state', () => {
+      const params = { isFilterVisible: 'bar' }
+      mutations[SET_FILTER_IS_VISIBLE](state, params)
+
+      expect(state.isFilterVisible).toBe(params.isFilterVisible)
     })
   })
 
   describe('actions', () => {
-    const searchData = { results: ['foo'], result_count: 1 }
-    const audioDetailData = 'audioDetails'
-    const imageDetailData = 'imageDetails'
-    let services = null
-    let audioServiceMock = null
-    let imageServiceMock = null
-    let state
-    let context
-    beforeEach(() => {
-      imageServiceMock = {
-        search: jest.fn(() => Promise.resolve({ data: searchData })),
-        getProviderCollection: jest.fn(() =>
-          Promise.resolve({ data: searchData })
-        ),
-        getMediaDetail: jest.fn(() =>
-          Promise.resolve({ data: imageDetailData })
-        ),
-      }
-      audioServiceMock = {
-        search: jest.fn(() => Promise.resolve({ data: searchData })),
-        getProviderCollection: jest.fn(() =>
-          Promise.resolve({ data: searchData })
-        ),
-        getMediaDetail: jest.fn(() =>
-          Promise.resolve({ data: audioDetailData })
-        ),
-      }
-      services = { [AUDIO]: audioServiceMock, [IMAGE]: imageServiceMock }
-      state = {
-        audios: [{ id: 'foo' }, { id: 'bar' }, { id: 'zeta' }],
-        images: [{ id: 'foo' }, { id: 'bar' }, { id: 'zeta' }],
-        query: { q: 'foo query' },
-      }
+    let state = null
+    let commitMock = null
+    let dispatchMock = null
+    let actions = null
+    let context = null
 
+    beforeEach(() => {
+      commitMock = jest.fn()
+      dispatchMock = jest.fn()
+      state = store.state()
+      actions = store.actions
       context = {
-        commit: jest.fn(),
-        dispatch: jest.fn(),
-        rootState: { user: { usageSessionId: 'foo' } },
+        commit: commitMock,
+        dispatch: dispatchMock,
+        rootState: {},
         state: state,
       }
     })
 
-    it('FETCH_MEDIA throws an error on unknown media type', async () => {
-      const action = createActions(services)[FETCH_MEDIA]
-      const params = {
-        mediaType: 'unknown',
-        page: 1,
-      }
-      await expect(action(context, params)).rejects.toThrow(
-        'Cannot fetch unknown media type "unknown"'
-      )
-    })
+    it('SET_QUERY sets q parameter', () => {
+      const params = { query: { q: 'foo' } }
+      actions[SET_QUERY](context, params)
 
-    it('FETCH_MEDIA on success', async () => {
-      const params = {
-        q: 'foo',
-        page: 1,
-        shouldPersistMedia: false,
-        mediaType: IMAGE,
-      }
-      const action = createActions(services)[FETCH_MEDIA]
-      await action(context, params)
-      expect(context.commit).toHaveBeenCalledWith(FETCH_START_MEDIA, {
-        mediaType: IMAGE,
-      })
-      expect(context.commit).toHaveBeenCalledWith(FETCH_END_MEDIA, {
-        mediaType: IMAGE,
-      })
-
-      expect(context.commit).toHaveBeenCalledWith(SET_MEDIA, {
-        media: searchData.results,
-        mediaCount: searchData.result_count,
-        shouldPersistMedia: params.shouldPersistMedia,
-        page: params.page,
-        mediaType: IMAGE,
-      })
-      expect(services[IMAGE].search).toHaveBeenCalledWith(params)
-    })
-
-    it('FETCH_MEDIA dispatches SEND_SEARCH_QUERY_EVENT', async () => {
-      const params = { q: 'foo', shouldPersistMedia: false, mediaType: IMAGE }
-      const action = createActions(services)[FETCH_MEDIA]
-      await action(context, params)
-
-      expect(context.dispatch).toHaveBeenCalledWith(
-        `${USAGE_DATA}/${SEND_SEARCH_QUERY_EVENT}`,
-        {
-          query: params.q,
-          sessionId: context.rootState.user.usageSessionId,
+      expect(context.commit).toHaveBeenCalledWith(MUTATE_QUERY, {
+        query: {
+          ...params.query,
+          mediaType: IMAGE,
         },
+      })
+      expect(context.commit).toHaveBeenCalledWith(
+        RESET_MEDIA,
+        { mediaType: IMAGE },
         { root: true }
       )
     })
 
-    it('does not dispatch SEND_SEARCH_QUERY_EVENT if page param is available', async () => {
-      const params = {
+    it('SET_QUERY replaces query q parameter', () => {
+      const params = { query: { q: 'bar' } }
+      context.state.query = {
         q: 'foo',
-        page: 1,
-        shouldPersistMedia: false,
-        mediaType: IMAGE,
       }
-      const action = createActions(services)[FETCH_MEDIA]
-      await action(context, params)
+      actions[SET_QUERY](context, params)
 
-      expect(context.dispatch).not.toHaveBeenCalledWith(
-        `${USAGE_DATA}/${SEND_SEARCH_QUERY_EVENT}`,
-        {
-          query: params.q,
-          sessionId: context.rootState.user.usageSessionId,
-        }
-      )
-    })
-
-    it('FETCH_MEDIA on error', async () => {
-      const mediaType = IMAGE
-      services[IMAGE] = {
-        search: jest.fn(() => Promise.reject('error')),
-      }
-      const params = {
-        q: 'foo',
-        page: 1,
-        shouldPersistMedia: false,
-        mediaType,
-      }
-      const action = createActions(services)[FETCH_MEDIA]
-      await action(context, params)
-      await expect(services[IMAGE].search).rejects.toEqual('error')
-
-      expect(context.commit).toHaveBeenCalledWith(FETCH_START_MEDIA, {
-        mediaType,
-      })
-      expect(context.dispatch).toHaveBeenCalledWith(HANDLE_MEDIA_ERROR, {
-        error: 'error',
-        mediaType,
-      })
-    })
-
-    it('FETCH_MEDIA resets images if page is not defined', async () => {
-      const mediaType = IMAGE
-      const params = {
-        q: 'foo',
-        page: undefined,
-        shouldPersistMedia: false,
-        mediaType,
-      }
-      const action = createActions(services)[FETCH_MEDIA]
-      await action(context, params)
-
-      expect(context.commit).toHaveBeenCalledWith(FETCH_START_MEDIA, {
-        mediaType,
-      })
-      expect(context.commit).toHaveBeenCalledWith(RESET_MEDIA, { mediaType })
-      expect(context.commit).toHaveBeenCalledWith(FETCH_END_MEDIA, {
-        mediaType,
-      })
-    })
-
-    it('FETCH_MEDIA does not reset images if page is defined', async () => {
-      const mediaType = IMAGE
-      const params = {
-        q: 'foo',
-        page: 1,
-        shouldPersistMedia: false,
-        mediaType,
-      }
-      const action = createActions(services)[FETCH_MEDIA]
-      await action(context, params)
-
-      expect(context.commit).not.toHaveBeenCalledWith(RESET_MEDIA, {
-        mediaType,
-      })
-    })
-
-    it('FETCH_AUDIO on success', async () => {
-      const params = { id: 'foo' }
-      const action = createActions(services)[FETCH_AUDIO]
-      await action(context, params)
-      expect(context.commit).toHaveBeenCalledWith(SET_AUDIO, { audio: {} })
-      expect(context.commit).toHaveBeenCalledWith(SET_AUDIO, {
-        audio: audioDetailData,
-      })
-      expect(audioServiceMock.getMediaDetail).toHaveBeenCalledWith(params)
-    })
-
-    it('FETCH_AUDIO dispatches SEND_RESULT_CLICKED_EVENT', () => {
-      const params = { id: 'foo' }
-      const action = createActions(services)[FETCH_AUDIO]
-      action(context, params)
-
-      expect(context.dispatch).toHaveBeenLastCalledWith(
-        `${USAGE_DATA}/${SEND_RESULT_CLICKED_EVENT}`,
-        {
-          query: state.query.q,
-          resultUuid: 'foo',
-          resultRank: 0,
-          sessionId: context.rootState.user.usageSessionId,
-        },
-        { root: true }
-      )
-    })
-
-    it('FETCH_AUDIO on error', async () => {
-      services[AUDIO] = {
-        getMediaDetail: jest.fn(() => Promise.reject('error')),
-      }
-      const params = { id: 'foo' }
-      const action = createActions(services)[FETCH_AUDIO]
-      await action(context, params)
-      await expect(services[AUDIO].getMediaDetail).rejects.toEqual('error')
-
-      expect(context.dispatch).toHaveBeenLastCalledWith(HANDLE_MEDIA_ERROR, {
-        error: 'error',
-        mediaType: 'audio',
-      })
-    })
-
-    it('FETCH_AUDIO on 404 doesnt break and commits MEDIA_NOT_FOUND', async () => {
-      const mediaType = AUDIO
-      services[AUDIO] = {
-        getMediaDetail: jest.fn(() =>
-          Promise.reject({ response: { status: 404 } })
-        ),
-      }
-      const params = { id: 'foo' }
-      const action = createActions(services)[FETCH_AUDIO]
-      await action(context, params)
-      expect(context.commit).toHaveBeenCalledWith(MEDIA_NOT_FOUND, {
-        mediaType,
-      })
-    })
-
-    it('FETCH_IMAGE on success', async () => {
-      const params = { id: 'foo' }
-      const action = createActions(services)[FETCH_IMAGE]
-      await action(context, params)
-      expect(context.commit).toHaveBeenCalledWith(SET_IMAGE, { image: {} })
-      expect(context.commit).toHaveBeenCalledWith(SET_IMAGE, {
-        image: imageDetailData,
-      })
-
-      expect(imageServiceMock.getMediaDetail).toHaveBeenCalledWith(params)
-    })
-
-    it('FETCH_IMAGE dispatches SEND_RESULT_CLICKED_EVENT', () => {
-      const params = { id: 'foo' }
-      const action = createActions(services)[FETCH_IMAGE]
-      action(context, params)
-
-      expect(context.dispatch).toHaveBeenLastCalledWith(
-        `${USAGE_DATA}/${SEND_RESULT_CLICKED_EVENT}`,
-        {
-          query: state.query.q,
-          resultUuid: 'foo',
-          resultRank: 0,
-          sessionId: context.rootState.user.usageSessionId,
-        },
-        { root: true }
-      )
-    })
-
-    it('FETCH_IMAGE on error', async () => {
-      services[IMAGE] = {
-        getMediaDetail: jest.fn(() =>
-          Promise.reject(new Error('Server error'))
-        ),
-      }
-      const params = { id: 'foo' }
-      const action = createActions(services)[FETCH_IMAGE]
-      await expect(action(context, params)).rejects.toThrow(
-        'Error fetching the image: Server error'
-      )
-    })
-
-    it('FETCH_IMAGE on 404 doesnt break and commits MEDIA_NOT_FOUND', async () => {
-      const mediaType = IMAGE
-      services[IMAGE] = {
-        getMediaDetail: jest.fn(() =>
-          Promise.reject({ response: { status: 404 } })
-        ),
-      }
-      const params = { id: 'foo' }
-      const action = createActions(services)[FETCH_IMAGE]
-      await action(context, params)
-      expect(context.commit).toHaveBeenCalledWith(MEDIA_NOT_FOUND, {
-        mediaType,
-      })
-    })
-
-    it('HANDLE_MEDIA_ERROR handles 500 error', () => {
-      const action = createActions(services)[HANDLE_MEDIA_ERROR]
-      const error = { response: { status: 500, message: 'Server error' } }
-
-      action(context, { mediaType: AUDIO, error })
-      expect(context.commit).toHaveBeenCalledWith(FETCH_MEDIA_ERROR, {
-        errorMessage: 'There was a problem with our servers',
-        mediaType: AUDIO,
-      })
-    })
-
-    it('HANDLE_MEDIA_ERROR handles a 403 error', () => {
-      const action = createActions(services)[HANDLE_MEDIA_ERROR]
-      const error = { response: { status: 403, message: 'Server error' } }
-
-      action(context, { mediaType: AUDIO, error })
-      expect(context.commit).toHaveBeenCalledWith(FETCH_MEDIA_ERROR, {
-        errorMessage: error.response.message,
-        mediaType: AUDIO,
-      })
-    })
-
-    it('HANDLE_MEDIA_ERROR throws a new error on error when server did not respond', async () => {
-      const action = createActions(services)[HANDLE_MEDIA_ERROR]
-      const error = new Error('Server did not respond')
-      await expect(
-        action(context, { mediaType: AUDIO, error })
-      ).rejects.toThrow(error.message)
-    })
-
-    it('HANDLE_NO_MEDIA throws an error when media count is 0', async () => {
-      const action = createActions(services)[HANDLE_NO_MEDIA]
-      await action(context, { mediaCount: 0, mediaType: IMAGE })
-      expect(context.commit).toHaveBeenLastCalledWith(FETCH_MEDIA_ERROR, {
-        errorMessage: 'No image found for this query',
-      })
-    })
-
-    it('HANDLE_NO_MEDIA does not throw an error when media count is not 0', () => {
-      const action = createActions(services)[HANDLE_NO_MEDIA]
-      action(context, { mediaCount: 1, mediaType: IMAGE })
-      expect(context.commit.mock.calls.length).toEqual(0)
+      expect(context.commit).toHaveBeenCalledWith(MUTATE_QUERY, params)
     })
 
     it('SET_SEARCH_TYPE_FROM_URL sets search type to image', () => {
-      const action = createActions(services)[SET_SEARCH_TYPE_FROM_URL]
-      action(context, { url: '/search/image?q=cat&source=met' })
+      const url = '/search/image?q=cat&source=met'
+      const path = '/search/image'
+      actions[SET_SEARCH_TYPE_FROM_URL](context, { url, path })
+
       expect(context.commit).toHaveBeenCalledWith(SET_SEARCH_TYPE, {
         searchType: IMAGE,
       })
-      expect(context.commit).toHaveBeenCalledWith(
-        `${FILTER}/${UPDATE_FILTERS}`,
-        { searchType: IMAGE },
-        { root: true }
-      )
+      expect(context.commit).toHaveBeenCalledWith(UPDATE_FILTERS, {
+        searchType: IMAGE,
+      })
     })
 
     it('SET_SEARCH_TYPE_FROM_URL sets search type to ALL_MEDIA if URL param is not set', () => {
-      const action = createActions(services)[SET_SEARCH_TYPE_FROM_URL]
+      const action = actions[SET_SEARCH_TYPE_FROM_URL]
       action(context, { url: '/search/?q=cat&source=met' })
+      const searchType = ALL_MEDIA
       expect(context.commit).toHaveBeenCalledWith(SET_SEARCH_TYPE, {
-        searchType: ALL_MEDIA,
+        searchType,
       })
-      expect(context.commit).toHaveBeenCalledWith(
-        `${FILTER}/${UPDATE_FILTERS}`,
-        { searchType: 'all' },
-        { root: true }
-      )
+      expect(context.commit).toHaveBeenCalledWith(UPDATE_FILTERS, {
+        searchType,
+      })
     })
 
     it('UPDATE_SEARCH_TYPE sets search type to ALL_MEDIA if URL param is not set', () => {
-      const action = createActions(services)[UPDATE_SEARCH_TYPE]
+      const action = actions[UPDATE_SEARCH_TYPE]
 
       action(context, { searchType: ALL_MEDIA })
       expect(context.commit).toHaveBeenCalledWith(SET_SEARCH_TYPE, {
         searchType: ALL_MEDIA,
       })
-      expect(context.commit).toHaveBeenCalledWith(
-        `${FILTER}/${UPDATE_FILTERS}`,
-        { searchType: 'all' },
-        { root: true }
+      expect(context.commit).toHaveBeenCalledWith(UPDATE_FILTERS, {
+        searchType: 'all',
+      })
+    })
+
+    it('SET_FILTERS_FROM_URL', () => {
+      const url =
+        'https://wp.org/openverse/search/image?q=cat&license=cc0,by&searchBy=creator&extension=jpg&mature=true&source=met'
+      actions[SET_FILTERS_FROM_URL](
+        {
+          commit: commitMock,
+          dispatch: dispatchMock,
+          state,
+        },
+        { url }
       )
+      expect(commitMock).toHaveBeenCalledWith(REPLACE_FILTERS, {
+        newFilterData: {
+          aspectRatios: [
+            {
+              checked: false,
+              code: 'tall',
+              name: 'filters.aspect-ratios.tall',
+            },
+            {
+              checked: false,
+              code: 'wide',
+              name: 'filters.aspect-ratios.wide',
+            },
+            {
+              checked: false,
+              code: 'square',
+              name: 'filters.aspect-ratios.square',
+            },
+          ],
+          audioCategories: [
+            {
+              checked: false,
+              code: 'music',
+              name: 'filters.audio-categories.music',
+            },
+            {
+              checked: false,
+              code: 'soundEffects',
+              name: 'filters.audio-categories.sound-effects',
+            },
+            {
+              checked: false,
+              code: 'podcast',
+              name: 'filters.audio-categories.podcast',
+            },
+          ],
+          audioExtensions: [
+            {
+              checked: false,
+              code: 'mp3',
+              name: 'filters.audio-extensions.mp3',
+            },
+            {
+              checked: false,
+              code: 'ogg',
+              name: 'filters.audio-extensions.ogg',
+            },
+            {
+              checked: false,
+              code: 'flac',
+              name: 'filters.audio-extensions.flac',
+            },
+          ],
+          audioProviders: [],
+          durations: [
+            { checked: false, code: 'short', name: 'filters.durations.short' },
+            {
+              checked: false,
+              code: 'medium',
+              name: 'filters.durations.medium',
+            },
+            { checked: false, code: 'long', name: 'filters.durations.long' },
+          ],
+          imageCategories: [
+            {
+              checked: false,
+              code: 'photograph',
+              name: 'filters.image-categories.photograph',
+            },
+            {
+              checked: false,
+              code: 'illustration',
+              name: 'filters.image-categories.illustration',
+            },
+            {
+              checked: false,
+              code: 'digitized_artwork',
+              name: 'filters.image-categories.digitized-artwork',
+            },
+          ],
+          imageExtensions: [
+            {
+              checked: true,
+              code: 'jpg',
+              name: 'filters.image-extensions.jpg',
+            },
+            {
+              checked: false,
+              code: 'png',
+              name: 'filters.image-extensions.png',
+            },
+            {
+              checked: false,
+              code: 'gif',
+              name: 'filters.image-extensions.gif',
+            },
+            {
+              checked: false,
+              code: 'svg',
+              name: 'filters.image-extensions.svg',
+            },
+          ],
+          imageProviders: [],
+          licenseTypes: [
+            {
+              checked: false,
+              code: 'commercial',
+              name: 'filters.license-types.commercial',
+            },
+            {
+              checked: false,
+              code: 'modification',
+              name: 'filters.license-types.modification',
+            },
+          ],
+          licenses: [
+            { checked: true, code: 'cc0', name: 'filters.licenses.cc0' },
+            { checked: false, code: 'pdm', name: 'filters.licenses.pdm' },
+            { checked: true, code: 'by', name: 'filters.licenses.by' },
+            { checked: false, code: 'by-sa', name: 'filters.licenses.by-sa' },
+            { checked: false, code: 'by-nc', name: 'filters.licenses.by-nc' },
+            { checked: false, code: 'by-nd', name: 'filters.licenses.by-nd' },
+            {
+              checked: false,
+              code: 'by-nc-sa',
+              name: 'filters.licenses.by-nc-sa',
+            },
+            {
+              checked: false,
+              code: 'by-nc-nd',
+              name: 'filters.licenses.by-nc-nd',
+            },
+          ],
+          mature: true,
+          searchBy: [
+            {
+              checked: true,
+              code: 'creator',
+              name: 'filters.searchBy.creator',
+            },
+          ],
+          sizes: [
+            { checked: false, code: 'small', name: 'filters.sizes.small' },
+            { checked: false, code: 'medium', name: 'filters.sizes.medium' },
+            { checked: false, code: 'large', name: 'filters.sizes.large' },
+          ],
+        },
+      })
+    })
+
+    it('CLEAR_FILTERS resets filters to initial state', async () => {
+      state.filters.licenses = [
+        { code: 'by', checked: true },
+        { code: 'by-nc', checked: true },
+        { code: 'by-nd', checked: true },
+      ]
+      actions[CLEAR_FILTERS]({
+        commit: commitMock,
+        dispatch: dispatchMock,
+        state,
+      })
+      expect(commitMock).toHaveBeenCalledWith(REPLACE_FILTERS, {
+        newFilterData: filterData,
+      })
+      expect(dispatchMock).toHaveBeenCalledWith(UPDATE_QUERY)
+    })
+
+    it('CLEAR_FILTERS sets providers filters checked to false', async () => {
+      state.filters.imageProviders = [
+        { code: 'met', name: 'Metropolitan', checked: true },
+        { code: 'flickr', name: 'Flickr', checked: false },
+      ]
+
+      actions[CLEAR_FILTERS]({
+        commit: commitMock,
+        dispatch: dispatchMock,
+        state,
+      })
+      const expectedFilters = {
+        ...state.filters,
+        imageProviders: [
+          { code: 'met', name: 'Metropolitan', checked: false },
+          { code: 'flickr', name: 'Flickr', checked: false },
+        ],
+      }
+      expect(commitMock).toHaveBeenCalledWith(REPLACE_FILTERS, {
+        newFilterData: expectedFilters,
+      })
+      expect(dispatchMock).toHaveBeenCalledWith(UPDATE_QUERY)
+    })
+
+    it.each`
+      filterType           | code              | idx
+      ${'licenses'}        | ${'cc0'}          | ${0}
+      ${'licenseTypes'}    | ${'modification'} | ${1}
+      ${'imageExtensions'} | ${'svg'}          | ${3}
+      ${'imageCategories'} | ${'photograph'}   | ${0}
+      ${'searchBy'}        | ${'creator'}      | ${0}
+      ${'mature'}          | ${undefined}      | ${-1}
+      ${'aspectRatios'}    | ${'tall'}         | ${0}
+      ${'sizes'}           | ${'medium'}       | ${1}
+    `(
+      "TOGGLE_FILTER should set filter '$code' of type '$filterType",
+      ({ filterType, code, idx }) => {
+        actions[TOGGLE_FILTER](
+          { commit: commitMock, dispatch: dispatchMock, state },
+          { filterType: filterType, code: code }
+        )
+        expect(commitMock).toHaveBeenCalledWith(SET_FILTER, {
+          filterType: filterType,
+          code: code,
+          codeIdx: idx,
+        })
+
+        expect(dispatchMock).toHaveBeenCalledWith(UPDATE_QUERY)
+      }
+    )
+
+    it('TOGGLE_FILTER updates mature', () => {
+      actions[TOGGLE_FILTER](
+        { commit: commitMock, dispatch: dispatchMock, state },
+        { filterType: 'mature' }
+      )
+
+      expect(commitMock).toHaveBeenCalledWith(SET_FILTER, {
+        filterType: 'mature',
+        codeIdx: -1,
+      })
+
+      expect(dispatchMock).toHaveBeenCalledWith(UPDATE_QUERY)
+    })
+
+    it('TOGGLE_FILTER toggles mature', () => {
+      state.filters.mature = true
+      actions[TOGGLE_FILTER](
+        { commit: commitMock, dispatch: dispatchMock, state },
+        { filterType: 'mature' }
+      )
+
+      expect(commitMock).toHaveBeenCalledWith(SET_FILTER, {
+        filterType: 'mature',
+        codeIdx: -1,
+      })
+
+      expect(dispatchMock).toHaveBeenCalledWith(UPDATE_QUERY)
     })
   })
 })

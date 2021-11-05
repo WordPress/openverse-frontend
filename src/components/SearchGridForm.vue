@@ -63,14 +63,14 @@
 import { SET_FILTER_IS_VISIBLE } from '~/constants/mutation-types'
 import { queryStringToSearchType } from '~/utils/search-query-transform'
 import { VIDEO } from '~/constants/media'
-import { FILTER, SEARCH } from '~/constants/store-modules'
+import { SEARCH } from '~/constants/store-modules'
 import { mapMutations, mapState } from 'vuex'
 
 export default {
   name: 'SearchGridForm',
   data: () => ({ searchTermsModel: null }),
   computed: {
-    ...mapState(FILTER, ['isFilterVisible']),
+    ...mapState(SEARCH, ['isFilterVisible']),
     ...mapState(SEARCH, ['query']),
     searchTerms() {
       return this.query.q
@@ -93,7 +93,7 @@ export default {
     this.setFormInput()
   },
   methods: {
-    ...mapMutations(FILTER, { setFilterIsVisible: SET_FILTER_IS_VISIBLE }),
+    ...mapMutations(SEARCH, { setFilterIsVisible: SET_FILTER_IS_VISIBLE }),
     onSubmit(e) {
       e.preventDefault()
       if (this.searchTermsModel) {

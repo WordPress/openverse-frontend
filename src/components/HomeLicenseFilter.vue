@@ -21,19 +21,19 @@
 
 <script>
 import { TOGGLE_FILTER } from '~/constants/action-types'
-import { FILTER } from '~/constants/store-modules'
+import { SEARCH } from '~/constants/store-modules'
 import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'LicenseFilter',
   computed: {
-    ...mapState(FILTER, ['filters']),
+    ...mapState(SEARCH, ['filters']),
     licenseTypes() {
       return this.filters.licenseTypes
     },
   },
   methods: {
-    ...mapActions(FILTER, { toggleFilter: TOGGLE_FILTER }),
+    ...mapActions(SEARCH, { toggleFilter: TOGGLE_FILTER }),
     onFilterChanged(code) {
       this.toggleFilter({
         code,

@@ -1,8 +1,8 @@
 import Vuex from 'vuex'
-import { SET_Q } from '~/constants/mutation-types'
 import render from '../../test-utils/render'
 import { createLocalVue } from '@vue/test-utils'
 import PhotoTags from '~/components/PhotoTags'
+import { SET_Q } from '~/constants/action-types'
 
 describe('PhotoTags', () => {
   let options = null
@@ -42,12 +42,12 @@ describe('PhotoTags', () => {
   })
 
   it('commits a mutation when a tag is clicked', () => {
-    const commitMock = jest.fn()
+    const dispatchMock = jest.fn()
     const localVue = createLocalVue()
     localVue.use(Vuex)
     const storeMock = new Vuex.Store({
       modules: {
-        search: { namespaced: true, mutations: { [SET_Q]: commitMock } },
+        search: { namespaced: true, actions: { [SET_Q]: dispatchMock } },
       },
     })
     const opts = {
@@ -60,7 +60,7 @@ describe('PhotoTags', () => {
     const wrapper = render(PhotoTags, opts)
     wrapper.find('.tag').trigger('click')
     const tagName = wrapper.find('.tag').text()
-    // When mocking the module's mutation, the mutation type comes as `{}`
-    expect(commitMock).toHaveBeenCalledWith({}, { q: tagName })
+    const dispatchArgs = dispatchMock.mock.calls[0][1]
+    expect(dispatchArgs).toEqual({ q: tagName })
   })
 })

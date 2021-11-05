@@ -48,7 +48,7 @@
 import { mapActions, mapGetters, mapState } from 'vuex'
 import { FETCH_MEDIA } from '~/constants/action-types'
 import { AUDIO } from '~/constants/media'
-import { FILTER, SEARCH } from '~/constants/store-modules'
+import { MEDIA, SEARCH } from '~/constants/store-modules'
 
 export default {
   name: 'AudioResultsList',
@@ -61,7 +61,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(SEARCH, [
+    ...mapState(MEDIA, [
       'audios',
       'errorMessage',
       'audiosCount',
@@ -69,8 +69,9 @@ export default {
       'pageCount',
       'query',
     ]),
+    ...mapState(SEARCH, ['query']),
     ...mapGetters(SEARCH, ['isFetching', 'isFetchingError']),
-    ...mapState(FILTER, ['isFilterVisible']),
+    ...mapState(SEARCH, ['isFilterVisible']),
     _audiosCount() {
       const count = this.audiosCount
       if (count === 0) {
@@ -92,7 +93,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(SEARCH, { fetchMedia: FETCH_MEDIA }),
+    ...mapActions(MEDIA, { fetchMedia: FETCH_MEDIA }),
     onLoadMoreAudios() {
       const searchParams = {
         page: this.audioPage + 1,

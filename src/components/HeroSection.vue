@@ -65,7 +65,8 @@
 </template>
 
 <script>
-import { SET_Q, SET_SEARCH_TYPE } from '~/constants/mutation-types'
+import { SET_Q } from '~/constants/action-types'
+import { SET_SEARCH_TYPE } from '~/constants/mutation-types'
 import { filtersToQueryData } from '~/utils/search-query-transform'
 import { SEARCH } from '~/constants/store-modules'
 import { mapMutations } from 'vuex'
@@ -111,7 +112,7 @@ export default {
         query: {
           q: this.form.searchTerm,
           ...filtersToQueryData(
-            this.$store.state.filter.filters,
+            this.$store.state.search.filters,
             this.getMediaType()
           ),
         },

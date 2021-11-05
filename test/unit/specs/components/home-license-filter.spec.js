@@ -1,7 +1,7 @@
 import HomeLicenseFilter from '~/components/HomeLicenseFilter'
 import { render, screen } from '@testing-library/vue'
 import { TOGGLE_FILTER } from '~/constants/action-types'
-import { FILTER } from '~/constants/store-modules'
+import { SEARCH } from '~/constants/store-modules'
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 
@@ -20,7 +20,7 @@ describe('HomeLicenseFilter', () => {
     localVue.use(Vuex)
     storeMock = new Vuex.Store({
       modules: {
-        filter: {
+        search: {
           namespaced: true,
           actions: {
             // Without this action, we get '[vuex] unknown local action type' error
@@ -62,7 +62,7 @@ describe('HomeLicenseFilter', () => {
     const checked = screen.queryAllByRole('checkbox', { checked: true })
 
     expect(checked.length).toEqual(1)
-    expect(dispatchMock).toHaveBeenCalledWith(`${FILTER}/${TOGGLE_FILTER}`, {
+    expect(dispatchMock).toHaveBeenCalledWith(`${SEARCH}/${TOGGLE_FILTER}`, {
       code: 'commercial',
       filterType: 'licenseTypes',
     })

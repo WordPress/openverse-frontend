@@ -59,11 +59,11 @@
 </template>
 
 <script>
+import { mapActions, mapGetters, mapMutations, mapState } from 'vuex'
+import { IMAGE } from '~/constants/media'
+import { MEDIA, SEARCH } from '~/constants/store-modules'
 import { FETCH_MEDIA } from '~/constants/action-types'
 import { SET_MEDIA } from '~/constants/mutation-types'
-import { IMAGE } from '~/constants/media'
-import { mapActions, mapGetters, mapMutations, mapState } from 'vuex'
-import { SEARCH } from '~/constants/store-modules'
 
 export default {
   name: 'SearchGridManualLoad',
@@ -95,14 +95,9 @@ export default {
     }
   },
   computed: {
-    ...mapState(SEARCH, [
-      'imagesCount',
-      'imagePage',
-      'errorMessage',
-      'images',
-      'query',
-    ]),
-    ...mapGetters(SEARCH, ['isFetching', 'isFetchingError']),
+    ...mapState(SEARCH, ['query']),
+    ...mapState(MEDIA, ['imagesCount', 'imagePage', 'errorMessage', 'images']),
+    ...mapGetters(MEDIA, ['isFetching', 'isFetchingError']),
     _imagesCount() {
       const count = this.imagesCount
       if (count === 0) {
@@ -120,7 +115,7 @@ export default {
       return this.query
     },
     isFinished() {
-      return this.imagePage >= this.$store.state.search.pageCount.images
+      return this.imagePage >= this.$store.state.media.pageCount.images
     },
   },
   watch: {
@@ -132,8 +127,8 @@ export default {
     },
   },
   methods: {
-    ...mapMutations(SEARCH, { setMedia: SET_MEDIA }),
-    ...mapActions(SEARCH, { fetchMedia: FETCH_MEDIA }),
+    ...mapMutations(MEDIA, { setMedia: SET_MEDIA }),
+    ...mapActions(MEDIA, { fetchMedia: FETCH_MEDIA }),
     searchChanged() {
       this.setMedia({ media: [], page: 1 })
     },

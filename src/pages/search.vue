@@ -26,22 +26,23 @@
   </div>
 </template>
 <script>
+import { mapActions, mapMutations, mapState } from 'vuex'
+import { MEDIA, SEARCH } from '~/constants/store-modules'
 import {
   FETCH_MEDIA,
   SET_FILTERS_FROM_URL,
+  SET_QUERY,
   SET_SEARCH_TYPE_FROM_URL,
   UPDATE_SEARCH_TYPE,
 } from '~/constants/action-types'
-import { SET_QUERY, SET_FILTER_IS_VISIBLE } from '~/constants/mutation-types'
+import { SET_FILTER_IS_VISIBLE } from '~/constants/mutation-types'
+import { ALL_MEDIA, IMAGE } from '~/constants/media'
 import {
   queryStringToQueryData,
   queryStringToSearchType,
 } from '~/utils/search-query-transform'
 import local from '~/utils/local'
 import { screenWidth } from '~/utils/get-browser-info'
-import { ALL_MEDIA, IMAGE } from '~/constants/media'
-import { mapActions, mapMutations, mapState } from 'vuex'
-import { FILTER, SEARCH } from '~/constants/store-modules'
 import debounce from 'lodash.debounce'
 
 const BrowsePage = {
@@ -56,8 +57,8 @@ const BrowsePage = {
       const query = queryStringToQueryData(url)
       this.setQuery({ query })
     }
-    await this.setSearchTypeFromUrl({ url })
-    await this.setFiltersFromUrl({ url })
+    await this.setSearchTypeFromUrl({ url, path: this.$route.path })
+    await this.setFiltersFromUrl({ url, query: this.$route.query })
   },
   data: () => ({
     showScrollButton: false,
@@ -84,26 +85,24 @@ const BrowsePage = {
   },
   computed: {
     ...mapState(SEARCH, ['query', 'searchType']),
-    ...mapState(FILTER, ['isFilterVisible']),
+    ...mapState(SEARCH, ['isFilterVisible']),
     mediaType() {
       // Default to IMAGE until media search/index is generalized
       return this.searchType !== ALL_MEDIA ? this.searchType : IMAGE
     },
   },
   methods: {
-    ...mapActions(SEARCH, {
+    ...mapActions(MEDIA, {
       fetchMedia: FETCH_MEDIA,
+    }),
+    ...mapActions(SEARCH, {
       setSearchTypeFromUrl: SET_SEARCH_TYPE_FROM_URL,
       setFiltersFromUrl: SET_FILTERS_FROM_URL,
       updateSearchType: UPDATE_SEARCH_TYPE,
-    }),
-    ...mapActions(FILTER, {
+      setQuery: SET_QUERY,
       setFiltersFromUrl: SET_FILTERS_FROM_URL,
     }),
     ...mapMutations(SEARCH, {
-      setQuery: SET_QUERY,
-    }),
-    ...mapMutations(FILTER, {
       setFilterVisibility: SET_FILTER_IS_VISIBLE,
     }),
     getMediaItems(params, mediaType) {

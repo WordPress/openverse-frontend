@@ -1,318 +1,449 @@
 import findIndex from 'lodash.findindex'
-import prepareSearchQueryParams from '~/utils/prepare-search-query-params'
-import decodeMediaData from '~/utils/decode-media-data'
+import clonedeep from 'lodash.clonedeep'
+
+import local from '~/utils/local'
 import {
-  FETCH_AUDIO,
-  FETCH_IMAGE,
-  FETCH_MEDIA,
-  HANDLE_MEDIA_ERROR,
-  HANDLE_NO_MEDIA,
+  queryStringToSearchType,
+  queryToFilterData,
+} from '~/utils/search-query-transform'
+import { ALL_MEDIA, AUDIO, IMAGE, supportedMediaTypes } from '~/constants/media'
+import {
+  REPLACE_QUERY,
+  SET_FILTERS_FROM_URL,
+  SET_Q,
+  SET_QUERY,
   SET_SEARCH_TYPE_FROM_URL,
+  TOGGLE_FILTER,
   UPDATE_QUERY,
   UPDATE_SEARCH_TYPE,
 } from '~/constants/action-types'
 import {
-  FETCH_END_MEDIA,
-  FETCH_MEDIA_ERROR,
-  FETCH_START_MEDIA,
-  MEDIA_NOT_FOUND,
-  REPLACE_QUERY,
-  RESET_MEDIA,
-  SET_AUDIO,
-  SET_IMAGE,
-  SET_IMAGE_PAGE,
-  SET_MEDIA,
-  SET_Q,
-  SET_QUERY,
-  SET_SEARCH_TYPE,
+  SET_FILTER,
+  SET_PROVIDERS_FILTERS,
+  CLEAR_FILTERS,
+  SET_FILTER_IS_VISIBLE,
   UPDATE_FILTERS,
+  REPLACE_FILTERS,
+  SET_SEARCH_TYPE,
+  MUTATE_QUERY,
+  RESET_MEDIA,
 } from '~/constants/mutation-types'
-import {
-  SEND_RESULT_CLICKED_EVENT,
-  SEND_SEARCH_QUERY_EVENT,
-} from '~/constants/usage-data-analytics-types'
-import {
-  filtersToQueryData,
-  queryStringToSearchType,
-} from '~/utils/search-query-transform'
-import { ALL_MEDIA, AUDIO, IMAGE } from '~/constants/media'
-import { FILTER, USAGE_DATA } from '~/constants/store-modules'
-import AudioService from '~/data/audio-service'
-import ImageService from '~/data/image-service'
+
+// The order of the keys here is the same as in the side filter display
+export const mediaFilterKeys = {
+  image: [
+    'licenses',
+    'licenseTypes',
+    'imageCategories',
+    'imageExtensions',
+    'aspectRatios',
+    'sizes',
+    'imageProviders',
+    'searchBy',
+    'mature',
+  ],
+  audio: process.env.enableAudio
+    ? [
+        'licenses',
+        'licenseTypes',
+        'audioCategories',
+        'audioExtensions',
+        'durations',
+        'audioProviders',
+        'searchBy',
+        'mature',
+      ]
+    : [],
+  video: [],
+  all: ['licenses', 'licenseTypes', 'searchBy', 'mature'],
+}
+
+export const mediaSpecificFilters = {
+  all: ['licenses', 'licenseTypes', 'searchBy', 'mature'],
+  image: [
+    'imageCategories',
+    'imageExtensions',
+    'aspectRatios',
+    'sizes',
+    'imageProviders',
+  ],
+  audio: process.env.enableAudio
+    ? ['audioCategories', 'audioExtensions', 'durations', 'audioProviders']
+    : [],
+  video: [],
+}
+
+export const filterData = {
+  licenses: [
+    { code: 'cc0', name: 'filters.licenses.cc0', checked: false },
+    { code: 'pdm', name: 'filters.licenses.pdm', checked: false },
+    { code: 'by', name: 'filters.licenses.by', checked: false },
+    { code: 'by-sa', name: 'filters.licenses.by-sa', checked: false },
+    { code: 'by-nc', name: 'filters.licenses.by-nc', checked: false },
+    { code: 'by-nd', name: 'filters.licenses.by-nd', checked: false },
+    { code: 'by-nc-sa', name: 'filters.licenses.by-nc-sa', checked: false },
+    { code: 'by-nc-nd', name: 'filters.licenses.by-nc-nd', checked: false },
+  ],
+  licenseTypes: [
+    {
+      code: 'commercial',
+      name: 'filters.license-types.commercial',
+      checked: false,
+    },
+    {
+      code: 'modification',
+      name: 'filters.license-types.modification',
+      checked: false,
+    },
+  ],
+  audioCategories: [
+    {
+      code: 'music',
+      name: 'filters.audio-categories.music',
+      checked: false,
+    },
+    {
+      code: 'soundEffects',
+      name: 'filters.audio-categories.sound-effects',
+      checked: false,
+    },
+    {
+      code: 'podcast',
+      name: 'filters.audio-categories.podcast',
+      checked: false,
+    },
+  ],
+  imageCategories: [
+    {
+      code: 'photograph',
+      name: 'filters.image-categories.photograph',
+      checked: false,
+    },
+    {
+      code: 'illustration',
+      name: 'filters.image-categories.illustration',
+      checked: false,
+    },
+    {
+      code: 'digitized_artwork',
+      name: 'filters.image-categories.digitized-artwork',
+      checked: false,
+    },
+  ],
+  audioExtensions: [
+    { code: 'mp3', name: 'filters.audio-extensions.mp3', checked: false },
+    { code: 'ogg', name: 'filters.audio-extensions.ogg', checked: false },
+    { code: 'flac', name: 'filters.audio-extensions.flac', checked: false },
+  ],
+  imageExtensions: [
+    { code: 'jpg', name: 'filters.image-extensions.jpg', checked: false },
+    { code: 'png', name: 'filters.image-extensions.png', checked: false },
+    { code: 'gif', name: 'filters.image-extensions.gif', checked: false },
+    { code: 'svg', name: 'filters.image-extensions.svg', checked: false },
+  ],
+  aspectRatios: [
+    { code: 'tall', name: 'filters.aspect-ratios.tall', checked: false },
+    { code: 'wide', name: 'filters.aspect-ratios.wide', checked: false },
+    { code: 'square', name: 'filters.aspect-ratios.square', checked: false },
+  ],
+  durations: [
+    { code: 'short', name: 'filters.durations.short', checked: false },
+    { code: 'medium', name: 'filters.durations.medium', checked: false },
+    { code: 'long', name: 'filters.durations.long', checked: false },
+  ],
+  sizes: [
+    { code: 'small', name: 'filters.sizes.small', checked: false },
+    { code: 'medium', name: 'filters.sizes.medium', checked: false },
+    { code: 'large', name: 'filters.sizes.large', checked: false },
+  ],
+  audioProviders: [],
+  imageProviders: [],
+  searchBy: [
+    { code: 'creator', name: 'filters.searchBy.creator', checked: false },
+  ],
+  mature: false,
+}
 
 /**
- * @type {{ audios: import('./types').AudioDetail[],
- * audiosCount: number, audioPage:number,
- * images: import('../store/types').ImageDetail[],
- * imagePage: number, imagesCount: number, query: {},
- * pageCount: {images: number, audios: number},
- * isFetching: {images: boolean, audios: boolean},
- * isFetchingError: {images: boolean, audios: boolean},
- * errorMessage: null, searchType: string, }}
+ * Returns true if any of the filters' checked property is true
+ * except for `mature` filter, as it is not displayed as a tag
+ * @param filters
+ * @returns {boolean}
  */
+const anyFilterApplied = (filters) =>
+  Object.keys(filters).some((filterKey) => {
+    if (filterKey === 'mature') {
+      return false
+    } // this is hardcoded to "false" because we do not show mature in `FilterDisplay.vue` like the other filters
+
+    return (
+      filters[filterKey] && filters[filterKey].some((filter) => filter.checked)
+    )
+  })
+
 export const state = () => ({
-  audios: [],
-  audiosCount: 0,
-  audioPage: 1,
-  images: [],
-  imagesCount: 0,
-  imagePage: 1,
-  pageCount: {
-    images: 0,
-    audios: 0,
-  },
-  isFetching: {
-    audios: false,
-    images: false,
-  },
-  isFetchingError: {
-    audios: true,
-    images: true,
-  },
-  errorMessage: null,
+  filters: clonedeep(filterData),
+  isFilterVisible: false,
   searchType: ALL_MEDIA,
-  query: {},
-  audio: {},
-  image: {},
-})
-
-export const createActions = (services) => ({
-  async [FETCH_MEDIA]({ commit, dispatch, rootState }, params) {
-    // does not send event if user is paginating for more results
-    const { page, mediaType, q } = params
-    const sessionId = rootState.user.usageSessionId
-    if (!page) {
-      dispatch(
-        `${USAGE_DATA}/${SEND_SEARCH_QUERY_EVENT}`,
-        { query: q, sessionId },
-        { root: true }
-      )
-    }
-
-    commit(FETCH_START_MEDIA, { mediaType })
-    if (!params.page) {
-      commit(RESET_MEDIA, { mediaType })
-    }
-    const queryParams = prepareSearchQueryParams(params)
-    if (!Object.keys(services).includes(mediaType)) {
-      throw new Error(`Cannot fetch unknown media type "${mediaType}"`)
-    }
-    await services[mediaType]
-      .search(queryParams)
-      .then(({ data }) => {
-        commit(FETCH_END_MEDIA, { mediaType })
-        const mediaCount = data.result_count
-        commit(SET_MEDIA, {
-          mediaType,
-          media: data.results,
-          mediaCount,
-          pageCount: data.page_count,
-          shouldPersistMedia: params.shouldPersistMedia,
-          page: page,
-        })
-        dispatch(HANDLE_NO_MEDIA, { mediaType, mediaCount })
-      })
-      .catch((error) => {
-        dispatch(HANDLE_MEDIA_ERROR, { mediaType, error })
-      })
-  },
-  async [FETCH_AUDIO]({ commit, dispatch, state, rootState }, params) {
-    dispatch(
-      `${USAGE_DATA}/${SEND_RESULT_CLICKED_EVENT}`,
-      {
-        query: state.query.q,
-        resultUuid: params.id,
-        resultRank: findIndex(state.audios, (img) => img.id === params.id),
-        sessionId: rootState.user.usageSessionId,
-      },
-      { root: true }
-    )
-    commit(SET_AUDIO, { audio: {} })
-    await services[AUDIO].getMediaDetail(params)
-      .then(({ data }) => {
-        commit(SET_AUDIO, { audio: data })
-      })
-      .catch((error) => {
-        if (error.response && error.response.status === 404) {
-          commit(MEDIA_NOT_FOUND, { mediaType: AUDIO })
-        } else {
-          dispatch(HANDLE_MEDIA_ERROR, { mediaType: AUDIO, error })
-        }
-      })
-  },
-  async [FETCH_IMAGE]({ commit, dispatch, state, rootState }, params) {
-    dispatch(
-      `${USAGE_DATA}/${SEND_RESULT_CLICKED_EVENT}`,
-      {
-        query: state.query.q,
-        resultUuid: params.id,
-        resultRank: findIndex(state.images, (img) => img.id === params.id),
-        sessionId: rootState.user.usageSessionId,
-      },
-      { root: true }
-    )
-
-    commit(SET_IMAGE, { image: {} })
-    await services[IMAGE].getMediaDetail(params)
-      .then(({ data }) => {
-        commit(SET_IMAGE, { image: data })
-      })
-      .catch((error) => {
-        if (error.response && error.response.status === 404) {
-          commit(MEDIA_NOT_FOUND, { mediaType: IMAGE })
-        } else {
-          throw new Error(`Error fetching the image: ${error.message}`)
-        }
-      })
-  },
-  async [HANDLE_MEDIA_ERROR]({ commit }, { mediaType, error }) {
-    let errorMessage
-    if (error.response) {
-      errorMessage =
-        error.response.status === 500
-          ? 'There was a problem with our servers'
-          : error.response.message
-      commit(FETCH_MEDIA_ERROR, { mediaType, errorMessage })
-    } else {
-      commit(FETCH_MEDIA_ERROR, { mediaType, errorMessage: error.message })
-      throw new Error(error)
-    }
-  },
-  [HANDLE_NO_MEDIA]({ commit }, { mediaCount, mediaType }) {
-    if (!mediaCount) {
-      commit(FETCH_MEDIA_ERROR, {
-        errorMessage: `No ${mediaType} found for this query`,
-      })
-    }
-  },
-  [SET_SEARCH_TYPE_FROM_URL]({ commit }, params) {
-    const searchType = queryStringToSearchType(params.url)
-    commit(SET_SEARCH_TYPE, { searchType })
-    commit(`${FILTER}/${UPDATE_FILTERS}`, { searchType }, { root: true })
-  },
-  [UPDATE_SEARCH_TYPE]({ commit }, { searchType }) {
-    commit(SET_SEARCH_TYPE, { searchType })
-    commit(`${FILTER}/${UPDATE_FILTERS}`, { searchType }, { root: true })
-  },
-  [UPDATE_QUERY]({ commit, state, rootState }) {
-    const query = filtersToQueryData(rootState.filter.filters, state.searchType)
-    commit(REPLACE_QUERY, {
-      query: {
-        q: state.query.q,
-        ...query,
-      },
-    })
+  query: {
+    q: '',
+    mediaType: IMAGE,
   },
 })
 
 export const getters = {
-  isFetching(state) {
-    return state.isFetching[state.searchType]
+  /**
+   * Returns all applied filters in unified format
+   * Mature filter is not returned because it is not displayed
+   * as a filter tag
+   * @param state
+   * @returns {{code: string, name: string, filterType: string}[]}
+   */
+  appliedFilterTags: (state) => {
+    let appliedFilters = []
+    const filterKeys = mediaFilterKeys[state.query.mediaType]
+    filterKeys.forEach((filterType) => {
+      if (filterType !== 'mature') {
+        const newFilters = state.filters[filterType]
+          .filter((f) => f.checked)
+          .map((f) => {
+            return {
+              code: f.code,
+              name: f.name,
+              filterType: filterType,
+            }
+          })
+        appliedFilters = [...appliedFilters, ...newFilters]
+      }
+    })
+    return appliedFilters
   },
-  isFetchingError(state) {
-    return state.isFetchingError[state.searchType]
+  isAnyFilterApplied: (state) => {
+    return anyFilterApplied(
+      getMediaTypeFilters({
+        filters: state.filters,
+        mediaType: state.query.mediaType,
+      })
+    )
+  },
+  mediaFiltersForDisplay: (state) => {
+    return getMediaTypeFilters({
+      filters: state.filters,
+      mediaType: state.query.mediaType,
+      includeMature: false,
+    })
   },
 }
 
-export const mutations = {
-  [FETCH_START_MEDIA](_state, { mediaType }) {
-    const mediaPlural = `${mediaType}s`
-    _state.isFetching[mediaPlural] = true
-    _state.isFetchingError[mediaPlural] = false
+const actions = {
+  /**
+   * Toggles a filter's checked parameter
+   * @param {import('vuex').ActionContext} context
+   * @param params
+   */
+  async [TOGGLE_FILTER]({ commit, dispatch, state }, params) {
+    const { filterType, code } = params
+    const filters = state.filters[filterType]
+    const codeIdx = findIndex(filters, (f) => f.code === code)
+
+    commit(SET_FILTER, { codeIdx, ...params })
+    await dispatch(UPDATE_QUERY)
   },
-  [FETCH_END_MEDIA](_state, { mediaType }) {
-    const mediaPlural = `${mediaType}s`
-    _state.isFetching[mediaPlural] = false
-  },
-  [FETCH_MEDIA_ERROR](_state, params) {
-    const { mediaType, errorMessage } = params
-    const mediaPlural = `${mediaType}s`
-    _state.isFetching[mediaPlural] = false
-    _state.isFetchingError[mediaPlural] = true
-    _state.errorMessage = errorMessage
-  },
-  [SET_AUDIO](_state, params) {
-    _state.audio = decodeMediaData(params.audio, AUDIO)
-  },
-  [SET_IMAGE](_state, params) {
-    _state.image = decodeMediaData(params.image)
-  },
-  [SET_IMAGE_PAGE](_state, params) {
-    _state.imagePage = params.imagePage
-  },
-  [SET_MEDIA](_state, params) {
-    const {
-      mediaType,
-      media,
-      mediaCount,
-      page,
-      pageCount,
-      shouldPersistMedia,
-    } = params
-    const mediaPlural = `${mediaType}s`
-    let mediaToSet
-    if (shouldPersistMedia) {
-      mediaToSet = _state[`${mediaType}s`].concat(media)
-    } else {
-      mediaToSet = media
+
+  /**
+   * Resets all filters to initial values.
+   * Provider filters are not in the initial filters, so they need to be
+   * handled separately.
+   * @param {import('vuex').ActionContext} context
+   */
+  async [CLEAR_FILTERS]({ commit, dispatch, state }) {
+    const initialFilters = clonedeep(filterData)
+    const resetProviders = (mediaType) => {
+      return state.filters[`${mediaType}Providers`].map((provider) => ({
+        ...provider,
+        checked: false,
+      }))
     }
-    mediaToSet = mediaToSet.map((item) => decodeMediaData(item))
-    _state[mediaPlural] = mediaToSet
-    _state[`${mediaPlural}Count`] = mediaCount || 0
-    _state[`${mediaType}Page`] = page || 1
-    _state.pageCount[mediaPlural] = pageCount
+    const newFilterData = {
+      ...initialFilters,
+      audioProviders: resetProviders(AUDIO),
+      imageProviders: resetProviders(IMAGE),
+    }
+    commit(REPLACE_FILTERS, { newFilterData })
+    await dispatch(UPDATE_QUERY)
+  },
+
+  /**
+   *
+   * @param {import('vuex').ActionContext} context
+   * @param url
+   */
+  [SET_FILTERS_FROM_URL]({ commit }, { url }) {
+    const newFilterData = queryToFilterData(url)
+    commit(REPLACE_FILTERS, { newFilterData })
+  },
+
+  /**
+   * On the first page load, sets the search type and updates search filters.
+   *
+   * @param {import('vuex').ActionContext} context
+   * @param {{ url: string }} params
+   */
+  [SET_SEARCH_TYPE_FROM_URL]({ commit }, params) {
+    const searchType = queryStringToSearchType(params.url)
+    commit(SET_SEARCH_TYPE, { searchType })
+    commit(UPDATE_FILTERS, { searchType })
+  },
+
+  /**
+   * On selecting a search tab, updates the search type and
+   * sets the filters that are applicable for this media type.
+   * @param {import('vuex').ActionContext} context
+   * @param searchType
+   */
+  [UPDATE_SEARCH_TYPE]({ commit }, { searchType }) {
+    commit(SET_SEARCH_TYPE, { searchType })
+    commit(UPDATE_FILTERS, { searchType })
   },
   /**
    * Merges the query object from parameters with the existing
    * query object. Used on 'Search' button click.
-   * @param _state
+   * Reset the media state.
+   * @param {import('vuex').ActionContext} context
    * @param {object} query
    */
-  [SET_QUERY](_state, { query }) {
-    _state.query = Object.assign({}, _state.query, query)
-    _state.images = []
-    _state.audios = []
+  [SET_QUERY]({ state, commit }, { query }) {
+    const newQuery = Object.assign({}, state.query, query)
+    commit(MUTATE_QUERY, { query: newQuery })
+    commit(RESET_MEDIA, { mediaType: state.query.mediaType }, { root: true })
   },
   /**
    * When a new search term is searched for, sets the `q`
    * parameter for the API request query and resets the media.
    * Leaves other query parameters for filters as before.
-   * @param _state
+   * Reset the media state.
+   * @param {import('vuex').ActionContext} context
    * @param {string} q
    */
-  [SET_Q](_state, { q }) {
-    _state.query.q = q
-    _state.images = []
-    _state.audios = []
+  [SET_Q]({ state, commit }, { q }) {
+    commit(MUTATE_QUERY, { query: { ...state.query, q } })
+    commit(RESET_MEDIA, { mediaType: state.query.mediaType }, { root: true })
   },
   /**
    * Replaces the query object completely and resets all the
    * media. Called when filters are updated.
-   * @param _state
+   * @param {import('vuex').ActionContext} context
    * @param {object} query
    */
-  [REPLACE_QUERY](_state, { query }) {
-    _state.query = query
-    _state.images = []
-    _state.audios = []
+  [REPLACE_QUERY]({ commit }, { query }) {
+    commit(MUTATE_QUERY, { query })
+    commit(RESET_MEDIA, { mediaType: state.query.mediaType }, { root: true })
   },
-  [MEDIA_NOT_FOUND](_state, params) {
-    throw new Error(`Media of type ${params.mediaType} not found`)
+}
+
+function getMediaTypeFilters({ filters, mediaType, includeMature = false }) {
+  let filterKeys = mediaFilterKeys[mediaType]
+  if (!includeMature) {
+    filterKeys = filterKeys.filter((filterKey) => filterKey !== 'mature')
+  }
+  const mediaTypeFilters = {}
+  filterKeys.forEach((filterKey) => {
+    mediaTypeFilters[filterKey] = filters[filterKey]
+  })
+  return mediaTypeFilters
+}
+
+// Make sure when redirecting after applying a filter, we stick to the right tab (i.e, "/search/video", "/search/audio", etc.)
+const mutations = {
+  /**
+   * After a search type is changed, unchecks all the filters that are not
+   * applicable for this Media type.
+   * @param state
+   * @param searchType
+   */
+  [UPDATE_FILTERS](state, { searchType }) {
+    const mediaTypesToClear = supportedMediaTypes.filter(
+      (media) => media !== searchType
+    )
+
+    let filterKeysToClear = []
+    mediaTypesToClear.forEach((mediaType) => {
+      const filterKeys = mediaSpecificFilters[mediaType]
+      filterKeysToClear = [...filterKeysToClear, ...filterKeys]
+    })
+
+    Object.keys(state.filters).forEach((filterType) => {
+      if (filterKeysToClear.includes(filterType)) {
+        state.filters[filterType] = state.filters[filterType].map((f) => ({
+          ...f,
+          checked: false,
+        }))
+      }
+    })
+  },
+  [REPLACE_FILTERS](state, { newFilterData }) {
+    Object.keys(state.filters).forEach((filterType) => {
+      if (filterType === 'mature') {
+        state.filters.mature = newFilterData.mature
+      } else if (['audioProviders', 'imageProviders'].includes(filterType)) {
+        newFilterData[filterType].forEach((provider) => {
+          const idx = state.filters[filterType].findIndex(
+            (p) => p.code === provider.code
+          )
+          if (idx > -1) {
+            state.filters[filterType][idx].checked = provider.checked
+          }
+        })
+      } else {
+        state.filters[filterType] = newFilterData[filterType]
+      }
+    })
+  },
+  [SET_FILTER](state, params) {
+    const { filterType, codeIdx } = params
+    if (filterType === 'mature') {
+      state.filters.mature = !state.filters.mature
+    } else {
+      const filters = state.filters[filterType]
+      filters[codeIdx].checked = !filters[codeIdx].checked
+    }
+  },
+  [SET_PROVIDERS_FILTERS](state, params) {
+    const { mediaType, providers } = params
+    // merge providers from API response with the filters that came from the
+    // browse URL search query string and match the checked properties
+    // in the store
+    const providersKey = `${mediaType}Providers`
+    const currentProviders = [...state.filters[providersKey]]
+    state.filters[providersKey] = providers.map((provider) => {
+      const existingProviderFilterIdx = findIndex(
+        currentProviders,
+        (p) => p.code === provider.source_name
+      )
+
+      const checked =
+        existingProviderFilterIdx >= 0
+          ? currentProviders[existingProviderFilterIdx].checked
+          : false
+
+      return {
+        code: provider.source_name,
+        name: provider.display_name,
+        checked,
+      }
+    })
+  },
+  [SET_FILTER_IS_VISIBLE](state, params) {
+    state.isFilterVisible = params.isFilterVisible
+    local.set(process.env.filterStorageKey, params.isFilterVisible)
   },
   [SET_SEARCH_TYPE](_state, params) {
     _state.searchType = params.searchType
   },
-  [RESET_MEDIA](_state, params) {
-    const { mediaType } = params
-    _state[`${mediaType}s`] = []
-    _state[`${mediaType}sCount`] = 0
-    _state[`${mediaType}Page`] = undefined
-    _state.pageCount[`${mediaType}s`] = 0
+  [MUTATE_QUERY](state, { query }) {
+    state.query = query
   },
 }
-
-const mediaServices = { [AUDIO]: AudioService, [IMAGE]: ImageService }
-const actions = createActions(mediaServices)
 
 export default {
   state,
