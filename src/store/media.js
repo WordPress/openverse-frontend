@@ -7,8 +7,6 @@ import {
   FETCH_MEDIA,
   HANDLE_MEDIA_ERROR,
   HANDLE_NO_MEDIA,
-  REPLACE_QUERY,
-  UPDATE_QUERY,
 } from '~/constants/action-types'
 import {
   FETCH_END_MEDIA,
@@ -25,7 +23,6 @@ import {
   SEND_RESULT_CLICKED_EVENT,
   SEND_SEARCH_QUERY_EVENT,
 } from '~/constants/usage-data-analytics-types'
-import { filtersToQueryData } from '~/utils/search-query-transform'
 import { AUDIO, IMAGE } from '~/constants/media'
 import { USAGE_DATA } from '~/constants/store-modules'
 import AudioService from '~/data/audio-service'
@@ -204,22 +201,6 @@ export const createActions = (services) => ({
         errorMessage: `No ${mediaType} found for this query`,
       })
     }
-  },
-  /**
-   *
-   * @param {import('vuex').ActionContext} context
-   */
-  async [UPDATE_QUERY]({ dispatch, state, rootState }) {
-    const query = filtersToQueryData(
-      rootState.search.filters,
-      rootState.search.searchType
-    )
-    await dispatch(REPLACE_QUERY, {
-      query: {
-        q: state.query.q,
-        ...query,
-      },
-    })
   },
 })
 

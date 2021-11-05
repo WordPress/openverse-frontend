@@ -19,6 +19,7 @@ import {
   RESET_MEDIA,
 } from '~/constants/mutation-types'
 import { ALL_MEDIA, AUDIO, IMAGE } from '~/constants/media'
+import { MEDIA } from '~/constants/store-modules'
 
 describe('Filter Store', () => {
   describe('state', () => {
@@ -258,7 +259,7 @@ describe('Filter Store', () => {
         },
       })
       expect(context.commit).toHaveBeenCalledWith(
-        RESET_MEDIA,
+        `${MEDIA}/${RESET_MEDIA}`,
         { mediaType: IMAGE },
         { root: true }
       )

@@ -100,7 +100,6 @@ const BrowsePage = {
       setFiltersFromUrl: SET_FILTERS_FROM_URL,
       updateSearchType: UPDATE_SEARCH_TYPE,
       setQuery: SET_QUERY,
-      setFiltersFromUrl: SET_FILTERS_FROM_URL,
     }),
     ...mapMutations(SEARCH, {
       setFilterVisibility: SET_FILTER_IS_VISIBLE,

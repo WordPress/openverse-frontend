@@ -69,9 +69,8 @@ export default {
       'pageCount',
       'query',
     ]),
-    ...mapState(SEARCH, ['query']),
-    ...mapGetters(SEARCH, ['isFetching', 'isFetchingError']),
-    ...mapState(SEARCH, ['isFilterVisible']),
+    ...mapState(SEARCH, ['query', 'isFilterVisible']),
+    ...mapGetters(MEDIA, ['isFetching', 'isFetchingError']),
     _audiosCount() {
       const count = this.audiosCount
       if (count === 0) {

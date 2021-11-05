@@ -28,6 +28,7 @@ import {
   MUTATE_QUERY,
   RESET_MEDIA,
 } from '~/constants/mutation-types'
+import { MEDIA } from '~/constants/store-modules'
 
 // The order of the keys here is the same as in the side filter display
 export const mediaFilterKeys = {
@@ -315,7 +316,11 @@ const actions = {
   [SET_QUERY]({ state, commit }, { query }) {
     const newQuery = Object.assign({}, state.query, query)
     commit(MUTATE_QUERY, { query: newQuery })
-    commit(RESET_MEDIA, { mediaType: state.query.mediaType }, { root: true })
+    commit(
+      `${MEDIA}/${RESET_MEDIA}`,
+      { mediaType: state.query.mediaType },
+      { root: true }
+    )
   },
   /**
    * When a new search term is searched for, sets the `q`

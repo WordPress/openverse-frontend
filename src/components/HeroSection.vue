@@ -69,7 +69,7 @@ import { SET_Q } from '~/constants/action-types'
 import { SET_SEARCH_TYPE } from '~/constants/mutation-types'
 import { filtersToQueryData } from '~/utils/search-query-transform'
 import { SEARCH } from '~/constants/store-modules'
-import { mapMutations } from 'vuex'
+import { mapActions, mapMutations } from 'vuex'
 import HomeLicenseFilter from '~/components/HomeLicenseFilter'
 import SearchTypeToggle from '~/components/SearchTypeToggle'
 
@@ -89,10 +89,8 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(SEARCH, {
-      setSearchTerm: SET_Q,
-      setSearchType: SET_SEARCH_TYPE,
-    }),
+    ...mapMutations(SEARCH, { setSearchType: SET_SEARCH_TYPE }),
+    ...mapActions(SEARCH, { setSearchTerm: SET_Q }),
     getPath() {
       if (!process.env.enableAudio) return '/search/image'
       return `/search/${this.form.searchType}`
@@ -106,16 +104,17 @@ export default {
       if (process.env.enableAudio) {
         this.setSearchType({ searchType: this.form.searchType })
       }
-
+      const query = {
+        q: this.form.searchTerm,
+        ...filtersToQueryData(
+          this.$store.state.search.filters,
+          this.getMediaType()
+        ),
+      }
+      delete query.mediaType
       const newPath = this.localePath({
         path: this.getPath(),
-        query: {
-          q: this.form.searchTerm,
-          ...filtersToQueryData(
-            this.$store.state.search.filters,
-            this.getMediaType()
-          ),
-        },
+        query,
       })
       this.$router.push(newPath)
     },
