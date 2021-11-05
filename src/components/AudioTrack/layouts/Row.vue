@@ -58,7 +58,7 @@
                 {{ $t('interpunct') }}
               </template>
             </div>
-            <License class="inline" :license="audio.license" />
+            <License :license="audio.license" />
           </div>
         </div>
       </div>

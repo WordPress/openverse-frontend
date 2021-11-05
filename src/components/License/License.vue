@@ -1,27 +1,13 @@
 <template>
-  <div class="license text-dark-charcoal-70 flex gap-2">
+  <div class="license text-dark-charcoal-70 flex flex-row items-center gap-2">
     <div class="flex gap-1">
-      <svg
-        v-if="isCC"
-        class="h-5 w-5 inline"
-        viewBox="0 0 30 30"
-        xmlns="http://www.w3.org/2000/svg"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <use :href="`${ccLogo}#icon`" />
-      </svg>
-      <svg
+      <VIcon v-if="isCC" view-box="0 0 30 30" :icon-path="ccLogo" />
+      <VIcon
         v-for="(name, index) in icons"
         :key="index"
-        class="h-5 w-5 inline"
-        viewBox="0 0 30 30"
-        xmlns="http://www.w3.org/2000/svg"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <use :href="`${svgs[name]}#icon`" />
-      </svg>
+        view-box="0 0 30 30"
+        :icon-path="svgs[name]"
+      />
     </div>
     <span class="name">
       {{ $t(`license-names.${license}`) }}
@@ -30,12 +16,15 @@
 </template>
 
 <script>
+import { computed } from '@nuxtjs/composition-api'
+
+import VIcon from '~/components/VIcon/VIcon.vue'
+
 import {
   ALL_LICENCES,
   CC_LICENSES,
   LICENSE_ICON_MAPPING,
 } from '~/constants/license.js'
-import { computed } from '@nuxtjs/composition-api'
 
 import by from '~/assets/licenses/by.svg'
 import cc0 from '~/assets/licenses/cc0.svg'
@@ -51,6 +40,7 @@ import sa from '~/assets/licenses/sa.svg'
  */
 export default {
   name: 'License',
+  components: { VIcon },
   props: {
     /**
      * the slug of the license
@@ -85,3 +75,10 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.v-icon {
+  height: 1.1667em;
+  width: 1.1667em;
+}
+</style>

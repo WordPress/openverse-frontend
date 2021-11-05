@@ -2,7 +2,7 @@
   <svg
     class="v-icon h-6 w-6"
     xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
+    :viewBox="viewBox"
     aria-hidden="true"
     focusable="false"
   >
@@ -17,6 +17,13 @@
 export default {
   name: 'VIcon',
   props: {
+    /**
+     *
+     */
+    viewBox: {
+      type: String,
+      default: '0 0 24 24',
+    },
     /**
      * the path to the icon SVG; In a bundled application like Openverse,
      * importing an SVG should give us the path to the file.
