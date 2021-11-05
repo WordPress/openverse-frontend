@@ -24,7 +24,7 @@ import wavWaveform from './wav-waveform.json'
     },
     layout: {
       defaultValue: 'full',
-      options: ['full', 'box', 'row'],
+      options: ['full', 'box', 'row', 'global'],
       control: 'select',
     },
     size: {
@@ -142,6 +142,19 @@ specifying a `layout`. The layout can further be customised by the `size` and
     args={{
       layout: 'row',
       size: 'm',
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Global
+
+<Canvas>
+  <Story
+    name="Global"
+    args={{
+      layout: 'global',
     }}
   >
     {Template.bind({})}
