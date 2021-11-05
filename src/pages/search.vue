@@ -1,7 +1,7 @@
 <template>
   <div class="browse-page">
     <div class="search columns">
-      <div class="desk:hidden">
+      <div class="lg:hidden">
         <AppModal v-if="isFilterVisible" @close="onToggleSearchGridFilter">
           <SearchGridFilter />
         </AppModal>
