@@ -7,6 +7,7 @@ import { createLocalVue } from '@vue/test-utils'
 import clonedeep from 'lodash.clonedeep'
 import VueI18n from 'vue-i18n'
 import messages from '~/locales/en.json'
+import { IMAGE } from '~/constants/media'
 
 const i18n = new VueI18n({
   locale: 'en',
@@ -33,6 +34,10 @@ describe('HeroSection', () => {
           ...mediaStore,
           ...searchStore,
           state: {
+            query: {
+              q: 'me',
+              mediaType: IMAGE,
+            },
             isFilterVisible: true,
             filters,
           },

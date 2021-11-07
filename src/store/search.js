@@ -3,10 +3,17 @@ import clonedeep from 'lodash.clonedeep'
 
 import local from '~/utils/local'
 import {
+  filtersToQueryData,
   queryStringToSearchType,
   queryToFilterData,
 } from '~/utils/search-query-transform'
-import { ALL_MEDIA, AUDIO, IMAGE, supportedMediaTypes } from '~/constants/media'
+import {
+  ALL_MEDIA,
+  AUDIO,
+  IMAGE,
+  supportedMediaTypes,
+  VIDEO,
+} from '~/constants/media'
 import {
   REPLACE_QUERY,
   SET_FILTERS_FROM_URL,
@@ -26,9 +33,7 @@ import {
   REPLACE_FILTERS,
   SET_SEARCH_TYPE,
   MUTATE_QUERY,
-  RESET_MEDIA,
 } from '~/constants/mutation-types'
-import { MEDIA } from '~/constants/store-modules'
 
 // The order of the keys here is the same as in the side filter display
 export const mediaFilterKeys = {
@@ -164,14 +169,30 @@ export const filterData = {
   ],
   mature: false,
 }
-
+const supportedTabTypes = [AUDIO, IMAGE]
+if (process.env.enableAudio) {
+  supportedTabTypes.unshift(ALL_MEDIA)
+}
+const searchTabToMediaType = process.env.enableAudio
+  ? {
+      [ALL_MEDIA]: IMAGE,
+      [AUDIO]: AUDIO,
+      [IMAGE]: IMAGE,
+      [VIDEO]: null,
+    }
+  : {
+      [ALL_MEDIA]: IMAGE,
+      [AUDIO]: null,
+      [IMAGE]: IMAGE,
+      [VIDEO]: null,
+    }
 /**
  * Returns true if any of the filters' checked property is true
  * except for `mature` filter, as it is not displayed as a tag
  * @param filters
  * @returns {boolean}
  */
-const anyFilterApplied = (filters) =>
+const anyFilterApplied = (filters = {}) =>
   Object.keys(filters).some((filterKey) => {
     if (filterKey === 'mature') {
       return false
@@ -185,14 +206,47 @@ const anyFilterApplied = (filters) =>
 export const state = () => ({
   filters: clonedeep(filterData),
   isFilterVisible: false,
-  searchType: ALL_MEDIA,
+  searchType: IMAGE,
   query: {
     q: '',
     mediaType: IMAGE,
+    license: '',
+    license_type: '',
+    categories: '',
+    extension: '',
+    duration: '',
+    aspect_ratio: '',
+    size: '',
+    source: '',
+    searchBy: '',
+    mature: false,
   },
 })
 
 export const getters = {
+  /**
+   * Returns the search query parameters for API request:
+   * drops `mediaType` parameter, and all parameters with blank values.
+   * @param state
+   * @return {{}}
+   */
+  searchQueryParams: (state) => {
+    // Ensure that q filter always comes first
+    const params = { q: state.query.q }
+    // Remove the mediaType parameter, and handle mature filter separately
+    const filterKeys = Object.keys(state.query).filter(
+      (key) => !['q', 'mediaType', 'mature'].includes(key)
+    )
+    filterKeys.forEach((key) => {
+      if (state.query[key].length) {
+        params[key] = state.query[key]
+      }
+    })
+    if (state.query.mature === true) {
+      params.mature = true
+    }
+    return params
+  },
   /**
    * Returns all applied filters in unified format
    * Mature filter is not returned because it is not displayed
@@ -202,21 +256,23 @@ export const getters = {
    */
   appliedFilterTags: (state) => {
     let appliedFilters = []
-    const filterKeys = mediaFilterKeys[state.query.mediaType]
-    filterKeys.forEach((filterType) => {
-      if (filterType !== 'mature') {
-        const newFilters = state.filters[filterType]
-          .filter((f) => f.checked)
-          .map((f) => {
-            return {
-              code: f.code,
-              name: f.name,
-              filterType: filterType,
-            }
-          })
-        appliedFilters = [...appliedFilters, ...newFilters]
-      }
-    })
+    if (state.query.mediaType) {
+      const filterKeys = mediaFilterKeys[state.query.mediaType]
+      filterKeys.forEach((filterType) => {
+        if (filterType !== 'mature') {
+          const newFilters = state.filters[filterType]
+            .filter((f) => f.checked)
+            .map((f) => {
+              return {
+                code: f.code,
+                name: f.name,
+                filterType: filterType,
+              }
+            })
+          appliedFilters = [...appliedFilters, ...newFilters]
+        }
+      })
+    }
     return appliedFilters
   },
   isAnyFilterApplied: (state) => {
@@ -302,9 +358,27 @@ const actions = {
    * @param {import('vuex').ActionContext} context
    * @param searchType
    */
-  [UPDATE_SEARCH_TYPE]({ commit }, { searchType }) {
+  async [UPDATE_SEARCH_TYPE]({ commit, dispatch }, { searchType }) {
     commit(SET_SEARCH_TYPE, { searchType })
     commit(UPDATE_FILTERS, { searchType })
+    await dispatch(UPDATE_QUERY)
+  },
+  /**
+   * After a change in filters, updates the query.
+   * @param {import('vuex').ActionContext} context
+   */
+  async [UPDATE_QUERY]({ state, commit }) {
+    const newQuery = filtersToQueryData(
+      state.filters,
+      state.query.mediaType,
+      false
+    )
+    const query = {
+      ...newQuery,
+      q: state.query.q || '',
+      mediaType: state.query.mediaType,
+    }
+    commit(MUTATE_QUERY, { query })
   },
   /**
    * Merges the query object from parameters with the existing
@@ -316,11 +390,6 @@ const actions = {
   [SET_QUERY]({ state, commit }, { query }) {
     const newQuery = Object.assign({}, state.query, query)
     commit(MUTATE_QUERY, { query: newQuery })
-    commit(
-      `${MEDIA}/${RESET_MEDIA}`,
-      { mediaType: state.query.mediaType },
-      { root: true }
-    )
   },
   /**
    * When a new search term is searched for, sets the `q`
@@ -331,22 +400,26 @@ const actions = {
    * @param {string} q
    */
   [SET_Q]({ state, commit }, { q }) {
-    commit(MUTATE_QUERY, { query: { ...state.query, q } })
-    commit(RESET_MEDIA, { mediaType: state.query.mediaType }, { root: true })
+    const query = { ...state.query, q }
+    commit(MUTATE_QUERY, { query })
   },
   /**
-   * Replaces the query object completely and resets all the
-   * media. Called when filters are updated.
+   * Replaces the query object completely. Called when filters are updated.
    * @param {import('vuex').ActionContext} context
    * @param {object} query
    */
-  [REPLACE_QUERY]({ commit }, { query }) {
+  [REPLACE_QUERY]({ commit, state }, { query }) {
+    if (!query.mediaType) {
+      query.mediaType = state.query.mediaType
+    }
     commit(MUTATE_QUERY, { query })
-    commit(RESET_MEDIA, { mediaType: state.query.mediaType }, { root: true })
   },
 }
 
 function getMediaTypeFilters({ filters, mediaType, includeMature = false }) {
+  if (![ALL_MEDIA, AUDIO, IMAGE, VIDEO].includes(mediaType)) {
+    mediaType = ALL_MEDIA
+  }
   let filterKeys = mediaFilterKeys[mediaType]
   if (!includeMature) {
     filterKeys = filterKeys.filter((filterKey) => filterKey !== 'mature')
@@ -444,8 +517,15 @@ const mutations = {
   },
   [SET_SEARCH_TYPE](_state, params) {
     _state.searchType = params.searchType
+    _state.query.mediaType = searchTabToMediaType[params.searchType]
   },
   [MUTATE_QUERY](state, { query }) {
+    if (!query.mediaType) {
+      query = {
+        ...query,
+        mediaType: state.query.mediaType,
+      }
+    }
     state.query = query
   },
 }

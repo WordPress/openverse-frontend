@@ -26,7 +26,7 @@
   </div>
 </template>
 <script>
-import { mapActions, mapMutations, mapState } from 'vuex'
+import { mapActions, mapGetters, mapMutations, mapState } from 'vuex'
 import { MEDIA, SEARCH } from '~/constants/store-modules'
 import {
   FETCH_MEDIA,
@@ -84,17 +84,15 @@ const BrowsePage = {
     window.removeEventListener('scroll', this.debounceScrollHandling)
   },
   computed: {
-    ...mapState(SEARCH, ['query', 'searchType']),
-    ...mapState(SEARCH, ['isFilterVisible']),
+    ...mapState(SEARCH, ['query', 'isFilterVisible', 'searchType']),
+    ...mapGetters(SEARCH, ['searchQueryParams']),
     mediaType() {
       // Default to IMAGE until media search/index is generalized
       return this.searchType !== ALL_MEDIA ? this.searchType : IMAGE
     },
   },
   methods: {
-    ...mapActions(MEDIA, {
-      fetchMedia: FETCH_MEDIA,
-    }),
+    ...mapActions(MEDIA, { fetchMedia: FETCH_MEDIA }),
     ...mapActions(SEARCH, {
       setSearchTypeFromUrl: SET_SEARCH_TYPE_FROM_URL,
       setFiltersFromUrl: SET_FILTERS_FROM_URL,
@@ -128,15 +126,17 @@ const BrowsePage = {
     },
   },
   watch: {
-    query(newQuery) {
-      if (newQuery) {
+    query: {
+      deep: true,
+      handler() {
+        console.log('[query watch]', this.searchQueryParams)
         const newPath = this.localePath({
           path: this.$route.path,
-          query: newQuery,
+          query: this.searchQueryParams,
         })
         this.$router.push(newPath)
-        this.getMediaItems(newQuery, this.mediaType)
-      }
+        this.getMediaItems(this.query, this.mediaType)
+      },
     },
     $route(route) {
       const searchType = queryStringToSearchType(route.path)

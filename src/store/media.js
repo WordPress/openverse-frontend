@@ -50,12 +50,12 @@ export const state = () => ({
     audios: 0,
   },
   isFetching: {
-    audios: false,
-    images: false,
+    audio: false,
+    image: false,
   },
   isFetchingError: {
-    audios: true,
-    images: true,
+    audio: true,
+    image: true,
   },
   errorMessage: null,
   audio: {},
@@ -206,28 +206,31 @@ export const createActions = (services) => ({
 
 export const getters = {
   isFetching(state, getters, rootState) {
-    return state.isFetching[rootState.search.searchType]
+    console.log(
+      'will return ',
+      rootState.search.query.mediaType,
+      state.isFetching[rootState.search.query.mediaType],
+      state.isFetching
+    )
+    return state.isFetching[rootState.search.query.mediaType]
   },
   isFetchingError(state, getters, rootState) {
-    return state.isFetchingError[rootState.search.searchType]
+    return state.isFetchingError[rootState.search.query.mediaType]
   },
 }
 
 export const mutations = {
   [FETCH_START_MEDIA](_state, { mediaType }) {
-    const mediaPlural = `${mediaType}s`
-    _state.isFetching[mediaPlural] = true
-    _state.isFetchingError[mediaPlural] = false
+    _state.isFetching[mediaType] = true
+    _state.isFetchingError[mediaType] = false
   },
   [FETCH_END_MEDIA](_state, { mediaType }) {
-    const mediaPlural = `${mediaType}s`
-    _state.isFetching[mediaPlural] = false
+    _state.isFetching[mediaType] = false
   },
   [FETCH_MEDIA_ERROR](_state, params) {
     const { mediaType, errorMessage } = params
-    const mediaPlural = `${mediaType}s`
-    _state.isFetching[mediaPlural] = false
-    _state.isFetchingError[mediaPlural] = true
+    _state.isFetching[mediaType] = false
+    _state.isFetchingError[mediaType] = true
     _state.errorMessage = errorMessage
   },
   [SET_AUDIO](_state, params) {

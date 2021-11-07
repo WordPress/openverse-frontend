@@ -16,10 +16,8 @@ import {
   SET_SEARCH_TYPE,
   UPDATE_FILTERS,
   MUTATE_QUERY,
-  RESET_MEDIA,
 } from '~/constants/mutation-types'
 import { ALL_MEDIA, AUDIO, IMAGE } from '~/constants/media'
-import { MEDIA } from '~/constants/store-modules'
 
 describe('Filter Store', () => {
   describe('state', () => {
@@ -256,13 +254,18 @@ describe('Filter Store', () => {
         query: {
           ...params.query,
           mediaType: IMAGE,
+          aspect_ratio: '',
+          categories: '',
+          duration: '',
+          extension: '',
+          license: '',
+          license_type: '',
+          mature: false,
+          searchBy: '',
+          size: '',
+          source: '',
         },
       })
-      expect(context.commit).toHaveBeenCalledWith(
-        `${MEDIA}/${RESET_MEDIA}`,
-        { mediaType: IMAGE },
-        { root: true }
-      )
     })
 
     it('SET_QUERY replaces query q parameter', () => {

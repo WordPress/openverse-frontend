@@ -36,10 +36,10 @@ describe('Search Store', () => {
       expect(state.imagePage).toBe(1)
       expect(state.pageCount.audios).toBe(0)
       expect(state.pageCount.images).toBe(0)
-      expect(state.isFetching.audios).toBeFalsy()
-      expect(state.isFetching.images).toBeFalsy()
-      expect(state.isFetchingError.audios).toBeTruthy()
-      expect(state.isFetchingError.images).toBeTruthy()
+      expect(state.isFetching.audio).toBeFalsy()
+      expect(state.isFetching.image).toBeFalsy()
+      expect(state.isFetchingError.audio).toBeTruthy()
+      expect(state.isFetchingError.image).toBeTruthy()
       expect(state.errorMessage).toBe(null)
     })
   })
@@ -55,14 +55,14 @@ describe('Search Store', () => {
     it('FETCH_START_MEDIA updates state', () => {
       mutations[FETCH_START_MEDIA](state, { mediaType: IMAGE })
 
-      expect(state.isFetching.images).toBeTruthy()
-      expect(state.isFetchingError.images).toBeFalsy()
+      expect(state.isFetching.image).toBeTruthy()
+      expect(state.isFetchingError.image).toBeFalsy()
     })
 
     it('FETCH_END_MEDIA updates state', () => {
       mutations[FETCH_END_MEDIA](state, { mediaType: IMAGE })
 
-      expect(state.isFetching.images).toBeFalsy()
+      expect(state.isFetching.image).toBeFalsy()
     })
 
     it('FETCH_MEDIA_ERROR updates state', () => {
@@ -71,8 +71,8 @@ describe('Search Store', () => {
         errorMessage: 'error',
       })
 
-      expect(state.isFetching.images).toBeFalsy()
-      expect(state.isFetchingError.images).toBeTruthy()
+      expect(state.isFetching.image).toBeFalsy()
+      expect(state.isFetchingError.image).toBeTruthy()
       expect(state.errorMessage).toBe('error')
     })
 
@@ -224,7 +224,6 @@ describe('Search Store', () => {
       const params = {
         q: 'foo',
         page: 1,
-        shouldPersistMedia: false,
         mediaType: IMAGE,
       }
       const action = createActions(services)[FETCH_MEDIA]
