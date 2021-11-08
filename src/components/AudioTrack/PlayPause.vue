@@ -36,6 +36,20 @@ export default {
       validator: (val) => ['playing', 'paused', 'played'].includes(val),
     },
   },
+  data() {
+    return {
+      statusVerbMap: {
+        playing: 'pause',
+        paused: 'play',
+        played: 'replay',
+      },
+      statusIconMap: {
+        playing: pauseIcon,
+        paused: playIcon,
+        played: replayIcon,
+      },
+    }
+  },
   computed: {
     isPlaying() {
       return this.status === 'playing'
@@ -44,23 +58,13 @@ export default {
      * Get the button label based on the current status of the player.
      */
     label() {
-      const statusVerbMap = {
-        playing: 'pause',
-        paused: 'play',
-        played: 'replay',
-      }
-      return `play-pause.${statusVerbMap[this.status]}`
+      return `play-pause.${this.statusVerbMap[this.status]}`
     },
     /**
      * Get the button icon based on the current status of the player.
      */
     icon() {
-      const statusIconMap = {
-        playing: pauseIcon,
-        paused: playIcon,
-        played: replayIcon,
-      }
-      return statusIconMap[this.status]
+      return this.statusIconMap[this.status]
     },
   },
   methods: {
