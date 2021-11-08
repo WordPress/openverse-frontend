@@ -21,7 +21,7 @@ import { useDisclosureRef } from '~/composables/use-disclosure-ref'
 import { useFocusOnHide } from '~/composables/use-focus-on-hide'
 import { useHideOnClickOutside } from '~/composables/use-hide-on-click-outside'
 import { useFocusOnBlur } from '~/composables/use-focus-on-blur'
-import { usePopoverState } from '~/composables/use-popover-state'
+import { usePopper } from '~/composables/use-popper'
 import { warn } from '~/utils/warn'
 
 import { propTypes } from './VPopoverContent.types'
@@ -71,7 +71,7 @@ export default defineComponent({
       popoverPropsRefs: propsRefs,
     })
 
-    usePopoverState({
+    usePopper({
       popoverRef,
       disclosureRef,
       popoverPropsRefs: propsRefs,
@@ -106,6 +106,6 @@ export default defineComponent({
 
 <style module>
 .popover {
-  @apply bg-white border border-light-gray rounded-sm px-2 pt-2 pb-1 max-w-min whitespace-nowrap shadow;
+  @apply bg-white border border-light-gray rounded-sm px-2 pt-2 pb-1 mt-2 max-w-min whitespace-nowrap shadow;
 }
 </style>

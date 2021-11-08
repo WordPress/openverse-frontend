@@ -11,35 +11,18 @@ import { createPopper } from '@popperjs/core'
 /**
  * @param {Props} props
  */
-export function usePopoverState({
-  popoverRef,
-  disclosureRef,
-  popoverPropsRefs,
-}) {
+export function usePopper({ popoverRef, disclosureRef, popoverPropsRefs }) {
   /** @type {import('./types').Ref<import('@popperjs/core').Instance>} */
   const popperInstanceRef = ref()
-  /** @type {import('./types').Ref<[number, number]>} */
-  const offsetRef = ref()
 
   watch(
-    [popoverPropsRefs.gutter],
-    ([gutter]) => (offsetRef.value = [0, gutter]),
-    { immediate: true }
-  )
-
-  watch(
-    [
-      popoverPropsRefs.visible,
-      popoverPropsRefs.placement,
-      popoverPropsRefs.fixed,
-      offsetRef,
-    ],
+    [popoverPropsRefs.visible, popoverPropsRefs.placement],
     /**
-     * @param {[boolean, import('@popperjs/core').Placement, boolean, [number, number]]} deps
+     * @param {[boolean, import('@popperjs/core').Placement]} deps
      * @param {unknown} _
      * @param {(cb: () => void) => void} onInvalidate
      */
-    ([visible, placement, fixed, offset], _, onInvalidate) => {
+    ([visible, placement], _, onInvalidate) => {
       if (!(disclosureRef.value && popoverRef.value)) return
 
       popperInstanceRef.value = createPopper(
@@ -47,19 +30,11 @@ export function usePopoverState({
         popoverRef.value,
         {
           placement,
-          strategy: fixed ? 'fixed' : 'absolute',
+          strategy: 'absolute',
           modifiers: [
             {
               name: 'eventListeners',
               enabled: visible,
-            },
-            {
-              name: 'applyStyles',
-              enabled: false,
-            },
-            {
-              name: 'offset',
-              options: { offset },
             },
             {
               name: 'arrow',
@@ -78,4 +53,6 @@ export function usePopoverState({
     },
     { immediate: true }
   )
+
+  return popperInstanceRef
 }
