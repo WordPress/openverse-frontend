@@ -60,5 +60,5 @@ export type ImageDetail = {
 export interface ActiveMediaState {
   type: 'image' | 'audio' | null
   id: string | null
-  status: 'stopped' | 'playing' | 'paused' // 'stopped' means player is closed
+  status: 'ejected' | 'playing' | 'paused' // 'ejected' means player is closed
 }

@@ -29,7 +29,7 @@ import VIcon from '~/components/VIcon/VIcon.vue'
 import closeIcon from '~/assets/icons/close.svg'
 
 import { ACTIVE } from '~/constants/store-modules.js'
-import { STOP_ACTIVE_MEDIA_ITEM } from '~/constants/mutation-types.js'
+import { EJECT_ACTIVE_MEDIA_ITEM } from '~/constants/mutation-types.js'
 
 export default {
   name: 'Global',
@@ -42,7 +42,7 @@ export default {
     const store = useStore()
 
     const handleClose = () => {
-      store.commit(`${ACTIVE}/${STOP_ACTIVE_MEDIA_ITEM}`)
+      store.commit(`${ACTIVE}/${EJECT_ACTIVE_MEDIA_ITEM}`)
     }
 
     return {
