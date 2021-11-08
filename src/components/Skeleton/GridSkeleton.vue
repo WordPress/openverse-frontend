@@ -1,39 +1,31 @@
 <template>
   <section class="px-10 pb-16">
-    <template v-if="isForTab == 'audio'">
-      <AudioTrackSkeleton v-for="idx in numElems" :key="idx" />
-    </template>
-
     <div
       v-if="isForTab == 'all'"
       class="grid gap-4 tab:grid-cols-2 desk:grid-cols-5"
     >
-      <div
-        v-for="idx in numElems"
-        :key="idx"
-        class="square bg-dark-charcoal-10"
-      >
-        &nbsp;
-      </div>
+      <VBone v-for="idx in numElems" :key="idx" class="square" />
     </div>
 
     <div v-if="isForTab == 'image'" class="masonry">
-      <div
+      <VBone
         v-for="idx in numElems"
         :key="idx"
-        class="bg-dark-charcoal-10 mb-4"
+        class="mb-4"
         :style="{ height: `${getRandomSize()}px` }"
-      >
-        &nbsp;
-      </div>
+      />
     </div>
+
+    <template v-if="isForTab == 'audio'">
+      <AudioTrackSkeleton v-for="idx in numElems" :key="idx" />
+    </template>
   </section>
 </template>
 
 <script>
 /**
- * Display placeholder elements while the actual elements are loaded in the
- * results views.
+ * Display placeholder elements while waiting for the actual elements to be
+ * loaded in the results views.
  */
 export default {
   name: 'GridSkeleton',
@@ -52,10 +44,12 @@ export default {
       },
     },
   },
-  methods: {
-    getRandomSize(max = 300, min = 100) {
+  setup() {
+    function getRandomSize(max = 300, min = 100) {
       return Math.floor(Math.random() * (max - min) + min)
-    },
+    }
+
+    return { getRandomSize }
   },
 }
 </script>
