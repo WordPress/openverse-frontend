@@ -3,7 +3,7 @@
     <InputField
       v-model="text"
       v-bind="$attrs"
-      class="flex-grow input-field"
+      class="flex-grow search-field"
       :connection-sides="['end']"
       input-id="search-bar"
       type="search"
@@ -72,10 +72,10 @@ export default {
 
 <style>
 /* Removes the cross icon to clear the field */
-input[type='search']::-webkit-search-decoration,
-input[type='search']::-webkit-search-cancel-button,
-input[type='search']::-webkit-search-results-button,
-input[type='search']::-webkit-search-results-decoration {
+.search-field input[type='search']::-webkit-search-decoration,
+.search-field input[type='search']::-webkit-search-cancel-button,
+.search-field input[type='search']::-webkit-search-results-button,
+.search-field input[type='search']::-webkit-search-results-decoration {
   -webkit-appearance: none;
 }
 </style>
