@@ -1,5 +1,5 @@
 # application builder
-FROM node:16-alpine AS builder
+FROM node:16 AS builder
 
 WORKDIR /usr/app
 
@@ -16,7 +16,7 @@ COPY . /usr/app
 RUN npm run build
 
 # application package
-FROM node:16-alpine AS app
+FROM node:16 AS app
 
 WORKDIR /usr/app
 
@@ -26,11 +26,10 @@ ENV CYPRESS_INSTALL_BINARY=0
 # copy the package.json and package-lock.json files
 COPY package*.json .
 
-RUN npm install
+RUN npm ci --only=production --ignore-script
 
 # copy distribution directory with the static content
 COPY --from=builder /usr/app/dist /usr/app/dist
-
 
 # expose port 3000 by default
 # https://nuxtjs.org/docs/features/configuration/#edit-host-and-port
