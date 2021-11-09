@@ -4,14 +4,13 @@ import { createPopper } from '@popperjs/core'
 /**
  * @typedef Props
  * @property {import('./types').Ref<HTMLElement>} popoverRef
- * @property {import('./types').Ref<HTMLElement>} disclosureRef
  * @property {import('./types').ToRefs<import('../components/VPopover/VPopoverContent.types').Props>} popoverPropsRefs
  */
 
 /**
  * @param {Props} props
  */
-export function usePopper({ popoverRef, disclosureRef, popoverPropsRefs }) {
+export function usePopper({ popoverRef, popoverPropsRefs }) {
   /** @type {import('./types').Ref<import('@popperjs/core').Instance>} */
   const popperInstanceRef = ref()
 
@@ -20,7 +19,7 @@ export function usePopper({ popoverRef, disclosureRef, popoverPropsRefs }) {
       popoverPropsRefs.visible,
       popoverPropsRefs.placement,
       popoverPropsRefs.gutter,
-      disclosureRef,
+      popoverPropsRefs.triggerElement,
       popoverRef,
     ],
     /**
@@ -28,33 +27,33 @@ export function usePopper({ popoverRef, disclosureRef, popoverPropsRefs }) {
      * @param {unknown} _
      * @param {(cb: () => void) => void} onInvalidate
      */
-    ([visible, placement, gutter, disclosure, popover], _, onInvalidate) => {
-      if (!(disclosure && popover)) return
+    (
+      [visible, placement, gutter, triggerElement, popover],
+      _,
+      onInvalidate
+    ) => {
+      if (!(triggerElement && popover)) return
 
-      popperInstanceRef.value = createPopper(
-        disclosureRef.value,
-        popoverRef.value,
-        {
-          placement,
-          strategy: 'absolute',
-          modifiers: [
-            {
-              name: 'eventListeners',
-              enabled: visible,
+      popperInstanceRef.value = createPopper(triggerElement, popover, {
+        placement,
+        strategy: 'absolute',
+        modifiers: [
+          {
+            name: 'eventListeners',
+            enabled: visible,
+          },
+          {
+            name: 'arrow',
+            enabled: false,
+          },
+          {
+            name: 'offset',
+            options: {
+              offset: [0, gutter],
             },
-            {
-              name: 'arrow',
-              enabled: false,
-            },
-            {
-              name: 'offset',
-              options: {
-                offset: [0, gutter],
-              },
-            },
-          ],
-        }
-      )
+          },
+        ],
+      })
 
       onInvalidate(() => {
         if (popperInstanceRef.value) {

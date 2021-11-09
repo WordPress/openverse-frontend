@@ -45,17 +45,13 @@ function useBlurTracker() {
 export function useFocusOnBlur({ popoverRef, popoverPropsRefs }) {
   const [blurredRef, scheduleFocus] = useBlurTracker()
 
-  watch(
-    [blurredRef],
-    ([blurred]) => {
-      if (!popoverPropsRefs.visible.value) return
-      if (!blurred) return
-      if (!isActualElement(getActiveElement(popoverRef.value))) {
-        popoverRef.value?.focus()
-      }
-    },
-    { immediate: true }
-  )
+  watch([blurredRef], ([blurred]) => {
+    if (!popoverPropsRefs.visible.value) return
+    if (!blurred) return
+    if (!isActualElement(getActiveElement(popoverRef.value))) {
+      popoverRef.value?.focus()
+    }
+  })
 
   /**
    * @param {FocusEvent} event

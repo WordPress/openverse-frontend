@@ -16,8 +16,6 @@
 <script>
 import { defineComponent, toRefs, ref } from '@nuxtjs/composition-api'
 import { useFocusOnShow } from '~/composables/use-focus-on-show'
-import { useFocusOnChildUnmount } from '~/composables/use-focus-on-child-unmount'
-import { useDisclosureRef } from '~/composables/use-disclosure-ref'
 import { useFocusOnHide } from '~/composables/use-focus-on-hide'
 import { useHideOnClickOutside } from '~/composables/use-hide-on-click-outside'
 import { useFocusOnBlur } from '~/composables/use-focus-on-blur'
@@ -46,10 +44,6 @@ export default defineComponent({
 
     const propsRefs = toRefs(props)
     const popoverRef = ref()
-    const disclosureRef = useDisclosureRef({
-      popoverRef,
-      popoverPropsRefs: propsRefs,
-    })
     const focusOnBlur = useFocusOnBlur({
       popoverRef,
       popoverPropsRefs: propsRefs,
@@ -59,21 +53,17 @@ export default defineComponent({
       popoverRef,
       popoverPropsRefs: propsRefs,
     })
-    useFocusOnChildUnmount({ popoverRef, popoverPropsRefs: propsRefs })
     useFocusOnHide({
       popoverRef,
-      disclosureRef,
       popoverPropsRefs: propsRefs,
     })
     useHideOnClickOutside({
       popoverRef,
-      disclosureRef,
       popoverPropsRefs: propsRefs,
     })
 
     usePopper({
       popoverRef,
-      disclosureRef,
       popoverPropsRefs: propsRefs,
     })
 
@@ -81,6 +71,7 @@ export default defineComponent({
      * @param {Event} event
      */
     const onKeyDown = (event) => {
+      console.log('onkeydown')
       emit('keydown', event)
 
       if (event.defaultPrevented) return
@@ -92,10 +83,12 @@ export default defineComponent({
     }
 
     /**
-     * @param {Event} event
+     * @param {FocusEvent} event
      */
     const onBlur = (event) => {
+      if (event.relatedTarget === props.triggerElement) return
       emit('blur', event)
+      propsRefs.hide.value()
       focusOnBlur(event)
     }
 

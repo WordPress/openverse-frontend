@@ -1,6 +1,10 @@
 <template>
   <div>
-    <div ref="triggerRef" class="w-min" @click="onTriggerClick">
+    <div
+      ref="triggerContainerRef"
+      class="w-min whitespace-nowrap"
+      @click="onTriggerClick"
+    >
       <!--
         @slot The trigger, should be a button 99.99% of the time. If you need custom event handling on the trigger button, ensure bubbling is not prevented or else the popover will not open
           @binding {object} a11yProps
@@ -14,11 +18,9 @@
     </div>
     <VPopoverContent
       :visible="visibleRef"
-      :get-disclosure-element-ref="getDisclosureRef"
-      :final-focus-element="finalFocusElementRef"
+      :trigger-element="triggerRef"
       :placement="placement"
       :fixed="fixed"
-      :hide-visually="hideVisually"
       :hide-on-esc="hideOnEsc"
       :hide-on-click-outside="hideOnClickOutside"
       :auto-focus-on-show="autoFocusOnShow"
@@ -36,7 +38,13 @@
 
 <script>
 import VPopoverContent from '~/components/VPopover/VPopoverContent.vue'
-import { defineComponent, ref, watch, reactive } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  ref,
+  watch,
+  reactive,
+  computed,
+} from '@nuxtjs/composition-api'
 
 export default defineComponent({
   name: 'VPopover',
@@ -62,7 +70,7 @@ export default defineComponent({
   setup(_, { emit }) {
     const visibleRef = ref(false)
     /** @type {import('@nuxtjs/composition-api').Ref<HTMLElement | undefined>} */
-    const triggerRef = ref()
+    const triggerContainerRef = ref()
     /** @type {import('@nuxtjs/composition-api').Ref<HTMLElement | undefined>} */
     const finalFocusElementRef = ref()
     /** @type {import('@nuxtjs/composition-api').Ref<HTMLElement | undefined>} */
@@ -73,10 +81,7 @@ export default defineComponent({
       'aria-haspopup': 'dialog',
     })
 
-    watch(
-      triggerRef,
-      (trigger) => (finalFocusElementRef.value = trigger.firstChild)
-    )
+    const triggerRef = computed(() => triggerContainerRef.value?.firstChild)
 
     watch(
       [disclosureRef, finalFocusElementRef, visibleRef],
@@ -102,6 +107,7 @@ export default defineComponent({
     }
 
     const onTriggerClick = () => {
+      console.log('clicking!', visibleRef.value)
       if (visibleRef.value === true) {
         close()
       } else {
@@ -112,6 +118,7 @@ export default defineComponent({
     return {
       visibleRef,
       close,
+      triggerContainerRef,
       triggerRef,
       onTriggerClick,
       getDisclosureRef,

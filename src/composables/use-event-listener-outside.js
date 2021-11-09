@@ -13,7 +13,7 @@ function isInDocument(target) {
 /**
  * @typedef Props
  * @property {import('./types').Ref<HTMLElement>} containerRef
- * @property {import('./types').Ref<HTMLElement>} disclosureRef
+ * @property {import('./types').Ref<HTMLElement>} triggerRef
  * @property {string} eventType
  * @property {import('./types').Ref<(e: Event) => void>} listenerRef
  * @property {import('./types').Ref<boolean>} [shouldListenRef]
@@ -24,19 +24,19 @@ function isInDocument(target) {
  */
 export const useEventListenerOutside = ({
   containerRef,
-  disclosureRef,
+  triggerRef,
   eventType,
   listenerRef,
   shouldListenRef,
 }) => {
   watch(
-    [containerRef, disclosureRef, listenerRef, shouldListenRef],
+    [containerRef, triggerRef, listenerRef, shouldListenRef],
     /**
      * @param {[HTMLElement, HTMLElement, (e: Event) => void, boolean]} deps
      * @param {unknown} _
      * @param {(cb: () => void) => void} onInvalidate
      */
-    ([container, disclosure, listener, shouldListen], _, onInvalidate) => {
+    ([container, trigger, listener, shouldListen], _, onInvalidate) => {
       if (!shouldListen) return
 
       /**
@@ -53,8 +53,8 @@ export const useEventListenerOutside = ({
         if (!isInDocument(target)) return
         // Event inside the container
         if (contains(container, target)) return
-        // Event on the disclosure
-        if (disclosure && contains(disclosure, target)) return
+        // Event on the trigger
+        if (trigger && contains(trigger, target)) return
 
         listener(event)
       }

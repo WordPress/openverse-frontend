@@ -1,11 +1,10 @@
-import { ref, watch } from '@nuxtjs/composition-api'
+import { ref, watch, computed } from '@nuxtjs/composition-api'
 import { getDocument } from 'reakit-utils'
 import { useEventListenerOutside } from './use-event-listener-outside'
 
 /**
  * @typedef Props
  * @property {import('./types').Ref<HTMLElement>} popoverRef
- * @property {import('./types').Ref<HTMLElement>} disclosureRef
  * @property {import('./types').ToRefs<import('../components/VPopover/VPopover.types').Props>} popoverPropsRefs
  */
 
@@ -42,36 +41,29 @@ function useMouseDownTargetRef({ popoverRef, popoverPropsRefs }) {
 /**
  * @param {Props} props
  */
-export function useHideOnClickOutside({
-  popoverRef,
-  disclosureRef,
-  popoverPropsRefs,
-}) {
+export function useHideOnClickOutside({ popoverRef, popoverPropsRefs }) {
   const mouseDownTargetRef = useMouseDownTargetRef({
     popoverRef,
     popoverPropsRefs,
   })
 
-  const shouldListenRef = ref()
-
-  watch(
-    [popoverPropsRefs.visible, popoverPropsRefs.hideOnClickOutside],
-    ([visible, hideOnClickOutside]) =>
-      (shouldListenRef.value = visible && hideOnClickOutside),
-    { immediate: true }
+  const shouldListenRef = computed(
+    () =>
+      popoverPropsRefs.visible.value &&
+      popoverPropsRefs.hideOnClickOutside.value
   )
 
   useEventListenerOutside({
     containerRef: popoverRef,
-    disclosureRef,
+    triggerRef: popoverPropsRefs.triggerElement,
     eventType: 'click',
     listenerRef: ref((event) => {
-      // Make sure the element that has been clicked is the same that last
-      // triggered the mousedown event. This prevents the dialog from closing
-      // by dragging the cursor (for example, selecting some text inside the
-      // dialog and releasing the mouse outside of it).
       if (mouseDownTargetRef.value === event.target) {
-        popoverPropsRefs.hide.value?.()
+        // Make sure the element that has been clicked is the same that last
+        // triggered the mousedown event. This prevents the dialog from closing
+        // by dragging the cursor (for example, selecting some text inside the
+        // dialog and releasing the mouse outside of it).
+        popoverPropsRefs.hide.value()
       }
     }),
     shouldListenRef,

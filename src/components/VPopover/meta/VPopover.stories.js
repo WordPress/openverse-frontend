@@ -22,3 +22,28 @@ export const Default = () => ({
   `,
   components: { VPopover, VButton },
 })
+
+export const TwoPopovers = () => ({
+  template: `
+    <div>
+      <VPopover label="First popover">
+        <template #trigger="{ visible, a11yProps }">
+          <VButton :pressed="visible" v-bind="a11yProps">{{ visible ? 'First popover open' : 'First popover closed' }}</VButton>
+        </template>
+        <template #content>
+          <div>First popover content</div>
+        </template>
+      </VPopover>
+      <div class="h-5">Some content</div>
+      <VPopover label="Second popover">
+        <template #trigger="{ visible, a11yProps }">
+          <VButton :pressed="visible" v-bind="a11yProps">{{ visible ? 'Second popover open' : 'Second popover closed' }}</VButton>
+        </template>
+        <template #content>
+          <div>Second popover content</div>
+        </template>
+      </VPopover>
+    </div>
+  `,
+  components: { VPopover, VButton },
+})

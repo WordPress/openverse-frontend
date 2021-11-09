@@ -1,4 +1,3 @@
-import { ref } from '@nuxtjs/composition-api'
 import { placements as popoverPlacements } from '@popperjs/core'
 
 export const propTypes = {
@@ -26,11 +25,7 @@ export const propTypes = {
     type: Boolean,
     default: true,
   },
-  getDisclosureElementRef: {
-    type: /** @type {import('@nuxtjs/composition-api').PropType<() => import('@nuxtjs/composition-api').Ref<HTMLElement>>} */ (Function),
-    default: () => ref(),
-  },
-  finalFocusElement: {
+  triggerElement: {
     type: /** @type {import('@nuxtjs/composition-api').PropType<HTMLElement>} */ (process.server
       ? Object
       : HTMLElement),

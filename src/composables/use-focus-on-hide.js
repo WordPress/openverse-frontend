@@ -4,14 +4,11 @@ import {
   getActiveElement,
   contains,
   ensureFocus,
-  getDocument,
 } from 'reakit-utils'
-import { warn } from '~/utils/warn'
 
 /**
  * @typedef Props
  * @property {import('./types').Ref<HTMLElement>} popoverRef
- * @property {import('./types').Ref<HTMLElement>} disclosureRef
  * @property {import('./types').ToRefs<import('../components/VPopover/VPopover.types').Props>} popoverPropsRefs
  */
 
@@ -34,48 +31,25 @@ function hidByFocusingAnotherElement(popover) {
 /**
  * @param {Props} Props
  */
-export const useFocusOnHide = ({
-  popoverRef,
-  disclosureRef,
-  popoverPropsRefs,
-}) => {
+export const useFocusOnHide = ({ popoverRef, popoverPropsRefs }) => {
   watch(
     [
       popoverRef,
-      disclosureRef,
+      popoverPropsRefs.triggerElement,
       popoverPropsRefs.visible,
       popoverPropsRefs.autoFocusOnHide,
-      popoverPropsRefs.finalFocusElement,
     ],
     /**
-     * @param {[HTMLElement, HTMLElement, boolean, boolean, HTMLElement]} deps
+     * @param {[HTMLElement, HTMLElement, boolean, boolean]} deps
      */
-    ([popover, disclosure, visible, autoFocusOnHide, finalFocusElement]) => {
+    ([popover, triggerElement, visible, autoFocusOnHide]) => {
       const shouldFocus = autoFocusOnHide && !visible
 
       if (!shouldFocus) return
 
       if (hidByFocusingAnotherElement(popover)) return
 
-      const finalFocusEl = finalFocusElement || disclosure
-
-      if (finalFocusEl) {
-        if (finalFocusEl.id) {
-          const document = getDocument(finalFocusEl)
-          const compositeElement = document.querySelector(
-            `[aria-activedescendant='${finalFocusEl.id}']`
-          )
-          if (compositeElement) {
-            return ensureFocus(compositeElement)
-          }
-        }
-        return ensureFocus(finalFocusEl)
-      }
-
-      // Otherwise we couldn't determine what element to return focus to. That's no good!
-      warn(
-        'Could not determine where to return focus. Please provide a `finalFocusElement` prop.'
-      )
+      ensureFocus(triggerElement)
     }
   )
 }
