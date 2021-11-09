@@ -113,8 +113,7 @@ export default {
 
 .checkbox:checked::after {
   content: '';
-  @apply w-2 h-4 border-2 border-white absolute top-0 left-1/3;
-  border-width: 1px;
+  @apply w-2 h-4 border border-white absolute top-0 left-1/3;
   border-top: 0;
   border-left: 0;
   transform: rotate(35deg);
