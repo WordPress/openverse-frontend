@@ -106,6 +106,6 @@ export default defineComponent({
 
 <style module>
 .popover {
-  @apply bg-white border border-light-gray rounded-sm px-2 pt-2 pb-1 mt-2 max-w-min whitespace-nowrap shadow;
+  @apply bg-white border border-light-gray rounded-sm px-2 pt-2 pb-1 max-w-min whitespace-nowrap shadow;
 }
 </style>

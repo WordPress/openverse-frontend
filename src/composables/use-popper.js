@@ -5,7 +5,7 @@ import { createPopper } from '@popperjs/core'
  * @typedef Props
  * @property {import('./types').Ref<HTMLElement>} popoverRef
  * @property {import('./types').Ref<HTMLElement>} disclosureRef
- * @property {import('./types').ToRefs<import('../VPopoverContent.types').Props>} popoverPropsRefs
+ * @property {import('./types').ToRefs<import('../components/VPopover/VPopoverContent.types').Props>} popoverPropsRefs
  */
 
 /**
@@ -16,14 +16,20 @@ export function usePopper({ popoverRef, disclosureRef, popoverPropsRefs }) {
   const popperInstanceRef = ref()
 
   watch(
-    [popoverPropsRefs.visible, popoverPropsRefs.placement],
+    [
+      popoverPropsRefs.visible,
+      popoverPropsRefs.placement,
+      popoverPropsRefs.gutter,
+      disclosureRef,
+      popoverRef,
+    ],
     /**
-     * @param {[boolean, import('@popperjs/core').Placement]} deps
+     * @param {[boolean, import('@popperjs/core').Placement, number]} deps
      * @param {unknown} _
      * @param {(cb: () => void) => void} onInvalidate
      */
-    ([visible, placement], _, onInvalidate) => {
-      if (!(disclosureRef.value && popoverRef.value)) return
+    ([visible, placement, gutter, disclosure, popover], _, onInvalidate) => {
+      if (!(disclosure && popover)) return
 
       popperInstanceRef.value = createPopper(
         disclosureRef.value,
@@ -39,6 +45,12 @@ export function usePopper({ popoverRef, disclosureRef, popoverPropsRefs }) {
             {
               name: 'arrow',
               enabled: false,
+            },
+            {
+              name: 'offset',
+              options: {
+                offset: [0, gutter],
+              },
             },
           ],
         }

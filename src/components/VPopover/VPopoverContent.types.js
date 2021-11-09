@@ -37,11 +37,11 @@ export const propTypes = {
   },
   gutter: {
     type: Number,
-    default: 12,
+    default: 8,
   },
   placement: {
     type: /** @type {import('@nuxtjs/composition-api').PropType<import('@popperjs/core').Placement>} */ (String),
-    default: 'bottom',
+    default: 'bottom-end',
     validate: (v) => popoverPlacements.includes(v),
   },
   fixed: {
