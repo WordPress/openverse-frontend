@@ -10,9 +10,6 @@
         class="absolute inset-x-0 z-10 top-4 px-4 flex flex-row items-center justify-between"
       >
         <p class="text-sr font-semibold">{{ audio.title }}</p>
-        <button @click="handleClose">
-          <VIcon :icon-path="closeIcon" />
-        </button>
       </div>
 
       <slot name="controller" :waveform-props="{ 'usable-frac': 0.5 }" />
@@ -21,35 +18,12 @@
 </template>
 
 <script>
-import { useStore } from '@nuxtjs/composition-api'
-
 import AudioThumbnail from '~/components/AudioThumbnail/AudioThumbnail.vue'
-import VIcon from '~/components/VIcon/VIcon.vue'
-
-import closeIcon from '~/assets/icons/close.svg'
-
-import { ACTIVE } from '~/constants/store-modules.js'
-import { EJECT_ACTIVE_MEDIA_ITEM } from '~/constants/mutation-types.js'
 
 export default {
   name: 'Global',
-  components: {
-    VIcon,
-    AudioThumbnail,
-  },
+  components: { AudioThumbnail },
   props: ['audio'],
-  setup() {
-    const store = useStore()
-
-    const handleClose = () => {
-      store.commit(`${ACTIVE}/${EJECT_ACTIVE_MEDIA_ITEM}`)
-    }
-
-    return {
-      closeIcon,
-      handleClose,
-    }
-  },
 }
 </script>
 
