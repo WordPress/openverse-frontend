@@ -176,6 +176,9 @@ module.exports = {
   },
   variants: {
     extend: {
+      backgroundColor: ['checked'],
+      borderColor: ['checked'],
+      margin: ['last'],
       opacity: ['disabled'],
       ringColor: ['focus-visible'],
       ringOffsetWidth: ['focus-visible'],

@@ -34,35 +34,33 @@
         :key="index"
         class="filter-checkbox-wrapper"
       >
-        <!--eslint-disable vuejs-accessibility/label-has-for -->
-        <label class="checkbox" :disabled="isDisabled(item)">
-          <input
-            :key="index"
-            :name="item.code"
-            type="checkbox"
-            class="filter-checkbox me-2"
-            :checked="item.checked"
-            :disabled="isDisabled(item)"
-            @change="onValueChange"
-          />
+        <Checkbox
+          :id="item.code"
+          :key="index"
+          class="filter-checkbox me-2"
+          :checked="item.checked"
+          :disabled="isDisabled(item)"
+          @change="onValueChange"
+        >
           <LicenseIcons v-if="filterType === 'licenses'" :license="item.code" />
-          {{ itemLabel(item) }}
-        </label>
-        <button class="appearance-none" type="button">
+          {{ itemLabel(item) }}</Checkbox
+        >
+        <button
+          v-if="filterType === 'licenses'"
+          :aria-label="$t('browse-page.aria.license-explanation')"
+          class="appearance-none"
+          type="button"
+          @click="toggleLicenseExplanationVisibility(item.code)"
+        >
           <svg
-            v-if="filterType === 'licenses'"
             :ref="`${index}licenseIcon`"
+            aria-hidden="true"
             width="24"
             height="20"
             viewBox="0 0 24 20"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            :aria-label="$t('browse-page.aria.license-explanation')"
-            tabindex="0"
-            alt="help"
             class="license-help pe-1"
-            @click.stop="toggleLicenseExplanationVisibility(item.code)"
-            @keyup.enter="toggleLicenseExplanationVisibility(item.code)"
           >
             <circle cx="12" cy="10" r="8" stroke="#1E1E1E" stroke-width="1.5" />
             <path
@@ -128,10 +126,10 @@ export default {
         ? item.name
         : this.$t(item.name)
     },
-    onValueChange(e) {
+    onValueChange({ value }) {
       this.$emit('filterChanged', {
-        code: e.target.name,
-        filterType: this.$props.filterType,
+        code: value,
+        filterType: this.filterType,
       })
     },
     /**

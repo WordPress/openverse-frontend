@@ -52,7 +52,7 @@
             </template>
           </i18n>
         </div>
-        <HomeLicenseFilter @toggle="toggleFilter" />
+        <HomeLicenseFilter :filters="filters" @toggle="toggleFilter" />
       </form>
     </div>
     <img
@@ -102,8 +102,8 @@ export default {
     getMediaType() {
       return this.form.searchType
     },
-    toggleFilter({ code }) {
-      this.filters[code] = !this.filters[code]
+    toggleFilter({ code, checked }) {
+      this.filters[code] = checked
     },
     onSubmit() {
       const newQuery = { q: this.form.searchTerm }

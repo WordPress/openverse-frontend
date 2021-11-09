@@ -1,48 +1,30 @@
-import HomeLicenseFilter from '~/components/HomeLicenseFilter'
-import { render, screen } from '@testing-library/vue'
-import { TOGGLE_FILTER } from '~/constants/action-types'
-import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
+import { render, screen } from '@testing-library/vue'
+import { createLocalVue } from '@vue/test-utils'
+import HomeLicenseFilter from '~/components/HomeLicenseFilter'
+import Checkbox from '~/components/Checkbox'
 
 describe('HomeLicenseFilter', () => {
   let options = {}
   let localVue = null
-  let dispatchMock = null
-  let toggleMock = null
-  let storeMock = null
+  let propsData = null
 
   beforeEach(() => {
-    dispatchMock = jest.fn()
-    toggleMock = jest.fn()
-
     localVue = createLocalVue()
     localVue.use(Vuex)
-    storeMock = new Vuex.Store({
-      modules: {
-        search: {
-          namespaced: true,
-          actions: {
-            // Without this action, we get '[vuex] unknown local action type' error
-            [TOGGLE_FILTER]: toggleMock,
-          },
-          state: {
-            filters: {
-              licenseTypes: [
-                { code: 'commercial', name: 'Commercial usage' },
-                { code: 'modification', name: 'Allows modification' },
-              ],
-            },
-          },
-        },
-      },
-    })
+    localVue.component('Checkbox', Checkbox)
+    propsData = {
+      filters: { commercial: false, modification: false },
+    }
     options = {
-      store: storeMock,
+      localVue,
+      props: propsData,
     }
   })
 
-  it('renders checkboxes', () => {
-    render(HomeLicenseFilter, options)
+  it('renders checkboxes', async () => {
+    await render(HomeLicenseFilter, options)
+    screen.debug()
     const checkboxes = screen.queryAllByRole('checkbox')
     expect(checkboxes.length).toEqual(2)
 
@@ -53,8 +35,7 @@ describe('HomeLicenseFilter', () => {
     expect(modificationCheckbox).toBeTruthy()
   })
 
-  it('dispatches `TOGGLE_FILTER` when checkboxes selected', async () => {
-    storeMock.dispatch = dispatchMock
+  it('toggles checkboxes', async () => {
     render(HomeLicenseFilter, options)
     const commercialCheckbox = screen.queryByLabelText(/commercial/i)
     await commercialCheckbox.click()

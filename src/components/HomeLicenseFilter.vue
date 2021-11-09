@@ -3,42 +3,32 @@
     <legend>
       {{ $t('hero.license-filter.label') }}
     </legend>
-    <template v-for="(licenseType, index) in filters">
-      <label :key="index" class="checkbox" :for="licenseType.code">
-        <input
-          :id="licenseType.code"
-          v-model="licenseType.checked"
-          type="checkbox"
-          name="lt"
-          :value="licenseType.code"
-          @change="onFilterChanged(licenseType.code)"
-        />
-        {{ $t(licenseType.name) }}
-      </label>
-    </template>
+    <Checkbox
+      v-for="[licenseType, isChecked] in Object.entries(filters)"
+      :id="licenseType"
+      :key="licenseType"
+      class="me-6 last:me-0"
+      :checked="isChecked"
+      name="licenseType"
+      @change="onFilterChanged"
+    >
+      {{ $t(`filters.license-types.${licenseType}`) }}
+    </Checkbox>
   </fieldset>
 </template>
 
 <script>
 export default {
   name: 'LicenseFilter',
-  data: () => ({
-    filters: [
-      {
-        code: 'commercial',
-        name: 'filters.license-types.commercial',
-        checked: false,
-      },
-      {
-        code: 'modification',
-        name: 'filters.license-types.modification',
-        checked: false,
-      },
-    ],
-  }),
+  props: {
+    filters: {
+      type: Object,
+      required: true,
+    },
+  },
   methods: {
-    onFilterChanged(code) {
-      this.$emit('toggle', { code })
+    onFilterChanged({ value, checked }) {
+      this.$emit('toggle', { code: value, checked })
     },
   },
 }

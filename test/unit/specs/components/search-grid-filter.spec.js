@@ -1,10 +1,11 @@
-import clonedeep from 'lodash.clonedeep'
 import Vuex from 'vuex'
 import { fireEvent, render, screen } from '@testing-library/vue'
 import { createLocalVue } from '@vue/test-utils'
 import { IMAGE } from '~/constants/media'
 import store from '~/store/search'
+import clonedeep from 'lodash.clonedeep'
 import SearchGridFilter from '~/components/Filters/SearchGridFilter'
+import Checkbox from '~/components/Checkbox'
 
 const initialFilters = {
   licenseTypes: [
@@ -34,6 +35,7 @@ describe('SearchGridFilter', () => {
   beforeEach(() => {
     localVue = createLocalVue()
     localVue.use(Vuex)
+    localVue.component('Checkbox', Checkbox)
     filters = clonedeep(initialFilters)
     storeMock = new Vuex.Store({
       modules: {
@@ -62,6 +64,7 @@ describe('SearchGridFilter', () => {
     })
 
     options = {
+      localVue,
       propsData: props,
       mocks: {
         $store: storeMock,
@@ -89,7 +92,7 @@ describe('SearchGridFilter', () => {
     const checked = screen.queryAllByRole('checkbox', { checked: true })
     expect(checked.length).toEqual(0)
 
-    await fireEvent.click(screen.queryByLabelText('Commercial usage'))
+    await fireEvent.click(screen.queryByLabelText(/commercial/i))
 
     // `getBy` serves as expect because it throws an error if no element is found
     screen.getByRole('checkbox', { checked: true })
