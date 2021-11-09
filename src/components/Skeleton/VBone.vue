@@ -1,7 +1,5 @@
 <template>
-  <div :class="['bg-dark-charcoal-10', shimmer ? 'shimmering' : '']">
-    &nbsp;
-  </div>
+  <div :class="['bg-dark-charcoal-10', shimmer ? 'shimmering' : '']" />
 </template>
 
 <script>

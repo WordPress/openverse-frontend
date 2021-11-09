@@ -3,9 +3,7 @@
     <!-- Thumbnail skeleton -->
     <div
       class="flex-shrink-0 h-20 w-20 mr-4 bg-dark-charcoal-10 rounded shimmering"
-    >
-      &nbsp;
-    </div>
+    />
 
     <div class="flex flex-row gap-6 h-20 w-full">
       <!-- Track info skeleton -->
