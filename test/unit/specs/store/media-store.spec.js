@@ -41,6 +41,8 @@ describe('Search Store', () => {
       expect(state.isFetchingError.audio).toBeTruthy()
       expect(state.isFetchingError.image).toBeTruthy()
       expect(state.errorMessage).toBe(null)
+      expect(state.audio).toEqual({})
+      expect(state.image).toEqual({})
     })
   })
 
