@@ -4,22 +4,29 @@
       :id="id"
       type="checkbox"
       class="checkbox"
-      :checked="checked"
       :name="inputName"
       :value="inputValue"
-      :disabled="disabled"
+      v-bind="inputAttrs"
       @change="onChange"
-    /><span>
-      <slot>
-        {{ label }}
-      </slot>
-    </span>
+    />
+    <Checkmark
+      v-show="checked"
+      class="checkmark"
+      focusable="false"
+      width="20"
+      height="20"
+      role="img"
+    />
+    <!--  @slot The checkbox label  --><slot />
   </label>
 </template>
 
 <script>
+import Checkmark from '~/assets/icons/checkmark.svg?inline'
+
 export default {
   name: 'Checkbox',
+  components: { Checkmark },
   props: {
     /**
      * Checkbox `id` is used for the input id property, connecting the label to
@@ -29,16 +36,6 @@ export default {
     id: {
       type: String,
       required: true,
-    },
-    /**
-     * The checkbox can be labeled either using the `label` prop, or the default
-     * slot (for labels that can contain more than simple strings).
-     *
-     * @default ''
-     */
-    label: {
-      type: String,
-      default: '',
     },
     /**
      * Whether the checkbox is checked or not. No indeterminate state is allowed.
@@ -88,6 +85,16 @@ export default {
     labelClasses() {
       return this.disabled ? 'opacity-50' : ''
     },
+    inputAttrs() {
+      const attrs = {}
+      if (this.disabled) {
+        attrs.disabled = 'disabled'
+      }
+      if (this.checked) {
+        attrs.checked = 'checked'
+      }
+      return attrs
+    },
   },
   methods: {
     onChange() {
@@ -100,22 +107,17 @@ export default {
   },
 }
 </script>
-<style>
+<style scoped>
 .checkbox-label {
-  @apply flex text-sm text-dark-charcoal leading-5;
+  @apply relative flex text-sm text-dark-charcoal leading-5;
 }
 .checkbox {
   @apply appearance-none w-5 h-5 border-dark-charcoal border rounded-sm me-2 flex-shrink-0 relative;
-  @apply focus:outline-none focus-visible:ring focus-visible:ring-offset-2 focus-visible:ring-pink;
+  @apply focus:outline-none focus:ring focus:ring-offset-2 focus:ring-pink;
   @apply transition-colors disabled:opacity-50;
   @apply checked:bg-dark-charcoal;
 }
-
-.checkbox:checked::after {
-  content: '';
-  @apply w-2 h-4 border border-white absolute top-0 left-1/3;
-  border-top: 0;
-  border-left: 0;
-  transform: rotate(35deg);
+.checkmark {
+  @apply absolute left-0 w-5 h-5 text-white;
 }
 </style>

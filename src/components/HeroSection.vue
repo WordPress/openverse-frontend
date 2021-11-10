@@ -79,7 +79,7 @@ export default {
    */
   data: () => ({
     form: { searchTerm: '', searchType: 'image' },
-    filters: { commercial: false, modification: false },
+    filters: { commercial: false, modification: true },
     showSearchType: process.env.enableAudio || false,
   }),
   computed: {
@@ -106,12 +106,12 @@ export default {
       this.filters[code] = checked
     },
     onSubmit() {
-      const newQuery = { q: this.form.searchTerm }
-      const checkedFilters = Object.keys(this.filters).filter(
-        (filterName) => !!this.filters[filterName]
-      )
-      checkedFilters.forEach((f) => {
-        this.checkFilter({ filterType: 'licenseTypes', code: f })
+      this.setSearchTerm({ q: this.form.searchTerm })
+
+      Object.entries(this.filters).forEach(([filterCode, isChecked]) => {
+        if (isChecked) {
+          this.checkFilter({ filterType: 'licenseTypes', code: filterCode })
+        }
       })
 
       if (process.env.enableAudio) {

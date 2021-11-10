@@ -2,7 +2,7 @@ import Vuex from 'vuex'
 import { render, screen } from '@testing-library/vue'
 import { createLocalVue } from '@vue/test-utils'
 import HomeLicenseFilter from '~/components/HomeLicenseFilter'
-import Checkbox from '~/components/Checkbox'
+import VCheckbox from '~/components/VCheckbox'
 
 describe('HomeLicenseFilter', () => {
   let options = {}
@@ -12,7 +12,7 @@ describe('HomeLicenseFilter', () => {
   beforeEach(() => {
     localVue = createLocalVue()
     localVue.use(Vuex)
-    localVue.component('Checkbox', Checkbox)
+    localVue.component('VCheckbox', VCheckbox)
     propsData = {
       filters: { commercial: false, modification: false },
     }

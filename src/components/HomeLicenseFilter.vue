@@ -1,9 +1,9 @@
 <template>
-  <fieldset class="home-license-filter mt-16">
-    <legend>
+  <fieldset class="home-license-filter mt-16 flex justify-center">
+    <legend class="flex justify-center w-full mb-2">
       {{ $t('hero.license-filter.label') }}
     </legend>
-    <Checkbox
+    <VCheckbox
       v-for="[licenseType, isChecked] in Object.entries(filters)"
       :id="licenseType"
       :key="licenseType"
@@ -13,13 +13,16 @@
       @change="onFilterChanged"
     >
       {{ $t(`filters.license-types.${licenseType}`) }}
-    </Checkbox>
+    </VCheckbox>
   </fieldset>
 </template>
 
 <script>
+import VCheckbox from '~/components/VCheckbox'
+
 export default {
-  name: 'LicenseFilter',
+  name: 'HomeLicenseFilter',
+  components: { VCheckbox },
   props: {
     filters: {
       type: Object,
@@ -33,20 +36,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped>
-.home-license-filter {
-  display: flex;
-  justify-content: center;
-  legend {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    margin-bottom: 0.5rem;
-  }
-}
-
-.checkbox:not(:last-child) {
-  margin-right: 1.5rem;
-}
-</style>

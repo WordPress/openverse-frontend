@@ -1,31 +1,95 @@
-import { render, screen } from '@testing-library/vue'
-import Checkbox from '~/components/Checkbox'
-import ByIcon from '~/assets/licenses/by.svg?inline'
+// eslint-disable vue/one-component-per-file
+import Vue from 'vue'
+import { fireEvent, render, screen } from '@testing-library/vue'
+import VCheckbox from '~/components/VCheckbox'
+import License from '~/components/License/License'
 
-describe('Checkbox', () => {
-  it('should render a checkbox with a string label', () => {
-    render(Checkbox, { propsData: { id: 'simple', label: 'Is Code Poetry?' } })
-    // Get throws an error if element is not found, so this serves as an assert
-    screen.getByLabelText(/code/i, { checked: false })
+const TestWrapperStringLabel = ({
+  id = 'simple',
+  checked = false,
+  defaultSlot = 'JPGs',
+  disabled = false,
+} = {}) => {
+  return Vue.component('TestWrapper', {
+    components: { VCheckbox },
+    data() {
+      return { checked, status: '' }
+    },
+    computed: {
+      attrs() {
+        return {
+          id: id,
+          checked: this.checked,
+          defaultSlot: defaultSlot,
+          disabled: disabled,
+        }
+      },
+    },
+    methods: {
+      updateStatus(params) {
+        this.status = Object.values(params).join(',')
+      },
+    },
+    template: `<div><span>{{status}}</span><VCheckbox v-bind="attrs" @change="updateStatus">${defaultSlot}</VCheckbox></div>`,
+  })
+}
+
+const TestWrapperLicenseLabel = Vue.component('TestWrapperLicenseLabel', {
+  // This still raises an error `Unknown custom element: <Licence>`
+  components: { VCheckbox, License },
+  template: `<VCheckbox id="license" name="licenseType">
+  <Licence class="license" license="by-sa" /></VCheckbox>`,
+})
+
+describe('VCheckbox', () => {
+  it('should render a checkbox with a string label', async () => {
+    const wrapper = TestWrapperStringLabel()
+    const { container } = render(wrapper)
+    // Finding a checked input doesn't work using { checked: false/true }
+    // does not change the result, the checkbox is still returned.
+    // toHaveAttribute('checked', 'true') also doesn't work, screen.debug()
+    // returns an element without `checked` attribute, although the attribute
+    // exists in the app/Storybook.
+    const checkboxes = screen.queryAllByLabelText(/jpgs/i, { role: 'checkbox' })
+
+    // The checkmark svg should not be visible
+    expect(container.querySelector('svg')).not.toBeVisible()
+    expect(checkboxes).toHaveLength(1)
   })
 
-  it('should become checked when clicked', async () => {
-    render(Checkbox, { propsData: { id: 'simple', label: 'Is Code Poetry?' } })
-    const checkbox = screen.getByText(/code/i)
-    await checkbox.click()
-    screen.getByText(/code/i, { checked: true })
+  it('should render a checked checkbox if `checked` is true', async () => {
+    const wrapper = TestWrapperStringLabel({ checked: true })
+    const { container } = render(wrapper)
+    const checkboxes = screen.queryAllByLabelText(/jpgs/i, { role: 'checkbox' })
+
+    // The checkmark svg should be visible
+    expect(container.querySelector('svg')).toBeVisible()
+    expect(checkboxes).toHaveLength(1)
   })
 
-  it('should render icons if provided in the default slot', async () => {
-    // @obulat: I cannot pass a required prop to `License` object to use it in the slot,
-    // nor can I check that svg is rendered using its accessible role. But if you use
-    // `screen.debug()`, you can see it is rendered :)
-    render(Checkbox, {
-      propsData: { id: 'simple', label: 'Is Code Poetry?' },
-      slots: { default: ByIcon },
-    })
-    const checkbox = screen.getByRole('checkbox')
-    await checkbox.click()
-    screen.getByRole('checkbox', { checked: true })
+  it('should emit event on change', async () => {
+    const wrapper = TestWrapperStringLabel()
+    const { container } = render(wrapper)
+    await fireEvent.click(screen.queryByRole('checkbox'))
+
+    // Testing the method that handles the emitted data instead of testing emitted event
+    expect(container.querySelector('span').textContent).toEqual(
+      'simple,simple,true'
+    )
+  })
+
+  it('should render a disabled checkbox if `disabled` is true', async () => {
+    const wrapper = TestWrapperStringLabel({ disabled: true })
+    render(wrapper)
+    const checkboxes = screen.queryAllByLabelText(/jpgs/i, { role: 'checkbox' })
+
+    expect(checkboxes).toHaveLength(1)
+    expect(checkboxes[0]).toHaveAttribute('disabled', 'disabled')
+  })
+
+  it('should render another component in the default slot', async () => {
+    const { container } = render(TestWrapperLicenseLabel)
+
+    expect(container.querySelectorAll('.license')).toHaveLength(1)
   })
 })

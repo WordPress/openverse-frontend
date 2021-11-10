@@ -1,9 +1,9 @@
-import Checkbox from '~/components/Checkbox'
+import VCheckbox from '~/components/VCheckbox'
 import License from '~/components/License/License'
 
 export default {
   title: 'Components/Checkbox',
-  component: Checkbox,
+  component: VCheckbox,
   argTypes: {
     value: 'boolean',
     label: {
@@ -21,8 +21,8 @@ export default {
 }
 
 const SimpleCheckboxStory = (args, { argTypes }) => ({
-  template: `<Checkbox v-bind="$props" id="simple" @change="onChange" label="Code is Poetry" />`,
-  components: { Checkbox },
+  template: `<VCheckbox v-bind="$props" id="simple" @change="onChange" >Code is Poetry</VCheckbox>`,
+  components: { Checkbox: VCheckbox },
   props: Object.keys(argTypes),
   methods: {
     onChange() {
@@ -32,14 +32,14 @@ const SimpleCheckboxStory = (args, { argTypes }) => ({
 })
 
 const DisabledCheckboxStory = (args, { argTypes }) => ({
-  template: `<Checkbox v-bind="$props" id="disabled" disabled="true" @change="onChange" label="Use commercially" />`,
-  components: { Checkbox },
+  template: `<VCheckbox v-bind="$props" id="disabled" disabled="true" @change="onChange" >Use commercially</VCheckbox>`,
+  components: { VCheckbox },
   props: Object.keys(argTypes),
 })
 
 const LicenseCheckboxStory = (args, { argTypes }) => ({
-  template: `<Checkbox v-bind="$props" id="license" @change="onChange"><License license="by-nc" /></Checkbox>`,
-  components: { Checkbox, License },
+  template: `<VCheckbox v-bind="$props" id="license" @change="onChange"><License license="by-nc" /></VCheckbox>`,
+  components: { VCheckbox, License },
   props: Object.keys(argTypes),
   methods: {
     onChange() {

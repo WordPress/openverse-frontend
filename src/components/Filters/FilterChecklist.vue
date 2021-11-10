@@ -34,7 +34,7 @@
         :key="index"
         class="filter-checkbox-wrapper"
       >
-        <Checkbox
+        <VCheckbox
           :id="item.code"
           :key="index"
           class="filter-checkbox me-2"
@@ -43,7 +43,7 @@
           @change="onValueChange"
         >
           <LicenseIcons v-if="filterType === 'licenses'" :license="item.code" />
-          {{ itemLabel(item) }}</Checkbox
+          {{ itemLabel(item) }}</VCheckbox
         >
         <button
           v-if="filterType === 'licenses'"

@@ -1,11 +1,13 @@
 import Vuex from 'vuex'
 import { fireEvent, render, screen } from '@testing-library/vue'
 import { createLocalVue } from '@vue/test-utils'
+import { UPDATE_QUERY } from '~/constants/action-types'
 import { IMAGE } from '~/constants/media'
 import store from '~/store/search'
 import clonedeep from 'lodash.clonedeep'
+import VCheckbox from '~/components/VCheckbox'
 import SearchGridFilter from '~/components/Filters/SearchGridFilter'
-import Checkbox from '~/components/Checkbox'
+import VCheckbox from '~/components/VCheckbox'
 
 const initialFilters = {
   licenseTypes: [
@@ -35,7 +37,7 @@ describe('SearchGridFilter', () => {
   beforeEach(() => {
     localVue = createLocalVue()
     localVue.use(Vuex)
-    localVue.component('Checkbox', Checkbox)
+    localVue.component('VCheckbox', VCheckbox)
     filters = clonedeep(initialFilters)
     storeMock = new Vuex.Store({
       modules: {
