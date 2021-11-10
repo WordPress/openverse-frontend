@@ -34,7 +34,6 @@ export const useFocusOnShow = ({ popoverRef, popoverPropsRefs }) => {
           warn(noFocusableElementWarning)
         }
       }
-    },
-    { immediate: true }
+    }
   )
 }

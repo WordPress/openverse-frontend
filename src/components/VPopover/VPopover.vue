@@ -107,7 +107,6 @@ export default defineComponent({
     }
 
     const onTriggerClick = () => {
-      console.log('clicking!', visibleRef.value)
       if (visibleRef.value === true) {
         close()
       } else {

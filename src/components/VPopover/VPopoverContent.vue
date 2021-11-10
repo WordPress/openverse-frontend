@@ -32,7 +32,7 @@ export default defineComponent({
    * to the underlying element so anything and everything is emitted. `@keydown` is the
    * only one this component overrides and controls (but ultimately still emits).
    */
-  emits: ['keydown'],
+  emits: ['keydown', 'blur'],
   /**
    * @param {import('./VPopoverContent.types').Props} props
    * @param {import('@nuxtjs/composition-api').SetupContext} context
