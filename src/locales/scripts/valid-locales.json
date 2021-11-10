@@ -169,6 +169,13 @@
     "file": "pt.json"
   },
   {
+    "code": "pt-br",
+    "name": "Portuguese (Brazil)",
+    "iso": "pt",
+    "wpLocale": "pt_BR",
+    "file": "pt-br.json"
+  },
+  {
     "code": "ro",
     "name": "Romanian",
     "iso": "ro",

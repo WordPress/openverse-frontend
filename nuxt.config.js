@@ -166,9 +166,9 @@ export default {
   },
   modules: [
     '@nuxtjs/sentry',
-    '@nuxtjs/sitemap',
     'nuxt-ssr-cache',
     '@nuxtjs/i18n',
+    '@nuxtjs/sitemap',
   ],
   i18n: {
     locales: [

@@ -61,6 +61,7 @@ To run the e2e tests, run:
 ```bash
 npm run test:e2e
 ```
+You might have to run `npx playwright install` to get the browsers installed if e2e tests fail.
 
 When writing e2e tests, you can also use `npm run generate-e2e-tests` to generate tests and test selectors.
 
