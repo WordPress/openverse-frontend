@@ -16,7 +16,7 @@
         v-model="text"
         v-bind="$attrs"
         :type="type"
-        class="leading-none font-semibold bg-tx ms-4 h-full focus:outline-none"
+        class="leading-none font-semibold bg-tx placeholder-dark-charcoal-70 ms-4 h-full focus:outline-none"
       />
     </label>
     <div
