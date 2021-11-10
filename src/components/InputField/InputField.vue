@@ -9,16 +9,16 @@
       },
     ]"
   >
-    <!-- eslint-disable vuejs-accessibility/form-control-has-label -->
-    <!-- The `inputId` prop is provided so that the user of the component can associate a label. -->
-    <input
-      v-bind="$attrs"
-      :id="inputId"
-      v-model="text"
-      :type="type"
-      class="flex-grow leading-none font-semibold bg-tx ms-4 h-full focus:outline-none"
-    />
-    <!-- eslint-enable vuejs-accessibility/form-control-has-label -->
+    <label class="flex-grow" :for="fieldId">
+      <span v-if="labelText" class="sr-only">{{ labelText }}</span>
+      <input
+        :id="fieldId"
+        v-model="text"
+        v-bind="$attrs"
+        :type="type"
+        class="leading-none font-semibold bg-tx ms-4 h-full focus:outline-none"
+      />
+    </label>
     <div
       class="info font-semibold text-xs text-dark-charcoal-70 group-hover:text-dark-charcoal me-4"
     >
@@ -50,10 +50,9 @@ export default {
       default: '',
     },
     /**
-     * the ID to associate with the internal `<input>` element; This should be
-     * used to associate a label and is recommended for a11y.
+     * the textual content of the label associated with this input field
      */
-    inputId: {
+    labelText: {
       type: String,
     },
     /**
@@ -66,6 +65,9 @@ export default {
     },
   },
   setup(props, { emit, attrs }) {
+    const type = attrs['type'] ?? 'text'
+    const fieldId = attrs['id'] ?? btoa(Date.now().toString())
+
     const text = computed({
       get() {
         return props.value
@@ -75,10 +77,10 @@ export default {
       },
     })
 
-    const type = attrs['type'] ?? 'text'
-
     return {
       type,
+      fieldId,
+
       text,
     }
   },

@@ -33,14 +33,24 @@ describe('InputField', () => {
     render(InputField, {
       attrs: {
         placeholder: 'Enter some text',
-      },
-      propsData: {
-        inputId: 'input-id',
+        id: 'input-id',
       },
     })
 
     const element = screen.getByPlaceholderText('Enter some text')
 
     expect(element).toHaveAttribute('id', 'input-id')
+  })
+
+  it('should render the label text connected to the input field if specified', () => {
+    render(InputField, {
+      propsData: {
+        labelText: 'Label',
+      },
+    })
+
+    const element = screen.getByLabelText('Label')
+
+    expect(element.tagName).toBe('INPUT')
   })
 })

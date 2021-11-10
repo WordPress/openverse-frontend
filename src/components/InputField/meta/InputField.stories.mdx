@@ -86,22 +86,38 @@ change the type as the field is specifically designed for text.
   </Story>
 </Canvas>
 
-For a11y, it is recommended that the input field be associated with a label. The
-approach for this is to set the `inputId` prop and use the ID as the `for`
-attribute of a `<label>` element.
+For a11y, it is recommended that the input field be associated with a label. For
+this reason, the field is rendered with an SR-only label. The text can be set
+via the `labelText` prop.
+
+<Canvas>
+  <Story
+    name="With label text"
+    args={{
+      labelText: 'Label:',
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+To provide a custom label, skip the `labelText` prop (to remove the SR-only
+label) and set the `id` attribute on the component (which is passed to the
+`<input>` element). Now use the ID as the `for` attribute of your custom
+`<label>` element.
 
 export const labelTemplate = () => ({
   template: `
     <div>
       <label for="field">Label:</label>
-      <InputField input-id="field"/>
+      <InputField id="field"/>
     </div>
   `,
   components: { InputField },
 })
 
 <Canvas>
-  <Story name="With label">{labelTemplate.bind({})}</Story>
+  <Story name="With custom label">{labelTemplate.bind({})}</Story>
 </Canvas>
 
 The field can be conjoined with other controls on either the start or the end
