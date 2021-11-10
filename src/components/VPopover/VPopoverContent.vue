@@ -71,7 +71,6 @@ export default defineComponent({
      * @param {Event} event
      */
     const onKeyDown = (event) => {
-      console.log('onkeydown')
       emit('keydown', event)
 
       if (event.defaultPrevented) return

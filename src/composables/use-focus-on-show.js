@@ -26,6 +26,7 @@ export const useFocusOnShow = ({ popoverRef, popoverPropsRefs }) => {
 
       const tabbable = getFirstTabbableIn(popover, true)
       const isActive = () => hasFocusWithin(popover)
+
       if (tabbable) {
         ensureFocus(tabbable, { preventScroll: true, isActive })
       } else {

@@ -42,8 +42,12 @@ export const useFocusOnHide = ({ popoverRef, popoverPropsRefs }) => {
     /**
      * @param {[HTMLElement, HTMLElement, boolean, boolean]} deps
      */
-    ([popover, triggerElement, visible, autoFocusOnHide]) => {
-      const shouldFocus = autoFocusOnHide && !visible
+    (
+      [popover, triggerElement, visible, autoFocusOnHide],
+      [, , previousVisible]
+    ) => {
+      const shouldFocus =
+        autoFocusOnHide && !visible && visible !== previousVisible
 
       if (!shouldFocus) return
 
