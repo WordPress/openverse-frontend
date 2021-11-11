@@ -1,5 +1,5 @@
 <template>
-  <div class="license text-dark-charcoal-70 flex flex-row items-center gap-2">
+  <div class="license flex flex-row items-center gap-2">
     <div class="flex gap-1">
       <VIcon
         v-if="isCC"
@@ -27,7 +27,7 @@ import { computed } from '@nuxtjs/composition-api'
 import VIcon from '~/components/VIcon/VIcon.vue'
 
 import {
-  ALL_LICENCES,
+  ALL_LICENSES,
   CC_LICENSES,
   LICENSE_ICON_MAPPING,
 } from '~/constants/license.js'
@@ -45,7 +45,7 @@ import sa from '~/assets/licenses/sa.svg'
  * license.
  */
 export default {
-  name: 'License',
+  name: 'VLicense',
   components: { VIcon },
   props: {
     /**
@@ -55,7 +55,7 @@ export default {
     license: {
       type: String,
       required: true,
-      validator: (val) => ALL_LICENCES.includes(val),
+      validator: (val) => ALL_LICENSES.includes(val),
     },
   },
   setup(props) {
