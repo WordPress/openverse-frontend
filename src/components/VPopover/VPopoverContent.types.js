@@ -30,18 +30,10 @@ export const propTypes = {
       ? Object
       : HTMLElement),
   },
-  gutter: {
-    type: Number,
-    default: 8,
-  },
   placement: {
     type: /** @type {import('@nuxtjs/composition-api').PropType<import('@popperjs/core').Placement>} */ (String),
     default: 'bottom-end',
     validate: (v) => popoverPlacements.includes(v),
-  },
-  fixed: {
-    type: Boolean,
-    default: true,
   },
 }
 

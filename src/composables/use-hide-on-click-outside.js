@@ -57,7 +57,7 @@ export function useHideOnClickOutside({ popoverRef, popoverPropsRefs }) {
     containerRef: popoverRef,
     triggerRef: popoverPropsRefs.triggerElement,
     eventType: 'click',
-    listenerRef: ref((event) => {
+    listener: (event) => {
       if (mouseDownTargetRef.value === event.target) {
         // Make sure the element that has been clicked is the same that last
         // triggered the mousedown event. This prevents the dialog from closing
@@ -65,7 +65,23 @@ export function useHideOnClickOutside({ popoverRef, popoverPropsRefs }) {
         // dialog and releasing the mouse outside of it).
         popoverPropsRefs.hide.value()
       }
-    }),
+    },
+    shouldListenRef,
+  })
+
+  useEventListenerOutside({
+    containerRef: popoverRef,
+    triggerRef: popoverPropsRefs.triggerElement,
+    eventType: 'focusin',
+    listener: (event) => {
+      const document = getDocument(popoverRef.value)
+      // Fix for https://github.com/reakit/reakit/issues/619
+      // On IE11, calling element.blur() triggers the focus event on
+      // document.body, so we make sure to ignore it as well.
+      if (event.target !== document && event.target !== document.body) {
+        popoverPropsRefs.hide.value()
+      }
+    },
     shouldListenRef,
   })
 }

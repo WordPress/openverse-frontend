@@ -20,12 +20,10 @@
       :visible="visibleRef"
       :trigger-element="triggerRef"
       :placement="placement"
-      :fixed="fixed"
       :hide-on-esc="hideOnEsc"
       :hide-on-click-outside="hideOnClickOutside"
       :auto-focus-on-show="autoFocusOnShow"
       :auto-focus-on-hide="autoFocusOnHide"
-      :gutter="gutter"
       :hide="close"
       :aria-label="label"
       :aria-labelledby="labelledBy"
@@ -50,19 +48,13 @@ export default defineComponent({
   name: 'VPopover',
   components: { VPopoverContent },
   props: {
-    hideVisually: {
-      type: Boolean,
-      default: undefined,
-    },
     hideOnEsc: { type: Boolean, default: undefined },
     hideOnClickOutside: { type: Boolean, default: undefined },
     autoFocusOnShow: { type: Boolean, default: undefined },
     autoFocusOnHide: { type: Boolean, default: undefined },
-    gutter: { type: Number, default: undefined },
     placement: {
       type: /** @type {import('@nuxtjs/composition-api').PropType<import('@popperjs/core').Placement>} */ (String),
     },
-    fixed: { type: Boolean, default: undefined },
     label: { type: String },
     labelledBy: { type: String },
   },
@@ -71,11 +63,7 @@ export default defineComponent({
     const visibleRef = ref(false)
     /** @type {import('@nuxtjs/composition-api').Ref<HTMLElement | undefined>} */
     const triggerContainerRef = ref()
-    /** @type {import('@nuxtjs/composition-api').Ref<HTMLElement | undefined>} */
-    const finalFocusElementRef = ref()
-    /** @type {import('@nuxtjs/composition-api').Ref<HTMLElement | undefined>} */
-    const disclosureRef = ref()
-    const getDisclosureRef = () => disclosureRef
+
     const triggerA11yProps = reactive({
       'aria-expanded': false,
       'aria-haspopup': 'dialog',
@@ -83,18 +71,13 @@ export default defineComponent({
 
     const triggerRef = computed(() => triggerContainerRef.value?.firstChild)
 
-    watch(
-      [disclosureRef, finalFocusElementRef, visibleRef],
-      ([disclosure, finalFocusElement, visible]) => {
-        if (!(disclosure && finalFocusElement)) return
-
-        if (disclosure === finalFocusElement && visible) {
-          triggerA11yProps['aria-expanded'] = true
-        } else {
-          triggerA11yProps['aria-expanded'] = false
-        }
+    watch([visibleRef], ([visible]) => {
+      if (visible) {
+        triggerA11yProps['aria-expanded'] = true
+      } else {
+        triggerA11yProps['aria-expanded'] = false
       }
-    )
+    })
 
     const open = () => {
       visibleRef.value = true
@@ -120,9 +103,7 @@ export default defineComponent({
       triggerContainerRef,
       triggerRef,
       onTriggerClick,
-      getDisclosureRef,
       triggerA11yProps,
-      finalFocusElementRef,
     }
   },
 })

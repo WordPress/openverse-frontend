@@ -85,9 +85,7 @@ export default defineComponent({
      * @param {FocusEvent} event
      */
     const onBlur = (event) => {
-      if (event.relatedTarget === props.triggerElement) return
       emit('blur', event)
-      propsRefs.hide.value()
       focusOnBlur(event)
     }
 

@@ -18,7 +18,6 @@ export function usePopper({ popoverRef, popoverPropsRefs }) {
     [
       popoverPropsRefs.visible,
       popoverPropsRefs.placement,
-      popoverPropsRefs.gutter,
       popoverPropsRefs.triggerElement,
       popoverRef,
     ],
@@ -27,11 +26,7 @@ export function usePopper({ popoverRef, popoverPropsRefs }) {
      * @param {unknown} _
      * @param {(cb: () => void) => void} onInvalidate
      */
-    (
-      [visible, placement, gutter, triggerElement, popover],
-      _,
-      onInvalidate
-    ) => {
+    ([visible, placement, triggerElement, popover], _, onInvalidate) => {
       if (!(triggerElement && popover)) return
 
       popperInstanceRef.value = createPopper(triggerElement, popover, {
@@ -49,7 +44,7 @@ export function usePopper({ popoverRef, popoverPropsRefs }) {
           {
             name: 'offset',
             options: {
-              offset: [0, gutter],
+              offset: [0, 8],
             },
           },
         ],

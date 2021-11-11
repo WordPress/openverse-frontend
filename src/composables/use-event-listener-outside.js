@@ -1,4 +1,4 @@
-import { watch } from '@nuxtjs/composition-api'
+import { watch, ref } from '@nuxtjs/composition-api'
 import { getDocument, contains } from 'reakit-utils'
 
 /**
@@ -15,7 +15,7 @@ function isInDocument(target) {
  * @property {import('./types').Ref<HTMLElement>} containerRef
  * @property {import('./types').Ref<HTMLElement>} triggerRef
  * @property {string} eventType
- * @property {import('./types').Ref<(e: Event) => void>} listenerRef
+ * @property {(e: Event) => void} listener
  * @property {import('./types').Ref<boolean>} [shouldListenRef]
  */
 
@@ -26,24 +26,31 @@ export const useEventListenerOutside = ({
   containerRef,
   triggerRef,
   eventType,
-  listenerRef,
+  listener,
   shouldListenRef,
 }) => {
+  const boundEventRef = ref()
+
   watch(
-    [containerRef, triggerRef, listenerRef, shouldListenRef],
+    [containerRef, triggerRef, shouldListenRef],
     /**
-     * @param {[HTMLElement, HTMLElement, (e: Event) => void, boolean]} deps
+     * @param {[HTMLElement, HTMLElement, boolean]} deps
      * @param {unknown} _
      * @param {(cb: () => void) => void} onInvalidate
      */
-    ([container, trigger, listener, shouldListen], _, onInvalidate) => {
+    ([container, trigger, shouldListen], _, onInvalidate) => {
+      if (boundEventRef.value && !shouldListen) {
+        const document = getDocument(container)
+        document.removeEventListener(eventType, boundEventRef.value)
+      }
+
       if (!shouldListen) return
 
       /**
        * @param {Event} event
        */
       const onEvent = (event) => {
-        if (!listenerRef.value) return
+        if (!listener) return
         const target = event.target
         if (!container) return
 
@@ -59,9 +66,16 @@ export const useEventListenerOutside = ({
         listener(event)
       }
 
+      boundEventRef.value = onEvent
+
       const document = getDocument(container)
-      document.addEventListener(eventType, onEvent)
-      onInvalidate(() => document.removeEventListener(eventType, onEvent))
+      document.addEventListener(eventType, boundEventRef.value)
+      onInvalidate(() => {
+        if (boundEventRef.value) {
+          document.removeEventListener(eventType, boundEventRef.value)
+          boundEventRef.value = undefined
+        }
+      })
     },
     { immediate: true }
   )
