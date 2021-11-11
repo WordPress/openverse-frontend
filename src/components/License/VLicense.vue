@@ -62,7 +62,9 @@ export default {
     const icons = computed(() =>
       props.license.split(/[-\s]/).map((term) => LICENSE_ICON_MAPPING[term])
     )
-    const isCC = computed(() => CC_LICENSES.includes(props.license))
+    const isCC = computed(
+      () => CC_LICENSES.includes(props.license) || props.license === 'cc0'
+    )
 
     return {
       ccLogo,
