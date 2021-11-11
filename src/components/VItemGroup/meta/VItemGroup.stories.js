@@ -16,7 +16,7 @@ export default {
   title: 'Components/VItemGroup',
   args: {
     direction: {
-      type: 'text',
+      type: 'radio',
       options: ['vertical', 'horizontal'],
     },
   },
@@ -25,12 +25,13 @@ export default {
 const DefaultStory = (args, { argTypes }) => ({
   template: `
     <div style="width: 300px">
-      <VItemGroup>
+      <VItemGroup v-bind="$props">
           <VItem
             v-for="(item) in items"
             :key="item.id"
             :selected="selectedItem.id === item.id"
             @click="selectedItem = item"
+            :direction="$props.direction"
           >
             <VIcon :icon-path="item.icon" /> {{ item.label }}
           </VItem>
