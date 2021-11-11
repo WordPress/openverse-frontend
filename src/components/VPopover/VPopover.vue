@@ -29,7 +29,7 @@
       :aria-labelledby="labelledBy"
     >
       <!-- @slot The content of the popover -->
-      <slot name="content" />
+      <slot name="default" />
     </VPopoverContent>
   </div>
 </template>
