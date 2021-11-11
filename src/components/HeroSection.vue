@@ -79,7 +79,7 @@ export default {
    */
   data: () => ({
     form: { searchTerm: '', searchType: 'image' },
-    filters: { commercial: false, modification: true },
+    filters: { commercial: false, modification: false },
     showSearchType: process.env.enableAudio || false,
   }),
   computed: {

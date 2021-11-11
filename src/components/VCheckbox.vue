@@ -4,13 +4,11 @@
       :id="id"
       type="checkbox"
       class="checkbox"
-      :name="inputName"
-      :value="inputValue"
       v-bind="inputAttrs"
       @change="onChange"
     />
     <Checkmark
-      v-show="checked"
+      v-show="localCheckedState"
       class="checkmark"
       focusable="false"
       width="20"
@@ -23,9 +21,10 @@
 
 <script>
 import Checkmark from '~/assets/icons/checkmark.svg?inline'
+import { computed, defineComponent, ref, watch } from '@nuxtjs/composition-api'
 
-export default {
-  name: 'Checkbox',
+const VCheckbox = defineComponent({
+  name: 'VCheckbox',
   components: { Checkmark },
   props: {
     /**
@@ -60,52 +59,52 @@ export default {
       required: false,
     },
     /**
-     * The value that is sent in the `change` event's payload. The value of `id` prop
-     * is used if `value` is not set.
-     */
-    value: {
-      type: String,
-      required: false,
-    },
-    /**
      * Sets disabled property of the input and changes label opacity if set to true.
      */
     disabled: {
-      type: [Boolean, String],
+      type: Boolean,
       default: false,
     },
   },
-  computed: {
-    inputName() {
-      return this.name || this.id
-    },
-    inputValue() {
-      return this.value || this.id
-    },
-    labelClasses() {
-      return this.disabled ? 'opacity-50' : ''
-    },
-    inputAttrs() {
-      const attrs = {}
-      if (this.disabled) {
+  setup(props, { emit }) {
+    const localCheckedState = ref(props.checked || false)
+    const labelClasses = computed(() => (props.disabled ? 'opacity-50' : ''))
+    const inputAttrs = computed(() => {
+      const attrs = {
+        name: props.name || props.id,
+      }
+      if (props.disabled) {
         attrs.disabled = 'disabled'
       }
-      if (this.checked) {
+      if (localCheckedState.value) {
         attrs.checked = 'checked'
       }
       return attrs
-    },
-  },
-  methods: {
-    onChange() {
-      this.$emit('change', {
-        name: this.inputName,
-        value: this.inputValue,
-        checked: !this.checked,
+    })
+
+    watch(props, (props) => {
+      if (props.checked !== localCheckedState.value) {
+        localCheckedState.value = props.checked
+      }
+    })
+
+    const onChange = () => {
+      localCheckedState.value = !localCheckedState.value
+      emit('change', {
+        name: inputAttrs.value.name,
+        value: props.id,
+        checked: localCheckedState.value,
       })
-    },
+    }
+    return {
+      localCheckedState,
+      labelClasses,
+      inputAttrs,
+      onChange,
+    }
   },
-}
+})
+export default VCheckbox
 </script>
 <style scoped>
 .checkbox-label {
