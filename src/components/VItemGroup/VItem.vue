@@ -1,7 +1,7 @@
 <template>
   <VButton
     class="flex justify-between w-full"
-    :class="$style[direction]"
+    :class="[$style.item, $style[direction]]"
     variant="grouped"
     :pressed="selected"
     v-bind="$attrs"
@@ -42,6 +42,10 @@ export default defineComponent({
 </script>
 
 <style module>
+.item:focus {
+  @apply z-10 border;
+}
+
 .vertical {
   @apply min-w-full rounded-none border border-t-0 border-b border-dark-charcoal-20 justify-between;
 }

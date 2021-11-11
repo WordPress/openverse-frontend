@@ -55,4 +55,6 @@ const DefaultStory = (args, { argTypes }) => ({
 })
 
 export const Default = DefaultStory.bind({})
-Default.args = {}
+Default.args = {
+  direction: 'vertical',
+}
