@@ -11,6 +11,7 @@
     :aria-pressed="pressed"
     :aria-disabled="ariaDisabledRef"
     :disabled="disabledAttributeRef"
+    v-bind="$attrs"
     v-on="$listeners"
   >
     <!--
@@ -72,6 +73,7 @@ const VButton = defineComponent({
           'tertiary',
           'action-menu',
           'action-menu-muted',
+          'grouped',
         ].includes(v),
     },
     /**
@@ -259,5 +261,13 @@ a.button {
 
 .action-menu-muted-pressed {
   @apply border-tx bg-dark-charcoal text-white;
+}
+
+.grouped {
+  @apply bg-white text-black focus-visible:ring-pink;
+}
+
+.grouped-pressed {
+  @apply bg-dark-charcoal-10;
 }
 </style>

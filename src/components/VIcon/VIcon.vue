@@ -29,7 +29,10 @@ export default {
      * importing an SVG should give us the path to the file.
      */
     iconPath: {
-      type: String,
+      /**
+       * In `just` our icons get transformed to Vue components
+       */
+      type: process.env.NODE_ENV === 'test' ? Object : String,
       required: true,
     },
     /**
