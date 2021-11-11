@@ -1,6 +1,6 @@
 import Vue from 'vue'
 
-import { ref, watch, useContext } from '@nuxtjs/composition-api'
+import { ref, watch, useContext, onMounted } from '@nuxtjs/composition-api'
 import { useEffect } from '@storybook/client-api'
 
 const languageDirection = Vue.observable({ value: 'ltr' })
@@ -16,19 +16,21 @@ export const WithRTL = (story, context) => {
     setup() {
       const element = ref()
       const { i18n } = useContext()
-      watch(
-        languageDirection,
-        (direction) => {
-          i18n.localeProperties.dir = direction.value
-          if (element.value) {
-            element.value.ownerDocument.documentElement.setAttribute(
-              'dir',
-              direction?.value ?? 'ltr'
-            )
-          }
-        },
-        { immediate: true }
-      )
+      onMounted(() => {
+        watch(
+          languageDirection,
+          (direction) => {
+            i18n.localeProperties.dir = direction.value
+            if (element.value) {
+              element.value.ownerDocument.documentElement.setAttribute(
+                'dir',
+                direction?.value ?? 'ltr'
+              )
+            }
+          },
+          { immediate: true }
+        )
+      })
       return { element }
     },
   }
