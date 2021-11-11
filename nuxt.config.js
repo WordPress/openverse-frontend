@@ -134,6 +134,7 @@ export default {
       '~/components/MediaInfo',
       '~/components/MetaSearch',
       '~/components/MediaTag',
+      '~/components/Skeleton',
     ],
   },
   plugins: [
@@ -166,9 +167,9 @@ export default {
   },
   modules: [
     '@nuxtjs/sentry',
-    '@nuxtjs/sitemap',
     'nuxt-ssr-cache',
     '@nuxtjs/i18n',
+    '@nuxtjs/sitemap',
   ],
   i18n: {
     locales: [

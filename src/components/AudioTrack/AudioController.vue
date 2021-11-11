@@ -91,7 +91,8 @@ export default {
         if (!audioEl.value) return
 
         if (prevStatus === 'played' && status === 'playing') {
-          // If going from played to playing, then reset the time to the beginning. Let the regular logic handle actually triggering the playing of the audio
+          // If going from played to playing, then reset the time to the beginning.
+          // Let the regular logic handle actually triggering the playing of the audio
           audioEl.value.currentTime = 0
         }
 
@@ -105,7 +106,7 @@ export default {
             window.requestAnimationFrame(updateTimeLoop)
             break
           case 'paused':
-          case 'played':
+          case 'played': // Note that played media shows as paused in the store
             audioEl.value.pause()
             if (isActiveTrack.value) {
               store.commit(`${ACTIVE}/${PAUSE_ACTIVE_MEDIA_ITEM}`)

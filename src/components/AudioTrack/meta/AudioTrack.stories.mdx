@@ -121,23 +121,19 @@ export const Template = (args, { argTypes }) => ({
 
 ## Layouts
 
-The component can be rendered in a multiple different layouts, by specifying the
-`layout` prop. The layout can further be customised by the `size` and `aspect`
-props.
+The component can be rendered in a multiple different layouts, by
+specifying a `layout`. The layout can further be customised by the `size` and
+`aspect` props.
 
 ### Full (default)
-
-**Size:** unsupported
-**Aspect:** unsupported
 
 <Canvas>
   <Story name="Full">{Template.bind({})}</Story>
 </Canvas>
 
-### Row layout
+### Row
 
-**Sizes:** S (small) and M (medium)
-**Aspect:** unsupported
+**Sizes:** S (small), M (medium) and L (large)
 
 <Canvas>
   <Story
@@ -149,6 +145,9 @@ props.
   >
     {Template.bind({})}
   </Story>
+</Canvas>
+
+<Canvas>
   <Story
     name="Row (medium)"
     args={{
@@ -160,7 +159,19 @@ props.
   </Story>
 </Canvas>
 
-### Box layout
+<Canvas>
+  <Story
+    name="Row (large)"
+    args={{
+      layout: 'row',
+      size: 'l',
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Box
 
 **Sizes:** M (medium) and L (large)
 **Aspects:** wide (only on size M)
@@ -176,6 +187,9 @@ props.
   >
     {Template.bind({})}
   </Story>
+</Canvas>
+
+<Canvas>
   <Story
     name="Box (medium)"
     args={{
@@ -186,6 +200,9 @@ props.
   >
     {Template.bind({})}
   </Story>
+</Canvas>
+
+<Canvas>
   <Story
     name="Box (large)"
     args={{
@@ -198,10 +215,7 @@ props.
   </Story>
 </Canvas>
 
-### Global layout
-
-**Size:** unsupported
-**Aspect:** unsupported
+### Global
 
 <Canvas>
   <Story
