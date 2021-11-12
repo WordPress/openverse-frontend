@@ -3,13 +3,13 @@
   <div ref="modal" class="overlay app-modal" @click.self="$emit('close')">
     <FocusTrap :active="true">
       <div class="modal relative" aria-modal="true" role="dialog">
-        <header v-if="title" class="modal-header pt-8 pl-8 pr-4 pb-2">
+        <header v-if="title" class="modal-header pt-8 ps-8 pe-4 pb-2">
           <slot name="header">
             <h3>{{ title }}</h3>
           </slot>
           <button
             type="button"
-            class="close-button text-gray text-lgr desk:text-base"
+            class="close-button text-gray text-lgr lg:text-base"
             :aria-label="$t('browse-page.aria.close')"
             @click="$emit('close')"
             @keypress.enter="$emit('close')"

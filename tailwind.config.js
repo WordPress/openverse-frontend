@@ -1,13 +1,6 @@
 module.exports = {
   purge: ['src/**/*.{vue,js,jsx,ts,tsx,mdx}', './nuxt.config.js'],
   theme: {
-    screens: {
-      // Determined by the lower bound of screen width
-      tab: '768px',
-      desk: '1024px',
-      wide: '1216px',
-      hd: '1408px',
-    },
     colors: {
       // Accents
       tomato: '#e23600',
@@ -35,13 +28,18 @@ module.exports = {
       white: 'white',
 
       // WordPress
-      'admin-gray': '#DCDCDE',
+      'admin-gray': '#dcdcde',
 
-      // Semi-transparent
-      'dark-charcoal-04': 'rgba(48, 39, 46, 0.04)',
-      'dark-charcoal-20': 'rgba(48, 39, 46, 0.2)',
-      'dark-charcoal-60': 'rgba(48, 39, 46, 0.6)',
-      'dark-charcoal-70': 'rgba(48, 39, 46, 0.7)',
+      // Dark Charcoal
+      'dark-charcoal-06': '#f3f2f2',
+      'dark-charcoal-10': '#eae9ea',
+      'dark-charcoal-20': '#d6d4d5',
+      'dark-charcoal-30': '#c1bec0',
+      'dark-charcoal-40': '#aca9ab',
+      'dark-charcoal-50': '#989397',
+      'dark-charcoal-60': '#837d82',
+      'dark-charcoal-70': '#6e686d',
+      'dark-charcoal-80': '#595258',
 
       // Special keywords
       tx: 'transparent',
@@ -58,8 +56,10 @@ module.exports = {
 
       // Indexed by multiples of baseline (~ `0.25rem`)
       0: '0',
+      0.5: '0.125rem',
       1: '0.25rem',
       2: '0.50rem',
+      3: '0.75rem',
       4: '1.00rem',
       5: '1.25rem',
       6: '1.50rem',
@@ -72,6 +72,7 @@ module.exports = {
       24: '6.00rem',
       30: '7.50rem',
       70: '17.50rem',
+      80: '20.00rem',
     },
     ringWidth: {
       DEFAULT: '1.5px',
