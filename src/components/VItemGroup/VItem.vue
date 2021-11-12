@@ -1,18 +1,24 @@
 <template>
-  <VButton
-    class="flex justify-between w-full"
-    :class="[$style.item, $style[direction]]"
-    variant="grouped"
-    :pressed="selected"
-    v-bind="$attrs"
-    role="listitem"
-    v-on="$listeners"
+  <div
+    :class="{
+      [`flex border p-2 ${$style[direction]}`]: true,
+      'bg-dark-charcoal-10': selected,
+    }"
   >
-    <div :class="$style[`${direction}-content`]">
-      <slot name="default" />
-    </div>
-    <VIcon v-if="selected && direction === 'vertical'" :icon-path="check" />
-  </VButton>
+    <VButton
+      class="flex justify-between focus-visible:ring-pink rounded min-w-full"
+      variant="grouped"
+      :pressed="selected"
+      v-bind="$attrs"
+      role="listitem"
+      v-on="$listeners"
+    >
+      <div :class="['flex-grow', $style[`${direction}-content`]]">
+        <slot name="default" />
+      </div>
+      <VIcon v-if="selected && direction === 'vertical'" :icon-path="check" />
+    </VButton>
+  </div>
 </template>
 
 <script>
@@ -42,10 +48,6 @@ export default defineComponent({
 </script>
 
 <style module>
-.item {
-  @apply rounded-none border ring-inset focus-visible:ring-pink;
-}
-
 .vertical {
   @apply min-w-full border-t-0 border-b border-dark-charcoal-20 justify-between;
 }
