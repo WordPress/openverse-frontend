@@ -33,7 +33,7 @@ const DefaultStory = (args, { argTypes }) => ({
           :selected="selectedItem.id === item.id"
           @click="selectedItem = item"
           :direction="$props.direction"
-          size="large"
+          size="medium"
         >
           <VIcon :icon-path="item.icon" /> {{ item.label }}
         </VItem>

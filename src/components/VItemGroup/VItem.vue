@@ -10,6 +10,7 @@
   >
     <VButton
       class="flex justify-between focus-visible:ring-pink rounded min-w-full"
+      :class="$style[`${contextProps.direction}-button`]"
       variant="grouped"
       :pressed="selected"
       v-bind="$attrs"
@@ -78,6 +79,10 @@ export default defineComponent({
 
 .vertical-content {
   @apply flex flex-row;
+}
+
+.horizontal-button {
+  @apply w-max;
 }
 
 .horizontal-bordered {
