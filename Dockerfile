@@ -29,12 +29,14 @@ COPY package*.json .
 RUN npm ci --only=production --ignore-script
 
 # copy distribution directory with the static content
-COPY --from=builder /usr/app/dist /usr/app/dist
+COPY --from=builder /usr/app/.nuxt /usr/app/.nuxt
 
-# expose port 3000 by default
-# https://nuxtjs.org/docs/features/configuration/#edit-host-and-port
-EXPOSE 3000
+# set application port
+ENV PORT=8443
+
+# expose port 8443 by default
+EXPOSE 8443
 
 # run the application in static mode
-CMD ["npm", "start"]
+ENTRYPOINT ["npm", "start"]
 
