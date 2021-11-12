@@ -19,6 +19,7 @@ export default {
       type: 'radio',
       options: ['vertical', 'horizontal'],
     },
+    bordered: 'boolean',
   },
 }
 
@@ -26,17 +27,16 @@ const DefaultStory = (args, { argTypes }) => ({
   template: `
     <div style="width: 300px">
       <VItemGroup v-bind="$props">
-          <VItem
-            v-for="(item) in items"
-            :key="item.id"
-            :selected="selectedItem.id === item.id"
-            @click="selectedItem = item"
-            :direction="$props.direction"
-            size="large"
-          >
-            <VIcon :icon-path="item.icon" /> {{ item.label }}
-          </VItem>
-
+        <VItem
+          v-for="(item) in items"
+          :key="item.id"
+          :selected="selectedItem.id === item.id"
+          @click="selectedItem = item"
+          :direction="$props.direction"
+          size="large"
+        >
+          <VIcon :icon-path="item.icon" /> {{ item.label }}
+        </VItem>
       </VItemGroup>
     </div>
   `,
@@ -58,4 +58,5 @@ const DefaultStory = (args, { argTypes }) => ({
 export const Default = DefaultStory.bind({})
 Default.args = {
   direction: 'vertical',
+  bordered: true,
 }

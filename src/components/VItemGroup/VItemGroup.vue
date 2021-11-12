@@ -8,7 +8,9 @@
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, provide } from '@nuxtjs/composition-api'
+
+export const VItemGroupContextKey = Symbol('VItemGroupContext')
 
 export default defineComponent({
   name: 'VItemGroup',
@@ -18,6 +20,13 @@ export default defineComponent({
       default: 'vertical',
       validate: (v) => ['vertical', 'horizontal'].includes(v),
     },
+    bordered: {
+      type: Boolean,
+      default: true,
+    },
+  },
+  setup(props) {
+    provide(VItemGroupContextKey, props)
   },
 })
 </script>
