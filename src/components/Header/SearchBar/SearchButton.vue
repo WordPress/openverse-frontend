@@ -36,8 +36,7 @@ export default {
 </script>
 
 <style scoped>
-.search-button:hover:focus,
-.group:hover .search-button:focus {
+.search-button:active {
   box-shadow: 0 0 0 1px inset white;
 }
 </style>
