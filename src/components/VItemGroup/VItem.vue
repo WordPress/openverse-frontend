@@ -1,7 +1,8 @@
 <template>
   <div
+    class="flex p-2"
     :class="{
-      [`flex p-2 ${$style[contextProps.direction]}`]: true,
+      [$style[contextProps.direction]]: true,
       [`border border-dark-charcoal-20 ${
         $style[`${contextProps.direction}-bordered`]
       }`]: contextProps.bordered,
@@ -13,15 +14,14 @@
       :class="$style[`${contextProps.direction}-button`]"
       variant="grouped"
       :pressed="selected"
+      :role="contextProps.type === 'radiogroup' ? 'radio' : 'menuitemcheckbox'"
+      :aria-checked="selected"
       v-bind="$attrs"
-      role="listitem"
       v-on="$listeners"
     >
       <div
-        :class="[
-          'flex-grow whitespace-nowrap',
-          $style[`${contextProps.direction}-content`],
-        ]"
+        class="flex-grow whitespace-nowrap"
+        :class="$style[`${contextProps.direction}-content`]"
       >
         <slot name="default" />
       </div>
@@ -44,6 +44,9 @@ export default defineComponent({
   name: 'VItem',
   components: { VButton, VIcon },
   props: {
+    /**
+     * Whether the item is selected/checked.
+     */
     selected: {
       type: Boolean,
       required: true,
@@ -51,6 +54,7 @@ export default defineComponent({
   },
   setup() {
     const contextProps = inject(VItemGroupContextKey)
+
     return { check, contextProps }
   },
 })

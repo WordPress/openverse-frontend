@@ -34,19 +34,34 @@ const TestWrapper = Vue.component('TestWrapper', {
 describe('VItemGroup', () => {
   it('should render buttons with the appropriate roles', () => {
     render(TestWrapper)
-    expect(screen.queryByRole('list')).not.toBe(null)
-    const items = screen.queryAllByRole('listitem')
+    expect(screen.queryByRole('menu')).not.toBe(null)
+    const items = screen.queryAllByRole('menuitemcheckbox')
     expect(items).toHaveLength(4)
     expect(items.every((item) => item.tagName === 'BUTTON')).toBe(true)
   })
 
   it('should render functional buttons', async () => {
     const { container } = render(TestWrapper)
-    const [, secondItem] = screen.queryAllByRole('listitem')
-    expect(container.querySelector('[aria-pressed="true"]')).not.toBe(
-      secondItem
-    )
+    const [, secondItem] = screen.queryAllByRole('menuitemcheckbox')
+    expect(
+      container.querySelector('[aria-pressed="true"][aria-checked="true"]')
+    ).not.toBe(secondItem)
     await userEvent.click(secondItem)
-    expect(container.querySelector('[aria-pressed="true"]')).toBe(secondItem)
+    expect(
+      container.querySelector('[aria-pressed="true"][aria-checked="true"]')
+    ).toBe(secondItem)
+  })
+
+  it('should render a radio group', async () => {
+    const { container } = render(TestWrapper, { attrs: { type: 'radiogroup' } })
+    expect(screen.queryByRole('radiogroup')).not.toBe(null)
+    const [, secondItem] = screen.queryAllByRole('radio')
+    expect(
+      container.querySelector('[aria-pressed="true"][aria-checked="true"]')
+    ).not.toBe(secondItem)
+    await userEvent.click(secondItem)
+    expect(
+      container.querySelector('[aria-pressed="true"][aria-checked="true"]')
+    ).toBe(secondItem)
   })
 })
