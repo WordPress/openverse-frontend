@@ -1,6 +1,6 @@
 <template>
   <div
-    class="input-field group flex flex-row items-center gap-4 hover:bg-dark-charcoal-06 group-hover:bg-dark-charcoal-06 h-12 p-0.5px focus-within:p-0 border focus-within:border-1.5 border-dark-charcoal-20 rounded-sm overflow-hidden focus-within:border-pink"
+    class="input-field group flex flex-row items-center gap-4 hover:bg-dark-charcoal-06 focus-within:bg-dark-charcoal-06 group-hover:bg-dark-charcoal-06 h-12 p-0.5px focus-within:p-0 border focus-within:border-1.5 border-dark-charcoal-20 rounded-sm overflow-hidden focus-within:border-pink"
     :class="[
       {
         // Padding is set to 1.5px to accommodate the border that will appear later.
@@ -20,7 +20,7 @@
       />
     </label>
     <div
-      class="info font-semibold text-xs text-dark-charcoal-70 group-hover:text-dark-charcoal me-4"
+      class="info font-semibold text-xs text-dark-charcoal-70 group-hover:text-dark-charcoal group-focus:text-dark-charcoal me-4"
     >
       <!-- @slot Extra information goes here -->
       <slot />
@@ -86,3 +86,9 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.input-field:focus-within .info {
+  @apply text-dark-charcoal;
+}
+</style>
