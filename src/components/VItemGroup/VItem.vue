@@ -42,12 +42,12 @@ export default defineComponent({
 </script>
 
 <style module>
-.item:focus {
-  @apply z-10 border;
+.item {
+  @apply rounded-none border ring-inset focus-visible:ring-pink;
 }
 
 .vertical {
-  @apply min-w-full rounded-none border border-t-0 border-b border-dark-charcoal-20 justify-between;
+  @apply min-w-full border-t-0 border-b border-dark-charcoal-20 justify-between;
 }
 
 .vertical:first-of-type {
@@ -63,7 +63,7 @@ export default defineComponent({
 }
 
 .horizontal {
-  @apply rounded-none border border-s-0 border-e border-dark-charcoal-20;
+  @apply border-s-0 border-e border-dark-charcoal-20;
 }
 
 .horizontal:first-of-type {

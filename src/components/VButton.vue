@@ -268,6 +268,6 @@ a.button {
 }
 
 .grouped-pressed {
-  @apply bg-dark-charcoal-10;
+  @apply bg-dark-charcoal-10 ring-offset-dark-charcoal-10;
 }
 </style>
