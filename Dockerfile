@@ -6,11 +6,19 @@ WORKDIR /usr/app
 # copy package.json and package-lock.json files
 COPY package*.json .
 
+RUN ls -lah
+
 # install dependencies including local development tools
 RUN npm install
 
 # copy the rest of the content
 COPY . /usr/app
+
+
+RUN ls -lah
+
+# disable telemetry when building the app
+ENV NUXT_TELEMETRY_DISABLED=1
 
 # build the application and generate a distribution package
 RUN npm run build
@@ -26,13 +34,28 @@ ENV CYPRESS_INSTALL_BINARY=0
 # copy the package.json and package-lock.json files
 COPY package*.json .
 
-RUN npm ci --only=production --ignore-script
+# copy the nuxt configuration file
+COPY --from=builder /usr/app/nuxt.config.js .
 
 # copy distribution directory with the static content
 COPY --from=builder /usr/app/.nuxt /usr/app/.nuxt
 
+# copy some files required by nuxt.config.js
+COPY --from=builder /usr/app/src/locales /usr/app/src/locales
+COPY --from=builder /usr/app/src/utils  /usr/app/src/utils
+
+RUN ls -lah
+
+RUN npm ci --only=production --ignore-script
+
+# set app serving to permissive / assigned
+ENV NUXT_HOST=0.0.0.0
+
+# set app port
+ENV NUXT_PORT=8433
+
 # set application port
-ENV PORT=8443
+ENV PORT=8433
 
 # expose port 8443 by default
 EXPOSE 8443
