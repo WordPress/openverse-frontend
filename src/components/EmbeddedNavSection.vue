@@ -124,10 +124,10 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
-import { SEARCH } from '~/constants/store-modules'
 import { SET_Q } from '~/constants/action-types'
 import Dropdown from '~/components/Dropdown'
+import { SEARCH } from '~/constants/store-modules'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'EmbeddedNavSection',

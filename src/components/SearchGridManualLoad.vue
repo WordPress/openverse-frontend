@@ -59,11 +59,11 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapMutations, mapState } from 'vuex'
-import { IMAGE } from '~/constants/media'
-import { MEDIA, SEARCH } from '~/constants/store-modules'
 import { FETCH_MEDIA } from '~/constants/action-types'
 import { SET_MEDIA } from '~/constants/mutation-types'
+import { IMAGE } from '~/constants/media'
+import { mapActions, mapGetters, mapMutations, mapState } from 'vuex'
+import { MEDIA, SEARCH } from '~/constants/store-modules'
 
 export default {
   name: 'SearchGridManualLoad',

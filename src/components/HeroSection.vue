@@ -65,10 +65,10 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapMutations } from 'vuex'
-import { SEARCH } from '~/constants/store-modules'
 import { SET_Q, TOGGLE_FILTER } from '~/constants/action-types'
+import { SEARCH } from '~/constants/store-modules'
 import { SET_SEARCH_TYPE } from '~/constants/mutation-types'
+import { mapActions, mapGetters, mapMutations } from 'vuex'
 import HomeLicenseFilter from '~/components/HomeLicenseFilter'
 import SearchTypeToggle from '~/components/SearchTypeToggle'
 

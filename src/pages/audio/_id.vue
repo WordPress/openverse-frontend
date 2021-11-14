@@ -25,11 +25,11 @@
 <script>
 import { mapState } from 'vuex'
 import { FETCH_AUDIO } from '~/constants/action-types'
-import { AUDIO } from '~/constants/media'
-import { MEDIA } from '~/constants/store-modules'
 import iframeHeight from '~/mixins/iframe-height'
+import { AUDIO } from '~/constants/media'
 import attributionHtml from '~/utils/attribution-html'
 import { getFullLicenseName } from '~/utils/license'
+import { MEDIA } from '~/constants/store-modules'
 
 const AudioDetailPage = {
   name: 'AudioDetailPage',

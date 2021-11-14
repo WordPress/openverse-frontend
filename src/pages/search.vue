@@ -26,8 +26,6 @@
   </div>
 </template>
 <script>
-import { mapActions, mapGetters, mapMutations, mapState } from 'vuex'
-import { MEDIA, SEARCH } from '~/constants/store-modules'
 import {
   FETCH_MEDIA,
   SET_FILTERS_FROM_URL,
@@ -36,13 +34,15 @@ import {
   UPDATE_SEARCH_TYPE,
 } from '~/constants/action-types'
 import { SET_FILTER_IS_VISIBLE } from '~/constants/mutation-types'
-import { ALL_MEDIA, IMAGE } from '~/constants/media'
 import {
   queryStringToQueryData,
   queryStringToSearchType,
 } from '~/utils/search-query-transform'
 import local from '~/utils/local'
 import { screenWidth } from '~/utils/get-browser-info'
+import { ALL_MEDIA, IMAGE } from '~/constants/media'
+import { mapActions, mapGetters, mapMutations, mapState } from 'vuex'
+import { MEDIA, SEARCH } from '~/constants/store-modules'
 import debounce from 'lodash.debounce'
 
 const BrowsePage = {
@@ -129,7 +129,6 @@ const BrowsePage = {
     query: {
       deep: true,
       handler() {
-        console.log('[query watch]', this.searchQueryParams)
         const newPath = this.localePath({
           path: this.$route.path,
           query: this.searchQueryParams,
