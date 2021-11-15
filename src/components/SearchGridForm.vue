@@ -98,7 +98,7 @@ export default {
       e.preventDefault()
       if (this.searchTermsModel) {
         this.$emit('onSearchFormSubmit', {
-          query: { q: this.searchTermsModel },
+          q: this.searchTermsModel,
         })
         this.$refs.search.blur()
       }
@@ -107,7 +107,7 @@ export default {
       this.searchTermsModel = e.target.value
       if (this.activeTab === VIDEO) {
         this.$emit('onSearchFormSubmit', {
-          query: { q: this.searchTermsModel },
+          q: this.searchTermsModel,
         })
       }
     },

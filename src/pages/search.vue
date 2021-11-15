@@ -113,8 +113,8 @@ const BrowsePage = {
     onLoadMoreItems(searchParams) {
       this.getMediaItems(searchParams, this.mediaType)
     },
-    onSearchFormSubmit(searchParams) {
-      this.updateQuery(searchParams)
+    onSearchFormSubmit({ q }) {
+      this.updateQuery({ q })
     },
     onToggleSearchGridFilter() {
       this.setFilterVisibility({
