@@ -62,7 +62,6 @@ const BrowsePage = {
         path: this.$route.path,
         query: this.$route.query,
       })
-      console.log('[created]', this.query, this.results)
     }
   },
   mounted() {
