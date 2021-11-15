@@ -103,7 +103,7 @@ test.skip('url filter types not used by current mediaType are discarded', async 
 
 test('can search for a different term', async ({ page }) => {
   await page.goto('/search/image?q=cat')
-  await page.type('input[type="search"]', 'dog')
+  await page.fill('input[type="search"]', 'dog')
   await page.keyboard.press('Enter')
   await expect(page).toHaveURL('/search/image?q=dog')
 })
