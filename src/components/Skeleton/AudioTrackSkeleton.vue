@@ -2,7 +2,15 @@
   <article class="flex flex-row w-full mb-14">
     <!-- Thumbnail skeleton -->
     <div
-      class="flex-shrink-0 h-20 w-20 mr-4 bg-dark-charcoal-10 rounded shimmering"
+      class="
+        flex-shrink-0
+        h-20
+        w-20
+        mr-4
+        bg-dark-charcoal-10
+        rounded
+        shimmering
+      "
     />
 
     <div class="flex flex-row gap-6 h-20 w-full">

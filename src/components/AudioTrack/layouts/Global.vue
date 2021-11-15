@@ -7,7 +7,16 @@
 
     <div class="relative flex-grow">
       <div
-        class="absolute inset-x-0 z-10 top-4 px-4 flex flex-row items-center justify-between"
+        class="
+          absolute
+          inset-x-0
+          z-10
+          top-4
+          px-4
+          flex flex-row
+          items-center
+          justify-between
+        "
       >
         <p class="text-sr font-semibold">{{ audio.title }}</p>
       </div>

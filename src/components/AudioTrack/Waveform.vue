@@ -1,7 +1,14 @@
 <template>
   <div
     ref="el"
-    class="waveform relative bg-dark-charcoal-06 overflow-hidden focus:outline-none focus-visible:ring focus-visible:ring-offset-2 focus-visible:ring-pink"
+    class="
+      waveform
+      relative
+      bg-dark-charcoal-06
+      overflow-hidden
+      focus:outline-none
+      focus-visible:ring focus-visible:ring-offset-2 focus-visible:ring-pink
+    "
     :style="{ '--unusable-height': `${Math.floor((1 - usableFrac) * 100)}%` }"
     tabIndex="0"
     role="slider"
@@ -62,7 +69,18 @@
 
     <!-- Keyboard focus -->
     <div
-      class="focus-indicator hidden absolute z-20 top-0 flex flex-col items-center justify-between bg-black h-full"
+      class="
+        focus-indicator
+        hidden
+        absolute
+        z-20
+        top-0
+        flex flex-col
+        items-center
+        justify-between
+        bg-black
+        h-full
+      "
       :style="{ width: `${barWidth}px`, left: `${seekSpaceBefore}px` }"
     >
       <div
@@ -112,7 +130,16 @@
     <!-- Message overlay -->
     <div
       v-else
-      class="absolute inset-0 flex items-center justify-center loading font-bold text-xs"
+      class="
+        absolute
+        inset-0
+        flex
+        items-center
+        justify-center
+        loading
+        font-bold
+        text-xs
+      "
     >
       {{ message }}
     </div>

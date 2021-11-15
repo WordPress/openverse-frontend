@@ -1,6 +1,13 @@
 <template>
   <div
-    class="font-heading font-semibold text-base text-center leading-tight bg-yellow text-dark-blue py-6"
+    class="
+      font-heading font-semibold
+      text-base text-center
+      leading-tight
+      bg-yellow
+      text-dark-blue
+      py-6
+    "
   >
     <!-- @slot Content goes here -->
     <slot />

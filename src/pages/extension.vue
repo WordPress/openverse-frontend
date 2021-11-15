@@ -26,7 +26,14 @@
       </div>
     </div>
     <div
-      class="features grid grid-cols-1 tab:grid-cols-2 gap-x-12 gap-y-30 py-30 mx-auto"
+      class="
+        features
+        grid grid-cols-1
+        tab:grid-cols-2
+        gap-x-12 gap-y-30
+        py-30
+        mx-auto
+      "
       :class="[isEmbedded ? '' : 'is-fluid']"
     >
       <template v-for="(feature, index) in features">

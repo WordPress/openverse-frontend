@@ -2,7 +2,15 @@
   <Component
     :is="tag"
     v-bind="$attrs"
-    class="media-tag text-dark-charcoal-60 text-sm font-semibold py-1 px-2 border border-dark-charcoal-60 rounded-full"
+    class="
+      media-tag
+      text-dark-charcoal-60 text-sm
+      font-semibold
+      py-1
+      px-2
+      border border-dark-charcoal-60
+      rounded-full
+    "
   >
     <!-- @slot Content goes here -->
     <slot />
