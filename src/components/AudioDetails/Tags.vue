@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { SET_Q } from '~/constants/action-types'
+import { UPDATE_QUERY } from '~/constants/action-types'
 import { SEARCH } from '~/constants/store-modules'
 import { mapActions } from 'vuex'
 
@@ -30,7 +30,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(SEARCH, { setSearchTerm: SET_Q }),
+    ...mapActions(SEARCH, { setSearchTerm: UPDATE_QUERY }),
     isClarifaiTag(provider) {
       return provider === 'clarifai'
     },

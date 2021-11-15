@@ -65,10 +65,9 @@
 </template>
 
 <script>
-import { SET_Q, TOGGLE_FILTER } from '~/constants/action-types'
+import { UPDATE_QUERY, TOGGLE_FILTER } from '~/constants/action-types'
 import { SEARCH } from '~/constants/store-modules'
-import { SET_SEARCH_TYPE } from '~/constants/mutation-types'
-import { mapActions, mapGetters, mapMutations } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import HomeLicenseFilter from '~/components/HomeLicenseFilter'
 import SearchTypeToggle from '~/components/SearchTypeToggle'
 
@@ -92,8 +91,10 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(SEARCH, { setSearchType: SET_SEARCH_TYPE }),
-    ...mapActions(SEARCH, { setSearchTerm: SET_Q, checkFilter: TOGGLE_FILTER }),
+    ...mapActions(SEARCH, {
+      setSearchTerm: UPDATE_QUERY,
+      checkFilter: TOGGLE_FILTER,
+    }),
     getPath() {
       if (!process.env.enableAudio) return '/search/image'
       return `/search/${this.form.searchType}`
@@ -105,7 +106,7 @@ export default {
       this.filters[code] = !this.filters[code]
     },
     onSubmit() {
-      this.setSearchTerm({ q: this.form.searchTerm })
+      const newQuery = { q: this.form.searchTerm }
       const checkedFilters = Object.keys(this.filters).filter(
         (filterName) => !!this.filters[filterName]
       )
@@ -114,8 +115,9 @@ export default {
       })
 
       if (process.env.enableAudio) {
-        this.setSearchType({ searchType: this.form.searchType })
+        newQuery.searchType = this.form.searchType
       }
+      this.setSearchTerm(newQuery)
       const newPath = this.localePath({
         path: this.getPath(),
         query: this.searchQueryParams,

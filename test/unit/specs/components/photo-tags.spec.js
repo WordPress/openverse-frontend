@@ -2,7 +2,7 @@ import Vuex from 'vuex'
 import render from '../../test-utils/render'
 import { createLocalVue } from '@vue/test-utils'
 import PhotoTags from '~/components/PhotoTags'
-import { SET_Q } from '~/constants/action-types'
+import { UPDATE_QUERY } from '~/constants/action-types'
 
 describe('PhotoTags', () => {
   let options = null
@@ -41,13 +41,13 @@ describe('PhotoTags', () => {
     expect(wrapper.find('.photo_tags').element).toBeUndefined()
   })
 
-  it('commits a mutation when a tag is clicked', () => {
+  it('dispatches an action when a tag is clicked', () => {
     const dispatchMock = jest.fn()
     const localVue = createLocalVue()
     localVue.use(Vuex)
     const storeMock = new Vuex.Store({
       modules: {
-        search: { namespaced: true, actions: { [SET_Q]: dispatchMock } },
+        search: { namespaced: true, actions: { [UPDATE_QUERY]: dispatchMock } },
       },
     })
     const opts = {

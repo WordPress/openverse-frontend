@@ -7,7 +7,6 @@ import {
   RESET_MEDIA,
   SET_AUDIO,
   SET_IMAGE,
-  SET_IMAGE_PAGE,
   SET_MEDIA,
 } from '~/constants/mutation-types'
 import {
@@ -28,19 +27,26 @@ describe('Search Store', () => {
   describe('state', () => {
     it('exports default state', () => {
       const state = store.state()
-      expect(state.audios).toHaveLength(0)
-      expect(state.audiosCount).toBe(0)
-      expect(state.audioPage).toBe(1)
-      expect(state.images).toHaveLength(0)
-      expect(state.imagesCount).toBe(0)
-      expect(state.imagePage).toBe(1)
-      expect(state.pageCount.audios).toBe(0)
-      expect(state.pageCount.images).toBe(0)
-      expect(state.isFetching.audio).toBeFalsy()
-      expect(state.isFetching.image).toBeFalsy()
-      expect(state.isFetchingError.audio).toBeTruthy()
-      expect(state.isFetchingError.image).toBeTruthy()
-      expect(state.errorMessage).toBe(null)
+      expect(state.results.audio).toEqual({
+        count: 0,
+        items: [],
+        page: undefined,
+        pageCount: 0,
+      })
+      expect(state.results.image).toEqual({
+        count: 0,
+        items: [],
+        page: undefined,
+        pageCount: 0,
+      })
+      expect(state.fetchingState.audio).toEqual({
+        fetchingError: null,
+        isFetching: false,
+      })
+      expect(state.fetchingState.image).toEqual({
+        fetchingError: null,
+        isFetching: false,
+      })
       expect(state.audio).toEqual({})
       expect(state.image).toEqual({})
     })
@@ -57,14 +63,14 @@ describe('Search Store', () => {
     it('FETCH_START_MEDIA updates state', () => {
       mutations[FETCH_START_MEDIA](state, { mediaType: IMAGE })
 
-      expect(state.isFetching.image).toBeTruthy()
-      expect(state.isFetchingError.image).toBeFalsy()
+      expect(state.fetchingState.image.isFetching).toBeTruthy()
+      expect(state.fetchingState.image.fetchingError).toBeFalsy()
     })
 
     it('FETCH_END_MEDIA updates state', () => {
       mutations[FETCH_END_MEDIA](state, { mediaType: IMAGE })
 
-      expect(state.isFetching.image).toBeFalsy()
+      expect(state.fetchingState.image.isFetching).toBeFalsy()
     })
 
     it('FETCH_MEDIA_ERROR updates state', () => {
@@ -73,9 +79,9 @@ describe('Search Store', () => {
         errorMessage: 'error',
       })
 
-      expect(state.isFetching.image).toBeFalsy()
-      expect(state.isFetchingError.image).toBeTruthy()
-      expect(state.errorMessage).toBe('error')
+      expect(state.fetchingState.image.isFetching).toBeFalsy()
+      expect(state.fetchingState.image.fetchingError).toBeTruthy()
+      expect(state.fetchingState.image.fetchingError).toBe('error')
     })
 
     it('SET_AUDIO updates state', () => {
@@ -92,17 +98,10 @@ describe('Search Store', () => {
       expect(state.image).toEqual(params.image)
     })
 
-    it('SET_IMAGE_PAGE updates state', () => {
-      const params = { imagePage: 1 }
-      mutations[SET_IMAGE_PAGE](state, params)
-
-      expect(state.imagePage).toBe(params.imagePage)
-    })
-
     it('SET_MEDIA updates state persisting images', () => {
       const img1 = { title: 'Foo', creator: 'foo', tags: [] }
       const img2 = { title: 'Bar', creator: 'bar', tags: [] }
-      state.images = [img1]
+      state.results.image.items = [img1]
       const params = {
         media: [img2],
         mediaCount: 2,
@@ -112,14 +111,14 @@ describe('Search Store', () => {
       }
       mutations[SET_MEDIA](state, params)
 
-      expect(state.images).toEqual([img1, img2])
-      expect(state.imagesCount).toBe(params.mediaCount)
-      expect(state.imagePage).toBe(params.page)
+      expect(state.results.image.items).toEqual([img1, img2])
+      expect(state.results.image.count).toBe(params.mediaCount)
+      expect(state.results.image.page).toBe(params.page)
     })
 
     it('SET_MEDIA updates state not persisting images', () => {
       const img = { title: 'Foo', creator: 'bar', tags: [] }
-      state.images = ['img1']
+      state.results.image.items = ['img1']
       const params = {
         media: [img],
         mediaCount: 2,
@@ -129,19 +128,19 @@ describe('Search Store', () => {
       }
       mutations[SET_MEDIA](state, params)
 
-      expect(state.images).toEqual([img])
-      expect(state.imagesCount).toBe(params.mediaCount)
-      expect(state.imagePage).toBe(params.page)
+      expect(state.results.image.items).toEqual([img])
+      expect(state.results.image.count).toBe(params.mediaCount)
+      expect(state.results.image.page).toBe(params.page)
     })
 
     it('SET_MEDIA updates state with default count and page', () => {
       const img = { title: 'Foo', creator: 'bar', tags: [] }
-      state.images = ['img1']
+      state.results.image.items = ['img1']
       const params = { media: [img], mediaType: IMAGE }
       mutations[SET_MEDIA](state, params)
 
-      expect(state.imagesCount).toBe(0)
-      expect(state.imagePage).toBe(1)
+      expect(state.results.image.count).toBe(0)
+      expect(state.results.image.page).toBe(1)
     })
 
     it('MEDIA_NOT_FOUND throws an error', () => {
@@ -152,19 +151,21 @@ describe('Search Store', () => {
 
     it('RESET_MEDIA resets the media type state', () => {
       state = {
-        images: [{ id: 'image1' }, { id: 'image2' }],
-        imagePage: 2,
-        imagesCount: 200,
-        pageCount: {
-          images: 2,
+        results: {
+          image: {
+            items: [{ id: 'image1' }, { id: 'image2' }],
+            page: 2,
+            count: 200,
+            pageCount: 2,
+          },
         },
       }
 
       mutations[RESET_MEDIA](state, { mediaType: IMAGE })
-      expect(state.images).toStrictEqual([])
-      expect(state.imagesCount).toEqual(0)
-      expect(state.imagePage).toBe(undefined)
-      expect(state.pageCount.images).toEqual(0)
+      expect(state.results.image.items).toStrictEqual([])
+      expect(state.results.image.count).toEqual(0)
+      expect(state.results.image.page).toBe(undefined)
+      expect(state.results.image.pageCount).toEqual(0)
     })
   })
 
@@ -198,15 +199,24 @@ describe('Search Store', () => {
       }
       services = { [AUDIO]: audioServiceMock, [IMAGE]: imageServiceMock }
       state = {
-        audios: [{ id: 'foo' }, { id: 'bar' }, { id: 'zeta' }],
-        images: [{ id: 'foo' }, { id: 'bar' }, { id: 'zeta' }],
-        query: { q: 'foo query' },
+        results: {
+          image: {
+            items: [{ id: 'foo' }, { id: 'bar' }, { id: 'zeta' }],
+          },
+          audio: {
+            items: [{ id: 'foo' }, { id: 'bar' }, { id: 'zeta' }],
+          },
+        },
       }
 
       context = {
         commit: jest.fn(),
         dispatch: jest.fn(),
-        rootState: { user: { usageSessionId: 'foo' } },
+        rootState: {
+          user: { usageSessionId: 'foo' },
+          search: { query: { q: 'cat' } },
+        },
+        rootGetters: { search: { searchQueryParams: () => {} } },
         state: state,
       }
     })
@@ -244,6 +254,7 @@ describe('Search Store', () => {
         page: params.page,
         mediaType: IMAGE,
       })
+      delete params.mediaType
       expect(services[IMAGE].search).toHaveBeenCalledWith(params)
     })
 
@@ -360,7 +371,7 @@ describe('Search Store', () => {
       expect(context.dispatch).toHaveBeenLastCalledWith(
         `${USAGE_DATA}/${SEND_RESULT_CLICKED_EVENT}`,
         {
-          query: state.query.q,
+          query: context.rootState.search.query.q,
           resultUuid: 'foo',
           resultRank: 0,
           sessionId: context.rootState.user.usageSessionId,
@@ -419,7 +430,7 @@ describe('Search Store', () => {
       expect(context.dispatch).toHaveBeenLastCalledWith(
         `${USAGE_DATA}/${SEND_RESULT_CLICKED_EVENT}`,
         {
-          query: state.query.q,
+          query: context.rootState.search.query.q,
           resultUuid: 'foo',
           resultRank: 0,
           sessionId: context.rootState.user.usageSessionId,

@@ -1,8 +1,5 @@
 import SearchGrid from '~/components/SearchGridManualLoad'
 import render from '../../test-utils/render'
-// import { SET_MEDIA } from '~/constants/mutation-types'
-// import filterStore from '~/store/filter'
-// import searchStore from '~/store/search'
 
 import Vuex from 'vuex'
 import { IMAGE } from '~/constants/media'
@@ -10,71 +7,13 @@ import { createLocalVue } from '@vue/test-utils'
 import VueI18n from 'vue-i18n'
 import messages from '~/locales/en.json'
 import SaferBrowsing from '~/components/SaferBrowsing'
+import SearchGridCell from '~/components/SearchGridCell'
 describe('SearchGrid', () => {
-  // let options = {}
-  // let commitMock = null
-  // let storeMock
-  // let searchStoreMock
-  //
-  // beforeEach(() => {
-  //   commitMock = jest.fn()
-  //   searchStoreMock = {
-  //     state: {
-  //       images: [{ id: 'foo', title: 'image1.jpg' }],
-  //       imagesCount: 1,
-  //       imagePage: 1,
-  //       isFetching: {
-  //         images: false,
-  //       },
-  //       isFetchingError: {
-  //         images: false,
-  //       },
-  //       pageCount: {
-  //         images: 2,
-  //       },
-  //       searchType: IMAGE,
-  //     },
-  //     getters: searchStore.getters,
-  //     actions: searchStore.actions,
-  //     mutations: {
-  //       ...searchStore.mutations,
-  //       [SET_MEDIA]: commitMock,
-  //     },
-  //   }
-  //   storeMock = new Vuex.Store({
-  //     modules: {
-  //       filter: {
-  //         namespaced: true,
-  //         ...filterStore,
-  //       },
-  //       search: {
-  //         namespaced: true,
-  //         ...searchStoreMock,
-  //       },
-  //     },
-  //   })
-  //   options = {
-  //     store: storeMock,
-  //     stubs: {
-  //       SaferBrowsing: true,
-  //       LoadingIcon: true,
-  //       MetaSearchForm: true,
-  //       SearchGridCell: true,
-  //       SearchRating: true,
-  //     },
-  //     propsData: {
-  //       includeAnalytics: true,
-  //     },
-  //     mocks: {
-  //       $store: storeMock,
-  //       store: storeMock,
-  //     },
-  //   }
-  // })
   let options = {}
   const localVue = createLocalVue()
   localVue.use(Vuex)
   localVue.use(VueI18n)
+  localVue.component('SearchGridCell', SearchGridCell)
   let storeMock
 
   const i18n = new VueI18n({
@@ -108,21 +47,33 @@ describe('SearchGrid', () => {
         media: {
           namespaced: true,
           state: {
-            currentPage: {
-              image: 1,
+            results: {
+              image: {
+                count: 40,
+                page: 1,
+                pageCount: 2,
+                items: [
+                  { id: 'image1', url: 'https://wp.org/image1.jpg' },
+                  { id: 'image2', url: 'https://wp.org/image2.svg' },
+                ],
+              },
             },
-            searchResults: {
-              image: [
+          },
+          getters: {
+            fetchingState: () => ({
+              isFetching: false,
+              fetchingError: null,
+            }),
+            isFinished: () => false,
+            results: () => ({
+              count: 40,
+              page: 1,
+              pageCount: 2,
+              items: [
                 { id: 'image1', url: 'https://wp.org/image1.jpg' },
                 { id: 'image2', url: 'https://wp.org/image2.svg' },
               ],
-            },
-            pageCount: { images: 2 },
-            imagesCount: 40,
-          },
-          getters: {
-            isFetching: () => false,
-            isFetchingError: () => false,
+            }),
           },
         },
       },

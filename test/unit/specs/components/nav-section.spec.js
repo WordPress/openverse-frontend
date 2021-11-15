@@ -2,7 +2,7 @@ import Vuex from 'vuex'
 import render from '../../test-utils/render'
 import { createLocalVue } from '@vue/test-utils'
 import NavSection from '~/components/NavSection'
-import { SET_Q } from '~/constants/action-types'
+import { UPDATE_QUERY } from '~/constants/action-types'
 
 describe('NavSection', () => {
   it('should render correct contents', () => {
@@ -10,7 +10,7 @@ describe('NavSection', () => {
     expect(wrapper.find('nav').vm).toBeDefined()
   })
 
-  it('commits a mutation when the form is submitted', async () => {
+  it('dispatches an action when the form is submitted', async () => {
     const localVue = createLocalVue()
     localVue.use(Vuex)
     const dispatchMock = jest.fn()
@@ -19,7 +19,7 @@ describe('NavSection', () => {
         search: {
           namespaced: true,
           actions: {
-            [SET_Q]: dispatchMock,
+            [UPDATE_QUERY]: dispatchMock,
           },
         },
       },
