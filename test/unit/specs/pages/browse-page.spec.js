@@ -21,6 +21,9 @@ describe('Search Grid Wrapper', () => {
           mutations: {
             SET_FILTER_IS_VISIBLE: jest.fn(),
           },
+          getters: {
+            isAnyFilterApplied: jest.fn(),
+          },
         },
       },
     })
