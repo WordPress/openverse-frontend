@@ -56,7 +56,7 @@
         </div>
         <MetaSearchForm
           type="image"
-          :noresult="results.count === 0"
+          :noresult="!fetchingState.isFetching && results.count === 0"
           :supported="true"
         />
       </div>
