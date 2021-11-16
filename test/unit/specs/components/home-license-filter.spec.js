@@ -24,7 +24,6 @@ describe('HomeLicenseFilter', () => {
 
   it('renders checkboxes', async () => {
     await render(HomeLicenseFilter, options)
-    screen.debug()
     const checkboxes = screen.queryAllByRole('checkbox')
     expect(checkboxes.length).toEqual(2)
 

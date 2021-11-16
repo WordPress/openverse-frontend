@@ -5,7 +5,6 @@ import clonedeep from 'lodash.clonedeep'
 import VueI18n from 'vue-i18n'
 import messages from '~/locales/en.json'
 import searchStore, { filterData } from '~/store/search'
-import mediaStore from '~/store/media'
 import { IMAGE } from '~/constants/media'
 import HeroSection from '~/components/HeroSection'
 import VCheckbox from '~/components/VCheckbox'
@@ -33,7 +32,6 @@ describe('HeroSection', () => {
       modules: {
         search: {
           namespaced: true,
-          ...mediaStore,
           ...searchStore,
           state: {
             query: {

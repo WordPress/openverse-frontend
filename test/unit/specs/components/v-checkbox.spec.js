@@ -2,7 +2,7 @@
 import Vue from 'vue'
 import { fireEvent, render, screen } from '@testing-library/vue'
 import VCheckbox from '~/components/VCheckbox'
-import License from '~/components/License/License'
+import VLicense from '~/components/License/VLicense'
 
 const TestWrapperStringLabel = ({
   id = 'simple',
@@ -36,9 +36,9 @@ const TestWrapperStringLabel = ({
 
 const TestWrapperLicenseLabel = Vue.component('TestWrapperLicenseLabel', {
   // This still raises an error `Unknown custom element: <Licence>`
-  components: { VCheckbox, License },
+  components: { VCheckbox, VLicense },
   template: `<VCheckbox id="license" name="licenseType">
-  <Licence class="license" license="by-sa" /></VCheckbox>`,
+  <VLicence class="license" license="by-sa" /></VCheckbox>`,
 })
 
 describe('VCheckbox', () => {

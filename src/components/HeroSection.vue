@@ -106,7 +106,7 @@ export default {
       this.filters[code] = checked
     },
     onSubmit() {
-      this.setSearchTerm({ q: this.form.searchTerm })
+      const newQuery = { q: this.form.searchTerm }
 
       Object.entries(this.filters).forEach(([filterCode, isChecked]) => {
         if (isChecked) {

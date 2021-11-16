@@ -1,11 +1,9 @@
 import Vuex from 'vuex'
 import { fireEvent, render, screen } from '@testing-library/vue'
 import { createLocalVue } from '@vue/test-utils'
-import { UPDATE_QUERY } from '~/constants/action-types'
 import { IMAGE } from '~/constants/media'
 import store from '~/store/search'
 import clonedeep from 'lodash.clonedeep'
-import VCheckbox from '~/components/VCheckbox'
 import SearchGridFilter from '~/components/Filters/SearchGridFilter'
 import VCheckbox from '~/components/VCheckbox'
 
@@ -22,6 +20,7 @@ const initialFilters = {
   imageExtensions: [{ code: 'jpg', name: 'JPG', checked: false }],
   imageProviders: [{ code: 'met', name: 'Metropolitan', checked: false }],
   audioProviders: [{ code: 'jamendo', name: 'Jamendo', checked: false }],
+  sizes: [{ code: 'small', name: 'small', checked: false }],
   aspectRatios: [],
   searchBy: [{ code: 'creator', checked: false }],
   mature: false,
@@ -114,7 +113,7 @@ describe('SearchGridFilter', () => {
     })
     expect(checkedFilters.length).toEqual(0)
     // Filters are reset with the initial `filterData`
-    expect(uncheckedFilters.length).toEqual(22)
+    expect(uncheckedFilters.length).toEqual(25)
   })
 
   it('toggles search visibility', async () => {
