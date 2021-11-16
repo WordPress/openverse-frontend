@@ -42,9 +42,9 @@
           :disabled="isDisabled(item)"
           @change="onValueChange"
         >
-          <LicenseIcons v-if="filterType === 'licenses'" :license="item.code" />
-          {{ itemLabel(item) }}</VCheckbox
-        >
+          <VLicense v-if="filterType === 'licenses'" :license="item.code" />
+          <span v-else>{{ itemLabel(item) }}</span>
+        </VCheckbox>
         <button
           v-if="filterType === 'licenses'"
           :aria-label="$t('browse-page.aria.license-explanation')"
@@ -86,13 +86,13 @@
 </template>
 
 <script>
-import LicenseIcons from '~/components/LicenseIcons'
 import LicenseExplanationTooltip from '~/components/Filters/LicenseExplanationTooltip'
+import VLicense from '~/components/License/VLicense'
 
 export default {
   name: 'FilterCheckList',
   components: {
-    LicenseIcons,
+    VLicense,
     LicenseExplanationTooltip,
   },
   props: ['options', 'title', 'filterType', 'disabled'],

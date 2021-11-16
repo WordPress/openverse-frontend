@@ -16,7 +16,7 @@ module.exports = {
       yellow: '#ffe033',
       'dark-charcoal': '#30272e',
       pink: '#c52b9b',
-
+      primary: '#3e58e1', // will change to pink after redesign launch
       // Active
       'dark-pink': '#7c2264',
 
