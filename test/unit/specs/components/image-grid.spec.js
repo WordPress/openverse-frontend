@@ -11,7 +11,6 @@ const propsData = {
   fetchState: {
     isFetching: false,
     fetchingError: null,
-    // isFinished: false,
   },
 }
 const options = {

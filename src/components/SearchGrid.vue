@@ -1,7 +1,7 @@
 <template>
   <section class="search-grid">
     <div
-      v-show="!fetchState.isFetching"
+      v-show="shouldShowMeta"
       class="results-meta flex flex-col sm:flex-row justify-between px-6"
     >
       <div
@@ -36,6 +36,9 @@ export default {
   computed: {
     ...mapState(SEARCH, ['query', 'searchType']),
     ...mapGetters(MEDIA, ['fetchState', 'results']),
+    shouldShowMeta() {
+      return this.query.q.trim() !== '' && !this.fetchState.isFetching
+    },
     mediaCount() {
       const count = this.results.count
       if (count === 0) {

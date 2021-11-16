@@ -1,20 +1,20 @@
 <template>
   <section>
-    <div class="px-6 pt-6">
-      <AudioTrack
-        v-for="audio in mediaResults.items"
-        :key="audio.id"
-        :audio="audio"
-        :size="audioTrackSize"
-        layout="row"
-      />
-    </div>
+    <AudioTrack
+      v-for="audio in mediaResults.items"
+      :key="audio.id"
+      class="px-6 mb-6"
+      :audio="audio"
+      :size="audioTrackSize"
+      layout="row"
+    />
 
     <template v-if="isError" class="m-auto w-1/2 text-center pt-6">
       <h5>{{ errorHeader }}</h5>
       <p>{{ fetchState.fetchingError }}</p>
     </template>
     <LoadMoreButton
+      v-if="shouldShowLoadMore"
       :is-error="isError"
       :is-fetching="fetchState.isFetching"
       :is-finished="isFinished"
@@ -36,6 +36,10 @@ export default {
       type: Boolean,
       required: true,
     },
+    searchTerm: {
+      type: String,
+      required: true,
+    },
   },
   computed: {
     audioTrackSize() {
@@ -51,6 +55,9 @@ export default {
       return this.$t('browse-page.fetching-error', {
         type: this.typeString,
       })
+    },
+    shouldShowLoadMore() {
+      return this.searchTerm.trim() !== ''
     },
   },
   methods: {

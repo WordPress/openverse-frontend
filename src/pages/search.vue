@@ -12,8 +12,6 @@
         <SearchGridForm @onSearchFormSubmit="onSearchFormSubmit" />
         <SearchTypeTabs class="mb-4" />
         <FilterDisplay v-show="shouldShowFilterTags" />
-        <NuxtChild :key="$route.path" @onLoadMoreItems="onLoadMoreItems" />
-        <ScrollButton :show-btn="showScrollButton" />
         <SearchGrid
           :id="`tab-${searchType}`"
           role="tabpanel"
@@ -27,14 +25,12 @@
               :fetch-state="fetchState"
               :is-finished="isFinished"
               :is-filter-visible="isFilterVisible"
+              :search-term="query.q"
               @load-more="fetchMedia"
             />
           </template>
         </SearchGrid>
-        <ScrollButton
-          data-testid="scroll-button"
-          :show-btn="showScrollButton"
-        />
+        <ScrollButton data-testid="scroll-button" :v-show="showScrollButton" />
       </div>
     </div>
   </div>
@@ -73,7 +69,12 @@ const BrowsePage = {
   },
   scrollToTop: false,
   async fetch() {
-    if (this.mediaType !== VIDEO && !Object.keys(this.results.items).length) {
+    //!Object.keys(this.results.items).length ??
+    if (
+      this.mediaType !== VIDEO &&
+      this.results.items.length === 0 &&
+      this.query.q.trim() !== ''
+    ) {
       await this.fetchMedia({ mediaType: this.mediaType, q: this.query.q })
     }
   },
@@ -136,7 +137,9 @@ const BrowsePage = {
       setFilterVisibility: SET_FILTER_IS_VISIBLE,
     }),
     async getMediaItems(params, mediaType) {
-      await this.fetchMedia({ ...params, mediaType })
+      if (params.q.trim() !== '') {
+        await this.fetchMedia({ ...params, mediaType })
+      }
     },
     onLoadMoreItems(searchParams) {
       this.getMediaItems(searchParams, this.mediaType)

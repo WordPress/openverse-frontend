@@ -39,11 +39,11 @@ describe('Search Store', () => {
         page: undefined,
         pageCount: 0,
       })
-      expect(state.fetchingState.audio).toEqual({
+      expect(state.fetchState.audio).toEqual({
         fetchingError: null,
         isFetching: false,
       })
-      expect(state.fetchingState.image).toEqual({
+      expect(state.fetchState.image).toEqual({
         fetchingError: null,
         isFetching: false,
       })
@@ -63,14 +63,14 @@ describe('Search Store', () => {
     it('FETCH_START_MEDIA updates state', () => {
       mutations[FETCH_START_MEDIA](state, { mediaType: IMAGE })
 
-      expect(state.fetchingState.image.isFetching).toBeTruthy()
-      expect(state.fetchingState.image.fetchingError).toBeFalsy()
+      expect(state.fetchState.image.isFetching).toBeTruthy()
+      expect(state.fetchState.image.fetchingError).toBeFalsy()
     })
 
     it('FETCH_END_MEDIA updates state', () => {
       mutations[FETCH_END_MEDIA](state, { mediaType: IMAGE })
 
-      expect(state.fetchingState.image.isFetching).toBeFalsy()
+      expect(state.fetchState.image.isFetching).toBeFalsy()
     })
 
     it('FETCH_MEDIA_ERROR updates state', () => {
@@ -79,9 +79,9 @@ describe('Search Store', () => {
         errorMessage: 'error',
       })
 
-      expect(state.fetchingState.image.isFetching).toBeFalsy()
-      expect(state.fetchingState.image.fetchingError).toBeTruthy()
-      expect(state.fetchingState.image.fetchingError).toBe('error')
+      expect(state.fetchState.image.isFetching).toBeFalsy()
+      expect(state.fetchState.image.fetchingError).toBeTruthy()
+      expect(state.fetchState.image.fetchingError).toBe('error')
     })
 
     it('SET_AUDIO updates state', () => {

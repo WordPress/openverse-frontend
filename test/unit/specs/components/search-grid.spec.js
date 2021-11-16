@@ -60,7 +60,7 @@ describe('SearchGrid', () => {
             },
           },
           getters: {
-            fetchingState: () => ({
+            fetchState: () => ({
               isFetching: false,
               fetchingError: null,
             }),
