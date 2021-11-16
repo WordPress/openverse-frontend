@@ -2,7 +2,6 @@ import Vuex from 'vuex'
 import HeroSection from '~/components/HeroSection'
 import { fireEvent, render, screen } from '@testing-library/vue'
 import searchStore, { filterData } from '~/store/search'
-import mediaStore from '~/store/media'
 import { createLocalVue } from '@vue/test-utils'
 import clonedeep from 'lodash.clonedeep'
 import VueI18n from 'vue-i18n'
@@ -31,7 +30,6 @@ describe('HeroSection', () => {
       modules: {
         search: {
           namespaced: true,
-          ...mediaStore,
           ...searchStore,
           state: {
             query: {
