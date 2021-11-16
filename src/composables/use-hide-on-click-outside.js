@@ -75,10 +75,7 @@ export function useHideOnClickOutside({ popoverRef, popoverPropsRefs }) {
     eventType: 'focusin',
     listener: (event) => {
       const document = getDocument(popoverRef.value)
-      // Fix for https://github.com/reakit/reakit/issues/619
-      // On IE11, calling element.blur() triggers the focus event on
-      // document.body, so we make sure to ignore it as well.
-      if (event.target !== document && event.target !== document.body) {
+      if (event.target !== document) {
         popoverPropsRefs.hide.value()
       }
     },

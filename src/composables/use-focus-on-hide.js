@@ -23,9 +23,8 @@ function hidByFocusingAnotherElement(popover) {
   if (!activeElement) return false
   if (contains(popover, activeElement)) return false
   if (isTabbable(activeElement)) return true
-  if (activeElement.getAttribute('data-popover') === 'true') return true
 
-  return false
+  return activeElement.getAttribute('data-popover') === 'true'
 }
 
 /**
@@ -41,6 +40,7 @@ export const useFocusOnHide = ({ popoverRef, popoverPropsRefs }) => {
     ],
     /**
      * @param {[HTMLElement, HTMLElement, boolean, boolean]} deps
+     * @param {[unknown, unknown, boolean]} previousDeps
      */
     (
       [popover, triggerElement, visible, autoFocusOnHide],

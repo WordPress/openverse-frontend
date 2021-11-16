@@ -31,9 +31,6 @@ function isActualElement(element) {
 function useBlurTracker() {
   const blurredRef = ref(0)
 
-  /**
-   * @param {number} n
-   */
   const scheduleFocus = () => (blurredRef.value += 1)
 
   return [blurredRef, scheduleFocus]

@@ -15,11 +15,7 @@
 
 <script>
 import { defineComponent, toRefs, ref } from '@nuxtjs/composition-api'
-import { useFocusOnShow } from '~/composables/use-focus-on-show'
-import { useFocusOnHide } from '~/composables/use-focus-on-hide'
-import { useHideOnClickOutside } from '~/composables/use-hide-on-click-outside'
-import { useFocusOnBlur } from '~/composables/use-focus-on-blur'
-import { usePopper } from '~/composables/use-popper'
+import { usePopoverContent } from '~/composables/use-popover-content'
 import { warn } from '~/utils/warn'
 
 import { propTypes } from './VPopoverContent.types'
@@ -44,31 +40,13 @@ export default defineComponent({
 
     const propsRefs = toRefs(props)
     const popoverRef = ref()
-    const focusOnBlur = useFocusOnBlur({
-      popoverRef,
-      popoverPropsRefs: propsRefs,
-    })
-
-    useFocusOnShow({
-      popoverRef,
-      popoverPropsRefs: propsRefs,
-    })
-    useFocusOnHide({
-      popoverRef,
-      popoverPropsRefs: propsRefs,
-    })
-    useHideOnClickOutside({
-      popoverRef,
-      popoverPropsRefs: propsRefs,
-    })
-
-    usePopper({
+    const { focusOnBlur } = usePopoverContent({
       popoverRef,
       popoverPropsRefs: propsRefs,
     })
 
     /**
-     * @param {Event} event
+     * @param {KeyboardEvent} event
      */
     const onKeyDown = (event) => {
       emit('keydown', event)
