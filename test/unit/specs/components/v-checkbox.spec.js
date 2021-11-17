@@ -1,4 +1,3 @@
-// eslint-disable vue/one-component-per-file
 import Vue from 'vue'
 import { fireEvent, render, screen } from '@testing-library/vue'
 import VCheckbox from '~/components/VCheckbox'
@@ -6,10 +5,12 @@ import VLicense from '~/components/License/VLicense'
 
 const TestWrapperStringLabel = ({
   id = 'simple',
+  value = 'simple',
   checked = false,
   defaultSlot = 'JPGs',
   disabled = false,
 } = {}) => {
+  // eslint-disable-next-line vue/one-component-per-file
   return Vue.component('TestWrapper', {
     components: { VCheckbox },
     data() {
@@ -19,6 +20,7 @@ const TestWrapperStringLabel = ({
       attrs() {
         return {
           id: id,
+          value: value,
           checked: this.checked,
           defaultSlot: defaultSlot,
           disabled: disabled,
@@ -34,6 +36,7 @@ const TestWrapperStringLabel = ({
   })
 }
 
+// eslint-disable-next-line vue/one-component-per-file
 const TestWrapperLicenseLabel = Vue.component('TestWrapperLicenseLabel', {
   // This still raises an error `Unknown custom element: <Licence>`
   components: { VCheckbox, VLicense },

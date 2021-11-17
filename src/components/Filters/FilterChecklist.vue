@@ -1,8 +1,8 @@
 <template>
   <fieldset
-    class="filters mb-8"
-    @click="hideLicenseExplanationVisibility()"
-    @keyup.enter="hideLicenseExplanationVisibility()"
+    class="mb-8"
+    @click="hideLicenseExplanationVisibility"
+    @keyup.enter="hideLicenseExplanationVisibility"
   >
     <legend v-if="title" class="text-2xl font-semibold mb-2">
       {{ title }}
@@ -10,14 +10,14 @@
     <div
       v-for="(item, index) in options"
       :key="index"
-      class="filter-checkbox-wrapper flex justify-between items-center mt-3"
+      class="flex justify-between items-center mt-3"
     >
       <VCheckbox
         :id="item.code"
         :key="index"
-        class="filter-checkbox"
         :checked="item.checked"
-        :name="title"
+        :name="itemName"
+        :value="item.code"
         :disabled="isDisabled(item)"
         @change="onValueChange"
       >
@@ -80,15 +80,15 @@ export default {
     }
   },
   computed: {
-    isSingleFilter() {
-      return this.$props.filterType === 'searchBy'
+    itemName() {
+      return this.filterType === 'searchBy'
+        ? this.$t('filters.searchBy.title')
+        : this.title
     },
   },
   methods: {
     itemLabel(item) {
-      return ['audioProviders', 'imageProviders'].includes(
-        this.$props.filterType
-      )
+      return ['audioProviders', 'imageProviders'].includes(this.filterType)
         ? item.name
         : this.$t(item.name)
     },

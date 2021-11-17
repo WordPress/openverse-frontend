@@ -51,10 +51,20 @@ const VCheckbox = defineComponent({
      * the POST request body.
      * In a Vue app, this is used as the name parameter in the emitted event's payload.
      * It is usually the category that this checkbox belongs to, eg. licenseType for a
-     * 'cc-by' checkbox.
+     * 'by-nc-nd' checkbox.
      * If not set, the value of `id` prop is used instead.
      */
     name: {
+      type: String,
+      required: false,
+    },
+    /**
+     * The value parameter in `name=value` pair sent in the POST request body, here
+     * emitted in the event's payload. Usually the code as 'by-nc-nd'.
+     *
+     * If not set, the value of `id` prop is used.
+     */
+    value: {
       type: String,
       required: false,
     },
@@ -72,7 +82,7 @@ const VCheckbox = defineComponent({
     const inputAttrs = computed(() => {
       const attrs = {
         name: props.name || props.id,
-        value: props.id,
+        value: props.value || props.id,
       }
       if (props.disabled) {
         attrs.disabled = 'disabled'
@@ -93,7 +103,7 @@ const VCheckbox = defineComponent({
       localCheckedState.value = !localCheckedState.value
       emit('change', {
         name: inputAttrs.value.name,
-        value: props.id,
+        value: props.value,
         checked: localCheckedState.value,
       })
     }

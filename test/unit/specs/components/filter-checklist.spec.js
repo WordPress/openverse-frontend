@@ -1,7 +1,7 @@
 import FilterChecklist from '~/components/Filters/FilterChecklist'
 import VCheckbox from '~/components/VCheckbox'
-import render from '../../test-utils/render'
 import { createLocalVue } from '@vue/test-utils'
+import { fireEvent, render, screen } from '@testing-library/vue'
 
 describe('FilterChecklist', () => {
   let options = {}
@@ -20,14 +20,19 @@ describe('FilterChecklist', () => {
     options = {
       localVue,
       propsData: props,
-      mocks: {
-        $store: { state: { filters: { licenses: {}, licenseTypes: {} } } },
-      },
     }
   })
 
-  it('should render correct contents', () => {
-    const wrapper = render(FilterChecklist, options)
-    expect(wrapper.find('.filters').vm).toBeDefined()
+  it('should render correct contents', async () => {
+    const { container } = render(FilterChecklist, options)
+    const checkbox = screen.getByRole('checkbox', {
+      checked: false,
+      label: /bar/i,
+    })
+    expect(checkbox).toBeTruthy()
+    expect(container.querySelector('svg')).not.toBeVisible()
+
+    await fireEvent.click(checkbox)
+    expect(container.querySelector('svg')).toBeVisible()
   })
 })
