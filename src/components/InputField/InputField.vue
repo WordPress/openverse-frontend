@@ -16,6 +16,7 @@
       v-bind="$attrs"
       :type="type"
       class="flex-grow leading-none font-semibold bg-tx placeholder-dark-charcoal-70 ms-4 h-full focus:outline-none"
+      v-on="$listeners"
     />
     <div
       class="info font-semibold text-xs text-dark-charcoal-70 group-hover:text-dark-charcoal group-focus:text-dark-charcoal me-4"
