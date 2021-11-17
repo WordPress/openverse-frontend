@@ -9,16 +9,14 @@
       },
     ]"
   >
-    <label class="flex-grow" :for="fieldId">
-      <span v-if="labelText" class="sr-only">{{ labelText }}</span>
-      <input
-        :id="fieldId"
-        v-model="text"
-        v-bind="$attrs"
-        :type="type"
-        class="leading-none font-semibold bg-tx placeholder-dark-charcoal-70 ms-4 h-full focus:outline-none"
-      />
-    </label>
+    <label class="flex-grow sr-only" :for="fieldId">{{ labelText }}</label>
+    <input
+      :id="fieldId"
+      v-model="text"
+      v-bind="$attrs"
+      :type="type"
+      class="leading-none font-semibold bg-tx placeholder-dark-charcoal-70 ms-4 h-full focus:outline-none"
+    />
     <div
       class="info font-semibold text-xs text-dark-charcoal-70 group-hover:text-dark-charcoal group-focus:text-dark-charcoal me-4"
     >
@@ -50,10 +48,20 @@ export default {
       default: '',
     },
     /**
-     * the textual content of the label associated with this input field
+     * the textual content of the label associated with this input field; This
+     * label is SR-only.
      */
     labelText: {
       type: String,
+      required: true,
+    },
+    /**
+     * the ID to assign to the field; This can be used to attach custom labels
+     * to the field.
+     */
+    fieldId: {
+      type: String,
+      required: true,
     },
     /**
      * list of sides where the field is connected to other controls
@@ -66,7 +74,6 @@ export default {
   },
   setup(props, { emit, attrs }) {
     const type = attrs['type'] ?? 'text'
-    const fieldId = attrs['id'] ?? btoa(Date.now().toString())
 
     const text = computed({
       get() {
@@ -79,7 +86,6 @@ export default {
 
     return {
       type,
-      fieldId,
 
       text,
     }
