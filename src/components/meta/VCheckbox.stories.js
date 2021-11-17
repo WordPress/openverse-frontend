@@ -1,5 +1,5 @@
 import VCheckbox from '~/components/VCheckbox'
-import License from '~/components/License/License'
+import VLicense from '~/components/License/VLicense'
 
 export default {
   title: 'Components/VCheckbox',
@@ -29,17 +29,17 @@ const SimpleCheckboxStory = (args, { argTypes }) => {
 }
 
 const DisabledCheckboxStory = (args, { argTypes }) => ({
-  template: `<VCheckbox v-bind="$props">Use commercially</VCheckbox>`,
+  template: `<fieldset><legend>Use</legend><VCheckbox v-bind="$props">Use commercially</VCheckbox></fieldset>`,
   components: { VCheckbox },
   props: Object.keys(argTypes),
 })
 
 const LicenseCheckboxStory = (args, { argTypes }) => ({
   template: `<VCheckbox v-bind="$props" @change="onChange">
-  <License license="by-nc" class="me-4"/>
+  <VLicense license="by-nc" class="me-4"/>
   <span >Checked: {{ isChecked }}</span>
   </VCheckbox>`,
-  components: { VCheckbox, License },
+  components: { VCheckbox, VLicense },
   data: () => ({
     isChecked: args.checked,
   }),
@@ -63,7 +63,7 @@ export const DisabledCheckbox = DisabledCheckboxStory.bind({})
 DisabledCheckbox.args = {
   id: 'disabled',
   checked: false,
-  name: 'checkboxes',
+  name: 'use',
   disabled: true,
 }
 
