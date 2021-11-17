@@ -8,6 +8,10 @@ describe('InputField', () => {
       attrs: {
         placeholder: 'Enter some text',
       },
+      propsData: {
+        fieldId: 'input-id',
+        labelText: 'Label',
+      },
     })
 
     const element = screen.getByPlaceholderText('Enter some text')
@@ -22,6 +26,10 @@ describe('InputField', () => {
         placeholder: 'Enter some number',
         type: 'number',
       },
+      propsData: {
+        fieldId: 'input-id',
+        labelText: 'Label',
+      },
     })
 
     const element = screen.getByPlaceholderText('Enter some number')
@@ -33,7 +41,10 @@ describe('InputField', () => {
     render(InputField, {
       attrs: {
         placeholder: 'Enter some text',
-        id: 'input-id',
+      },
+      propsData: {
+        fieldId: 'input-id',
+        labelText: 'Label',
       },
     })
 
@@ -45,6 +56,7 @@ describe('InputField', () => {
   it('should render the label text connected to the input field if specified', () => {
     render(InputField, {
       propsData: {
+        fieldId: 'input-id',
         labelText: 'Label',
       },
     })
