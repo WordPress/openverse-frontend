@@ -27,7 +27,11 @@
         />
       </NuxtLink>
       <figcaption class="overlay overlay__top p-2">
-        <LicenseIcons :license="image.license" />
+        <VLicense
+          :license="image.license"
+          :bg-filled="true"
+          :hide-name="true"
+        />
       </figcaption>
       <figcaption class="overlay overlay__bottom py-2 px-4">
         <span class="caption font-semibold">{{ image.title }}</span>
@@ -37,7 +41,6 @@
 </template>
 
 <script>
-import LicenseIcons from '~/components/LicenseIcons'
 import getProviderLogo from '~/utils/get-provider-logo'
 
 const errorImage = require('~/assets/image_not_available_placeholder.png')
@@ -56,9 +59,6 @@ const toAbsolutePath = (url, prefix = 'https://') => {
 
 export default {
   name: 'SearchGridCell',
-  components: {
-    LicenseIcons,
-  },
   props: ['image', 'shouldContainImage'],
   data() {
     return {
