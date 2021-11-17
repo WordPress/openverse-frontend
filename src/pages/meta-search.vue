@@ -19,6 +19,7 @@
         {{ $t('meta-search-page.content') }}
       </h2>
       <p>{{ $t('meta-search-page.content-types') }}</p>
+
       <h2 class="mt-10 mb-4 text-2xl">
         {{ $t('meta-search-page.images.title') }}
       </h2>
@@ -26,10 +27,20 @@
       <div class="content">
         <ol>
           <li>
-            {{ $t('meta-search-page.images.continue') }}
+            <i18n path="meta-search-page.images.continue">
+              <template #load-more>
+                <strong>{{ $t('browse-page.load') }}</strong>
+              </template>
+            </i18n>
           </li>
           <li>
-            {{ $t('meta-search-page.images.not-finding') }}
+            <i18n path="meta-search-page.images.not-finding">
+              <template #not-finding>
+                <strong>{{
+                  $t('meta-search.form.supported-title', { type: ' ' })
+                }}</strong>
+              </template>
+            </i18n>
           </li>
         </ol>
       </div>
@@ -37,13 +48,19 @@
         <template #use>
           <strong>{{ $t('meta-search-page.use') }}</strong>
         </template>
+        <template #not-finding>
+          <strong>{{
+            $t('meta-search.form.supported-title', { type: ' ' })
+          }}</strong>
+        </template>
       </i18n>
       <figure class="image my-10">
         <img
-          src="@/assets/meta-search-images.gif"
-          alt="Meta Search Images - Cars"
+          :alt="$t('meta-search.form.supported-title', { type: ' ' })"
+          src="~/assets/screenshots/supported.png"
         />
       </figure>
+
       <h2 class="mt-10 mb-4 text-2xl">
         {{ $t('meta-search-page.audio-video.title') }}
       </h2>
@@ -55,8 +72,8 @@
       </i18n>
       <figure class="image my-10">
         <img
-          src="@/assets/meta-search-audio.gif"
-          alt="Meta Search Audio - Drums"
+          :alt="$t('meta-search.form.unsupported-title', { type: ' ' })"
+          src="~/assets/screenshots/unsupported.png"
         />
       </figure>
       <h2 class="mt-10 mb-4 text-2xl">
