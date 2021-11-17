@@ -57,7 +57,7 @@ FROM node:16 AS app
 WORKDIR /usr/app
 
 ENV NODE_ENV=production
-ENV CYPRESS_INSTALL_BINARY=0
+ENV PLAYWRIGHT_SKIP_BROWSER_GC=1
 
 # copy the package.json and package-lock.json files
 COPY package*.json .
