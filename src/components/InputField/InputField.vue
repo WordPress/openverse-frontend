@@ -9,13 +9,13 @@
       },
     ]"
   >
-    <label class="flex-grow sr-only" :for="fieldId">{{ labelText }}</label>
+    <label class="sr-only" :for="fieldId">{{ labelText }}</label>
     <input
       :id="fieldId"
       v-model="text"
       v-bind="$attrs"
       :type="type"
-      class="leading-none font-semibold bg-tx placeholder-dark-charcoal-70 ms-4 h-full focus:outline-none"
+      class="flex-grow leading-none font-semibold bg-tx placeholder-dark-charcoal-70 ms-4 h-full focus:outline-none"
     />
     <div
       class="info font-semibold text-xs text-dark-charcoal-70 group-hover:text-dark-charcoal group-focus:text-dark-charcoal me-4"
