@@ -10,7 +10,7 @@
         :icon-path="svgs[name]"
       />
     </div>
-    <span class="name">
+    <span class="name" :aria-label="$t(`license-readable-names.${license}`)">
       {{ $t(`license-names.${license}`) }}
     </span>
   </div>

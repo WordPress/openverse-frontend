@@ -49,6 +49,38 @@ msgctxt "dropdown-button.aria.arrow-label"
 msgid "Dropdown"
 msgstr ""
 
+msgctxt "license-readable-names.cc0"
+msgid "Zero"
+msgstr ""
+
+msgctxt "license-readable-names.pdm"
+msgid "Public Domain Mark"
+msgstr ""
+
+msgctxt "license-readable-names.by"
+msgid "Attribution"
+msgstr ""
+
+msgctxt "license-readable-names.by-sa"
+msgid "Attribution ShareAlike"
+msgstr ""
+
+msgctxt "license-readable-names.by-nc"
+msgid "Attribution NonCommercial"
+msgstr ""
+
+msgctxt "license-readable-names.by-nd"
+msgid "Attribution NoDerivatives"
+msgstr ""
+
+msgctxt "license-readable-names.by-nc-sa"
+msgid "Attribution NonCommercial ShareAlike"
+msgstr ""
+
+msgctxt "license-readable-names.by-nc-nd"
+msgid "Attribution NonCommercial NoDerivatives"
+msgstr ""
+
 msgctxt "license-names.cc0"
 msgid "CC0"
 msgstr ""
