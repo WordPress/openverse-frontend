@@ -9,13 +9,13 @@
         {{ $t('hero.subtitle') }}
       </h2>
       <form
-        class="hero-search__form mt-12"
+        class="px-2 mt-12"
         role="search"
         method="get"
         action="/search"
         @submit.prevent="onSubmit"
       >
-        <div class="hero-search__control">
+        <div class="flex flex-row">
           <input
             id="searchTerm"
             v-model.lazy="form.searchTerm"
@@ -150,15 +150,6 @@ $hero-height: 55vh;
   margin-top: 4rem;
 }
 .hero-search {
-  &__form {
-    position: relative;
-    width: 100%;
-    padding: 0 0.5em 0 0.5em;
-  }
-  &__control {
-    display: flex;
-    justify-content: center;
-  }
   &__input {
     margin-right: -1px;
     border-bottom-right-radius: 0;
