@@ -20,7 +20,7 @@
             id="searchTerm"
             v-model.lazy="form.searchTerm"
             required="required"
-            class="hero-search__input input"
+            class="hero-search__input input lg:px-10 rounded-e-none -me-px"
             :aria-label="$t('hero.aria.search')"
             autofocus
             type="search"
@@ -28,7 +28,10 @@
             :placeholder="$t('hero.search.placeholder')"
             autocapitalize="none"
           />
-          <button class="hero-search__button button is-primary" title="Search">
+          <button
+            class="hero-search__button button is-primary rounded-s-none"
+            title="Search"
+          >
             {{ $t('hero.search.button') }}
           </button>
         </div>
@@ -151,21 +154,13 @@ $hero-height: 55vh;
 }
 .hero-search {
   &__input {
-    margin-right: -1px;
-    border-bottom-right-radius: 0;
-    border-top-right-radius: 0;
-    width: 100%;
-    max-width: 100%;
     @screen lg {
       width: 570px;
       font-size: 1.75rem;
       height: 5.063rem;
-      padding-left: 1.5rem;
     }
   }
   &__button {
-    border-bottom-left-radius: 0;
-    border-top-left-radius: 0;
     font-size: 1rem;
     padding: 0.5rem 1.2rem;
     @screen lg {
