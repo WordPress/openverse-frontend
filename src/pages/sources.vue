@@ -1,5 +1,5 @@
 <template>
-  <div class="section">
+  <div class="section" dir="ltr">
     <div :class="['container', isEmbedded ? '' : 'is-fluid']">
       <div class="mb-10">
         <h1 class="text-5xl mb-10">
@@ -162,8 +162,12 @@ const SourcePage = {
     },
   },
   methods: {
+    /**
+     * @param {number} imageCount
+     */
     getProviderImageCount(imageCount) {
-      return imageCount.toLocaleString(this.$i18n.locale)
+      // Always use EN, most sites with RTL language with numbers continue to use Western Arabic Numerals whereas `toLocaleString` will use Eastern Arabic Numerals for Arabic and Hebrew by default
+      return imageCount.toLocaleString('en')
     },
     sortTable(field) {
       let direction = 'asc'
