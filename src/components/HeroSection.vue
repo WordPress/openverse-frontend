@@ -1,7 +1,7 @@
 <template>
   <!-- eslint-disable vuejs-accessibility/no-autofocus -->
   <div class="hero">
-    <div class="hero-center text-center">
+    <div class="text-center mt-16">
       <h1 class="text-5xl pb-4">
         {{ $t('hero.title') }}
       </h1>
@@ -9,18 +9,18 @@
         {{ $t('hero.subtitle') }}
       </h2>
       <form
-        class="px-2 mt-12"
+        class="relative w-full px-2 mt-12"
         role="search"
         method="get"
         action="/search"
         @submit.prevent="onSubmit"
       >
-        <div class="flex flex-row">
+        <div class="flex justify-center">
           <input
             id="searchTerm"
             v-model.lazy="form.searchTerm"
             required="required"
-            class="hero-search__input input lg:px-10 rounded-e-none -me-px"
+            class="hero-search__input input rounded rounded-e-none -me-px text-start lg:px-10 w-full max-w-full"
             :aria-label="$t('hero.aria.search')"
             autofocus
             type="search"
@@ -29,7 +29,7 @@
             autocapitalize="none"
           />
           <button
-            class="hero-search__button button is-primary rounded-s-none"
+            class="hero-search__button button is-primary rounded rounded-s-none"
             title="Search"
           >
             {{ $t('hero.search.button') }}
@@ -148,9 +148,6 @@ $hero-height: 55vh;
   @include tablet() {
     min-height: $hero-height-desktop;
   }
-}
-.hero-center {
-  margin-top: 4rem;
 }
 .hero-search {
   &__input {
