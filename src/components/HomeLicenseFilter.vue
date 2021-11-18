@@ -1,6 +1,6 @@
 <template>
   <fieldset class="home-license-filter mt-16">
-    <legend>
+    <legend class="w-full text-center">
       {{ $t('hero.license-filter.label') }}
     </legend>
     <template v-for="(licenseType, index) in filters">
