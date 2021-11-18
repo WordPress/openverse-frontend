@@ -20,7 +20,7 @@
             id="searchTerm"
             v-model.lazy="form.searchTerm"
             required="required"
-            class="hero-search__input input rounded-sm rounded-e-none -me-px text-start lg:ps-6 w-full max-w-full"
+            class="hero-search__input input rounded rounded-e-none -me-px text-start lg:px-10 w-full max-w-full"
             :aria-label="$t('hero.aria.search')"
             autofocus
             type="search"
@@ -29,7 +29,7 @@
             autocapitalize="none"
           />
           <button
-            class="hero-search__button button is-primary rounded-sm rounded-s-none"
+            class="hero-search__button button is-primary rounded rounded-s-none"
             title="Search"
           >
             {{ $t('hero.search.button') }}
