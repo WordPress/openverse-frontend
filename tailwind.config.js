@@ -174,6 +174,11 @@ module.exports = {
       mono: ['"JetBrains Mono"', 'monospace'],
       icons: ['"Vocabulary Icons"'],
     },
+    extend: {
+      scale: {
+        '-100': '-1',
+      },
+    },
   },
   variants: {
     extend: {

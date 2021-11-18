@@ -1,6 +1,7 @@
 <template>
   <svg
     class="v-icon h-6 w-6"
+    :class="{ 'rtl-flip': rtlFlip }"
     xmlns="http://www.w3.org/2000/svg"
     :viewBox="viewBox"
     aria-hidden="true"
@@ -40,6 +41,20 @@ export default {
       type: String,
       default: 'icon',
     },
+    /**
+     * whether to flip the icon for RTL languages; This generally makes sense
+     * for directional icons such as those involving arrows.
+     */
+    rtlFlip: {
+      type: Boolean,
+      default: false,
+    },
   },
 }
 </script>
+
+<style scoped>
+[dir='rtl'] .v-icon.rtl-flip {
+  @apply transform -scale-x-100;
+}
+</style>
