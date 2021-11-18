@@ -1,9 +1,5 @@
 <template>
-  <fieldset
-    class="mb-8"
-    @click="hideLicenseExplanationVisibility"
-    @keyup.enter="hideLicenseExplanationVisibility"
-  >
+  <fieldset class="mb-8" @click.stop="hideLicenseExplanationVisibility">
     <legend v-if="title" class="text-2xl font-semibold mb-2">
       {{ title }}
     </legend>
@@ -22,7 +18,7 @@
         @change="onValueChange"
       >
         <VLicense v-if="filterType === 'licenses'" :license="item.code" />
-        <span v-else>{{ itemLabel(item) }}</span>
+        <template v-else>{{ itemLabel(item) }}</template>
       </VCheckbox>
       <button
         v-if="filterType === 'licenses'"

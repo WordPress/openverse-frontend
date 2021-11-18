@@ -95,11 +95,14 @@ const VCheckbox = defineComponent({
       return attrs
     })
 
-    watch(() => props.checked, (checked) => {
-      if (checked !== localCheckedState.value) {
-        localCheckedState.value = checked
+    watch(
+      () => props.checked,
+      (checked) => {
+        if (checked !== localCheckedState.value) {
+          localCheckedState.value = checked
+        }
       }
-    })
+    )
 
     const onChange = () => {
       localCheckedState.value = !localCheckedState.value
