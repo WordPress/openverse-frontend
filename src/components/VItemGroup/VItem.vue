@@ -1,18 +1,23 @@
 <template>
   <div
-    class="flex p-2"
+    class="flex"
     :class="{
       [$style[contextProps.direction]]: true,
       [`border border-dark-charcoal-20 ${
         $style[`${contextProps.direction}-bordered`]
       }`]: contextProps.bordered,
       'bg-dark-charcoal-10': selected && contextProps.bordered,
+      'p-2': isInPopover,
+      [$style[`${contextProps.direction}-popover-item`]]: isInPopover,
     }"
   >
     <VButton
       class="flex justify-between focus-visible:ring-pink rounded min-w-full"
-      :class="$style[`${contextProps.direction}-button`]"
+      :class="{
+        [$style[`${contextProps.direction}-button`]]: true,
+      }"
       variant="grouped"
+      size="small"
       :pressed="selected"
       :role="contextProps.type === 'radiogroup' ? 'radio' : 'menuitemcheckbox'"
       :aria-checked="selected"
@@ -26,7 +31,7 @@
         <slot name="default" />
       </div>
       <VIcon
-        v-if="selected && contextProps.direction === 'vertical'"
+        v-if="!isInPopover && selected && contextProps.direction === 'vertical'"
         :icon-path="check"
       />
     </VButton>
@@ -39,6 +44,8 @@ import check from '~/assets/icons/check.svg'
 import VButton from '~/components/VButton.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'
 import { VItemGroupContextKey } from './VItemGroup.vue'
+import { VPopoverContentContextKey } from '~/components/VPopover/VPopoverContent.vue'
+import { warn } from '~/utils/warn'
 
 export default defineComponent({
   name: 'VItem',
@@ -53,16 +60,21 @@ export default defineComponent({
     },
   },
   setup() {
+    const isInPopover = inject(VPopoverContentContextKey, false)
     const contextProps = inject(VItemGroupContextKey)
 
-    return { check, contextProps }
+    if (isInPopover && contextProps.bordered) {
+      warn('Bordered popover items are not supported')
+    }
+
+    return { check, contextProps, isInPopover }
   },
 })
 </script>
 
 <style module>
 .vertical {
-  @apply min-w-full;
+  @apply min-w-max;
 }
 
 .vertical-bordered {
@@ -83,6 +95,14 @@ export default defineComponent({
 
 .vertical-content {
   @apply flex flex-row;
+}
+
+.vertical-popover-item {
+  @apply pb-0;
+}
+
+.vertical-popover-item:last-of-type {
+  @apply pb-2;
 }
 
 .horizontal-button {
@@ -107,5 +127,13 @@ export default defineComponent({
 
 .horizontal-content {
   @apply flex flex-col items-center;
+}
+
+.horizontal-popover-item {
+  @apply pe-0;
+}
+
+.horizontal-popover-item:last-of-type {
+  @apply pe-2;
 }
 </style>
