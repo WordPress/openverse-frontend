@@ -177,18 +177,6 @@ $hero-height: 55vh;
   }
 }
 
-.help-links {
-  z-index: 1;
-  position: absolute;
-  bottom: 1rem;
-  left: 1rem;
-}
-
-.help-icon {
-  height: 32px;
-  vertical-align: middle;
-}
-
 .logo-cloud {
   z-index: 0;
   margin-top: auto;
