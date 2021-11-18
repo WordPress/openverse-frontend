@@ -76,7 +76,7 @@
             role="menuitem"
             @focus="onFocus()"
             >{{ $t('header.licenses-nav-item') }}
-            <i class="icon external-link" />
+            <VIcon class="ms-2" :icon-path="externalLinkIcon" rtl-flip />
           </a>
         </Dropdown>
 
@@ -113,7 +113,7 @@
             class="navbar-item"
             @focus="onFocus()"
             >{{ $t('header.api-nav-item') }}
-            <i class="icon external-link" />
+            <VIcon class="ms-2" :icon-path="externalLinkIcon" rtl-flip />
           </a>
         </Dropdown>
 
@@ -129,15 +129,18 @@
 import { mapActions } from 'vuex'
 
 import Dropdown from '~/components/Dropdown'
+import VIcon from '~/components/VIcon/VIcon.vue'
 
 import { UPDATE_QUERY } from '~/constants/action-types'
 import { SEARCH } from '~/constants/store-modules'
 
 import OpenverseLogo from '~/assets/logo.svg?inline'
+import externalLinkIcon from '~/assets/icons/external-link.svg'
 
 export default {
   name: 'EmbeddedNavSection',
   components: {
+    VIcon,
     Dropdown,
     OpenverseLogo,
   },
@@ -146,7 +149,11 @@ export default {
       default: false,
     },
   },
-  data: () => ({ form: { searchTerm: '' }, isBurgerMenuActive: false }),
+  data: () => ({
+    form: { searchTerm: '' },
+    isBurgerMenuActive: false,
+    externalLinkIcon,
+  }),
   computed: {
     navSearchPlaceholder() {
       return this.$t('header.placeholder')
