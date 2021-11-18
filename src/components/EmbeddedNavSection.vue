@@ -20,9 +20,7 @@
         @click="toggleBurgerActive"
         @keyup.enter="toggleBurgerActive"
       >
-        <span aria-hidden="true" />
-        <span aria-hidden="true" />
-        <span aria-hidden="true" />
+        <span v-for="i in 3" :key="i" aria-hidden="true" />
       </a>
     </div>
 

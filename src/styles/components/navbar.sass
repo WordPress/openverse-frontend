@@ -210,9 +210,9 @@ a.navbar-item,
     flex-shrink: 0
   .navbar-end
     justify-content: flex-end
-    +ltr-property("margin", auto, false)
+    margin-inline-start: auto
     & > .navbar-item:not(:first-child)
-      margin-left: $space-large
+      margin-inline-start: $space-large
   .navbar-dropdown
     background-color: $navbar-dropdown-background-color
     border-bottom-left-radius: $navbar-dropdown-radius
