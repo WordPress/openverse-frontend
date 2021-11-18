@@ -10,7 +10,7 @@
       />
     </NuxtLink>
 
-    <div class="navbar-brand text-white">
+    <div class="navbar-brand">
       <a
         role="button"
         class="navbar-burger"
