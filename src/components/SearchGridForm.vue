@@ -15,7 +15,10 @@
     >
       {{ $t('filters.title') }}
     </button>
-    <div class="search-field field has-addons control search-control">
+    <div
+      class="search-field field has-addons control search-control"
+      :class="isFilterVisible ? '' : 'ms-2'"
+    >
       <label for="searchInput" class="search-field__label control label">
         <input
           id="searchInput"
@@ -23,7 +26,7 @@
           :aria-label="$t('browse-page.aria.search')"
           required="required"
           autofocus="true"
-          class="search-input input placeholder-dark-charcoal-50"
+          class="search-input input placeholder-dark-charcoal-50 placeholder-opacity-50"
           type="search"
           :placeholder="searchBoxPlaceholder"
           :value="searchTermsModel"
