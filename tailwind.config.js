@@ -177,7 +177,7 @@ module.exports = {
   variants: {
     extend: {
       backgroundColor: ['checked', 'disabled'],
-      borderColor: ['checked'],
+      borderColor: ['checked', 'disabled'],
       margin: ['last'],
       opacity: ['disabled'],
       ringColor: ['focus-visible'],

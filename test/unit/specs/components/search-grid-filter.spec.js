@@ -14,6 +14,11 @@ const initialFilters = {
       name: 'Commercial usage',
       checked: false,
     },
+    {
+      code: 'modification',
+      name: 'Modify or adapt',
+      checked: false,
+    },
   ],
   licenses: [{ code: 'by', name: 'CC-BY', checked: false }],
   imageCategories: [{ code: 'photo', name: 'Photographs', checked: false }],
@@ -70,6 +75,7 @@ describe('SearchGridFilter', () => {
       mocks: {
         $store: storeMock,
       },
+      stubs: { VIcon: true },
     }
   })
 

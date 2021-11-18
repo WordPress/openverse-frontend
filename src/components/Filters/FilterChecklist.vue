@@ -26,17 +26,17 @@
       </VCheckbox>
       <button
         v-if="filterType === 'licenses'"
+        :ref="`${item.code}licenseIcon`"
         :aria-label="$t('browse-page.aria.license-explanation')"
         class="appearance-none"
         type="button"
-        @click="toggleLicenseExplanationVisibility(item.code)"
+        @click.stop="toggleLicenseExplanationVisibility(item.code)"
       >
         <svg
-          :ref="`${index}licenseIcon`"
           aria-hidden="true"
           width="24"
-          height="20"
-          viewBox="0 0 24 20"
+          height="24"
+          viewBox="0 0 24 24"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
           class="pe-1"
@@ -50,15 +50,12 @@
           <path d="M12 13V14.5" stroke="#1E1E1E" stroke-width="1.5" />
         </svg>
       </button>
-
-      <LicenseExplanationTooltip
-        v-if="
-          shouldRenderLicenseExplanationTooltip(item.code) && !isDisabled(item)
-        "
-        :license="licenseExplanationCode"
-        :icon-dom-node="$refs[`${index}licenseIcon`][0]"
-      />
     </div>
+    <LicenseExplanationTooltip
+      v-if="licenseExplanationVisible"
+      :license="licenseExplanationCode"
+      :icon-dom-node="$refs[`${licenseExplanationCode}licenseIcon`][0]"
+    />
   </fieldset>
 </template>
 
@@ -72,11 +69,16 @@ export default {
     VLicense,
     LicenseExplanationTooltip,
   },
-  props: ['options', 'title', 'filterType', 'disabled'],
+  props: {
+    options: { type: Array, required: false },
+    title: { type: String },
+    filterType: { type: String, required: true },
+    disabled: { type: Boolean, default: false },
+  },
   data() {
     return {
       licenseExplanationVisible: false,
-      licenseExplanationCode: '',
+      licenseExplanationCode: null,
     }
   },
   computed: {
@@ -118,22 +120,22 @@ export default {
           (item.code === 'commercial' && nc.some((li) => li.checked)) ||
           (item.code === 'modification' && nd.some((li) => li.checked))
         )
-      }
-      if (this.filterType === 'licenses') {
+      } else if (this.filterType === 'licenses') {
         const commercial = this.getFilterTypeValue('licenseTypes', 'commercial')
         const modification = this.getFilterTypeValue(
           'licenseTypes',
           'modification'
         )
         return (
-          (commercial.checked && item.code.includes('nc')) ||
-          (modification.checked && item.code.includes('nd'))
+          (commercial[0].checked && item.code.includes('nc')) ||
+          (modification[0].checked && item.code.includes('nd'))
         )
       }
       return this.disabled
     },
     shouldRenderLicenseExplanationTooltip(licenseCode) {
       return (
+        !this.isDisabled({ code: licenseCode }) &&
         this.licenseExplanationVisible &&
         this.licenseExplanationCode === licenseCode
       )

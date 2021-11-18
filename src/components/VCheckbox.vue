@@ -78,7 +78,9 @@ const VCheckbox = defineComponent({
   },
   setup(props, { emit }) {
     const localCheckedState = ref(props.checked || false)
-    const labelClasses = computed(() => (props.disabled ? 'opacity-50' : ''))
+    const labelClasses = computed(() =>
+      props.disabled ? 'text-dark-charcoal-70' : 'text-dark-charcoal'
+    )
     const inputAttrs = computed(() => {
       const attrs = {
         name: props.name || props.id,
@@ -103,7 +105,7 @@ const VCheckbox = defineComponent({
       localCheckedState.value = !localCheckedState.value
       emit('change', {
         name: inputAttrs.value.name,
-        value: props.value,
+        value: inputAttrs.value.value,
         checked: localCheckedState.value,
       })
     }
@@ -119,12 +121,12 @@ export default VCheckbox
 </script>
 <style scoped>
 .checkbox-label {
-  @apply relative flex text-base text-dark-charcoal leading-5;
+  @apply relative flex text-base leading-5;
 }
 .checkbox {
   @apply appearance-none w-5 h-5 border-dark-charcoal border rounded-sm me-3 flex-shrink-0 relative;
   @apply focus:outline-none focus:ring focus:ring-offset-2 focus:ring-primary;
-  @apply transition-colors disabled:bg-dark-charcoal-20;
+  @apply transition-colors disabled:bg-dark-charcoal-10 disabled:border-dark-charcoal-40;
   @apply checked:bg-dark-charcoal;
 }
 .checkmark {
