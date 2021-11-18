@@ -11,7 +11,8 @@
     <div class="navbar-brand text-white">
       <a
         role="button"
-        :class="{ ['navbar-burger']: true, ['is-active']: isBurgerMenuActive }"
+        class="navbar-burger"
+        :class="{ 'is-active': isBurgerMenuActive }"
         :aria-label="$t('header.aria.menu')"
         aria-expanded="false"
         @click="toggleBurgerActive"
@@ -22,7 +23,7 @@
         <span aria-hidden="true" />
       </a>
     </div>
-    <div :class="{ ['navbar-menu']: true, ['is-active']: isBurgerMenuActive }">
+    <div class="navbar-menu" :class="{ 'is-active': isBurgerMenuActive }">
       <form
         v-if="showNavSearch"
         class="hero_search-form"
