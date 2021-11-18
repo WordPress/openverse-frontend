@@ -82,7 +82,7 @@ $wp-max-width: 940px
   padding: 0.5rem 0.75rem
   position: relative
   .icon
-    margin-left: $space-small
+    margin-inline-start: $space-small
 
 .navbar.embedded
   .navbar-end
@@ -221,7 +221,6 @@ a.navbar-item,
     box-shadow: 0 8px 8px toRgba($scheme-invert, 0.1)
     display: none
     font-size: 0.875rem
-    +ltr-position(0, false)
     min-width: 100%
     position: absolute
     top: 100%
@@ -230,7 +229,7 @@ a.navbar-item,
       padding: 0.375rem 1rem
       white-space: nowrap
     a.navbar-item
-      +ltr-property("padding", 3rem)
+      padding-inline-end: 3rem
       &:focus,
       &:hover
         background-color: $navbar-dropdown-item-hover-background-color
