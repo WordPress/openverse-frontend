@@ -17,7 +17,7 @@
     </button>
     <div
       class="search-field field has-addons control search-control"
-      :class="isFilterVisible ? '' : 'ms-2'"
+      :class="{ 'ms-2': isFilterVisible }"
     >
       <label for="searchInput" class="search-field__label control label">
         <input
