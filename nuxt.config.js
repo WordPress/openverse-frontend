@@ -129,7 +129,6 @@ export default {
       '~/components',
       '~/components/ContentReport',
       '~/components/Filters',
-      '~/components/License',
       '~/components/ImageDetails',
       '~/components/ImageGrid',
       '~/components/MediaInfo',

@@ -80,10 +80,11 @@
 <script>
 import { computed } from '@nuxtjs/composition-api'
 import AudioThumbnail from '~/components/AudioThumbnail/AudioThumbnail.vue'
+import VLicense from '~/components/License/VLicense'
 
 export default {
   name: 'Row',
-  components: { AudioThumbnail },
+  components: { AudioThumbnail, VLicense },
   props: ['audio', 'size'],
   setup(props) {
     /* Utils */

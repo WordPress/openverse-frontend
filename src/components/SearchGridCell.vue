@@ -42,6 +42,7 @@
 
 <script>
 import getProviderLogo from '~/utils/get-provider-logo'
+import VLicense from '~/components/License/VLicense'
 
 const errorImage = require('~/assets/image_not_available_placeholder.png')
 
@@ -59,6 +60,7 @@ const toAbsolutePath = (url, prefix = 'https://') => {
 
 export default {
   name: 'SearchGridCell',
+  components: { VLicense },
   props: ['image', 'shouldContainImage'],
   data() {
     return {
