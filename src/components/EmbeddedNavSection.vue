@@ -27,7 +27,7 @@
     <div class="navbar-menu" :class="{ 'is-active': isBurgerMenuActive }">
       <form
         v-if="showNavSearch"
-        class="hero_search-form"
+        class="flex items-center"
         role="search"
         method="post"
         @submit.prevent="onSubmit"
@@ -35,7 +35,7 @@
         <input
           v-model.lazy="form.searchTerm"
           :aria-label="$t('header.aria.search')"
-          class="input"
+          class="input w-64"
           type="search"
           :placeholder="navSearchPlaceholder"
         />
@@ -169,29 +169,3 @@ export default {
   },
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss" scoped>
-/* header */
-.logo {
-  color: black;
-  font-size: 2rem;
-  font-weight: bold;
-  &:link,
-  &:visited,
-  &:hover,
-  &:active {
-    text-decoration: none;
-  }
-}
-
-.hero_search-form {
-  margin: 0 15px 0 0;
-  display: flex;
-  align-items: center;
-
-  input {
-    width: 16rem;
-  }
-}
-</style>
