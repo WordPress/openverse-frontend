@@ -1,12 +1,11 @@
 <template>
   <nav :aria-label="$t('header.aria.primary')" class="navbar embedded">
     <NuxtLink to="/" style="align-self: center; line-height: 0">
-      <img
+      <!-- width and height chosen w.r.t. viewBox "0 0 280 42" -->
+      <OpenverseLogo
+        :style="{ width: '160px', height: '24px' }"
+        class="me-6"
         alt="Openverse logo mark"
-        src="~/assets/logo.svg?data"
-        style="padding-right: 24px"
-        width="160"
-        height="24"
       />
     </NuxtLink>
     <div class="navbar-brand text-white">
@@ -124,14 +123,21 @@
 </template>
 
 <script>
-import { UPDATE_QUERY } from '~/constants/action-types'
-import Dropdown from '~/components/Dropdown'
-import { SEARCH } from '~/constants/store-modules'
 import { mapActions } from 'vuex'
+
+import Dropdown from '~/components/Dropdown'
+
+import { UPDATE_QUERY } from '~/constants/action-types'
+import { SEARCH } from '~/constants/store-modules'
+
+import OpenverseLogo from '~/assets/logo.svg?inline'
 
 export default {
   name: 'EmbeddedNavSection',
-  components: { Dropdown },
+  components: {
+    Dropdown,
+    OpenverseLogo,
+  },
   props: {
     showNavSearch: {
       default: false,
