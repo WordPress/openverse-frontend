@@ -1,4 +1,5 @@
 <template>
+  <!-- Refer to the Bulma docs for markup: https://bulma.io/documentation/components/navbar/ -->
   <nav :aria-label="$t('header.aria.primary')" class="navbar embedded">
     <NuxtLink to="/" style="align-self: center; line-height: 0">
       <!-- width and height chosen w.r.t. viewBox "0 0 280 42" -->
@@ -8,6 +9,7 @@
         alt="Openverse logo mark"
       />
     </NuxtLink>
+
     <div class="navbar-brand text-white">
       <a
         role="button"
@@ -23,6 +25,7 @@
         <span aria-hidden="true" />
       </a>
     </div>
+
     <div class="navbar-menu" :class="{ 'is-active': isBurgerMenuActive }">
       <form
         v-if="showNavSearch"
@@ -48,6 +51,7 @@
           />
         </div>
       </form>
+
       <div class="navbar-end">
         <Dropdown v-slot="{ onFocus }" :text="$t('header.about-tab')">
           <NuxtLink
