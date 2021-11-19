@@ -8,7 +8,7 @@
   >
     <button
       v-if="!isFilterVisible"
-      class="button filter-toggle h-10 md:h-14"
+      class="button filter-toggle"
       type="button"
       @click.prevent="onToggleSearchGridFilter"
     >
@@ -122,7 +122,7 @@ export default {
 
 <style lang="scss" scoped>
 .filter-toggle {
-  @apply h-10 md:h-14 text-2xl hover:border-tx p-2 border-light-gray normal-case;
+  @apply h-10 lg:h-14 text-2xl hover:border-tx p-2 border-light-gray normal-case;
 }
 .search-icon {
   @apply start-0 text-light-gray w-10 h-10 absolute items-center inline-flex justify-center pointer-events-none;
@@ -132,7 +132,7 @@ export default {
   @apply placeholder-dark-charcoal-50 placeholder-opacity-50;
   @apply text-2xl text-start font-semibold placeholder-dark-charcoal-50;
   @apply border border-light-gray hover:border-gray rounded rounded-e-none focus:outline-none focus:border-gray;
-  @apply md:text-lgr md:h-14;
+  @apply lg:text-lgr lg:h-14;
 }
 .search-form {
   @apply w-full top-0 sticky bg-white flex;
@@ -145,7 +145,7 @@ export default {
   }
 
   .button {
-    @apply py-2 px-5 h-10 md:h-14 md:px-10 rounded rounded-s-none text-2xl md:text-lgr;
+    @apply py-2 px-5 h-10 lg:h-14 lg:px-10 rounded rounded-s-none text-2xl lg:text-lgr;
   }
 }
 .search-icon {
