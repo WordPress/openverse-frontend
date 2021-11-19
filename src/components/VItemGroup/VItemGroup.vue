@@ -138,19 +138,15 @@ export default defineComponent({
         case 'ArrowUp':
         case resolveArrow('ArrowLeft', 'ArrowRight'):
           if (targetIndex === 0) {
-            // If navigating up/left on the first item, ignore it
-            return
+            return ensureFocus(items[items.length - 1])
           }
-          ensureFocus(items[targetIndex - 1])
-          break
+          return ensureFocus(items[targetIndex - 1])
         case 'ArrowDown':
         case resolveArrow('ArrowRight', 'ArrowLeft'):
           if (targetIndex === items.length - 1) {
-            // If navigation down/right on the last item, ignore it
-            return
+            return ensureFocus(items[0])
           }
-          ensureFocus(items[targetIndex + 1])
-          break
+          return ensureFocus(items[targetIndex + 1])
       }
     }
 

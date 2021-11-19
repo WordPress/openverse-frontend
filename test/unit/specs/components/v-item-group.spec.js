@@ -157,13 +157,13 @@ describe('VItemGroup', () => {
       )
 
       it.each(['ArrowUp', 'ArrowLeft'])(
-        'should do nothing when on the first item and pressing %s',
+        'should go to the last item when on the first item and pressing %s',
         async (key) => {
           render(TestWrapper, { attrs: { type: 'radiogroup' } })
-          const [firstItem] = screen.queryAllByRole('radio')
+          const [firstItem, , , lastItem] = screen.queryAllByRole('radio')
           await doFocus(firstItem)
           await userEvent.keyboard(`{${key}}`)
-          expect(firstItem).toHaveFocus()
+          expect(lastItem).toHaveFocus()
         }
       )
 
@@ -180,14 +180,14 @@ describe('VItemGroup', () => {
       )
 
       it.each(['ArrowDown', 'ArrowRight'])(
-        'should do nothing when on the last item and pressing %s',
+        'should go to the first item when on the last item and pressing %s',
         async (key) => {
           render(TestWrapper, { attrs: { type: 'radiogroup' } })
-          const [, , , lastItem] = screen.queryAllByRole('radio')
+          const [firstItem, , , lastItem] = screen.queryAllByRole('radio')
 
           await doFocus(lastItem)
           await userEvent.keyboard(`{${key}}`)
-          expect(lastItem).toHaveFocus()
+          expect(firstItem).toHaveFocus()
         }
       )
 
@@ -210,13 +210,13 @@ describe('VItemGroup', () => {
           )
 
           it.each(['ArrowUp', 'ArrowLeft'])(
-            'should do nothing when on the first item and pressing %s',
+            'should go to the last item when on the first item and pressing %s',
             async (key) => {
               render(TestWrapper, { attrs: { type: 'radiogroup' } })
-              const [firstItem] = screen.queryAllByRole('radio')
+              const [firstItem, , , lastItem] = screen.queryAllByRole('radio')
               await doFocus(firstItem)
               await userEvent.keyboard(`{${key}}`)
-              expect(firstItem).toHaveFocus()
+              expect(lastItem).toHaveFocus()
             }
           )
 
@@ -233,14 +233,14 @@ describe('VItemGroup', () => {
           )
 
           it.each(['ArrowDown', 'ArrowRight'])(
-            'should do nothing when on the last item and pressing %s',
+            'should go to the first item when on the last item and pressing %s',
             async (key) => {
               render(TestWrapper, { attrs: { type: 'radiogroup' } })
-              const [, , , lastItem] = screen.queryAllByRole('radio')
+              const [firstItem, , , lastItem] = screen.queryAllByRole('radio')
 
               await doFocus(lastItem)
               await userEvent.keyboard(`{${key}}`)
-              expect(lastItem).toHaveFocus()
+              expect(firstItem).toHaveFocus()
             }
           )
         })
@@ -261,15 +261,15 @@ describe('VItemGroup', () => {
           )
 
           it.each(['ArrowUp', 'ArrowRight'])(
-            'should do nothing when on the first item and pressing %s',
+            'should go to the last item when on the first item and pressing %s',
             async (key) => {
               render(TestWrapper, {
                 attrs: { type: 'radiogroup', direction: 'horizontal' },
               })
-              const [firstItem] = screen.queryAllByRole('radio')
+              const [firstItem, , , lastItem] = screen.queryAllByRole('radio')
               await doFocus(firstItem)
               await userEvent.keyboard(`{${key}}`)
-              expect(firstItem).toHaveFocus()
+              expect(lastItem).toHaveFocus()
             }
           )
 
@@ -288,16 +288,16 @@ describe('VItemGroup', () => {
           )
 
           it.each(['ArrowDown', 'ArrowLeft'])(
-            'should do nothing when on the last item and pressing %s',
+            'should go to the first item when on the last item and pressing %s',
             async (key) => {
               render(TestWrapper, {
                 attrs: { type: 'radiogroup', direction: 'horizontal' },
               })
-              const [, , , lastItem] = screen.queryAllByRole('radio')
+              const [firstItem, , , lastItem] = screen.queryAllByRole('radio')
 
               await doFocus(lastItem)
               await userEvent.keyboard(`{${key}}`)
-              expect(lastItem).toHaveFocus()
+              expect(firstItem).toHaveFocus()
             }
           )
         })
