@@ -42,7 +42,7 @@
 
 <script>
 import getProviderLogo from '~/utils/get-provider-logo'
-import VLicense from '~/components/License/VLicense'
+import VLicense from '~/components/License/VLicense.vue'
 
 const errorImage = require('~/assets/image_not_available_placeholder.png')
 
