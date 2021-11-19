@@ -22,6 +22,7 @@ import {
   readonly,
 } from '@nuxtjs/composition-api'
 import { ensureFocus } from 'reakit-utils'
+import { useI18n } from '~/composables/use-i18n'
 
 /**
  * @typedef VItemGroupContext
@@ -99,6 +100,23 @@ export default defineComponent({
     const isFocused = ref(false)
     provide(VItemGroupContextKey, props)
 
+    const i18n = useI18n()
+
+    /**
+     * When the item group is horizontal, we need to "reverse" the behavior of the left and right arrow keys for RTL locales
+     * because the DOM order gets reversed to be opposite the visual order relative to left/right movement.
+     *
+     * For vertical locales it should remain the same.
+     * @param {string} ltr
+     * @param {string} rtl
+     */
+    const resolveArrow = (ltr, rtl) => {
+      return i18n.localeProperties.dir === 'rtl' &&
+        props.direction === 'horizontal'
+        ? rtl
+        : ltr
+    }
+
     /**
      * @param {KeyboardEvent} event
      */
@@ -118,7 +136,7 @@ export default defineComponent({
 
       switch (event.key) {
         case 'ArrowUp':
-        case 'ArrowLeft':
+        case resolveArrow('ArrowLeft', 'ArrowRight'):
           if (targetIndex === 0) {
             // If navigating up/left on the first item, ignore it
             return
@@ -126,7 +144,7 @@ export default defineComponent({
           ensureFocus(items[targetIndex - 1])
           break
         case 'ArrowDown':
-        case 'ArrowRight':
+        case resolveArrow('ArrowRight', 'ArrowLeft'):
           if (targetIndex === items.length - 1) {
             // If navigation down/right on the last item, ignore it
             return

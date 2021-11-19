@@ -4,6 +4,11 @@ import { render, screen } from '@testing-library/vue'
 import VItemGroup from '~/components/VItemGroup/VItemGroup.vue'
 import VItem from '~/components/VItemGroup/VItem.vue'
 import userEvent from '@testing-library/user-event'
+import { useI18n } from '~/composables/use-i18n'
+
+jest.mock('~/composables/use-i18n', () => ({
+  useI18n: jest.fn(),
+}))
 
 const doFocus = (element) => {
   element.focus()
@@ -47,6 +52,14 @@ const TestWrapper = Vue.component('TestWrapper', {
 })
 
 describe('VItemGroup', () => {
+  let mockDir
+  beforeEach(() => {
+    mockDir = 'ltr'
+    useI18n.mockImplementation(() => ({ localeProperties: { dir: mockDir } }))
+  })
+  afterEach(() => {
+    useI18n.mockReset()
+  })
   it('should render buttons with the appropriate roles', () => {
     render(TestWrapper)
     expect(screen.queryByRole('menu')).not.toBe(null)
@@ -68,7 +81,9 @@ describe('VItemGroup', () => {
   })
 
   it('should render a radio group', async () => {
-    const { container } = render(TestWrapper, { attrs: { type: 'radiogroup' } })
+    const { container } = render(TestWrapper, {
+      attrs: { type: 'radiogroup' },
+    })
     expect(screen.queryByRole('radiogroup')).not.toBe(null)
     const [, secondItem] = screen.queryAllByRole('radio')
     expect(
@@ -93,7 +108,9 @@ describe('VItemGroup', () => {
     })
 
     it('should render all items tabbable when in a menu', () => {
-      const { container } = render(TestWrapper, { attrs: { type: 'menu' } })
+      const { container } = render(TestWrapper, {
+        attrs: { type: 'menu' },
+      })
       const tabbableElements = container.querySelectorAll('[tabindex="0"]')
       const items = screen.queryAllByRole('menuitemcheckbox')
       items.forEach((item) => expect(tabbableElements).toContain(item))
@@ -173,6 +190,118 @@ describe('VItemGroup', () => {
           expect(lastItem).toHaveFocus()
         }
       )
+
+      describe('rtl', () => {
+        beforeEach(() => {
+          mockDir = 'rtl'
+        })
+
+        describe('vertical', () => {
+          it.each(['ArrowUp', 'ArrowLeft'])(
+            'should focus to the previous item on %s',
+            async (key) => {
+              render(TestWrapper, { attrs: { type: 'radiogroup' } })
+              const [firstItem, secondItem] = screen.queryAllByRole('radio')
+
+              await doFocus(secondItem)
+              await userEvent.keyboard(`{${key}}`)
+              expect(firstItem).toHaveFocus()
+            }
+          )
+
+          it.each(['ArrowUp', 'ArrowLeft'])(
+            'should do nothing when on the first item and pressing %s',
+            async (key) => {
+              render(TestWrapper, { attrs: { type: 'radiogroup' } })
+              const [firstItem] = screen.queryAllByRole('radio')
+              await doFocus(firstItem)
+              await userEvent.keyboard(`{${key}}`)
+              expect(firstItem).toHaveFocus()
+            }
+          )
+
+          it.each(['ArrowDown', 'ArrowRight'])(
+            'should focus to the next item on %s',
+            async (key) => {
+              render(TestWrapper, { attrs: { type: 'radiogroup' } })
+              const [firstItem, secondItem] = screen.queryAllByRole('radio')
+
+              await doFocus(firstItem)
+              await userEvent.keyboard(`{${key}}`)
+              expect(secondItem).toHaveFocus()
+            }
+          )
+
+          it.each(['ArrowDown', 'ArrowRight'])(
+            'should do nothing when on the last item and pressing %s',
+            async (key) => {
+              render(TestWrapper, { attrs: { type: 'radiogroup' } })
+              const [, , , lastItem] = screen.queryAllByRole('radio')
+
+              await doFocus(lastItem)
+              await userEvent.keyboard(`{${key}}`)
+              expect(lastItem).toHaveFocus()
+            }
+          )
+        })
+
+        describe('horizontal', () => {
+          it.each(['ArrowUp', 'ArrowRight'])(
+            'should focus to the previous item on %s',
+            async (key) => {
+              render(TestWrapper, {
+                attrs: { type: 'radiogroup', direction: 'horizontal' },
+              })
+              const [firstItem, secondItem] = screen.queryAllByRole('radio')
+
+              await doFocus(secondItem)
+              await userEvent.keyboard(`{${key}}`)
+              expect(firstItem).toHaveFocus()
+            }
+          )
+
+          it.each(['ArrowUp', 'ArrowRight'])(
+            'should do nothing when on the first item and pressing %s',
+            async (key) => {
+              render(TestWrapper, {
+                attrs: { type: 'radiogroup', direction: 'horizontal' },
+              })
+              const [firstItem] = screen.queryAllByRole('radio')
+              await doFocus(firstItem)
+              await userEvent.keyboard(`{${key}}`)
+              expect(firstItem).toHaveFocus()
+            }
+          )
+
+          it.each(['ArrowDown', 'ArrowLeft'])(
+            'should focus to the next item on %s',
+            async (key) => {
+              render(TestWrapper, {
+                attrs: { type: 'radiogroup', direction: 'horizontal' },
+              })
+              const [firstItem, secondItem] = screen.queryAllByRole('radio')
+
+              await doFocus(firstItem)
+              await userEvent.keyboard(`{${key}}`)
+              expect(secondItem).toHaveFocus()
+            }
+          )
+
+          it.each(['ArrowDown', 'ArrowLeft'])(
+            'should do nothing when on the last item and pressing %s',
+            async (key) => {
+              render(TestWrapper, {
+                attrs: { type: 'radiogroup', direction: 'horizontal' },
+              })
+              const [, , , lastItem] = screen.queryAllByRole('radio')
+
+              await doFocus(lastItem)
+              await userEvent.keyboard(`{${key}}`)
+              expect(lastItem).toHaveFocus()
+            }
+          )
+        })
+      })
     })
   })
 })
