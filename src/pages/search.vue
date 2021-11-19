@@ -1,14 +1,14 @@
 <template>
   <div class="browse-page">
     <div class="search columns">
-      <div class="lg:hidden">
+      <div v-if="!isDesktop()">
         <AppModal v-if="isFilterVisible" @close="onToggleSearchGridFilter">
           <SearchGridFilter />
         </AppModal>
       </div>
       <aside
-        v-if="isFilterVisible"
-        class="column is-narrow grid-sidebar is-hidden-touch max-w-full bg-white"
+        v-if="isDesktop() && isFilterVisible"
+        class="column is-narrow grid-sidebar max-w-full bg-white"
       >
         <SearchGridFilter />
       </aside>
@@ -41,6 +41,8 @@ import { mapActions, mapGetters, mapMutations, mapState } from 'vuex'
 import { MEDIA, SEARCH } from '~/constants/store-modules'
 import debounce from 'lodash.debounce'
 
+const MIN_SCREEN_WIDTH_FILTER_VISIBLE_BY_DEFAULT = 768
+
 const BrowsePage = {
   name: 'browse-page',
   layout({ store }) {
@@ -70,11 +72,8 @@ const BrowsePage = {
         ? local.get(process.env.filterStorageKey) === 'true'
         : true
 
-    const MIN_SCREEN_WIDTH_FILTER_VISIBLE_BY_DEFAULT = 800
-    const isDesktop = () =>
-      screenWidth() > MIN_SCREEN_WIDTH_FILTER_VISIBLE_BY_DEFAULT
     this.setFilterVisibility({
-      isFilterVisible: isDesktop() ? localFilterState() : false,
+      isFilterVisible: this.isDesktop() ? localFilterState() : false,
     })
     window.addEventListener('scroll', this.debounceScrollHandling)
   },
@@ -122,6 +121,9 @@ const BrowsePage = {
     },
     checkScrollLength() {
       this.showScrollButton = window.scrollY > 70
+    },
+    isDesktop() {
+      return screenWidth() >= MIN_SCREEN_WIDTH_FILTER_VISIBLE_BY_DEFAULT
     },
   },
   watch: {
