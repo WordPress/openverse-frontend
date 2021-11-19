@@ -30,7 +30,7 @@ export default {
      */
     iconPath: {
       /**
-       * In `just` our icons get transformed to Vue components
+       * In `jest` our icons get transformed to Vue components
        */
       type: process.env.NODE_ENV === 'test' ? Object : String,
       required: true,

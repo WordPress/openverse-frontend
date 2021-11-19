@@ -1,8 +1,11 @@
 <template>
   <div
+    ref="nodeRef"
     class="w-full flex"
     :role="type"
     :class="direction === 'vertical' ? 'flex-col' : 'flex-row'"
+    @focusin="isFocused = true"
+    @focusout="isFocused = false"
   >
     <!--
       @slot The items in the item group. Should all be `VItem`s
@@ -12,7 +15,13 @@
 </template>
 
 <script>
-import { defineComponent, provide } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  provide,
+  ref,
+  readonly,
+} from '@nuxtjs/composition-api'
+import { ensureFocus } from 'reakit-utils'
 
 /**
  * @typedef VItemGroupContext
@@ -25,6 +34,21 @@ import { defineComponent, provide } from '@nuxtjs/composition-api'
  * @type {import('@nuxtjs/composition-api').InjectionKey<VItemGroupContext>}
  */
 export const VItemGroupContextKey = Symbol('VItemGroupContext')
+
+/**
+ * @typedef VItemGroupFocusContext
+ * @property {import('@nuxtjs/composition-api').Readonly<import('@nuxtjs/composition-api').Ref<boolean>>} isGroupFocused
+ * @property {(event: KeyboardEvent) => void} onItemKeyPress
+ * @property {import('@nuxtjs/composition-api').Readonly<import('@nuxtjs/composition-api').Ref<number>>} selectedCount
+ * @property {(selected: boolean, previousSelected: boolean) => void} setSelected
+ */
+
+/**
+ * @type {import('@nuxtjs/composition-api').InjectionKey<VItemGroupFocusContext>}
+ */
+export const VItemGroupFocusContextKey = Symbol('VItemGroupFocusContext')
+
+const arrows = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight']
 
 export default defineComponent({
   name: 'VItemGroup',
@@ -70,7 +94,69 @@ export default defineComponent({
     },
   },
   setup(props) {
+    /** @type {import('@nuxtjs/composition-api').Ref<HTMLElement | undefined>} */
+    const nodeRef = ref()
+    const isFocused = ref(false)
     provide(VItemGroupContextKey, props)
+
+    /**
+     * @param {KeyboardEvent} event
+     */
+    const onItemKeyPress = (event) => {
+      if (!arrows.includes(event.key) || !nodeRef.value) return
+
+      event.preventDefault()
+
+      const target = event.target
+
+      // While VItem ultimately renders a button at the moment, that could change in the future, so using a data attribute selector makes it more flexible for the future
+      const items = Array.from(
+        nodeRef.value.querySelectorAll('[data-item-group-item]')
+      )
+
+      const targetIndex = items.findIndex((item) => item === target)
+
+      switch (event.key) {
+        case 'ArrowUp':
+        case 'ArrowLeft':
+          if (targetIndex === 0) {
+            // If navigating up/left on the first item, ignore it
+            return
+          }
+          ensureFocus(items[targetIndex - 1])
+          break
+        case 'ArrowDown':
+        case 'ArrowRight':
+          if (targetIndex === items.length - 1) {
+            // If navigation down/right on the last item, ignore it
+            return
+          }
+          ensureFocus(items[targetIndex + 1])
+          break
+      }
+    }
+
+    const selectedCount = ref(0)
+
+    /**
+     * @param {boolean} selected
+     * @param {boolean} previousSelected
+     */
+    const setSelected = (selected, previousSelected) => {
+      if (previousSelected && !selected) selectedCount.value -= 1
+      if (!previousSelected && selected) selectedCount.value += 1
+    }
+
+    const focusContext = {
+      isGroupFocused: readonly(isFocused),
+      onItemKeyPress,
+      selectedCount: readonly(selectedCount),
+      setSelected,
+    }
+
+    provide(VItemGroupFocusContextKey, focusContext)
+
+    return { isFocused, nodeRef }
   },
 })
 </script>

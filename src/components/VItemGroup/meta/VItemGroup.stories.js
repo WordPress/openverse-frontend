@@ -34,9 +34,10 @@ const DefaultStory = (args, { argTypes }) => ({
       <div style="width: 300px">
         <VItemGroup v-bind="$props" type="radiogroup">
           <VItem
-            v-for="(item) in items"
+            v-for="(item, idx) in items"
             :key="item.id"
             :selected="selectedItem.id === item.id"
+            :is-first="idx === 0"
             @click="selectedItem = item"
             size="medium"
           >
@@ -55,7 +56,7 @@ const DefaultStory = (args, { argTypes }) => ({
       icon: icons[i],
     }))
 
-    const selectedItem = ref(items[0])
+    const selectedItem = ref({})
 
     return { items, selectedItem }
   },
@@ -76,9 +77,10 @@ const MenuStory = (args, { argTypes }) => ({
       <div style="width: 300px">
         <VItemGroup v-bind="$props" type="menu">
           <VItem
-            v-for="(item) in items"
+            v-for="(item, idx) in items"
             :key="item.id"
             :selected="selectedItemIds.has(item.id)"
+            :is-first="idx === 0"
             @click="toggleItem(item)"
             size="medium"
           >
@@ -126,9 +128,10 @@ const PopoverStory = (args, { argTypes }) => ({
 
       <VItemGroup v-bind="$props" type="menu">
         <VItem
-          v-for="(item) in items"
+          v-for="(item, idx) in items"
           :key="item.id"
           :selected="selectedItemIds.has(item.id)"
+          :is-first="idx === 0"
           @click="toggleItem(item)"
           size="medium"
         >

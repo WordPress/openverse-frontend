@@ -12,17 +12,20 @@
     }"
   >
     <VButton
+      data-item-group-item
       class="flex justify-between focus-visible:ring-pink rounded min-w-full"
-      :class="{
-        [$style[`${contextProps.direction}-button`]]: true,
-      }"
+      :class="[$style.button, $style[`${contextProps.direction}-button`]]"
       variant="grouped"
       size="small"
       :pressed="selected"
       :role="contextProps.type === 'radiogroup' ? 'radio' : 'menuitemcheckbox'"
       :aria-checked="selected"
+      :tabindex="tabIndex"
       v-bind="$attrs"
       v-on="$listeners"
+      @focus="isFocused = true"
+      @blur="isFocused = false"
+      @keydown="focusContext.onItemKeyPress"
     >
       <div
         class="flex-grow whitespace-nowrap"
@@ -39,11 +42,20 @@
 </template>
 
 <script>
-import { defineComponent, inject } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  inject,
+  ref,
+  computed,
+  watch,
+} from '@nuxtjs/composition-api'
 import check from '~/assets/icons/check.svg'
 import VButton from '~/components/VButton.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'
-import { VItemGroupContextKey } from './VItemGroup.vue'
+import {
+  VItemGroupContextKey,
+  VItemGroupFocusContextKey,
+} from './VItemGroup.vue'
 import { VPopoverContentContextKey } from '~/components/VPopover/VPopoverContent.vue'
 import { warn } from '~/utils/warn'
 
@@ -58,8 +70,17 @@ export default defineComponent({
       type: Boolean,
       required: true,
     },
+    /**
+     * Whether the item is the first in the group.
+     */
+    isFirst: {
+      type: Boolean,
+      required: true,
+    },
   },
-  setup() {
+  setup(props) {
+    const focusContext = inject(VItemGroupFocusContextKey)
+    const isFocused = ref(false)
     const isInPopover = inject(VPopoverContentContextKey, false)
     const contextProps = inject(VItemGroupContextKey)
 
@@ -67,12 +88,48 @@ export default defineComponent({
       warn('Bordered popover items are not supported')
     }
 
-    return { check, contextProps, isInPopover }
+    watch(
+      () => props.selected,
+      (selected, previousSelected) =>
+        focusContext.setSelected(selected, previousSelected)
+    )
+
+    const tabIndex = computed(() => {
+      // If outside a radiogroup then everything can be tabbable in order
+      if (contextProps.type !== 'radiogroup') return 0
+      // If no items are selected then all can be tabbable to ensure it is possible to enter into the group
+      if (
+        focusContext.selectedCount.value === 0 &&
+        props.isFirst &&
+        !focusContext.isGroupFocused.value
+      )
+        return 0
+      // If this one is focused then it should be the tabbable item
+      if (isFocused.value) return 0
+      // If the group is not focused but this is the selected item, then this should be the focusable item when focusing into the group
+      if (!focusContext.isGroupFocused.value && props.selected) return 0
+
+      // Otherwise the item should not be tabbable. The logic above guarantees that at least one other item in the group will be tabbable.
+      return -1
+    })
+
+    return {
+      check,
+      contextProps,
+      isInPopover,
+      isFocused,
+      tabIndex,
+      focusContext,
+    }
   },
 })
 </script>
 
 <style module>
+.button:focus {
+  @apply z-10;
+}
+
 .vertical {
   @apply min-w-max;
 }
