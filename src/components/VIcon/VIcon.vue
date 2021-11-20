@@ -1,7 +1,7 @@
 <template>
   <svg
-    class="v-icon h-6 w-6"
-    :class="{ 'rtl-flip': rtlFlip }"
+    class="v-icon"
+    :class="[`w-${size}`, `h-${size}`, { 'rtl-flip': rtlFlip }]"
     xmlns="http://www.w3.org/2000/svg"
     :viewBox="viewBox"
     aria-hidden="true"
@@ -48,6 +48,14 @@ export default {
     rtlFlip: {
       type: Boolean,
       default: false,
+    },
+    /**
+     * the size of the icon in terms of the Tailwind height and width scale; The
+     * icon, being square, uses this for both dimensions.
+     */
+    size: {
+      type: Number,
+      default: 6,
     },
   },
 }
