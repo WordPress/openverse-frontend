@@ -66,8 +66,8 @@
     "nuxt": "^2.15.4",
     "reakit-utils": "^0.15.2",
     "uuid": "^8.3.2",
-    "vue-i18n-extract": "^2.0.0",
-    "vue-i18n": "^8.26.5"
+    "vue-i18n": "^8.26.5",
+    "vue-i18n-extract": "^2.0.0"
   },
   "devDependencies": {
     "@babel/runtime-corejs3": "^7.15.3",
