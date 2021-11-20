@@ -39,16 +39,7 @@
         {{ $t('filter-list.clear') }}
       </button>
       <button
-        class="
-          text-sm
-          py-4
-          px-6
-          lowercase
-          rounded
-          bg-trans-blue
-          text-white
-          lg:hidden
-        "
+        class="text-sm py-4 px-6 lowercase rounded bg-trans-blue text-white lg:hidden"
         @click="onToggleSearchGridFilter()"
       >
         {{ $t('filter-list.show') }}

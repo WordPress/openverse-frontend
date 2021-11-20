@@ -26,10 +26,8 @@ const baseUrl = `https://translate.wordpress.org/projects/meta/openverse`
  * @param {Format} format
  * @returns {(localeCode: string) => string}
  */
-const makeTranslationUrl =
-  (format = 'po') =>
-  (localeCode = 'en-gb') =>
-    `${baseUrl}/${localeCode}/default/export-translations/?format=${format}`
+const makeTranslationUrl = (format = 'po') => (localeCode = 'en-gb') =>
+  `${baseUrl}/${localeCode}/default/export-translations/?format=${format}`
 
 /**
  * fetch a json translation from GlotPress

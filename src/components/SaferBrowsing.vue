@@ -13,15 +13,7 @@
     <FocusTrap :active="true">
       <div v-show="showForm" class="p-4 arrow-popup arrow-popup--anchor-right">
         <button
-          class="
-            button
-            close-button
-            is-text
-            tiny
-            float-right
-            block
-            text-light-gray
-          "
+          class="button close-button is-text tiny float-right block text-light-gray"
           @keypress.enter="toggleShowForm"
           @click="toggleShowForm"
         >

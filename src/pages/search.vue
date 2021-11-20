@@ -8,14 +8,7 @@
       </div>
       <aside
         v-if="isFilterVisible"
-        class="
-          column
-          is-narrow
-          grid-sidebar
-          is-hidden-touch
-          max-w-full
-          bg-white
-        "
+        class="column is-narrow grid-sidebar is-hidden-touch max-w-full bg-white"
       >
         <SearchGridFilter />
       </aside>

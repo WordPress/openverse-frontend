@@ -3,16 +3,7 @@
     <div class="column is-three-fifths photo_image-ctr mt-4">
       <a
         v-if="shouldShowBreadcrumb"
-        class="
-          block
-          photo_breadcrumb
-          text-left
-          ms-4
-          mb-4
-          text-dark-gray
-          font-semibold
-          caption
-        "
+        class="block photo_breadcrumb text-left ms-4 mb-4 text-dark-gray font-semibold caption"
         :href="breadCrumbURL"
         @click.prevent="onGoBackToSearchResults"
         @keyup.enter.prevent="onGoBackToSearchResults"
