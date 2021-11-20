@@ -86,7 +86,7 @@
             role="menuitem"
             @focus="onFocus()"
             >{{ $t('header.licenses-nav-item') }}
-            <VIcon class="ms-2" :icon-path="externalLinkIcon" rtl-flip />
+            <VIcon class="inline ms-2" :icon-path="externalLinkIcon" rtl-flip />
           </a>
         </Dropdown>
 
@@ -123,7 +123,7 @@
             class="navbar-item"
             @focus="onFocus()"
             >{{ $t('header.api-nav-item') }}
-            <VIcon class="ms-2" :icon-path="externalLinkIcon" rtl-flip />
+            <VIcon class="inline ms-2" :icon-path="externalLinkIcon" rtl-flip />
           </a>
         </Dropdown>
 
