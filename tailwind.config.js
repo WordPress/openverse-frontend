@@ -16,7 +16,7 @@ module.exports = {
       yellow: '#ffe033',
       'dark-charcoal': '#30272e',
       pink: '#c52b9b',
-
+      primary: '#3e58e1', // will change to pink after redesign launch
       // Active
       'dark-pink': '#7c2264',
 
@@ -48,7 +48,9 @@ module.exports = {
     fill: (theme) => theme('colors'),
     spacing: {
       // Constants
+      '0.5px': '0.5px',
       px: '1px',
+      '1.5px': '1.5px',
       ch: '1ch',
       ex: '1ex',
       half: '50%',
@@ -76,6 +78,13 @@ module.exports = {
     },
     ringWidth: {
       DEFAULT: '1.5px',
+      0: 0,
+    },
+    borderWidth: {
+      0: '0px',
+      DEFAULT: '1px',
+      1.5: '1.5px',
+      2: '2px',
     },
     ringOffsetWidth: {
       2: '2px',
@@ -167,10 +176,15 @@ module.exports = {
   },
   variants: {
     extend: {
+      backgroundColor: ['checked', 'disabled'],
+      borderColor: ['checked', 'disabled'],
+      margin: ['last'],
       opacity: ['disabled'],
       ringColor: ['focus-visible'],
       ringOffsetWidth: ['focus-visible'],
       ringWidth: ['focus-visible'],
+      borderWidth: ['focus', 'focus-within'],
+      padding: ['focus', 'focus-within'],
     },
   },
   plugins: [require('tailwindcss-rtl')],
