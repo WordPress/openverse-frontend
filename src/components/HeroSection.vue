@@ -1,7 +1,7 @@
 <template>
   <!-- eslint-disable vuejs-accessibility/no-autofocus -->
   <div class="hero">
-    <div class="hero-center text-center">
+    <div class="text-center mt-16">
       <h1 class="text-5xl pb-4">
         {{ $t('hero.title') }}
       </h1>
@@ -9,18 +9,18 @@
         {{ $t('hero.subtitle') }}
       </h2>
       <form
-        class="hero-search__form mt-12"
+        class="relative w-full px-2 mt-12"
         role="search"
         method="get"
         action="/search"
         @submit.prevent="onSubmit"
       >
-        <div class="hero-search__control">
+        <div class="flex justify-center">
           <input
             id="searchTerm"
             v-model.lazy="form.searchTerm"
             required="required"
-            class="hero-search__input input"
+            class="hero-search__input input rounded rounded-e-none -me-px text-start lg:px-10 w-full max-w-full"
             :aria-label="$t('hero.aria.search')"
             autofocus
             type="search"
@@ -28,7 +28,10 @@
             :placeholder="$t('hero.search.placeholder')"
             autocapitalize="none"
           />
-          <button class="hero-search__button button is-primary" title="Search">
+          <button
+            class="hero-search__button button is-primary rounded rounded-s-none"
+            title="Search"
+          >
             {{ $t('hero.search.button') }}
           </button>
         </div>
@@ -52,7 +55,7 @@
             </template>
           </i18n>
         </div>
-        <HomeLicenseFilter @toggle="toggleFilter" />
+        <HomeLicenseFilter :filters="filters" @toggle="toggleFilter" />
       </form>
     </div>
     <img
@@ -102,16 +105,16 @@ export default {
     getMediaType() {
       return this.form.searchType
     },
-    toggleFilter({ code }) {
-      this.filters[code] = !this.filters[code]
+    toggleFilter({ code, checked }) {
+      this.filters[code] = checked
     },
     onSubmit() {
       const newQuery = { q: this.form.searchTerm }
-      const checkedFilters = Object.keys(this.filters).filter(
-        (filterName) => !!this.filters[filterName]
-      )
-      checkedFilters.forEach((f) => {
-        this.checkFilter({ filterType: 'licenseTypes', code: f })
+
+      Object.entries(this.filters).forEach(([filterCode, isChecked]) => {
+        if (isChecked) {
+          this.checkFilter({ filterType: 'licenseTypes', code: filterCode })
+        }
       })
 
       if (process.env.enableAudio) {
@@ -146,35 +149,15 @@ $hero-height: 55vh;
     min-height: $hero-height-desktop;
   }
 }
-.hero-center {
-  margin-top: 4rem;
-}
 .hero-search {
-  &__form {
-    position: relative;
-    width: 100%;
-    padding: 0 0.5em 0 0.5em;
-  }
-  &__control {
-    display: flex;
-    justify-content: center;
-  }
   &__input {
-    margin-right: -1px;
-    border-bottom-right-radius: 0;
-    border-top-right-radius: 0;
-    width: 100%;
-    max-width: 100%;
     @screen lg {
       width: 570px;
       font-size: 1.75rem;
       height: 5.063rem;
-      padding-left: 1.5rem;
     }
   }
   &__button {
-    border-bottom-left-radius: 0;
-    border-top-left-radius: 0;
     font-size: 1rem;
     padding: 0.5rem 1.2rem;
     @screen lg {
@@ -184,18 +167,6 @@ $hero-height: 55vh;
       height: 5.063rem;
     }
   }
-}
-
-.help-links {
-  z-index: 1;
-  position: absolute;
-  bottom: 1rem;
-  left: 1rem;
-}
-
-.help-icon {
-  height: 32px;
-  vertical-align: middle;
 }
 
 .logo-cloud {
