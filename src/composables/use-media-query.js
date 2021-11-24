@@ -1,10 +1,10 @@
-/* this implementation is original ported from https://github.com/logaretm/vue-use-web by Abdelrahman Awad */
-import { ref } from '@nuxtjs/composition-api'
+/* this implementation is from https://github.com/vueuse/vueuse/packages/core/useMediaQuery/
+ which, in turn, is ported from https://github.com/logaretm/vue-use-web by Abdelrahman Awad */
+import { onBeforeUnmount, ref } from '@nuxtjs/composition-api'
 
 /**
  * Reactive Media Query.
  *
- * @see https://vueuse.org/useMediaQuery
  * @param query
  * @param options
  */
@@ -18,16 +18,21 @@ export function useMediaQuery(query, options = {}) {
   const handler = (/** @type MediaQueryListEvent */ event) => {
     matches.value = event.matches
   }
-
-  if ('addEventListener' in mediaQuery)
+  // Before Safari 14, MediaQueryList is based on EventTarget,
+  // so we use addListener() and removeListener(), too.
+  if ('addEventListener' in mediaQuery) {
     mediaQuery.addEventListener('change', handler)
-  else mediaQuery.addListener(handler)
+  } else {
+    mediaQuery.addListener(handler)
+  }
 
-  // onDispose(() => {
-  //   if ('removeEventListener' in mediaQuery)
-  //     mediaQuery.removeEventListener('change', handler)
-  //   else mediaQuery.removeListener(handler)
-  // })
+  onBeforeUnmount(() => {
+    if ('removeEventListener' in mediaQuery) {
+      mediaQuery.removeEventListener('change', handler)
+    } else {
+      mediaQuery.removeListener(handler)
+    }
+  })
 
   return matches
 }
