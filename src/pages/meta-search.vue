@@ -97,12 +97,6 @@
         {{ $t('meta-search-page.why.title') }}
       </h2>
       <p>{{ $t('meta-search-page.why.content') }}</p>
-      <figure class="image my-10">
-        <img
-          src="@/assets/cc-meta-search.gif"
-          alt="Old CC Meta Search Portal Demo"
-        />
-      </figure>
       <p class="my-2">
         {{ $t('meta-search-page.why.new') }}
       </p>
