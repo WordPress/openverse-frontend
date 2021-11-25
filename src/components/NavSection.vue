@@ -1,34 +1,42 @@
 <template>
-  <nav :aria-label="$t('header.aria.primary')" class="navbar">
-    <div class="navbar-brand text-white">
-      <!-- eslint-disable @intlify/vue-i18n/no-raw-text -->
-      <NuxtLink class="logo" :to="localePath('/')">
-        <img
+  <!-- Refer to the Bulma docs for markup: https://bulma.io/documentation/components/navbar/ -->
+  <nav
+    role="navigation"
+    class="navbar embedded"
+    :aria-label="$t('header.aria.primary')"
+  >
+    <div class="navbar-brand flex-grow md:flex-grow-0">
+      <NuxtLink
+        to="/"
+        class="navbar-item"
+        style="align-self: center; line-height: 0"
+      >
+        <!-- width and height chosen w.r.t. viewBox "0 0 280 42" -->
+        <OpenverseLogo
+          :style="{ width: '160px', height: '24px' }"
           alt="Openverse logo mark"
-          src="~/assets/logo.svg?data"
-          style="padding-right: 24px"
-          width="160"
-          height="24"
         />
       </NuxtLink>
-      <!-- eslint-enable -->
+
+      <!-- Hamburger menu -->
       <a
         role="button"
-        :class="{ ['navbar-burger']: true, ['is-active']: isBurgerMenuActive }"
+        class="navbar-burger"
+        :class="{ 'is-active': isBurgerMenuActive }"
         :aria-label="$t('header.aria.menu')"
         aria-expanded="false"
         @click="toggleBurgerActive"
         @keyup.enter="toggleBurgerActive"
       >
-        <span aria-hidden="true" />
-        <span aria-hidden="true" />
-        <span aria-hidden="true" />
+        <span v-for="i in 3" :key="i" aria-hidden="true" />
       </a>
     </div>
-    <div :class="{ ['navbar-menu']: true, ['is-active']: isBurgerMenuActive }">
-      <div v-if="showNavSearch" class="ms-6">
+
+    <div class="navbar-menu" :class="{ 'is-active': isBurgerMenuActive }">
+      <div class="navbar-start">
         <form
-          class="hero_search-form"
+          v-if="showNavSearch"
+          class="navbar-item flex items-center"
           role="search"
           method="post"
           @submit.prevent="onSubmit"
@@ -36,7 +44,7 @@
           <input
             v-model.lazy="form.searchTerm"
             :aria-label="$t('header.aria.search')"
-            class="input"
+            class="input w-64"
             type="search"
             :placeholder="navSearchPlaceholder"
           />
@@ -51,11 +59,13 @@
           </div>
         </form>
       </div>
+
       <div class="navbar-end">
         <Dropdown v-slot="{ onFocus }" :text="$t('header.about-tab')">
           <NuxtLink
             class="navbar-item"
             :to="localePath('/about')"
+            role="menuitem"
             @focus="onFocus()"
           >
             {{ $t('header.about-nav-item') }}
@@ -63,6 +73,7 @@
           <NuxtLink
             class="navbar-item"
             :to="localePath('/sources')"
+            role="menuitem"
             @focus="onFocus()"
           >
             {{ $t('header.source-nav-item') }}
@@ -72,9 +83,10 @@
             target="_blank"
             rel="noopener"
             class="navbar-item"
+            role="menuitem"
             @focus="onFocus()"
             >{{ $t('header.licenses-nav-item') }}
-            <i class="icon external-link" />
+            <VIcon class="inline ms-2" :icon-path="externalLinkIcon" rtl-flip />
           </a>
         </Dropdown>
 
@@ -82,6 +94,7 @@
           <NuxtLink
             class="navbar-item"
             :to="localePath('/search-help')"
+            role="menuitem"
             @focus="onFocus()"
           >
             {{ $t('header.search-guide-nav-item') }}
@@ -89,6 +102,7 @@
           <NuxtLink
             class="navbar-item"
             :to="localePath('/meta-search')"
+            role="menuitem"
             @focus="onFocus()"
           >
             {{ $t('header.meta-search-nav-item') }}
@@ -96,6 +110,7 @@
           <NuxtLink
             class="navbar-item"
             :to="localePath('/feedback')"
+            role="menuitem"
             @focus="onFocus()"
           >
             {{ $t('header.feedback-nav-item') }}
@@ -104,41 +119,51 @@
             href="https://api.openverse.engineering/v1/"
             target="_blank"
             rel="noopener"
+            role="menuitem"
             class="navbar-item"
             @focus="onFocus()"
             >{{ $t('header.api-nav-item') }}
-            <i class="icon external-link" />
+            <VIcon class="inline ms-2" :icon-path="externalLinkIcon" rtl-flip />
           </a>
         </Dropdown>
 
-        <a
-          class="navbar-item"
-          href="https://opensource.creativecommons.org/ccsearch-browser-extension/"
-          target="_blank"
-        >
+        <NuxtLink class="navbar-item" :to="localePath('/extension')">
           {{ $t('header.extension-nav-item') }}
-          <i class="icon external-link" />
-        </a>
+        </NuxtLink>
       </div>
     </div>
   </nav>
 </template>
 
 <script>
-import { UPDATE_QUERY } from '~/constants/action-types'
-import Dropdown from '~/components/Dropdown'
-import { SEARCH } from '~/constants/store-modules'
 import { mapActions } from 'vuex'
 
+import Dropdown from '~/components/Dropdown'
+import VIcon from '~/components/VIcon/VIcon.vue'
+
+import { UPDATE_QUERY } from '~/constants/action-types'
+import { SEARCH } from '~/constants/store-modules'
+
+import OpenverseLogo from '~/assets/logo.svg?inline'
+import externalLinkIcon from '~/assets/icons/external-link.svg'
+
 export default {
-  name: 'NavSection',
-  components: { Dropdown },
+  name: 'EmbeddedNavSection',
+  components: {
+    VIcon,
+    Dropdown,
+    OpenverseLogo,
+  },
   props: {
     showNavSearch: {
       default: false,
     },
   },
-  data: () => ({ form: { searchTerm: '' }, isBurgerMenuActive: false }),
+  data: () => ({
+    form: { searchTerm: '' },
+    isBurgerMenuActive: false,
+    externalLinkIcon,
+  }),
   computed: {
     navSearchPlaceholder() {
       return this.$t('header.placeholder')
@@ -147,10 +172,11 @@ export default {
   methods: {
     ...mapActions(SEARCH, { setSearchTerm: UPDATE_QUERY }),
     onSubmit() {
-      this.setSearchTerm({ q: this.form.searchTerm })
+      const q = this.form.searchTerm
+      this.setSearchTerm({ q })
       const newPath = this.localePath({
         path: '/search',
-        query: { q: this.form.searchTerm },
+        query: { q },
       })
       this.$router.push(newPath)
     },
@@ -160,27 +186,3 @@ export default {
   },
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss" scoped>
-/* header */
-.logo {
-  color: black;
-  font-size: 2rem;
-  font-weight: bold;
-  &:link,
-  &:visited,
-  &:hover,
-  &:active {
-    text-decoration: none;
-  }
-}
-
-.hero_search-form {
-  margin: 0 15px;
-
-  input {
-    width: 16rem;
-  }
-}
-</style>
