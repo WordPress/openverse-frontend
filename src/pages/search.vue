@@ -13,10 +13,7 @@
         <SearchTypeTabs />
         <FilterDisplay v-show="shouldShowFilterTags" />
         <NuxtChild :key="$route.path" @onLoadMoreItems="onLoadMoreItems" />
-        <ScrollButton
-          data-testid="scroll-button"
-          :show-btn="showScrollButton"
-        />
+        <ScrollButton :show-btn="showScrollButton" />
       </div>
     </div>
   </div>
