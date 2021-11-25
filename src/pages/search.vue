@@ -82,7 +82,6 @@ const BrowsePage = {
       local.get(process.env.filterStorageKey)
         ? local.get(process.env.filterStorageKey) === 'true'
         : true
-
     this.setFilterVisibility({
       isFilterVisible: this.isLargeScreen ? localFilterState() : false,
     })
