@@ -645,11 +645,11 @@
     "cc0": "Zero",
     "pdm": "Public Domain Mark",
     "by": "Attribution",
-    "by-sa": "Attribution ShareAlike",
-    "by-nc": "Attribution NonCommercial",
-    "by-nd": "Attribution NoDerivatives",
-    "by-nc-sa": "Attribution NonCommercial ShareAlike",
-    "by-nc-nd": "Attribution NonCommercial NoDerivatives"
+    "by-sa": "Attribution-Share-Alike",
+    "by-nc": "Attribution-NonCommercial",
+    "by-nd": "Attribution-NoDerivatives",
+    "by-nc-sa": "Attribution-NonCommercial-Share-Alike",
+    "by-nc-nd": "Attribution-NonCommercial-NoDerivatives"
   },
   "dropdown-button": {
     "aria": {
