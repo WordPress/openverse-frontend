@@ -1,5 +1,12 @@
 module.exports = {
-  purge: ['src/**/*.{vue,js,jsx,ts,tsx,mdx}', './nuxt.config.js'],
+  purge: {
+    content: ['src/**/*.{vue,js,jsx,ts,tsx,mdx}', './nuxt.config.js'],
+    // In production, dynamically-created class names are purged as unused:
+    // https://tailwindcss.com/docs/optimizing-for-production#writing-purgeable-html
+    // The commonly-used icon size classes are safe-listed here
+    //to ensure that they are not removed:
+    safelist: ['w-4', 'w-5', 'h-4', 'h-5'],
+  },
   theme: {
     colors: {
       // Accents
