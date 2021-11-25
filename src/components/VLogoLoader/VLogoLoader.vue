@@ -1,7 +1,12 @@
 <template>
   <div
+    :data-prefers-reduced-motion="prefersReducedMotion"
     :data-fake-aria-label="loadingLabel"
     class="hover:bg-yellow w-16 h-16 p-4 rounded-sm inline-flex justify-center items-center"
+    :class="{
+      [$style.loading]: status === 'loading',
+      [$style.quiet]: status === 'loading' && prefersReducedMotion,
+    }"
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -44,6 +49,7 @@
 
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
+import { useReducedMotion } from '~/composables/use-media-query'
 import { warn } from '~/utils/warn'
 
 import { propTypes } from './VLogoLoader.types'
@@ -56,13 +62,32 @@ export default defineComponent({
    * @param {import('@nuxtjs/composition-api').SetupContext} context
    */
   setup(props) {
+    const prefersReducedMotion = useReducedMotion()
+
     if (!props.loadingLabel) {
       warn(
         'Please provide a label to announce when the component is "loading".'
       )
     }
 
-    return props
+    return { prefersReducedMotion }
   },
 })
 </script>
+
+<style module>
+.loading {
+  animation: blink 1s steps(5, start) infinite;
+}
+
+@keyframes blink {
+  to {
+    visibility: hidden;
+  }
+}
+
+.quiet {
+  opacity: 0.5;
+  animation: none !important;
+}
+</style>
