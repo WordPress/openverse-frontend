@@ -136,15 +136,11 @@
 <script>
 import sortBy from 'lodash.sortby'
 import { mapState } from 'vuex'
-import { NAV, PROVIDER } from '~/constants/store-modules'
+import { PROVIDER } from '~/constants/store-modules'
 
 const SourcePage = {
   name: 'source-page',
-  layout({ store }) {
-    return store.state.nav.isEmbedded
-      ? 'embedded-with-nav-search'
-      : 'with-nav-search'
-  },
+  layout: 'with-nav-search',
   data() {
     return {
       sort: {
@@ -154,7 +150,6 @@ const SourcePage = {
     }
   },
   computed: {
-    ...mapState(NAV, ['isEmbedded']),
     ...mapState(PROVIDER, ['imageProviders']),
     sortedProviders() {
       const sorted = sortBy(this.imageProviders, [this.sort.field])

@@ -43,9 +43,7 @@ import debounce from 'lodash.debounce'
 
 const BrowsePage = {
   name: 'browse-page',
-  layout({ store }) {
-    return store.state.nav.isEmbedded ? 'embedded' : 'default'
-  },
+  layout: 'default',
   scrollToTop: false,
   async fetch() {
     if (this.mediaType !== VIDEO && this.results.items.length === 0) {

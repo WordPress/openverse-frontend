@@ -253,21 +253,9 @@
 </template>
 
 <script>
-/* eslint-disable vue/html-quotes */
-
-import { mapState } from 'vuex'
-import { NAV } from '~/constants/store-modules'
-
 const SearchHelpPage = {
   name: 'search-help-page',
-  layout({ store }) {
-    return store.state.nav.isEmbedded
-      ? 'embedded-with-nav-search'
-      : 'with-nav-search'
-  },
-  computed: {
-    ...mapState(NAV, ['isEmbedded']),
-  },
+  layout: 'with-nav-search',
   methods: {
     providerSearchLink(providerCode) {
       return `https://search.creativecommons.org/search?q=provider%3A%20"${providerCode}"`

@@ -70,23 +70,16 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-
 import ExtensionBrowsers from '~/components/ExtensionBrowsers'
 
 import feature1 from '~/assets/screenshots/extension_feat_1.png'
 import feature2 from '~/assets/screenshots/extension_feat_2.png'
 import feature3 from '~/assets/screenshots/extension_feat_3.png'
-import { NAV } from '~/constants/store-modules'
 
 const AboutPage = {
   name: 'about-page',
   components: { ExtensionBrowsers },
-  layout({ store }) {
-    return store.state.nav.isEmbedded
-      ? 'embedded-with-nav-search'
-      : 'with-nav-search'
-  },
+  layout: 'with-nav-search',
   data() {
     const features = [
       { key: 'search', image: feature1 },
@@ -97,9 +90,6 @@ const AboutPage = {
       features,
       isPlaying: true,
     }
-  },
-  computed: {
-    ...mapState(NAV, ['isEmbedded']),
   },
   methods: {
     togglePlay() {

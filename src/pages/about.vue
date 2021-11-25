@@ -96,19 +96,9 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import { NAV } from '~/constants/store-modules'
-
 const AboutPage = {
   name: 'about-page',
-  layout({ store }) {
-    return store.state.nav.isEmbedded
-      ? 'embedded-with-nav-search'
-      : 'with-nav-search'
-  },
-  computed: {
-    ...mapState(NAV, ['isEmbedded']),
-  },
+  layout: 'with-nav-search',
 }
 
 export default AboutPage
