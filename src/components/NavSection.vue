@@ -36,7 +36,7 @@
       <div class="navbar-start">
         <form
           v-if="showNavSearch"
-          class="navbar-item flex items-center"
+          class="search-form navbar-item flex items-center"
           role="search"
           method="post"
           @submit.prevent="onSubmit"
