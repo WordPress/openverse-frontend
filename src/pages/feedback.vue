@@ -1,6 +1,6 @@
 <template>
   <div class="section">
-    <div :class="['container', isEmbedded ? '' : 'is-fluid']">
+    <div class="container">
       <div class="pb-6">
         <h1 id="feedback" class="text-5xl mb-10">
           {{ $t('feedback.title') }}

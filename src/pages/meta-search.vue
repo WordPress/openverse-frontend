@@ -1,6 +1,6 @@
 <template>
   <div class="section mb-10">
-    <div :class="['container', isEmbedded ? '' : 'is-fluid']">
+    <div class="container">
       <div class="mb-10">
         <h1 class="text-5xl">
           {{ $t('meta-search-page.title') }}

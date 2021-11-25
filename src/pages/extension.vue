@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="hero-section border-b">
-      <div class="container pt-16" :class="[isEmbedded ? '' : 'is-fluid']">
+      <div class="container pt-16">
         <div class="intro text-center mx-auto">
           <h2 class="text-5xl mb-10">
             {{ $t('extension.description.intro') }}
@@ -27,7 +27,6 @@
     </div>
     <div
       class="features grid grid-cols-1 tab:grid-cols-2 gap-x-12 gap-y-30 py-30 mx-auto"
-      :class="[isEmbedded ? '' : 'is-fluid']"
     >
       <template v-for="(feature, index) in features">
         <figure
@@ -58,10 +57,7 @@
       </template>
     </div>
     <div class="section">
-      <div
-        class="container conclusion mb-24"
-        :class="[isEmbedded ? '' : 'is-fluid']"
-      >
+      <div class="container conclusion mb-24">
         <h2 class="text-center mx-auto">{{ $t('extension.conclusion') }}</h2>
         <ExtensionBrowsers class="mt-6" />
       </div>
