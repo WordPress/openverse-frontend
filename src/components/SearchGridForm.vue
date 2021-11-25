@@ -10,7 +10,7 @@
       v-if="!isFilterVisible"
       class="button filter-toggle"
       type="button"
-      @click.prevent="onToggleSearchGridFilter"
+      @click="onToggleSearchGridFilter"
     >
       {{ $t('filters.title') }}
     </button>
