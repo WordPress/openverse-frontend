@@ -9,7 +9,6 @@ import { REPORT_CONTENT, USAGE_DATA } from '~/constants/store-modules'
 import { TOGGLE_REPORT_FORM_VISIBILITY } from '~/constants/mutation-types'
 
 const stubs = {
-  LegalDisclaimer: true,
   ImageAttribution: true,
   ContentReportForm: true,
   ReuseSurvey: true,

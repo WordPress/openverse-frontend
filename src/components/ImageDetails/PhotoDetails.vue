@@ -1,5 +1,5 @@
 <template>
-  <div class="photo columns is-desktop pb-16" :style="{ margin: 0 }">
+  <div class="photo columns is-desktop w-full m-0 pb-16">
     <div class="column is-three-fifths photo_image-ctr mt-4">
       <a
         v-if="shouldShowBreadcrumb"
@@ -26,7 +26,11 @@
         @failure="sketchFabfailure = true"
       />
 
-      <LegalDisclaimer />
+      <div class="mt-4 mb-2 ms-4">
+        <p class="caption text-left text-dark-gray">
+          {{ $t('photo-details.legal-disclaimer') }}
+        </p>
+      </div>
 
       <div class="mb-1 text-left">
         <button
@@ -252,7 +256,37 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~/styles/photodetails.scss';
+.icon {
+  vertical-align: middle;
+}
+
+.photo_image.loading {
+  width: 100%;
+}
+
+.photo_image-ctr {
+  overflow: hidden;
+  text-align: center;
+
+  img {
+    position: relative;
+    width: 100%;
+    height: auto;
+    max-height: 44rem;
+    max-width: 100%;
+    object-fit: contain;
+  }
+
+  @include mobile {
+    padding: 30px 15px;
+  }
+}
+
+.photo_info-ctr {
+  @include mobile {
+    padding: 30px 0;
+  }
+}
 
 @include touch {
   .image-info {

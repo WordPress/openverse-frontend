@@ -74,7 +74,7 @@
           </template>
           <template #license>
             <a
-              class="photo_license"
+              class="uppercase"
               :href="licenseUrl"
               target="_blank"
               rel="noopener"

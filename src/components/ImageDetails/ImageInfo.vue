@@ -53,7 +53,6 @@ import {
 } from '~/constants/usage-data-analytics-types'
 import PhotoTags from '~/components/PhotoTags'
 import getProviderName from '~/utils/get-provider-name'
-import getProviderLogo from '~/utils/get-provider-logo'
 import { PROVIDER, USAGE_DATA } from '~/constants/store-modules'
 import { mapActions, mapState } from 'vuex'
 
@@ -87,9 +86,6 @@ export default {
   },
   methods: {
     ...mapActions(USAGE_DATA, { sendEvent: SEND_DETAIL_PAGE_EVENT }),
-    getProviderLogo(providerName) {
-      return getProviderLogo(providerName)
-    },
     onPhotoSourceLinkClicked() {
       this.sendEvent({
         eventType: DETAIL_PAGE_EVENTS.SOURCE_CLICKED,
