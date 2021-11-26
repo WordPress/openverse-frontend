@@ -253,8 +253,4 @@ textarea {
   border: none;
   resize: none;
 }
-
-.copy-attribution {
-  margin-left: auto;
-}
 </style>
