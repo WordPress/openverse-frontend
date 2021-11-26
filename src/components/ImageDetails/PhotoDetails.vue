@@ -107,7 +107,7 @@
             {{ $t('photo-details.information.title') }}
           </button>
         </div>
-        <!-- <section class="photo_info-ctr tabs-content">-->
+
         <div
           id="tab-reuse"
           role="tabpanel"
@@ -120,7 +120,6 @@
             :image="image"
             :license-url="licenseUrl"
             :full-license-name="fullLicenseName"
-            :attribution-html="attributionHtml()"
           />
         </div>
         <div
@@ -166,7 +165,6 @@ import {
   SEND_DETAIL_PAGE_EVENT,
   DETAIL_PAGE_EVENTS,
 } from '~/constants/usage-data-analytics-types'
-import attributionHtml from '~/utils/attribution-html'
 import { getFullLicenseName } from '~/utils/license'
 import { REPORT_CONTENT, USAGE_DATA } from '~/constants/store-modules'
 
@@ -238,10 +236,6 @@ export default {
     setActiveTab(tabIdx) {
       this.activeTab = tabIdx
     },
-    attributionHtml() {
-      const licenseUrl = `${this.licenseUrl}&atype=html`
-      return attributionHtml(this.image, licenseUrl, this.fullLicenseName)
-    },
     toggleReportFormVisibility() {
       this.$store.commit(`${REPORT_CONTENT}/${TOGGLE_REPORT_FORM_VISIBILITY}`)
     },
@@ -279,12 +273,6 @@ export default {
 
   @include mobile {
     padding: 30px 15px;
-  }
-}
-
-.photo_info-ctr {
-  @include mobile {
-    padding: 30px 0;
   }
 }
 
