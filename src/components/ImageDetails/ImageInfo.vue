@@ -97,29 +97,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.report {
-  font-size: 0.8rem !important;
-  text-transform: none !important;
-
-  &:hover {
-    background: none !important;
-  }
-
-  &:focus {
-    background: none !important;
-  }
-}
-
 dl {
   display: flex;
   flex-wrap: wrap;
 }
 
 dt {
-  font-weight: bold;
-  width: 92px;
-  margin-right: 24px;
-  display: inline-block;
+  @apply font-bold inline-block me-6 w-24;
 }
 
 dd {
