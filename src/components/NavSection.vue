@@ -14,6 +14,8 @@
         <!-- width and height chosen w.r.t. viewBox "0 0 280 42" -->
         <OpenverseLogo
           :style="{ width: '160px', height: '24px' }"
+          width="160"
+          height="24"
           alt="Openverse logo mark"
         />
       </NuxtLink>
