@@ -56,7 +56,7 @@
       </i18n>
       <figure class="image my-10">
         <img
-          :alt="$t('meta-search.form.supported-title', { type: ' ' })"
+          :alt="$t('meta-search-page.images.demo-label', { type: ' ' })"
           src="~/assets/screenshots/supported.png"
         />
       </figure>
@@ -72,7 +72,7 @@
       </i18n>
       <figure class="image my-10">
         <img
-          :alt="$t('meta-search.form.unsupported-title', { type: ' ' })"
+          :alt="$t('meta-search-page.audio-video.demo-label', { type: ' ' })"
           src="~/assets/screenshots/unsupported.png"
         />
       </figure>

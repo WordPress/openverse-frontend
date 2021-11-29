@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2021-11-24T17:12:28+00:00\n"
+"POT-Creation-Date: 2021-11-29T14:32:09+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -184,7 +184,6 @@ msgid "Openverse does not currently index the sources listed above, but through 
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/meta-search.vue:75
 msgctxt "meta-search.form.unsupported-title"
 msgid "Openverse does not yet support built-in ###type### search."
 msgstr ""
@@ -703,7 +702,7 @@ msgctxt "browse-page.aria.scroll"
 msgid "scroll to top"
 msgstr ""
 
-#: src/components/SearchGridForm.vue:25
+#: src/components/SearchGridForm.vue:26
 msgctxt "browse-page.aria.search"
 msgid "search"
 msgstr ""
@@ -712,7 +711,7 @@ msgctxt "browse-page.aria.remove-filter"
 msgid "remove filter"
 msgstr ""
 
-#: src/components/Filters/FilterChecklist.vue:60
+#: src/components/Filters/FilterChecklist.vue:26
 msgctxt "browse-page.aria.license-explanation"
 msgid "license explanation"
 msgstr ""
@@ -736,12 +735,12 @@ msgctxt "browse-page.safer-browsing.title"
 msgid "Safer Browsing"
 msgstr ""
 
-#: src/components/SaferBrowsing.vue:23
+#: src/components/SaferBrowsing.vue:21
 msgctxt "browse-page.safer-browsing.caption"
 msgid "By default, search results will not include results that have been reported as mature by users and sources."
 msgstr ""
 
-#: src/components/SaferBrowsing.vue:35
+#: src/components/SaferBrowsing.vue:33
 msgctxt "browse-page.safer-browsing.label"
 msgid "Show Mature Content"
 msgstr ""
@@ -803,7 +802,7 @@ msgctxt "browse-page.search-form.collection-placeholder"
 msgid "Search this collection"
 msgstr ""
 
-#: src/components/SearchGridForm.vue:53
+#: src/components/SearchGridForm.vue:54
 msgctxt "browse-page.search-form.button"
 msgid "Search"
 msgstr ""
@@ -833,23 +832,22 @@ msgctxt "filter-list.filter-by"
 msgid "Filter results by"
 msgstr ""
 
-#: src/components/Filters/FiltersList.vue:15
+#: src/components/Filters/FiltersList.vue:14
 msgctxt "filter-list.hide"
 msgid "Hide filters"
 msgstr ""
 
-#: src/components/Filters/FiltersList.vue:39
+#: src/components/Filters/FiltersList.vue:37
 msgctxt "filter-list.clear"
 msgid "Clear filters"
 msgstr ""
 
-#: src/components/Filters/FiltersList.vue:45
+#: src/components/Filters/FiltersList.vue:43
 msgctxt "filter-list.show"
 msgid "Show results"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/Filters/FilterChecklist.vue:16
 msgctxt "filter-list.category-aria"
 msgid "filters list for ###categoryName### category"
 msgstr ""
@@ -887,6 +885,7 @@ msgctxt "filters.license-explanation.link"
 msgid "here"
 msgstr ""
 
+#: src/components/Filters/FilterChecklist.vue:83
 msgctxt "filters.searchBy.title"
 msgid "Search By"
 msgstr ""
@@ -1517,70 +1516,75 @@ msgctxt "meta-search-page.use"
 msgid " Use "
 msgstr ""
 
-#: src/pages/meta-search.vue:97
+#: src/pages/meta-search.vue:99
 msgctxt "meta-search-page.why.title"
 msgid "Why did you build this?"
 msgstr ""
 
-#: src/pages/meta-search.vue:99
+#: src/pages/meta-search.vue:101
 msgctxt "meta-search-page.why.content"
 msgid "For many years, CC has offered its users a dedicated search portal for searching platforms that have CC licensing filters built in. These platforms included Europeana, Google Images, Flickr, Jamendo, Open Clip Art Library, SpinXpress, Wikimedia Commons, YouTube, ccMixter, and SoundCloud. The search experience looked like this:"
 msgstr ""
 
-#: src/pages/meta-search.vue:107
+#: src/pages/meta-search.vue:103
 msgctxt "meta-search-page.why.new"
 msgid "For users of the legacy CC Meta Search site, the Meta Search feature on Openverse will look familiar. The goal was to ensure that the functionality is not lost, but is updated and embedded within our new search engine for openly licensed content. In addition, the Meta Search feature builds on this functionality, allowing us to quickly add new sources to Meta Search as we discover them, and support new content types in the future, as we expand."
 msgstr ""
 
-#: src/pages/meta-search.vue:112
+#: src/pages/meta-search.vue:108
 msgctxt "meta-search-page.why.aria-label"
 msgid "feedback"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/meta-search.vue:109
+#: src/pages/meta-search.vue:105
 msgctxt "meta-search-page.why.feedback-suggestions"
 msgid "We hope you enjoy, and if you have suggestions for improvement, leave us ###feedback###."
 msgstr ""
 
-#: src/pages/meta-search.vue:114
+#: src/pages/meta-search.vue:110
 msgctxt "meta-search-page.why.feedback-link"
 msgid "feedback"
 msgstr ""
 
-#: src/pages/meta-search.vue:80
+#: src/pages/meta-search.vue:82
 msgctxt "meta-search-page.new.title"
 msgid "Can I suggest new sources for Meta Search?"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/meta-search.vue:82
+#: src/pages/meta-search.vue:84
 msgctxt "meta-search-page.new.content"
 msgid "Yes, please! Create an ###issue### in our GitHub repository or send us an ###email### and tell us about the new sources you’d like to see included."
 msgstr ""
 
-#: src/pages/meta-search.vue:87
+#: src/pages/meta-search.vue:89
 msgctxt "meta-search-page.new.issue"
 msgid "issue"
 msgstr ""
 
-#: src/pages/meta-search.vue:92
+#: src/pages/meta-search.vue:94
 msgctxt "meta-search-page.new.email"
 msgid "email"
 msgstr ""
 
-#: src/pages/meta-search.vue:65
+#: src/pages/meta-search.vue:66
 msgctxt "meta-search-page.audio-video.title"
 msgid "How does the Meta Search feature work for non-indexed media types?"
 msgstr ""
 
-#: src/pages/meta-search.vue:67
+#: src/pages/meta-search.vue:76
+msgctxt "meta-search-page.audio-video.demo-label"
+msgid "Layout of Meta Search for non-indexed media type, like video"
+msgstr ""
+
+#: src/pages/meta-search.vue:68
 msgctxt "meta-search-page.audio-video.content"
 msgid "Openverse does not yet support built-in search for some media types, such as videos. For these media types, click on the appropriate tab and you’ll see sources where you can find CC-licensed content."
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/meta-search.vue:68
+#: src/pages/meta-search.vue:69
 msgctxt "meta-search-page.audio-video.filter"
 msgid "The Filters bar on the left includes the ###use### filter, which may be supported by some meta search sources. Apply these before clicking on the button for the external source you’d like to search."
 msgstr ""
@@ -1588,6 +1592,11 @@ msgstr ""
 #: src/pages/meta-search.vue:24
 msgctxt "meta-search-page.images.title"
 msgid "How does the Meta Search feature work for indexed media types?"
+msgstr ""
+
+#: src/pages/meta-search.vue:59
+msgctxt "meta-search-page.images.demo-label"
+msgid "Layout of Meta Search for indexed media type, like images"
 msgstr ""
 
 #: src/pages/meta-search.vue:26
@@ -2032,7 +2041,7 @@ msgctxt "hero.search-type.image"
 msgid "Images"
 msgstr ""
 
-#: src/components/HeroSection.vue:37
+#: src/components/HeroSection.vue:40
 msgctxt "hero.search-type.prompt"
 msgid "I would like to find:"
 msgstr ""
@@ -2042,7 +2051,7 @@ msgctxt "hero.aria.search"
 msgid "search"
 msgstr ""
 
-#: src/components/HeroSection.vue:47
+#: src/components/HeroSection.vue:50
 msgctxt "hero.aria.caption"
 msgid "about cc licenses"
 msgstr ""
@@ -2067,12 +2076,12 @@ msgid "I want something I can"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/HeroSection.vue:42
+#: src/components/HeroSection.vue:45
 msgctxt "hero.caption.content"
 msgid "All our content is under Creative Commons licenses or in the public domain. ###link### about CC licenses and tools."
 msgstr ""
 
-#: src/components/HeroSection.vue:50
+#: src/components/HeroSection.vue:53
 msgctxt "hero.caption.link"
 msgid "Learn more"
 msgstr ""
@@ -2082,7 +2091,7 @@ msgctxt "hero.search.placeholder"
 msgid "Search all content"
 msgstr ""
 
-#: src/components/HeroSection.vue:32
+#: src/components/HeroSection.vue:35
 msgctxt "hero.search.button"
 msgid "Search"
 msgstr ""

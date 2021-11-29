@@ -156,6 +156,7 @@
     "use": " Use ",
     "images": {
       "title": "How does the Meta Search feature work for indexed media types?",
+      "demo-label": "Layout of Meta Search for indexed media type, like images",
       "content": "Openverse supports built-in search for some media types, such as images. When you enter a query on the Openverse homepage, a page of results will be displayed. Scrolling to the bottom of the page, you have two choices:",
       "continue": "{load-more}, and continue browsing in Openverse.",
       "not-finding": "See the section “{not-finding}” below the results.",
@@ -163,6 +164,7 @@
     },
     "audio-video": {
       "title": "How does the Meta Search feature work for non-indexed media types?",
+      "demo-label": "Layout of Meta Search for non-indexed media type, like video",
       "content": "Openverse does not yet support built-in search for some media types, such as videos. For these media types, click on the appropriate tab and you’ll see sources where you can find CC-licensed content.",
       "filter": "The Filters bar on the left includes the {use} filter, which may be supported by some meta search sources. Apply these before clicking on the button for the external source you’d like to search."
     },
