@@ -58,11 +58,14 @@
       </div>
 
       <div class="navbar-end">
-        <Dropdown v-slot="{ onFocus }" :text="$t('header.about-tab')">
+        <Dropdown
+          v-slot="{ onFocus, a11yProps }"
+          :text="$t('header.about-tab')"
+        >
           <NuxtLink
             class="navbar-item"
             :to="localePath('/about')"
-            role="menuitem"
+            v-bind="a11yProps"
             @focus="onFocus()"
           >
             {{ $t('header.about-nav-item') }}
@@ -70,7 +73,7 @@
           <NuxtLink
             class="navbar-item"
             :to="localePath('/sources')"
-            role="menuitem"
+            v-bind="a11yProps"
             @focus="onFocus()"
           >
             {{ $t('header.source-nav-item') }}
@@ -80,18 +83,21 @@
             target="_blank"
             rel="noopener"
             class="navbar-item"
-            role="menuitem"
+            v-bind="a11yProps"
             @focus="onFocus()"
             >{{ $t('header.licenses-nav-item') }}
             <VIcon class="inline ms-2" :icon-path="externalLinkIcon" rtl-flip />
           </a>
         </Dropdown>
 
-        <Dropdown v-slot="{ onFocus }" :text="$t('header.resources-tab')">
+        <Dropdown
+          v-slot="{ onFocus, a11yProps }"
+          :text="$t('header.resources-tab')"
+        >
           <NuxtLink
             class="navbar-item"
             :to="localePath('/search-help')"
-            role="menuitem"
+            v-bind="a11yProps"
             @focus="onFocus()"
           >
             {{ $t('header.search-guide-nav-item') }}
@@ -99,7 +105,7 @@
           <NuxtLink
             class="navbar-item"
             :to="localePath('/meta-search')"
-            role="menuitem"
+            v-bind="a11yProps"
             @focus="onFocus()"
           >
             {{ $t('header.meta-search-nav-item') }}
@@ -107,7 +113,7 @@
           <NuxtLink
             class="navbar-item"
             :to="localePath('/feedback')"
-            role="menuitem"
+            v-bind="a11yProps"
             @focus="onFocus()"
           >
             {{ $t('header.feedback-nav-item') }}
@@ -116,7 +122,7 @@
             href="https://api.openverse.engineering/v1/"
             target="_blank"
             rel="noopener"
-            role="menuitem"
+            v-bind="a11yProps"
             class="navbar-item"
             @focus="onFocus()"
             >{{ $t('header.api-nav-item') }}
