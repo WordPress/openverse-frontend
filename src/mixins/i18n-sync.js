@@ -1,8 +1,27 @@
 import { sendWindowMessage } from '~/utils/send-message.js'
 import config from '../../nuxt.config.js'
+import translated from '../locales/scripts/translated.json'
 
 export default {
   methods: {
+    /**
+     * Show banner inviting to contribute translations if fewer than 90%
+     * of strings are translated for current locale.
+     * Default locale is `en_US`, but it doesn't have wpLocale property,
+     * so its value is hard-coded to false.
+     * @param {string} locale - wpLocale property of the current locale
+     * @returns {boolean}
+     */
+    needsTranslationBanner(locale) {
+      if (locale === 'en_US') return false
+      let localeTranslatedStatus = translated.find((item) => {
+        return item.code === locale
+      })
+      if (!localeTranslatedStatus) {
+        return true
+      }
+      return localeTranslatedStatus.translated <= 90
+    },
     /**
      * Handles messages of type `localeSet` received by the `iframe`. Any
      * other message types will be discarded.
@@ -23,6 +42,7 @@ export default {
         (item) => item.wpLocale === wpLocaleValue
       )
       if (locale) {
+        this.showNotification = this.needsTranslationBanner(value.locale)
         await this.$i18n.setLocale(locale.code)
         document.documentElement.lang = locale.wpLocale.replace('_', '-')
         // Always set `dir` property, default to 'ltr'
