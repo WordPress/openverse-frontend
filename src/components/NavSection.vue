@@ -12,7 +12,7 @@
         style="align-self: center; line-height: 0"
       >
         <!-- width and height chosen w.r.t. viewBox "0 0 280 42" -->
-        <OpenverseLogo width="160" height="24" alt="Openverse logo mark" />
+        <OpenverseLogo width="160" height="24" alt="Openverse logo" />
       </NuxtLink>
 
       <!-- Hamburger menu -->
