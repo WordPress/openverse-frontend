@@ -18,6 +18,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import {
   FETCH_MEDIA,
@@ -80,7 +81,7 @@ const BrowsePage = {
         ? local.get(process.env.filterStorageKey) === 'true'
         : true
     this.setFilterVisibility({
-      isFilterVisible: this.isLargeScreen ? localFilterState() : false,
+      isFilterVisible: this.isLargeScreen && localFilterState(),
     })
     window.addEventListener('scroll', this.debounceScrollHandling)
   },
@@ -103,9 +104,10 @@ const BrowsePage = {
     },
     searchFilter() {
       return {
-        classes: this.isLargeScreen
-          ? 'column is-narrow grid-sidebar max-w-full bg-white'
-          : '',
+        classes: {
+          'column is-narrow grid-sidebar max-w-full bg-white': this
+            .isLargeScreen,
+        },
         as: this.isLargeScreen ? 'aside' : AppModal,
       }
     },
