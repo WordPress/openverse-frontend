@@ -58,6 +58,7 @@
         <img
           :alt="$t('meta-search-page.images.demo-label', { type: ' ' })"
           src="~/assets/screenshots/supported.png"
+          aria-hidden="true"
         />
       </figure>
 
@@ -74,6 +75,7 @@
         <img
           :alt="$t('meta-search-page.audio-video.demo-label', { type: ' ' })"
           src="~/assets/screenshots/unsupported.png"
+          aria-hidden="true"
         />
       </figure>
       <h2 class="mt-10 mb-4 text-2xl">
