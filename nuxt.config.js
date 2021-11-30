@@ -205,6 +205,7 @@ export default {
       process.env.SENTRY_DSN ||
       'https://3f3e05dbe6994c318d1bf1c8bfcf71a1@o288582.ingest.sentry.io/1525413',
     disabled: process.env.NODE_ENV === 'development',
+    environment: process.env.NODE_ENV
     lazy: true,
   },
   tailwindcss: {
