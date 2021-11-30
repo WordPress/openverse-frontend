@@ -42,8 +42,8 @@ ENV NUXT_TELEMETRY_DISABLED=1
 # install dependencies (development dependencies included)
 RUN npm install
 
-# expose port 8433
-EXPOSE 8433
+# expose port 8443
+EXPOSE 8443
 
 # run the application in development mode
 ENTRYPOINT [ "npm", "run", "dev" ]
@@ -52,7 +52,7 @@ ENTRYPOINT [ "npm", "run", "dev" ]
 # production
 # ==
 # application package (for production)
-FROM node:16 AS app
+FROM node:alpine AS app
 
 WORKDIR /usr/app
 
@@ -78,10 +78,10 @@ RUN npm ci --only=production --ignore-script
 ENV NUXT_HOST=0.0.0.0
 
 # set app port
-ENV NUXT_PORT=8433
+ENV NUXT_PORT=8443
 
 # set application port
-ENV PORT=8433
+ENV PORT=8443
 
 # expose port 8443 by default
 EXPOSE 8443

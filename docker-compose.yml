@@ -9,4 +9,4 @@ services:
     environment:
       # HOST is necessary for Nuxt + Docker
       HOST: 0.0.0.0
-      PORT: 8433
+      PORT: 8443
