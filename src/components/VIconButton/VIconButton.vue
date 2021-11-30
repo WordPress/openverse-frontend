@@ -1,6 +1,6 @@
 <template>
   <button
-    class="icon-button flex items-center justify-center border-1.5 focus:border-pink focus:outline-none"
+    class="icon-button flex items-center justify-center border-1.5 focus:border-pink focus:outline-none focus:shadow-ring active:shadow-ring"
     :class="[...buttonSizeClasses]"
     :type="type"
     v-on="$listeners"
@@ -67,10 +67,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-.icon-button:focus,
-.icon-button:active {
-  box-shadow: 0 0 0 1px inset white;
-}
-</style>

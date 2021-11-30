@@ -1,7 +1,7 @@
 <template>
   <div
     ref="el"
-    class="waveform relative bg-dark-charcoal-06 border-1.5 border-tx focus:border-pink focus:outline-none overflow-hidden"
+    class="waveform relative bg-dark-charcoal-06 border-1.5 border-tx focus:border-pink focus:outline-none focus:shadow-ring overflow-hidden"
     :style="{ '--unusable-height': `${Math.floor((1 - usableFrac) * 100)}%` }"
     tabIndex="0"
     role="slider"
@@ -451,10 +451,6 @@ export default {
 
 .seek {
   left: var(--seek-time-left);
-}
-
-.waveform:focus {
-  box-shadow: 0 0 0 1px inset white;
 }
 
 .waveform:focus-visible .focus-indicator {

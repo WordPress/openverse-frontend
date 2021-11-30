@@ -178,6 +178,9 @@ module.exports = {
       scale: {
         '-100': '-1',
       },
+      boxShadow: {
+        ring: 'inset 0 0 0 1px white',
+      },
     },
   },
   variants: {
@@ -191,6 +194,7 @@ module.exports = {
       ringWidth: ['focus-visible'],
       borderWidth: ['focus', 'focus-within'],
       padding: ['focus', 'focus-within'],
+      boxShadow: ['focus', 'active'],
     },
   },
   plugins: [require('tailwindcss-rtl')],
