@@ -104,7 +104,7 @@
             :value="attributionHtml"
             cols="30"
             rows="4"
-            readonly="readonly"
+            dir="ltr"
           />
         </label>
         <CopyButton
