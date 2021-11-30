@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div dir="ltr">
     <div class="hero-section border-b">
       <div class="container pt-16">
         <div class="intro text-center mx-auto">
