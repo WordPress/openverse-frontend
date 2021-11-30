@@ -3,7 +3,7 @@
     :aria-label="$t('photo-details.aria.related')"
     class="p-4 my-6 photo_related-images"
   >
-    <h3 class="b-header">
+    <h3 class="text-3xl">
       {{ $t('photo-details.related-images') }}
     </h3>
     <ImageGrid

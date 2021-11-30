@@ -57,12 +57,12 @@
       class="column image-info ms-12"
     >
       <div class="my-4">
-        <h1 class="text-2xl">
+        <h1 class="text-6xl">
           {{ image.title }}
         </h1>
         <i18n
           v-if="image.creator"
-          class="caption font-semibold"
+          class="caption"
           path="photo-details.creator"
           tag="span"
         >
