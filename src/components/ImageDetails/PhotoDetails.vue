@@ -1,9 +1,9 @@
 <template>
-  <div class="photo columns is-desktop w-full m-0 pb-16">
-    <div class="column is-three-fifths photo_image-ctr mt-4">
+  <div class="photo columns flex w-full m-0 pb-16">
+    <div class="column is-three-fifths photo_image-ctr mt-4 lg:ms-14">
       <a
         v-if="shouldShowBreadcrumb"
-        class="block photo_breadcrumb text-left ms-4 mb-4 text-dark-gray font-semibold caption"
+        class="block photo_breadcrumb text-left ms-4 mb-4 lg:ms-0 text-dark-gray font-semibold caption"
         :href="breadCrumbURL"
         @click.prevent="onGoBackToSearchResults"
         @keyup.enter.prevent="onGoBackToSearchResults"
@@ -26,7 +26,7 @@
         @failure="sketchFabfailure = true"
       />
 
-      <div class="mt-4 mb-2 ms-4">
+      <div class="mt-4 mb-2 ms-4 lg:ms-0">
         <p class="caption text-left text-dark-gray">
           {{ $t('photo-details.legal-disclaimer') }}
         </p>
