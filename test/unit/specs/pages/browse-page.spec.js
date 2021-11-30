@@ -19,13 +19,10 @@ describe('Search Grid Wrapper', () => {
             isFilterVisible: false,
           },
           getters: {
-            isAnyFilterApplied: () => false,
+            isAnyFilterApplied: jest.fn(() => false),
           },
           mutations: {
             SET_FILTER_IS_VISIBLE: jest.fn(),
-          },
-          getters: {
-            isAnyFilterApplied: jest.fn(),
           },
         },
       },
