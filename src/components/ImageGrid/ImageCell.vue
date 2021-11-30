@@ -146,7 +146,7 @@ export default {
 }
 
 .search-grid_item-container {
-  margin: 10px;
+  margin: 0.6rem;
 }
 
 .search-grid_item {

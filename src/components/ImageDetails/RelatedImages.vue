@@ -1,7 +1,7 @@
 <template>
   <aside
     :aria-label="$t('photo-details.aria.related')"
-    class="p-4 my-6 photo_related-images"
+    class="m-6 md:mx-14 md:mb-14 photo_related-images"
   >
     <h3 class="text-3xl">
       {{ $t('photo-details.related-images') }}

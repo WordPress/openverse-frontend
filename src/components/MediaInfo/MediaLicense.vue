@@ -7,7 +7,7 @@
       <i18n
         path="media-details.reuse.attribution.main"
         tag="span"
-        class="photo_usage-attribution block"
+        class="block"
       >
         <template #link>
           <a

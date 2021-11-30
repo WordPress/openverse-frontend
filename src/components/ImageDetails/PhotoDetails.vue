@@ -1,6 +1,6 @@
 <template>
-  <div class="photo columns flex w-full m-0 pb-16">
-    <div class="column is-three-fifths photo_image-ctr mt-4 lg:ms-14">
+  <div class="photo columns is-desktop px-6 md:px-14 pb-16">
+    <div class="column is-three-fifths photo_image-ctr mt-4">
       <a
         v-if="shouldShowBreadcrumb"
         class="block photo_breadcrumb text-left ms-4 mb-4 lg:ms-0 text-dark-gray font-semibold caption"
@@ -39,7 +39,7 @@
           @click="toggleReportFormVisibility"
         >
           <span class="text-trans-blue ms-2 text-sm">
-            <i class="icon flag me-2" />
+            <i class="icon flag" />
             {{ $t('photo-details.content-report.title') }}
           </span>
         </button>
@@ -54,7 +54,7 @@
     <div
       role="region"
       :aria-label="$t('photo-details.aria.details')"
-      class="column image-info ms-12"
+      class="column image-info md:ms-10"
     >
       <div class="my-4">
         <h1 class="text-6xl">
@@ -270,15 +270,9 @@ export default {
     max-width: 100%;
     object-fit: contain;
   }
-
-  @include mobile {
-    padding: 30px 15px;
-  }
 }
 
-@include touch {
-  .image-info {
-    margin-left: 0 !important;
-  }
+.tab:first-child {
+  margin-inline-start: 0;
 }
 </style>
