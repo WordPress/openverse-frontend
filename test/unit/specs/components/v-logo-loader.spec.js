@@ -32,5 +32,7 @@ describe('VLogoLoader', () => {
       const element = screen.getByRole('status')
       expect(element).toHaveAttribute('data-prefers-reduced-motion', 'true')
     })
+
+    it.todo('Should render as an aria live region when status is loading')
   })
 })

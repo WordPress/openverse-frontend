@@ -19,7 +19,7 @@ const SingleLoaderStory = (_, { argTypes }) => ({
   props: Object.keys(argTypes),
   template: `
     <div>
-      <VLogoLoader v-bind="$props" />
+      <VLogoLoader v-bind="$props" :key="$props.status" />
     </div>
   `,
   components: { VLogoLoader },

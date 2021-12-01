@@ -8,6 +8,9 @@
       [$style.loading]: status === 'loading',
       [$style.quiet]: status === 'loading' && prefersReducedMotion,
     }"
+    :aria-busy="status === 'loading' ? true : undefined"
+    :aria-live="status === 'loading' ? 'polite' : undefined"
+    :aria-label="status === 'loading' ? loadingLabel : undefined"
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"
