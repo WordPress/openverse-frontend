@@ -36,8 +36,9 @@ import debounce from 'lodash.debounce'
 import SearchGridFilter from '~/components/Filters/SearchGridFilter.vue'
 import { useMediaQuery } from '~/composables/use-media-query.js'
 import AppModal from '~/components/AppModal'
+import { SCREEN_SIZES } from '~/constants/screens.js'
 
-const MIN_SCREEN_WIDTH_FILTER_VISIBLE_BY_DEFAULT = 768
+const MIN_SCREEN_WIDTH_FILTER_VISIBLE_BY_DEFAULT = SCREEN_SIZES.get('md')
 
 const BrowsePage = {
   name: 'browse-page',

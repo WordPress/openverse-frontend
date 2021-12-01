@@ -1,6 +1,11 @@
+const { SCREEN_SIZES } = require('./src/constants/screens')
+
 module.exports = {
   purge: ['src/**/*.{vue,js,jsx,ts,tsx,mdx}', './nuxt.config.js'],
   theme: {
+    screens: Object.fromEntries(
+      Array.from(SCREEN_SIZES, ([name, width]) => [name, `${width}px`])
+    ),
     colors: {
       // Accents
       tomato: '#e23600',
