@@ -166,12 +166,7 @@ export default {
   styleResources: {
     scss: ['./styles/utilities/all.scss'],
   },
-  modules: [
-    '@nuxtjs/sentry',
-    'nuxt-ssr-cache',
-    '@nuxtjs/i18n',
-    '@nuxtjs/sitemap',
-  ],
+  modules: ['@nuxtjs/sentry', '@nuxtjs/i18n', '@nuxtjs/sitemap'],
   i18n: {
     locales: [
       {
@@ -203,7 +198,9 @@ export default {
   sentry: {
     dsn:
       process.env.SENTRY_DSN ||
-      'https://3f3e05dbe6994c318d1bf1c8bfcf71a1@o288582.ingest.sentry.io/1525413',
+      'https://53da8fbcebeb48a6bf614a212629df6b@o787041.ingest.sentry.io/5799642',
+    disabled: process.env.NODE_ENV === 'development',
+    environment: process.env.NODE_ENV,
     lazy: true,
   },
   tailwindcss: {

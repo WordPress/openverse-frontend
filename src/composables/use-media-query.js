@@ -1,35 +1,38 @@
-import { useEventListener } from '~/composables/use-event-listener'
-import { computed, ref } from '@nuxtjs/composition-api'
+/* this implementation is from https://github.com/vueuse/vueuse/packages/core/useMediaQuery/
+ which, in turn, is ported from https://github.com/logaretm/vue-use-web by Abdelrahman Awad */
+import { onBeforeUnmount, ref } from '@nuxtjs/composition-api'
 
 /**
- * Use a media query.
- * @param {Ref<string> | string} query
- * @returns
+ * Reactive Media Query.
+ *
+ * @param query
+ * @param options
  */
-export function useMediaQuery(query) {
+export function useMediaQuery(query, options = {}) {
+  const { window } = options
+  if (!window) return ref(false)
+
   const mediaQuery = window.matchMedia(query)
   const matches = ref(mediaQuery.matches)
 
-  useEventListener(mediaQuery, 'change', (event) => {
+  const handler = (/** @type MediaQueryListEvent */ event) => {
     matches.value = event.matches
+  }
+  // Before Safari 14, MediaQueryList is based on EventTarget,
+  // so we use addListener() and removeListener(), too.
+  if ('addEventListener' in mediaQuery) {
+    mediaQuery.addEventListener('change', handler)
+  } else {
+    mediaQuery.addListener(handler)
+  }
+
+  onBeforeUnmount(() => {
+    if ('removeEventListener' in mediaQuery) {
+      mediaQuery.removeEventListener('change', handler)
+    } else {
+      mediaQuery.removeListener(handler)
+    }
   })
 
   return matches
-}
-
-/**
- * Check if the user prefers reduced motion or not.
- *
- * @returns {computed<Boolean>}
- */
-export function useReducedMotion() {
-  const prefersReducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)')
-
-  return computed(() => {
-    if (prefersReducedMotion.value) {
-      return true
-    }
-
-    return false
-  })
 }
