@@ -62,7 +62,8 @@ export default defineComponent({
    * @param {import('@nuxtjs/composition-api').SetupContext} context
    */
   setup(props) {
-    const prefersReducedMotion = useReducedMotion()
+    const defaultWindow = typeof window !== 'undefined' ? window : undefined
+    const prefersReducedMotion = useReducedMotion({ window: defaultWindow })
 
     if (!props.loadingLabel) {
       warn(

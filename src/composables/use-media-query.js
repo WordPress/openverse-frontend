@@ -41,6 +41,6 @@ export function useMediaQuery(query, options = {}) {
 /**
  * Check if the user prefers reduced motion or not.
  */
-export function useReducedMotion() {
-  return useMediaQuery('(prefers-reduced-motion: reduce)')
+export function useReducedMotion(options = {}) {
+  return useMediaQuery('(prefers-reduced-motion: reduce)', options)
 }
