@@ -199,6 +199,7 @@ export default {
     vueI18n: '~/plugins/vue-i18n.js',
   },
   sentry: {
+    disabled: true,
     dsn:
       process.env.SENTRY_DSN ||
       'https://3f3e05dbe6994c318d1bf1c8bfcf71a1@o288582.ingest.sentry.io/1525413',
