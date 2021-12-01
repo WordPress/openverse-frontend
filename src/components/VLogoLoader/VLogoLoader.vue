@@ -1,5 +1,6 @@
 <template>
   <div
+    role="status"
     :data-prefers-reduced-motion="prefersReducedMotion"
     :data-fake-aria-label="loadingLabel"
     class="hover:bg-yellow w-16 h-16 p-4 rounded-sm inline-flex justify-center items-center"
@@ -12,6 +13,7 @@
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 47 42"
       class="w-full h-full flex-shrink-0"
+      data-testid="loading-icon"
     >
       <path
         id="part-1"
@@ -54,6 +56,9 @@ import { warn } from '~/utils/warn'
 
 import { propTypes } from './VLogoLoader.types'
 
+export const noLoaderLabelWarning =
+  'Please provide a label to announce when the component is "loading".'
+
 export default defineComponent({
   name: 'VLogoLoader',
   props: propTypes,
@@ -66,9 +71,7 @@ export default defineComponent({
     const prefersReducedMotion = useReducedMotion({ window: defaultWindow })
 
     if (!props.loadingLabel) {
-      warn(
-        'Please provide a label to announce when the component is "loading".'
-      )
+      warn(noLoaderLabelWarning)
     }
 
     return { prefersReducedMotion }
