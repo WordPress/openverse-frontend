@@ -9,6 +9,9 @@ import {
   ref,
   useContext,
 } from '@nuxtjs/composition-api'
+import { StorageSerializers, useStorage } from '~/composables/use-storage'
+
+const BASE_URL = 'https://translate.wordpress.org/projects/meta/openverse/'
 
 export default function useI18nSync() {
   const { i18n } = useContext()
@@ -62,6 +65,28 @@ export default function useI18nSync() {
     return localeTranslatedStatus.translated <= 90
   }
 
+  const bannerDismissedForLocales = useStorage(
+    'openverse-dismissed-banner-locales',
+    [],
+    {
+      serializer: StorageSerializers.object,
+    }
+  )
+  const shouldHideBanner = computed(() => {
+    return (
+      !showBanner.value ||
+      bannerDismissedForLocales.value.includes(bannerLocale.code)
+    )
+  })
+  const dismissBanner = () => {
+    bannerDismissedForLocales.value = [
+      ...bannerDismissedForLocales.value,
+      bannerLocale.code,
+    ]
+  }
+  const translationLink = computed(
+    () => `${BASE_URL}${bannerLocale.code}/default/`
+  )
   /**
    * Handles messages of type `localeSet` received by the `iframe`. Any
    * other message types will be discarded.
@@ -119,7 +144,9 @@ export default function useI18nSync() {
     window.removeEventListener('message', localeMsgHandler)
   })
   return {
-    showBanner,
+    shouldHideBanner,
+    dismissBanner,
     bannerLocale,
+    translationLink,
   }
 }

@@ -220,7 +220,6 @@ export default {
     disabled: process.env.NODE_ENV === 'development',
     environment: process.env.NODE_ENV,
     lazy: true,
-    disabled: true,
   },
   tailwindcss: {
     // https://github.com/nuxt-community/tailwindcss-module/issues/114#issuecomment-698885369
