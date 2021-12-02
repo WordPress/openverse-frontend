@@ -31,8 +31,8 @@
   },
   "notification": {
     "translation": {
-      "text": "The translation for this locale is incomplete. Help us get to 100 percent by {link}.",
-      "link": "contributing translation"
+      "text": "The translation for {locale} locale is incomplete. Help us get to 100 percent by {link}.",
+      "link": "contributing a translation"
     },
     "dismiss": "Dismiss",
     "okay": "OK"

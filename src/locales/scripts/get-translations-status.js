@@ -1,6 +1,6 @@
 /**
- * Fetch the NGX-Translate JSON file for each supported language,
- * convert to our JSON format, and save in the correct folder.
+ * Fetch the list of locales that are available on translate.wordpress.org
+ * and the translation status for all of them.
  */
 const { writeFile } = require('fs/promises')
 const os = require('os')
@@ -8,9 +8,11 @@ const axios = require('axios')
 const parser = require('node-html-parser')
 
 const baseUrl = `https://translate.wordpress.org/projects/meta/openverse`
-const locales = require('./valid-locales.json')
+const localesList = require('./locales-list.json')
+const locales = Object.values(localesList)
+
 /**
- * fetch a json translation from GlotPress
+ * fetch a json translation from translate.wordpress.org
  */
 const fetchTranslationStatusPage = async () => {
   const localesData = []
@@ -19,29 +21,28 @@ const fetchTranslationStatusPage = async () => {
   parsed
     .querySelector('tbody')
     .querySelectorAll('tr')
-    .forEach((row, idx) => {
+    .forEach((row) => {
       const cells = row.querySelectorAll('td')
-      const langName = cells[0].querySelector('a').text.trim()
+      const langLink = cells[0].querySelector('a')
+      const langName = langLink.text.trim()
       const langObject = locales.find((locale) => {
-        // console.log(locale.name, langName)
-        return locale.name === langName
+        return locale.englishName === langName
       })
       if (langObject) {
-        console.log(idx, 'row:')
-        console.log('object: ', langName, langObject)
         const percentTranslated = parseInt(
           cells[1].text.trim().replace('%', ''),
           10
         )
-        localesData.push({ ...langObject, translated: percentTranslated })
+        let name = langObject.englishName
+        delete langObject.englishName
+        langObject.code = langObject.slug
+        localesData.push({ name, ...langObject, translated: percentTranslated })
       }
     })
   return localesData
 }
 
 fetchTranslationStatusPage().then((r) => {
-  console.log(r)
-
   writeFile(
     process.cwd() + `/src/locales/scripts/translated.json`,
     JSON.stringify(r, null, 2) + os.EOL

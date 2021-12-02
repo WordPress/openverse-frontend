@@ -1,10 +1,12 @@
-import { ref, shallowRef, unref, watch } from '@nuxtjs/composition-api'
+import { ref, unref, watch } from '@nuxtjs/composition-api'
 import { useEventListener } from '~/composables/use-event-listener'
 
 const defaultWindow =
   typeof window === 'undefined' || !('localStorage' in window)
     ? undefined
     : window
+
+/** @typedef {{read: (function(string): T), write: (function(T): string)}} Serializer<T> */
 
 export const StorageSerializers = {
   boolean: {
@@ -19,6 +21,10 @@ export const StorageSerializers = {
     read: (v) => v,
     write: (v) => String(v),
   },
+  object: {
+    read: (v) => JSON.parse(v),
+    write: (v) => JSON.stringify(v),
+  },
 }
 
 /**
@@ -27,20 +33,14 @@ export const StorageSerializers = {
  * @see https://vueuse.org/useStorage
  * @param {string} key
  * @param {MaybeRef<T>} initialValue
- * @param storage
  * @param options
  */
-export function useStorage(
-  key,
-  initialValue,
-  storage = defaultWindow?.localStorage,
-  options = {}
-) {
+export function useStorage(key, initialValue, options = {}) {
   const {
     listenToStorageChanges = true,
     writeDefaults = true,
-    shallow,
     window = defaultWindow,
+    storage = defaultWindow?.localStorage,
     onError = (e) => {
       console.error(e)
     },
@@ -57,7 +57,7 @@ export function useStorage(
       ? 'string'
       : 'any'
 
-  const data = (shallow ? shallowRef : ref)(initialValue)
+  const data = ref(initialValue)
   const serializer = options.serializer ?? StorageSerializers[type]
 
   function read(event) {

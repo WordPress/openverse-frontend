@@ -15,6 +15,13 @@ async function getLocalesData() {
   return res.data
 }
 
+const snakeToCamel = (str) =>
+  str
+    .toLowerCase()
+    .replace(/([-_][a-z])/g, (group) =>
+      group.toUpperCase().replace('-', '').replace('_', '')
+    )
+
 getLocalesData()
   .then((data) => {
     const rawLocalesData = data
@@ -52,7 +59,7 @@ getLocalesData()
           const pattern = propertyRePatterns[key]
           const value = rawData.match(pattern)
           if (value) {
-            locales[wpLocale][key] = value[1]
+            locales[wpLocale][snakeToCamel(key)] = value[1]
           }
         })
       }

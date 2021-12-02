@@ -1,6 +1,7 @@
 import { sendWindowMessage } from '~/utils/send-message.js'
 import config from '../../nuxt.config.js'
 import translated from '../locales/scripts/translated.json'
+import allLocales from '../locales/scripts/locales-list.json'
 
 export default {
   methods: {
@@ -13,7 +14,7 @@ export default {
      * @returns {boolean}
      */
     needsTranslationBanner(locale) {
-      if (locale === 'en_US') return false
+      if (['en', 'en_US'].includes(locale)) return false
       let localeTranslatedStatus = translated.find((item) => {
         return item.code === locale
       })
@@ -38,16 +39,28 @@ export default {
       if (type !== 'localeSet') return
       // If the locale set by wp.org is 'en_US', not 'en', this is not necessary.
       const wpLocaleValue = value.locale === 'en' ? 'en_US' : value.locale
-      const locale = this.$i18n.locales.find(
+      let locale = this.$i18n.locales.find(
         (item) => item.wpLocale === wpLocaleValue
       )
+      /**
+       * i18n.locales list only contains the locales that have at least one
+       * translated string.
+       */
       if (locale) {
-        this.showNotification = this.needsTranslationBanner(value.locale)
         await this.$i18n.setLocale(locale.code)
-        document.documentElement.lang = locale.wpLocale.replace('_', '-')
-        // Always set `dir` property, default to 'ltr'
-        document.documentElement.dir = locale.dir === 'rtl' ? 'rtl' : 'ltr'
+      } else {
+        locale = Object.values(allLocales).find(
+          (item) => item.wp_locale === value.locale
+        )
       }
+      if (this.needsTranslationBanner(locale.wpLocale)) {
+        this.showNotification = true
+        this.bannerLocale = locale?.slug || null
+        this.bannerLanguageName = locale?.englishName || 'this'
+      }
+      document.documentElement.lang = locale.wpLocale.replace('_', '-')
+      // Always set `dir` property, default to 'ltr'
+      document.documentElement.dir = locale.dir === 'rtl' ? 'rtl' : 'ltr'
     },
   },
   mounted() {

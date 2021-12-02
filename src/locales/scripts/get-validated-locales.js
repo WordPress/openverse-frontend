@@ -1,20 +1,22 @@
 const fs = require('fs')
 const localesList = require('./locales-list.json')
 
+/**
+ * Returns a list of locale objects with at least one translated string
+ * @returns {{code: *, wpLocale: *, file: string, iso: *, name: *, dir: *}[]}
+ */
 const getValidatedLocales = () => {
   return Object.values(localesList)
     .map((locale) => ({
       code: locale.slug,
-      name: locale.english_name,
-      iso: locale.lang_code_iso_639_1,
-      wpLocale: locale.wp_locale,
-      dir: locale.text_direction,
+      name: locale.englishName,
+      iso: locale.langCodeIso_639_1,
+      wpLocale: locale.wpLocale,
+      dir: locale.textDirection,
       file: `${locale.slug}.json`,
     }))
     .filter((i) => fs.existsSync(process.cwd() + `/src/locales/${i.file}`))
 }
-
-console.log(process.cwd())
 
 try {
   let locales = getValidatedLocales()

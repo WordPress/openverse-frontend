@@ -36,7 +36,7 @@
     "i18n:get-translations": "node src/locales/scripts/get-translations && npm run i18n:get-valid-locales",
     "i18n:generate-pot": "node src/locales/scripts/json-to-pot",
     "i18n:update-locales": "node src/locales/scripts/update-locale-list",
-    "i18n:get-translated-status": "node src/locales/scripts/get-translations-status.js"
+    "i18n:get-translated-status": "node src/locales/scripts/get-translations-status"
   },
   "dependencies": {
     "@nuxt/components": "^2.1.6",
