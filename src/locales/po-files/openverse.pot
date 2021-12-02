@@ -18,6 +18,11 @@ msgctxt "interpunct"
 msgid "•"
 msgstr ""
 
+#: src/components/VModal/VModalContent.vue:14
+msgctxt "modal.close"
+msgid "Close"
+msgstr ""
+
 #: src/components/DownloadButton.vue:14
 msgctxt "download-button.download"
 msgid "Download"
