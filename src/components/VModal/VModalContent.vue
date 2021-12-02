@@ -1,37 +1,45 @@
 <template>
   <VTeleport v-if="visible" to="modal">
-    <div
-      class="flex justify-start items-center flex-col z-10 inset-0 overflow-y-auto fixed inset-0 bg-dark-charcoal bg-opacity-75 transition-opacity min-h-screen"
-      v-bind="$attrs"
-      aria-modal="true"
-      role="dialog"
-      v-on="$listeners"
-      @keydown="onKeyDown"
-      @blur="onBlur"
-    >
-      <div class="w-4/5 flex justify-end">
-        <VButton
-          size="disabled"
-          variant="floating"
-          class="text-white py-2"
-          @click="hide()"
-        >
-          {{ $t('modal.close') }} <VIcon :icon-path="closeIcon" />
-        </VButton>
-      </div>
-
+    <!-- Prevent FocusTrap from trying to focus the first element. We already do that in a more flexible, adaptive way in our Dialog composables. -->
+    <FocusTrap :active="true" :initial-focus="() => {}">
       <div
-        ref="dialogRef"
-        class="w-4/5 flex-grow align-bottom bg-white rounded-t-sm text-left overflow-y-auto shadow-xl transform transition-all"
+        class="flex justify-center z-10 fixed inset-0 bg-dark-charcoal bg-opacity-75 min-h-screen"
       >
-        <slot />
+        <div
+          ref="dialogRef"
+          v-bind="$attrs"
+          class="w-4/5 flex flex-col"
+          role="dialog"
+          aria-modal="true"
+          v-on="$listeners"
+          @keydown="onKeyDown"
+          @blur="onBlur"
+        >
+          <div class="w-full flex justify-end">
+            <VButton
+              size="disabled"
+              variant="floating"
+              class="text-white py-2"
+              @click="hide()"
+            >
+              {{ $t('modal.close') }} <VIcon :icon-path="closeIcon" />
+            </VButton>
+          </div>
+
+          <div
+            class="w-full flex-grow align-bottom bg-white rounded-t-sm text-left overflow-y-auto"
+          >
+            <slot />
+          </div>
+        </div>
       </div>
-    </div>
+    </FocusTrap>
   </VTeleport>
 </template>
 
 <script>
 import { defineComponent, toRefs, ref } from '@nuxtjs/composition-api'
+import { FocusTrap } from 'focus-trap-vue'
 import { VTeleport } from '~/components/VTeleport'
 import { useDialogContent } from '~/composables/use-dialog-content'
 import { warn } from '~/utils/warn'
@@ -40,13 +48,11 @@ import VIcon from '~/components/VIcon/VIcon.vue'
 import closeIcon from '~/assets/icons/close.svg'
 
 /**
- * Renders the inner content of a modal and wires up focus management
- * via the `useModalContent` composable. An extension of the "dialog"
- * concept.
+ * Renders the inner content of a modal and manages focus.
  */
 const VModalContent = defineComponent({
   name: 'VModalContent',
-  components: { VTeleport, VButton, VIcon },
+  components: { VTeleport, VButton, VIcon, FocusTrap },
   props: {
     visible: {
       type: Boolean,

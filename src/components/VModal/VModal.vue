@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div ref="nodeRef">
     <div ref="triggerContainerRef" @click="onTriggerClick">
       <!--
         @slot The trigger. Should be a button 99% of the time. If you need custom event handling on the trigger button, ensure bubbling is not prevented or else the dialog will not open.
@@ -36,6 +36,7 @@ import {
   reactive,
   computed,
 } from '@nuxtjs/composition-api'
+import { useBodyScrollLock } from '~/composables/use-body-scroll-lock'
 import VModalContent from '~/components/VModal/VModalContent.vue'
 
 export default defineComponent({
@@ -109,6 +110,7 @@ export default defineComponent({
   ],
   setup(_, { emit }) {
     const visibleRef = ref(false)
+    const nodeRef = ref()
 
     /** @type {import('@nuxtjs/composition-api').Ref<HTMLElement | undefined>} */
     const triggerContainerRef = ref()
@@ -128,14 +130,18 @@ export default defineComponent({
       }
     })
 
+    const { lock, unlock } = useBodyScrollLock({ nodeRef })
+
     const open = () => {
       visibleRef.value = true
       emit('open')
+      lock()
     }
 
     const close = () => {
       visibleRef.value = false
       emit('close')
+      unlock()
     }
 
     const onTriggerClick = () => {
@@ -147,6 +153,7 @@ export default defineComponent({
     }
 
     return {
+      nodeRef,
       visibleRef,
       close,
       triggerContainerRef,
