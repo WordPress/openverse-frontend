@@ -272,7 +272,7 @@ a.button {
   @apply bg-dark-charcoal-10 ring-offset-dark-charcoal-10;
 }
 
-.floating {
+.plain {
   @apply bg-tx focus-visible:ring-pink;
 }
 </style>

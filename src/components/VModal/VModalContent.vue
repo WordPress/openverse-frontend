@@ -18,7 +18,7 @@
           <div class="w-full flex justify-end">
             <VButton
               size="disabled"
-              variant="floating"
+              variant="plain"
               class="text-white py-2"
               @click="hide()"
             >
