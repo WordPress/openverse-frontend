@@ -21,7 +21,7 @@ const DefaultStory = (args, { argTypes }) => ({
     <div>
       <VModal v-bind="$props">
         <template #trigger="{ a11yProps, visible }">
-          <VButton v-bind="a11yProps">{{ visible ? 'Modal 1 open' : 'Modal 1 closed' }}</VButton>
+          <VButton v-bind="a11yProps">{{ visible ? 'Modal open' : 'Modal closed' }}</VButton>
         </template>
 
         <div class="p-4">

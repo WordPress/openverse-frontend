@@ -10,7 +10,12 @@
       @blur="onBlur"
     >
       <div class="w-4/5 flex justify-end">
-        <VButton variant="floating" class="text-white" @click="hide()">
+        <VButton
+          size="disabled"
+          variant="floating"
+          class="text-white py-2"
+          @click="hide()"
+        >
           {{ $t('modal.close') }} <VIcon :icon-path="closeIcon" />
         </VButton>
       </div>

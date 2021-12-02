@@ -87,14 +87,15 @@ const VButton = defineComponent({
       default: false,
     },
     /**
-     * The size of the button.
+     * The size of the button. `disabled` removes all internal padding allowing
+     * the consumer of the component to determine the padding.
      *
      * @default 'medium'
      */
     size: {
       type: String,
       default: 'medium',
-      validate: (v) => ['large', 'medium', 'small'].includes(v),
+      validate: (v) => ['large', 'medium', 'small', 'disabled'].includes(v),
     },
     /**
      * Whether the button is disabled. Used alone this will only
