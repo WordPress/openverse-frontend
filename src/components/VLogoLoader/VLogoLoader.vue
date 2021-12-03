@@ -168,7 +168,7 @@ export default defineComponent({
 /**
   The stops at 20% and 40% here are used to simulate a 'pause' whenever the spheres
   reach the start or end of the logo. CSS's built in animation-delay property only
-  works on the first cycle of an animation, not  between subsequent runs.
+  works on the first cycle of an animation, not between subsequent runs.
  */
 @keyframes end-shift {
   0%,
