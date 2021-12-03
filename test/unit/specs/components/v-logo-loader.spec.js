@@ -11,17 +11,17 @@ jest.mock('~/composables/use-media-query', () => ({
 
 describe('VLogoLoader', () => {
   it('should render the logo', () => {
-    render(VLogoLoader, { props: { loadingLabel: 'Loading images' } })
-    const element = screen.getByTestId('loading-icon')
+    render(VLogoLoader)
+    const element = screen.getByTestId('logo-loader')
     expect(element).toBeInTheDocument()
   })
 
   describe('accessibility', () => {
     it('should render differently when the user prefers reduced motion', () => {
       render(VLogoLoader, {
-        props: { loadingLabel: 'Loading images', status: 'loading' },
+        props: { status: 'loading' },
       })
-      const element = screen.getByRole('status')
+      const element = screen.getByTestId('logo-loader')
       expect(element).toHaveAttribute('data-prefers-reduced-motion', 'true')
     })
 

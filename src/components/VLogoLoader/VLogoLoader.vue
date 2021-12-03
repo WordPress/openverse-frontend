@@ -1,43 +1,41 @@
 <template>
-  <div
+  <svg
+    viewBox="0 0 34 32"
+    xmlns="http://www.w3.org/2000/svg"
+    :class="{
+      [$style.loading]: status === 'loading' && !prefersReducedMotion,
+      [$style.quiet]: status === 'loading' && prefersReducedMotion,
+    }"
     aria-hidden="true"
     :data-prefers-reduced-motion="prefersReducedMotion"
+    data-testid="logo-loader"
     class="hover:bg-yellow w-16 h-16 p-4 rounded inline-flex justify-center items-center"
   >
-    <svg
-      viewBox="0 0 34 32"
-      xmlns="http://www.w3.org/2000/svg"
-      :class="{
-        [$style.loading]: status === 'loading' && !prefersReducedMotion,
-        [$style.quiet]: status === 'loading' && prefersReducedMotion,
-      }"
-    >
-      <path
-        data-logo-part-1
-        d="M0 6.962c0 3.831 3.09 6.962 6.916 6.962V0C3.09 0 0 3.111 0 6.962Z"
-      />
-      <path
-        data-logo-part-2
-        d="M10.084 6.962c0 3.831 3.091 6.962 6.916 6.962V0c-3.806 0-6.916 3.111-6.916 6.962Z"
-      />
-      <path
-        data-logo-part-3
-        d="M27.084 13.924c3.82 0 6.916-3.117 6.916-6.962C34 3.117 30.904 0 27.084 0c-3.82 0-6.916 3.117-6.916 6.962 0 3.845 3.097 6.962 6.916 6.962Z"
-      />
-      <path
-        data-logo-part-4
-        d="M0 24.153c0 3.85 3.09 6.962 6.916 6.962V17.21C3.09 17.21 0 20.322 0 24.153Z"
-      />
-      <path
-        data-logo-part-5
-        d="M10.084 24.095c0 3.83 3.091 6.962 6.916 6.962V17.152c-3.806 0-6.916 3.112-6.916 6.943Z"
-      />
-      <path
-        data-logo-part-6
-        d="M27.084 31.057c3.82 0 6.916-3.117 6.916-6.962 0-3.845-3.096-6.962-6.916-6.962-3.82 0-6.916 3.117-6.916 6.962 0 3.845 3.097 6.962 6.916 6.962Z"
-      />
-    </svg>
-  </div>
+    <path
+      data-logo-part-1
+      d="M0 6.962c0 3.831 3.09 6.962 6.916 6.962V0C3.09 0 0 3.111 0 6.962Z"
+    />
+    <path
+      data-logo-part-2
+      d="M10.084 6.962c0 3.831 3.091 6.962 6.916 6.962V0c-3.806 0-6.916 3.111-6.916 6.962Z"
+    />
+    <path
+      data-logo-part-3
+      d="M27.084 13.924c3.82 0 6.916-3.117 6.916-6.962C34 3.117 30.904 0 27.084 0c-3.82 0-6.916 3.117-6.916 6.962 0 3.845 3.097 6.962 6.916 6.962Z"
+    />
+    <path
+      data-logo-part-4
+      d="M0 24.153c0 3.85 3.09 6.962 6.916 6.962V17.21C3.09 17.21 0 20.322 0 24.153Z"
+    />
+    <path
+      data-logo-part-5
+      d="M10.084 24.095c0 3.83 3.091 6.962 6.916 6.962V17.152c-3.806 0-6.916 3.112-6.916 6.943Z"
+    />
+    <path
+      data-logo-part-6
+      d="M27.084 31.057c3.82 0 6.916-3.117 6.916-6.962 0-3.845-3.096-6.962-6.916-6.962-3.82 0-6.916 3.117-6.916 6.962 0 3.845 3.097 6.962 6.916 6.962Z"
+    />
+  </svg>
 </template>
 
 <script>
