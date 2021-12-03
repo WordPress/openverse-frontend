@@ -166,18 +166,20 @@ export default {
   styleResources: {
     scss: ['./styles/utilities/all.scss'],
   },
-  modules: [
-    '@nuxtjs/sentry',
-    'nuxt-ssr-cache',
-    '@nuxtjs/i18n',
-    '@nuxtjs/sitemap',
+  modules: ['@nuxtjs/sentry', '@nuxtjs/i18n', '@nuxtjs/sitemap'],
+  serverMiddleware: [
+    { path: '/healthcheck', handler: '~/server-middleware/healthcheck.js' },
   ],
   i18n: {
     locales: [
       {
+        // unique identifier for the locale in Vue i18n
         code: 'en',
         name: 'English',
+        // ISO code used for SEO purposes (html lang attribute)
         iso: 'en',
+        // wp_locale as found in GlotPress
+        wpLocale: 'en_US',
         file: 'en.json',
       },
       ...(locales ?? []),
@@ -203,7 +205,9 @@ export default {
   sentry: {
     dsn:
       process.env.SENTRY_DSN ||
-      'https://3f3e05dbe6994c318d1bf1c8bfcf71a1@o288582.ingest.sentry.io/1525413',
+      'https://53da8fbcebeb48a6bf614a212629df6b@o787041.ingest.sentry.io/5799642',
+    disabled: process.env.NODE_ENV === 'development',
+    environment: process.env.NODE_ENV,
     lazy: true,
   },
   tailwindcss: {

@@ -1,7 +1,16 @@
 const { SCREEN_SIZES } = require('./src/constants/screens')
 
 module.exports = {
-  purge: ['src/**/*.{vue,js,jsx,ts,tsx,mdx}', './nuxt.config.js'],
+  purge: {
+    content: ['src/**/*.{vue,js,jsx,ts,tsx,mdx}', './nuxt.config.js'],
+    /**
+     * In production, dynamically-created class names are purged as unused:
+     * https://tailwindcss.com/docs/optimizing-for-production#writing-purgeable-html
+     * The commonly-used icon size classes are safe-listed here
+     * to ensure that they are not removed:
+     */
+    safelist: ['w-4', 'w-5', 'w-6', 'h-4', 'h-5', 'h-6'],
+  },
   theme: {
     screens: Object.fromEntries(
       Array.from(SCREEN_SIZES, ([name, width]) => [name, `${width}px`])
@@ -93,6 +102,8 @@ module.exports = {
       2: '2px',
     },
     ringOffsetWidth: {
+      0: '0px',
+      1: '1px',
       2: '2px',
     },
     fontSize: {
@@ -194,7 +205,7 @@ module.exports = {
       borderColor: ['checked', 'disabled'],
       margin: ['last'],
       opacity: ['disabled'],
-      ringColor: ['focus-visible'],
+      ringColor: ['focus', 'focus-visible'],
       ringOffsetWidth: ['focus-visible'],
       ringWidth: ['focus-visible'],
       borderWidth: ['focus', 'focus-within'],
