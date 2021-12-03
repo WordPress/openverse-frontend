@@ -17,7 +17,7 @@
       v-if="shouldShowLoadMore"
       :is-error="isError"
       :is-fetching="fetchState.isFetching"
-      :is-finished="isFinished"
+      :is-finished="fetchState.isFinished"
       media-type="audio"
       data-testid="load-more"
       @onLoadMore="onLoadMore"
@@ -32,10 +32,6 @@ export default {
     mediaResults: {},
     fetchState: {},
     isFilterVisible: {},
-    isFinished: {
-      type: Boolean,
-      required: true,
-    },
     searchTerm: {
       type: String,
       required: true,

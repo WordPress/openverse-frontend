@@ -13,10 +13,6 @@ export default {
   props: {
     mediaResults: {},
     fetchState: {},
-    isFinished: {
-      type: Boolean,
-      required: true,
-    },
     searchTerm: {
       type: String,
       required: true,
