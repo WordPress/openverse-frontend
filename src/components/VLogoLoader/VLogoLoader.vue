@@ -4,7 +4,6 @@
     xmlns="http://www.w3.org/2000/svg"
     :class="{
       [$style.loading]: status === 'loading' && !prefersReducedMotion,
-      [$style.quiet]: status === 'loading' && prefersReducedMotion,
     }"
     aria-hidden="true"
     :data-prefers-reduced-motion="prefersReducedMotion"
@@ -178,20 +177,6 @@ export default defineComponent({
   40%,
   50% {
     transform: translateX(var(--circle-shift));
-  }
-}
-
-/** A simple opacity pulse for when the user prefers reduced motion. */
-.quiet {
-  animation: scale 1s infinite linear alternate;
-}
-
-@keyframes scale {
-  from {
-    opacity: 0.7;
-  }
-  to {
-    opacity: 1;
   }
 }
 </style>
