@@ -1,6 +1,6 @@
 export const propTypes = {
   status: {
-    type: /** @type {'loading'|'idle'} */ String,
+    type: /** @type {'loading'|'idle'} */ (String),
     default: 'idle',
     required: false,
   },
