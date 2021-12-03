@@ -17,7 +17,7 @@ const SimpleLoaderStory = (_, { argTypes }) => ({
   template: `
     <div>
       <VLogoLoader v-bind="$props" />
-      <p>Remember to test with the <code class="inline p-0"><pre class="inline bg-light-gray p-0 m-0 leading-normal">prefers-reduced-motion</pre></code> media query. You can find instructions for doing so in Firefox <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion#user_preferences">here.</a>
+      <p>Remember to test with the <code class="inline p-0"><pre class="inline bg-light-gray p-0 m-0 leading-normal">prefers-reduced-motion</pre></code> media query. You can find instructions for doing so in Firefox <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion#user_preferences">here.</a></p>
     </div>
   `,
   components: { VLogoLoader },
