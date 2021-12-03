@@ -15,7 +15,7 @@ export default {
   },
 }
 
-const SingleLoaderStory = (_, { argTypes }) => ({
+const SimpleLoaderStory = (_, { argTypes }) => ({
   props: Object.keys(argTypes),
   template: `
     <div>
@@ -26,8 +26,14 @@ const SingleLoaderStory = (_, { argTypes }) => ({
   setup() {},
 })
 
-export const Default = SingleLoaderStory.bind({})
+export const Default = SimpleLoaderStory.bind({})
 Default.args = {
   status: 'idle',
+  loadingLabel: 'Loading images',
+}
+
+export const Loading = SimpleLoaderStory.bind({})
+Loading.args = {
+  status: 'loading',
   loadingLabel: 'Loading images',
 }
