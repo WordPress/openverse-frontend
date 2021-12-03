@@ -1,8 +1,5 @@
 import { render, screen } from '@testing-library/vue'
-import VLogoLoader, {
-  noLoaderLabelWarning,
-} from '~/components/VLogoLoader/VLogoLoader.vue'
-import { warn } from '~/utils/warn'
+import VLogoLoader from '~/components/VLogoLoader/VLogoLoader.vue'
 
 jest.mock('~/utils/warn', () => ({
   warn: jest.fn(),
@@ -17,11 +14,6 @@ describe('VLogoLoader', () => {
     render(VLogoLoader, { props: { loadingLabel: 'Loading images' } })
     const element = screen.getByTestId('loading-icon')
     expect(element).toBeInTheDocument()
-  })
-
-  it('should complain if there is not a label', () => {
-    render(VLogoLoader, {})
-    expect(warn).toHaveBeenCalledWith(noLoaderLabelWarning)
   })
 
   describe('accessibility', () => {

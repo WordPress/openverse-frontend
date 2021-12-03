@@ -1,52 +1,40 @@
 <template>
   <div
-    role="status"
+    aria-hidden="true"
     :data-prefers-reduced-motion="prefersReducedMotion"
-    :data-fake-aria-label="loadingLabel"
-    class="hover:bg-yellow w-16 h-16 p-4 rounded-sm inline-flex justify-center items-center"
-    :class="{
-      [$style.loading]: status === 'loading',
-      [$style.quiet]: status === 'loading' && prefersReducedMotion,
-    }"
-    :aria-busy="status === 'loading' ? true : undefined"
-    :aria-live="status === 'loading' ? 'polite' : undefined"
-    :aria-label="status === 'loading' ? loadingLabel : undefined"
+    class="hover:bg-yellow w-16 h-16 p-4 rounded inline-flex justify-center items-center"
   >
     <svg
+      viewBox="0 0 34 32"
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 47 42"
-      class="w-full h-full flex-shrink-0"
-      data-testid="loading-icon"
+      :class="{
+        [$style.loading]: status === 'loading' && !prefersReducedMotion,
+        [$style.quiet]: status === 'loading' && prefersReducedMotion,
+      }"
     >
       <path
-        id="part-1"
-        class="semi order-1"
-        d="M0.999969 9.3975C0.999969 14.5687 5.17217 18.795 10.3353 18.795V0C5.17217 0 0.999969 4.2 0.999969 9.3975Z"
+        data-logo-part-1
+        d="M0 6.962c0 3.831 3.09 6.962 6.916 6.962V0C3.09 0 0 3.111 0 6.962Z"
       />
       <path
-        id="part-2"
-        class="semi order-2"
-        d="M14.6118 9.3975C14.6118 14.5687 18.784 18.795 23.9471 18.795V0C18.8101 0 14.6118 4.2 14.6118 9.3975Z"
+        data-logo-part-2
+        d="M10.084 6.962c0 3.831 3.091 6.962 6.916 6.962V0c-3.806 0-6.916 3.111-6.916 6.962Z"
       />
       <path
-        id="part-3"
-        class="full order-3"
-        d="M37.5589 18.795C42.7146 18.795 46.8942 14.5876 46.8942 9.3975C46.8942 4.2074 42.7146 0 37.5589 0C32.4031 0 28.2236 4.2074 28.2236 9.3975C28.2236 14.5876 32.4031 18.795 37.5589 18.795Z"
+        data-logo-part-3
+        d="M27.084 13.924c3.82 0 6.916-3.117 6.916-6.962C34 3.117 30.904 0 27.084 0c-3.82 0-6.916 3.117-6.916 6.962 0 3.845 3.097 6.962 6.916 6.962Z"
       />
       <path
-        id="part-4"
-        class="semi order-a"
-        d="M0.999969 32.6025C0.999969 37.8 5.17217 42 10.3353 42V23.2312C5.17217 23.2312 0.999969 27.4312 0.999969 32.6025Z"
+        data-logo-part-4
+        d="M0 24.153c0 3.85 3.09 6.962 6.916 6.962V17.21C3.09 17.21 0 20.322 0 24.153Z"
       />
       <path
-        id="part-5"
-        class="semi order-b"
-        d="M14.6118 32.5238C14.6118 37.695 18.784 41.9213 23.9471 41.9213V23.1525C18.8101 23.1525 14.6118 27.3525 14.6118 32.5238Z"
+        data-logo-part-5
+        d="M10.084 24.095c0 3.83 3.091 6.962 6.916 6.962V17.152c-3.806 0-6.916 3.112-6.916 6.943Z"
       />
       <path
-        id="part-6"
-        class="full order-c"
-        d="M37.5589 41.9212C42.7146 41.9212 46.8942 37.7138 46.8942 32.5238C46.8942 27.3337 42.7146 23.1263 37.5589 23.1263C32.4031 23.1263 28.2236 27.3337 28.2236 32.5238C28.2236 37.7138 32.4031 41.9212 37.5589 41.9212Z"
+        data-logo-part-6
+        d="M27.084 31.057c3.82 0 6.916-3.117 6.916-6.962 0-3.845-3.096-6.962-6.916-6.962-3.82 0-6.916 3.117-6.916 6.962 0 3.845 3.097 6.962 6.916 6.962Z"
       />
     </svg>
   </div>
@@ -55,12 +43,8 @@
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
 import { useReducedMotion } from '~/composables/use-media-query'
-import { warn } from '~/utils/warn'
 
 import { propTypes } from './VLogoLoader.types'
-
-export const noLoaderLabelWarning =
-  'Please provide a label to announce when the component is "loading".'
 
 export default defineComponent({
   name: 'VLogoLoader',
@@ -69,13 +53,9 @@ export default defineComponent({
    * @param {import('./VLogoLoader.types').Props} props
    * @param {import('@nuxtjs/composition-api').SetupContext} context
    */
-  setup(props) {
+  setup() {
     const defaultWindow = typeof window !== 'undefined' ? window : undefined
     const prefersReducedMotion = useReducedMotion({ window: defaultWindow })
-
-    if (!props.loadingLabel) {
-      warn(noLoaderLabelWarning)
-    }
 
     return { prefersReducedMotion }
   },
@@ -83,18 +63,137 @@ export default defineComponent({
 </script>
 
 <style module>
+/**
+  Openverse Logo Loader
+
+  ┌───┐ ┌───┐ ┌──────┐
+  │ 1 │ │ 2 │ │   3  │
+  └───┘ └───┘ └──────┘
+  ┌───┐ ┌───┐ ┌──────┐
+  │ 4 │ │ 5 │ │   6  │
+  └───┘ └───┘ └──────┘
+
+  The logo, in goofy ascii!
+
+  The loader keyframe animation steps (the defined percentage blocks within each animation)
+  are tightly coupled to the cubic bezier easing curve of the full circles (parts 3 and 6),
+  as they move from right to left and back to their starting positions.
+
+  This easing curve determines at which point in the animation timeline the sphere will be
+  in a particular position. Changing it or the keyframe step percentages will break the animation.
+
+  Things you *can* change are:
+
+  1. The duration of the animation
+  2. The easing of parts 1,2,4, and 5 (this is the animation of the half circles shifting in from
+  the right after the circles 'sweep' by)
+  3. The size of the logo (has no bearing on the animation despite the 'magic' pixel values in our
+  CSS vars)
+
+  Things you can't change, without making several additional changes:
+
+  1. The --halfcircle-shift and --circle-shift variable values
+  2. The easing curve of the end-shift animation on parts 3 and 6
+  3. The keyframe percentage steps (think of these as points on a timeline of the animation, with 0%
+  being the start and 100% being the end)
+*/
+
 .loading {
-  animation: blink 1s steps(5, start) infinite;
+  --halfcircle-shift: 7px;
+  --circle-shift: -20.1px;
 }
 
-@keyframes blink {
-  to {
+.loading > [data-logo-part-1],
+.loading > [data-logo-part-4] {
+  animation: start-shift 2s infinite ease-in-out;
+}
+
+.loading > [data-logo-part-2],
+.loading > [data-logo-part-5] {
+  animation: middle-shift 2s infinite ease-in-out;
+}
+
+.loading > [data-logo-part-3],
+.loading > [data-logo-part-6] {
+  /**
+    Changing this cubic-bezier will break the animation and require changes to the
+    start-shift and middle-shift keyframe steps.
+  */
+  animation: end-shift 2s infinite cubic-bezier(0.79, 0.14, 0.15, 0.86);
+}
+
+/* Stagger the second row so it animates slightly after the first */
+.loading > [data-logo-part-4],
+.loading > [data-logo-part-5],
+.loading > [data-logo-part-6] {
+  animation-delay: 0.35s;
+}
+
+@keyframes start-shift {
+  0% {
+    visibility: visible;
+    transform: translateX(0);
+  }
+  50% {
     visibility: hidden;
+    transform: translateX(0);
+  }
+  73% {
+    visibility: hidden;
+    transform: translateX(var(--halfcircle-shift));
+  }
+  79% {
+    visibility: visible;
+    transform: translateX(0);
   }
 }
 
+@keyframes middle-shift {
+  0% {
+    visibility: visible;
+    transform: translateX(0);
+  }
+  30% {
+    visibility: hidden;
+    transform: translateX(0);
+  }
+  78.6% {
+    visibility: hidden;
+    transform: translateX(var(--halfcircle-shift));
+  }
+  86% {
+    visibility: visible;
+    transform: translateX(0);
+  }
+}
+
+/**
+  The stops at 20% and 40% here are used to simulate a 'pause' whenever the spheres
+  reach the start or end of the logo. CSS's built in animation-delay property only
+  works on the first cycle of an animation, not  between subsequent runs.
+ */
+@keyframes end-shift {
+  0%,
+  20% {
+    transform: translateX(0);
+  }
+  40%,
+  50% {
+    transform: translateX(var(--circle-shift));
+  }
+}
+
+/** A simple opacity pulse for when the user prefers reduced motion. */
 .quiet {
-  opacity: 0.5;
-  animation: none !important;
+  animation: scale 1s infinite linear alternate;
+}
+
+@keyframes scale {
+  from {
+    opacity: 0.7;
+  }
+  to {
+    opacity: 1;
+  }
 }
 </style>

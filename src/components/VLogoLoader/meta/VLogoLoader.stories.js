@@ -1,4 +1,4 @@
-import VLogoLoader from '~/components/VLogoLoader/VLogoLoader.vue'
+import VLogoLoader from '~/components/VLogoLoader/VLogoLoader'
 
 export default {
   component: VLogoLoader,
@@ -9,9 +9,6 @@ export default {
       options: ['loading', 'idle'],
       control: { type: 'radio' },
     },
-    loadingLabel: {
-      control: { type: 'text' },
-    },
   },
 }
 
@@ -19,7 +16,8 @@ const SimpleLoaderStory = (_, { argTypes }) => ({
   props: Object.keys(argTypes),
   template: `
     <div>
-      <VLogoLoader v-bind="$props" :key="$props.status" />
+      <VLogoLoader v-bind="$props" />
+      <p>Remember to test with the <code class="inline p-0"><pre class="inline bg-light-gray p-0 m-0 leading-normal">prefers-reduced-motion</pre></code> media query. You can find instructions for doing so in Firefox <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion#user_preferences">here.</a>
     </div>
   `,
   components: { VLogoLoader },
@@ -29,11 +27,27 @@ const SimpleLoaderStory = (_, { argTypes }) => ({
 export const Default = SimpleLoaderStory.bind({})
 Default.args = {
   status: 'idle',
-  loadingLabel: 'Loading images',
 }
 
 export const Loading = SimpleLoaderStory.bind({})
 Loading.args = {
   status: 'loading',
+  loadingLabel: 'Loading images',
+}
+
+const LinkWrappedLoaderStory = (_, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  template: `
+    <a class="focus:outline-none focus:ring focus:ring-offset-2 focus:ring-pink inline-block" href='https://wordpress.org/openverse'>
+      <VLogoLoader v-bind="$props" />
+    </a>
+  `,
+  components: { VLogoLoader },
+  setup() {},
+})
+
+export const LinkWrapped = LinkWrappedLoaderStory.bind({})
+LinkWrappedLoaderStory.args = {
+  status: 'idle',
   loadingLabel: 'Loading images',
 }
