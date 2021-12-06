@@ -166,7 +166,12 @@ export default {
   styleResources: {
     scss: ['./styles/utilities/all.scss'],
   },
-  modules: ['@nuxtjs/sentry', '@nuxtjs/i18n', '@nuxtjs/sitemap'],
+  modules: [
+    '@nuxtjs/i18n',
+    '@nuxtjs/redirect-module',
+    '@nuxtjs/sentry',
+    '@nuxtjs/sitemap',
+  ],
   serverMiddleware: [
     { path: '/healthcheck', handler: '~/server-middleware/healthcheck.js' },
   ],
@@ -202,6 +207,7 @@ export default {
     baseUrl: 'http://localhost:8443',
     vueI18n: '~/plugins/vue-i18n.js',
   },
+  redirect: [{ from: '^/photos/(.*)$', to: '/image/$1' }],
   sentry: {
     dsn:
       process.env.SENTRY_DSN ||
