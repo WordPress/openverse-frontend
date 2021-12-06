@@ -15,7 +15,7 @@ export function useMediaQuery(query, options = {}) {
   if (!window) return ref(false)
 
   const mediaQuery = window.matchMedia(query)
-  /** @type {import('@nuxtjs/composition-api').Ref<boolean>} */
+  /** @type {import('@nuxtjs/composition-api').Ref<Boolean>} */
   const matches = ref(mediaQuery.matches)
 
   const handler = (/** @type MediaQueryListEvent */ event) => {
