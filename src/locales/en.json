@@ -316,9 +316,9 @@
     "image": "image",
     "audio": "audio"
   },
-  "search-tab": {
-    "all": "All",
-    "image": "Image",
+  "search-type": {
+    "all": "All content",
+    "image": "Images",
     "audio": "Audio",
     "video": "Video"
   },

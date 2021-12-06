@@ -1,0 +1,50 @@
+import {
+  ArgsTable,
+  Canvas,
+  Description,
+  Meta,
+  Story,
+} from '@storybook/addon-docs'
+import ContentSwitcher from '~/components/VHeader/ContentSwitcher.vue'
+
+<Meta
+  title="Components/VHeader/ContentSwitcher"
+  component={ContentSwitcher}
+  argTypes={{
+    input: {
+      action: 'input',
+    },
+    submit: {
+      action: 'submit',
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  template: `
+    <ContentSwitcher v-bind="$props" v-on="$props">
+    </ContentSwitcher>`,
+  components: { ContentSwitcher },
+  props: Object.keys(argTypes),
+})
+
+# ContentSwitcher
+
+<Description of={ContentSwitcher} />
+
+<ArgsTable of={ContentSwitcher} />
+
+The component emits an `input` event with the new contents of the field whenever
+the field receives an input. It also emits the `search` event when the search
+button is clicked.
+
+<Canvas>
+  <Story
+    name="Default"
+    args={{
+      value: 'Search query',
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>

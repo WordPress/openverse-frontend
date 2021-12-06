@@ -9,7 +9,16 @@
     <NuxtLink to="/">
       <VLogoLoader :status="isFetching ? 'loading' : 'idle'" />
     </NuxtLink>
-
+    <VButton
+      v-if="!!currentOverlay"
+      variant="action-menu"
+      class="self-center"
+      @click="closeOverlay"
+    >
+      <span class="text-sr">{{ $t('modal.close') }}</span>
+      <VIcon :icon-path="closeIcon" />
+    </VButton>
+    <VContentSwitcher class="flex-grow" />
     <VFilterButton
       v-if="isSearch"
       :is-header-scrolled="isHeaderScrolled"
@@ -34,15 +43,18 @@ import { useWindowScroll } from '~/composables/use-window-scroll'
 
 import closeIcon from '~/assets/icons/close.svg'
 
+import VContentSwitcher from '~/components/VHeader/VContentSwitcher.vue'
 import VFilterButton from '~/components/VHeader/VFilterButton.vue'
-
+import VIcon from '~/components/VIcon/VIcon.vue'
 import VLogoLoader from '~/components/VLogoLoader/VLogoLoader.vue'
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
 
 const VHeader = defineComponent({
   name: 'VHeader',
   components: {
+    VContentSwitcher,
     VFilterButton,
+    VIcon,
     VLogoLoader,
   },
   setup() {

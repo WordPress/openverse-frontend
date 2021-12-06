@@ -49,9 +49,10 @@ import {
   SET_SEARCH_STATE_FROM_URL,
   UPDATE_SEARCH_TYPE,
 } from '~/constants/action-types'
-import { queryStringToSearchType } from '~/utils/search-query-transform'
-import { ALL_MEDIA, AUDIO, IMAGE } from '~/constants/media'
-import { mapActions, mapGetters, mapState } from 'vuex'
+import { SET_FILTER_IS_VISIBLE } from '~/constants/mutation-types'
+import local from '~/utils/local'
+import { ALL_MEDIA, IMAGE, VIDEO } from '~/constants/media'
+import { mapActions, mapGetters, mapMutations, mapState } from 'vuex'
 import { MEDIA, SEARCH } from '~/constants/store-modules'
 import debounce from 'lodash.debounce'
 
@@ -187,17 +188,6 @@ const BrowsePage = {
           this.getMediaItems(this.query)
         }
       },
-    },
-    /**
-     * Updates the search type only if the route's path changes.
-     * @param newRoute
-     * @param oldRoute
-     */
-    $route(newRoute, oldRoute) {
-      if (newRoute.path !== oldRoute.path) {
-        const searchType = queryStringToSearchType(newRoute.path)
-        this.updateSearchType({ searchType })
-      }
     },
   },
 }
