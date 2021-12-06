@@ -207,7 +207,7 @@ export default {
     baseUrl: 'http://localhost:8443',
     vueI18n: '~/plugins/vue-i18n.js',
   },
-  redirect: [{ from: '^/photos/(.*)$', to: '/image/$1' }],
+  redirect: [{ from: '^/photos/(.*)$', to: '/image/$1', statusCode: 301 }],
   sentry: {
     dsn:
       process.env.SENTRY_DSN ||
