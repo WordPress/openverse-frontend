@@ -2,7 +2,7 @@
   <div class="app">
     <MigrationNotice v-show="isReferredFromCc" />
     <TranslationStatusBanner />
-    <HeaderSection :show-nav-search="true" />
+    <VHeader />
     <main class="embedded">
       <Nuxt />
     </main>
@@ -10,15 +10,22 @@
 </template>
 <script>
 import iframeHeight from '~/mixins/iframe-height'
+import { useContext } from '@nuxtjs/composition-api'
 
 import { NAV } from '~/constants/store-modules'
 
 import TranslationStatusBanner from '~/components/TranslationStatusBanner.vue'
-import { useContext } from '@nuxtjs/composition-api'
+
+import MigrationNotice from '~/components/MigrationNotice.vue'
+import VHeader from '~/components/VHeader/VHeader.vue'
 
 const embeddedWithNavSearch = {
   name: 'embedded-with-nav-search',
-  components: { TranslationStatusBanner },
+  components: {
+    MigrationNotice,
+    TranslationStatusBanner
+    VHeader,
+  },
   layout: 'embedded-with-nav-search',
   mixins: [iframeHeight],
   head() {

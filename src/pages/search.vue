@@ -73,8 +73,7 @@ const BrowsePage = {
     VSearchGrid,
   },
   setup() {
-    const defaultWindow = typeof window !== 'undefined' ? window : undefined
-    const isMdScreen = isScreen('md', defaultWindow)
+    const isMdScreen = isScreen('md')
     return {
       isMdScreen,
     }

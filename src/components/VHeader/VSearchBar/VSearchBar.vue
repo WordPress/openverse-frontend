@@ -12,7 +12,7 @@
       <!-- @slot Extra information such as loading message or result count goes here. -->
       <slot />
     </InputField>
-    <SearchButton type="submit" />
+    <VSearchButton type="submit" />
   </form>
 </template>
 
@@ -20,7 +20,7 @@
 import { computed } from '@nuxtjs/composition-api'
 
 import InputField from '~/components/InputField/InputField.vue'
-import SearchButton from '~/components/Header/SearchBar/SearchButton.vue'
+import VSearchButton from '~/components/VHeader/VSearchBar/VSearchButton.vue'
 
 /**
  * Displays a text field for a search query and is attached to an action button
@@ -31,7 +31,7 @@ export default {
   name: 'SearchBar',
   components: {
     InputField,
-    SearchButton,
+    VSearchButton,
   },
   inheritAttrs: false,
   model: {
