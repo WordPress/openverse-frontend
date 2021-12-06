@@ -2,6 +2,7 @@
  which, in turn, is ported from https://github.com/logaretm/vue-use-web by Abdelrahman Awad */
 import { onBeforeUnmount, ref } from '@nuxtjs/composition-api'
 import { SCREEN_SIZES } from '~/constants/screens.js'
+import { defaultWindow } from '~/composables/window'
 
 /**
  * Reactive Media Query.
@@ -10,7 +11,7 @@ import { SCREEN_SIZES } from '~/constants/screens.js'
  * @param options
  */
 export function useMediaQuery(query, options = {}) {
-  const { window } = options
+  const { window = defaultWindow } = options
   if (!window) return ref(false)
 
   const mediaQuery = window.matchMedia(query)
