@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/vue'
 
-import SearchBar from '~/components/Header/SearchBar/SearchBar.vue'
+import SearchBar from '~/components/VHeader/VSearchBar/VSearchBar.vue'
 
 describe('SearchBar', () => {
   it('renders an input field with placeholder and type="search"', () => {

@@ -15,7 +15,7 @@ import VIconButton from '~/components/VIconButton/VIconButton.vue'
 import searchIcon from '~/assets/icons/search.svg'
 
 export default {
-  name: 'SearchButton',
+  name: 'VSearchButton',
   components: { VIconButton },
   inheritAttrs: false,
   setup() {
