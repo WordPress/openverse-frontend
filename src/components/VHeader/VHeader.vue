@@ -6,6 +6,9 @@
     <NuxtLink to="/">
       <VLogoLoader :status="isFetching ? 'loading' : 'idle'" />
     </NuxtLink>
+    <template v-if="!currentOverlay">
+      <VFilterButton :is-header-scrolled="isHeaderScrolled" />
+    </template>
     <VButton
       v-if="!!currentOverlay"
       variant="action-menu"
@@ -32,12 +35,14 @@ import { useWindowScroll } from '~/composables/use-window-scroll'
 
 import closeIcon from '~/assets/icons/close.svg'
 
+import VFilterButton from '~/components/VHeader/VFilterButton.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'
 import VLogoLoader from '~/components/VLogoLoader/VLogoLoader.vue'
 
 const VHeader = defineComponent({
   name: 'VHeader',
   components: {
+    VFilterButton,
     VIcon,
     VLogoLoader,
   },

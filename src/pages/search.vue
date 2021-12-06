@@ -3,15 +3,16 @@
     <div class="search columns">
       <Component
         :is="searchFilter.as"
-        v-if="isFilterVisible"
+        v-if="isFilterSidebarVisible"
+        id="filter-sidebar"
         :class="searchFilter.classes"
         @close="onToggleSearchGridFilter"
-        ><SearchGridFilter
+        ><VSearchGridFilter @close="onToggleSearchGridFilter"
       /></Component>
       <div class="column search-grid-ctr">
         <SearchGridForm @onSearchFormSubmit="onSearchFormSubmit" />
         <SearchTypeTabs />
-        <FilterDisplay v-show="shouldShowFilterTags" />
+        <VFilterDisplay v-show="shouldShowFilterTags" />
         <NuxtChild :key="$route.path" @onLoadMoreItems="onLoadMoreItems" />
         <ScrollButton :show-btn="showScrollButton" />
       </div>
@@ -26,27 +27,38 @@ import {
   SET_SEARCH_STATE_FROM_URL,
   UPDATE_SEARCH_TYPE,
 } from '~/constants/action-types'
-import { SET_FILTER_IS_VISIBLE } from '~/constants/mutation-types'
 import { queryStringToSearchType } from '~/utils/search-query-transform'
-import local from '~/utils/local'
 import { ALL_MEDIA, IMAGE, VIDEO } from '~/constants/media'
-import { mapActions, mapGetters, mapMutations, mapState } from 'vuex'
+import { mapActions, mapGetters, mapState } from 'vuex'
 import { MEDIA, SEARCH } from '~/constants/store-modules'
 import debounce from 'lodash.debounce'
-import SearchGridFilter from '~/components/Filters/SearchGridFilter.vue'
+
 import { isScreen } from '~/composables/use-media-query.js'
+import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
+
 import AppModal from '~/components/AppModal'
+import VSearchGridFilter from '~/components/VFilters/VSearchGridFilter.vue'
+import VFilterDisplay from '~/components/VFilters/VFilterDisplay.vue'
 
 const BrowsePage = {
   name: 'browse-page',
   layout: 'default',
   components: {
-    SearchGridFilter,
+    VFilterDisplay,
+    VSearchGridFilter,
   },
   setup() {
     const isMdScreen = isScreen('md')
+    const {
+      isFilterSidebarVisible,
+      setFilterSidebarVisibility,
+    } = useFilterSidebarVisibility({ mediaQuery: isMdScreen })
+
     return {
       isMdScreen,
+      isFilterSidebarVisible,
+
+      setFilterSidebarVisibility,
     }
   },
   scrollToTop: false,
@@ -68,20 +80,13 @@ const BrowsePage = {
     }
   },
   mounted() {
-    const localFilterState = () =>
-      local.get(process.env.filterStorageKey)
-        ? local.get(process.env.filterStorageKey) === 'true'
-        : true
-    this.setFilterVisibility({
-      isFilterVisible: this.isMdScreen && localFilterState(),
-    })
     window.addEventListener('scroll', this.debounceScrollHandling)
   },
   beforeDestroy() {
     window.removeEventListener('scroll', this.debounceScrollHandling)
   },
   computed: {
-    ...mapState(SEARCH, ['query', 'isFilterVisible', 'searchType']),
+    ...mapState(SEARCH, ['query', 'searchType']),
     ...mapGetters(SEARCH, ['searchQueryParams', 'isAnyFilterApplied']),
     ...mapGetters(MEDIA, ['results']),
     mediaType() {
@@ -110,9 +115,6 @@ const BrowsePage = {
       updateSearchType: UPDATE_SEARCH_TYPE,
       updateQuery: UPDATE_QUERY,
     }),
-    ...mapMutations(SEARCH, {
-      setFilterVisibility: SET_FILTER_IS_VISIBLE,
-    }),
     async getMediaItems(params, mediaType) {
       await this.fetchMedia({ ...params, mediaType })
     },
@@ -123,9 +125,7 @@ const BrowsePage = {
       this.updateQuery({ q })
     },
     onToggleSearchGridFilter() {
-      this.setFilterVisibility({
-        isFilterVisible: !this.isFilterVisible,
-      })
+      this.setFilterSidebarVisibility(!this.isFilterSidebarVisible)
     },
     checkScrollLength() {
       this.showScrollButton = window.scrollY > 70
