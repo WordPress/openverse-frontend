@@ -1,6 +1,9 @@
-import ApiService from './api-service'
 import config from '../../nuxt.config.js'
 import sampleAudioResponses from './sample-audio-responses.json'
+
+import ApiService from './api-service'
+import decodeMediaData from '~/utils/decode-media-data.js'
+import { AUDIO } from '~/constants/media.js'
 
 // TODO: Remove sample responses when Audio API is available
 const AudioService = {
@@ -13,6 +16,16 @@ const AudioService = {
     return config.dev
       ? Promise.resolve({ data: sampleAudioResponses.search })
       : ApiService.query('audios', params)
+  },
+
+  transformResults(data) {
+    data.results = Object.fromEntries(
+      data.results.map((item) => {
+        item = decodeMediaData(item, AUDIO)
+        return [item.id, item]
+      })
+    )
+    return data
   },
 
   getProviderCollection(params) {
