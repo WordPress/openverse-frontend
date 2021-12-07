@@ -75,17 +75,6 @@ export default defineComponent({
      */
     autoFocusOnHide: { type: Boolean, default: undefined },
     /**
-     * The placement of the popover relative to the trigger. Should be one of the options
-     * for `placement` passed to popper.js.
-     *
-     * @see https://popper.js.org/docs/v2/constructors/#options
-     *
-     * @default 'bottom'
-     */
-    placement: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<import('@popperjs/core').Placement>} */ (String),
-    },
-    /**
      * The label of the popover content. Must be provided if `labelledBy` is empty.
      *
      * @default undefined
