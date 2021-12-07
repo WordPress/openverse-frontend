@@ -13,9 +13,11 @@ const AudioService = {
    * @return {Promise<{data: any}>}
    */
   search(params) {
-    return config.dev
-      ? Promise.resolve({ data: sampleAudioResponses.search })
-      : ApiService.query('audios', params)
+    if (config.dev) {
+      const data = JSON.parse(JSON.stringify(sampleAudioResponses.search))
+      return Promise.resolve({ data })
+    }
+    return ApiService.query('audios', params)
   },
 
   transformResults(data) {
