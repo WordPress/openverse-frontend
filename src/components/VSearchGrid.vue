@@ -23,10 +23,10 @@
 
     <VMetaSearchForm
       v-if="!fetchState.isFetching"
-      :type="searchType === 'all' ? 'image' : searchType"
+      :type="metaSearchFormType"
       :noresult="noresult"
       :query="query"
-      :supported="searchType === 'all' ? true : supported"
+      :supported="isSupported"
     />
   </section>
 </template>
@@ -105,13 +105,23 @@ export default {
     const noresult = computed(() => {
       // noresult is hard-coded for search types that are not currently
       // supported by Openverse built-in search
-      return props.supported ? props.resultsCount === 0 : false
+      return props.supported
+        ? props.query.q !== '' && props.resultsCount === 0
+        : false
+    })
+    const isSupported = computed(() => {
+      return props.searchType === 'all' ? true : props.supported
+    })
+    const metaSearchFormType = computed(() => {
+      return props.searchType === 'all' ? 'image' : props.searchType
     })
 
     return {
       mediaCount,
       noresult,
       shouldShowMeta,
+      isSupported,
+      metaSearchFormType,
     }
   },
 }
