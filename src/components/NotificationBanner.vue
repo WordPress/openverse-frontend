@@ -37,8 +37,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
-$bgColor: #e6f6eb;
+// Styles from learn.wordpress.org
+$bgColor: #fff8e5;
 .wrapper {
   background-color: $bgColor;
+  border-left: 4px solid #ffb900;
 }
 </style>
