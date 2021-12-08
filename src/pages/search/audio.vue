@@ -1,27 +1,29 @@
 <template>
   <section>
-    <AudioTrack
-      v-for="audio in mediaResults.items"
-      :key="audio.id"
-      class="px-6 mb-6"
-      :audio="audio"
-      :size="audioTrackSize"
-      layout="row"
-    />
+    <template v-if="supported">
+      <AudioTrack
+        v-for="audio in mediaResults.items"
+        :key="audio.id"
+        class="px-6 mb-6"
+        :audio="audio"
+        :size="audioTrackSize"
+        layout="row"
+      />
 
-    <template v-if="isError" class="m-auto w-1/2 text-center pt-6">
-      <h5>{{ errorHeader }}</h5>
-      <p>{{ fetchState.fetchingError }}</p>
+      <template v-if="isError" class="m-auto w-1/2 text-center pt-6">
+        <h5>{{ errorHeader }}</h5>
+        <p>{{ fetchState.fetchingError }}</p>
+      </template>
+      <LoadMoreButton
+        v-if="shouldShowLoadMore"
+        :is-error="isError"
+        :is-fetching="fetchState.isFetching"
+        :is-finished="fetchState.isFinished"
+        media-type="audio"
+        data-testid="load-more"
+        @onLoadMore="onLoadMore"
+      />
     </template>
-    <LoadMoreButton
-      v-if="shouldShowLoadMore"
-      :is-error="isError"
-      :is-fetching="fetchState.isFetching"
-      :is-finished="fetchState.isFinished"
-      media-type="audio"
-      data-testid="load-more"
-      @onLoadMore="onLoadMore"
-    />
   </section>
 </template>
 
@@ -34,6 +36,10 @@ export default {
     isFilterVisible: {},
     searchTerm: {
       type: String,
+      required: true,
+    },
+    supported: {
+      type: Boolean,
       required: true,
     },
   },

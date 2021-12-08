@@ -229,13 +229,10 @@ export const getters = {
    * @param {import('./types').MediaState} state
    * @param getters
    * @param rootState
-   * @return {import('./types').MediaStoreResult|null}
+   * @return {import('./types').MediaStoreResult}
    */
   results(state, getters, rootState) {
-    if (getters.unsupportedMediaType) {
-      return null
-    }
-    return state.results[rootState.search.query.mediaType]
+    return state.results[rootState.search.query.mediaType] || null
   },
   /**
    * Search fetching state for selected media type.
@@ -244,10 +241,13 @@ export const getters = {
    * @returns {import('./types').fetchState}
    */
   fetchState(state, getters) {
-    if (getters.unsupportedMediaType) {
-      return {}
-    }
-    return state.fetchState[getters.mediaType]
+    return (
+      state.fetchState[getters.mediaType] || {
+        isFetching: false,
+        fetchError: false,
+        isFinished: true,
+      }
+    )
   },
   mediaType(state, getters, rootState) {
     return rootState.search.query.mediaType

@@ -12,10 +12,15 @@
         <SearchGridForm @onSearchFormSubmit="onSearchFormSubmit" />
         <SearchTypeTabs class="mb-4" />
         <FilterDisplay v-show="shouldShowFilterTags" />
-        <SearchGrid
+        <VSearchGrid
           :id="`tab-${searchType}`"
           role="tabpanel"
           :aria-labelledby="searchType"
+          :fetch-state="fetchState"
+          :query="query"
+          :supported="supported"
+          :search-type="searchType"
+          :results-count="resultsCount"
           data-testid="search-grid"
         >
           <template #media>
@@ -25,10 +30,12 @@
               :fetch-state="fetchState"
               :is-filter-visible="isFilterVisible"
               :search-term="query.q"
+              :supported="supported"
+              data-testid="search-results"
               @load-more="getMediaItems"
             />
           </template>
-        </SearchGrid>
+        </VSearchGrid>
         <ScrollButton data-testid="scroll-button" :v-show="showScrollButton" />
       </div>
     </div>
@@ -45,19 +52,24 @@ import {
 import { SET_FILTER_IS_VISIBLE } from '~/constants/mutation-types'
 import { queryStringToSearchType } from '~/utils/search-query-transform'
 import local from '~/utils/local'
-import { ALL_MEDIA, IMAGE, VIDEO } from '~/constants/media'
+import { ALL_MEDIA, AUDIO, IMAGE, VIDEO } from '~/constants/media'
 import { mapActions, mapGetters, mapMutations, mapState } from 'vuex'
 import { MEDIA, SEARCH } from '~/constants/store-modules'
 import debounce from 'lodash.debounce'
-import SearchGridFilter from '~/components/Filters/SearchGridFilter.vue'
+
 import { isScreen } from '~/composables/use-media-query.js'
+
 import AppModal from '~/components/AppModal'
+import VSearchGrid from '~/components/VSearchGrid.vue'
+import SearchGridFilter from '~/components/Filters/SearchGridFilter.vue'
 
 const BrowsePage = {
   name: 'browse-page',
   layout: 'default',
   components: {
+    AppModal,
     SearchGridFilter,
+    VSearchGrid,
   },
   setup() {
     const defaultWindow = typeof window !== 'undefined' ? window : undefined
@@ -116,12 +128,27 @@ const BrowsePage = {
         this.isAnyFilterApplied
       )
     },
+    /**
+     * Number of search results. Returns 0 for unsupported types.
+     * @returns {number}
+     */
+    resultsCount() {
+      return this.supported ? this.results.count : 0
+    },
     searchFilter() {
       return {
         classes: {
           'column is-narrow grid-sidebar max-w-full bg-white': this.isMdScreen,
         },
         as: this.isMdScreen ? 'aside' : AppModal,
+      }
+    },
+    supported() {
+      if (this.searchType === AUDIO) {
+        // Only show audio results if non-image results are supported
+        return process.env.enableAudio
+      } else {
+        return [IMAGE, ALL_MEDIA].includes(this.searchType)
       }
     },
   },
@@ -161,7 +188,9 @@ const BrowsePage = {
           query: this.searchQueryParams,
         })
         this.$router.push(newPath)
-        this.getMediaItems(this.query)
+        if (this.supported) {
+          this.getMediaItems(this.query)
+        }
       },
     },
     /**
