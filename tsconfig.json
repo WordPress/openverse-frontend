@@ -35,6 +35,7 @@
     "baseUrl": "./"
 	},
   "include": [
+      "src/composables/types.js",
       "src/composables/use-event-listener-outside.js"
   ]
 }
