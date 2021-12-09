@@ -75,6 +75,27 @@ Here 1000 points are downsampled to as many as required to fill the viewport.
   </Story>
 </Canvas>
 
+## Background
+
+The background color for the waveform can be changed as required. To do so, set
+the `--waveform-background-color` CSS custom property on the component or on the
+`.waveform` class.
+
+<Canvas>
+  <Story
+    name="Background"
+    args={{
+      peaks: [0.5, 1, 0.5, 0, 0.5],
+      currentTime: 2,
+      duration: 10,
+      showDuration: true,
+      style: { '--waveform-background-color': '#d7fcd4' },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
 ## Sizing
 
 The waveform always takes the height and width of its container.
