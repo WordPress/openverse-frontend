@@ -1,0 +1,1142 @@
+[
+  {
+    "code": "skr",
+    "wpLocale": "skr",
+    "dir": "rtl",
+    "translated": 0,
+    "file": "skr.json"
+  },
+  {
+    "code": "srd",
+    "iso": "sc",
+    "wpLocale": "srd",
+    "translated": 0,
+    "file": "srd.json"
+  },
+  {
+    "code": "gd",
+    "iso": "gd",
+    "wpLocale": "gd",
+    "translated": 0,
+    "file": "gd.json"
+  },
+  {
+    "code": "nb",
+    "iso": "nb",
+    "wpLocale": "nb_NO",
+    "translated": 0,
+    "file": "nb.json"
+  },
+  {
+    "code": "scn",
+    "wpLocale": "scn",
+    "translated": 0,
+    "file": "scn.json"
+  },
+  {
+    "code": "pcm",
+    "wpLocale": "pcm",
+    "translated": 0,
+    "file": "pcm.json"
+  },
+  {
+    "code": "sr",
+    "iso": "sr",
+    "wpLocale": "sr_RS",
+    "translated": 0,
+    "file": "sr.json"
+  },
+  {
+    "code": "ne",
+    "iso": "ne",
+    "wpLocale": "ne_NP",
+    "translated": 0,
+    "file": "ne.json"
+  },
+  {
+    "code": "nn",
+    "iso": "nn",
+    "wpLocale": "nn_NO",
+    "translated": 0,
+    "file": "nn.json"
+  },
+  {
+    "code": "szl",
+    "wpLocale": "szl",
+    "translated": 0,
+    "file": "szl.json"
+  },
+  {
+    "code": "sq-xk",
+    "iso": "sq",
+    "wpLocale": "sq_XK",
+    "translated": 0,
+    "file": "sq-xk.json"
+  },
+  {
+    "code": "nqo",
+    "wpLocale": "nqo",
+    "dir": "rtl",
+    "translated": 0,
+    "file": "nqo.json"
+  },
+  {
+    "code": "mya",
+    "iso": "my",
+    "wpLocale": "my_MM",
+    "translated": 0,
+    "file": "mya.json"
+  },
+  {
+    "code": "sna",
+    "iso": "sn",
+    "wpLocale": "sna",
+    "translated": 0,
+    "file": "sna.json"
+  },
+  {
+    "code": "pcd",
+    "wpLocale": "pcd",
+    "translated": 0,
+    "file": "pcd.json"
+  },
+  {
+    "code": "oci",
+    "iso": "oc",
+    "wpLocale": "oci",
+    "translated": 0,
+    "file": "oci.json"
+  },
+  {
+    "code": "si",
+    "iso": "si",
+    "wpLocale": "si_LK",
+    "translated": 0,
+    "file": "si.json"
+  },
+  {
+    "code": "pl",
+    "iso": "pl",
+    "wpLocale": "pl_PL",
+    "translated": 0,
+    "file": "pl.json"
+  },
+  {
+    "code": "pt-ao",
+    "iso": "pt",
+    "wpLocale": "pt_AO",
+    "translated": 0,
+    "file": "pt-ao.json"
+  },
+  {
+    "code": "rhg",
+    "wpLocale": "rhg",
+    "translated": 0,
+    "file": "rhg.json"
+  },
+  {
+    "code": "fa-af",
+    "iso": "fa",
+    "wpLocale": "fa_AF",
+    "dir": "rtl",
+    "translated": 0,
+    "file": "fa-af.json"
+  },
+  {
+    "code": "roh",
+    "iso": "rm",
+    "wpLocale": "roh",
+    "translated": 0,
+    "file": "roh.json"
+  },
+  {
+    "code": "sah",
+    "wpLocale": "sah",
+    "translated": 0,
+    "file": "sah.json"
+  },
+  {
+    "code": "ory",
+    "iso": "or",
+    "wpLocale": "ory",
+    "translated": 0,
+    "file": "ory.json"
+  },
+  {
+    "code": "fa",
+    "iso": "fa",
+    "wpLocale": "fa_IR",
+    "dir": "rtl",
+    "translated": 0,
+    "file": "fa.json"
+  },
+  {
+    "code": "ps",
+    "iso": "ps",
+    "wpLocale": "ps",
+    "dir": "rtl",
+    "translated": 0,
+    "file": "ps.json"
+  },
+  {
+    "code": "pap-aw",
+    "wpLocale": "pap_AW",
+    "translated": 0,
+    "file": "pap-aw.json"
+  },
+  {
+    "code": "pap-cw",
+    "wpLocale": "pap_CW",
+    "translated": 0,
+    "file": "pap-cw.json"
+  },
+  {
+    "code": "pirate",
+    "wpLocale": "art_xpirate",
+    "translated": 0,
+    "file": "pirate.json"
+  },
+  {
+    "code": "os",
+    "iso": "os",
+    "wpLocale": "os",
+    "translated": 0,
+    "file": "os.json"
+  },
+  {
+    "code": "sa-in",
+    "iso": "sa",
+    "wpLocale": "sa_IN",
+    "translated": 0,
+    "file": "sa-in.json"
+  },
+  {
+    "code": "snd",
+    "iso": "sd",
+    "wpLocale": "snd",
+    "dir": "rtl",
+    "translated": 0,
+    "file": "snd.json"
+  },
+  {
+    "code": "af",
+    "iso": "af",
+    "wpLocale": "af",
+    "translated": 0,
+    "file": "af.json"
+  },
+  {
+    "code": "sk",
+    "iso": "sk",
+    "wpLocale": "sk_SK",
+    "translated": 0,
+    "file": "sk.json"
+  },
+  {
+    "code": "uk",
+    "iso": "uk",
+    "wpLocale": "uk",
+    "translated": 0,
+    "file": "uk.json"
+  },
+  {
+    "code": "te",
+    "iso": "te",
+    "wpLocale": "te",
+    "translated": 0,
+    "file": "te.json"
+  },
+  {
+    "code": "th",
+    "iso": "th",
+    "wpLocale": "th",
+    "translated": 0,
+    "file": "th.json"
+  },
+  {
+    "code": "bo",
+    "iso": "bo",
+    "wpLocale": "bo",
+    "translated": 0,
+    "file": "bo.json"
+  },
+  {
+    "code": "tir",
+    "iso": "ti",
+    "wpLocale": "tir",
+    "translated": 0,
+    "file": "tir.json"
+  },
+  {
+    "code": "tr",
+    "iso": "tr",
+    "wpLocale": "tr_TR",
+    "translated": 0,
+    "file": "tr.json"
+  },
+  {
+    "code": "tuk",
+    "iso": "tk",
+    "wpLocale": "tuk",
+    "translated": 0,
+    "file": "tuk.json"
+  },
+  {
+    "code": "twd",
+    "wpLocale": "twd",
+    "translated": 0,
+    "file": "twd.json"
+  },
+  {
+    "code": "ug",
+    "iso": "ug",
+    "wpLocale": "ug_CN",
+    "dir": "rtl",
+    "translated": 0,
+    "file": "ug.json"
+  },
+  {
+    "code": "hsb",
+    "wpLocale": "hsb",
+    "translated": 0,
+    "file": "hsb.json"
+  },
+  {
+    "code": "ta-lk",
+    "iso": "ta",
+    "wpLocale": "ta_LK",
+    "translated": 0,
+    "file": "ta-lk.json"
+  },
+  {
+    "code": "ur",
+    "iso": "ur",
+    "wpLocale": "ur",
+    "dir": "rtl",
+    "translated": 0,
+    "file": "ur.json"
+  },
+  {
+    "code": "uz",
+    "iso": "uz",
+    "wpLocale": "uz_UZ",
+    "translated": 0,
+    "file": "uz.json"
+  },
+  {
+    "code": "vec",
+    "wpLocale": "vec",
+    "translated": 0,
+    "file": "vec.json"
+  },
+  {
+    "code": "vi",
+    "iso": "vi",
+    "wpLocale": "vi",
+    "translated": 0,
+    "file": "vi.json"
+  },
+  {
+    "code": "cy",
+    "iso": "cy",
+    "wpLocale": "cy",
+    "translated": 0,
+    "file": "cy.json"
+  },
+  {
+    "code": "wol",
+    "iso": "wo",
+    "wpLocale": "wol",
+    "translated": 0,
+    "file": "wol.json"
+  },
+  {
+    "code": "xho",
+    "iso": "xh",
+    "wpLocale": "xho",
+    "translated": 0,
+    "file": "xho.json"
+  },
+  {
+    "code": "yor",
+    "iso": "yo",
+    "wpLocale": "yor",
+    "translated": 0,
+    "file": "yor.json"
+  },
+  {
+    "code": "tt",
+    "iso": "tt",
+    "wpLocale": "tt_RU",
+    "translated": 0,
+    "file": "tt.json"
+  },
+  {
+    "code": "ta",
+    "iso": "ta",
+    "wpLocale": "ta_IN",
+    "translated": 0,
+    "file": "ta.json"
+  },
+  {
+    "code": "sl",
+    "iso": "sl",
+    "wpLocale": "sl_SI",
+    "translated": 0,
+    "file": "sl.json"
+  },
+  {
+    "code": "es-pr",
+    "iso": "es",
+    "wpLocale": "es_PR",
+    "translated": 0,
+    "file": "es-pr.json"
+  },
+  {
+    "code": "so",
+    "iso": "so",
+    "wpLocale": "so_SO",
+    "translated": 0,
+    "file": "so.json"
+  },
+  {
+    "code": "azb",
+    "iso": "az",
+    "wpLocale": "azb",
+    "dir": "rtl",
+    "translated": 0,
+    "file": "azb.json"
+  },
+  {
+    "code": "es-cl",
+    "iso": "es",
+    "wpLocale": "es_CL",
+    "translated": 0,
+    "file": "es-cl.json"
+  },
+  {
+    "code": "es-cr",
+    "iso": "es",
+    "wpLocale": "es_CR",
+    "translated": 0,
+    "file": "es-cr.json"
+  },
+  {
+    "code": "me",
+    "wpLocale": "me_ME",
+    "translated": 0,
+    "file": "me.json"
+  },
+  {
+    "code": "es-gt",
+    "iso": "es",
+    "wpLocale": "es_GT",
+    "translated": 0,
+    "file": "es-gt.json"
+  },
+  {
+    "code": "es-hn",
+    "iso": "es",
+    "wpLocale": "es_HN",
+    "translated": 0,
+    "file": "es-hn.json"
+  },
+  {
+    "code": "es-pe",
+    "iso": "es",
+    "wpLocale": "es_PE",
+    "translated": 0,
+    "file": "es-pe.json"
+  },
+  {
+    "code": "es-uy",
+    "iso": "es",
+    "wpLocale": "es_UY",
+    "translated": 0,
+    "file": "es-uy.json"
+  },
+  {
+    "code": "tzm",
+    "wpLocale": "tzm",
+    "translated": 0,
+    "file": "tzm.json"
+  },
+  {
+    "code": "su",
+    "iso": "su",
+    "wpLocale": "su_ID",
+    "translated": 0,
+    "file": "su.json"
+  },
+  {
+    "code": "sw",
+    "iso": "sw",
+    "wpLocale": "sw",
+    "translated": 0,
+    "file": "sw.json"
+  },
+  {
+    "code": "ssw",
+    "iso": "ss",
+    "wpLocale": "ssw",
+    "translated": 0,
+    "file": "ssw.json"
+  },
+  {
+    "code": "syr",
+    "wpLocale": "syr",
+    "translated": 0,
+    "file": "syr.json"
+  },
+  {
+    "code": "tl",
+    "iso": "tl",
+    "wpLocale": "tl",
+    "translated": 0,
+    "file": "tl.json"
+  },
+  {
+    "code": "tah",
+    "iso": "ty",
+    "wpLocale": "tah",
+    "translated": 0,
+    "file": "tah.json"
+  },
+  {
+    "code": "tg",
+    "iso": "tg",
+    "wpLocale": "tg",
+    "translated": 0,
+    "file": "tg.json"
+  },
+  {
+    "code": "zgh",
+    "wpLocale": "zgh",
+    "translated": 0,
+    "file": "zgh.json"
+  },
+  {
+    "code": "ary",
+    "iso": "ar",
+    "wpLocale": "ary",
+    "dir": "rtl",
+    "translated": 0,
+    "file": "ary.json"
+  },
+  {
+    "code": "lug",
+    "iso": "lg",
+    "wpLocale": "lug",
+    "translated": 0,
+    "file": "lug.json"
+  },
+  {
+    "code": "mn",
+    "iso": "mn",
+    "wpLocale": "mn",
+    "translated": 0,
+    "file": "mn.json"
+  },
+  {
+    "code": "art-xemoji",
+    "wpLocale": "art_xemoji",
+    "translated": 0,
+    "file": "art-xemoji.json"
+  },
+  {
+    "code": "ceb",
+    "wpLocale": "ceb",
+    "translated": 0,
+    "file": "ceb.json"
+  },
+  {
+    "code": "zh-hk",
+    "iso": "zh",
+    "wpLocale": "zh_HK",
+    "translated": 0,
+    "file": "zh-hk.json"
+  },
+  {
+    "code": "zh-sg",
+    "iso": "zh",
+    "wpLocale": "zh_SG",
+    "translated": 0,
+    "file": "zh-sg.json"
+  },
+  {
+    "code": "cor",
+    "iso": "kw",
+    "wpLocale": "cor",
+    "translated": 0,
+    "file": "cor.json"
+  },
+  {
+    "code": "co",
+    "iso": "co",
+    "wpLocale": "co",
+    "translated": 0,
+    "file": "co.json"
+  },
+  {
+    "code": "hr",
+    "iso": "hr",
+    "wpLocale": "hr",
+    "translated": 0,
+    "file": "hr.json"
+  },
+  {
+    "code": "dv",
+    "iso": "dv",
+    "wpLocale": "dv",
+    "dir": "rtl",
+    "translated": 0,
+    "file": "dv.json"
+  },
+  {
+    "code": "dzo",
+    "iso": "dz",
+    "wpLocale": "dzo",
+    "translated": 0,
+    "file": "dzo.json"
+  },
+  {
+    "code": "en-nz",
+    "iso": "en",
+    "wpLocale": "en_NZ",
+    "translated": 0,
+    "file": "en-nz.json"
+  },
+  {
+    "code": "ca",
+    "iso": "ca",
+    "wpLocale": "ca",
+    "translated": 0,
+    "file": "ca.json"
+  },
+  {
+    "code": "eo",
+    "iso": "eo",
+    "wpLocale": "eo",
+    "translated": 0,
+    "file": "eo.json"
+  },
+  {
+    "code": "et",
+    "iso": "et",
+    "wpLocale": "et",
+    "translated": 0,
+    "file": "et.json"
+  },
+  {
+    "code": "fo",
+    "iso": "fo",
+    "wpLocale": "fo",
+    "translated": 0,
+    "file": "fo.json"
+  },
+  {
+    "code": "fi",
+    "iso": "fi",
+    "wpLocale": "fi",
+    "translated": 0,
+    "file": "fi.json"
+  },
+  {
+    "code": "fon",
+    "wpLocale": "fon",
+    "translated": 0,
+    "file": "fon.json"
+  },
+  {
+    "code": "fr-be",
+    "iso": "fr",
+    "wpLocale": "fr_BE",
+    "translated": 0,
+    "file": "fr-be.json"
+  },
+  {
+    "code": "fr-ca",
+    "iso": "fr",
+    "wpLocale": "fr_CA",
+    "translated": 0,
+    "file": "fr-ca.json"
+  },
+  {
+    "code": "fy",
+    "iso": "fy",
+    "wpLocale": "fy",
+    "translated": 0,
+    "file": "fy.json"
+  },
+  {
+    "code": "bal",
+    "wpLocale": "bal",
+    "translated": 0,
+    "file": "bal.json"
+  },
+  {
+    "code": "bg",
+    "iso": "bg",
+    "wpLocale": "bg_BG",
+    "translated": 0,
+    "file": "bg.json"
+  },
+  {
+    "code": "fuc",
+    "iso": "ff",
+    "wpLocale": "fuc",
+    "translated": 0,
+    "file": "fuc.json"
+  },
+  {
+    "code": "az-tr",
+    "iso": "az",
+    "wpLocale": "az_TR",
+    "translated": 0,
+    "file": "az-tr.json"
+  },
+  {
+    "code": "arq",
+    "iso": "ar",
+    "wpLocale": "arq",
+    "dir": "rtl",
+    "translated": 0,
+    "file": "arq.json"
+  },
+  {
+    "code": "am",
+    "iso": "am",
+    "wpLocale": "am",
+    "translated": 0,
+    "file": "am.json"
+  },
+  {
+    "code": "an",
+    "iso": "an",
+    "wpLocale": "arg",
+    "translated": 0,
+    "file": "an.json"
+  },
+  {
+    "code": "hy",
+    "iso": "hy",
+    "wpLocale": "hy",
+    "translated": 0,
+    "file": "hy.json"
+  },
+  {
+    "code": "frp",
+    "wpLocale": "frp",
+    "translated": 0,
+    "file": "frp.json"
+  },
+  {
+    "code": "as",
+    "iso": "as",
+    "wpLocale": "as",
+    "translated": 0,
+    "file": "as.json"
+  },
+  {
+    "code": "ast",
+    "wpLocale": "ast",
+    "translated": 0,
+    "file": "ast.json"
+  },
+  {
+    "code": "az",
+    "iso": "az",
+    "wpLocale": "az",
+    "translated": 0,
+    "file": "az.json"
+  },
+  {
+    "code": "bcc",
+    "wpLocale": "bcc",
+    "dir": "rtl",
+    "translated": 0,
+    "file": "bcc.json"
+  },
+  {
+    "code": "br",
+    "iso": "br",
+    "wpLocale": "bre",
+    "translated": 0,
+    "file": "br.json"
+  },
+  {
+    "code": "ba",
+    "iso": "ba",
+    "wpLocale": "ba",
+    "translated": 0,
+    "file": "ba.json"
+  },
+  {
+    "code": "eu",
+    "iso": "eu",
+    "wpLocale": "eu",
+    "translated": 0,
+    "file": "eu.json"
+  },
+  {
+    "code": "bel",
+    "iso": "be",
+    "wpLocale": "bel",
+    "translated": 0,
+    "file": "bel.json"
+  },
+  {
+    "code": "bn",
+    "iso": "bn",
+    "wpLocale": "bn_BD",
+    "translated": 0,
+    "file": "bn.json"
+  },
+  {
+    "code": "bn-in",
+    "iso": "bn",
+    "wpLocale": "bn_IN",
+    "translated": 0,
+    "file": "bn-in.json"
+  },
+  {
+    "code": "bho",
+    "wpLocale": "bho",
+    "translated": 0,
+    "file": "bho.json"
+  },
+  {
+    "code": "brx",
+    "wpLocale": "brx",
+    "translated": 0,
+    "file": "brx.json"
+  },
+  {
+    "code": "gax",
+    "wpLocale": "gax",
+    "translated": 0,
+    "file": "gax.json"
+  },
+  {
+    "code": "bs",
+    "iso": "bs",
+    "wpLocale": "bs_BA",
+    "translated": 0,
+    "file": "bs.json"
+  },
+  {
+    "code": "fur",
+    "wpLocale": "fur",
+    "translated": 0,
+    "file": "fur.json"
+  },
+  {
+    "code": "ka",
+    "iso": "ka",
+    "wpLocale": "ka_GE",
+    "translated": 0,
+    "file": "ka.json"
+  },
+  {
+    "code": "mfe",
+    "wpLocale": "mfe",
+    "translated": 0,
+    "file": "mfe.json"
+  },
+  {
+    "code": "lt",
+    "iso": "lt",
+    "wpLocale": "lt_LT",
+    "translated": 0,
+    "file": "lt.json"
+  },
+  {
+    "code": "ckb",
+    "iso": "ku",
+    "wpLocale": "ckb",
+    "dir": "rtl",
+    "translated": 0,
+    "file": "ckb.json"
+  },
+  {
+    "code": "kir",
+    "iso": "ky",
+    "wpLocale": "kir",
+    "translated": 0,
+    "file": "kir.json"
+  },
+  {
+    "code": "lo",
+    "iso": "lo",
+    "wpLocale": "lo",
+    "translated": 0,
+    "file": "lo.json"
+  },
+  {
+    "code": "lv",
+    "iso": "lv",
+    "wpLocale": "lv",
+    "translated": 0,
+    "file": "lv.json"
+  },
+  {
+    "code": "lij",
+    "wpLocale": "lij",
+    "translated": 0,
+    "file": "lij.json"
+  },
+  {
+    "code": "li",
+    "iso": "li",
+    "wpLocale": "li",
+    "translated": 0,
+    "file": "li.json"
+  },
+  {
+    "code": "lin",
+    "iso": "ln",
+    "wpLocale": "lin",
+    "translated": 0,
+    "file": "lin.json"
+  },
+  {
+    "code": "lmo",
+    "wpLocale": "lmo",
+    "translated": 0,
+    "file": "lmo.json"
+  },
+  {
+    "code": "ko",
+    "iso": "ko",
+    "wpLocale": "ko_KR",
+    "translated": 0,
+    "file": "ko.json"
+  },
+  {
+    "code": "dsb",
+    "wpLocale": "dsb",
+    "translated": 0,
+    "file": "dsb.json"
+  },
+  {
+    "code": "lb",
+    "iso": "lb",
+    "wpLocale": "lb_LU",
+    "translated": 0,
+    "file": "lb.json"
+  },
+  {
+    "code": "mk",
+    "iso": "mk",
+    "wpLocale": "mk_MK",
+    "translated": 0,
+    "file": "mk.json"
+  },
+  {
+    "code": "mai",
+    "wpLocale": "mai",
+    "translated": 0,
+    "file": "mai.json"
+  },
+  {
+    "code": "mg",
+    "iso": "mg",
+    "wpLocale": "mg_MG",
+    "translated": 0,
+    "file": "mg.json"
+  },
+  {
+    "code": "ms",
+    "iso": "ms",
+    "wpLocale": "ms_MY",
+    "translated": 0,
+    "file": "ms.json"
+  },
+  {
+    "code": "ml",
+    "iso": "ml",
+    "wpLocale": "ml_IN",
+    "translated": 0,
+    "file": "ml.json"
+  },
+  {
+    "code": "mri",
+    "iso": "mi",
+    "wpLocale": "mri",
+    "translated": 0,
+    "file": "mri.json"
+  },
+  {
+    "code": "mr",
+    "iso": "mr",
+    "wpLocale": "mr",
+    "translated": 0,
+    "file": "mr.json"
+  },
+  {
+    "code": "kmr",
+    "iso": "ku",
+    "wpLocale": "kmr",
+    "translated": 0,
+    "file": "kmr.json"
+  },
+  {
+    "code": "kin",
+    "iso": "rw",
+    "wpLocale": "kin",
+    "translated": 0,
+    "file": "kin.json"
+  },
+  {
+    "code": "de-at",
+    "iso": "de",
+    "wpLocale": "de_AT",
+    "translated": 0,
+    "file": "de-at.json"
+  },
+  {
+    "code": "he",
+    "iso": "he",
+    "wpLocale": "he_IL",
+    "dir": "rtl",
+    "translated": 0,
+    "file": "he.json"
+  },
+  {
+    "code": "de-ch",
+    "iso": "de",
+    "wpLocale": "de_CH",
+    "translated": 0,
+    "file": "de-ch.json"
+  },
+  {
+    "code": "el",
+    "iso": "el",
+    "wpLocale": "el",
+    "translated": 0,
+    "file": "el.json"
+  },
+  {
+    "code": "kal",
+    "iso": "kl",
+    "wpLocale": "kal",
+    "translated": 0,
+    "file": "kal.json"
+  },
+  {
+    "code": "gu",
+    "iso": "gu",
+    "wpLocale": "gu",
+    "translated": 0,
+    "file": "gu.json"
+  },
+  {
+    "code": "hat",
+    "iso": "ht",
+    "wpLocale": "hat",
+    "translated": 0,
+    "file": "hat.json"
+  },
+  {
+    "code": "hau",
+    "iso": "ha",
+    "wpLocale": "hau",
+    "translated": 0,
+    "file": "hau.json"
+  },
+  {
+    "code": "haw",
+    "wpLocale": "haw_US",
+    "translated": 0,
+    "file": "haw.json"
+  },
+  {
+    "code": "haz",
+    "wpLocale": "haz",
+    "dir": "rtl",
+    "translated": 0,
+    "file": "haz.json"
+  },
+  {
+    "code": "hi",
+    "iso": "hi",
+    "wpLocale": "hi_IN",
+    "translated": 0,
+    "file": "hi.json"
+  },
+  {
+    "code": "km",
+    "iso": "km",
+    "wpLocale": "km",
+    "translated": 0,
+    "file": "km.json"
+  },
+  {
+    "code": "hu",
+    "iso": "hu",
+    "wpLocale": "hu_HU",
+    "translated": 0,
+    "file": "hu.json"
+  },
+  {
+    "code": "is",
+    "iso": "is",
+    "wpLocale": "is_IS",
+    "translated": 0,
+    "file": "is.json"
+  },
+  {
+    "code": "ido",
+    "iso": "io",
+    "wpLocale": "ido",
+    "translated": 0,
+    "file": "ido.json"
+  },
+  {
+    "code": "ibo",
+    "iso": "ig",
+    "wpLocale": "ibo",
+    "translated": 0,
+    "file": "ibo.json"
+  },
+  {
+    "code": "ga",
+    "iso": "ga",
+    "wpLocale": "ga",
+    "translated": 0,
+    "file": "ga.json"
+  },
+  {
+    "code": "jv",
+    "iso": "jv",
+    "wpLocale": "jv_ID",
+    "translated": 0,
+    "file": "jv.json"
+  },
+  {
+    "code": "kab",
+    "wpLocale": "kab",
+    "translated": 0,
+    "file": "kab.json"
+  },
+  {
+    "code": "kaa",
+    "wpLocale": "kaa",
+    "translated": 0,
+    "file": "kaa.json"
+  },
+  {
+    "code": "kk",
+    "iso": "kk",
+    "wpLocale": "kk",
+    "translated": 0,
+    "file": "kk.json"
+  },
+  {
+    "code": "zul",
+    "iso": "zu",
+    "wpLocale": "zul",
+    "translated": 0,
+    "file": "zul.json"
+  }
+]

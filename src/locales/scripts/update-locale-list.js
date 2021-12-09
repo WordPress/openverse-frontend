@@ -10,7 +10,7 @@ const base_url =
 
 const locales = {}
 
-async function getLocalesData() {
+async function getGpLocalesData() {
   const res = await axios.get(base_url)
   return res.data
 }
@@ -22,7 +22,7 @@ const snakeToCamel = (str) =>
       group.toUpperCase().replace('-', '').replace('_', '')
     )
 
-getLocalesData()
+getGpLocalesData()
   .then((data) => {
     const rawLocalesData = data
       .split('new GP_Locale();')
@@ -59,14 +59,18 @@ getLocalesData()
           const pattern = propertyRePatterns[key]
           const value = rawData.match(pattern)
           if (value) {
-            locales[wpLocale][snakeToCamel(key)] = value[1]
+            const camelCased = snakeToCamel(
+              key === 'english_name' ? 'name' : key
+            )
+            locales[wpLocale][camelCased] = value[1]
           }
         })
       }
     })
 
     try {
-      const fileName = process.cwd() + '/src/locales/scripts/locales-list.json'
+      const fileName =
+        process.cwd() + '/src/locales/scripts/gp-locales-list.json'
       fs.writeFileSync(fileName, JSON.stringify(locales, null, 2) + '\n')
       console.log(`Successfully wrote locales list file to ${fileName}`)
     } catch (err) {

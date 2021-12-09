@@ -1,6 +1,6 @@
 import { sendWindowMessage } from '~/utils/send-message.js'
 import config from '../../nuxt.config.js'
-import translated from '../locales/scripts/translated.json'
+import untranslatedLocales from '../locales/scripts/untranslated-locales.json'
 import {
   computed,
   onMounted,
@@ -51,18 +51,13 @@ export default function useI18nSync() {
    * of strings are translated for current locale.
    * Hard-coded to false for default locales: `en` and `en_US`.
    *
-   * @param {string} locale - wpLocale property of the current locale
+   * @param {import('../locales/scripts/types').i18nLocaleProps} locale - current locale object
    * @returns {boolean}
    */
   const needsTranslationBanner = (locale) => {
     if (['en', 'en_US'].includes(locale)) return false
-    let localeTranslatedStatus = translated.find((item) => {
-      return item.code === locale
-    })
-    if (!localeTranslatedStatus) {
-      return true
-    }
-    return localeTranslatedStatus.translated <= 90
+
+    return locale.translated <= 90
   }
 
   const bannerDismissedForLocales = useStorage(
@@ -119,13 +114,13 @@ export default function useI18nSync() {
         dir: locale.dir === 'rtl' ? 'rtl' : 'ltr',
       }
     } else {
-      locale = Object.values(translated).find(
+      locale = Object.values(untranslatedLocales).find(
         (item) => item.wpLocale === value.locale
       )
     }
     await updateLocale(htmlLocaleProps)
 
-    if (needsTranslationBanner(locale.wpLocale)) {
+    if (needsTranslationBanner(locale)) {
       showBanner.value = true
       bannerLocale.code = locale.code || null
       bannerLocale.name = locale.name || 'this'
