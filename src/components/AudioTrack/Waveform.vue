@@ -214,7 +214,7 @@ export default {
      */
     const getPositionFrac = (event) => {
       const xPos = getPosition(event)
-      return xPos / waveformWidth.value
+      return xPos / waveformDimens.value.width
     }
     /**
      * Get the number of peaks that will fit within the given width.
@@ -228,15 +228,18 @@ export default {
     /* Element dimensions */
 
     const el = ref(null) // template ref
-    const waveformWidth = ref(0)
-    const updateWaveformWidth = () => {
-      waveformWidth.value = el.value.clientWidth
+    const waveformDimens = ref({ width: 0, height: 0 })
+    const updateWaveformDimens = () => {
+      waveformDimens.value = {
+        width: el.value.clientWidth,
+        height: el.value.clientHeight,
+      }
     }
     let observer
     onMounted(() => {
-      observer = new ResizeObserver(updateWaveformWidth)
+      observer = new ResizeObserver(updateWaveformDimens)
       observer.observe(el.value)
-      updateWaveformWidth()
+      updateWaveformDimens()
     })
     onBeforeUnmount(() => {
       if (observer) {
@@ -252,23 +255,31 @@ export default {
 
     const barWidth = 2
     const barGap = 2
-    const peakCount = computed(() => getPeaksInWidth(waveformWidth.value))
+    const peakCount = computed(() =>
+      getPeaksInWidth(waveformDimens.value.width)
+    )
     const normalizedPeaks = computed(() => {
-      const givenLength = props.peaks.length
+      let samples = props.peaks
+
+      const givenLength = samples.length
       const required = peakCount.value
       if (givenLength < required) {
-        return upsampleArray(props.peaks, required)
+        samples = upsampleArray(samples, required)
       } else if (givenLength > required) {
-        return downsampleArray(props.peaks, required)
+        samples = downsampleArray(samples, required)
       }
-      return props.peaks
+
+      return samples.map((peak) => peak * waveformDimens.value.height)
     })
 
     /* SVG drawing */
 
-    const viewBox = computed(() => `0 0 ${waveformWidth.value} 1`)
+    const viewBox = computed(() =>
+      [0, 0, waveformDimens.value.width, waveformDimens.value.height].join(' ')
+    )
     const spaceBefore = (index) => index * barWidth + (index + 1) * barGap
-    const spaceAbove = (index) => 1 - normalizedPeaks.value[index]
+    const spaceAbove = (index) =>
+      waveformDimens.value.height - normalizedPeaks.value[index]
 
     /* Progress bar */
 
@@ -277,7 +288,7 @@ export default {
     )
     const progressBarWidth = computed(() => {
       const frac = isDragging.value ? seekFrac.value : currentFrac.value
-      return waveformWidth.value * frac
+      return waveformDimens.value.width * frac
     })
 
     /* Progress timestamp */
@@ -298,7 +309,7 @@ export default {
     const seekFrac = ref(null)
     const seekBarWidth = computed(() => {
       const frac = seekFrac.value ?? currentFrac.value
-      return waveformWidth.value * frac
+      return waveformDimens.value.width * frac
     })
     const seekIndex = computed(() => getPeaksInWidth(seekBarWidth.value))
     const seekSpaceBefore = computed(() => spaceBefore(seekIndex.value))
