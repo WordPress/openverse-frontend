@@ -123,6 +123,7 @@ export default {
 
 .row-track .audio-controller {
   @apply flex-grow;
+  --waveform-background-color: theme('colors.white');
 }
 
 .row-track .waveform {

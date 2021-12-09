@@ -1,7 +1,7 @@
 <template>
   <div
     ref="el"
-    class="waveform relative bg-dark-charcoal-06 border-1.5 border-tx focus:border-pink focus:outline-none focus:shadow-ring overflow-hidden"
+    class="waveform relative bg-background-var border-1.5 border-tx focus:border-pink focus:outline-none focus:shadow-ring overflow-hidden"
     :style="{
       '--usable-height': `${Math.floor(usableFrac * 100)}%`,
       '--unusable-height': `${Math.floor((1 - usableFrac) * 100)}%`,
@@ -87,7 +87,7 @@
         class="progress timestamp z-10 transform"
         :class="[
           ...(isProgressTimestampCutoff
-            ? ['bg-dark-charcoal-06']
+            ? ['bg-background-var']
             : ['bg-yellow', '-translate-x-full']),
         ]"
         :style="{ '--progress-time-left': `${progressBarWidth}px` }"
@@ -105,7 +105,7 @@
       </div>
       <div
         v-if="showDuration"
-        class="duration timestamp right-0 bg-dark-charcoal-06"
+        class="duration timestamp right-0 bg-background-var"
       >
         {{ timeFmt(duration) }}
       </div>
@@ -449,9 +449,20 @@ export default {
 </script>
 
 <style scoped lang="css">
+.waveform {
+  --v-background-color: var(
+    --waveform-background-color,
+    theme('colors.dark-charcoal.06')
+  );
+}
+
 .timestamp {
   @apply absolute font-bold text-xs px-1 pointer-events-none;
   top: calc(var(--unusable-height) + theme('spacing[0.5]'));
+}
+
+.bg-background-var {
+  background-color: var(--v-background-color);
 }
 
 .bars {
