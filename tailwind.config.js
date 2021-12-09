@@ -62,6 +62,7 @@ module.exports = {
       curr: 'currentColor',
     },
     fill: (theme) => theme('colors'),
+    stroke: (theme) => theme('colors'),
     spacing: {
       // Constants
       '0.5px': '0.5px',
@@ -198,6 +199,7 @@ module.exports = {
       },
       boxShadow: {
         ring: 'inset 0 0 0 1px white',
+        'ring-1.5': 'inset 0 0 0 1.5px white',
       },
     },
   },
@@ -213,6 +215,7 @@ module.exports = {
       borderWidth: ['focus', 'focus-within'],
       padding: ['focus', 'focus-within'],
       boxShadow: ['focus', 'active'],
+      display: ['group-focus'],
     },
   },
   plugins: [require('tailwindcss-rtl')],

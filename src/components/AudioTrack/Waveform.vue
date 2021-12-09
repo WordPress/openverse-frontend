@@ -1,7 +1,7 @@
 <template>
   <div
     ref="el"
-    class="waveform relative bg-background-var border-1.5 border-tx focus:border-pink focus:outline-none focus:shadow-ring overflow-hidden"
+    class="waveform group relative bg-background-var focus:outline-none overflow-hidden"
     :style="{
       '--usable-height': `${Math.floor(usableFrac * 100)}%`,
       '--unusable-height': `${Math.floor((1 - usableFrac) * 100)}%`,
@@ -23,6 +23,34 @@
     @keydown.home.prevent="handlePosKeys(0)"
     @keydown.end.prevent="handlePosKeys(1)"
   >
+    <!-- Focus ring -->
+    <svg
+      class="hidden group-focus:block absolute inset-0 w-full h-full z-10 shadow-ring-1"
+      xmlns="http://www.w3.org/2000/svg"
+      :viewBox="viewBox"
+      preserveAspectRatio="none"
+    >
+      <!-- Stroke is calculated from the centre of the path -->
+      <rect
+        class="stroke-pink"
+        x="0.5"
+        y="0.5"
+        :width="waveformDimens.width - 1"
+        :height="waveformDimens.height - 1"
+        fill="none"
+        stroke-width="1"
+      />
+      <rect
+        class="stroke-white"
+        x="1.5"
+        y="1.5"
+        :width="waveformDimens.width - 3"
+        :height="waveformDimens.height - 3"
+        fill="none"
+        stroke-width="1"
+      />
+    </svg>
+
     <!-- Progress bar -->
     <svg
       class="absolute inset-0 w-full h-full"
@@ -277,7 +305,7 @@ export default {
     const viewBox = computed(() =>
       [0, 0, waveformDimens.value.width, waveformDimens.value.height].join(' ')
     )
-    const spaceBefore = (index) => index * barWidth + (index + 1) * barGap
+    const spaceBefore = (index) => index * barWidth + index * barGap
     const spaceAbove = (index) =>
       waveformDimens.value.height - normalizedPeaks.value[index]
 
@@ -408,6 +436,7 @@ export default {
       barWidth,
       normalizedPeaks,
 
+      waveformDimens,
       viewBox,
       spaceBefore,
       spaceAbove,
