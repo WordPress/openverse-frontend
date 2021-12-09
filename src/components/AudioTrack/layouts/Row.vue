@@ -34,31 +34,29 @@
             'text-sr': isSmall,
             'leading-snug': isMedium || isLarge,
             'flex-col gap-2': isSmall || isMedium,
-            'flex-row items-center justify-between': isLarge,
+            'flex-row items-center': isLarge,
           }"
         >
           <div class="part-a">
-            <i18n tag="span" class="font-semibold" path="audio-track.creator">
-              <template #creator>{{ audio.creator }}</template>
-            </i18n>
-            <span v-if="isSmall || isLarge">
-              {{ $t('interpunct') }} {{ timeFmt(audio.duration) }}
-              <template v-if="audio.category">
-                {{ $t('interpunct') }}
-                {{ $t(`audio-categories.${audio.category}`) }}
-              </template>
-            </span>
+            <i18n tag="span" path="audio-track.creator">
+              <template #creator>{{ audio.creator }}</template> </i18n
+            ><span v-if="isLarge" class="mx-2">{{ $t('interpunct') }}</span>
           </div>
 
-          <div class="part-b inline-flex space-x-1">
-            <div v-if="isMedium">
-              {{ timeFmt(audio.duration) }} {{ $t('interpunct') }}
-              <template v-if="audio.category">
-                {{ $t(`audio-categories.${audio.category}`) }}
-                {{ $t('interpunct') }}
-              </template>
-            </div>
-            <VLicense :license="audio.license" />
+          <div class="part-b inline-flex">
+            <span v-if="isSmall">
+              <span
+                class="text-dark-charcoal font-semibold bg-dark-charcoal-06 p-1 rounded-sm"
+                >{{ timeFmt(audio.duration) }}</span
+              ><span class="mx-2">{{ $t('interpunct') }}</span>
+            </span>
+
+            <span v-if="audio.category">
+              <span>{{ $t(`audio-categories.${audio.category}`) }}</span
+              ><span class="mx-2">{{ $t('interpunct') }}</span>
+            </span>
+
+            <VLicense :hide-name="isSmall" :license="audio.license" />
           </div>
         </div>
       </div>
@@ -71,7 +69,7 @@
         }"
       >
         <slot name="play-pause" :size="isLarge ? 'medium' : 'large'" />
-        <slot name="controller" />
+        <slot name="controller" :waveform-props="{ showDuration: true }" />
       </div>
     </div>
   </article>
