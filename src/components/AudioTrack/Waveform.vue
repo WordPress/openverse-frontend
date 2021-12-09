@@ -2,7 +2,10 @@
   <div
     ref="el"
     class="waveform relative bg-dark-charcoal-06 border-1.5 border-tx focus:border-pink focus:outline-none focus:shadow-ring overflow-hidden"
-    :style="{ '--unusable-height': `${Math.floor((1 - usableFrac) * 100)}%` }"
+    :style="{
+      '--usable-height': `${Math.floor(usableFrac * 100)}%`,
+      '--unusable-height': `${Math.floor((1 - usableFrac) * 100)}%`,
+    }"
     tabIndex="0"
     role="slider"
     :aria-label="$t('waveform.label')"
@@ -40,7 +43,6 @@
     <!-- Bars -->
     <svg
       class="bars absolute bottom-0 w-full"
-      :style="{ '--usable-height': `${Math.floor(usableFrac * 100)}%` }"
       xmlns="http://www.w3.org/2000/svg"
       :viewBox="viewBox"
       preserveAspectRatio="none"
