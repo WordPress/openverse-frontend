@@ -1,19 +1,70 @@
-[
-  {
-    "name": "Czech",
-    "nativeName": "Čeština",
-    "langCodeIso_639_1": "cs",
-    "langCodeIso_639_2": "ces",
-    "countryCode": "cz",
-    "slug": "cs",
-    "pluralExpression": "(n == 1) ? 0 : ((n >= 2 && n <= 4) ? 1 : 2)",
-    "googleCode": "cs",
-    "facebookLocale": "cs_CZ",
-    "wpLocale": "cs_CZ",
-    "code": "cs",
+{
+  "es_ES": {
+    "name": "Spanish (Spain)",
+    "nativeName": "Español",
+    "langCodeIso_639_1": "es",
+    "langCodeIso_639_2": "spa",
+    "countryCode": "es",
+    "slug": "es",
+    "googleCode": "es",
+    "facebookLocale": "es_ES",
+    "wpLocale": "es_ES",
+    "code": "es",
     "translated": 100
   },
-  {
+  "es_EC": {
+    "name": "Spanish (Ecuador)",
+    "nativeName": "Español de Ecuador",
+    "langCodeIso_639_1": "es",
+    "langCodeIso_639_2": "spa",
+    "countryCode": "ec",
+    "slug": "es-ec",
+    "googleCode": "es",
+    "facebookLocale": "es_LA",
+    "wpLocale": "es_EC",
+    "code": "es-ec",
+    "translated": 100
+  },
+  "es_VE": {
+    "name": "Spanish (Venezuela)",
+    "nativeName": "Español de Venezuela",
+    "langCodeIso_639_1": "es",
+    "langCodeIso_639_2": "spa",
+    "countryCode": "ve",
+    "slug": "es-ve",
+    "googleCode": "es",
+    "facebookLocale": "es_LA",
+    "wpLocale": "es_VE",
+    "code": "es-ve",
+    "translated": 100
+  },
+  "en_GB": {
+    "name": "English (UK)",
+    "nativeName": "English (UK)",
+    "langCodeIso_639_1": "en",
+    "langCodeIso_639_2": "eng",
+    "countryCode": "gb",
+    "slug": "en-gb",
+    "googleCode": "en",
+    "facebookLocale": "en_GB",
+    "wpLocale": "en_GB",
+    "code": "en-gb",
+    "translated": 100
+  },
+  "es_CO": {
+    "name": "Spanish (Colombia)",
+    "nativeName": "Español de Colombia",
+    "langCodeIso_639_1": "es",
+    "langCodeIso_639_2": "spa",
+    "countryCode": "co",
+    "slug": "es-co",
+    "googleCode": "es",
+    "facebookLocale": "es_LA",
+    "wpLocale": "es_CO",
+    "code": "es-co",
+    "translated": 100
+  },
+  "ro_RO": {
     "name": "Romanian",
     "nativeName": "Română",
     "langCodeIso_639_1": "ro",
@@ -27,7 +78,7 @@
     "code": "ro",
     "translated": 100
   },
-  {
+  "nl_NL": {
     "name": "Dutch",
     "nativeName": "Nederlands",
     "langCodeIso_639_1": "nl",
@@ -38,35 +89,23 @@
     "facebookLocale": "nl_NL",
     "wpLocale": "nl_NL",
     "code": "nl",
-    "translated": 100
+    "translated": 99
   },
-  {
-    "name": "English (UK)",
-    "nativeName": "English (UK)",
-    "langCodeIso_639_1": "en",
-    "langCodeIso_639_2": "eng",
-    "countryCode": "gb",
-    "slug": "en-gb",
-    "googleCode": "en",
-    "facebookLocale": "en_GB",
-    "wpLocale": "en_GB",
-    "code": "en-gb",
-    "translated": 100
+  "cs_CZ": {
+    "name": "Czech",
+    "nativeName": "Čeština",
+    "langCodeIso_639_1": "cs",
+    "langCodeIso_639_2": "ces",
+    "countryCode": "cz",
+    "slug": "cs",
+    "pluralExpression": "(n == 1) ? 0 : ((n >= 2 && n <= 4) ? 1 : 2)",
+    "googleCode": "cs",
+    "facebookLocale": "cs_CZ",
+    "wpLocale": "cs_CZ",
+    "code": "cs",
+    "translated": 99
   },
-  {
-    "name": "Spanish (Spain)",
-    "nativeName": "Español",
-    "langCodeIso_639_1": "es",
-    "langCodeIso_639_2": "spa",
-    "countryCode": "es",
-    "slug": "es",
-    "googleCode": "es",
-    "facebookLocale": "es_ES",
-    "wpLocale": "es_ES",
-    "code": "es",
-    "translated": 100
-  },
-  {
+  "de_DE": {
     "name": "German",
     "nativeName": "Deutsch",
     "langCodeIso_639_1": "de",
@@ -76,74 +115,9 @@
     "facebookLocale": "de_DE",
     "wpLocale": "de_DE",
     "code": "de",
-    "translated": 100
+    "translated": 99
   },
-  {
-    "name": "Spanish (Colombia)",
-    "nativeName": "Español de Colombia",
-    "langCodeIso_639_1": "es",
-    "langCodeIso_639_2": "spa",
-    "countryCode": "co",
-    "slug": "es-co",
-    "googleCode": "es",
-    "facebookLocale": "es_LA",
-    "wpLocale": "es_CO",
-    "code": "es-co",
-    "translated": 98
-  },
-  {
-    "name": "Spanish (Ecuador)",
-    "nativeName": "Español de Ecuador",
-    "langCodeIso_639_1": "es",
-    "langCodeIso_639_2": "spa",
-    "countryCode": "ec",
-    "slug": "es-ec",
-    "googleCode": "es",
-    "facebookLocale": "es_LA",
-    "wpLocale": "es_EC",
-    "code": "es-ec",
-    "translated": 98
-  },
-  {
-    "name": "Spanish (Venezuela)",
-    "nativeName": "Español de Venezuela",
-    "langCodeIso_639_1": "es",
-    "langCodeIso_639_2": "spa",
-    "countryCode": "ve",
-    "slug": "es-ve",
-    "googleCode": "es",
-    "facebookLocale": "es_LA",
-    "wpLocale": "es_VE",
-    "code": "es-ve",
-    "translated": 98
-  },
-  {
-    "name": "Galician",
-    "nativeName": "Galego",
-    "langCodeIso_639_1": "gl",
-    "langCodeIso_639_2": "glg",
-    "countryCode": "es",
-    "slug": "gl",
-    "googleCode": "gl",
-    "facebookLocale": "gl_ES",
-    "wpLocale": "gl_ES",
-    "code": "gl",
-    "translated": 96
-  },
-  {
-    "name": "Spanish (Argentina)",
-    "nativeName": "Español de Argentina",
-    "langCodeIso_639_1": "es",
-    "langCodeIso_639_2": "spa",
-    "countryCode": "ar",
-    "slug": "es-ar",
-    "googleCode": "es",
-    "facebookLocale": "es_LA",
-    "wpLocale": "es_AR",
-    "code": "es-ar",
-    "translated": 96
-  },
-  {
+  "sq": {
     "name": "Albanian",
     "nativeName": "Shqip",
     "langCodeIso_639_1": "sq",
@@ -154,9 +128,48 @@
     "facebookLocale": "sq_AL",
     "wpLocale": "sq",
     "code": "sq",
+    "translated": 99
+  },
+  "gl_ES": {
+    "name": "Galician",
+    "nativeName": "Galego",
+    "langCodeIso_639_1": "gl",
+    "langCodeIso_639_2": "glg",
+    "countryCode": "es",
+    "slug": "gl",
+    "googleCode": "gl",
+    "facebookLocale": "gl_ES",
+    "wpLocale": "gl_ES",
+    "code": "gl",
+    "translated": 98
+  },
+  "da_DK": {
+    "name": "Danish",
+    "nativeName": "Dansk",
+    "langCodeIso_639_1": "da",
+    "langCodeIso_639_2": "dan",
+    "countryCode": "dk",
+    "slug": "da",
+    "googleCode": "da",
+    "facebookLocale": "da_DK",
+    "wpLocale": "da_DK",
+    "code": "da",
+    "translated": 98
+  },
+  "es_AR": {
+    "name": "Spanish (Argentina)",
+    "nativeName": "Español de Argentina",
+    "langCodeIso_639_1": "es",
+    "langCodeIso_639_2": "spa",
+    "countryCode": "ar",
+    "slug": "es-ar",
+    "googleCode": "es",
+    "facebookLocale": "es_LA",
+    "wpLocale": "es_AR",
+    "code": "es-ar",
     "translated": 95
   },
-  {
+  "en_CA": {
     "name": "English (Canada)",
     "nativeName": "English (Canada)",
     "langCodeIso_639_1": "en",
@@ -168,20 +181,7 @@
     "code": "en-ca",
     "translated": 95
   },
-  {
-    "name": "Danish",
-    "nativeName": "Dansk",
-    "langCodeIso_639_1": "da",
-    "langCodeIso_639_2": "dan",
-    "countryCode": "dk",
-    "slug": "da",
-    "googleCode": "da",
-    "facebookLocale": "da_DK",
-    "wpLocale": "da_DK",
-    "code": "da",
-    "translated": 95
-  },
-  {
+  "en_ZA": {
     "name": "English (South Africa)",
     "nativeName": "English (South Africa)",
     "langCodeIso_639_1": "en",
@@ -193,7 +193,7 @@
     "code": "en-za",
     "translated": 95
   },
-  {
+  "es_DO": {
     "name": "Spanish (Dominican Republic)",
     "nativeName": "Español de República Dominicana",
     "langCodeIso_639_1": "es",
@@ -206,7 +206,7 @@
     "code": "es-do",
     "translated": 95
   },
-  {
+  "fr_FR": {
     "name": "French (France)",
     "nativeName": "Français",
     "langCodeIso_639_1": "fr",
@@ -219,7 +219,7 @@
     "code": "fr",
     "translated": 90
   },
-  {
+  "sv_SE": {
     "name": "Swedish",
     "nativeName": "Svenska",
     "langCodeIso_639_1": "sv",
@@ -230,9 +230,9 @@
     "facebookLocale": "sv_SE",
     "wpLocale": "sv_SE",
     "code": "sv",
-    "translated": 72
+    "translated": 71
   },
-  {
+  "zh_CN": {
     "name": "Chinese (China)",
     "nativeName": "简体中文",
     "langCodeIso_639_1": "zh",
@@ -246,7 +246,7 @@
     "code": "zh-cn",
     "translated": 61
   },
-  {
+  "id_ID": {
     "name": "Indonesian",
     "nativeName": "Bahasa Indonesia",
     "langCodeIso_639_1": "id",
@@ -260,7 +260,21 @@
     "code": "id",
     "translated": 57
   },
-  {
+  "pt_BR": {
+    "name": "Portuguese (Brazil)",
+    "nativeName": "Português do Brasil",
+    "langCodeIso_639_1": "pt",
+    "langCodeIso_639_2": "por",
+    "countryCode": "br",
+    "slug": "pt-br",
+    "pluralExpression": "n > 1",
+    "googleCode": "pt-BR",
+    "facebookLocale": "pt_BR",
+    "wpLocale": "pt_BR",
+    "code": "pt-br",
+    "translated": 54
+  },
+  "ru_RU": {
     "name": "Russian",
     "nativeName": "Русский",
     "langCodeIso_639_1": "ru",
@@ -274,21 +288,7 @@
     "code": "ru",
     "translated": 52
   },
-  {
-    "name": "Portuguese (Brazil)",
-    "nativeName": "Português do Brasil",
-    "langCodeIso_639_1": "pt",
-    "langCodeIso_639_2": "por",
-    "countryCode": "br",
-    "slug": "pt-br",
-    "pluralExpression": "n > 1",
-    "googleCode": "pt-BR",
-    "facebookLocale": "pt_BR",
-    "wpLocale": "pt_BR",
-    "code": "pt-br",
-    "translated": 38
-  },
-  {
+  "ja": {
     "name": "Japanese",
     "nativeName": "日本語",
     "langCodeIso_639_1": "ja",
@@ -301,7 +301,7 @@
     "code": "ja",
     "translated": 32
   },
-  {
+  "zh_TW": {
     "name": "Chinese (Taiwan)",
     "nativeName": "繁體中文",
     "langCodeIso_639_1": "zh",
@@ -315,7 +315,7 @@
     "code": "zh-tw",
     "translated": 30
   },
-  {
+  "es_MX": {
     "name": "Spanish (Mexico)",
     "nativeName": "Español de México",
     "langCodeIso_639_1": "es",
@@ -328,7 +328,7 @@
     "code": "es-mx",
     "translated": 20
   },
-  {
+  "nl_BE": {
     "name": "Dutch (Belgium)",
     "nativeName": "Nederlands (België)",
     "langCodeIso_639_1": "nl",
@@ -338,9 +338,9 @@
     "googleCode": "nl",
     "wpLocale": "nl_BE",
     "code": "nl-be",
-    "translated": 16
+    "translated": 15
   },
-  {
+  "kn": {
     "name": "Kannada",
     "nativeName": "ಕನ್ನಡ",
     "langCodeIso_639_1": "kn",
@@ -351,9 +351,9 @@
     "facebookLocale": "kn_IN",
     "wpLocale": "kn",
     "code": "kn",
-    "translated": 8
+    "translated": 9
   },
-  {
+  "it_IT": {
     "name": "Italian",
     "nativeName": "Italiano",
     "langCodeIso_639_1": "it",
@@ -366,7 +366,7 @@
     "code": "it",
     "translated": 6
   },
-  {
+  "ar": {
     "name": "Arabic",
     "nativeName": "العربية",
     "langCodeIso_639_1": "ar",
@@ -380,7 +380,7 @@
     "code": "ar",
     "translated": 2
   },
-  {
+  "en_AU": {
     "name": "English (Australia)",
     "nativeName": "English (Australia)",
     "langCodeIso_639_1": "en",
@@ -392,7 +392,7 @@
     "code": "en-au",
     "translated": 2
   },
-  {
+  "pt_PT": {
     "name": "Portuguese (Portugal)",
     "nativeName": "Português",
     "langCodeIso_639_1": "pt",
@@ -404,7 +404,7 @@
     "code": "pt",
     "translated": 1
   },
-  {
+  "skr": {
     "name": "Saraiki",
     "nativeName": "سرائیکی",
     "countryCode": "pk",
@@ -415,7 +415,7 @@
     "code": "skr",
     "translated": 0
   },
-  {
+  "srd": {
     "name": "Sardinian",
     "nativeName": "Sardu",
     "langCodeIso_639_1": "sc",
@@ -427,7 +427,7 @@
     "code": "srd",
     "translated": 0
   },
-  {
+  "gd": {
     "name": "Scottish Gaelic",
     "nativeName": "Gàidhlig",
     "langCodeIso_639_1": "gd",
@@ -440,7 +440,7 @@
     "code": "gd",
     "translated": 0
   },
-  {
+  "nb_NO": {
     "name": "Norwegian (Bokmål)",
     "nativeName": "Norsk bokmål",
     "langCodeIso_639_1": "nb",
@@ -453,7 +453,7 @@
     "code": "nb",
     "translated": 0
   },
-  {
+  "scn": {
     "name": "Sicilian",
     "nativeName": "Sicilianu",
     "countryCode": "it",
@@ -462,7 +462,7 @@
     "code": "scn",
     "translated": 0
   },
-  {
+  "pcm": {
     "name": "Nigerian Pidgin",
     "nativeName": "Nigerian Pidgin",
     "countryCode": "ng",
@@ -471,7 +471,7 @@
     "code": "pcm",
     "translated": 0
   },
-  {
+  "sr_RS": {
     "name": "Serbian",
     "nativeName": "Српски језик",
     "langCodeIso_639_1": "sr",
@@ -485,7 +485,7 @@
     "code": "sr",
     "translated": 0
   },
-  {
+  "ne_NP": {
     "name": "Nepali",
     "nativeName": "नेपाली",
     "langCodeIso_639_1": "ne",
@@ -498,7 +498,7 @@
     "code": "ne",
     "translated": 0
   },
-  {
+  "nn_NO": {
     "name": "Norwegian (Nynorsk)",
     "nativeName": "Norsk nynorsk",
     "langCodeIso_639_1": "nn",
@@ -511,7 +511,7 @@
     "code": "nn",
     "translated": 0
   },
-  {
+  "szl": {
     "name": "Silesian",
     "nativeName": "Ślōnskŏ gŏdka",
     "countryCode": "pl",
@@ -522,7 +522,7 @@
     "code": "szl",
     "translated": 0
   },
-  {
+  "sq_XK": {
     "name": "Shqip (Kosovo)",
     "nativeName": "Për Kosovën Shqip",
     "langCodeIso_639_1": "sq",
@@ -532,7 +532,7 @@
     "code": "sq-xk",
     "translated": 0
   },
-  {
+  "nqo": {
     "name": "N’ko",
     "nativeName": "ߒߞߏ",
     "langCodeIso_639_2": "nqo",
@@ -543,7 +543,7 @@
     "code": "nqo",
     "translated": 0
   },
-  {
+  "my_MM": {
     "name": "Myanmar (Burmese)",
     "nativeName": "ဗမာစာ",
     "langCodeIso_639_1": "my",
@@ -555,7 +555,7 @@
     "code": "mya",
     "translated": 0
   },
-  {
+  "sna": {
     "name": "Shona",
     "nativeName": "ChiShona",
     "langCodeIso_639_1": "sn",
@@ -565,7 +565,7 @@
     "code": "sna",
     "translated": 0
   },
-  {
+  "pcd": {
     "name": "Picard",
     "nativeName": "Ch’ti",
     "countryCode": "fr",
@@ -575,7 +575,7 @@
     "code": "pcd",
     "translated": 0
   },
-  {
+  "oci": {
     "name": "Occitan",
     "nativeName": "Occitan",
     "langCodeIso_639_1": "oc",
@@ -587,7 +587,7 @@
     "code": "oci",
     "translated": 0
   },
-  {
+  "si_LK": {
     "name": "Sinhala",
     "nativeName": "සිංහල",
     "langCodeIso_639_1": "si",
@@ -600,7 +600,7 @@
     "code": "si",
     "translated": 0
   },
-  {
+  "pl_PL": {
     "name": "Polish",
     "nativeName": "Polski",
     "langCodeIso_639_1": "pl",
@@ -614,7 +614,7 @@
     "code": "pl",
     "translated": 0
   },
-  {
+  "pt_AO": {
     "name": "Portuguese (Angola)",
     "nativeName": "Português de Angola",
     "langCodeIso_639_1": "pt",
@@ -624,7 +624,7 @@
     "code": "pt-ao",
     "translated": 0
   },
-  {
+  "rhg": {
     "name": "Rohingya",
     "nativeName": "Ruáinga",
     "countryCode": "mm",
@@ -634,7 +634,7 @@
     "code": "rhg",
     "translated": 0
   },
-  {
+  "fa_AF": {
     "name": "Persian (Afghanistan)",
     "nativeName": "(فارسی (افغانستان",
     "langCodeIso_639_1": "fa",
@@ -647,7 +647,7 @@
     "code": "fa-af",
     "translated": 0
   },
-  {
+  "roh": {
     "name": "Romansh",
     "nativeName": "Rumantsch",
     "langCodeIso_639_1": "rm",
@@ -658,7 +658,7 @@
     "code": "roh",
     "translated": 0
   },
-  {
+  "sah": {
     "name": "Sakha",
     "nativeName": "Сахалыы",
     "langCodeIso_639_2": "sah",
@@ -668,7 +668,7 @@
     "code": "sah",
     "translated": 0
   },
-  {
+  "ory": {
     "name": "Oriya",
     "nativeName": "ଓଡ଼ିଆ",
     "langCodeIso_639_1": "or",
@@ -680,7 +680,7 @@
     "code": "ory",
     "translated": 0
   },
-  {
+  "fa_IR": {
     "name": "Persian",
     "nativeName": "فارسی",
     "langCodeIso_639_1": "fa",
@@ -694,7 +694,7 @@
     "code": "fa",
     "translated": 0
   },
-  {
+  "ps": {
     "name": "Pashto",
     "nativeName": "پښتو",
     "langCodeIso_639_1": "ps",
@@ -707,7 +707,7 @@
     "code": "ps",
     "translated": 0
   },
-  {
+  "pap_AW": {
     "name": "Papiamento (Aruba)",
     "nativeName": "Papiamento",
     "langCodeIso_639_2": "pap",
@@ -717,7 +717,7 @@
     "code": "pap-aw",
     "translated": 0
   },
-  {
+  "pap_CW": {
     "name": "Papiamento (Curaçao and Bonaire)",
     "nativeName": "Papiamentu",
     "langCodeIso_639_2": "pap",
@@ -727,7 +727,7 @@
     "code": "pap-cw",
     "translated": 0
   },
-  {
+  "art_xpirate": {
     "name": "English (Pirate)",
     "nativeName": "English (Pirate)",
     "langCodeIso_639_2": "art",
@@ -738,7 +738,7 @@
     "code": "pirate",
     "translated": 0
   },
-  {
+  "os": {
     "name": "Ossetic",
     "nativeName": "Ирон",
     "langCodeIso_639_1": "os",
@@ -748,7 +748,7 @@
     "code": "os",
     "translated": 0
   },
-  {
+  "sa_IN": {
     "name": "Sanskrit",
     "nativeName": "भारतम्",
     "langCodeIso_639_1": "sa",
@@ -760,7 +760,7 @@
     "code": "sa-in",
     "translated": 0
   },
-  {
+  "snd": {
     "name": "Sindhi",
     "nativeName": "سنڌي",
     "langCodeIso_639_1": "sd",
@@ -772,7 +772,7 @@
     "code": "snd",
     "translated": 0
   },
-  {
+  "af": {
     "name": "Afrikaans",
     "nativeName": "Afrikaans",
     "langCodeIso_639_1": "af",
@@ -785,7 +785,7 @@
     "code": "af",
     "translated": 0
   },
-  {
+  "sk_SK": {
     "name": "Slovak",
     "nativeName": "Slovenčina",
     "langCodeIso_639_1": "sk",
@@ -799,7 +799,7 @@
     "code": "sk",
     "translated": 0
   },
-  {
+  "uk": {
     "name": "Ukrainian",
     "nativeName": "Українська",
     "langCodeIso_639_1": "uk",
@@ -813,7 +813,7 @@
     "code": "uk",
     "translated": 0
   },
-  {
+  "te": {
     "name": "Telugu",
     "nativeName": "తెలుగు",
     "langCodeIso_639_1": "te",
@@ -825,7 +825,7 @@
     "code": "te",
     "translated": 0
   },
-  {
+  "th": {
     "name": "Thai",
     "nativeName": "ไทย",
     "langCodeIso_639_1": "th",
@@ -838,7 +838,7 @@
     "code": "th",
     "translated": 0
   },
-  {
+  "bo": {
     "name": "Tibetan",
     "nativeName": "བོད་ཡིག",
     "langCodeIso_639_1": "bo",
@@ -849,7 +849,7 @@
     "code": "bo",
     "translated": 0
   },
-  {
+  "tir": {
     "name": "Tigrinya",
     "nativeName": "ትግርኛ",
     "langCodeIso_639_1": "ti",
@@ -861,7 +861,7 @@
     "code": "tir",
     "translated": 0
   },
-  {
+  "tr_TR": {
     "name": "Turkish",
     "nativeName": "Türkçe",
     "langCodeIso_639_1": "tr",
@@ -875,7 +875,7 @@
     "code": "tr",
     "translated": 0
   },
-  {
+  "tuk": {
     "name": "Turkmen",
     "nativeName": "Türkmençe",
     "langCodeIso_639_1": "tk",
@@ -888,7 +888,7 @@
     "code": "tuk",
     "translated": 0
   },
-  {
+  "twd": {
     "name": "Tweants",
     "nativeName": "Twents",
     "countryCode": "nl",
@@ -897,7 +897,7 @@
     "code": "twd",
     "translated": 0
   },
-  {
+  "ug_CN": {
     "name": "Uighur",
     "nativeName": "ئۇيغۇرچە",
     "langCodeIso_639_1": "ug",
@@ -909,7 +909,7 @@
     "code": "ug",
     "translated": 0
   },
-  {
+  "hsb": {
     "name": "Upper Sorbian",
     "nativeName": "Hornjoserbšćina",
     "langCodeIso_639_2": "hsb",
@@ -920,7 +920,7 @@
     "code": "hsb",
     "translated": 0
   },
-  {
+  "ta_LK": {
     "name": "Tamil (Sri Lanka)",
     "nativeName": "தமிழ்",
     "langCodeIso_639_1": "ta",
@@ -932,7 +932,7 @@
     "code": "ta-lk",
     "translated": 0
   },
-  {
+  "ur": {
     "name": "Urdu",
     "nativeName": "اردو",
     "langCodeIso_639_1": "ur",
@@ -946,7 +946,7 @@
     "code": "ur",
     "translated": 0
   },
-  {
+  "uz_UZ": {
     "name": "Uzbek",
     "nativeName": "O‘zbekcha",
     "langCodeIso_639_1": "uz",
@@ -960,7 +960,7 @@
     "code": "uz",
     "translated": 0
   },
-  {
+  "vec": {
     "name": "Venetian",
     "nativeName": "Vèneto",
     "langCodeIso_639_2": "roa",
@@ -970,7 +970,7 @@
     "code": "vec",
     "translated": 0
   },
-  {
+  "vi": {
     "name": "Vietnamese",
     "nativeName": "Tiếng Việt",
     "langCodeIso_639_1": "vi",
@@ -984,7 +984,7 @@
     "code": "vi",
     "translated": 0
   },
-  {
+  "cy": {
     "name": "Welsh",
     "nativeName": "Cymraeg",
     "langCodeIso_639_1": "cy",
@@ -998,7 +998,7 @@
     "code": "cy",
     "translated": 0
   },
-  {
+  "wol": {
     "name": "Wolof",
     "nativeName": "Wolof",
     "langCodeIso_639_1": "wo",
@@ -1010,7 +1010,7 @@
     "code": "wol",
     "translated": 0
   },
-  {
+  "xho": {
     "name": "Xhosa",
     "nativeName": "isiXhosa",
     "langCodeIso_639_1": "xh",
@@ -1023,7 +1023,7 @@
     "code": "xho",
     "translated": 0
   },
-  {
+  "yor": {
     "name": "Yoruba",
     "nativeName": "Yorùbá",
     "langCodeIso_639_1": "yo",
@@ -1036,7 +1036,7 @@
     "code": "yor",
     "translated": 0
   },
-  {
+  "tt_RU": {
     "name": "Tatar",
     "nativeName": "Татар теле",
     "langCodeIso_639_1": "tt",
@@ -1049,7 +1049,7 @@
     "code": "tt",
     "translated": 0
   },
-  {
+  "ta_IN": {
     "name": "Tamil",
     "nativeName": "தமிழ்",
     "langCodeIso_639_1": "ta",
@@ -1062,7 +1062,7 @@
     "code": "ta",
     "translated": 0
   },
-  {
+  "sl_SI": {
     "name": "Slovenian",
     "nativeName": "Slovenščina",
     "langCodeIso_639_1": "sl",
@@ -1076,7 +1076,7 @@
     "code": "sl",
     "translated": 0
   },
-  {
+  "es_PR": {
     "name": "Spanish (Puerto Rico)",
     "nativeName": "Español de Puerto Rico",
     "langCodeIso_639_1": "es",
@@ -1089,7 +1089,7 @@
     "code": "es-pr",
     "translated": 0
   },
-  {
+  "so_SO": {
     "name": "Somali",
     "nativeName": "Afsoomaali",
     "langCodeIso_639_1": "so",
@@ -1102,7 +1102,7 @@
     "code": "so",
     "translated": 0
   },
-  {
+  "azb": {
     "name": "South Azerbaijani",
     "nativeName": "گؤنئی آذربایجان",
     "langCodeIso_639_1": "az",
@@ -1113,7 +1113,7 @@
     "code": "azb",
     "translated": 0
   },
-  {
+  "es_CL": {
     "name": "Spanish (Chile)",
     "nativeName": "Español de Chile",
     "langCodeIso_639_1": "es",
@@ -1126,7 +1126,7 @@
     "code": "es-cl",
     "translated": 0
   },
-  {
+  "es_CR": {
     "name": "Spanish (Costa Rica)",
     "nativeName": "Español de Costa Rica",
     "langCodeIso_639_1": "es",
@@ -1139,7 +1139,7 @@
     "code": "es-cr",
     "translated": 0
   },
-  {
+  "me_ME": {
     "name": "Montenegrin",
     "nativeName": "Crnogorski jezik",
     "countryCode": "me",
@@ -1149,7 +1149,7 @@
     "code": "me",
     "translated": 0
   },
-  {
+  "es_GT": {
     "name": "Spanish (Guatemala)",
     "nativeName": "Español de Guatemala",
     "langCodeIso_639_1": "es",
@@ -1162,7 +1162,7 @@
     "code": "es-gt",
     "translated": 0
   },
-  {
+  "es_HN": {
     "name": "Spanish (Honduras)",
     "nativeName": "Español de Honduras",
     "langCodeIso_639_1": "es",
@@ -1175,7 +1175,7 @@
     "code": "es-hn",
     "translated": 0
   },
-  {
+  "es_PE": {
     "name": "Spanish (Peru)",
     "nativeName": "Español de Perú",
     "langCodeIso_639_1": "es",
@@ -1188,7 +1188,7 @@
     "code": "es-pe",
     "translated": 0
   },
-  {
+  "es_UY": {
     "name": "Spanish (Uruguay)",
     "nativeName": "Español de Uruguay",
     "langCodeIso_639_1": "es",
@@ -1201,7 +1201,7 @@
     "code": "es-uy",
     "translated": 0
   },
-  {
+  "tzm": {
     "name": "Tamazight (Central Atlas)",
     "nativeName": "ⵜⴰⵎⴰⵣⵉⵖⵜ",
     "langCodeIso_639_2": "tzm",
@@ -1212,7 +1212,7 @@
     "code": "tzm",
     "translated": 0
   },
-  {
+  "su_ID": {
     "name": "Sundanese",
     "nativeName": "Basa Sunda",
     "langCodeIso_639_1": "su",
@@ -1225,7 +1225,7 @@
     "code": "su",
     "translated": 0
   },
-  {
+  "sw": {
     "name": "Swahili",
     "nativeName": "Kiswahili",
     "langCodeIso_639_1": "sw",
@@ -1237,7 +1237,7 @@
     "code": "sw",
     "translated": 0
   },
-  {
+  "ssw": {
     "name": "Swati",
     "nativeName": "SiSwati",
     "langCodeIso_639_1": "ss",
@@ -1248,7 +1248,7 @@
     "code": "ssw",
     "translated": 0
   },
-  {
+  "syr": {
     "name": "Syriac",
     "nativeName": "Syriac",
     "countryCode": "iq",
@@ -1257,7 +1257,7 @@
     "code": "syr",
     "translated": 0
   },
-  {
+  "tl": {
     "name": "Tagalog",
     "nativeName": "Tagalog",
     "langCodeIso_639_1": "tl",
@@ -1270,7 +1270,7 @@
     "code": "tl",
     "translated": 0
   },
-  {
+  "tah": {
     "name": "Tahitian",
     "nativeName": "Reo Tahiti",
     "langCodeIso_639_1": "ty",
@@ -1282,7 +1282,7 @@
     "code": "tah",
     "translated": 0
   },
-  {
+  "tg": {
     "name": "Tajik",
     "nativeName": "Тоҷикӣ",
     "langCodeIso_639_1": "tg",
@@ -1295,7 +1295,7 @@
     "code": "tg",
     "translated": 0
   },
-  {
+  "zgh": {
     "name": "Tamazight",
     "nativeName": "ⵜⴰⵎⴰⵣⵉⵖⵜ",
     "langCodeIso_639_2": "zgh",
@@ -1306,7 +1306,7 @@
     "code": "zgh",
     "translated": 0
   },
-  {
+  "ary": {
     "name": "Moroccan Arabic",
     "nativeName": "العربية المغربية",
     "langCodeIso_639_1": "ar",
@@ -1318,7 +1318,7 @@
     "code": "ary",
     "translated": 0
   },
-  {
+  "lug": {
     "name": "Luganda",
     "nativeName": "Oluganda",
     "langCodeIso_639_1": "lg",
@@ -1329,7 +1329,7 @@
     "code": "lug",
     "translated": 0
   },
-  {
+  "mn": {
     "name": "Mongolian",
     "nativeName": "Монгол",
     "langCodeIso_639_1": "mn",
@@ -1342,7 +1342,7 @@
     "code": "mn",
     "translated": 0
   },
-  {
+  "art_xemoji": {
     "name": "Emoji",
     "langCodeIso_639_2": "art",
     "slug": "art-xemoji",
@@ -1351,7 +1351,7 @@
     "code": "art-xemoji",
     "translated": 0
   },
-  {
+  "ceb": {
     "name": "Cebuano",
     "nativeName": "Cebuano",
     "langCodeIso_639_2": "ceb",
@@ -1362,7 +1362,7 @@
     "code": "ceb",
     "translated": 0
   },
-  {
+  "zh_HK": {
     "name": "Chinese (Hong Kong)",
     "nativeName": "香港中文版\t",
     "langCodeIso_639_1": "zh",
@@ -1375,7 +1375,7 @@
     "code": "zh-hk",
     "translated": 0
   },
-  {
+  "zh_SG": {
     "name": "Chinese (Singapore)",
     "nativeName": "中文",
     "langCodeIso_639_1": "zh",
@@ -1387,7 +1387,7 @@
     "code": "zh-sg",
     "translated": 0
   },
-  {
+  "cor": {
     "name": "Cornish",
     "nativeName": "Kernewek",
     "langCodeIso_639_1": "kw",
@@ -1399,7 +1399,7 @@
     "code": "cor",
     "translated": 0
   },
-  {
+  "co": {
     "name": "Corsican",
     "nativeName": "Corsu",
     "langCodeIso_639_1": "co",
@@ -1410,7 +1410,7 @@
     "code": "co",
     "translated": 0
   },
-  {
+  "hr": {
     "name": "Croatian",
     "nativeName": "Hrvatski",
     "langCodeIso_639_1": "hr",
@@ -1424,7 +1424,7 @@
     "code": "hr",
     "translated": 0
   },
-  {
+  "dv": {
     "name": "Dhivehi",
     "nativeName": "ދިވެހި",
     "langCodeIso_639_1": "dv",
@@ -1436,7 +1436,7 @@
     "code": "dv",
     "translated": 0
   },
-  {
+  "dzo": {
     "name": "Dzongkha",
     "nativeName": "རྫོང་ཁ",
     "langCodeIso_639_1": "dz",
@@ -1448,7 +1448,7 @@
     "code": "dzo",
     "translated": 0
   },
-  {
+  "en_NZ": {
     "name": "English (New Zealand)",
     "nativeName": "English (New Zealand)",
     "langCodeIso_639_1": "en",
@@ -1460,7 +1460,7 @@
     "code": "en-nz",
     "translated": 0
   },
-  {
+  "ca": {
     "name": "Catalan",
     "nativeName": "Català",
     "langCodeIso_639_1": "ca",
@@ -1472,7 +1472,7 @@
     "code": "ca",
     "translated": 0
   },
-  {
+  "eo": {
     "name": "Esperanto",
     "nativeName": "Esperanto",
     "langCodeIso_639_1": "eo",
@@ -1484,7 +1484,7 @@
     "code": "eo",
     "translated": 0
   },
-  {
+  "et": {
     "name": "Estonian",
     "nativeName": "Eesti",
     "langCodeIso_639_1": "et",
@@ -1497,7 +1497,7 @@
     "code": "et",
     "translated": 0
   },
-  {
+  "fo": {
     "name": "Faroese",
     "nativeName": "Føroyskt",
     "langCodeIso_639_1": "fo",
@@ -1509,7 +1509,7 @@
     "code": "fo",
     "translated": 0
   },
-  {
+  "fi": {
     "name": "Finnish",
     "nativeName": "Suomi",
     "langCodeIso_639_1": "fi",
@@ -1522,7 +1522,7 @@
     "code": "fi",
     "translated": 0
   },
-  {
+  "fon": {
     "name": "Fon",
     "nativeName": "fɔ̀ngbè",
     "langCodeIso_639_2": "fon",
@@ -1532,7 +1532,7 @@
     "code": "fon",
     "translated": 0
   },
-  {
+  "fr_BE": {
     "name": "French (Belgium)",
     "nativeName": "Français de Belgique",
     "langCodeIso_639_1": "fr",
@@ -1544,7 +1544,7 @@
     "code": "fr-be",
     "translated": 0
   },
-  {
+  "fr_CA": {
     "name": "French (Canada)",
     "nativeName": "Français du Canada",
     "langCodeIso_639_1": "fr",
@@ -1557,7 +1557,7 @@
     "code": "fr-ca",
     "translated": 0
   },
-  {
+  "fy": {
     "name": "Frisian",
     "nativeName": "Frysk",
     "langCodeIso_639_1": "fy",
@@ -1569,7 +1569,7 @@
     "code": "fy",
     "translated": 0
   },
-  {
+  "bal": {
     "name": "Catalan (Balear)",
     "nativeName": "Català (Balear)",
     "langCodeIso_639_2": "bal",
@@ -1579,7 +1579,7 @@
     "code": "bal",
     "translated": 0
   },
-  {
+  "bg_BG": {
     "name": "Bulgarian",
     "nativeName": "Български",
     "langCodeIso_639_1": "bg",
@@ -1592,7 +1592,7 @@
     "code": "bg",
     "translated": 0
   },
-  {
+  "fuc": {
     "name": "Fulah",
     "nativeName": "Pulaar",
     "langCodeIso_639_1": "ff",
@@ -1603,7 +1603,7 @@
     "code": "fuc",
     "translated": 0
   },
-  {
+  "az_TR": {
     "name": "Azerbaijani (Turkey)",
     "nativeName": "Azərbaycan Türkcəsi",
     "langCodeIso_639_1": "az",
@@ -1614,7 +1614,7 @@
     "code": "az-tr",
     "translated": 0
   },
-  {
+  "arq": {
     "name": "Algerian Arabic",
     "nativeName": "الدارجة الجزايرية",
     "langCodeIso_639_1": "ar",
@@ -1626,7 +1626,7 @@
     "code": "arq",
     "translated": 0
   },
-  {
+  "am": {
     "name": "Amharic",
     "nativeName": "አማርኛ",
     "langCodeIso_639_1": "am",
@@ -1638,7 +1638,7 @@
     "code": "am",
     "translated": 0
   },
-  {
+  "arg": {
     "name": "Aragonese",
     "nativeName": "Aragonés",
     "langCodeIso_639_1": "an",
@@ -1649,7 +1649,7 @@
     "code": "an",
     "translated": 0
   },
-  {
+  "hy": {
     "name": "Armenian",
     "nativeName": "Հայերեն",
     "langCodeIso_639_1": "hy",
@@ -1662,7 +1662,7 @@
     "code": "hy",
     "translated": 0
   },
-  {
+  "frp": {
     "name": "Arpitan",
     "nativeName": "Arpitan",
     "countryCode": "fr",
@@ -1672,7 +1672,7 @@
     "code": "frp",
     "translated": 0
   },
-  {
+  "as": {
     "name": "Assamese",
     "nativeName": "অসমীয়া",
     "langCodeIso_639_1": "as",
@@ -1684,7 +1684,7 @@
     "code": "as",
     "translated": 0
   },
-  {
+  "ast": {
     "name": "Asturian",
     "nativeName": "Asturianu",
     "langCodeIso_639_2": "ast",
@@ -1694,7 +1694,7 @@
     "code": "ast",
     "translated": 0
   },
-  {
+  "az": {
     "name": "Azerbaijani",
     "nativeName": "Azərbaycan dili",
     "langCodeIso_639_1": "az",
@@ -1707,7 +1707,7 @@
     "code": "az",
     "translated": 0
   },
-  {
+  "bcc": {
     "name": "Balochi Southern",
     "nativeName": "بلوچی مکرانی",
     "countryCode": "pk",
@@ -1718,7 +1718,7 @@
     "code": "bcc",
     "translated": 0
   },
-  {
+  "bre": {
     "name": "Breton",
     "nativeName": "Brezhoneg",
     "langCodeIso_639_1": "br",
@@ -1731,7 +1731,7 @@
     "code": "br",
     "translated": 0
   },
-  {
+  "ba": {
     "name": "Bashkir",
     "nativeName": "башҡорт теле",
     "langCodeIso_639_1": "ba",
@@ -1741,7 +1741,7 @@
     "code": "ba",
     "translated": 0
   },
-  {
+  "eu": {
     "name": "Basque",
     "nativeName": "Euskara",
     "langCodeIso_639_1": "eu",
@@ -1754,7 +1754,7 @@
     "code": "eu",
     "translated": 0
   },
-  {
+  "bel": {
     "name": "Belarusian",
     "nativeName": "Беларуская мова",
     "langCodeIso_639_1": "be",
@@ -1768,7 +1768,7 @@
     "code": "bel",
     "translated": 0
   },
-  {
+  "bn_BD": {
     "name": "Bengali (Bangladesh)",
     "nativeName": "বাংলা",
     "langCodeIso_639_1": "bn",
@@ -1779,7 +1779,7 @@
     "code": "bn",
     "translated": 0
   },
-  {
+  "bn_IN": {
     "name": "Bengali (India)",
     "nativeName": "বাংলা (ভারত)",
     "langCodeIso_639_1": "bn",
@@ -1792,7 +1792,7 @@
     "code": "bn-in",
     "translated": 0
   },
-  {
+  "bho": {
     "name": "Bhojpuri",
     "nativeName": "भोजपुरी",
     "countryCode": "in",
@@ -1801,7 +1801,7 @@
     "code": "bho",
     "translated": 0
   },
-  {
+  "brx": {
     "name": "Bodo",
     "nativeName": "बोडो‎",
     "countryCode": "in",
@@ -1810,7 +1810,7 @@
     "code": "brx",
     "translated": 0
   },
-  {
+  "gax": {
     "name": "Borana-Arsi-Guji Oromo",
     "nativeName": "Afaan Oromoo",
     "countryCode": "et",
@@ -1820,7 +1820,7 @@
     "code": "gax",
     "translated": 0
   },
-  {
+  "bs_BA": {
     "name": "Bosnian",
     "nativeName": "Bosanski",
     "langCodeIso_639_1": "bs",
@@ -1834,7 +1834,7 @@
     "code": "bs",
     "translated": 0
   },
-  {
+  "fur": {
     "name": "Friulian",
     "nativeName": "Friulian",
     "langCodeIso_639_2": "fur",
@@ -1844,7 +1844,7 @@
     "code": "fur",
     "translated": 0
   },
-  {
+  "ka_GE": {
     "name": "Georgian",
     "nativeName": "ქართული",
     "langCodeIso_639_1": "ka",
@@ -1858,7 +1858,7 @@
     "code": "ka",
     "translated": 0
   },
-  {
+  "mfe": {
     "name": "Mauritian Creole",
     "nativeName": "Kreol Morisien",
     "countryCode": "mu",
@@ -1868,7 +1868,7 @@
     "code": "mfe",
     "translated": 0
   },
-  {
+  "lt_LT": {
     "name": "Lithuanian",
     "nativeName": "Lietuvių kalba",
     "langCodeIso_639_1": "lt",
@@ -1882,7 +1882,7 @@
     "code": "lt",
     "translated": 0
   },
-  {
+  "ckb": {
     "name": "Kurdish (Sorani)",
     "nativeName": "كوردی‎",
     "langCodeIso_639_1": "ku",
@@ -1894,7 +1894,7 @@
     "code": "ckb",
     "translated": 0
   },
-  {
+  "kir": {
     "name": "Kyrgyz",
     "nativeName": "Кыргызча",
     "langCodeIso_639_1": "ky",
@@ -1907,7 +1907,7 @@
     "code": "kir",
     "translated": 0
   },
-  {
+  "lo": {
     "name": "Lao",
     "nativeName": "ພາສາລາວ",
     "langCodeIso_639_1": "lo",
@@ -1921,7 +1921,7 @@
     "code": "lo",
     "translated": 0
   },
-  {
+  "lv": {
     "name": "Latvian",
     "nativeName": "Latviešu valoda",
     "langCodeIso_639_1": "lv",
@@ -1935,7 +1935,7 @@
     "code": "lv",
     "translated": 0
   },
-  {
+  "lij": {
     "name": "Ligurian",
     "nativeName": "Lìgure",
     "countryCode": "it",
@@ -1944,7 +1944,7 @@
     "code": "lij",
     "translated": 0
   },
-  {
+  "li": {
     "name": "Limburgish",
     "nativeName": "Limburgs",
     "langCodeIso_639_1": "li",
@@ -1956,7 +1956,7 @@
     "code": "li",
     "translated": 0
   },
-  {
+  "lin": {
     "name": "Lingala",
     "nativeName": "Ngala",
     "langCodeIso_639_1": "ln",
@@ -1969,7 +1969,7 @@
     "code": "lin",
     "translated": 0
   },
-  {
+  "lmo": {
     "name": "Lombard",
     "nativeName": "Lombardo",
     "countryCode": "it",
@@ -1978,7 +1978,7 @@
     "code": "lmo",
     "translated": 0
   },
-  {
+  "ko_KR": {
     "name": "Korean",
     "nativeName": "한국어",
     "langCodeIso_639_1": "ko",
@@ -1992,7 +1992,7 @@
     "code": "ko",
     "translated": 0
   },
-  {
+  "dsb": {
     "name": "Lower Sorbian",
     "nativeName": "Dolnoserbšćina",
     "langCodeIso_639_2": "dsb",
@@ -2003,7 +2003,7 @@
     "code": "dsb",
     "translated": 0
   },
-  {
+  "lb_LU": {
     "name": "Luxembourgish",
     "nativeName": "Lëtzebuergesch",
     "langCodeIso_639_1": "lb",
@@ -2013,7 +2013,7 @@
     "code": "lb",
     "translated": 0
   },
-  {
+  "mk_MK": {
     "name": "Macedonian",
     "nativeName": "Македонски јазик",
     "langCodeIso_639_1": "mk",
@@ -2027,7 +2027,7 @@
     "code": "mk",
     "translated": 0
   },
-  {
+  "mai": {
     "name": "Maithili",
     "nativeName": "मैथिली",
     "langCodeIso_639_2": "mai",
@@ -2037,7 +2037,7 @@
     "code": "mai",
     "translated": 0
   },
-  {
+  "mg_MG": {
     "name": "Malagasy",
     "nativeName": "Malagasy",
     "langCodeIso_639_1": "mg",
@@ -2050,7 +2050,7 @@
     "code": "mg",
     "translated": 0
   },
-  {
+  "ms_MY": {
     "name": "Malay",
     "nativeName": "Bahasa Melayu",
     "langCodeIso_639_1": "ms",
@@ -2063,7 +2063,7 @@
     "code": "ms",
     "translated": 0
   },
-  {
+  "ml_IN": {
     "name": "Malayalam",
     "nativeName": "മലയാളം",
     "langCodeIso_639_1": "ml",
@@ -2076,7 +2076,7 @@
     "code": "ml",
     "translated": 0
   },
-  {
+  "mri": {
     "name": "Maori",
     "nativeName": "Te Reo Māori",
     "langCodeIso_639_1": "mi",
@@ -2088,7 +2088,7 @@
     "code": "mri",
     "translated": 0
   },
-  {
+  "mr": {
     "name": "Marathi",
     "nativeName": "मराठी",
     "langCodeIso_639_1": "mr",
@@ -2100,7 +2100,7 @@
     "code": "mr",
     "translated": 0
   },
-  {
+  "kmr": {
     "name": "Kurdish (Kurmanji)",
     "nativeName": "Kurdî",
     "langCodeIso_639_1": "ku",
@@ -2111,7 +2111,7 @@
     "code": "kmr",
     "translated": 0
   },
-  {
+  "kin": {
     "name": "Kinyarwanda",
     "nativeName": "Ikinyarwanda",
     "langCodeIso_639_1": "rw",
@@ -2123,7 +2123,7 @@
     "code": "kin",
     "translated": 0
   },
-  {
+  "de_AT": {
     "name": "German (Austria)",
     "nativeName": "Deutsch (Österreich)",
     "langCodeIso_639_1": "de",
@@ -2134,7 +2134,7 @@
     "code": "de-at",
     "translated": 0
   },
-  {
+  "he_IL": {
     "name": "Hebrew",
     "nativeName": "עִבְרִית",
     "langCodeIso_639_1": "he",
@@ -2147,7 +2147,7 @@
     "code": "he",
     "translated": 0
   },
-  {
+  "de_CH": {
     "name": "German (Switzerland)",
     "nativeName": "Deutsch (Schweiz)",
     "langCodeIso_639_1": "de",
@@ -2158,7 +2158,7 @@
     "code": "de-ch",
     "translated": 0
   },
-  {
+  "el": {
     "name": "Greek",
     "nativeName": "Ελληνικά",
     "langCodeIso_639_1": "el",
@@ -2171,7 +2171,7 @@
     "code": "el",
     "translated": 0
   },
-  {
+  "kal": {
     "name": "Greenlandic",
     "nativeName": "Kalaallisut",
     "langCodeIso_639_1": "kl",
@@ -2182,7 +2182,7 @@
     "code": "kal",
     "translated": 0
   },
-  {
+  "gu": {
     "name": "Gujarati",
     "nativeName": "ગુજરાતી",
     "langCodeIso_639_1": "gu",
@@ -2194,7 +2194,7 @@
     "code": "gu",
     "translated": 0
   },
-  {
+  "hat": {
     "name": "Haitian Creole",
     "nativeName": "Kreyol ayisyen",
     "langCodeIso_639_1": "ht",
@@ -2205,7 +2205,7 @@
     "code": "hat",
     "translated": 0
   },
-  {
+  "hau": {
     "name": "Hausa",
     "nativeName": "Harshen Hausa",
     "langCodeIso_639_1": "ha",
@@ -2218,7 +2218,7 @@
     "code": "hau",
     "translated": 0
   },
-  {
+  "haw_US": {
     "name": "Hawaiian",
     "nativeName": "Ōlelo Hawaiʻi",
     "langCodeIso_639_2": "haw",
@@ -2228,7 +2228,7 @@
     "code": "haw",
     "translated": 0
   },
-  {
+  "haz": {
     "name": "Hazaragi",
     "nativeName": "هزاره گی",
     "countryCode": "af",
@@ -2238,7 +2238,7 @@
     "code": "haz",
     "translated": 0
   },
-  {
+  "hi_IN": {
     "name": "Hindi",
     "nativeName": "हिन्दी",
     "langCodeIso_639_1": "hi",
@@ -2251,7 +2251,7 @@
     "code": "hi",
     "translated": 0
   },
-  {
+  "km": {
     "name": "Khmer",
     "nativeName": "ភាសាខ្មែរ",
     "langCodeIso_639_1": "km",
@@ -2265,7 +2265,7 @@
     "code": "km",
     "translated": 0
   },
-  {
+  "hu_HU": {
     "name": "Hungarian",
     "nativeName": "Magyar",
     "langCodeIso_639_1": "hu",
@@ -2278,7 +2278,7 @@
     "code": "hu",
     "translated": 0
   },
-  {
+  "is_IS": {
     "name": "Icelandic",
     "nativeName": "Íslenska",
     "langCodeIso_639_1": "is",
@@ -2292,7 +2292,7 @@
     "code": "is",
     "translated": 0
   },
-  {
+  "ido": {
     "name": "Ido",
     "nativeName": "Ido",
     "langCodeIso_639_1": "io",
@@ -2302,7 +2302,7 @@
     "code": "ido",
     "translated": 0
   },
-  {
+  "ibo": {
     "name": "Igbo",
     "nativeName": "Asụsụ Igbo",
     "langCodeIso_639_1": "ig",
@@ -2315,7 +2315,7 @@
     "code": "ibo",
     "translated": 0
   },
-  {
+  "ga": {
     "name": "Irish",
     "nativeName": "Gaelige",
     "langCodeIso_639_1": "ga",
@@ -2329,7 +2329,7 @@
     "code": "ga",
     "translated": 0
   },
-  {
+  "jv_ID": {
     "name": "Javanese",
     "nativeName": "Basa Jawa",
     "langCodeIso_639_1": "jv",
@@ -2342,7 +2342,7 @@
     "code": "jv",
     "translated": 0
   },
-  {
+  "kab": {
     "name": "Kabyle",
     "nativeName": "Taqbaylit",
     "langCodeIso_639_2": "kab",
@@ -2353,7 +2353,7 @@
     "code": "kab",
     "translated": 0
   },
-  {
+  "kaa": {
     "name": "Karakalpak",
     "nativeName": "Qaraqalpaq tili",
     "langCodeIso_639_2": "kaa",
@@ -2363,7 +2363,7 @@
     "code": "kaa",
     "translated": 0
   },
-  {
+  "kk": {
     "name": "Kazakh",
     "nativeName": "Қазақ тілі",
     "langCodeIso_639_1": "kk",
@@ -2376,7 +2376,7 @@
     "code": "kk",
     "translated": 0
   },
-  {
+  "zul": {
     "name": "Zulu",
     "nativeName": "isiZulu",
     "langCodeIso_639_1": "zu",
@@ -2388,4 +2388,4 @@
     "code": "zul",
     "translated": 0
   }
-]
+}
