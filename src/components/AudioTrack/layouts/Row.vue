@@ -69,7 +69,10 @@
         }"
       >
         <slot name="play-pause" :size="isLarge ? 'medium' : 'large'" />
-        <slot name="controller" :waveform-props="{ showDuration: true }" />
+        <slot
+          name="controller"
+          :waveform-props="{ features: ['timestamps', 'duration'] }"
+        />
       </div>
     </div>
   </article>

@@ -71,6 +71,7 @@
     <!-- Bars -->
     <svg
       class="bars absolute bottom-0 w-full"
+      :class="{ 'with-space': showDuration || showTimestamps }"
       xmlns="http://www.w3.org/2000/svg"
       :viewBox="viewBox"
       preserveAspectRatio="none"
@@ -110,27 +111,29 @@
 
     <!-- Timestamps -->
     <template v-if="isReady">
-      <div
-        ref="progressTimestampEl"
-        class="progress timestamp z-10 transform"
-        :class="[
-          ...(isProgressTimestampCutoff
-            ? ['bg-background-var']
-            : ['bg-yellow', '-translate-x-full']),
-        ]"
-        :style="{ '--progress-time-left': `${progressBarWidth}px` }"
-      >
-        {{ timeFmt(progressTimestamp) }}
-      </div>
-      <div
-        v-if="seekFrac"
-        ref="seekTimestampEl"
-        class="seek timestamp transform"
-        :class="{ '-translate-x-full': !isSeekTimestampCutoff }"
-        :style="{ '--seek-time-left': `${seekBarWidth}px` }"
-      >
-        {{ timeFmt(seekTimestamp) }}
-      </div>
+      <template v-if="showTimestamps">
+        <div
+          ref="progressTimestampEl"
+          class="progress timestamp z-10 transform"
+          :class="[
+            ...(isProgressTimestampCutoff
+              ? ['bg-background-var']
+              : ['bg-yellow', '-translate-x-full']),
+          ]"
+          :style="{ '--progress-time-left': `${progressBarWidth}px` }"
+        >
+          {{ timeFmt(progressTimestamp) }}
+        </div>
+        <div
+          v-if="seekFrac"
+          ref="seekTimestampEl"
+          class="seek timestamp transform"
+          :class="{ '-translate-x-full': !isSeekTimestampCutoff }"
+          :style="{ '--seek-time-left': `${seekBarWidth}px` }"
+        >
+          {{ timeFmt(seekTimestamp) }}
+        </div>
+      </template>
       <div
         v-if="showDuration"
         class="duration timestamp right-0 bg-background-var"
@@ -197,19 +200,20 @@ export default {
       default: 0,
     },
     /**
-     * whether to show the duration of the audio at the ending edge
-     */
-    showDuration: {
-      type: Boolean,
-      default: false,
-    },
-    /**
      * the fraction of the waveform height to use for the bars and timestamp;
      * The remaining space can be used to place other elements.
      */
     usableFrac: {
       type: Number,
       default: 1,
+    },
+    /**
+     * selectively enable features in the waveform; Available features are
+     * `'timestamp'` and `'duration'`.
+     */
+    features: {
+      type: Array,
+      default: () => ['timestamps'],
     },
   },
   setup(props, { emit }) {
@@ -274,6 +278,11 @@ export default {
         observer.disconnect()
       }
     })
+
+    /* Features */
+
+    const showDuration = computed(() => props.features.includes('duration'))
+    const showTimestamps = computed(() => props.features.includes('timestamps'))
 
     /* State */
 
@@ -431,6 +440,9 @@ export default {
 
       el, // template ref
 
+      showDuration,
+      showTimestamps,
+
       isReady,
 
       barWidth,
@@ -495,6 +507,10 @@ export default {
 }
 
 .bars {
+  height: calc(var(--usable-height));
+}
+
+.bars.with-space {
   height: calc(var(--usable-height) - 1rem - 2 * theme('spacing[0.5]'));
 }
 
