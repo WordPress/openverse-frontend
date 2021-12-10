@@ -15,7 +15,7 @@
         <p>{{ fetchState.fetchingError }}</p>
       </template>
       <LoadMoreButton
-        v-if="shouldShowLoadMore"
+        v-if="canLoadMore"
         :is-error="isError"
         :is-fetching="fetchState.isFetching"
         :is-finished="fetchState.isFinished"
@@ -28,49 +28,43 @@
 </template>
 
 <script>
-export default {
+import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
+import { useLoadMore } from '~/composables/use-load-more'
+
+import AudioTrack from '~/components/AudioTrack/AudioTrack.vue'
+import LoadMoreButton from '~/components/ImageGrid/LoadMoreButton.vue'
+
+import { propTypes } from './search-page.types'
+
+const AudioSearch = defineComponent({
   name: 'AudioSearch',
-  props: {
-    mediaResults: {},
-    fetchState: {},
-    isFilterVisible: {},
-    searchTerm: {
-      type: String,
-      required: true,
-    },
-    supported: {
-      type: Boolean,
-      required: true,
-    },
+  components: {
+    AudioTrack,
+    LoadMoreButton,
   },
-  computed: {
-    audioTrackSize() {
-      return this.isFilterVisible ? 'm' : 's'
-    },
-    isError() {
-      return !!this.fetchState.fetchingError
-    },
-    typeString() {
-      return this.$t('browse-page.search-form.audio')
-    },
-    errorHeader() {
-      return this.$t('browse-page.fetching-error', {
-        type: this.typeString,
-      })
-    },
-    shouldShowLoadMore() {
-      return this.searchTerm.trim() !== ''
-    },
+  props: propTypes,
+  setup(props) {
+    const { i18n } = useContext()
+
+    const audioTrackSize = computed(() => (props.isFilterVisible ? 'm' : 's'))
+
+    const isError = computed(() => !!props.fetchState.fetchingError)
+    const errorHeader = computed(() => {
+      const type = i18n.t('browse-page.search-form.audio')
+      return i18n.t('browse-page.fetching-error', { type })
+    })
+
+    const { canLoadMore, onLoadMore } = useLoadMore(props)
+
+    return {
+      audioTrackSize,
+      isError,
+      errorHeader,
+
+      canLoadMore,
+      onLoadMore,
+    }
   },
-  methods: {
-    onLoadMore() {
-      if (!this.supported) return
-      const searchParams = {
-        page: this.mediaResults.page + 1,
-        shouldPersistMedia: true,
-      }
-      this.$emit('load-more', searchParams)
-    },
-  },
-}
+})
+export default AudioSearch
 </script>

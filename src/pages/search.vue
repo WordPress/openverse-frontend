@@ -32,11 +32,10 @@
               :search-term="query.q"
               :supported="supported"
               data-testid="search-results"
-              @load-more="getMediaItems"
             />
           </template>
         </VSearchGrid>
-        <ScrollButton v-show="showScrollButton" data-testid="scroll-button" />
+        <VScrollButton v-show="showScrollButton" data-testid="scroll-button" />
       </div>
     </div>
   </div>
@@ -59,7 +58,8 @@ import debounce from 'lodash.debounce'
 
 import { isScreen } from '~/composables/use-media-query.js'
 
-import AppModal from '~/components/AppModal'
+import AppModal from '~/components/AppModal.vue'
+import VScrollButton from '~/components/VScrollButton.vue'
 import VSearchGrid from '~/components/VSearchGrid.vue'
 import SearchGridFilter from '~/components/Filters/SearchGridFilter.vue'
 
@@ -69,6 +69,7 @@ const BrowsePage = {
   components: {
     AppModal,
     SearchGridFilter,
+    VScrollButton,
     VSearchGrid,
   },
   setup() {

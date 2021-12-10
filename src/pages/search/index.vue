@@ -8,29 +8,18 @@
 </template>
 
 <script>
-export default {
+import { propTypes } from '~/pages/search/search-page.types'
+import { defineComponent } from '@nuxtjs/composition-api'
+import { useLoadMore } from '~/composables/use-load-more'
+
+const SearchIndex = defineComponent({
   name: 'SearchIndex',
-  props: {
-    mediaResults: {},
-    fetchState: {},
-    searchTerm: {
-      type: String,
-      required: true,
-    },
+  props: propTypes,
+
+  setup(props) {
+    const { canLoadMore, onLoadMore } = useLoadMore(props)
+    return { canLoadMore, onLoadMore }
   },
-  computed: {
-    canLoadMore() {
-      return this.searchTerm.trim() !== ''
-    },
-  },
-  methods: {
-    onLoadMore() {
-      const searchParams = {
-        page: this.mediaResults.page + 1,
-        shouldPersistMedia: true,
-      }
-      this.$emit('load-more', searchParams)
-    },
-  },
-}
+})
+export default SearchIndex
 </script>

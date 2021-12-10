@@ -111,6 +111,7 @@ export interface Filters {
 export interface FetchState {
   isFetching: boolean
   fetchingError: null | string
+  isFinished?: boolean
 }
 
 export interface SearchState {
