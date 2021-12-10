@@ -4,12 +4,7 @@
     :aria-label="$t('audio-track.aria-label')"
     role="region"
   >
-    <Component
-      :is="layoutComponent"
-      :audio="audio"
-      :size="size"
-      :aspect="aspect"
-    >
+    <Component :is="layoutComponent" :audio="audio" :size="size">
       <template #controller="controllerProps">
         <AudioController
           v-model="status"
@@ -82,15 +77,6 @@ export default {
       type: String,
       default: 'm',
       validator: (val) => ['s', 'm', 'l', 'xl'].includes(val),
-    },
-    /**
-     * whether to show the 'box' layout with a wider aspect ratio; This is
-     * opposed to the regular square layout.
-     */
-    aspect: {
-      type: String,
-      default: 'regular',
-      validator: (val) => ['regular', 'wide'].includes(val),
     },
   },
   setup(props) {

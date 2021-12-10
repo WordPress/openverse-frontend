@@ -32,11 +32,6 @@ import wavWaveform from './wav-waveform.json'
       options: ['s', 'm', 'l', 'xl'],
       control: 'select',
     },
-    aspect: {
-      defaultValue: 'regular',
-      options: ['regular', 'wide'],
-      control: 'select',
-    },
     audio: {
       control: false,
     },
@@ -114,8 +109,7 @@ export const Template = (args, { argTypes }) => ({
 ## Layouts
 
 The component can be rendered in a multiple different layouts, by
-specifying a `layout`. The layout can further be customised by the `size` and
-`aspect` props.
+specifying a `layout`. The layout can further be customised by the `size` prop.
 
 ### Full (default)
 
