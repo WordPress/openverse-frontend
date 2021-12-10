@@ -51,7 +51,7 @@ import {
 import { SET_FILTER_IS_VISIBLE } from '~/constants/mutation-types'
 import { queryStringToSearchType } from '~/utils/search-query-transform'
 import local from '~/utils/local'
-import { ALL_MEDIA, AUDIO, IMAGE, VIDEO } from '~/constants/media'
+import { ALL_MEDIA, AUDIO, IMAGE } from '~/constants/media'
 import { mapActions, mapGetters, mapMutations, mapState } from 'vuex'
 import { MEDIA, SEARCH } from '~/constants/store-modules'
 import debounce from 'lodash.debounce'
@@ -81,13 +81,12 @@ const BrowsePage = {
   },
   scrollToTop: false,
   async fetch() {
-    //!Object.keys(this.results.items).length ??
     if (
-      this.mediaType !== VIDEO &&
-      this.results.items.length === 0 &&
+      this.supported &&
+      !Object.keys(this.results.items).length &&
       this.query.q.trim() !== ''
     ) {
-      await this.fetchMedia()
+      await this.fetchMedia({})
     }
   },
   data: () => ({

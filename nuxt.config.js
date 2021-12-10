@@ -132,7 +132,7 @@ export default {
       '~/components/ImageDetails',
       '~/components/ImageGrid',
       '~/components/MediaInfo',
-      '~/components/MetaSearch',
+      '~/components/VMetaSearch',
       '~/components/MediaTag',
       '~/components/Skeleton',
       '~/components/VPopover',
