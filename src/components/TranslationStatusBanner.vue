@@ -1,5 +1,9 @@
 <template>
   <NotificationBanner v-show="!shouldHideBanner" @close="dismissBanner">
+    {{
+      // eslint-disable-next-line @intlify/vue-i18n/no-raw-text
+      '⚠️'
+    }}
     <i18n path="notification.translation.text">
       <template #link>
         <a :href="translationLink" target="_blank">{{
