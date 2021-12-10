@@ -36,7 +36,7 @@
             />
           </template>
         </VSearchGrid>
-        <ScrollButton data-testid="scroll-button" :v-show="showScrollButton" />
+        <ScrollButton v-show="showScrollButton" data-testid="scroll-button" />
       </div>
     </div>
   </div>
