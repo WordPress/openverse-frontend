@@ -50,7 +50,6 @@ export const createActions = (services) => ({
     return providerService
       .getProviderStats()
       .then(({ data }) => {
-        console.log(data)
         sortedProviders = sortProviders(data)
       })
       .catch((error) => {
