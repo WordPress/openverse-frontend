@@ -98,7 +98,16 @@
                 <TableSortIcon :active="sort.field === 'display_name'" />
               </span>
             </th>
-            <th>{{ $t('sources.providers.domain') }}</th>
+            <th
+              tabindex="0"
+              @click="sortTable('source_url')"
+              @keypress.enter="sortTable('source_url')"
+            >
+              <span class="table-header-inner">
+                {{ $t('sources.providers.domain') }}
+                <TableSortIcon :active="sort.field === 'source_url'" />
+              </span>
+            </th>
             <th
               tabindex="0"
               @click="sortTable('media_count')"
