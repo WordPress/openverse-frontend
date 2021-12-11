@@ -61,7 +61,7 @@ export const createActions = (services) => ({
       })
       .catch((error) => {
         console.warn(
-          `Error getting ${mediaType} providers: ${error}.  Will use saved provider data instead `
+          `Error getting ${mediaType} providers: ${error}. Will use saved provider data instead.`
         )
         sortedProviders = existingProviders[mediaType]
         commit(SET_PROVIDER_FETCH_ERROR, { mediaType, error: true })

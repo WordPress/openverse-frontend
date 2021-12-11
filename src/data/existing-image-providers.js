@@ -1,7 +1,7 @@
 const existingImageProviders = [
   {
     source_name: 'animaldiversity',
-    image_count: 15554,
+    media_count: 15554,
     display_name: 'Animal Diversity Web',
     source_url: 'https://animaldiversity.org',
     logo_url:
@@ -9,7 +9,7 @@ const existingImageProviders = [
   },
   {
     source_name: 'bio_diversity',
-    image_count: 228289,
+    media_count: 228289,
     display_name: 'Biodiversity Heritage Library',
     source_url: 'https://www.biodiversitylibrary.org/',
     logo_url:
@@ -17,7 +17,7 @@ const existingImageProviders = [
   },
   {
     source_name: 'brooklynmuseum',
-    image_count: 63221,
+    media_count: 63221,
     display_name: 'Brooklyn Museum',
     source_url: 'https://www.brooklynmuseum.org',
     logo_url:
@@ -25,7 +25,7 @@ const existingImageProviders = [
   },
   {
     source_name: 'CAPL',
-    image_count: 15143,
+    media_count: 15143,
     display_name: 'Culturally Authentic Pictorial Lexicon',
     source_url: 'http://capl.washjeff.edu',
     logo_url:
@@ -33,7 +33,7 @@ const existingImageProviders = [
   },
   {
     source_name: 'clevelandmuseum',
-    image_count: 34283,
+    media_count: 34283,
     display_name: 'Cleveland Museum of Art',
     source_url: 'http://www.clevelandart.org',
     logo_url:
@@ -41,7 +41,7 @@ const existingImageProviders = [
   },
   {
     source_name: 'deviantart',
-    image_count: 239000,
+    media_count: 239000,
     display_name: 'DeviantArt',
     source_url: 'https://www.deviantart.com',
     logo_url:
@@ -49,7 +49,7 @@ const existingImageProviders = [
   },
   {
     source_name: 'digitaltmuseum',
-    image_count: 289769,
+    media_count: 289769,
     display_name: 'Digitalt Museum',
     source_url: 'https://digitaltmuseum.no',
     logo_url:
@@ -57,7 +57,7 @@ const existingImageProviders = [
   },
   {
     source_name: 'europeana',
-    image_count: 7729617,
+    media_count: 7729617,
     display_name: 'Europeana',
     source_url: 'https://www.europeana.eu',
     logo_url:
@@ -65,7 +65,7 @@ const existingImageProviders = [
   },
   {
     source_name: 'flickr',
-    image_count: 466541100,
+    media_count: 466541100,
     display_name: 'Flickr',
     source_url: 'https://www.flickr.com',
     logo_url:
@@ -73,7 +73,7 @@ const existingImageProviders = [
   },
   {
     source_name: 'floraon',
-    image_count: 55010,
+    media_count: 55010,
     display_name: 'Flora-On',
     source_url: 'https://flora-on.pt',
     logo_url:
@@ -81,7 +81,7 @@ const existingImageProviders = [
   },
   {
     source_name: 'geographorguk',
-    image_count: 1090120,
+    media_count: 1090120,
     display_name: 'Geograph Britain and Ireland',
     source_url: 'https://www.geograph.org.uk',
     logo_url:
@@ -89,7 +89,7 @@ const existingImageProviders = [
   },
   {
     source_name: 'mccordmuseum',
-    image_count: 110075,
+    media_count: 110075,
     display_name: 'McCord Museum',
     source_url: 'http://www.musee-mccord.qc.ca/en',
     logo_url:
@@ -97,7 +97,7 @@ const existingImageProviders = [
   },
   {
     source_name: 'met',
-    image_count: 182000,
+    media_count: 182000,
     display_name: 'Metropolitan Museum of Art',
     source_url: 'https://www.metmuseum.org',
     logo_url:
@@ -105,7 +105,7 @@ const existingImageProviders = [
   },
   {
     source_name: 'museumsvictoria',
-    image_count: 143842,
+    media_count: 143842,
     display_name: 'Museums Victoria',
     source_url: 'https://museumsvictoria.com.au',
     logo_url:
@@ -113,7 +113,7 @@ const existingImageProviders = [
   },
   {
     source_name: 'nasa',
-    image_count: 115006,
+    media_count: 115006,
     display_name: 'NASA',
     source_url: 'https://www.nasa.gov/',
     logo_url:
@@ -121,7 +121,7 @@ const existingImageProviders = [
   },
   {
     source_name: 'nypl',
-    image_count: 1269,
+    media_count: 1269,
     display_name: 'New York Public Library',
     source_url: 'https://www.nypl.org',
     logo_url:
@@ -129,7 +129,7 @@ const existingImageProviders = [
   },
   {
     source_name: 'phylopic',
-    image_count: 3855,
+    media_count: 3855,
     display_name: 'PhyloPic',
     source_url: 'http://phylopic.org',
     logo_url:
@@ -137,7 +137,7 @@ const existingImageProviders = [
   },
   {
     source_name: 'rawpixel',
-    image_count: 25199,
+    media_count: 25199,
     display_name: 'Rawpixel',
     source_url: 'https://www.rawpixel.com',
     logo_url:
@@ -145,7 +145,7 @@ const existingImageProviders = [
   },
   {
     source_name: 'rijksmuseum',
-    image_count: 29999,
+    media_count: 29999,
     display_name: 'Rijksmuseum',
     source_url: 'https://www.rijksmuseum.nl/en',
     logo_url:
@@ -153,7 +153,7 @@ const existingImageProviders = [
   },
   {
     source_name: 'sciencemuseum',
-    image_count: 63218,
+    media_count: 63218,
     display_name: 'Science Museum – UK',
     source_url: 'https://www.sciencemuseum.org.uk',
     logo_url:
@@ -161,7 +161,7 @@ const existingImageProviders = [
   },
   {
     source_name: 'sketchfab',
-    image_count: 37900,
+    media_count: 37900,
     display_name: 'Sketchfab',
     source_url: 'https://sketchfab.com',
     logo_url:
@@ -169,7 +169,7 @@ const existingImageProviders = [
   },
   {
     source_name: 'smithsonian_african_american_history_museum',
-    image_count: 7477,
+    media_count: 7477,
     display_name:
       'Smithsonian Institution: National Museum of African American History and Culture',
     source_url: 'https://nmaahc.si.edu',
@@ -178,7 +178,7 @@ const existingImageProviders = [
   },
   {
     source_name: 'smithsonian_african_art_museum',
-    image_count: 135,
+    media_count: 135,
     display_name: 'Smithsonian Institution: National Museum of African Art',
     source_url: 'https://africa.si.edu/',
     logo_url:
@@ -186,7 +186,7 @@ const existingImageProviders = [
   },
   {
     source_name: 'smithsonian_air_and_space_museum',
-    image_count: 4741,
+    media_count: 4741,
     display_name: 'Smithsonian Institution: National Air and Space Museum',
     source_url: 'https://airandspace.si.edu',
     logo_url:
@@ -194,7 +194,7 @@ const existingImageProviders = [
   },
   {
     source_name: 'smithsonian_american_art_museum',
-    image_count: 11877,
+    media_count: 11877,
     display_name: 'Smithsonian Institution: Smithsonian American Art Museum',
     source_url: 'https://americanart.si.edu/',
     logo_url:
@@ -202,7 +202,7 @@ const existingImageProviders = [
   },
   {
     source_name: 'smithsonian_american_history_museum',
-    image_count: 2492,
+    media_count: 2492,
     display_name:
       'Smithsonian Institution: National Museum of American History',
     source_url: 'https://americanhistory.si.edu/',
@@ -211,7 +211,7 @@ const existingImageProviders = [
   },
   {
     source_name: 'smithsonian_american_indian_museum',
-    image_count: 246,
+    media_count: 246,
     display_name:
       'Smithsonian Institution: National Museum of the American Indian',
     source_url: 'https://americanindian.si.edu/',
@@ -220,7 +220,7 @@ const existingImageProviders = [
   },
   {
     source_name: 'smithsonian_anacostia_museum',
-    image_count: 571,
+    media_count: 571,
     display_name: 'Smithsonian Institution: Anacostia Community Museum',
     source_url: 'https://anacostia.si.edu/',
     logo_url:
@@ -228,7 +228,7 @@ const existingImageProviders = [
   },
   {
     source_name: 'smithsonian_cooper_hewitt_museum',
-    image_count: 65396,
+    media_count: 65396,
     display_name:
       'Smithsonian Institution: Cooper Hewitt, Smithsonian Design Museum',
     source_url: 'https://www.cooperhewitt.org',
@@ -237,7 +237,7 @@ const existingImageProviders = [
   },
   {
     source_name: 'smithsonian_freer_gallery_of_art',
-    image_count: 3876,
+    media_count: 3876,
     display_name: 'Smithsonian Institution: Freer Gallery of Art',
     source_url: 'https://asia.si.edu/',
     logo_url:
@@ -245,7 +245,7 @@ const existingImageProviders = [
   },
   {
     source_name: 'smithsonian_gardens',
-    image_count: 689,
+    media_count: 689,
     display_name: 'Smithsonian Institution: Smithsonian Gardens',
     source_url: 'https://gardens.si.edu/',
     logo_url:
@@ -253,7 +253,7 @@ const existingImageProviders = [
   },
   {
     source_name: 'smithsonian_hirshhorn_museum',
-    image_count: 423,
+    media_count: 423,
     display_name:
       'Smithsonian Institution: Hirshhorn Museum and Sculpture Garden',
     source_url: 'https://hirshhorn.si.edu/',
@@ -262,7 +262,7 @@ const existingImageProviders = [
   },
   {
     source_name: 'smithsonian_institution_archives',
-    image_count: 4971,
+    media_count: 4971,
     display_name: 'Smithsonian Institution Archives',
     source_url: 'https://siarchives.si.edu/',
     logo_url:
@@ -270,7 +270,7 @@ const existingImageProviders = [
   },
   {
     source_name: 'smithsonian_libraries',
-    image_count: 55,
+    media_count: 55,
     display_name: 'Smithsonian Institution: Smithsonian Libraries',
     source_url: 'https://library.si.edu/',
     logo_url:
@@ -278,7 +278,7 @@ const existingImageProviders = [
   },
   {
     source_name: 'smithsonian_national_museum_of_natural_history',
-    image_count: 2790144,
+    media_count: 2790144,
     display_name: 'Smithsonian Institution: National Museum of Natural History',
     source_url: 'https://naturalhistory.si.edu/',
     logo_url:
@@ -286,7 +286,7 @@ const existingImageProviders = [
   },
   {
     source_name: 'smithsonian_portrait_gallery',
-    image_count: 11549,
+    media_count: 11549,
     display_name: 'Smithsonian Institution: National Portrait Gallery',
     source_url: 'https://npg.si.edu/',
     logo_url:
@@ -294,7 +294,7 @@ const existingImageProviders = [
   },
   {
     source_name: 'smithsonian_postal_museum',
-    image_count: 2945,
+    media_count: 2945,
     display_name: 'Smithsonian Institution: National Postal Museum',
     source_url: 'http://postalmuseum.si.edu/',
     logo_url:
@@ -302,7 +302,7 @@ const existingImageProviders = [
   },
   {
     source_name: 'smithsonian_zoo_and_conservation',
-    image_count: 462,
+    media_count: 462,
     display_name: 'Smithsonian Institution: National Zoo',
     source_url: 'https://nationalzoo.si.edu/',
     logo_url:
@@ -310,7 +310,7 @@ const existingImageProviders = [
   },
   {
     source_name: 'spacex',
-    image_count: 877,
+    media_count: 877,
     display_name: 'SpaceX',
     source_url: 'https://spacex.com',
     logo_url:
@@ -318,7 +318,7 @@ const existingImageProviders = [
   },
   {
     source_name: 'svgsilh',
-    image_count: 358943,
+    media_count: 358943,
     display_name: 'SVG Silh',
     source_url: 'https://svgsilh.com',
     logo_url:
@@ -326,7 +326,7 @@ const existingImageProviders = [
   },
   {
     source_name: 'thingiverse',
-    image_count: 32395,
+    media_count: 32395,
     display_name: 'Thingiverse',
     source_url: 'https://www.thingiverse.com',
     logo_url:
@@ -334,7 +334,7 @@ const existingImageProviders = [
   },
   {
     source_name: 'thorvaldsensmuseum',
-    image_count: 9052,
+    media_count: 9052,
     display_name: 'Thorvaldsens Museum',
     source_url: 'http://www.thorvaldsensmuseum.dk',
     logo_url:
@@ -342,7 +342,7 @@ const existingImageProviders = [
   },
   {
     source_name: 'wikimedia',
-    image_count: 44491984,
+    media_count: 44491984,
     display_name: 'Wikimedia Commons',
     source_url: 'https://commons.wikimedia.org',
     logo_url:
@@ -350,7 +350,7 @@ const existingImageProviders = [
   },
   {
     source_name: 'woc_tech',
-    image_count: 267,
+    media_count: 267,
     display_name: 'WOCinTech Chat',
     source_url: 'https://www.wocintechchat.com/',
     logo_url:
@@ -358,7 +358,7 @@ const existingImageProviders = [
   },
   {
     source_name: 'WoRMS',
-    image_count: 19783,
+    media_count: 19783,
     display_name: 'World Register of Marine Species',
     source_url: 'http://www.marinespecies.org',
     logo_url:
