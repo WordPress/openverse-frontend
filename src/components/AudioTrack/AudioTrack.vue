@@ -78,7 +78,7 @@ export default {
     size: {
       type: String,
       default: 'm',
-      validator: (val) => ['s', 'm', 'l', 'xl'].includes(val),
+      validator: (val) => ['s', 'm', 'l'].includes(val),
     },
   },
   setup(props) {
