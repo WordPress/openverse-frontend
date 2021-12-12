@@ -6,8 +6,9 @@
       '--usable-height': `${Math.floor(usableFrac * 100)}%`,
       '--unusable-height': `${Math.floor((1 - usableFrac) * 100)}%`,
     }"
-    tabIndex="0"
-    role="slider"
+    :tabIndex="!message && isReady ? 0 : -1"
+    :role="!message && isReady ? 'slider' : null"
+    :aria-disabled="!(!message && isReady)"
     :aria-label="$t('waveform.label')"
     aria-orientation="horizontal"
     aria-valuemin="0"
