@@ -20,7 +20,7 @@
       <div class="flex-shrink-0" :class="{ 'w-70': isMedium }">
         <NuxtLink
           :to="localePath(`/audio/${audio.id}`)"
-          class="font-heading font-semibold text-dark-charcoal hover:text-dark-charcoal"
+          class="font-heading font-semibold text-dark-charcoal hover:text-dark-charcoal p-px rounded-sm focus:outline-none focus:ring focus:ring-pink"
           :class="{
             'text-2xl': isMedium || isLarge,
             'leading-snug': isSmall,

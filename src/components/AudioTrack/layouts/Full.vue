@@ -20,9 +20,11 @@
             class="font-semibold leading-snug"
           >
             <template #creator>
-              <a class="text-pink hover:text-pink" :href="audio.creator_url">{{
-                audio.creator
-              }}</a>
+              <a
+                class="text-pink hover:text-pink p-px rounded-sm focus:outline-none focus:ring focus:ring-pink"
+                :href="audio.creator_url"
+                >{{ audio.creator }}</a
+              >
             </template>
           </i18n>
 
