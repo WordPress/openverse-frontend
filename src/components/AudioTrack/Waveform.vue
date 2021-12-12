@@ -26,7 +26,7 @@
   >
     <!-- Focus ring -->
     <svg
-      class="hidden group-focus:block absolute inset-0 w-full h-full z-10 shadow-ring-1"
+      class="hidden group-focus:block absolute inset-0 w-full h-full z-20 shadow-ring-1"
       xmlns="http://www.w3.org/2000/svg"
       :viewBox="viewBox"
       preserveAspectRatio="none"
@@ -34,21 +34,23 @@
       <!-- Stroke is calculated from the centre of the path -->
       <rect
         class="stroke-pink"
-        x="0.5"
-        y="0.5"
-        :width="waveformDimens.width - 1"
-        :height="waveformDimens.height - 1"
+        x="0.75"
+        y="0.75"
+        :width="waveformDimens.width - 1.5"
+        :height="waveformDimens.height - 1.5"
+        rx="2"
         fill="none"
-        stroke-width="1"
+        stroke-width="1.5"
       />
       <rect
         class="stroke-white"
-        x="1.5"
-        y="1.5"
-        :width="waveformDimens.width - 3"
-        :height="waveformDimens.height - 3"
+        x="2"
+        y="2"
+        :width="waveformDimens.width - 4"
+        :height="waveformDimens.height - 4"
         fill="none"
         stroke-width="1"
+        rx="0.75"
       />
     </svg>
 
@@ -94,7 +96,7 @@
 
     <!-- Keyboard focus -->
     <div
-      class="focus-indicator hidden absolute z-20 top-0 flex flex-col items-center justify-between bg-black h-full"
+      class="focus-indicator hidden absolute z-30 top-0 flex flex-col items-center justify-between bg-black h-full"
       :style="{ width: `${barWidth}px`, left: `${seekSpaceBefore}px` }"
     >
       <div
