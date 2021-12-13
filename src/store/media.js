@@ -68,7 +68,9 @@ export const createActions = (services) => ({
    */
   async [FETCH_MEDIA]({ commit, dispatch, rootState, rootGetters }, params) {
     // does not send event if user is paginating for more results
-    const { page, mediaType, q } = params
+    const { page } = params
+    const mediaType = rootState.search.query.mediaType
+    const q = rootState.search.query.q
     const sessionId = rootState.user.usageSessionId
     if (!page) {
       await dispatch(

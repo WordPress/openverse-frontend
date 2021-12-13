@@ -9,7 +9,6 @@
         ><SearchGridFilter
       /></Component>
       <div class="column search-grid-ctr">
-        <SearchGridForm @onSearchFormSubmit="onSearchFormSubmit" />
         <SearchTypeTabs />
         <FilterDisplay v-show="shouldShowFilterTags" />
         <NuxtChild :key="$route.path" @onLoadMoreItems="onLoadMoreItems" />
@@ -132,17 +131,6 @@ const BrowsePage = {
     },
   },
   watch: {
-    query: {
-      deep: true,
-      handler() {
-        const newPath = this.localePath({
-          path: this.$route.path,
-          query: this.searchQueryParams,
-        })
-        this.$router.push(newPath)
-        this.getMediaItems(this.query, this.mediaType)
-      },
-    },
     /**
      * Updates the search type only if the route's path changes.
      * @param newRoute

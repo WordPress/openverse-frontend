@@ -227,30 +227,16 @@ describe('Search Store', () => {
         dispatch: jest.fn(),
         rootState: {
           user: { usageSessionId: 'foo' },
-          search: { query: { q: 'cat' } },
+          search: { query: { q: 'cat', mediaType: IMAGE } },
         },
         rootGetters: { search: { searchQueryParams: () => {} } },
         state: state,
       }
     })
 
-    it('FETCH_MEDIA throws an error on unknown media type', async () => {
-      const action = createActions(services)[FETCH_MEDIA]
-      const params = {
-        mediaType: 'unknown',
-        page: 1,
-      }
-      await expect(action(context, params)).rejects.toThrow(
-        'Cannot fetch unknown media type "unknown"'
-      )
-    })
-
     it('FETCH_MEDIA on success', async () => {
-      const params = {
-        q: 'foo',
-        page: 1,
-        mediaType: IMAGE,
-      }
+      context.rootState.search.query.q = 'foo'
+      const params = { page: 1 }
       const action = createActions(services)[FETCH_MEDIA]
       await action(context, params)
       expect(context.commit).toHaveBeenCalledWith(FETCH_START_MEDIA, {
@@ -272,14 +258,16 @@ describe('Search Store', () => {
     })
 
     it('FETCH_MEDIA dispatches SEND_SEARCH_QUERY_EVENT', async () => {
-      const params = { q: 'foo', shouldPersistMedia: false, mediaType: IMAGE }
+      const queryQ = 'foo'
+      context.rootState.search.query.q = queryQ
+      const params = { shouldPersistMedia: false }
       const action = createActions(services)[FETCH_MEDIA]
       await action(context, params)
 
       expect(context.dispatch).toHaveBeenCalledWith(
         `${USAGE_DATA}/${SEND_SEARCH_QUERY_EVENT}`,
         {
-          query: params.q,
+          query: queryQ,
           sessionId: context.rootState.user.usageSessionId,
         },
         { root: true }
@@ -287,11 +275,10 @@ describe('Search Store', () => {
     })
 
     it('does not dispatch SEND_SEARCH_QUERY_EVENT if page param is available', async () => {
+      context.rootState.search.query.q = 'foo'
       const params = {
-        q: 'foo',
         page: 1,
         shouldPersistMedia: false,
-        mediaType: IMAGE,
       }
       const action = createActions(services)[FETCH_MEDIA]
       await action(context, params)
@@ -299,7 +286,7 @@ describe('Search Store', () => {
       expect(context.dispatch).not.toHaveBeenCalledWith(
         `${USAGE_DATA}/${SEND_SEARCH_QUERY_EVENT}`,
         {
-          query: params.q,
+          query: context.rootState.search.query.q,
           sessionId: context.rootState.user.usageSessionId,
         }
       )
@@ -335,7 +322,6 @@ describe('Search Store', () => {
         q: 'foo',
         page: undefined,
         shouldPersistMedia: false,
-        mediaType,
       }
       const action = createActions(services)[FETCH_MEDIA]
       await action(context, params)

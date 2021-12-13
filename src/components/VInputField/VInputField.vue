@@ -12,10 +12,11 @@
     <label class="sr-only" :for="fieldId">{{ labelText }}</label>
     <input
       :id="fieldId"
-      v-model="text"
       v-bind="$attrs"
       :type="type"
       class="flex-grow leading-none font-semibold bg-tx placeholder-dark-charcoal-70 ms-4 h-full focus:outline-none"
+      :value="modelValue"
+      @input="updateModelValue"
       v-on="$listeners"
     />
     <div
@@ -28,23 +29,17 @@
 </template>
 
 <script>
-import { computed } from '@nuxtjs/composition-api'
-
 /**
  * Provides a control to enter text as input.
  */
 export default {
-  name: 'InputField',
+  name: 'VInputField',
   inheritAttrs: false,
-  model: {
-    prop: 'value',
-    event: 'input',
-  },
   props: {
     /**
      * the textual content of the input field
      */
-    value: {
+    modelValue: {
       type: String,
       default: '',
     },
@@ -73,22 +68,20 @@ export default {
       validator: (val) => val.every((item) => ['start', 'end'].includes(item)),
     },
   },
+  // using non-native event name to ensure the two are not mixed
+  emits: ['update:modelValue'],
   setup(props, { emit, attrs }) {
     const type = attrs['type'] ?? 'text'
-
-    const text = computed({
-      get() {
-        return props.value
-      },
-      set(value) {
-        emit('input', value)
-      },
-    })
+    console.log('setting type to ', type, attrs)
+    const updateModelValue = (event) => {
+      emit('update:modelValue', event.target.value)
+    }
 
     return {
+      emit,
       type,
 
-      text,
+      updateModelValue,
     }
   },
 }
