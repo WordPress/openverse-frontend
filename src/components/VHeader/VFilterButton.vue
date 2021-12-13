@@ -99,7 +99,7 @@ const VFilterButton = defineComponent({
         if (isAnyFilterApplied.value) {
           variant = 'gray'
         } else {
-          variant = props.isHeaderScrolled ? 'bordered' : 'textOnly'
+          variant = props.isHeaderScrolled ? 'textOnly' : 'bordered'
         }
       }
       return buttonVariants[variant]
