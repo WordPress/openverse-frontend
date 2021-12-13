@@ -166,7 +166,7 @@ const VButton = defineComponent({
           typeRef.value = undefined
           supportsDisabledAttributeRef.value = false
 
-          // No need to decalare `href` as an explicit prop as Vue preserves
+          // No need to declare `href` as an explicit prop as Vue preserves
           // the `attrs` object reference between renders and updates the properties
           // meaning we'll always have the latest values for the properties on the
           // attrs object

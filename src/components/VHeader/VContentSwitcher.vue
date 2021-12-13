@@ -1,17 +1,19 @@
 <template>
-  <div class="flex flex-row items-center">
+  <div class="flex flex-row items-center flex-grow justify-between">
     <VPopover class="mx-4">
       <template #trigger>
-        <VIconButton
+        <VButton
+          variant="action-menu-secondary"
           :icon-props="{ iconPath: icons.ellipsis }"
           :aria-label="$t('header.aria.menu')"
-      /></template>
+          ><VIcon :icon-path="icons.ellipsis" /></VButton
+      ></template>
       <template #default>
         <VItemGroup direction="vertical" :bordered="false" type="menu">
           <VItem
             v-for="(page, idx) in state.pages"
             :key="`${idx}-${page.name}`"
-            :selected="page.active"
+            :selected="page.id === currentPage"
             :is-first="idx === 0"
             size="medium"
             :link="page.link"
@@ -27,14 +29,16 @@
         </VItemGroup>
       </template>
     </VPopover>
-
-    <VPopover class="mx-4">
+    <VPopover v-if="isSearch" class="mx-4">
       <template #trigger>
-        <button class="flex flex-row">
+        <VButton
+          class="flex flex-row"
+          :variant="isHeaderScrolled ? 'action-menu-secondary' : 'action-menu'"
+        >
           <VIcon :icon-path="icons[activeItem.icon]" class="me-2" />
           {{ $t(`search-type.${activeItem.id}`) }}
           <VIcon class="ms-2" :icon-path="icons.caretDown" />
-        </button>
+        </VButton>
       </template>
       <template #default>
         <VItemGroup
@@ -65,17 +69,11 @@
   </div>
 </template>
 <script>
-import {
-  defineComponent,
-  reactive,
-  useContext,
-  watch,
-} from '@nuxtjs/composition-api'
+import { defineComponent, reactive, useContext } from '@nuxtjs/composition-api'
 import { useMediaQuery } from '~/composables/use-media-query'
 import useContentType from '~/composables/use-content-type'
 
 import VIcon from '~/components/VIcon/VIcon.vue'
-import VIconButton from '~/components/VIconButton/VIconButton.vue'
 import VItem from '~/components/VItemGroup/VItem.vue'
 import VItemGroup from '~/components/VItemGroup/VItemGroup.vue'
 import VPopover from '~/components/VPopover/VPopover.vue'
@@ -92,22 +90,26 @@ const VContentSwitcher = defineComponent({
   name: 'VContentSwitcher',
   components: {
     VIcon,
-    VIconButton,
     VItem,
     VItemGroup,
     VPopover,
   },
-  setup() {
+  props: {
+    route: {},
+    isHeaderScrolled: {
+      type: Boolean,
+      default: false,
+    },
+    isSearch: {
+      type: Boolean,
+      required: true,
+    },
+  },
+  setup(props) {
     const { app } = useContext()
 
     const defaultWindow = typeof window !== 'undefined' ? window : undefined
     const isTablet = useMediaQuery('(min-width: 640px)', defaultWindow)
-    watch(
-      () => isTablet,
-      () => {
-        console.log('isTablet changed: ', isTablet.value)
-      }
-    )
     const icons = {
       caretDown,
       allContent,
@@ -122,51 +124,43 @@ const VContentSwitcher = defineComponent({
         {
           id: 'about',
           name: 'header.about-nav-item',
-          active: true,
           link: app.localePath('/about'),
         },
         {
           id: 'sources',
           name: 'header.source-nav-item',
-          active: false,
           link: app.localePath('/sources'),
         },
         {
           id: 'licenses',
           name: 'header.licenses-nav-item',
-          active: false,
           icon: 'externalLink',
           link: 'https://creativecommons.org/about/cclicenses/',
         },
         {
           id: 'search-help',
           name: 'header.search-guide-nav-item',
-          active: false,
           link: app.localePath('/search-help'),
         },
         {
-          id: 'meta',
+          id: 'meta-search',
           name: 'header.meta-search-nav-item',
-          active: false,
           link: app.localePath('/meta-search'),
         },
         {
           id: 'feedback',
           name: 'header.feedback-nav-item',
-          active: false,
           link: app.localePath('/feedback'),
         },
         {
           id: 'api',
           name: 'header.api-nav-item',
-          active: false,
           icon: 'externalLink',
           link: 'https://api.openverse.engineering/v1/',
         },
         {
           id: 'extension',
           name: 'header.extension-nav-item',
-          active: false,
           link: app.localePath('/extension'),
         },
       ],
@@ -184,22 +178,17 @@ const VContentSwitcher = defineComponent({
           }
     }
 
-    const onClick = (event) => {
-      console.log(event)
-      alert('clicked!')
-    }
-
     const { setActiveContentType, activeItem, contentTypes } = useContentType()
 
     return {
       activeItem,
       isTablet,
       state,
-      onClick,
       getLinkProps,
       setActiveContentType,
       contentTypes,
       icons,
+      currentPage: props.route.name,
     }
   },
 })
