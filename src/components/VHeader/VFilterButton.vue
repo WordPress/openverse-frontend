@@ -130,11 +130,12 @@ const VFilterButton = defineComponent({
      * text label initially, running updateButton adds a visual label if the
      * screen size is larger than mobile when it is mounted.
      */
-    onMounted(() => updateButton())
-
-    watchEffect(() => {
-      updateButton()
-    })
+    watchEffect(
+      () => {
+        updateButton()
+      },
+      { immediate: true }
+    )
 
     const toggleFilters = () => {
       setFilterSidebarVisibility(!pressed.value)
