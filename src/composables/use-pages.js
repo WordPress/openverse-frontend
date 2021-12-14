@@ -1,7 +1,10 @@
 import { computed, useContext, useRoute } from '@nuxtjs/composition-api'
 
+/** @returns {import('./types').UsePages} */
 export default function usePages() {
   const { app } = useContext()
+
+  /** @type PageObject[] */
   const pages = [
     {
       id: 'about',

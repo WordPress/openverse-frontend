@@ -17,11 +17,11 @@
 import VIcon from '~/components/VIcon/VIcon.vue'
 import VItem from '~/components/VItemGroup/VItem.vue'
 import VItemGroup from '~/components/VItemGroup/VItemGroup.vue'
-import allContent from 'assets/icons/all-content.svg'
-import audioContent from 'assets/icons/audio-content.svg'
-import imageContent from 'assets/icons/image-content.svg'
-import check from 'assets/icons/checkmark.svg'
-import externalLink from 'assets/icons/external-link.svg'
+import allContent from '~/assets/icons/all-content.svg'
+import audioContent from '~/assets/icons/audio-content.svg'
+import imageContent from '~/assets/icons/image-content.svg'
+import check from '~/assets/icons/checkmark.svg'
+import externalLink from '~/assets/icons/external-link.svg'
 import usePages from '~/composables/use-pages'
 const externalLinkProps = { target: '_blank', rel: 'noopener' }
 
