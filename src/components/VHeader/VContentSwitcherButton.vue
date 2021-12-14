@@ -2,6 +2,8 @@
   <VButton
     class="flex flex-row"
     :variant="isHeaderScrolled ? 'action-menu-secondary' : 'action-menu'"
+    :pressed="pressed"
+    @click="$emit('click')"
   >
     <VIcon :icon-path="icons[activeItem.icon]" class="me-2" />
     {{ $t(`search-type.${activeItem.id}`) }}
@@ -19,6 +21,10 @@ export default {
     activeItem: {},
     icons: {},
     isHeaderScrolled: {},
+    pressed: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup() {
     return {

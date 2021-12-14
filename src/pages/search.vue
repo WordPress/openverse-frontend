@@ -1,5 +1,6 @@
 <template>
   <div class="browse-page">
+    <VMenuOverlay v-show="showOverlay" />
     <div class="search columns">
       <Component
         :is="searchFilter.as"
@@ -43,6 +44,7 @@
 </template>
 
 <script>
+import debounce from 'lodash.debounce'
 import {
   FETCH_MEDIA,
   UPDATE_QUERY,
@@ -64,6 +66,7 @@ import VScrollButton from '~/components/VScrollButton.vue'
 import VSearchGrid from '~/components/VSearchGrid.vue'
 import VSearchGridFilter from '~/components/VFilters/VSearchGridFilter.vue'
 import VFilterDisplay from '~/components/VFilters/VFilterDisplay.vue'
+import VMenuOverlay from '~/components/VHeader/VMenuOverlay.vue'
 
 const BrowsePage = {
   name: 'browse-page',
@@ -71,6 +74,7 @@ const BrowsePage = {
   components: {
     AppModal,
     VFilterDisplay,
+    VMenuOverlay,
     VSearchGridFilter,
     VScrollButton,
     VSearchGrid,
@@ -79,12 +83,14 @@ const BrowsePage = {
     const isMdScreen = isMinScreen('md')
     const { isFilterSidebarVisible, setFilterSidebarVisibility } =
       useFilterSidebarVisibility({ mediaQuery: isMdScreen })
+    const { showOverlay } = useOverlay()
 
     return {
       isMdScreen,
       isFilterSidebarVisible,
 
       setFilterSidebarVisibility,
+      showOverlay,
     }
   },
   scrollToTop: false,

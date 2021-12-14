@@ -1,60 +1,41 @@
 <template>
   <div class="flex flex-row items-center flex-grow justify-between">
-    <VPopover class="mx-4">
-      <template #trigger>
-        <VPageMenuButton :icons="icons" />
-      </template>
-      <template #default>
-        <VPageMenuPopover
-          :current-page="currentPage"
-          :icons="icons"
-          :pages="state.pages"
-        />
-      </template>
-    </VPopover>
-    <VPopover v-if="isSearch" class="mx-4">
-      <template #trigger>
-        <VContentSwitcherButton
-          :active-item="activeContentType"
-          :icons="icons"
-          :is-header-scrolled="isHeaderScrolled"
-        />
-      </template>
-      <template #default>
-        <VContentTypePopover
-          :active-item="activeContentType"
-          :content-types="contentTypes"
-          :icons="icons"
-          @set-active="setActiveContentType"
-        />
-      </template>
-    </VPopover>
+    <VDesktopContentSwitcher
+      v-if="isMdScreen"
+      :pages="state.pages"
+      :icons="icons"
+      :is-header-scrolled="isHeaderScrolled"
+      :is-search="isSearch"
+      :route="route"
+    />
+    <VMobileContentSwitcher
+      v-else
+      :pages="state.pages"
+      :icons="icons"
+      :is-search="isSearch"
+      :route="route"
+      :is-overlay-open="isOverlayOpen"
+      @open="openOverlay"
+    />
   </div>
 </template>
 <script>
 import { defineComponent, reactive, useContext } from '@nuxtjs/composition-api'
 import useContentType from '~/composables/use-content-type'
 
-import VPopover from '~/components/VPopover/VPopover.vue'
-
 import audioContent from '~/assets/icons/audio-content.svg'
 import imageContent from '~/assets/icons/image-content.svg'
 import allContent from '~/assets/icons/all-content.svg'
 import check from '~/assets/icons/checkmark.svg'
 import externalLink from '~/assets/icons/external-link.svg'
-import VPageMenuButton from '~/components/VHeader/VPageMenuButton'
-import VContentSwitcherButton from '~/components/VHeader/VContentSwitcherButton'
-import VPageMenuPopover from '~/components/VHeader/VPageMenuPopover'
-import VContentTypePopover from '~/components/VHeader/VContentTypePopover'
+import VDesktopContentSwitcher from '~/components/VHeader/VDesktopContentSwitcher'
+import VMobileContentSwitcher from '~/components/VHeader/VMobileContentSwitcher'
 
 const VContentSwitcher = defineComponent({
   name: 'VContentSwitcher',
   components: {
-    VContentTypePopover,
-    VPageMenuPopover,
-    VContentSwitcherButton,
-    VPageMenuButton,
-    VPopover,
+    VDesktopContentSwitcher,
+    VMobileContentSwitcher,
   },
   props: {
     route: {
@@ -73,8 +54,12 @@ const VContentSwitcher = defineComponent({
       type: Boolean,
       required: true,
     },
+    isOverlayOpen: {
+      type: Boolean,
+      required: true,
+    },
   },
-  setup(props) {
+  setup(props, { emit }) {
     const { app } = useContext()
 
     const icons = {
@@ -137,6 +122,9 @@ const VContentSwitcher = defineComponent({
       contentTypes,
     } = useContentType()
 
+    const openOverlay = () => {
+      emit('open-overlay')
+    }
     return {
       activeContentType,
       state,
@@ -144,6 +132,7 @@ const VContentSwitcher = defineComponent({
       contentTypes,
       icons,
       currentPage: props.route,
+      openOverlay,
     }
   },
 })

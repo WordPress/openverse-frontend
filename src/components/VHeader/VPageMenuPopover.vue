@@ -3,7 +3,7 @@
     <VItem
       v-for="(page, idx) in pages"
       :key="`${idx}-${page.name}`"
-      :selected="page.id === currentPage"
+      :selected="page.id === currentPageId"
       :is-first="idx === 0"
       size="medium"
       v-bind="getLinkProps(page)"
@@ -17,17 +17,26 @@
 import VIcon from '~/components/VIcon/VIcon.vue'
 import VItem from '~/components/VItemGroup/VItem.vue'
 import VItemGroup from '~/components/VItemGroup/VItemGroup.vue'
+import allContent from 'assets/icons/all-content.svg'
+import audioContent from 'assets/icons/audio-content.svg'
+import imageContent from 'assets/icons/image-content.svg'
+import check from 'assets/icons/checkmark.svg'
+import externalLink from 'assets/icons/external-link.svg'
+import usePages from '~/composables/use-pages'
 const externalLinkProps = { target: '_blank', rel: 'noopener' }
 
 export default {
   name: 'VPageMenuPopover',
   components: { VIcon, VItem, VItemGroup },
-  props: {
-    currentPage: {},
-    icons: {},
-    pages: {},
-  },
   setup() {
+    const icons = {
+      allContent,
+      audioContent,
+      imageContent,
+      check,
+      externalLink,
+    }
+    const { pages, currentPageId } = usePages()
     const getLinkProps = (item) => {
       return item.link.startsWith('/')
         ? { to: item.link }
@@ -35,6 +44,9 @@ export default {
     }
     return {
       getLinkProps,
+      icons,
+      pages,
+      currentPageId,
     }
   },
 }

@@ -1,4 +1,4 @@
-import { ref, useRoute, useRouter } from '@nuxtjs/composition-api'
+import { computed, ref, useRoute, useRouter } from '@nuxtjs/composition-api'
 
 const searchRoutes = ['search', 'search-image', 'search-audio', 'search-video']
 
@@ -15,8 +15,9 @@ export const useSearchRoute = () => {
     isSearch.value = searchRoutes.includes(to.name)
     next()
   })
+  const routeName = computed(() => route.value.name)
   return {
     isSearch,
-    route: route.value.name,
+    route: routeName,
   }
 }
