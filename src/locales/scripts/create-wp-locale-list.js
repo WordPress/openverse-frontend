@@ -100,7 +100,13 @@ async function getWpLocaleData() {
       locales[localeData.wpLocale] = localeData.data
     }
   })
-  return await addFetchedTranslationStatus(locales)
+  const unsortedLocales = await addFetchedTranslationStatus(locales)
+  return Object.keys(unsortedLocales)
+    .sort()
+    .reduce((accumulator, currentValue) => {
+      accumulator[currentValue] = unsortedLocales[currentValue]
+      return accumulator
+    }, {})
 }
 
 getWpLocaleData()
