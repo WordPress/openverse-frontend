@@ -1,9 +1,9 @@
 <template>
   <div class="app">
     <MigrationNotice v-show="isReferredFromCc" />
+    <TranslationStatusBanner />
     <HeaderSection />
     <main class="embedded">
-      <TranslationStatusBanner />
       <Nuxt />
     </main>
   </div>
