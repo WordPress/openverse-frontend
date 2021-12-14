@@ -113,19 +113,30 @@ const VHeader = defineComponent({
     /** @type {import('@nuxtjs/composition-api').ComputedRef<number>} */
     const resultsCount = computed(() => store.getters['media/results'].count)
 
-    const initialStatus = isFetching.value
-      ? 'Loading...'
-      : store.state.search.query.q === ''
-      ? ''
-      : mediaCount(resultsCount.value)
+    /**
+     * Status is blank on mobile screen.
+     * It shows Loading... or Number of results on bigger screens.
+     * @returns {string}
+     */
+    const setInitialStatus = () => {
+      if (!isMdScreen.value) return ''
+      if (isFetching.value) return i18n.t('header.loading')
+      return store.state.search.query.q === ''
+        ? ''
+        : mediaCount(resultsCount.value)
+    }
 
     /** @type {import('@nuxtjs/composition-api').Ref<string>} */
-    const searchStatus = ref(initialStatus)
+    const searchStatus = ref(setInitialStatus())
 
     watchEffect(() => {
-      searchStatus.value = isFetching.value
-        ? 'Loading...'
-        : mediaCount(resultsCount.value)
+      if (isMdScreen.value) {
+        searchStatus.value = isFetching.value
+          ? i18n.t('header.loading')
+          : mediaCount(resultsCount.value)
+      } else {
+        searchStatus.value = ''
+      }
     })
     const localSearchTerm = ref(store.state.search.query.q)
     const searchTerm = computed({

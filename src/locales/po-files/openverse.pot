@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2021-12-02T15:06:49+00:00\n"
+"POT-Creation-Date: 2021-12-14T03:13:16+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -18,7 +18,7 @@ msgctxt "interpunct"
 msgid "•"
 msgstr ""
 
-#: src/components/VModal/VModalContent.vue:19
+#: src/components/VHeader/VHeader.vue:21
 msgctxt "modal.close"
 msgid "Close"
 msgstr ""
@@ -134,7 +134,7 @@ msgctxt "audio-categories.podcast"
 msgid "Podcast"
 msgstr ""
 
-#: src/components/Header/SearchBar/SearchButton.vue:5
+#: src/components/VHeader/VSearchBar/VSearchButton.vue:7
 msgctxt "search.search"
 msgid "Search"
 msgstr ""
@@ -1142,7 +1142,7 @@ msgid "An error occurred"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/photos/_id.vue:54
+#: src/pages/image/_id.vue:54
 msgctxt "error.image-not-found"
 msgid "Couldn't find image with id ###id###"
 msgstr ""
@@ -1997,7 +1997,7 @@ msgctxt "header.extension-nav-item"
 msgid "Web extension"
 msgstr ""
 
-#: src/components/NavSection.vue:172
+#: src/components/NavSection.vue:173
 msgctxt "header.placeholder"
 msgid "Search all content"
 msgstr ""
@@ -2020,6 +2020,11 @@ msgstr ""
 #: src/components/NavSection.vue:128
 msgctxt "header.api-nav-item"
 msgid "API"
+msgstr ""
+
+#: src/components/VHeader/VHeader.vue:123
+msgctxt "header.loading"
+msgid "Loading..."
 msgstr ""
 
 msgctxt "header.notification.text"

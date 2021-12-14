@@ -32,14 +32,17 @@ import { ALL_MEDIA, IMAGE, VIDEO } from '~/constants/media'
 import { mapActions, mapGetters, mapMutations, mapState } from 'vuex'
 import { MEDIA, SEARCH } from '~/constants/store-modules'
 import debounce from 'lodash.debounce'
-import SearchGridFilter from '~/components/Filters/SearchGridFilter.vue'
 import { isScreen } from '~/composables/use-media-query.js'
-import AppModal from '~/components/AppModal'
+
+import AppModal from '~/components/AppModal.vue'
+import FilterDisplay from '~/components/Filters/FilterDisplay.vue'
+import SearchGridFilter from '~/components/Filters/SearchGridFilter.vue'
 
 const BrowsePage = {
   name: 'browse-page',
   layout: 'default',
   components: {
+    FilterDisplay,
     SearchGridFilter,
   },
   setup() {

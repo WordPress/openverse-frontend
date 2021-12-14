@@ -72,7 +72,7 @@ export default {
   emits: ['update:modelValue'],
   setup(props, { emit, attrs }) {
     const type = attrs['type'] ?? 'text'
-    console.log('setting type to ', type, attrs)
+
     const updateModelValue = (event) => {
       emit('update:modelValue', event.target.value)
     }

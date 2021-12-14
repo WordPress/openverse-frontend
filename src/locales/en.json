@@ -52,7 +52,8 @@
       "text": "{example_notification_text}",
       "dismiss": "Dismiss",
       "okay": "OK"
-    }
+    },
+    "loading": "Loading..."
   },
   "footer": {
     "navigation": {
