@@ -12,7 +12,7 @@
       <div class="column search-grid-ctr">
         <SearchGridForm @onSearchFormSubmit="onSearchFormSubmit" />
         <SearchTypeTabs class="mb-4" />
-        <FilterDisplay v-show="shouldShowFilterTags" />
+        <VFilterDisplay v-show="shouldShowFilterTags" />
         <VSearchGrid
           :id="`tab-${searchType}`"
           role="tabpanel"
@@ -29,7 +29,7 @@
               :key="$route.path"
               :media-results="results"
               :fetch-state="fetchState"
-              :is-filter-visible="isFilterVisible"
+              :is-filter-visible="isFilterSidebarVisible"
               :search-term="query.q"
               :supported="supported"
               data-testid="search-results"

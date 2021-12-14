@@ -72,10 +72,10 @@ const VHeader = defineComponent({
       currentOverlay.value = null
     }
 
-    /**  @type {import('@nuxtjs/composition-api').ComputedRef<Boolean>} */
-    const isFetching = computed(
-      () => store.getters['media/fetchingState'].isFetching
-    )
+    /**  @type {import('@nuxtjs/composition-api').ComputedRef<boolean>} */
+    const isFetching = computed(() => {
+      return store.getters['media/fetchState'].isFetching
+    })
 
     return {
       closeIcon,
