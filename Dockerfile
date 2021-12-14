@@ -25,7 +25,7 @@ COPY . /usr/app
 ENV NUXT_TELEMETRY_DISABLED=1
 
 # build the application and generate a distribution package
-RUN pnpm build
+RUN pnpm run build
 
 # ==
 # development
@@ -54,7 +54,7 @@ RUN pnpm install
 EXPOSE 8443
 
 # run the application in development mode
-ENTRYPOINT [ "pnpm", "dev" ]
+ENTRYPOINT [ "pnpm", "run", "dev" ]
 
 # ==
 # production
@@ -100,5 +100,5 @@ ENV PORT=8443
 EXPOSE 8443
 
 # run the application in static mode
-ENTRYPOINT ["pnpm", "start"]
+ENTRYPOINT ["pnpm", "run", "start"]
 
