@@ -21,7 +21,7 @@ export default function useContentType() {
     { id: 'audio', icon: 'audioContent' },
   ])
 
-  const activeItem = computed(() => {
+  const activeContentType = computed(() => {
     return contentTypes.find(
       (item) => item.id === store.state.search.searchType
     )
@@ -45,5 +45,5 @@ export default function useContentType() {
     //   ...route.value.query,
     // })
   }
-  return { setActiveContentType, activeItem, contentTypes }
+  return { setActiveContentType, activeContentType, contentTypes }
 }

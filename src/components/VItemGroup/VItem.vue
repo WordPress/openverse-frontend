@@ -13,6 +13,7 @@
   >
     <VButton
       data-item-group-item
+      :as="as"
       class="flex justify-between focus-visible:ring-pink rounded min-w-full"
       :class="[$style.button, $style[`${contextProps.direction}-button`]]"
       variant="grouped"
@@ -78,11 +79,28 @@ export default defineComponent({
       required: true,
     },
   },
-  setup(props) {
+  setup(props, { attrs }) {
     const focusContext = inject(VItemGroupFocusContextKey)
     const isFocused = ref(false)
     const isInPopover = inject(VPopoverContentContextKey, false)
     const contextProps = inject(VItemGroupContextKey)
+
+    /**
+     * If a link is passed in the attrs, the component is set
+     * to an anchor link or a NuxtLink.
+     * Otherwise, it's a button by default.
+     * @param {Object} attrs
+     * @returns {'a'|'NuxtLink'|'button'}
+     */
+    const component = (attrs) => {
+      if ('href' in attrs) {
+        return 'a'
+      } else if ('to' in attrs) {
+        return 'NuxtLink'
+      } else {
+        return 'button'
+      }
+    }
 
     if (isInPopover && contextProps.bordered) {
       warn('Bordered popover items are not supported')
@@ -114,6 +132,7 @@ export default defineComponent({
     })
 
     return {
+      as: component(attrs),
       check,
       contextProps,
       isInPopover,

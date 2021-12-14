@@ -18,7 +18,13 @@
       <span class="text-sr">{{ $t('modal.close') }}</span>
       <VIcon :icon-path="closeIcon" />
     </VButton>
-    <VContentSwitcher class="flex-grow" />
+    <VContentSwitcher
+      class="flex-grow self-center"
+      :route="route"
+      :is-header-scrolled="isHeaderScrolled"
+      :is-md-screen="isMdScreen"
+      :is-search="isSearch"
+    />
     <VFilterButton
       v-if="isSearch"
       :is-header-scrolled="isHeaderScrolled"
@@ -59,7 +65,7 @@ const VHeader = defineComponent({
   },
   setup() {
     const { store } = useContext()
-    const { isSearch } = useSearchRoute()
+    const { isSearch, route } = useSearchRoute()
     const { isHeaderScrolled } = useWindowScroll()
     const isMdScreen = isMinScreen('md')
     const { isFilterSidebarVisible, setFilterSidebarVisibility } =
@@ -110,6 +116,7 @@ const VHeader = defineComponent({
       isHeaderScrolled,
       isSearch,
       isFilterSidebarVisible,
+      route,
 
       toggleFilterVisibility,
       setCurrentOverlay,
