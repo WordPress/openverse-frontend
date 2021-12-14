@@ -22,7 +22,6 @@
 import {
   computed,
   defineComponent,
-  onMounted,
   reactive,
   useContext,
   watchEffect,
@@ -53,7 +52,7 @@ const VFilterButton = defineComponent({
       default: false,
     },
   },
-  setup(props) {
+  setup(props, { emit }) {
     const { i18n, store } = useContext()
     const isMdScreen = isScreen('md')
 
@@ -138,6 +137,9 @@ const VFilterButton = defineComponent({
     )
 
     const toggleFilters = () => {
+      if (!pressed.value) {
+        emit('overlay-open')
+      }
       setFilterSidebarVisibility(!pressed.value)
     }
     /**
