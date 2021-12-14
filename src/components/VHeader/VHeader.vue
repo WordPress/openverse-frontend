@@ -7,11 +7,15 @@
       <VLogoLoader :status="isFetching ? 'loading' : 'idle'" />
     </NuxtLink>
     <template v-if="!currentOverlay">
-      <VFilterButton :is-header-scrolled="isHeaderScrolled" />
+      <VFilterButton
+        :is-header-scrolled="isHeaderScrolled"
+        @overlay-open="setCurrentOverlay('filters')"
+      />
     </template>
+
     <VButton
       v-if="!!currentOverlay"
-      variant="action-menu"
+      variant="action-menu-secondary"
       class="self-center"
       @click="closeOverlay"
     >
@@ -75,11 +79,13 @@ const VHeader = defineComponent({
 
     return {
       closeIcon,
-      closeOverlay,
       currentOverlay,
       isFetching,
       isHeaderScrolled,
       isSearch,
+
+      setCurrentOverlay,
+      closeOverlay,
     }
   },
 })
