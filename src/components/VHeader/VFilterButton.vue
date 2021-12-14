@@ -12,7 +12,7 @@
       :icon-path="filterIcon"
       :class="{ 'me-2': icon.needsPadding }"
     />
-    <span class="filter-label" :class="button.a11yProps">{{
+    <span class="filter-label" :class="{ 'sr-only': isLabelSrOnly }">{{
       button.label
     }}</span>
   </VButton>
@@ -23,8 +23,9 @@ import {
   computed,
   defineComponent,
   reactive,
+  toRefs,
   useContext,
-  watchEffect,
+  watch,
 } from '@nuxtjs/composition-api'
 import { isScreen } from '~/composables/use-media-query'
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
@@ -55,6 +56,7 @@ const VFilterButton = defineComponent({
   setup(props, { emit }) {
     const { i18n, store } = useContext()
     const isMdScreen = isScreen('md')
+    const { isHeaderScrolled } = toRefs(props)
 
     const {
       isFilterSidebarVisible: pressed,
@@ -73,7 +75,7 @@ const VFilterButton = defineComponent({
     // the cognitive load of remembering the variant names when debugging the
     // button.
     const buttonVariants = {
-      pressed: 'action-menu-pressed',
+      pressed: 'action-menu',
       gray: 'action-menu-muted',
       bordered: 'action-menu',
       textOnly: 'action-menu-secondary',
@@ -87,34 +89,33 @@ const VFilterButton = defineComponent({
     const button = reactive({
       variant: 'action-menu',
       label: i18n.t('header.filter-button.simple'),
-      a11yProps: 'sr-only',
+      isSrOnly: true,
     })
 
     const computeButtonVariant = () => {
       let variant
-      if (pressed.value) {
-        variant = 'pressed'
+      if (isAnyFilterApplied.value) {
+        variant = 'gray'
+      } else if (isHeaderScrolled.value) {
+        variant = 'textOnly'
       } else {
-        if (isAnyFilterApplied.value) {
-          variant = 'gray'
-        } else {
-          variant = props.isHeaderScrolled ? 'textOnly' : 'bordered'
-        }
+        // 'Pressed' button also uses 'bordered' variant with pressed=true
+        variant = 'bordered'
       }
       return buttonVariants[variant]
     }
     const computeButtonLabel = () => {
       if (isAnyFilterApplied.value) {
         button.label =
-          !isMdScreen.value && props.isHeaderScrolled
+          !isMdScreen.value && isHeaderScrolled.value
             ? appliedFilterTags.value.toLocaleString('en')
             : labelWithCount(appliedFilterTags.value)
-        button.a11yProps = ''
+        button.isSrOnly = false
         icon.show = false
         icon.needsPadding = false
       } else {
         button.label = i18n.t('header.filter-button.simple')
-        button.a11yProps = isMdScreen.value ? '' : 'sr-only'
+        button.isSrOnly = !isMdScreen.value
         icon.show = true
         icon.needsPadding = !!isMdScreen.value
       }
@@ -129,7 +130,8 @@ const VFilterButton = defineComponent({
      * text label initially, running updateButton adds a visual label if the
      * screen size is larger than mobile when it is mounted.
      */
-    watchEffect(
+    watch(
+      [pressed, isAnyFilterApplied, isHeaderScrolled, isMdScreen],
       () => {
         updateButton()
       },
@@ -159,6 +161,8 @@ const VFilterButton = defineComponent({
       pressed,
       icon,
       button,
+      // If this data is nested in a reactive object, it does not re-render after SSR
+      isLabelSrOnly: button.isSrOnly,
 
       toggleFilters,
     }
