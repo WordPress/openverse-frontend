@@ -9,7 +9,8 @@
     <template v-if="!currentOverlay">
       <VFilterButton
         :is-header-scrolled="isHeaderScrolled"
-        @overlay-open="setCurrentOverlay('filters')"
+        :pressed="isFilterSidebarVisible"
+        @toggle="toggleFilterVisibility"
       />
     </template>
 
@@ -31,6 +32,7 @@ import {
   defineComponent,
   ref,
   useContext,
+  watch,
 } from '@nuxtjs/composition-api'
 
 import { isScreen } from '~/composables/use-media-query'
@@ -42,6 +44,7 @@ import closeIcon from '~/assets/icons/close.svg'
 import VFilterButton from '~/components/VHeader/VFilterButton.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'
 import VLogoLoader from '~/components/VLogoLoader/VLogoLoader.vue'
+import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
 
 const VHeader = defineComponent({
   name: 'VHeader',
@@ -55,14 +58,30 @@ const VHeader = defineComponent({
     const { isSearch } = useSearchRoute()
     const { isHeaderScrolled } = useWindowScroll()
     const isMdScreen = isScreen('md')
+    const {
+      isFilterSidebarVisible,
+      setFilterSidebarVisibility,
+    } = useFilterSidebarVisibility({ mediaQuery: isMdScreen })
 
+    watch(
+      () => isFilterSidebarVisible.value,
+      (isVisible) => {
+        if (isVisible) {
+          setCurrentOverlay('filters')
+        } else {
+          closeOverlay()
+        }
+      }
+    )
+    const toggleFilterVisibility = () => {
+      setFilterSidebarVisibility(!isFilterSidebarVisible.value)
+    }
     /** @type {import('@nuxtjs/composition-api').Ref<null|'filters'|'content-switcher'>} */
     const currentOverlay = ref(null)
     /**
      * When an overlay is opened on mobile, this sets the current overlay name
      * @param {'filters'|'content-switcher'} overlay
      */
-    // eslint-disable-next-line no-unused-vars
     const setCurrentOverlay = (overlay) => {
       // Overlay can only be set on mobile screen
       if (isMdScreen.value) return
@@ -83,7 +102,9 @@ const VHeader = defineComponent({
       isFetching,
       isHeaderScrolled,
       isSearch,
+      isFilterSidebarVisible,
 
+      toggleFilterVisibility,
       setCurrentOverlay,
       closeOverlay,
     }

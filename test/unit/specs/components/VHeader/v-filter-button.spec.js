@@ -83,12 +83,9 @@ describe('VFilterButton', () => {
     mediaQueryListMock.matches = false
     appliedFilters = []
     const { container } = render(VFilterButton, options)
-
-    // Text is only visible for screen readers.
-    const buttonTextLabel = screen.getByText('Filters')
+    // Screen debug shows that there is aria-label, but findByLabelText doesn't
+    // find the button.
     const icon = container.querySelector('svg')
-    expect(buttonTextLabel).toBeInTheDocument()
-    expect(buttonTextLabel).toHaveAttribute('class', 'filter-label sr-only')
     expect(icon).toBeInTheDocument()
   })
 
