@@ -22,12 +22,8 @@ import useI18nSync from '~/composables/use-i18n-sync'
 export default {
   name: 'TranslationStatusBanner',
   setup() {
-    const {
-      shouldHideBanner,
-      bannerLocale,
-      translationLink,
-      dismissBanner,
-    } = useI18nSync()
+    const { shouldHideBanner, bannerLocale, translationLink, dismissBanner } =
+      useI18nSync()
 
     return {
       dismissBanner,
