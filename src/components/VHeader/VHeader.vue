@@ -10,23 +10,12 @@
       <VLogoLoader :status="isFetching ? 'loading' : 'idle'" />
     </NuxtLink>
 
-    <!-- Only show the filter button on search routes, when there's not an open mobile overlay menu -->
     <VFilterButton
-      v-if="!currentOverlay && isSearch"
+      v-if="isSearch"
       :is-header-scrolled="isHeaderScrolled"
       :pressed="isFilterSidebarVisible"
       @toggle="toggleFilterVisibility"
     />
-
-    <VButton
-      v-if="!!currentOverlay"
-      variant="action-menu-secondary"
-      class="self-center"
-      @click="closeOverlay"
-    >
-      <span class="text-sr">{{ $t('modal.close') }}</span>
-      <VIcon :icon-path="closeIcon" />
-    </VButton>
   </div>
 </template>
 
@@ -46,7 +35,6 @@ import { useWindowScroll } from '~/composables/use-window-scroll'
 import closeIcon from '~/assets/icons/close.svg'
 
 import VFilterButton from '~/components/VHeader/VFilterButton.vue'
-import VIcon from '~/components/VIcon/VIcon.vue'
 import VLogoLoader from '~/components/VLogoLoader/VLogoLoader.vue'
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
 
@@ -54,7 +42,6 @@ const VHeader = defineComponent({
   name: 'VHeader',
   components: {
     VFilterButton,
-    VIcon,
     VLogoLoader,
   },
   setup() {
@@ -65,6 +52,12 @@ const VHeader = defineComponent({
     const { isFilterSidebarVisible, setFilterSidebarVisibility } =
       useFilterSidebarVisibility({ mediaQuery: isMdScreen })
 
+    /**
+     * Set the active mobile menu view to the 'filters'
+     * if the filter sidebar has been toggled open.
+     *
+     * @todo: There may be a better way to explain this
+     */
     watch(
       () => isFilterSidebarVisible.value,
       (isVisible) => {
@@ -78,6 +71,7 @@ const VHeader = defineComponent({
     const toggleFilterVisibility = () => {
       setFilterSidebarVisibility(!isFilterSidebarVisible.value)
     }
+
     /** @type {import('@nuxtjs/composition-api').Ref<null|'filters'|'content-switcher'>} */
     const currentOverlay = ref(null)
     /**

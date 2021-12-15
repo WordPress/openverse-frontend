@@ -1,19 +1,14 @@
 <template>
   <VButton
-    v-show="showButton"
-    :variant="button.variant"
-    class="self-center"
+    :variant="variant"
+    class="self-center gap-2 align-center font-semibold"
     :pressed="pressed"
     aria-controls="filter-sidebar"
-    :aria-label="button.label"
+    :aria-label="label"
     @click="toggleFilters"
   >
-    <VIcon
-      v-show="icon.show"
-      :icon-path="filterIcon"
-      :class="{ 'me-2': icon.needsPadding }"
-    />
-    <span v-if="!button.isSrOnly" class="font-bold">{{ button.label }}</span>
+    <VIcon v-if="showIcon" :icon-path="filterIcon" />
+    <span v-if="showLabel">{{ label }}</span>
   </VButton>
 </template>
 
@@ -21,13 +16,10 @@
 import {
   computed,
   defineComponent,
-  reactive,
   toRefs,
   useContext,
-  watch,
 } from '@nuxtjs/composition-api'
 import { isScreen } from '~/composables/use-media-query'
-
 import filterIcon from '~/assets/icons/filter.svg'
 import VButton from '~/components/VButton.vue'
 import VIcon from '~/components/VIcon/VIcon'
@@ -40,10 +32,6 @@ const VFilterButton = defineComponent({
   },
   props: {
     /**
-     * Whether the page has been scrolled. If true:
-     * - button has no border.
-     * - on mobile, the button label is blank.
-
      * @default false
      */
     isHeaderScrolled: {
@@ -57,100 +45,82 @@ const VFilterButton = defineComponent({
   },
   setup(props, { emit }) {
     const { i18n, store } = useContext()
-    const isMdScreen = isScreen('md')
     const { isHeaderScrolled, pressed } = toRefs(props)
+    const isMinScreenMD = isScreen('md')
 
-    const appliedFilterTags = computed(
+    const filterCount = computed(
       () => store.getters['search/appliedFilterTags'].length
     )
-    const isAnyFilterApplied = computed(() => appliedFilterTags.value > 0)
-
-    const labelWithCount = (count) => {
-      return i18n.tc('header.filter-button.with-count', count)
-    }
-
-    const icon = reactive({
-      show: true,
-      needsPadding: false,
-    })
-
-    const button = reactive({
-      variant: 'action-menu',
-      label: i18n.t('header.filter-button.simple'),
-      isSrOnly: false,
-      a11yProps: { class: 'sr-only' },
-    })
-
-    const computeButtonVariant = () => {
-      let variant
-      if (isAnyFilterApplied.value) {
-        variant = 'action-menu-muted'
-      } else if (isHeaderScrolled.value) {
-        variant = 'action-menu-secondary'
-      } else {
-        // 'Pressed' button also uses 'action-menu' variant with pressed=true
-        variant = 'action-menu'
-      }
-      return variant
-    }
-    const computeButtonLabel = () => {
-      if (isAnyFilterApplied.value) {
-        button.label =
-          isMdScreen.value && !isHeaderScrolled.value
-            ? appliedFilterTags.value.toLocaleString('en')
-            : labelWithCount(appliedFilterTags.value)
-        button.isSrOnly = true
-        button.a11yProps = {}
-        icon.show = false
-        icon.needsPadding = false
-      } else {
-        button.label = i18n.t('header.filter-button.simple')
-        button.isSrOnly = !isMdScreen.value
-        if (button.isSrOnly) {
-          button.a11yProps = { class: 'sr-only' }
-        }
-        icon.show = true
-        icon.needsPadding = !!isMdScreen.value
-      }
-    }
-    const updateButton = () => {
-      button.variant = computeButtonVariant()
-      computeButtonLabel()
-    }
+    const filtersAreApplied = computed(() => filterCount.value > 0)
 
     /**
-     * Since the page is rendered as mobile first, i.e. with a visually-hidden
-     * text label initially, running updateButton adds a visual label if the
-     * screen size is larger than mobile when it is mounted.
+     * Determine the visual style of the button
+     * based on the viewport, the application of filters, and scrolling.
      */
-    watch(
-      [pressed, isAnyFilterApplied, isHeaderScrolled, isMdScreen],
-      () => {
-        updateButton()
-      },
-      { immediate: true }
-    )
+    const variant = computed(() => {
+      // Show the borderd state by default, unless below md
+      let value = isMinScreenMD.value ? 'action-menu' : 'action-menu-muted'
 
-    const toggleFilters = () => {
-      emit('toggle')
-    }
+      if (isHeaderScrolled.value) {
+        value = 'action-menu-secondary'
+      }
+      if (filtersAreApplied.value) {
+        value = 'action-menu-muted'
+      }
+      // Override the default VButton pressed style
+      if (pressed.value) {
+        value = 'action-menu-muted-pressed'
+      }
+      return value
+    })
+
+    const label = computed(() => {
+      // Below medium viewport logic
+      if (!isMinScreenMD.value) {
+        return isHeaderScrolled.value
+          ? filterCount.value
+          : i18n.tc('header.filter-button.with-count', filterCount.value)
+      }
+      // Above the medium viewport, show the count when filters are applied.
+      return filtersAreApplied.value
+        ? i18n.tc('header.filter-button.with-count', filterCount.value)
+        : i18n.t('header.filter-button.simple')
+    })
+
     /**
-     * The button is not shown on mobile when the menu overlay with filters,
-     * or internal pages and content switcher, is open.
-     * @type {ComputedRef<boolean>}
+     * Whether or not to show the filter icon,
+     * based on viewport and the application of filters.
      */
-    const showButton = computed(() => {
-      return isMdScreen.value || !pressed.value
+    const showIcon = computed(() => {
+      // When filters are applied, hide the icon
+      if (filtersAreApplied.value) {
+        return false
+      }
+      // Below the medium viewport, only show when there's no filters applied.
+      if (!isMinScreenMD.value) {
+        return !isHeaderScrolled.value || !filtersAreApplied.value
+      }
+      return true
+    })
+
+    // Hide the label entirely when no filters are applied on mobile.
+    const showLabel = computed(() => {
+      if (!isMinScreenMD.value && !filtersAreApplied.value) {
+        return false
+      }
+      return true
     })
 
     return {
+      filterCount,
       filterIcon,
-      showButton,
-
-      icon,
-      button,
-
-      toggleFilters,
+      label,
+      showIcon,
+      showLabel,
+      toggleFilters: () => {
+        emit('toggle')
+      },
+      variant,
     }
   },
 })
