@@ -1,7 +1,10 @@
 <template>
   <div
-    class="fixed flex px-8 align-center z-40 w-full bg-white"
-    :class="{ 'border-b border-dark-charcoal-20': isHeaderScrolled }"
+    class="sticky top-0 flex px-8 align-center z-40 w-full bg-white"
+    :class="{
+      'border-b border-dark-charcoal-20':
+        isHeaderScrolled || isFilterSidebarVisible,
+    }"
   >
     <NuxtLink to="/">
       <VLogoLoader :status="isFetching ? 'loading' : 'idle'" />
