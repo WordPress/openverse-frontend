@@ -11,10 +11,32 @@
       /></Component>
       <div class="column search-grid-ctr">
         <SearchGridForm @onSearchFormSubmit="onSearchFormSubmit" />
-        <SearchTypeTabs />
+        <SearchTypeTabs class="mb-4" />
         <VFilterDisplay v-show="shouldShowFilterTags" />
-        <NuxtChild :key="$route.path" @onLoadMoreItems="onLoadMoreItems" />
-        <ScrollButton :show-btn="showScrollButton" />
+        <VSearchGrid
+          :id="`tab-${searchType}`"
+          role="tabpanel"
+          :aria-labelledby="searchType"
+          :fetch-state="fetchState"
+          :query="query"
+          :supported="supported"
+          :search-type="searchType"
+          :results-count="resultsCount"
+          data-testid="search-grid"
+        >
+          <template #media>
+            <NuxtChild
+              :key="$route.path"
+              :media-results="results"
+              :fetch-state="fetchState"
+              :is-filter-visible="isFilterSidebarVisible"
+              :search-term="query.q"
+              :supported="supported"
+              data-testid="search-results"
+            />
+          </template>
+        </VSearchGrid>
+        <VScrollButton v-show="showScrollButton" data-testid="scroll-button" />
       </div>
     </div>
   </div>
@@ -28,7 +50,7 @@ import {
   UPDATE_SEARCH_TYPE,
 } from '~/constants/action-types'
 import { queryStringToSearchType } from '~/utils/search-query-transform'
-import { ALL_MEDIA, IMAGE, VIDEO } from '~/constants/media'
+import { ALL_MEDIA, AUDIO, IMAGE } from '~/constants/media'
 import { mapActions, mapGetters, mapState } from 'vuex'
 import { MEDIA, SEARCH } from '~/constants/store-modules'
 import debounce from 'lodash.debounce'
@@ -36,7 +58,9 @@ import debounce from 'lodash.debounce'
 import { isScreen } from '~/composables/use-media-query.js'
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
 
-import AppModal from '~/components/AppModal'
+import AppModal from '~/components/AppModal.vue'
+import VScrollButton from '~/components/VScrollButton.vue'
+import VSearchGrid from '~/components/VSearchGrid.vue'
 import VSearchGridFilter from '~/components/VFilters/VSearchGridFilter.vue'
 import VFilterDisplay from '~/components/VFilters/VFilterDisplay.vue'
 
@@ -44,8 +68,11 @@ const BrowsePage = {
   name: 'browse-page',
   layout: 'default',
   components: {
+    AppModal,
     VFilterDisplay,
     VSearchGridFilter,
+    VScrollButton,
+    VSearchGrid,
   },
   setup() {
     const isMdScreen = isScreen('md')
@@ -63,8 +90,12 @@ const BrowsePage = {
   },
   scrollToTop: false,
   async fetch() {
-    if (this.mediaType !== VIDEO && !Object.keys(this.results.items).length) {
-      await this.fetchMedia({ mediaType: this.mediaType, q: this.query.q })
+    if (
+      this.supported &&
+      !Object.keys(this.results.items).length &&
+      this.query.q.trim() !== ''
+    ) {
+      await this.fetchMedia({})
     }
   },
   data: () => ({
@@ -88,7 +119,7 @@ const BrowsePage = {
   computed: {
     ...mapState(SEARCH, ['query', 'searchType']),
     ...mapGetters(SEARCH, ['searchQueryParams', 'isAnyFilterApplied']),
-    ...mapGetters(MEDIA, ['results']),
+    ...mapGetters(MEDIA, ['results', 'fetchState']),
     mediaType() {
       // Default to IMAGE until media search/index is generalized
       return this.searchType !== ALL_MEDIA ? this.searchType : IMAGE
@@ -99,12 +130,27 @@ const BrowsePage = {
         this.isAnyFilterApplied
       )
     },
+    /**
+     * Number of search results. Returns 0 for unsupported types.
+     * @returns {number}
+     */
+    resultsCount() {
+      return this.supported ? this.results.count : 0
+    },
     searchFilter() {
       return {
         classes: {
           'column is-narrow grid-sidebar max-w-full bg-white': this.isMdScreen,
         },
         as: this.isMdScreen ? 'aside' : AppModal,
+      }
+    },
+    supported() {
+      if (this.searchType === AUDIO) {
+        // Only show audio results if non-image results are supported
+        return process.env.enableAudio
+      } else {
+        return [IMAGE, ALL_MEDIA].includes(this.searchType)
       }
     },
   },
@@ -115,11 +161,10 @@ const BrowsePage = {
       updateSearchType: UPDATE_SEARCH_TYPE,
       updateQuery: UPDATE_QUERY,
     }),
-    async getMediaItems(params, mediaType) {
-      await this.fetchMedia({ ...params, mediaType })
-    },
-    onLoadMoreItems(searchParams) {
-      this.getMediaItems(searchParams, this.mediaType)
+    async getMediaItems(params) {
+      if (this.query.q.trim() !== '') {
+        await this.fetchMedia({ ...params })
+      }
     },
     onSearchFormSubmit({ q }) {
       this.updateQuery({ q })
@@ -140,7 +185,9 @@ const BrowsePage = {
           query: this.searchQueryParams,
         })
         this.$router.push(newPath)
-        this.getMediaItems(this.query, this.mediaType)
+        if (this.supported) {
+          this.getMediaItems(this.query)
+        }
       },
     },
     /**

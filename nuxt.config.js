@@ -1,6 +1,7 @@
 import pkg from './package.json'
 import locales from './src/locales/scripts/valid-locales.json'
 import stringToBoolean from './src/utils/string-to-boolean'
+import { VIEWPORTS } from './src/constants/screens'
 
 /**
  * Default environment variables are set on this key. Defaults are fallbacks to existing env vars.
@@ -132,7 +133,7 @@ export default {
       '~/components/ImageDetails',
       '~/components/ImageGrid',
       '~/components/MediaInfo',
-      '~/components/MetaSearch',
+      '~/components/VMetaSearch',
       '~/components/MediaTag',
       '~/components/Skeleton',
       '~/components/VPopover',
@@ -233,7 +234,7 @@ export default {
         name: '@storybook/addon-essentials',
         options: {
           backgrounds: false,
-          viewport: false,
+          viewport: true,
           toolbars: true,
         },
       },
@@ -243,6 +244,9 @@ export default {
         storySort: {
           order: ['Introduction', ['Openverse UI']],
         },
+      },
+      viewport: {
+        viewports: VIEWPORTS,
       },
     },
   },

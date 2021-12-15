@@ -5,6 +5,7 @@
     class="self-center"
     :pressed="pressed"
     aria-controls="filter-sidebar"
+    :aria-label="button.label"
     @click="toggleFilters"
   >
     <VIcon
@@ -12,9 +13,7 @@
       :icon-path="filterIcon"
       :class="{ 'me-2': icon.needsPadding }"
     />
-    <span class="filter-label" :class="{ 'sr-only': isLabelSrOnly }">{{
-      button.label
-    }}</span>
+    <span v-if="!button.isSrOnly" class="filter-label">{{ button.label }}</span>
   </VButton>
 </template>
 
@@ -28,7 +27,6 @@ import {
   watch,
 } from '@nuxtjs/composition-api'
 import { isScreen } from '~/composables/use-media-query'
-import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
 
 import filterIcon from '~/assets/icons/filter.svg'
 import VButton from '~/components/VButton.vue'
@@ -52,16 +50,15 @@ const VFilterButton = defineComponent({
       type: Boolean,
       default: false,
     },
+    pressed: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup(props, { emit }) {
     const { i18n, store } = useContext()
     const isMdScreen = isScreen('md')
-    const { isHeaderScrolled } = toRefs(props)
-
-    const {
-      isFilterSidebarVisible: pressed,
-      setFilterSidebarVisibility,
-    } = useFilterSidebarVisibility({ mediaQuery: isMdScreen })
+    const { isHeaderScrolled, pressed } = toRefs(props)
 
     const appliedFilterTags = computed(
       () => store.getters['search/appliedFilterTags'].length
@@ -70,15 +67,6 @@ const VFilterButton = defineComponent({
 
     const labelWithCount = (count) => {
       return i18n.tc('header.filter-button.with-count', count)
-    }
-    // TODO(obulat): Remove buttonVariants. The aim of this object was to lower
-    // the cognitive load of remembering the variant names when debugging the
-    // button.
-    const buttonVariants = {
-      pressed: 'action-menu',
-      gray: 'action-menu-muted',
-      bordered: 'action-menu',
-      textOnly: 'action-menu-secondary',
     }
 
     const icon = reactive({
@@ -90,19 +78,20 @@ const VFilterButton = defineComponent({
       variant: 'action-menu',
       label: i18n.t('header.filter-button.simple'),
       isSrOnly: true,
+      a11yProps: { class: 'sr-only' },
     })
 
     const computeButtonVariant = () => {
       let variant
       if (isAnyFilterApplied.value) {
-        variant = 'gray'
+        variant = 'action-menu-muted'
       } else if (isHeaderScrolled.value) {
-        variant = 'textOnly'
+        variant = 'action-menu-secondary'
       } else {
-        // 'Pressed' button also uses 'bordered' variant with pressed=true
-        variant = 'bordered'
+        // 'Pressed' button also uses 'action-menu' variant with pressed=true
+        variant = 'action-menu'
       }
-      return buttonVariants[variant]
+      return variant
     }
     const computeButtonLabel = () => {
       if (isAnyFilterApplied.value) {
@@ -111,11 +100,15 @@ const VFilterButton = defineComponent({
             ? appliedFilterTags.value.toLocaleString('en')
             : labelWithCount(appliedFilterTags.value)
         button.isSrOnly = false
+        button.a11yProps = {}
         icon.show = false
         icon.needsPadding = false
       } else {
         button.label = i18n.t('header.filter-button.simple')
         button.isSrOnly = !isMdScreen.value
+        if (button.isSrOnly) {
+          button.a11yProps = { class: 'sr-only' }
+        }
         icon.show = true
         icon.needsPadding = !!isMdScreen.value
       }
@@ -139,10 +132,7 @@ const VFilterButton = defineComponent({
     )
 
     const toggleFilters = () => {
-      if (!pressed.value) {
-        emit('overlay-open')
-      }
-      setFilterSidebarVisibility(!pressed.value)
+      emit('toggle')
     }
     /**
      * The button is not shown on mobile when the menu overlay with filters,
@@ -155,14 +145,10 @@ const VFilterButton = defineComponent({
 
     return {
       filterIcon,
-
       showButton,
 
-      pressed,
       icon,
       button,
-      // If this data is nested in a reactive object, it does not re-render after SSR
-      isLabelSrOnly: button.isSrOnly,
 
       toggleFilters,
     }
