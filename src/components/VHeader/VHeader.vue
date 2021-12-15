@@ -35,6 +35,7 @@ import { useWindowScroll } from '~/composables/use-window-scroll'
 import closeIcon from '~/assets/icons/close.svg'
 
 import VFilterButton from '~/components/VHeader/VFilterButton.vue'
+
 import VLogoLoader from '~/components/VLogoLoader/VLogoLoader.vue'
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
 

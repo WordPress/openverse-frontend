@@ -5,14 +5,19 @@ import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import VueI18n from 'vue-i18n'
 import messages from '../../../../../src/locales/en.json'
+import { isScreen } from '~/composables/use-media-query'
 
-const mediaQueryListMock = {
-  matches: true,
-  addEventListener: () => {},
-  removeEventListener: () => {},
-}
-// eslint-disable-next-line no-unused-vars
-window.matchMedia = (_) => mediaQueryListMock
+/**
+ * For some reason I need to mock the implementation
+ * of this mock in each test, or it doesn't work.
+ *
+ * In each implementation I'm vaking returning a ref
+ * with `mockImplementation(() => ({value: true}))`
+ * that may be related.
+ */
+jest.mock('~/composables/use-media-query', () => ({
+  isScreen: jest.fn(),
+}))
 
 describe('VFilterButton', () => {
   let options = {}
@@ -29,7 +34,6 @@ describe('VFilterButton', () => {
     fallbackLocale: 'en',
     messages: { en: messages },
   })
-  // mock for useMediaQuery filter to return true for any screen
   beforeEach(() => {
     localVue = createLocalVue()
     localVue.use(Vuex)
@@ -60,56 +64,74 @@ describe('VFilterButton', () => {
     }
   })
 
-  it('renders a button with an icon and "Filters" label if no filters are applied', () => {
-    const { container } = render(VFilterButton, options)
+  describe('Above the medium breakpoint', () => {
+    it('always shows the label and icon', () => {
+      isScreen.mockImplementation(() => ({ value: true }))
+      const { container } = render(VFilterButton, options)
 
-    const button = screen.getByText('Filters')
-    expect(button).toBeVisible()
-    const icon = container.querySelector('svg')
-    expect(icon).toBeVisible()
+      const button = screen.getByText('Filters')
+      const icon = container.querySelector('svg')
+
+      expect(button).toBeVisible()
+      expect(icon).toBeVisible()
+    })
+    it('shows the count and text when filters are applied', () => {
+      isScreen.mockImplementation(() => ({ value: true }))
+      const filterCount = Math.floor(Math.random() * 10) + 1
+      appliedFilters = Array(filterCount).fill('')
+      render(VFilterButton, options)
+
+      const button = screen.getByText(`${filterCount} Filters`)
+
+      expect(button).toBeVisible()
+    })
+    it('does not show the icon when filters are applied', () => {
+      isScreen.mockImplementation(() => ({ value: true }))
+      appliedFilters = ['mockfilter1', 'mockfilter2']
+
+      const { container } = render(VFilterButton, options)
+      const icon = container.querySelector('svg')
+
+      expect(icon).not.toBeInTheDocument()
+    })
   })
 
-  it('renders a button with "N Filters" label if N filters are applied', () => {
-    appliedFilters = ['mockfilter1', 'mockfilter2']
-    const { container } = render(VFilterButton, options)
+  describe('below the medium breakpoint', () => {
+    it('only shows the filter icon by default', () => {
+      isScreen.mockImplementation(() => ({ value: false }))
+      appliedFilters = []
+      const { container } = render(VFilterButton, options)
 
-    const button = screen.getByText('2 Filters')
-    expect(button).toBeVisible()
-    const icon = container.querySelector('svg')
-    expect(icon).not.toBeVisible()
-  })
+      const icon = container.querySelector('svg')
+      const label = screen.queryByTestId('filterbutton-label')
 
-  it('renders correct label on mobile when no filters are applied', () => {
-    mediaQueryListMock.matches = false
-    appliedFilters = []
-    const { container } = render(VFilterButton, options)
-    // Screen debug shows that there is aria-label, but findByLabelText doesn't
-    // find the button.
-    const icon = container.querySelector('svg')
-    expect(icon).toBeInTheDocument()
-  })
+      expect(icon).toBeVisible()
+      expect(label).not.toBeInTheDocument()
+    })
+    it('only shows the count and label when filters are applied', () => {
+      isScreen.mockImplementation(() => ({ value: false }))
+      const filterCount = Math.floor(Math.random() * 10) + 1
+      appliedFilters = Array(filterCount).fill('')
+      const { container } = render(VFilterButton, options)
 
-  it('renders correct label on mobile when filters are applied', () => {
-    mediaQueryListMock.matches = false
-    appliedFilters = ['mockfilter1', 'mockfilter2']
-    const { container } = render(VFilterButton, options)
+      const icon = container.querySelector('svg')
+      const button = screen.getByText(`${filterCount} Filters`)
 
-    const button = screen.getByText(/2 Filters/i)
-    const icon = container.querySelector('svg')
-    expect(button).toBeVisible()
-    expect(icon).not.toBeVisible()
-  })
+      expect(icon).not.toBeInTheDocument()
+      expect(button).toBeVisible()
+    })
+    it('only shows the count when filters are applied and the user scrolls', () => {
+      isScreen.mockImplementation(() => ({ value: false }))
+      const filterCount = Math.floor(Math.random() * 10) + 1
+      appliedFilters = Array(filterCount).fill('')
+      props.isHeaderScrolled = true
+      const { container } = render(VFilterButton, options)
 
-  it('renders correct label on mobile when filters are applied and is scrolled', () => {
-    mediaQueryListMock.matches = false
-    appliedFilters = ['mockfilter1', 'mockfilter2']
-    props.isHeaderScrolled = true
-    const { container } = render(VFilterButton, options)
+      const icon = container.querySelector('svg')
+      const button = screen.getByText(filterCount)
 
-    const button = screen.getByText('2')
-    const icon = container.querySelector('svg')
-
-    expect(button).toBeVisible()
-    expect(icon).not.toBeVisible()
+      expect(icon).not.toBeInTheDocument()
+      expect(button).toBeVisible()
+    })
   })
 })
