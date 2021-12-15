@@ -77,7 +77,8 @@ describe('VFilterButton', () => {
     })
     it('shows the count and text when filters are applied', () => {
       isScreen.mockImplementation(() => ({ value: true }))
-      const filterCount = Math.floor(Math.random() * 10) + 1
+      // +2 to guarantee it's plural
+      const filterCount = Math.floor(Math.random() * 10) + 2
       appliedFilters = Array(filterCount).fill('')
       render(VFilterButton, options)
 
@@ -110,7 +111,8 @@ describe('VFilterButton', () => {
     })
     it('only shows the count and label when filters are applied', () => {
       isScreen.mockImplementation(() => ({ value: false }))
-      const filterCount = Math.floor(Math.random() * 10) + 1
+      // +2 to guarantee it's plural
+      const filterCount = Math.floor(Math.random() * 10) + 2
       appliedFilters = Array(filterCount).fill('')
       const { container } = render(VFilterButton, options)
 
@@ -122,7 +124,8 @@ describe('VFilterButton', () => {
     })
     it('only shows the count when filters are applied and the user scrolls', () => {
       isScreen.mockImplementation(() => ({ value: false }))
-      const filterCount = Math.floor(Math.random() * 10) + 1
+      // +2 to guarantee it's plural
+      const filterCount = Math.floor(Math.random() * 10) + 2
       appliedFilters = Array(filterCount).fill('')
       props.isHeaderScrolled = true
       const { container } = render(VFilterButton, options)
