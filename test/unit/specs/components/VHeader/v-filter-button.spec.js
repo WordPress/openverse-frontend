@@ -11,7 +11,7 @@ import { isScreen } from '~/composables/use-media-query'
  * For some reason I need to mock the implementation
  * of this mock in each test, or it doesn't work.
  *
- * In each implementation I'm vaking returning a ref
+ * In each implementation I'm faking returning a ref
  * with `mockImplementation(() => ({value: true}))`
  * that may be related.
  */
