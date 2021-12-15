@@ -54,6 +54,7 @@ specifiers:
   lodash.findindex: ^4.6.0
   lodash.isempty: ^4.4.0
   lodash.sortby: ^4.7.0
+  lodash.throttle: ^4.1.1
   nuxt: ^2.15.4
   postcss: ^8.3.6
   prettier: ^2.2.1
@@ -97,6 +98,7 @@ dependencies:
   lodash.findindex: 4.6.0
   lodash.isempty: 4.4.0
   lodash.sortby: 4.7.0
+  lodash.throttle: 4.1.1
   nuxt: 2.15.8_typescript@4.5.4
   reakit-utils: 0.15.2
   uuid: 8.3.2
@@ -12562,6 +12564,10 @@ packages:
     resolution: {integrity: sha512-stgLz+i3Aa9mZgnjr/O+v9ruKZsPsndy7qPZOchbqk2cnTU1ZaldKK+v7m54WoKIyxiuMZTKT2H81F8BeAc3ZQ==}
     dependencies:
       lodash._reinterpolate: 3.0.0
+    dev: false
+
+  /lodash.throttle/4.1.1:
+    resolution: {integrity: sha1-wj6RtxAkKscMN/HhzaknTMOb8vQ=}
     dev: false
 
   /lodash.topath/4.5.2:
