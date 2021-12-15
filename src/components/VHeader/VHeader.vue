@@ -1,6 +1,6 @@
 <template>
   <div
-    class="sticky top-0 flex px-8 align-center z-40 w-full bg-white"
+    class="sticky top-0 flex py-4 px-6 md:px-7 align-center justify-between z-40 w-full bg-white"
     :class="{
       'border-b border-dark-charcoal-20':
         isHeaderScrolled || isFilterSidebarVisible,
@@ -9,13 +9,14 @@
     <NuxtLink to="/">
       <VLogoLoader :status="isFetching ? 'loading' : 'idle'" />
     </NuxtLink>
-    <template v-if="!currentOverlay">
-      <VFilterButton
-        :is-header-scrolled="isHeaderScrolled"
-        :pressed="isFilterSidebarVisible"
-        @toggle="toggleFilterVisibility"
-      />
-    </template>
+
+    <!-- Only show the filter button on search routes, when there's not an open mobile overlay menu -->
+    <VFilterButton
+      v-if="!currentOverlay && isSearch"
+      :is-header-scrolled="isHeaderScrolled"
+      :pressed="isFilterSidebarVisible"
+      @toggle="toggleFilterVisibility"
+    />
 
     <VButton
       v-if="!!currentOverlay"
@@ -61,10 +62,8 @@ const VHeader = defineComponent({
     const { isSearch } = useSearchRoute()
     const { isHeaderScrolled } = useWindowScroll()
     const isMdScreen = isScreen('md')
-    const {
-      isFilterSidebarVisible,
-      setFilterSidebarVisibility,
-    } = useFilterSidebarVisibility({ mediaQuery: isMdScreen })
+    const { isFilterSidebarVisible, setFilterSidebarVisibility } =
+      useFilterSidebarVisibility({ mediaQuery: isMdScreen })
 
     watch(
       () => isFilterSidebarVisible.value,

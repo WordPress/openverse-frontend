@@ -76,10 +76,8 @@ const BrowsePage = {
   },
   setup() {
     const isMdScreen = isScreen('md')
-    const {
-      isFilterSidebarVisible,
-      setFilterSidebarVisibility,
-    } = useFilterSidebarVisibility({ mediaQuery: isMdScreen })
+    const { isFilterSidebarVisible, setFilterSidebarVisibility } =
+      useFilterSidebarVisibility({ mediaQuery: isMdScreen })
 
     return {
       isMdScreen,

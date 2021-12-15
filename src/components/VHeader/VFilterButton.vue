@@ -13,7 +13,7 @@
       :icon-path="filterIcon"
       :class="{ 'me-2': icon.needsPadding }"
     />
-    <span v-if="!button.isSrOnly" class="filter-label">{{ button.label }}</span>
+    <span v-if="!button.isSrOnly" class="font-bold">{{ button.label }}</span>
   </VButton>
 </template>
 
@@ -77,7 +77,7 @@ const VFilterButton = defineComponent({
     const button = reactive({
       variant: 'action-menu',
       label: i18n.t('header.filter-button.simple'),
-      isSrOnly: true,
+      isSrOnly: false,
       a11yProps: { class: 'sr-only' },
     })
 
@@ -96,10 +96,10 @@ const VFilterButton = defineComponent({
     const computeButtonLabel = () => {
       if (isAnyFilterApplied.value) {
         button.label =
-          !isMdScreen.value && isHeaderScrolled.value
+          isMdScreen.value && !isHeaderScrolled.value
             ? appliedFilterTags.value.toLocaleString('en')
             : labelWithCount(appliedFilterTags.value)
-        button.isSrOnly = false
+        button.isSrOnly = true
         button.a11yProps = {}
         icon.show = false
         icon.needsPadding = false
