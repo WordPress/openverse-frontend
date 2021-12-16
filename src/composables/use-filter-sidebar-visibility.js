@@ -15,9 +15,7 @@ export function useFilterSidebarVisibility({ mediaQuery }) {
 
   onMounted(() => {
     const localFilterState = () =>
-      local.get(process.env.filterStorageKey)
-        ? local.get(process.env.filterStorageKey) === 'true'
-        : false
+      local.get(process.env.filterStorageKey) === 'true'
     setFilterSidebarVisibility(mediaQuery && localFilterState())
   })
 
