@@ -12,6 +12,7 @@
     </NuxtLink>
 
     <VSearchBar
+      v-if="isSearch"
       v-model.trim="searchTerm"
       class="search-bar"
       @submit="handleSearch"
@@ -34,9 +35,9 @@ import {
   defineComponent,
   ref,
   useContext,
-  watchEffect,
-  watch,
   useRouter,
+  watch,
+  watchEffect,
 } from '@nuxtjs/composition-api'
 
 import { MEDIA, SEARCH } from '~/constants/store-modules'
