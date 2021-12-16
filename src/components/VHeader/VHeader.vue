@@ -64,7 +64,6 @@ import {
   ref,
   useContext,
   useRouter,
-  watch,
   watchEffect,
 } from '@nuxtjs/composition-api'
 
@@ -187,46 +186,12 @@ const VHeader = defineComponent({
       })
     }
 
-    /**
-     * Set the active mobile menu view to the 'filters'
-     * if the filter sidebar has been toggled open.
-     *
-     * @todo: There may be a better way to explain this
-     */
-    watch(
-      () => isFilterSidebarVisible.value,
-      (isVisible) => {
-        if (isVisible) {
-          setCurrentOverlay('filters')
-        } else {
-          closeOverlay()
-        }
-      }
-    )
-
     const toggleFilterVisibility = () => {
       setFilterSidebarVisibility(!isFilterSidebarVisible.value)
     }
 
-    /** @type {import('@nuxtjs/composition-api').Ref<null|'filters'|'content-switcher'>} */
-    const currentOverlay = ref(null)
-    /**
-     * When an overlay is opened on mobile, this sets the current overlay name
-     * @param {'filters'|'content-switcher'} overlay
-     */
-    const setCurrentOverlay = (overlay) => {
-      // Overlay can only be set on mobile screen
-      if (isMinScreenMD.value) return
-      currentOverlay.value = overlay
-    }
-    const closeOverlay = () => {
-      currentOverlay.value = null
-    }
-
     return {
       closeIcon,
-      closeOverlay,
-      currentOverlay,
       handleSearch,
       isFetching,
       isFilterSidebarVisible,
@@ -235,7 +200,6 @@ const VHeader = defineComponent({
       isSearch,
       searchStatus,
       searchTerm,
-      setCurrentOverlay,
       toggleFilterVisibility,
     }
   },
