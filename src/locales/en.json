@@ -55,7 +55,11 @@
     "licenses-nav-item": "The Licenses",
     "about-tab": "About",
     "resources-tab": "Resources",
-    "api-nav-item": "API"
+    "api-nav-item": "API",
+    "filter-button": {
+      "simple": "Filters",
+      "with-count": "{count} Filter | {count} Filters"
+    }
   },
   "footer": {
     "navigation": {

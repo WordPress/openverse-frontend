@@ -3,7 +3,7 @@
     <MigrationNotice v-show="isReferredFromCc" />
     <TranslationStatusBanner />
     <VHeader />
-    <main class="embedded pt-20">
+    <main class="embedded">
       <Nuxt />
     </main>
   </div>
