@@ -259,16 +259,14 @@ describe('Search Store', () => {
     })
 
     it('FETCH_MEDIA dispatches SEND_SEARCH_QUERY_EVENT', async () => {
-      const queryQ = 'foo'
-      context.rootState.search.query.q = queryQ
-      const params = { shouldPersistMedia: false }
+      const params = { q: 'foo', shouldPersistMedia: false, mediaType: IMAGE }
       const action = createActions(services)[FETCH_MEDIA]
       await action(context, params)
 
       expect(context.dispatch).toHaveBeenCalledWith(
         `${USAGE_DATA}/${SEND_SEARCH_QUERY_EVENT}`,
         {
-          query: queryQ,
+          query: params.q,
           sessionId: context.rootState.user.usageSessionId,
         },
         { root: true }
@@ -276,8 +274,8 @@ describe('Search Store', () => {
     })
 
     it('does not dispatch SEND_SEARCH_QUERY_EVENT if page param is available', async () => {
-      context.rootState.search.query.q = 'foo'
       const params = {
+        q: 'foo',
         page: 1,
         shouldPersistMedia: false,
       }
@@ -287,7 +285,7 @@ describe('Search Store', () => {
       expect(context.dispatch).not.toHaveBeenCalledWith(
         `${USAGE_DATA}/${SEND_SEARCH_QUERY_EVENT}`,
         {
-          query: context.rootState.search.query.q,
+          query: params.q,
           sessionId: context.rootState.user.usageSessionId,
         }
       )
@@ -323,6 +321,7 @@ describe('Search Store', () => {
         q: 'foo',
         page: undefined,
         shouldPersistMedia: false,
+        mediaType,
       }
       const action = createActions(services)[FETCH_MEDIA]
       await action(context, params)
