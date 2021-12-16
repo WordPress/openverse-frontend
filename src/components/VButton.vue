@@ -253,8 +253,13 @@ a.button {
 .action-menu {
   @apply bg-white text-black border border-dark-charcoal-20 hover:border-dark-charcoal-20 focus-visible:ring-pink;
 }
+
 .action-menu-secondary {
   @apply bg-white text-black border border-tx hover:border-dark-charcoal-20 focus-visible:ring-pink;
+}
+
+.action-menu-secondary-pressed {
+  @apply border-tx bg-dark-charcoal text-white;
 }
 
 .action-menu-pressed {
@@ -266,7 +271,7 @@ a.button {
 }
 
 .action-menu-muted-pressed {
-  @apply border-tx bg-dark-charcoal text-white;
+  @apply border-tx bg-dark-charcoal text-white focus-visible:ring-pink;
 }
 
 .grouped {

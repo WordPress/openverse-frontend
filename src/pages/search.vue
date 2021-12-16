@@ -55,7 +55,7 @@ import { mapActions, mapGetters, mapState } from 'vuex'
 import { MEDIA, SEARCH } from '~/constants/store-modules'
 import debounce from 'lodash.debounce'
 
-import { isScreen } from '~/composables/use-media-query.js'
+import { isMinScreen } from '~/composables/use-media-query.js'
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
 
 import AppModal from '~/components/AppModal.vue'
@@ -75,7 +75,7 @@ const BrowsePage = {
     VSearchGrid,
   },
   setup() {
-    const isMdScreen = isScreen('md')
+    const isMdScreen = isMinScreen('md')
     const { isFilterSidebarVisible, setFilterSidebarVisibility } =
       useFilterSidebarVisibility({ mediaQuery: isMdScreen })
 

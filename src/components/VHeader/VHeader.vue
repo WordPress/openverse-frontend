@@ -28,7 +28,7 @@ import {
   watch,
 } from '@nuxtjs/composition-api'
 
-import { isScreen } from '~/composables/use-media-query'
+import { isMinScreen } from '~/composables/use-media-query'
 import { useSearchRoute } from '~/composables/use-search-route'
 import { useWindowScroll } from '~/composables/use-window-scroll'
 
@@ -49,7 +49,7 @@ const VHeader = defineComponent({
     const { store } = useContext()
     const { isSearch } = useSearchRoute()
     const { isHeaderScrolled } = useWindowScroll()
-    const isMdScreen = isScreen('md')
+    const isMdScreen = isMinScreen('md')
     const { isFilterSidebarVisible, setFilterSidebarVisibility } =
       useFilterSidebarVisibility({ mediaQuery: isMdScreen })
 

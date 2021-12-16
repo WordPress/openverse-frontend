@@ -15,7 +15,7 @@ export function useMediaQuery(query, options = {}) {
   if (!window) return ref(false)
 
   const mediaQuery = window.matchMedia(query)
-  /** @type {import('@nuxtjs/composition-api').Ref<Boolean>} */
+  /** @type {import('@nuxtjs/composition-api').Ref<boolean>} */
   const matches = ref(mediaQuery.matches)
 
   const handler = (/** @type MediaQueryListEvent */ event) => {
@@ -41,9 +41,10 @@ export function useMediaQuery(query, options = {}) {
 }
 
 /**
- * Check whether the screen meets the current breakpoint size.
+ * Check whether the curent screen meets
+ * or exceeds the provided breakpoint size.
  */
-export const isScreen = (breakpointName, options = {}) => {
+export const isMinScreen = (breakpointName, options = {}) => {
   return useMediaQuery(
     `(min-width: ${SCREEN_SIZES.get(breakpointName)}px)`,
     options
