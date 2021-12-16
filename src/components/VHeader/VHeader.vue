@@ -135,7 +135,7 @@ const VHeader = defineComponent({
     })
 
     /**
-     * Status is blank on mobile screen.
+     * Status is hidden below the medium breakpoint.
      * It shows Loading... or Number of results on bigger screens.
      * @returns {string}
      */
