@@ -1,34 +1,43 @@
 <template>
   <div class="app">
     <MigrationNotice v-show="isReferredFromCc" />
+    <TranslationStatusBanner />
     <VHeader />
-    <main class="embedded pt-20">
+    <main class="embedded">
       <Nuxt />
     </main>
   </div>
 </template>
 <script>
-import { mapState } from 'vuex'
-
 import iframeHeight from '~/mixins/iframe-height'
-import i18nSync from '~/mixins/i18n-sync'
 
 import { NAV } from '~/constants/store-modules'
 import MigrationNotice from '~/components/MigrationNotice.vue'
 import VHeader from '~/components/VHeader/VHeader.vue'
 
+import TranslationStatusBanner from '~/components/TranslationStatusBanner.vue'
+import { useContext } from '@nuxtjs/composition-api'
+
 const embeddedWithNavSearch = {
   name: 'embedded-with-nav-search',
   components: {
     MigrationNotice,
+    TranslationStatusBanner,
     VHeader,
   },
   layout: 'embedded-with-nav-search',
-  mixins: [iframeHeight, i18nSync],
+  mixins: [iframeHeight],
   head() {
     return this.$nuxtI18nHead({ addSeoAttributes: true, addDirAttribute: true })
   },
-  computed: { ...mapState(NAV, ['isReferredFromCc']) },
+  setup() {
+    const { store } = useContext()
+    const isReferredFromCc = store.state[NAV].isReferredFromCc
+
+    return {
+      isReferredFromCc,
+    }
+  },
 }
 export default embeddedWithNavSearch
 </script>

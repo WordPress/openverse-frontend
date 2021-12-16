@@ -1,6 +1,7 @@
 <template>
   <div class="app">
     <MigrationNotice v-show="isReferredFromCc" />
+    <TranslationStatusBanner />
     <VHeader />
     <main class="embedded">
       <Nuxt />
@@ -8,25 +9,30 @@
   </div>
 </template>
 <script>
-import { mapState } from 'vuex'
-
 import iframeHeight from '~/mixins/iframe-height'
-import i18nSync from '~/mixins/i18n-sync'
 
 import { NAV } from '~/constants/store-modules'
 import VHeader from '~/components/VHeader/VHeader.vue'
 
+import { useContext } from '@nuxtjs/composition-api'
+import TranslationStatusBanner from '~/components/TranslationStatusBanner.vue'
+
 const embeddedPage = {
   name: 'embedded',
+  components: { VHeader, TranslationStatusBanner },
   layout: 'embedded',
-  components: {
-    VHeader,
-  },
-  mixins: [iframeHeight, i18nSync],
+  mixins: [iframeHeight],
   head() {
     return this.$nuxtI18nHead({ addSeoAttributes: true, addDirAttribute: true })
   },
-  computed: { ...mapState(NAV, ['isReferredFromCc']) },
+  setup() {
+    const { store } = useContext()
+    const isReferredFromCc = store.state[NAV].isReferredFromCc
+
+    return {
+      isReferredFromCc,
+    }
+  },
 }
 export default embeddedPage
 </script>
