@@ -4,7 +4,7 @@
     :class="{ 'border-b border-dark-charcoal-20': isHeaderScrolled }"
   >
     <NuxtLink to="/">
-      <VLogoLoader />
+      <VLogoLoader :status="isFetching ? 'loading' : 'idle'" />
     </NuxtLink>
     <VSearchBar
       v-model.trim="searchTerm"
@@ -30,7 +30,6 @@ import {
   defineComponent,
   ref,
   useContext,
-  useRoute,
   useRouter,
   watchEffect,
 } from '@nuxtjs/composition-api'
@@ -38,8 +37,8 @@ import {
 import { MEDIA, SEARCH } from '~/constants/store-modules'
 import { FETCH_MEDIA, UPDATE_QUERY } from '~/constants/action-types'
 import { AUDIO, IMAGE } from '~/constants/media'
-
 import { isScreen } from '~/composables/use-media-query'
+import { useSearchRoute } from '~/composables/use-search-route'
 import { useWindowScroll } from '~/composables/use-window-scroll'
 
 import closeIcon from '~/assets/icons/close.svg'
@@ -47,8 +46,6 @@ import closeIcon from '~/assets/icons/close.svg'
 import VIcon from '~/components/VIcon/VIcon.vue'
 import VLogoLoader from '~/components/VLogoLoader/VLogoLoader.vue'
 import VSearchBar from '~/components/VHeader/VSearchBar/VSearchBar.vue'
-
-const HEADER_HEIGHT = 80
 
 const searchRoutes = ['search', 'search-image', 'search-audio', 'search-video']
 const i18nKeys = {
@@ -69,31 +66,38 @@ const VHeader = defineComponent({
   components: {
     VIcon,
     VLogoLoader,
+
     VSearchBar,
   },
   setup() {
     const { app, i18n, store } = useContext()
     const router = useRouter()
 
-    const { y } = useWindowScroll()
-    const isHeaderScrolled = computed(() => y.value > HEADER_HEIGHT)
-
     const isMdScreen = isScreen('md')
+    /** @type {import('@nuxtjs/composition-api').Ref<null|'filters'|'content-switcher'>} */
     const currentOverlay = ref(null)
-    // eslint-disable-next-line no-unused-vars
-    const setCurrentOverlay = () => {
-      // Overlay can only be set on mobile screen
-      if (!isMdScreen.value) return
-    }
+    const { isSearch } = useSearchRoute()
+    const { isHeaderScrolled } = useWindowScroll()
+
+    // /**
+    //  * When an overlay is opened on mobile, this sets the current overlay name
+    //  * @param {'filters'|'content-switcher'} overlay
+    //  */
+    // // eslint-disable-next-line no-unused-vars
+    // const setCurrentOverlay = (overlay) => {
+    //   // Overlay can only be set on mobile screen
+    //   if (isMdScreen.value) return
+    //   currentOverlay.value = overlay
+    // }
     const closeOverlay = () => {
       currentOverlay.value = null
     }
-    const route = useRoute()
-    const isSearch = ref(route.value.name === 'search')
+
     router.beforeEach((to, from, next) => {
       isSearch.value = searchRoutes.includes(to.name)
       next()
     })
+
     /**
      * Return a text representation of the result count.
      * @param {number} count
@@ -106,10 +110,11 @@ const VHeader = defineComponent({
       const localeCount = count.toLocaleString(i18n.locale)
       return i18n.tc(i18nKey, count, { localeCount })
     }
+
     /**  @type {import('@nuxtjs/composition-api').ComputedRef<Boolean>} */
-    const isFetching = computed(
-      () => store.getters['media/fetchingState'].isFetching
-    )
+    // @todo: fix
+    const isFetching = computed(() => true)
+
     /** @type {import('@nuxtjs/composition-api').ComputedRef<number>} */
     const resultsCount = computed(() => store.getters['media/results'].count)
 
@@ -165,15 +170,17 @@ const VHeader = defineComponent({
         ...store.getters['search/searchQueryParams'],
       })
     }
+
     return {
-      handleSearch,
-      searchStatus,
-      searchTerm,
       closeIcon,
       closeOverlay,
       currentOverlay,
+      handleSearch,
+      isFetching,
       isHeaderScrolled,
       isSearch,
+      searchStatus,
+      searchTerm,
     }
   },
 })

@@ -9,10 +9,33 @@
         ><SearchGridFilter
       /></Component>
       <div class="column search-grid-ctr">
-        <SearchTypeTabs />
+        <SearchGridForm @onSearchFormSubmit="onSearchFormSubmit" />
+        <SearchTypeTabs class="mb-4" />
         <FilterDisplay v-show="shouldShowFilterTags" />
-        <NuxtChild :key="$route.path" @onLoadMoreItems="onLoadMoreItems" />
-        <ScrollButton :show-btn="showScrollButton" />
+        <VSearchGrid
+          :id="`tab-${searchType}`"
+          role="tabpanel"
+          :aria-labelledby="searchType"
+          :fetch-state="fetchState"
+          :query="query"
+          :supported="supported"
+          :search-type="searchType"
+          :results-count="resultsCount"
+          data-testid="search-grid"
+        >
+          <template #media>
+            <NuxtChild
+              :key="$route.path"
+              :media-results="results"
+              :fetch-state="fetchState"
+              :is-filter-visible="isFilterVisible"
+              :search-term="query.q"
+              :supported="supported"
+              data-testid="search-results"
+            />
+          </template>
+        </VSearchGrid>
+        <VScrollButton v-show="showScrollButton" data-testid="scroll-button" />
       </div>
     </div>
   </div>
@@ -28,22 +51,27 @@ import {
 import { SET_FILTER_IS_VISIBLE } from '~/constants/mutation-types'
 import { queryStringToSearchType } from '~/utils/search-query-transform'
 import local from '~/utils/local'
-import { ALL_MEDIA, IMAGE, VIDEO } from '~/constants/media'
+import { ALL_MEDIA, AUDIO, IMAGE } from '~/constants/media'
 import { mapActions, mapGetters, mapMutations, mapState } from 'vuex'
 import { MEDIA, SEARCH } from '~/constants/store-modules'
 import debounce from 'lodash.debounce'
 import { isScreen } from '~/composables/use-media-query.js'
 
-import AppModal from '~/components/AppModal.vue'
-import FilterDisplay from '~/components/Filters/FilterDisplay.vue'
-import SearchGridFilter from '~/components/Filters/SearchGridFilter.vue'
+import AppModal from '~/components/AppModal'
+import FilterDisplay from '~/components/Filters/FilterDisplay'
+import SearchGridFilter from '~/components/Filters/SearchGridFilter'
+import VScrollButton from '~/components/VScrollButton'
+import VSearchGrid from '~/components/VSearchGrid'
 
 const BrowsePage = {
   name: 'browse-page',
   layout: 'default',
   components: {
+    AppModal,
     FilterDisplay,
     SearchGridFilter,
+    VScrollButton,
+    VSearchGrid,
   },
   setup() {
     const isMdScreen = isScreen('md')
@@ -53,8 +81,12 @@ const BrowsePage = {
   },
   scrollToTop: false,
   async fetch() {
-    if (this.mediaType !== VIDEO && !Object.keys(this.results.items).length) {
-      await this.fetchMedia({ mediaType: this.mediaType, q: this.query.q })
+    if (
+      this.supported &&
+      !Object.keys(this.results.items).length &&
+      this.query.q.trim() !== ''
+    ) {
+      await this.fetchMedia({})
     }
   },
   data: () => ({
@@ -85,7 +117,7 @@ const BrowsePage = {
   computed: {
     ...mapState(SEARCH, ['query', 'isFilterVisible', 'searchType']),
     ...mapGetters(SEARCH, ['searchQueryParams', 'isAnyFilterApplied']),
-    ...mapGetters(MEDIA, ['results']),
+    ...mapGetters(MEDIA, ['results', 'fetchState']),
     mediaType() {
       // Default to IMAGE until media search/index is generalized
       return this.searchType !== ALL_MEDIA ? this.searchType : IMAGE
@@ -96,12 +128,27 @@ const BrowsePage = {
         this.isAnyFilterApplied
       )
     },
+    /**
+     * Number of search results. Returns 0 for unsupported types.
+     * @returns {number}
+     */
+    resultsCount() {
+      return this.supported ? this.results.count : 0
+    },
     searchFilter() {
       return {
         classes: {
           'column is-narrow grid-sidebar max-w-full bg-white': this.isMdScreen,
         },
         as: this.isMdScreen ? 'aside' : AppModal,
+      }
+    },
+    supported() {
+      if (this.searchType === AUDIO) {
+        // Only show audio results if non-image results are supported
+        return process.env.enableAudio
+      } else {
+        return [IMAGE, ALL_MEDIA].includes(this.searchType)
       }
     },
   },
@@ -115,11 +162,10 @@ const BrowsePage = {
     ...mapMutations(SEARCH, {
       setFilterVisibility: SET_FILTER_IS_VISIBLE,
     }),
-    async getMediaItems(params, mediaType) {
-      await this.fetchMedia({ ...params, mediaType })
-    },
-    onLoadMoreItems(searchParams) {
-      this.getMediaItems(searchParams, this.mediaType)
+    async getMediaItems(params) {
+      if (this.query.q.trim() !== '') {
+        await this.fetchMedia({ ...params })
+      }
     },
     onSearchFormSubmit({ q }) {
       this.updateQuery({ q })
@@ -134,6 +180,19 @@ const BrowsePage = {
     },
   },
   watch: {
+    query: {
+      deep: true,
+      handler() {
+        const newPath = this.localePath({
+          path: this.$route.path,
+          query: this.searchQueryParams,
+        })
+        this.$router.push(newPath)
+        if (this.supported) {
+          this.getMediaItems(this.query)
+        }
+      },
+    },
     /**
      * Updates the search type only if the route's path changes.
      * @param newRoute

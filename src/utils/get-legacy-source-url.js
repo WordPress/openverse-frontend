@@ -116,6 +116,17 @@ export const legacySourceMap = {
       }
     },
   },
+  'The Greats': {
+    image(search) {
+      return {
+        url: 'https://www.thegreats.co/artworks/',
+        query: {
+          theme: 0,
+          search: search.q,
+        },
+      }
+    },
+  },
   SoundCloud: {
     audio(search) {
       let license = 'to_share'
@@ -150,10 +161,9 @@ export const legacySourceMap = {
       return {
         url: 'https://commons.wikimedia.org/w/index.php',
         query: {
-          sort: 'relevance',
-          search: `${search.q} filetype:audio`,
-          title: 'Special:Search',
-          'advancedSearch-current': '{"fields":{"filetype":"audio"}}',
+          search: `${search.q}`,
+          title: 'Special:MediaSearch',
+          type: 'audio',
         },
       }
     },
@@ -161,10 +171,9 @@ export const legacySourceMap = {
       return {
         url: 'https://commons.wikimedia.org/w/index.php',
         query: {
-          sort: 'relevance',
-          search: `${search.q} filetype:video`,
-          title: 'Special:Search',
-          'advancedSearch-current': '{"fields":{"filetype":"audio"}}',
+          search: `${search.q}`,
+          title: 'Special:MediaSearch',
+          type: 'video',
         },
       }
     },

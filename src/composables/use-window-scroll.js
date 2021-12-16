@@ -5,6 +5,13 @@ import { ref } from '@nuxtjs/composition-api'
 import { useEventListener } from '~/composables/use-event-listener'
 
 /**
+ * Whether the page has been scrolled down past the header.
+ *
+ * @type {import('@nuxtjs/composition-api').Ref<boolean>}
+ */
+export const isHeaderScrolled = ref(false)
+
+/**
  *
  * @param {object} options
  * @param {Window} [options.window]
@@ -28,6 +35,7 @@ export function useWindowScroll({
   const scrollHandler = () => {
     x.value = window.pageXOffset
     y.value = window.pageYOffset
+    isHeaderScrolled.value = y.value > 0
   }
 
   const handler = throttleMs
@@ -39,5 +47,5 @@ export function useWindowScroll({
     passive: true,
   })
 
-  return { x, y }
+  return { x, y, isHeaderScrolled }
 }
