@@ -1,6 +1,6 @@
 <template>
   <div
-    class="p-4 search-filters h-auto max-h-full overflow-y-scroll"
+    class="py-8 px-10 bg-dark-charcoal-06 search-filters h-auto max-h-screen overflow-y-scroll"
     :class="[isFilterVisible ? 'block' : 'hidden']"
     data-testid="filters-list"
     @onUpdateFilter="onUpdateFilter"
