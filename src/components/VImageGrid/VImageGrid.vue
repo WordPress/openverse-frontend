@@ -15,7 +15,7 @@
     <h5 v-if="isError" class="image-grid__notification py-4">
       {{ fetchState.fetchingError }}
     </h5>
-    <LoadMoreButton
+    <VLoadMore
       v-if="canLoadMore"
       :is-error="isError"
       :is-fetching="fetchState.isFetching"
@@ -34,12 +34,13 @@
  * or display 'No More Media'.
  * Used to display both image search results, and related images.
  */
-import LoadMoreButton from '~/components/ImageGrid/LoadMoreButton'
+import VLoadMore from '~/components/VLoadMore'
 import VImageCell from '~/components/VImageGrid/VImageCell'
+import { defineComponent, computed, useContext } from '@nuxtjs/composition-api'
 
-export default {
+export default defineComponent({
   name: 'VImageGrid',
-  components: { LoadMoreButton, VImageCell },
+  components: { VLoadMore, VImageCell },
   props: {
     images: {
       default: () => [],
@@ -56,34 +57,43 @@ export default {
       default: 6,
     },
   },
-  computed: {
-    isError() {
-      return !!this.fetchState.fetchingError
-    },
-    fetchingErrorHeading() {
-      const type = this.$t('browse-page.search-form.image')
-      return this.$t('browse-page.fetching-error', { type })
-    },
-    imageColumns() {
-      const makeArr = (length) => new Array(length).fill()
-      const cols = makeArr(this.columns).map(() => [])
+  setup(props, { emit }) {
+    const { i18n } = useContext()
 
-      if (!this.images) return cols
+    const isError = computed(() => {
+      return !!props.fetchState.fetchingError
+    })
+    const fetchingErrorHeading = computed(() => {
+      const type = i18n.t('browse-page.search-form.image')
+      return i18n.t('browse-page.fetching-error', { type })
+    })
+
+    const imageColumns = computed(() => {
+      const makeArr = (length) => new Array(length).fill()
+      const cols = makeArr(props.columns).map(() => [])
+
+      if (!props.images) return cols
 
       let activeCol = 1
-      Object.values(this.images).forEach((image) => {
+      Object.values(props.images).forEach((image) => {
         cols[activeCol - 1].push(image)
         activeCol = activeCol < cols.length ? activeCol + 1 : 1
       })
       return cols
-    },
+    })
+
+    const onLoadMore = () => {
+      emit('load-more')
+    }
+
+    return {
+      isError,
+      fetchingErrorHeading,
+      imageColumns,
+      onLoadMore,
+    }
   },
-  methods: {
-    onLoadMore() {
-      this.$emit('load-more')
-    },
-  },
-}
+})
 </script>
 
 <style>

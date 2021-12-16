@@ -2,7 +2,7 @@
   <div v-show="!isError" class="load-more pb-6">
     <button
       v-show="!isFetching"
-      class="w-full"
+      class="button"
       :disabled="isFinished"
       @click="onLoadMore"
       @keyup.enter="onLoadMore"
