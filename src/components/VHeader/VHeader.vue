@@ -56,8 +56,6 @@ const VHeader = defineComponent({
     /**
      * Set the active mobile menu view to the 'filters'
      * if the filter sidebar has been toggled open.
-     *
-     * @todo: There may be a better way to explain this
      */
     watch(
       () => isFilterSidebarVisible.value,
