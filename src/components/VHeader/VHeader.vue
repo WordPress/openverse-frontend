@@ -7,7 +7,10 @@
       'border-dark-charcoal-20': isHeaderScrolled || isFilterSidebarVisible,
     }"
   >
-    <NuxtLink to="/">
+    <NuxtLink
+      to="/"
+      class="rounded-sm ring-offset-1 focus:outline-none focus-visible:ring focus-visible:ring-pink"
+    >
       <VLogoLoader :status="isFetching ? 'loading' : 'idle'" />
     </NuxtLink>
 
