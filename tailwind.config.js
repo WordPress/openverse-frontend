@@ -13,7 +13,10 @@ module.exports = {
   },
   theme: {
     screens: Object.fromEntries(
-      Array.from(SCREEN_SIZES, ([name, width]) => [name, `${width}px`])
+      Array.from(SCREEN_SIZES, ([name, width]) => [
+        name,
+        `${width}px`,
+      ]).reverse()
     ),
     colors: {
       // Accents

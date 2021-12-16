@@ -8,7 +8,7 @@
     aria-hidden="true"
     :data-prefers-reduced-motion="prefersReducedMotion"
     data-testid="logo-loader"
-    class="hover:bg-yellow w-12 h-12 p-3 rounded inline-flex justify-center items-center"
+    class="w-12 h-12 p-3 rounded inline-flex justify-center items-center"
   >
     <path
       data-logo-part-1
