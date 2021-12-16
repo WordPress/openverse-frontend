@@ -1,13 +1,6 @@
 <template>
   <div class="browse-page">
     <div class="search columns">
-      <Component
-        :is="searchFilter.as"
-        v-if="isFilterVisible"
-        :class="searchFilter.classes"
-        @close="onToggleSearchGridFilter"
-        ><SearchGridFilter
-      /></Component>
       <div class="column search-grid-ctr">
         <SearchGridForm @onSearchFormSubmit="onSearchFormSubmit" />
         <SearchTypeTabs class="mb-4" />
@@ -37,6 +30,14 @@
         </VSearchGrid>
         <VScrollButton v-show="showScrollButton" data-testid="scroll-button" />
       </div>
+      <Component
+        :is="searchFilter.as"
+        v-if="isFilterVisible"
+        :class="searchFilter.classes"
+        @close="onToggleSearchGridFilter"
+      >
+        <SearchGridFilter />
+      </Component>
     </div>
   </div>
 </template>
