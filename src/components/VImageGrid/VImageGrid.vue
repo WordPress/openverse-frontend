@@ -1,10 +1,14 @@
 <template>
   <section>
     <div
-      class="image-grid"
+      class="image-grid px-4"
       :style="{ '--columns': columns, '--gutter': '12px' }"
     >
-      <div v-for="(column, index) in imageColumns" :key="index" class="column">
+      <div
+        v-for="(column, index) in imageColumns"
+        :key="index"
+        class="image-column"
+      >
         <VImageCell
           v-for="(image, imgIndex) in column"
           :key="imgIndex"
@@ -54,7 +58,7 @@ export default defineComponent({
     },
     columns: {
       type: Number,
-      default: 6,
+      default: 5,
     },
   },
   setup(props, { emit }) {
@@ -105,13 +109,13 @@ export default defineComponent({
   column-gap: var(--gutter);
 }
 
-.image-grid .column {
+.image-grid .image-column {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   row-gap: var(--gutter);
 }
 
-.image-grid .column img {
+.image-grid .image-column img {
   width: 100%;
   height: auto;
   background-color: lightgray;

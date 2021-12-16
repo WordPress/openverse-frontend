@@ -216,6 +216,7 @@ module.exports = {
       padding: ['focus', 'focus-within'],
       boxShadow: ['focus', 'active'],
       display: ['group-hover', 'group-focus'],
+      visibility: ['hover', 'focus', 'group-hover'],
     },
   },
   plugins: [require('tailwindcss-rtl')],
