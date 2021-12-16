@@ -1,5 +1,5 @@
 <template>
-  <div
+  <header
     class="sticky top-0 flex py-4 px-6 md:px-7 align-center justify-between z-40 w-full bg-white"
     :class="{
       'border-b': true,
@@ -29,7 +29,7 @@
       :pressed="isFilterSidebarVisible"
       @toggle="toggleFilterVisibility"
     />
-  </div>
+  </header>
 </template>
 
 <script>
