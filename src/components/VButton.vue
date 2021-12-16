@@ -2,6 +2,7 @@
   <Component
     :is="as"
     :type="typeRef"
+    class="transition-colors"
     :class="[
       $style.button,
       $style[variant],
@@ -72,6 +73,7 @@ const VButton = defineComponent({
           'secondary',
           'tertiary',
           'action-menu',
+          'action-menu-secondary',
           'action-menu-muted',
           'grouped',
         ].includes(v),
@@ -249,6 +251,9 @@ a.button {
 }
 
 .action-menu {
+  @apply bg-white text-black border border-dark-charcoal-20 hover:border-dark-charcoal-20 focus-visible:ring-pink;
+}
+.action-menu-secondary {
   @apply bg-white text-black border border-tx hover:border-dark-charcoal-20 focus-visible:ring-pink;
 }
 

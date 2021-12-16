@@ -53,7 +53,11 @@
       "dismiss": "Dismiss",
       "okay": "OK"
     },
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "filter-button": {
+      "simple": "Filters",
+      "with-count": "{count} Filter | {count} Filters"
+    }
   },
   "footer": {
     "navigation": {

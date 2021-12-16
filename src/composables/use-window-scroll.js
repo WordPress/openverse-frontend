@@ -5,7 +5,7 @@ import { ref } from '@nuxtjs/composition-api'
 import { useEventListener } from '~/composables/use-event-listener'
 
 /**
- * Whether the page has been scrolled down past the header.
+ * Whether the page has been scrolled down at all
  *
  * @type {import('@nuxtjs/composition-api').Ref<boolean>}
  */

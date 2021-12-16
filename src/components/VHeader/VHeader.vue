@@ -1,26 +1,30 @@
 <template>
   <div
-    class="fixed flex px-8 align-center z-40 w-full bg-white"
-    :class="{ 'border-b border-dark-charcoal-20': isHeaderScrolled }"
+    class="sticky top-0 flex py-4 px-6 md:px-7 align-center justify-between z-40 w-full bg-white"
+    :class="{
+      'border-b': true,
+      'border-white': !isHeaderScrolled && !isFilterSidebarVisible,
+      'border-dark-charcoal-20': isHeaderScrolled || isFilterSidebarVisible,
+    }"
   >
     <NuxtLink to="/">
       <VLogoLoader :status="isFetching ? 'loading' : 'idle'" />
     </NuxtLink>
+
     <VSearchBar
       v-model.trim="searchTerm"
       class="search-bar"
       @submit="handleSearch"
-      >{{ searchStatus }}</VSearchBar
     >
-    <VButton
-      v-if="!!currentOverlay"
-      variant="action-menu"
-      class="self-center"
-      @click="closeOverlay"
-    >
-      <span class="text-sr">{{ $t('modal.close') }}</span>
-      <VIcon :icon-path="closeIcon" />
-    </VButton>
+      {{ searchStatus }}
+    </VSearchBar>
+
+    <VFilterButton
+      v-if="isSearch"
+      :is-header-scrolled="isHeaderScrolled"
+      :pressed="isFilterSidebarVisible"
+      @toggle="toggleFilterVisibility"
+    />
   </div>
 </template>
 
@@ -30,8 +34,9 @@ import {
   defineComponent,
   ref,
   useContext,
-  useRouter,
   watchEffect,
+  watch,
+  useRouter,
 } from '@nuxtjs/composition-api'
 
 import { MEDIA, SEARCH } from '~/constants/store-modules'
@@ -40,14 +45,15 @@ import { AUDIO, IMAGE } from '~/constants/media'
 import { isScreen } from '~/composables/use-media-query'
 import { useSearchRoute } from '~/composables/use-search-route'
 import { useWindowScroll } from '~/composables/use-window-scroll'
+import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
 
 import closeIcon from '~/assets/icons/close.svg'
 
-import VIcon from '~/components/VIcon/VIcon.vue'
-import VLogoLoader from '~/components/VLogoLoader/VLogoLoader.vue'
 import VSearchBar from '~/components/VHeader/VSearchBar/VSearchBar.vue'
+import VFilterButton from '~/components/VHeader/VFilterButton.vue'
+import VLogoLoader from '~/components/VLogoLoader/VLogoLoader.vue'
 
-const searchRoutes = ['search', 'search-image', 'search-audio', 'search-video']
+// const searchRoutes = ['search', 'search-image', 'search-audio', 'search-video']
 const i18nKeys = {
   [AUDIO]: {
     noResult: 'browse-page.audio-no-results',
@@ -64,39 +70,18 @@ const i18nKeys = {
 const VHeader = defineComponent({
   name: 'VHeader',
   components: {
-    VIcon,
+    VFilterButton,
     VLogoLoader,
-
     VSearchBar,
   },
   setup() {
     const { app, i18n, store } = useContext()
-    const router = useRouter()
-
-    const isMdScreen = isScreen('md')
-    /** @type {import('@nuxtjs/composition-api').Ref<null|'filters'|'content-switcher'>} */
-    const currentOverlay = ref(null)
     const { isSearch } = useSearchRoute()
     const { isHeaderScrolled } = useWindowScroll()
-
-    // /**
-    //  * When an overlay is opened on mobile, this sets the current overlay name
-    //  * @param {'filters'|'content-switcher'} overlay
-    //  */
-    // // eslint-disable-next-line no-unused-vars
-    // const setCurrentOverlay = (overlay) => {
-    //   // Overlay can only be set on mobile screen
-    //   if (isMdScreen.value) return
-    //   currentOverlay.value = overlay
-    // }
-    const closeOverlay = () => {
-      currentOverlay.value = null
-    }
-
-    router.beforeEach((to, from, next) => {
-      isSearch.value = searchRoutes.includes(to.name)
-      next()
-    })
+    const router = useRouter()
+    const isMdScreen = isScreen('md')
+    const { isFilterSidebarVisible, setFilterSidebarVisibility } =
+      useFilterSidebarVisibility({ mediaQuery: isMdScreen })
 
     /**
      * Return a text representation of the result count.
@@ -111,12 +96,13 @@ const VHeader = defineComponent({
       return i18n.tc(i18nKey, count, { localeCount })
     }
 
-    /**  @type {import('@nuxtjs/composition-api').ComputedRef<Boolean>} */
-    // @todo: fix
-    const isFetching = computed(() => true)
-
     /** @type {import('@nuxtjs/composition-api').ComputedRef<number>} */
     const resultsCount = computed(() => store.getters['media/results'].count)
+
+    /**  @type {import('@nuxtjs/composition-api').ComputedRef<boolean>} */
+    const isFetching = computed(() => {
+      return store.getters['media/fetchState'].isFetching
+    })
 
     /**
      * Status is blank on mobile screen.
@@ -171,16 +157,55 @@ const VHeader = defineComponent({
       })
     }
 
+    /**
+     * Set the active mobile menu view to the 'filters'
+     * if the filter sidebar has been toggled open.
+     *
+     * @todo: There may be a better way to explain this
+     */
+    watch(
+      () => isFilterSidebarVisible.value,
+      (isVisible) => {
+        if (isVisible) {
+          setCurrentOverlay('filters')
+        } else {
+          closeOverlay()
+        }
+      }
+    )
+
+    const toggleFilterVisibility = () => {
+      setFilterSidebarVisibility(!isFilterSidebarVisible.value)
+    }
+
+    /** @type {import('@nuxtjs/composition-api').Ref<null|'filters'|'content-switcher'>} */
+    const currentOverlay = ref(null)
+    /**
+     * When an overlay is opened on mobile, this sets the current overlay name
+     * @param {'filters'|'content-switcher'} overlay
+     */
+    const setCurrentOverlay = (overlay) => {
+      // Overlay can only be set on mobile screen
+      if (isMdScreen.value) return
+      currentOverlay.value = overlay
+    }
+    const closeOverlay = () => {
+      currentOverlay.value = null
+    }
+
     return {
       closeIcon,
       closeOverlay,
       currentOverlay,
       handleSearch,
       isFetching,
+      isFilterSidebarVisible,
       isHeaderScrolled,
       isSearch,
       searchStatus,
       searchTerm,
+      setCurrentOverlay,
+      toggleFilterVisibility,
     }
   },
 })
