@@ -59,7 +59,7 @@ const VFilterButton = defineComponent({
      */
     const variant = computed(() => {
       // Show the borderd state by default, unless below md
-      let value = isMinScreenMD.value ? 'action-menu' : 'action-menu-muted'
+      let value = isMinScreenMD.value ? 'action-menu' : 'action-menu-secondary'
 
       if (isHeaderScrolled.value) {
         value = 'action-menu-secondary'
