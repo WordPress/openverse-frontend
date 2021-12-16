@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2021-12-02T15:06:49+00:00\n"
+"POT-Creation-Date: 2021-12-07T17:25:14+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -134,7 +134,7 @@ msgctxt "audio-categories.podcast"
 msgid "Podcast"
 msgstr ""
 
-#: src/components/Header/SearchBar/SearchButton.vue:5
+#: src/components/VHeader/VSearchBar/VSearchButton.vue:5
 msgctxt "search.search"
 msgid "Search"
 msgstr ""
@@ -739,7 +739,7 @@ msgctxt "browse-page.aria.scroll"
 msgid "scroll to top"
 msgstr ""
 
-#: src/components/SearchGridForm.vue:25
+#: src/components/SearchGridForm.vue:14
 msgctxt "browse-page.aria.search"
 msgid "search"
 msgstr ""
@@ -748,7 +748,7 @@ msgctxt "browse-page.aria.remove-filter"
 msgid "remove filter"
 msgstr ""
 
-#: src/components/Filters/FilterChecklist.vue:26
+#: src/components/VFilters/VFilterChecklist.vue:26
 msgctxt "browse-page.aria.license-explanation"
 msgid "license explanation"
 msgstr ""
@@ -782,7 +782,7 @@ msgctxt "browse-page.safer-browsing.label"
 msgid "Show Mature Content"
 msgstr ""
 
-#: src/components/Filters/LicenseExplanationTooltip.vue:8
+#: src/components/VFilters/VLicenseExplanationTooltip.vue:8
 msgctxt "browse-page.license-description.title"
 msgid "License CC"
 msgstr ""
@@ -812,7 +812,7 @@ msgid "This work is marked as being in the public domain."
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/SearchGridForm.vue:79
+#: src/components/SearchGridForm.vue:68
 msgctxt "browse-page.search-form.placeholder"
 msgid "Search all ###type###"
 msgstr ""
@@ -839,7 +839,7 @@ msgctxt "browse-page.search-form.collection-placeholder"
 msgid "Search this collection"
 msgstr ""
 
-#: src/components/SearchGridForm.vue:52
+#: src/components/SearchGridForm.vue:41
 msgctxt "browse-page.search-form.button"
 msgid "Search"
 msgstr ""
@@ -864,22 +864,22 @@ msgctxt "browse-page.search-rating.feedback-thanks"
 msgid "Thank you for the feedback!"
 msgstr ""
 
-#: src/components/Filters/SearchGridFilter.vue:12
+#: src/components/VFilters/VSearchGridFilter.vue:11
 msgctxt "filter-list.filter-by"
 msgid "Filter results by"
 msgstr ""
 
-#: src/components/Filters/SearchGridFilter.vue:21
+#: src/components/VFilters/VSearchGridFilter.vue:20
 msgctxt "filter-list.hide"
 msgid "Hide filters"
 msgstr ""
 
-#: src/components/Filters/SearchGridFilter.vue:45
+#: src/components/VFilters/VSearchGridFilter.vue:44
 msgctxt "filter-list.clear"
 msgid "Clear filters"
 msgstr ""
 
-#: src/components/Filters/SearchGridFilter.vue:52
+#: src/components/VFilters/VSearchGridFilter.vue:51
 msgctxt "filter-list.show"
 msgid "Show results"
 msgstr ""
@@ -889,40 +889,39 @@ msgctxt "filter-list.category-aria"
 msgid "filters list for ###categoryName### category"
 msgstr ""
 
-#: src/components/SearchGridForm.vue:15
 msgctxt "filters.title"
 msgid "Filters"
 msgstr ""
 
-#: src/components/Filters/FilterDisplay.vue:4
+#: src/components/VFilters/VFilterDisplay.vue:4
 msgctxt "filters.filter-by"
 msgid "Filter By"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/Filters/FilterTag.vue:4
+#: src/components/VFilters/VFilterTag.vue:4
 msgctxt "filters.aria.remove-filter"
 msgid "Remove ###label### filter"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/Filters/LicenseExplanationTooltip.vue:12
+#: src/components/VFilters/VLicenseExplanationTooltip.vue:12
 msgctxt "filters.license-explanation.tool"
 msgid "Read more about the tool ###link###"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/Filters/LicenseExplanationTooltip.vue:24
+#: src/components/VFilters/VLicenseExplanationTooltip.vue:24
 msgctxt "filters.license-explanation.license"
 msgid "Read more about the license ###link###"
 msgstr ""
 
-#: src/components/Filters/LicenseExplanationTooltip.vue:20
+#: src/components/VFilters/VLicenseExplanationTooltip.vue:20
 msgctxt "filters.license-explanation.link"
 msgid "here"
 msgstr ""
 
-#: src/components/Filters/FilterChecklist.vue:83
+#: src/components/VFilters/VFilterChecklist.vue:85
 msgctxt "filters.searchBy.title"
 msgid "Search By"
 msgstr ""
@@ -2020,6 +2019,17 @@ msgstr ""
 #: src/components/NavSection.vue:128
 msgctxt "header.api-nav-item"
 msgid "API"
+msgstr ""
+
+#: src/components/VHeader/VFilterButton.vue:104
+msgctxt "header.filter-button.simple"
+msgid "Filters"
+msgstr ""
+
+#. Do not translate words between ### ###.
+#: src/components/VHeader/VFilterButton.vue:91
+msgctxt "header.filter-button.with-count"
+msgid "###count### Filter | ###count### Filters"
 msgstr ""
 
 msgctxt "header.notification.text"

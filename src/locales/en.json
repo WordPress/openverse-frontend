@@ -52,6 +52,10 @@
       "text": "{example_notification_text}",
       "dismiss": "Dismiss",
       "okay": "OK"
+    },
+    "filter-button": {
+      "simple": "Filters",
+      "with-count": "{count} Filter | {count} Filters"
     }
   },
   "footer": {

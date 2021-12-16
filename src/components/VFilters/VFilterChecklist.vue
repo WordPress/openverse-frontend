@@ -47,7 +47,7 @@
         </svg>
       </button>
     </div>
-    <LicenseExplanationTooltip
+    <VLicenseExplanationTooltip
       v-if="licenseExplanationVisible"
       :license="licenseExplanationCode"
       :icon-dom-node="$refs[`${licenseExplanationCode}licenseIcon`][0]"
@@ -56,14 +56,16 @@
 </template>
 
 <script>
-import LicenseExplanationTooltip from '~/components/Filters/LicenseExplanationTooltip'
+import VLicenseExplanationTooltip from '~/components/VFilters/VLicenseExplanationTooltip'
+import VCheckbox from '~/components/VCheckbox.vue'
 import VLicense from '~/components/License/VLicense.vue'
 
 export default {
   name: 'FilterCheckList',
   components: {
+    VCheckbox,
     VLicense,
-    LicenseExplanationTooltip,
+    VLicenseExplanationTooltip,
   },
   props: {
     options: { type: Array, required: false },

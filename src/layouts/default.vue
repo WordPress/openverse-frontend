@@ -2,7 +2,7 @@
   <div class="app">
     <MigrationNotice v-show="isReferredFromCc" />
     <VHeader />
-    <main class="embedded pt-20">
+    <main class="embedded">
       <Nuxt />
     </main>
   </div>
