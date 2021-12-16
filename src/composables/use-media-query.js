@@ -10,9 +10,9 @@ import { defaultWindow } from '~/composables/window'
  * @param query
  * @param options
  */
-export function useMediaQuery(query, options = {}) {
+export function useMediaQuery(query, options = { shouldPassInSSR: false }) {
   const { window = defaultWindow } = options
-  if (!window) return ref(false)
+  if (!window) return ref(options.shouldPassInSSR)
 
   const mediaQuery = window.matchMedia(query)
   /** @type {import('@nuxtjs/composition-api').Ref<Boolean>} */
