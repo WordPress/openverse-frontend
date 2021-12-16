@@ -71,7 +71,7 @@
         <slot name="play-pause" :size="isLarge ? 'medium' : 'large'" />
         <slot
           name="controller"
-          :waveform-props="{ features: ['timestamps', 'duration'] }"
+          :waveform-props="{ features: ['timestamps', 'duration', 'seek'] }"
         />
       </div>
     </div>

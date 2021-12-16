@@ -6,26 +6,20 @@
       '--usable-height': `${Math.floor(usableFrac * 100)}%`,
       '--unusable-height': `${Math.floor((1 - usableFrac) * 100)}%`,
     }"
-    :tabIndex="!message && isReady ? 0 : -1"
-    :role="!message && isReady ? 'slider' : null"
-    :aria-disabled="!(!message && isReady)"
+    :tabIndex="isInteractive ? 0 : -1"
+    :role="isInteractive ? 'slider' : null"
+    :aria-disabled="!isInteractive"
     :aria-label="$t('waveform.label')"
     aria-orientation="horizontal"
     aria-valuemin="0"
     :aria-valuemax="duration"
     :aria-valuenow="currentTime"
     :aria-valuetext="currentTimeText"
-    @mousedown="handleMouseDown"
-    @mousemove="handleMouseMove"
-    @mouseup="handleMouseUp"
-    @mouseleave="handleMouseLeave"
-    @keydown.arrow-left.prevent="handleArrowKeys"
-    @keydown.arrow-right.prevent="handleArrowKeys"
-    @keydown.home.prevent="handlePosKeys(0)"
-    @keydown.end.prevent="handlePosKeys(1)"
+    v-on="eventHandlers"
   >
     <!-- Focus ring -->
     <svg
+      v-if="isInteractive"
       class="hidden group-focus:block absolute inset-0 w-full h-full z-20 shadow-ring-1"
       xmlns="http://www.w3.org/2000/svg"
       :viewBox="viewBox"
@@ -94,8 +88,9 @@
       />
     </svg>
 
-    <!-- Keyboard focus -->
+    <!-- Focus bar -->
     <div
+      v-if="isInteractive"
       class="focus-indicator hidden absolute z-30 top-0 flex flex-col items-center justify-between bg-black h-full"
       :style="{ width: `${barWidth}px`, left: `${seekSpaceBefore}px` }"
     >
@@ -212,11 +207,11 @@ export default {
     },
     /**
      * selectively enable features in the waveform; Available features are
-     * `'timestamp'` and `'duration'`.
+     * `'timestamp'`, `'duration'`, `'seek'`.
      */
     features: {
       type: Array,
-      default: () => ['timestamps'],
+      default: () => ['timestamps', 'seek'],
     },
   },
   setup(props, { emit }) {
@@ -286,10 +281,12 @@ export default {
 
     const showDuration = computed(() => props.features.includes('duration'))
     const showTimestamps = computed(() => props.features.includes('timestamps'))
+    const isSeekable = computed(() => props.features.includes('seek'))
 
     /* State */
 
     const isReady = computed(() => !props.message)
+    const isInteractive = computed(() => isSeekable.value && isReady.value)
 
     /* Resampling */
 
@@ -437,6 +434,29 @@ export default {
         emit('seeked', currentFrac.value + delta)
       }
     }
+    const handleKeys = (event) => {
+      event.preventDefault()
+      if (['ArrowLeft', 'ArrowRight'].includes(event.key))
+        return handleArrowKeys(event)
+      if (event.key === 'Home') return handlePosKeys(0)
+      if (event.key === 'End') return handlePosKeys(1)
+    }
+
+    /* v-on */
+
+    const eventHandlers = computed(() => {
+      if (isInteractive.value) {
+        return {
+          mousedown: handleMouseDown,
+          mousemove: handleMouseMove,
+          mouseup: handleMouseUp,
+          mouseleave: handleMouseLeave,
+          keydown: handleKeys,
+        }
+      } else {
+        return {}
+      }
+    })
 
     return {
       timeFmt,
@@ -445,8 +465,10 @@ export default {
 
       showDuration,
       showTimestamps,
+      isSeekable,
 
       isReady,
+      isInteractive,
 
       barWidth,
       normalizedPeaks,
@@ -477,6 +499,8 @@ export default {
 
       handlePosKeys,
       handleArrowKeys,
+
+      eventHandlers,
     }
   },
   computed: {
