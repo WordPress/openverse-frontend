@@ -9,8 +9,8 @@
   >
     <NuxtLink
       to="/"
-      class="rounded-sm ring-offset-1 focus:outline-none focus-visible:ring focus-visible:ring-pink -ms-2 inline-flex items-center hover:bg-yellow md:px-0"
-      :class="{ 'pe-3': !isHeaderScrolled }"
+      class="rounded-sm ring-offset-1 focus:outline-none focus-visible:ring focus-visible:ring-pink -ms-2 inline-flex items-center hover:bg-yellow"
+      :class="{ 'pe-3': !isHeaderScrolled || !isSearch, 'md:px-0': isSearch }"
     >
       <VLogoLoader :status="isFetching ? 'loading' : 'idle'" />
       <svg
@@ -42,7 +42,7 @@
     >
       <span
         v-if="searchStatus"
-        class="info font-semibold text-xs text-dark-charcoal-70 group-hover:text-dark-charcoal group-focus:text-dark-charcoal me-4"
+        class="info font-semibold text-xs text-dark-charcoal-70 group-hover:text-dark-charcoal group-focus:text-dark-charcoal mx-4"
       >
         {{ searchStatus }}
       </span>
