@@ -3,7 +3,7 @@
     itemprop="image"
     itemscope=""
     itemtype="https://schema.org/ImageObject"
-    class="group"
+    class="group relative"
   >
     <NuxtLink
       itemprop="contentUrl"
@@ -23,7 +23,7 @@
       />
     </NuxtLink>
     <figcaption
-      class="absolute left-0 bottom-0 hidden group-hover:visible bg-white p-1"
+      class="absolute left-0 bottom-0 invisible group-hover:visible bg-white p-1"
     >
       <VLicense :license="image.license" :bg-filled="true" :hide-name="true" />
     </figcaption>

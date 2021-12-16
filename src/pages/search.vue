@@ -214,16 +214,6 @@ export default BrowsePage
 .search {
   margin: 0;
 }
-.search-grid-ctr {
-  background-color: $color-wp-gray-0;
-  min-height: 600px;
-  padding: 0;
-
-  @include mobile {
-    width: 100%;
-    flex: none;
-  }
-}
 .grid-sidebar {
   padding: 0;
   border-right: 1px solid $color-transition-gray;

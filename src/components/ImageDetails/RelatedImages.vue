@@ -6,13 +6,14 @@
     <h3 class="text-3xl">
       {{ $t('photo-details.related-images') }}
     </h3>
-    <ImageGrid
+    <VImageGrid
       :images="images"
       :can-load-more="false"
       :fetch-state="{
         isFetching: $fetchState.pending,
         fetchingError: $fetchState.error,
       }"
+      :columns="3"
     />
   </aside>
 </template>
@@ -21,11 +22,11 @@
 import { ref } from '@nuxtjs/composition-api'
 import useRelated from '~/composables/use-related'
 import { IMAGE } from '~/constants/media'
-import ImageGrid from '~/components/ImageGrid/ImageGrid'
+import VImageGrid from '~/components/VImageGrid/VImageGrid'
 
 export default {
   name: 'RelatedImages',
-  components: { ImageGrid },
+  components: { VImageGrid },
   props: {
     imageId: {
       type: String,

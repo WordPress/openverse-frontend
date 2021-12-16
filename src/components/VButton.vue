@@ -74,6 +74,7 @@ const VButton = defineComponent({
           'action-menu',
           'action-menu-muted',
           'grouped',
+          'plain',
         ].includes(v),
     },
     /**
@@ -273,6 +274,6 @@ a.button {
 }
 
 .plain {
-  @apply bg-tx focus-visible:ring-pink;
+  @apply bg-none focus-visible:ring-pink;
 }
 </style>

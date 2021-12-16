@@ -1,7 +1,7 @@
 <template>
-  <section>
+  <section class="px-4">
     <div
-      class="image-grid px-4"
+      class="image-grid pb-8"
       :style="{ '--columns': columns, '--gutter': '12px' }"
     >
       <div
@@ -12,11 +12,18 @@
         <VImageCell
           v-for="(image, imgIndex) in column"
           :key="imgIndex"
+          :ref="
+            (el) => {
+              if (el && imgIndex === column.length - 1) {
+                lastImageRefs[index] = el
+              }
+            }
+          "
           :image="image"
         />
       </div>
     </div>
-    <h5 v-if="isError" class="image-grid__notification py-4">
+    <h5 v-if="isError" class="py-4">
       {{ fetchState.fetchingError }}
     </h5>
     <VLoadMore
@@ -40,7 +47,14 @@
  */
 import VLoadMore from '~/components/VLoadMore'
 import VImageCell from '~/components/VImageGrid/VImageCell'
-import { defineComponent, computed, useContext } from '@nuxtjs/composition-api'
+import {
+  computed,
+  defineComponent,
+  onBeforeUpdate,
+  onUpdated,
+  ref,
+  useContext,
+} from '@nuxtjs/composition-api'
 
 export default defineComponent({
   name: 'VImageGrid',
@@ -86,6 +100,19 @@ export default defineComponent({
       return cols
     })
 
+    // Collect a ref of each image that's the last of its column
+    const lastImageRefs = ref([])
+
+    // make sure to reset the refs before each update
+    onBeforeUpdate(() => {
+      lastImageRefs.value = []
+    })
+
+    onUpdated(() => {
+      console.log('last image refs!')
+      // console.log(lastImageRefs)
+    })
+
     const onLoadMore = () => {
       emit('load-more')
     }
@@ -95,6 +122,7 @@ export default defineComponent({
       fetchingErrorHeading,
       imageColumns,
       onLoadMore,
+      lastImageRefs,
     }
   },
 })

@@ -1,13 +1,15 @@
 <template>
-  <button
+  <VButton
     v-show="!isError"
+    size="large"
+    variant="plain"
     type="button"
-    class="load-more pb-6 w-full"
+    class="w-full font-semibold bg-dark-charcoal-06"
     :disabled="isFinished || isFetching"
     @click="onLoadMore"
   >
     <span>{{ buttonLabel }}</span>
-  </button>
+  </VButton>
 </template>
 <script>
 import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
