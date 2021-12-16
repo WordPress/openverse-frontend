@@ -41,9 +41,10 @@ export function useMediaQuery(query, options = { shouldPassInSSR: false }) {
 }
 
 /**
- * Check whether the screen meets the current breakpoint size.
+ * Check whether the curent screen meets
+ * or exceeds the provided breakpoint size.
  */
-export const isScreen = (breakpointName, options = {}) => {
+export const isMinScreen = (breakpointName, options = {}) => {
   return useMediaQuery(
     `(min-width: ${SCREEN_SIZES.get(breakpointName)}px)`,
     options

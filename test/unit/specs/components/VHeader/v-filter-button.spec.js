@@ -5,7 +5,7 @@ import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import VueI18n from 'vue-i18n'
 import messages from '../../../../../src/locales/en.json'
-import { isScreen } from '~/composables/use-media-query'
+import { isMinScreen } from '~/composables/use-media-query'
 
 /**
  * For some reason I need to mock the implementation
@@ -16,7 +16,7 @@ import { isScreen } from '~/composables/use-media-query'
  * that may be related.
  */
 jest.mock('~/composables/use-media-query', () => ({
-  isScreen: jest.fn(),
+  isMinScreen: jest.fn(),
 }))
 
 describe('VFilterButton', () => {
@@ -66,7 +66,7 @@ describe('VFilterButton', () => {
 
   describe('Above the medium breakpoint', () => {
     it('always shows the label and icon', () => {
-      isScreen.mockImplementation(() => ({ value: true }))
+      isMinScreen.mockImplementation(() => ({ value: true }))
       const { container } = render(VFilterButton, options)
 
       const button = screen.getByText('Filters')
@@ -76,7 +76,7 @@ describe('VFilterButton', () => {
       expect(icon).toBeVisible()
     })
     it('shows the count and text when filters are applied', () => {
-      isScreen.mockImplementation(() => ({ value: true }))
+      isMinScreen.mockImplementation(() => ({ value: true }))
       // +2 to guarantee it's plural
       const filterCount = Math.floor(Math.random() * 10) + 2
       appliedFilters = Array(filterCount).fill('')
@@ -87,7 +87,7 @@ describe('VFilterButton', () => {
       expect(button).toBeVisible()
     })
     it('does not show the icon when filters are applied', () => {
-      isScreen.mockImplementation(() => ({ value: true }))
+      isMinScreen.mockImplementation(() => ({ value: true }))
       appliedFilters = ['mockfilter1', 'mockfilter2']
 
       const { container } = render(VFilterButton, options)
@@ -99,7 +99,7 @@ describe('VFilterButton', () => {
 
   describe('below the medium breakpoint', () => {
     it('only shows the filter icon by default', () => {
-      isScreen.mockImplementation(() => ({ value: false }))
+      isMinScreen.mockImplementation(() => ({ value: false }))
       appliedFilters = []
       const { container } = render(VFilterButton, options)
 
@@ -110,7 +110,7 @@ describe('VFilterButton', () => {
       expect(label).not.toBeInTheDocument()
     })
     it('only shows the count and label when filters are applied', () => {
-      isScreen.mockImplementation(() => ({ value: false }))
+      isMinScreen.mockImplementation(() => ({ value: false }))
       // +2 to guarantee it's plural
       const filterCount = Math.floor(Math.random() * 10) + 2
       appliedFilters = Array(filterCount).fill('')
@@ -123,7 +123,7 @@ describe('VFilterButton', () => {
       expect(button).toBeVisible()
     })
     it('only shows the count when filters are applied and the user scrolls', () => {
-      isScreen.mockImplementation(() => ({ value: false }))
+      isMinScreen.mockImplementation(() => ({ value: false }))
       // +2 to guarantee it's plural
       const filterCount = Math.floor(Math.random() * 10) + 2
       appliedFilters = Array(filterCount).fill('')

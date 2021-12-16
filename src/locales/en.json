@@ -29,6 +29,14 @@
       "prompt": "I would like to find:"
     }
   },
+  "notification": {
+    "translation": {
+      "text": "The translation for {locale} locale is incomplete. Help us get to 100 percent by {link}.",
+      "link": "contributing a translation"
+    },
+    "dismiss": "Dismiss",
+    "okay": "OK"
+  },
   "header": {
     "about-nav-item": "Our Story",
     "source-nav-item": "Sources",

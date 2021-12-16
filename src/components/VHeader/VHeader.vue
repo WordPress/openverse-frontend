@@ -3,7 +3,8 @@
     class="sticky top-0 flex py-4 px-4 md:px-7 items -center justify-between z-40 w-full bg-white gap-x-2 border-b"
     :class="{
       'border-white': !isHeaderScrolled && !isFilterSidebarVisible,
-      'border-dark-charcoal-20': isHeaderScrolled || isFilterSidebarVisible,
+      'border-dark-charcoal-20':
+        isSearch && (isHeaderScrolled || isFilterSidebarVisible),
       'flex-wrap gap-y-4': !isMinScreenMD && !isHeaderScrolled,
     }"
   >
@@ -77,9 +78,9 @@ import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-vis
 
 import closeIcon from '~/assets/icons/close.svg'
 
-import VSearchBar from '~/components/VHeader/VSearchBar/VSearchBar.vue'
-import VFilterButton from '~/components/VHeader/VFilterButton.vue'
-import VLogoLoader from '~/components/VLogoLoader/VLogoLoader.vue'
+import VSearchBar from '~/components/VHeader/VSearchBar/VSearchBar'
+import VFilterButton from '~/components/VHeader/VFilterButton'
+import VLogoLoader from '~/components/VLogoLoader/VLogoLoader'
 
 // const searchRoutes = ['search', 'search-image', 'search-audio', 'search-video']
 const i18nKeys = {

@@ -19,7 +19,7 @@ import {
   toRefs,
   useContext,
 } from '@nuxtjs/composition-api'
-import { isScreen } from '~/composables/use-media-query'
+import { isMinScreen } from '~/composables/use-media-query'
 import filterIcon from '~/assets/icons/filter.svg'
 import VButton from '~/components/VButton.vue'
 import VIcon from '~/components/VIcon/VIcon'
@@ -46,7 +46,7 @@ const VFilterButton = defineComponent({
   setup(props, { emit }) {
     const { i18n, store } = useContext()
     const { isHeaderScrolled, pressed } = toRefs(props)
-    const isMinScreenMD = isScreen('md')
+    const isMinScreenMD = isMinScreen('md')
 
     const filterCount = computed(
       () => store.getters['search/appliedFilterTags'].length
@@ -59,7 +59,7 @@ const VFilterButton = defineComponent({
      */
     const variant = computed(() => {
       // Show the borderd state by default, unless below md
-      let value = isMinScreenMD.value ? 'action-menu' : 'action-menu-muted'
+      let value = isMinScreenMD.value ? 'action-menu' : 'action-menu-secondary'
 
       if (isHeaderScrolled.value) {
         value = 'action-menu-secondary'
