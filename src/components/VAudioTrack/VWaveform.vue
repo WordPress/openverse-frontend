@@ -153,6 +153,7 @@
 <script>
 import {
   computed,
+  defineComponent,
   onBeforeUnmount,
   onMounted,
   ref,
@@ -163,8 +164,8 @@ import { downsampleArray, upsampleArray } from '~/utils/resampling'
  * Renders an SVG representation of the waveform given a list of heights for the
  * bars.
  */
-export default {
-  name: 'Waveform',
+export default defineComponent({
+  name: 'VWaveform',
   props: {
     /**
      * an array of heights of the bars; The waveform will be generated with
@@ -513,7 +514,7 @@ export default {
       return this.$t('waveform.current-time', { time })
     },
   },
-}
+})
 </script>
 
 <style scoped lang="css">

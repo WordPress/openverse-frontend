@@ -6,11 +6,11 @@ import {
   Story,
 } from '@storybook/addon-docs'
 
-import Waveform from '~/components/AudioTrack/Waveform'
+import VWaveform from '~/components/VAudioTrack/VWaveform.vue'
 
 <Meta
   title="Components/Audio track/Waveform"
-  components={Waveform}
+  components={VWaveform}
   argTypes={{
     seeked: {
       action: 'seeked',
@@ -19,8 +19,8 @@ import Waveform from '~/components/AudioTrack/Waveform'
 />
 
 export const Template = (args, { argTypes }) => ({
-  template: `<Waveform class="w-full h-30" v-bind="$props" v-on="$props"/>`,
-  components: { Waveform },
+  template: `<VWaveform class="w-full h-30" v-bind="$props" v-on="$props"/>`,
+  components: { VWaveform },
   props: Object.keys(argTypes),
 })
 
