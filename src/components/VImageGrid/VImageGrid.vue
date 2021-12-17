@@ -10,16 +10,20 @@
         class="image-column"
       >
         <VImageCell
-          v-for="(image, imgIndex) in column"
-          :key="imgIndex"
+          v-for="item in column"
+          :key="item.index"
           :ref="
             (el) => {
-              if (el && imgIndex === column.length - 1) {
-                lastImageRefs[index] = el
-              }
+              imageRefs[item.index] = el
             }
           "
-          :image="image"
+          :data-focusindex="item.index"
+          :image="item.image"
+          @focus-leave="
+            (event) => {
+              focusEl(item.index + (event.shiftKey ? -1 : 1))
+            }
+          "
         />
       </div>
     </div>
@@ -50,8 +54,6 @@ import VImageCell from '~/components/VImageGrid/VImageCell'
 import {
   computed,
   defineComponent,
-  onBeforeUpdate,
-  onUpdated,
   ref,
   useContext,
 } from '@nuxtjs/composition-api'
@@ -93,36 +95,37 @@ export default defineComponent({
       if (!props.images) return cols
 
       let activeCol = 1
-      Object.values(props.images).forEach((image) => {
-        cols[activeCol - 1].push(image)
+      Object.values(props.images).forEach((image, index) => {
+        cols[activeCol - 1].push({ image, index })
         activeCol = activeCol < cols.length ? activeCol + 1 : 1
       })
       return cols
     })
-
-    // Collect a ref of each image that's the last of its column
-    const lastImageRefs = ref([])
-
-    // make sure to reset the refs before each update
-    onBeforeUpdate(() => {
-      lastImageRefs.value = []
-    })
-
-    onUpdated(() => {
-      console.log('last image refs!')
-      // console.log(lastImageRefs)
-    })
+    const imageRefs = ref({})
 
     const onLoadMore = () => {
       emit('load-more')
+    }
+
+    const focusEl = (index) => {
+      const el = document.querySelector(`[data-focusindex="${index}"]`)
+      if (!el) return
+      el.focus()
+    }
+
+    const debug = (thing) => {
+      console.log(thing)
+      console.log(imageRefs.value)
     }
 
     return {
       isError,
       fetchingErrorHeading,
       imageColumns,
+      imageRefs,
       onLoadMore,
-      lastImageRefs,
+      debug,
+      focusEl,
     }
   },
 })

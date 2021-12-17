@@ -1,33 +1,45 @@
 <template>
-  <figure
-    itemprop="image"
-    itemscope=""
-    itemtype="https://schema.org/ImageObject"
-    class="group relative"
+  <NuxtLink
+    v-slot="{ href }"
+    itemprop="contentUrl"
+    :to="localePath('/image/' + image.id)"
+    :title="image.title"
+    custom
   >
-    <NuxtLink
-      itemprop="contentUrl"
-      :to="localePath('/image/' + image.id)"
-      :title="image.title"
+    <a
+      :href="href"
+      class="group relative focus:outline-none focus-visible:ring focus-visible:ring-offset-2 focus-visible:ring-pink"
       @click="onGotoDetailPage($event, image)"
+      @keydown.tab.prevent="onFocusLeave"
     >
-      <img
-        ref="img"
-        loading="lazy"
-        :alt="image.title"
-        :src="getImageUrl(image)"
-        :width="image.width"
-        :height="image.height"
-        itemprop="thumbnailUrl"
-        @error="onImageLoadError($event, image)"
-      />
-    </NuxtLink>
-    <figcaption
-      class="absolute left-0 bottom-0 invisible group-hover:visible bg-white p-1"
-    >
-      <VLicense :license="image.license" :bg-filled="true" :hide-name="true" />
-    </figcaption>
-  </figure>
+      <figure
+        itemprop="image"
+        itemscope=""
+        itemtype="https://schema.org/ImageObject"
+      >
+        <img
+          ref="img"
+          loading="lazy"
+          :alt="image.title"
+          :src="getImageUrl(image)"
+          :width="image.width"
+          :height="image.height"
+          itemprop="thumbnailUrl"
+          @error="onImageLoadError($event, image)"
+        />
+        <figcaption
+          class="absolute left-0 bottom-0 invisible group-hover:visible group-focus:visible bg-white p-1"
+        >
+          <span class="sr-only">{{ image.title }}</span>
+          <VLicense
+            :license="image.license"
+            :bg-filled="true"
+            :hide-name="true"
+          />
+        </figcaption>
+      </figure>
+    </a>
+  </NuxtLink>
 </template>
 
 <script>
@@ -71,6 +83,9 @@ export default {
       } else {
         element.src = errorImage
       }
+    },
+    onFocusLeave(event) {
+      this.$emit('focus-leave', event)
     },
   },
 }
