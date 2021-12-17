@@ -114,7 +114,7 @@ export default {
     toggleFilter({ code, checked }) {
       this.filters[code] = checked
     },
-    onSubmit() {
+    async onSubmit() {
       const newQuery = { q: this.form.searchTerm }
 
       Object.entries(this.filters).forEach(([filterCode, isChecked]) => {
@@ -126,14 +126,16 @@ export default {
       if (process.env.enableAudio) {
         newQuery.searchType = this.form.searchType
       }
-      this.setSearchTerm(newQuery)
-      this.fetchMedia({})
+
+      await this.setSearchTerm(newQuery)
+      await this.fetchMedia({})
 
       const newPath = this.localePath({
         path: this.getPath(),
         query: this.searchQueryParams,
       })
-      this.$router.push(newPath)
+
+      await this.$router.push(newPath)
     },
   },
 }

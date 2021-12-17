@@ -1,23 +1,26 @@
 <template>
   <header
-    class="sticky top-0 flex py-4 px-4 md:px-7 items -center justify-between z-40 w-full bg-white gap-x-2 border-b"
+    class="sticky top-0 flex py-4 px-4 md:px-7 items -center justify-between z-40 w-full bg-white gap-x-2"
     :class="{
-      'border-white': !isHeaderScrolled && !isFilterSidebarVisible,
-      'border-dark-charcoal-20':
-        isSearch && (isHeaderScrolled || isFilterSidebarVisible),
+      'border-b border-white': !isHeaderScrolled && !isFilterSidebarVisible,
+      'border-b border-dark-charcoal-20':
+        isSearchRoute && (isHeaderScrolled || isFilterSidebarVisible),
       'flex-wrap gap-y-4': !isMinScreenMD && !isHeaderScrolled,
     }"
   >
     <NuxtLink
       to="/"
       class="rounded-sm ring-offset-1 focus:outline-none focus-visible:ring focus-visible:ring-pink -ms-2 inline-flex items-center hover:bg-yellow"
-      :class="{ 'pe-3': !isHeaderScrolled || !isSearch, 'md:px-0': isSearch }"
+      :class="{
+        'pe-3': !isHeaderScrolled || !isSearchRoute,
+        'md:px-0': isSearchRoute,
+      }"
     >
       <VLogoLoader :status="isFetching ? 'loading' : 'idle'" />
       <svg
-        v-if="!isHeaderScrolled || !isSearch"
+        v-if="!isHeaderScrolled || !isSearchRoute"
         class="-ml-1 mt-1"
-        :class="{ 'md:hidden': isSearch }"
+        :class="{ 'md:hidden': isSearchRoute }"
         width="95"
         height="15"
         viewBox="0 0 95 15"
@@ -32,7 +35,7 @@
     </NuxtLink>
 
     <VSearchBar
-      v-if="isSearch"
+      v-show="!isHomeRoute"
       v-model.trim="searchTerm"
       class="mx-auto md:ms-0 md:me-auto lg:w-1/2 2xl:w-1/3"
       :class="{
@@ -50,7 +53,7 @@
     </VSearchBar>
 
     <VFilterButton
-      v-if="isSearch"
+      v-if="isSearchRoute"
       :is-header-scrolled="isHeaderScrolled"
       :pressed="isFilterSidebarVisible"
       @toggle="toggleFilterVisibility"
@@ -71,8 +74,11 @@ import {
 import { MEDIA, SEARCH } from '~/constants/store-modules'
 import { FETCH_MEDIA, UPDATE_QUERY } from '~/constants/action-types'
 import { AUDIO, IMAGE } from '~/constants/media'
-import { isScreen } from '~/composables/use-media-query'
-import { useSearchRoute } from '~/composables/use-search-route'
+import { isMinScreen } from '~/composables/use-media-query'
+import {
+  useMatchSearchRoutes,
+  useMatchHomeRoute,
+} from '~/composables/use-match-routes'
 import { useWindowScroll } from '~/composables/use-window-scroll'
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
 
@@ -82,7 +88,6 @@ import VSearchBar from '~/components/VHeader/VSearchBar/VSearchBar'
 import VFilterButton from '~/components/VHeader/VFilterButton'
 import VLogoLoader from '~/components/VLogoLoader/VLogoLoader'
 
-// const searchRoutes = ['search', 'search-image', 'search-audio', 'search-video']
 const i18nKeys = {
   [AUDIO]: {
     noResult: 'browse-page.audio-no-results',
@@ -105,11 +110,11 @@ const VHeader = defineComponent({
   },
   setup() {
     const { app, i18n, store } = useContext()
-    const { isSearch } = useSearchRoute()
+    const { matches: isSearchRoute } = useMatchSearchRoutes()
+    const { matches: isHomeRoute } = useMatchHomeRoute()
     const { isHeaderScrolled } = useWindowScroll()
     const router = useRouter()
-    // Screen is at least the MD breakpoint wide
-    const isMinScreenMD = isScreen('md', { shouldPassInSSR: true })
+    const isMinScreenMD = isMinScreen('md', { shouldPassInSSR: true })
     const { isFilterSidebarVisible, setFilterSidebarVisibility } =
       useFilterSidebarVisibility({ mediaQuery: isMinScreenMD })
 
@@ -159,6 +164,7 @@ const VHeader = defineComponent({
         searchStatus.value = ''
       }
     })
+
     const localSearchTerm = ref(store.state.search.query.q)
     const searchTerm = computed({
       get: () => localSearchTerm.value,
@@ -198,7 +204,8 @@ const VHeader = defineComponent({
       isFilterSidebarVisible,
       isHeaderScrolled,
       isMinScreenMD,
-      isSearch,
+      isSearchRoute,
+      isHomeRoute,
       searchStatus,
       searchTerm,
       toggleFilterVisibility,
