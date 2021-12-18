@@ -3,10 +3,11 @@ services:
   web:
     build:
       context: .
-      target: dev
+      target: app
     ports:
       - '8443:8443'
     environment:
       # HOST is necessary for Nuxt + Docker
       HOST: 0.0.0.0
       PORT: 8443
+  
