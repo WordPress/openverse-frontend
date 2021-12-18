@@ -1,17 +1,18 @@
 <template>
   <aside
     :aria-label="$t('photo-details.aria.related')"
-    class="p-4 my-6 photo_related-images"
+    class="m-6 md:mx-14 md:mb-14 photo_related-images"
   >
-    <h3 class="b-header">
+    <h3 class="text-3xl">
       {{ $t('photo-details.related-images') }}
     </h3>
     <ImageGrid
       :images="images"
       :can-load-more="false"
-      :is-fetching="$fetchState.pending"
-      :fetching-error="$fetchState.error"
-      :error-message-text="null"
+      :fetch-state="{
+        isFetching: $fetchState.pending,
+        fetchingError: $fetchState.error,
+      }"
     />
   </aside>
 </template>

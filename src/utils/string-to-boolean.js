@@ -21,4 +21,4 @@ function stringToBoolean(string) {
   } else return false
 }
 
-export default stringToBoolean
+module.exports = stringToBoolean

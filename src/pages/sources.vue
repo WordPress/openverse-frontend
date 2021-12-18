@@ -1,6 +1,6 @@
 <template>
-  <div class="section">
-    <div :class="['container', isEmbedded ? '' : 'is-fluid']">
+  <div class="section" dir="ltr">
+    <div class="container">
       <div class="mb-10">
         <h1 class="text-5xl mb-10">
           {{ $t('sources.title') }}
@@ -98,15 +98,24 @@
                 <TableSortIcon :active="sort.field === 'display_name'" />
               </span>
             </th>
-            <th>{{ $t('sources.providers.domain') }}</th>
             <th
               tabindex="0"
-              @click="sortTable('image_count')"
-              @keypress.enter="sortTable('image_count')"
+              @click="sortTable('source_url')"
+              @keypress.enter="sortTable('source_url')"
+            >
+              <span class="table-header-inner">
+                {{ $t('sources.providers.domain') }}
+                <TableSortIcon :active="sort.field === 'source_url'" />
+              </span>
+            </th>
+            <th
+              tabindex="0"
+              @click="sortTable('media_count')"
+              @keypress.enter="sortTable('media_count')"
             >
               <span class="table-header-inner">
                 {{ $t('sources.providers.item') }}
-                <TableSortIcon :active="sort.field === 'image_count'" />
+                <TableSortIcon :active="sort.field === 'media_count'" />
               </span>
             </th>
           </tr>
@@ -124,7 +133,7 @@
               </a>
             </td>
             <td class="number-cell font-semibold">
-              {{ getProviderImageCount(imageProvider.image_count) }}
+              {{ getProviderMediaCount(imageProvider.media_count || 0) }}
             </td>
           </tr>
         </tbody>
@@ -136,15 +145,13 @@
 <script>
 import sortBy from 'lodash.sortby'
 import { mapState } from 'vuex'
-import { NAV, PROVIDER } from '~/constants/store-modules'
+import { PROVIDER } from '~/constants/store-modules'
+
+const ARABIC_NUMERAL_LOCALES = ['ar', 'fa', 'ur', 'ckb', 'ps']
 
 const SourcePage = {
   name: 'source-page',
-  layout({ store }) {
-    return store.state.nav.isEmbedded
-      ? 'embedded-with-nav-search'
-      : 'with-nav-search'
-  },
+  layout: 'with-nav-search',
   data() {
     return {
       sort: {
@@ -154,7 +161,6 @@ const SourcePage = {
     }
   },
   computed: {
-    ...mapState(NAV, ['isEmbedded']),
     ...mapState(PROVIDER, ['imageProviders']),
     sortedProviders() {
       const sorted = sortBy(this.imageProviders, [this.sort.field])
@@ -162,8 +168,19 @@ const SourcePage = {
     },
   },
   methods: {
-    getProviderImageCount(imageCount) {
-      return imageCount.toLocaleString(this.$i18n.locale)
+    /**
+     * @param {number} mediaCount
+     * @return {string} Localized media count
+     */
+    getProviderMediaCount(mediaCount = 0) {
+      let locale = this.$i18n.locale
+      if (ARABIC_NUMERAL_LOCALES.some((l) => locale.startsWith(l))) {
+        // most sites with RTL language with numbers continue to use Western Arabic Numerals whereas `toLocaleString` will use Eastern Arabic Numerals for Arabic and Hebrew by default
+        // Prevent formatting using Eastern Arabic Numerals and use `en-GB` to match the most common decimal and thousands delimiters for those regions
+        // https://en.wikipedia.org/wiki/Decimal_separator#Countries_using_decimal_point
+        locale = 'en-GB'
+      }
+      return mediaCount.toLocaleString(locale)
     },
     sortTable(field) {
       let direction = 'asc'

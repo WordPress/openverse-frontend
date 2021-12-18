@@ -1,5 +1,21 @@
 const fetch = require('node-fetch')
 const { chromium } = require('playwright')
+const stringToBoolean = require('./string-to-boolean')
+
+const useNewHeader =
+  stringToBoolean(process.env.FEATURE_2021_GLOBAL_HEADER_FOOTER) ?? false
+
+const wpSite = useNewHeader
+  ? {
+      url: 'http://wordpress.org/news-test',
+      headerSelector: '.global-header',
+      footerSelector: '.global-footer',
+    }
+  : {
+      url: 'http://wordpress.org',
+      headerSelector: '#wporg-header',
+      footerSelector: '#wporg-footer',
+    }
 
 /**
  * Scrapes the header, footer, and stylesheet contents from
@@ -12,15 +28,22 @@ const { chromium } = require('playwright')
 async function scrapeWpDotOrg() {
   const browser = await chromium.launch()
   const page = await browser.newPage()
-  await page.goto('http://wordpress.org')
+  await page.goto(wpSite.url)
+  const [header, footer, inlineStyleString, stylesheetURLs] =
+    await page.evaluate(async (wpSite) => {
+      console.log(wpSite)
 
-  const [header, footer, stylesheetURLs] = await page.evaluate(async () => {
-    return [
-      document.querySelector('#wporg-header').outerHTML,
-      document.querySelector('#wporg-footer').outerHTML,
-      [...document.styleSheets].map((i) => i.href).filter(Boolean),
-    ]
-  })
+      return [
+        document.querySelector(wpSite.headerSelector).outerHTML,
+        document.querySelector(wpSite.footerSelector).outerHTML,
+        // don't forget inline style tags!
+        [...document.querySelectorAll('style')].reduce(
+          (acc, i) => `${acc}\n${i.innerHTML}`,
+          ''
+        ),
+        [...document.styleSheets].map((i) => i.href).filter(Boolean),
+      ]
+    }, wpSite)
 
   let css = await Promise.all(
     stylesheetURLs.map((i) => fetch(i).then((res) => res.text()))
@@ -32,7 +55,7 @@ async function scrapeWpDotOrg() {
 
   await browser.close()
 
-  return [header, footer, css]
+  return [header, footer, `${inlineStyleString}\n${css}`]
 }
 
 module.exports = { scrapeWpDotOrg }

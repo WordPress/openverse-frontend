@@ -1,6 +1,7 @@
 import pkg from './package.json'
 import locales from './src/locales/scripts/valid-locales.json'
 import stringToBoolean from './src/utils/string-to-boolean'
+import { VIEWPORTS } from './src/constants/screens'
 
 /**
  * Default environment variables are set on this key. Defaults are fallbacks to existing env vars.
@@ -132,7 +133,7 @@ export default {
       '~/components/ImageDetails',
       '~/components/ImageGrid',
       '~/components/MediaInfo',
-      '~/components/MetaSearch',
+      '~/components/VMetaSearch',
       '~/components/MediaTag',
       '~/components/Skeleton',
       '~/components/VPopover',
@@ -167,17 +168,24 @@ export default {
     scss: ['./styles/utilities/all.scss'],
   },
   modules: [
-    '@nuxtjs/sentry',
-    'nuxt-ssr-cache',
     '@nuxtjs/i18n',
+    '@nuxtjs/redirect-module',
+    '@nuxtjs/sentry',
     '@nuxtjs/sitemap',
+  ],
+  serverMiddleware: [
+    { path: '/healthcheck', handler: '~/server-middleware/healthcheck.js' },
   ],
   i18n: {
     locales: [
       {
+        // unique identifier for the locale in Vue i18n
         code: 'en',
         name: 'English',
+        // ISO code used for SEO purposes (html lang attribute)
         iso: 'en',
+        // wp_locale as found in GlotPress
+        wpLocale: 'en_US',
         file: 'en.json',
       },
       ...(locales ?? []),
@@ -200,10 +208,18 @@ export default {
     baseUrl: 'http://localhost:8443',
     vueI18n: '~/plugins/vue-i18n.js',
   },
+  /**
+   * Map the old route for /photos/_id page to /image/_id permanently to keep links working.
+   * See the redirect module for more info.
+   * {@link https://github.com/nuxt-community/redirect-module#usage}
+   */
+  redirect: [{ from: '^/photos/(.*)$', to: '/image/$1', statusCode: 301 }],
   sentry: {
     dsn:
       process.env.SENTRY_DSN ||
-      'https://3f3e05dbe6994c318d1bf1c8bfcf71a1@o288582.ingest.sentry.io/1525413',
+      'https://53da8fbcebeb48a6bf614a212629df6b@o787041.ingest.sentry.io/5799642',
+    disabled: process.env.NODE_ENV === 'development',
+    environment: process.env.NODE_ENV,
     lazy: true,
   },
   tailwindcss: {
@@ -218,7 +234,7 @@ export default {
         name: '@storybook/addon-essentials',
         options: {
           backgrounds: false,
-          viewport: false,
+          viewport: true,
           toolbars: true,
         },
       },
@@ -228,6 +244,9 @@ export default {
         storySort: {
           order: ['Introduction', ['Openverse UI']],
         },
+      },
+      viewport: {
+        viewports: VIEWPORTS,
       },
     },
   },

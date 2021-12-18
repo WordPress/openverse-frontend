@@ -5,6 +5,7 @@ describe('SearchGridCell', () => {
   const props = {
     image: {
       id: 0,
+      license: 'by',
       title: 'foo',
       provider: 'flickr',
       url: 'foo.bar',
@@ -14,7 +15,7 @@ describe('SearchGridCell', () => {
   }
   const options = {
     propsData: props,
-    stubs: { RouterLink: true, NuxtLink: true },
+    stubs: ['NuxtLink', 'VLicense'],
   }
 
   it('should render correct contents', () => {

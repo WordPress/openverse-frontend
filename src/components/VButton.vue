@@ -11,6 +11,7 @@
     :aria-pressed="pressed"
     :aria-disabled="ariaDisabledRef"
     :disabled="disabledAttributeRef"
+    v-bind="$attrs"
     v-on="$listeners"
   >
     <!--
@@ -72,6 +73,7 @@ const VButton = defineComponent({
           'tertiary',
           'action-menu',
           'action-menu-muted',
+          'grouped',
         ].includes(v),
     },
     /**
@@ -85,14 +87,15 @@ const VButton = defineComponent({
       default: false,
     },
     /**
-     * The size of the button.
+     * The size of the button. `disabled` removes all internal padding allowing
+     * the consumer of the component to determine the padding.
      *
      * @default 'medium'
      */
     size: {
       type: String,
       default: 'medium',
-      validate: (v) => ['large', 'medium', 'small'].includes(v),
+      validate: (v) => ['large', 'medium', 'small', 'disabled'].includes(v),
     },
     /**
      * Whether the button is disabled. Used alone this will only
@@ -197,7 +200,7 @@ export default VButton
 
 <style module>
 .button {
-  @apply flex max-w-max items-center rounded-sm justify-center transition-shadow duration-100 ease-linear disabled:opacity-70 focus:outline-none focus-visible:ring focus-visible:ring-offset-2 no-underline appearance-none;
+  @apply flex items-center rounded-sm justify-center transition-shadow duration-100 ease-linear disabled:opacity-70 focus:outline-none focus-visible:ring no-underline appearance-none ring-offset-1;
 }
 
 .button[disabled='disabled'],
@@ -238,7 +241,7 @@ a.button {
 }
 
 .tertiary {
-  @apply bg-white text-black hover:bg-dark-charcoal hover:text-white border border-dark-charcoal-20 hover:border-tx focus-visible:ring-pink;
+  @apply bg-white text-black hover:bg-dark-charcoal hover:text-white border border-dark-charcoal-20 hover:border-tx focus-visible:ring-pink ring-offset-0;
 }
 
 .tertiary-pressed {
@@ -259,5 +262,17 @@ a.button {
 
 .action-menu-muted-pressed {
   @apply border-tx bg-dark-charcoal text-white;
+}
+
+.grouped {
+  @apply bg-white text-black focus-visible:ring-pink;
+}
+
+.grouped-pressed {
+  @apply bg-dark-charcoal-10 ring-offset-dark-charcoal-10;
+}
+
+.plain {
+  @apply bg-tx focus-visible:ring-pink;
 }
 </style>

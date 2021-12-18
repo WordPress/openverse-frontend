@@ -70,8 +70,6 @@ const VCheckbox = defineComponent({
     },
     /**
      * Sets disabled property of the input and changes label opacity if set to true.
-     *
-     * @default false
      */
     disabled: {
       type: Boolean,
@@ -135,6 +133,6 @@ export default VCheckbox
   @apply checked:bg-dark-charcoal;
 }
 .checkmark {
-  @apply absolute left-0 w-5 h-5 text-white;
+  @apply absolute start-0 w-5 h-5 text-white;
 }
 </style>

@@ -1,19 +1,37 @@
 <template>
   <div class="app">
-    <HeaderSection :is-embedded="false" />
-    <main>
+    <MigrationNotice v-show="isReferredFromCc" />
+    <TranslationStatusBanner />
+    <HeaderSection />
+    <main class="embedded">
       <Nuxt />
     </main>
-    <FooterSection />
   </div>
 </template>
 <script>
-const defaultPage = {
-  name: 'default',
-  layout: 'default',
+import iframeHeight from '~/mixins/iframe-height'
+
+import { NAV } from '~/constants/store-modules'
+
+import { useContext } from '@nuxtjs/composition-api'
+import TranslationStatusBanner from '~/components/TranslationStatusBanner.vue'
+
+const embeddedPage = {
+  name: 'embedded',
+  components: { TranslationStatusBanner },
+  layout: 'embedded',
+  mixins: [iframeHeight],
   head() {
     return this.$nuxtI18nHead({ addSeoAttributes: true, addDirAttribute: true })
   },
+  setup() {
+    const { store } = useContext()
+    const isReferredFromCc = store.state[NAV].isReferredFromCc
+
+    return {
+      isReferredFromCc,
+    }
+  },
 }
-export default defaultPage
+export default embeddedPage
 </script>

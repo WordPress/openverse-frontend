@@ -14,11 +14,16 @@
 </template>
 
 <script>
-import { defineComponent, toRefs, ref } from '@nuxtjs/composition-api'
+import { defineComponent, toRefs, ref, provide } from '@nuxtjs/composition-api'
 import { usePopoverContent } from '~/composables/use-popover-content'
 import { warn } from '~/utils/warn'
 
 import { propTypes } from './VPopoverContent.types'
+
+/**
+ * @type {import('@nuxtjs/composition-api').InjectionKey<boolean>}
+ */
+export const VPopoverContentContextKey = Symbol('VPopoverContentContextKey')
 
 export default defineComponent({
   name: 'VPopover',
@@ -34,38 +39,18 @@ export default defineComponent({
    * @param {import('@nuxtjs/composition-api').SetupContext} context
    */
   setup(props, { emit, attrs }) {
+    provide(VPopoverContentContextKey, true)
     if (!attrs['aria-label'] && !attrs['aria-labelledby']) {
       warn('You should provide either `aria-label` or `aria-labelledby` props.')
     }
 
     const propsRefs = toRefs(props)
     const popoverRef = ref()
-    const { focusOnBlur } = usePopoverContent({
+    const { onKeyDown, onBlur } = usePopoverContent({
       popoverRef,
       popoverPropsRefs: propsRefs,
+      emit,
     })
-
-    /**
-     * @param {KeyboardEvent} event
-     */
-    const onKeyDown = (event) => {
-      emit('keydown', event)
-
-      if (event.defaultPrevented) return
-      if (event.key !== 'Escape') return
-      if (!propsRefs.hideOnEsc.value) return
-
-      event.stopPropagation()
-      propsRefs.hide.value()
-    }
-
-    /**
-     * @param {FocusEvent} event
-     */
-    const onBlur = (event) => {
-      emit('blur', event)
-      focusOnBlur(event)
-    }
 
     return { popoverRef, onKeyDown, onBlur }
   },
@@ -74,6 +59,6 @@ export default defineComponent({
 
 <style module>
 .popover {
-  @apply bg-white border border-light-gray rounded-sm px-2 pt-2 pb-1 max-w-min whitespace-nowrap shadow;
+  @apply bg-white border border-light-gray rounded-sm max-w-max whitespace-nowrap shadow;
 }
 </style>

@@ -8,10 +8,14 @@ const propsData = {
     { id: 'i3', url: 'http://localhost:8080/i3.svg', title: 'image3' },
   ],
   canLoadMore: false,
+  fetchState: {
+    isFetching: false,
+    fetchingError: null,
+  },
 }
 const options = {
   props: propsData,
-  stubs: ['NuxtLink', 'LicenseIcons'],
+  stubs: ['NuxtLink', 'VLicense'],
 }
 describe('ImageGrid', () => {
   it('renders images without load more button if canLoadMore is false', () => {
@@ -38,7 +42,7 @@ describe('ImageGrid', () => {
 
   it('shows LoadingIcon instead of LoadMoreButton when isFetching', async () => {
     options.props.canLoadMore = true
-    options.props.isFetching = true
+    options.props.fetchState.isFetching = true
     render(ImageGrid, options)
     // getByRole('button') does not find the button
     expect(screen.getByText('browse-page.load')).not.toBeVisible()

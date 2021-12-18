@@ -29,23 +29,25 @@ describe('Search Store', () => {
       const state = store.state()
       expect(state.results.audio).toEqual({
         count: 0,
-        items: [],
+        items: {},
         page: undefined,
         pageCount: 0,
       })
       expect(state.results.image).toEqual({
         count: 0,
-        items: [],
+        items: {},
         page: undefined,
         pageCount: 0,
       })
-      expect(state.fetchingState.audio).toEqual({
+      expect(state.fetchState.audio).toEqual({
         fetchingError: null,
         isFetching: false,
+        isFinished: false,
       })
-      expect(state.fetchingState.image).toEqual({
+      expect(state.fetchState.image).toEqual({
         fetchingError: null,
         isFetching: false,
+        isFinished: false,
       })
       expect(state.audio).toEqual({})
       expect(state.image).toEqual({})
@@ -63,14 +65,14 @@ describe('Search Store', () => {
     it('FETCH_START_MEDIA updates state', () => {
       mutations[FETCH_START_MEDIA](state, { mediaType: IMAGE })
 
-      expect(state.fetchingState.image.isFetching).toBeTruthy()
-      expect(state.fetchingState.image.fetchingError).toBeFalsy()
+      expect(state.fetchState.image.isFetching).toBeTruthy()
+      expect(state.fetchState.image.fetchingError).toBeFalsy()
     })
 
     it('FETCH_END_MEDIA updates state', () => {
       mutations[FETCH_END_MEDIA](state, { mediaType: IMAGE })
 
-      expect(state.fetchingState.image.isFetching).toBeFalsy()
+      expect(state.fetchState.image.isFetching).toBeFalsy()
     })
 
     it('FETCH_MEDIA_ERROR updates state', () => {
@@ -79,9 +81,9 @@ describe('Search Store', () => {
         errorMessage: 'error',
       })
 
-      expect(state.fetchingState.image.isFetching).toBeFalsy()
-      expect(state.fetchingState.image.fetchingError).toBeTruthy()
-      expect(state.fetchingState.image.fetchingError).toBe('error')
+      expect(state.fetchState.image.isFetching).toBeFalsy()
+      expect(state.fetchState.image.fetchingError).toBeTruthy()
+      expect(state.fetchState.image.fetchingError).toBe('error')
     })
 
     it('SET_AUDIO updates state', () => {
@@ -99,11 +101,21 @@ describe('Search Store', () => {
     })
 
     it('SET_MEDIA updates state persisting images', () => {
-      const img1 = { title: 'Foo', creator: 'foo', tags: [] }
-      const img2 = { title: 'Bar', creator: 'bar', tags: [] }
-      state.results.image.items = [img1]
+      const img1 = {
+        id: '81e551de-52ab-4852-90eb-bc3973c342a0',
+        title: 'Foo',
+        creator: 'foo',
+        tags: [],
+      }
+      const img2 = {
+        id: '0dea3af1-27a4-4635-bab6-4b9fb76a59f5',
+        title: 'Bar',
+        creator: 'bar',
+        tags: [],
+      }
+      state.results.image.items = { [img1.id]: img1 }
       const params = {
-        media: [img2],
+        media: { [img2.id]: img2 },
         mediaCount: 2,
         page: 2,
         shouldPersistMedia: true,
@@ -111,7 +123,10 @@ describe('Search Store', () => {
       }
       mutations[SET_MEDIA](state, params)
 
-      expect(state.results.image.items).toEqual([img1, img2])
+      expect(state.results.image.items).toEqual({
+        [img1.id]: img1,
+        [img2.id]: img2,
+      })
       expect(state.results.image.count).toBe(params.mediaCount)
       expect(state.results.image.page).toBe(params.page)
     })
@@ -181,18 +196,12 @@ describe('Search Store', () => {
     beforeEach(() => {
       imageServiceMock = {
         search: jest.fn(() => Promise.resolve({ data: searchData })),
-        getProviderCollection: jest.fn(() =>
-          Promise.resolve({ data: searchData })
-        ),
         getMediaDetail: jest.fn(() =>
           Promise.resolve({ data: imageDetailData })
         ),
       }
       audioServiceMock = {
         search: jest.fn(() => Promise.resolve({ data: searchData })),
-        getProviderCollection: jest.fn(() =>
-          Promise.resolve({ data: searchData })
-        ),
         getMediaDetail: jest.fn(() =>
           Promise.resolve({ data: audioDetailData })
         ),
@@ -214,29 +223,20 @@ describe('Search Store', () => {
         dispatch: jest.fn(),
         rootState: {
           user: { usageSessionId: 'foo' },
-          search: { query: { q: 'cat' } },
+          search: { query: { q: 'cat', mediaType: IMAGE } },
         },
-        rootGetters: { search: { searchQueryParams: () => {} } },
+        rootGetters: {
+          search: { searchQueryParams: () => ({ q: 'cat', mediaType: IMAGE }) },
+        },
         state: state,
       }
-    })
-
-    it('FETCH_MEDIA throws an error on unknown media type', async () => {
-      const action = createActions(services)[FETCH_MEDIA]
-      const params = {
-        mediaType: 'unknown',
-        page: 1,
-      }
-      await expect(action(context, params)).rejects.toThrow(
-        'Cannot fetch unknown media type "unknown"'
-      )
     })
 
     it('FETCH_MEDIA on success', async () => {
       const params = {
         q: 'foo',
         page: 1,
-        mediaType: IMAGE,
+        shouldPersistMedia: true,
       }
       const action = createActions(services)[FETCH_MEDIA]
       await action(context, params)
@@ -278,7 +278,6 @@ describe('Search Store', () => {
         q: 'foo',
         page: 1,
         shouldPersistMedia: false,
-        mediaType: IMAGE,
       }
       const action = createActions(services)[FETCH_MEDIA]
       await action(context, params)

@@ -9,7 +9,6 @@ import { REPORT_CONTENT, USAGE_DATA } from '~/constants/store-modules'
 import { TOGGLE_REPORT_FORM_VISIBILITY } from '~/constants/mutation-types'
 
 const stubs = {
-  LegalDisclaimer: true,
   ImageAttribution: true,
   ContentReportForm: true,
   ReuseSurvey: true,
@@ -109,11 +108,6 @@ describe('PhotoDetails', () => {
   it('renders image title', () => {
     const wrapper = render(PhotoDetails, options)
     expect(wrapper.html()).toContain(props.image.title)
-  })
-
-  it('renders creator name', () => {
-    const wrapper = render(PhotoDetails, options)
-    expect(wrapper.html()).toContain(props.image.creator)
   })
 
   it('redirects back when clicking on the back to results link', async () => {

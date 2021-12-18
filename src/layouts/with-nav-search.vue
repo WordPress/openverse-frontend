@@ -1,19 +1,37 @@
 <template>
   <div class="app">
-    <HeaderSection :show-nav-search="true" :is-embedded="false" />
-    <main>
+    <MigrationNotice v-show="isReferredFromCc" />
+    <TranslationStatusBanner />
+    <HeaderSection :show-nav-search="true" />
+    <main class="embedded">
       <Nuxt />
     </main>
-    <FooterSection />
   </div>
 </template>
 <script>
-const withNavSearch = {
-  name: 'with-nav-search',
-  layout: 'with-nav-search',
+import iframeHeight from '~/mixins/iframe-height'
+
+import { NAV } from '~/constants/store-modules'
+
+import TranslationStatusBanner from '~/components/TranslationStatusBanner.vue'
+import { useContext } from '@nuxtjs/composition-api'
+
+const embeddedWithNavSearch = {
+  name: 'embedded-with-nav-search',
+  components: { TranslationStatusBanner },
+  layout: 'embedded-with-nav-search',
+  mixins: [iframeHeight],
   head() {
     return this.$nuxtI18nHead({ addSeoAttributes: true, addDirAttribute: true })
   },
+  setup() {
+    const { store } = useContext()
+    const isReferredFromCc = store.state[NAV].isReferredFromCc
+
+    return {
+      isReferredFromCc,
+    }
+  },
 }
-export default withNavSearch
+export default embeddedWithNavSearch
 </script>

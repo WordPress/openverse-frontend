@@ -25,11 +25,11 @@
     </div>
 
     <div
-      class="navbar-dropdown"
+      class="navbar-dropdown start-0"
       :class="{ visible: isHovered || isFocused }"
       role="menu"
     >
-      <slot :onFocus="onFocus" />
+      <slot :onFocus="onFocus" :a11y-props="{ role: 'menuitem' }" />
     </div>
   </div>
 </template>
