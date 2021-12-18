@@ -84,6 +84,7 @@ COPY --from=builder /usr/app/.nuxt /usr/app/.nuxt
 # copy some files required by nuxt.config.js
 COPY --from=builder /usr/app/src/locales /usr/app/src/locales
 COPY --from=builder /usr/app/src/utils  /usr/app/src/utils
+COPY --from=builder /usr/app/src/constants  /usr/app/src/constants
 
 RUN pnpm install --frozen-lockfile
 
