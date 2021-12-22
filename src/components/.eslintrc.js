@@ -6,7 +6,7 @@ module.exports = {
       // Allow things like `Component.stories.js` and `Component.types.js`
       {
         case: 'pascalCase',
-        ignore: ['.eslintrc.js', '.*\\..*\\.js', '*/meta/*'],
+        ignore: ['.eslintrc.js', '.*\\..*\\.js'],
       },
     ],
   },

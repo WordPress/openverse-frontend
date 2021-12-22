@@ -4,10 +4,10 @@ import { targets } from './meta/targets'
 
 export default defineComponent({
   name: 'VTeleportTarget',
-  data: () => ({ children: [] }),
   props: {
     name: { type: String, required: true },
   },
+  data: () => ({ children: [] }),
   created() {
     if (this.name in targets)
       throw new Error(`VTeleportTarget: duplicate name ${this.name}`)
