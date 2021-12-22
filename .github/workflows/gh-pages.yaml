@@ -1,7 +1,6 @@
 name: Storybook GitHub Pages
 
 on:
-  pull_request:  # this is just for testing the PR, remove before merging
   push:
     branches:
       - main
