@@ -37,14 +37,14 @@ const contentTypes = [
     name: 'All',
     url: '/search/?q=cat',
     supported: true,
-    sources: 5,
+    sources: 6,
   },
   {
     id: 'image',
     name: 'Image',
     url: '/search/image?q=cat',
     supported: true,
-    sources: 5,
+    sources: 6,
   },
   {
     id: 'audio',
