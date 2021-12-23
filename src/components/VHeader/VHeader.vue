@@ -68,6 +68,7 @@ import {
   ref,
   useContext,
   useRouter,
+  watch,
   watchEffect,
 } from '@nuxtjs/composition-api'
 
@@ -172,6 +173,15 @@ const VHeader = defineComponent({
         localSearchTerm.value = value
       },
     })
+
+    watch(
+      () => store.state.search.query.q,
+      (newSearchTerm) => {
+        if (newSearchTerm !== localSearchTerm.value) {
+          localSearchTerm.value = newSearchTerm
+        }
+      }
+    )
 
     const handleSearch = async () => {
       // Don't do anything if search term hasn't changed
