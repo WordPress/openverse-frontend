@@ -4,7 +4,7 @@ import { ref, useRoute, useRouter } from '@nuxtjs/composition-api'
  * Reactive property that returns true only on the matching routes.
  * Note that routes are matched by name, not the url path.
  *
- * @returns {{isSearch: import('@nuxtjs/composition-api').Ref<boolean>}}
+ * @returns {{matches: import('@nuxtjs/composition-api').Ref<boolean>}}
  */
 export const useMatchRoute = (routes = []) => {
   const route = useRoute()

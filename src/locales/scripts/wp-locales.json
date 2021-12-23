@@ -467,7 +467,7 @@
     "facebookLocale": "el_GR",
     "wpLocale": "el",
     "code": "el",
-    "translated": 9
+    "translated": 28
   },
   "en_AU": {
     "name": "English (Australia)",
@@ -848,7 +848,7 @@
     "facebookLocale": "fr_FR",
     "wpLocale": "fr_FR",
     "code": "fr",
-    "translated": 89
+    "translated": 90
   },
   "frp": {
     "name": "Arpitan",
@@ -1737,7 +1737,7 @@
     "facebookLocale": "pt_BR",
     "wpLocale": "pt_BR",
     "code": "pt-br",
-    "translated": 64
+    "translated": 72
   },
   "pt_PT": {
     "name": "Portuguese (Portugal)",
@@ -1856,7 +1856,7 @@
     "facebookLocale": "sk_SK",
     "wpLocale": "sk_SK",
     "code": "sk",
-    "translated": 0
+    "translated": 1
   },
   "skr": {
     "name": "Saraiki",
