@@ -153,8 +153,8 @@ for (const [i, contentType] of contentTypes.entries()) {
 
     // MetaSearch form
     const metaSearchFormText = contentType.supported
-      ? "Not finding what you're looking for? Try additional"
-      : 'Openverse does not yet support built-in '
+      ? 'Not finding'
+      : 'Openverse does not yet support built-in'
     const metaSearchForm = await page.locator(`text=${metaSearchFormText}`)
     await expect(metaSearchForm).toHaveCount(1)
 
