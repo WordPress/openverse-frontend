@@ -127,7 +127,7 @@ export default {
   },
   components: {
     dirs: [
-      { path: '~/components', ignore: '**/*.types.js' },
+      { path: '~/components', extensions: ['vue'] },
       '~/components/ContentReport',
       '~/components/Filters',
       '~/components/ImageDetails',
