@@ -38,7 +38,7 @@ export const createApiService = (baseUrl = process.env.apiUrl) => {
      * @returns {Promise<import('axios').AxiosResponse<any>>} Response The API response object
      */
     get(resource, slug) {
-      return client.get(`${resource}/${slug}`)
+      return client.get(`${resource}/${slug}/`)
     },
 
     /**

@@ -39,7 +39,7 @@ const AudioService = {
 
     return dev
       ? Promise.resolve({ data: sampleAudioResponses.detail })
-      : ApiService.get('audio', params.id)
+      : ApiService.get('audio/', params.id)
   },
 
   /**
