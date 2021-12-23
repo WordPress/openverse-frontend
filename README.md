@@ -10,9 +10,7 @@
 
 This repository is the frontend UI for accessing and exploring the openly-licensed content provided by the [Openverse API](https://github.com/wordpress/openverse-api).
 
-The application is live at its previous home: [wordpress.org/openverse](https://wordpress.org/openverse).
-
-We publish our Storybook live at [wordpress.github.io/openverse-frontend](https://wordpress.github.io/openverse-frontend)
+You can view [the application](https://wordpress.org/openverse) live on WordPress.org. You can also view [the production Storybook](https://wordpress.github.io/openverse-frontend)
 
 ## Technology
 
