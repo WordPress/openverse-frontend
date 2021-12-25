@@ -4,27 +4,27 @@
       :aria-label="$t('photo-details.aria.close-form')"
       class="button close-button is-text tiny float-right block bg-white"
       type="button"
-      @click="closeForm()"
+      @click="closeForm"
     >
-      <CloseIcon width="24" height="24" />
+      <VIcon :icon-path="closeIcon" />
     </button>
     <DmcaNotice
-      v-if="selectedCopyright"
+      v-if="showDmcaForm"
       :image-u-r-l="image.url"
       :provider-name="providerName"
       :dmca-form-url="dmcaFormUrl"
-      @onBackClick="onBackClick()"
+      @onBackClick="onBackClick"
     />
     <DoneMessage
-      v-else-if="!selectedCopyright && isReportSent"
+      v-else-if="isDone"
       :image-u-r-l="image.url"
       :provider-name="providerName"
     />
     <ReportError v-else-if="reportFailed" @back-click="backToReportStart" />
 
     <OtherIssueForm
-      v-else-if="selectedOther"
-      @onBackClick="onBackClick()"
+      v-else-if="showOtherForm"
+      @onBackClick="onBackClick"
       @sendContentReport="sendContentReport"
     />
     <form v-else>
@@ -43,7 +43,7 @@
         >
           <input
             :id="reason"
-            v-model="selectedReason"
+            v-model="reasonSelected"
             type="radio"
             name="type"
             :value="reason"
@@ -58,10 +58,9 @@
 
       <button
         type="button"
-        :disabled="selectedReason === null"
+        :disabled="!reasonSelected"
         class="float-end bg-trans-blue text-white py-2 px-4 font-semibold border-2 border-tx rounded-sm disabled:opacity-50"
-        @click="onIssueSelected()"
-        @keyup.enter="onIssueSelected()"
+        @click="onIssueSelected"
       >
         {{ $t('photo-details.content-report.next') }}
       </button>
@@ -70,77 +69,109 @@
 </template>
 
 <script>
-import CloseIcon from '~/assets/icons/close.svg?inline'
+import { computed, defineComponent, ref } from '@nuxtjs/composition-api'
 import DmcaNotice from './DmcaNotice'
 import OtherIssueForm from './OtherIssueForm'
 import DoneMessage from './DoneMessage'
 import ReportError from './ReportError'
 import ReportService from '~/data/report-service'
 
+import closeIcon from '~/assets/icons/close.svg'
+import VIcon from '~/components/VIcon/VIcon.vue'
+
 const dmcaFormUrl =
   'https://docs.google.com/forms/d/e/1FAIpQLSd0I8GsEbGQLdaX4K_F6V2NbHZqN137WMZgnptUpzwd-kbDKA/viewform'
+const reasons = {
+  DMCA: 'dmca',
+  MATURE: 'mature',
+  OTHER: 'other',
+}
+const statuses = {
+  SENT: 'sent',
+  FAILED: 'failed',
+  OPEN: 'open',
+}
 
-export default {
+export default defineComponent({
   name: 'ContentReportForm',
   components: {
     DoneMessage,
     DmcaNotice,
     ReportError,
     OtherIssueForm,
-    CloseIcon,
+    VIcon,
   },
   props: ['image', 'providerName', 'reportServiceProp'],
-  data() {
-    return {
-      selectedReason: null,
-      selectedOther: false,
-      selectedCopyright: false,
-      dmcaFormUrl,
-      isReportSent: false,
-      reportFailed: false,
-      reasons: ['dmca', 'mature', 'other'],
-    }
-  },
-  computed: {
-    reportService() {
-      return this.reportServiceProp ? this.reportServiceProp : ReportService
-    },
-  },
-  methods: {
-    onIssueSelected() {
-      if (this.selectedReason === 'other') {
-        this.selectedOther = true
-      } else if (this.selectedReason === 'dmca') {
-        this.selectedCopyright = true
-      } else {
-        this.sendContentReport({})
+  setup(props, { emit }) {
+    const selectedReason = ref(null)
+    const selectedOther = ref(false)
+    const selectedCopyright = ref(false)
+    const reportStatus = ref(statuses.OPEN)
+    const reasonSelected = ref(null)
+
+    const reportService = props.reportServiceProp || ReportService
+    const onIssueSelected = (val) => {
+      reasonSelected.value = val
+      if (![reasons.OTHER, reasons.DMCA].includes(val)) {
+        sendContentReport({})
       }
-    },
-    onBackClick() {
-      this.selectedOther = false
-      this.selectedCopyright = false
-    },
-    backToReportStart() {
-      this.reportFailed = false
-      this.isReportSent = false
-    },
-    async sendContentReport({ description = '' }) {
+      if (selectedReason.value === 'other') {
+        selectedOther.value = true
+      } else if (selectedReason === 'dmca') {
+        selectedCopyright.value = true
+      } else {
+        sendContentReport({})
+      }
+    }
+    const onBackClick = () => {
+      selectedOther.value = false
+      selectedCopyright.value = false
+    }
+    const backToReportStart = () => {
+      reportStatus.value = statuses.OPEN
+    }
+    const sendContentReport = async ({ description = '' }) => {
       try {
-        await this.reportService.sendReport({
-          identifier: this.$props.image.id,
-          reason: this.selectedReason,
+        await reportService.sendReport({
+          identifier: props.image.id,
+          reason: selectedReason.value,
           description,
         })
-        this.isReportSent = true
+        reportStatus.value = statuses.SENT
       } catch (error) {
-        this.reportFailed = true
+        reportStatus.value = statuses.FAILED
       }
-    },
-    closeForm() {
-      this.isReportSent = false
-      this.reportFailed = false
-      this.$emit('close-form')
-    },
+    }
+    const closeForm = () => {
+      reportStatus.value = statuses.OPEN
+      emit('close-form')
+    }
+    const reportFailed = computed(() => reportStatus.value === statuses.FAILED)
+    const isDone = computed(
+      () =>
+        reportStatus.value === statuses.SENT &&
+        !(reasonSelected.value === reasons.DMCA)
+    )
+    const showOtherForm = computed(() => reasonSelected.value === reasons.OTHER)
+    const showDmcaForm = computed(() => reasonSelected.value === reasons.DMCA)
+    return {
+      reasonSelected,
+      selectedOther,
+      selectedCopyright,
+      reportService,
+      closeIcon,
+      dmcaFormUrl,
+      isDone,
+      reportFailed,
+      closeForm,
+      onIssueSelected,
+      onBackClick,
+      sendContentReport,
+      backToReportStart,
+      showOtherForm,
+      showDmcaForm,
+      reasons: Object.values(reasons),
+    }
   },
-}
+})
 </script>
