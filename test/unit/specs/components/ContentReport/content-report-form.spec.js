@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/vue'
 import { createLocalVue } from '@vue/test-utils'
 import VueI18n from 'vue-i18n'
-import ContentReportForm from '~/components/ContentReport/ContentReportForm'
+import VContentReportForm from '~/components/VContentReport/VContentReportForm.vue'
 
 const messages = require('~/locales/en.json')
 const i18n = new VueI18n({
@@ -31,7 +31,7 @@ const getOtherInput = () =>
     name: /other/i,
   })
 
-describe('ContentReportForm', () => {
+describe('VContentReportForm', () => {
   let props = null
   let options = {}
 
@@ -54,7 +54,7 @@ describe('ContentReportForm', () => {
   })
 
   it('should contain the correct contents', async () => {
-    await render(ContentReportForm, options)
+    await render(VContentReportForm, options)
     getCloseButton()
     getDmcaInput()
     getMatureInput()
@@ -63,7 +63,7 @@ describe('ContentReportForm', () => {
   })
 
   it('should render thank you note when report is sent', async () => {
-    const { getByText } = render(ContentReportForm, options)
+    const { getByText } = render(VContentReportForm, options)
     await fireEvent.click(getMatureInput())
     await fireEvent.click(getNextButton())
 
@@ -75,7 +75,7 @@ describe('ContentReportForm', () => {
   it('should render error message if report sending fails', async () => {
     options.propsData.reportServiceProp = { sendReport: () => Promise.reject() }
 
-    const { getByText } = render(ContentReportForm, options)
+    const { getByText } = render(VContentReportForm, options)
     await fireEvent.click(getMatureInput())
     await fireEvent.click(getNextButton())
 
@@ -85,7 +85,7 @@ describe('ContentReportForm', () => {
   })
 
   it('should render dmca notice', async () => {
-    const { getByText } = render(ContentReportForm, options)
+    const { getByText } = render(VContentReportForm, options)
     await fireEvent.click(getDmcaInput())
     await fireEvent.click(getNextButton())
 
@@ -95,7 +95,7 @@ describe('ContentReportForm', () => {
   })
 
   it('should render other type form', async () => {
-    const { getByRole, getByText } = render(ContentReportForm, options)
+    const { getByRole, getByText } = render(VContentReportForm, options)
     await fireEvent.click(getOtherInput())
     await fireEvent.click(getNextButton())
 
@@ -110,7 +110,7 @@ describe('ContentReportForm', () => {
   it('should dispatch SEND_CONTENT_REPORT on next when mature is selected', async () => {
     const serviceMock = { sendReport: jest.fn() }
     options.propsData.reportServiceProp = serviceMock
-    render(ContentReportForm, options)
+    render(VContentReportForm, options)
     await fireEvent.click(getMatureInput())
     await fireEvent.click(getNextButton())
 
@@ -125,7 +125,7 @@ describe('ContentReportForm', () => {
     const serviceMock = { sendReport: jest.fn() }
     options.propsData.reportServiceProp = serviceMock
 
-    render(ContentReportForm, options)
+    render(VContentReportForm, options)
     await fireEvent.click(getDmcaInput())
     await fireEvent.click(getNextButton())
 
@@ -136,7 +136,7 @@ describe('ContentReportForm', () => {
     const serviceMock = { sendReport: jest.fn() }
     options.propsData.reportServiceProp = serviceMock
 
-    const { getByRole } = render(ContentReportForm, options)
+    const { getByRole } = render(VContentReportForm, options)
     await fireEvent.click(getOtherInput())
     await fireEvent.click(getNextButton())
 
@@ -153,7 +153,7 @@ describe('ContentReportForm', () => {
   it('should not send other report if description is short', async () => {
     options.propsData.reportServiceProp = { sendReport: jest.fn() }
 
-    const { getByRole } = render(ContentReportForm, options)
+    const { getByRole } = render(VContentReportForm, options)
     await fireEvent.click(getOtherInput())
     await fireEvent.click(getNextButton())
 

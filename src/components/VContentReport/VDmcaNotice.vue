@@ -36,27 +36,46 @@
       </template>
     </i18n>
 
-    <button
-      class="button is-text tiny mt-4"
-      @click="onBackClick()"
-      @keyup.enter="onBackClick()"
+    <VButton
+      type="button"
+      variant="action-button"
+      size="small"
+      @click="onBackClick"
     >
-      <span
-        ><i class="icon chevron-left me-2" />
-        {{ $t('photo-details.content-report.back') }}</span
-      >
-    </button>
+      <VIcon :icon-path="chevronLeftIcon" class="me-2" />
+      {{ $t('photo-details.content-report.back') }}
+    </VButton>
   </div>
 </template>
 
 <script>
-export default {
+import { defineComponent } from '@nuxtjs/composition-api'
+import VButton from '~/components/VButton.vue'
+import VIcon from '~/components/VIcon/VIcon.vue'
+import chevronLeftIcon from '~/assets/icons/chevron-left.svg'
+
+export default defineComponent({
   name: 'DmcaNotice',
-  props: ['dmcaFormUrl', 'imageURL', 'providerName'],
-  methods: {
-    onBackClick() {
-      this.$emit('onBackClick')
+  components: { VButton, VIcon },
+  props: {
+    dmcaFormUrl: {
+      type: String,
+      required: true,
+    },
+    imageURL: {
+      type: String,
+      required: true,
+    },
+    providerName: {
+      type: String,
+      required: true,
     },
   },
-}
+  setup(_, { emit }) {
+    const onBackClick = () => {
+      emit('onBackClick')
+    }
+    return { chevronLeftIcon, onBackClick }
+  },
+})
 </script>

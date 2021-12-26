@@ -547,7 +547,8 @@
       "link": "DMCA form",
       "aria-form": "{provider} form",
       "submission-error": "There was an error with the report submission. Please try again.",
-      "dmca-content": "You must fill out this {link} to report copyright infringement. No action will be taken until the form is filled out and submitted."
+      "dmca-content": "You must fill out this {link} to report copyright infringement. No action will be taken until the form is filled out and submitted.",
+      "placeholder": "Issue description required (with at least 20 characters)"
     },
     "aria": {
       "close-form": "close form",

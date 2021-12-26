@@ -8,21 +8,21 @@
     >
       <VIcon :icon-path="closeIcon" />
     </button>
-    <DmcaNotice
+    <VDmcaNotice
       v-if="showDmcaForm"
-      :image-u-r-l="image.url"
+      :image-u-r-l="image.foreign_landing_url"
       :provider-name="providerName"
       :dmca-form-url="dmcaFormUrl"
       @onBackClick="onBackClick"
     />
-    <DoneMessage
+    <VDoneMessage
       v-else-if="isDone"
-      :image-u-r-l="image.url"
+      :image-u-r-l="image.foreign_landing_url"
       :provider-name="providerName"
     />
-    <ReportError v-else-if="reportFailed" @back-click="backToReportStart" />
+    <VReportError v-else-if="reportFailed" @back-click="backToReportStart" />
 
-    <OtherIssueForm
+    <VOtherIssueForm
       v-else-if="showOtherForm"
       @onBackClick="onBackClick"
       @sendContentReport="sendContentReport"
@@ -56,28 +56,29 @@
         {{ $t('photo-details.content-report.caption') }}
       </p>
 
-      <button
-        type="button"
+      <VButton
         :disabled="!reasonSelected"
-        class="float-end bg-trans-blue text-white py-2 px-4 font-semibold border-2 border-tx rounded-sm disabled:opacity-50"
+        variant="secondary"
+        class="float-end bg-trans-blue"
         @click="onIssueSelected"
       >
         {{ $t('photo-details.content-report.next') }}
-      </button>
+      </VButton>
     </form>
   </div>
 </template>
 
 <script>
 import { computed, defineComponent, ref } from '@nuxtjs/composition-api'
-import DmcaNotice from './DmcaNotice'
-import OtherIssueForm from './OtherIssueForm'
-import DoneMessage from './DoneMessage'
-import ReportError from './ReportError'
+import VDmcaNotice from './VDmcaNotice'
+import VOtherIssueForm from './VOtherIssueForm'
+import VDoneMessage from './VDoneMessage'
+import VReportError from './VReportError'
 import ReportService from '~/data/report-service'
 
 import closeIcon from '~/assets/icons/close.svg'
 import VIcon from '~/components/VIcon/VIcon.vue'
+import VButton from '~/components/VButton.vue'
 
 const dmcaFormUrl =
   'https://docs.google.com/forms/d/e/1FAIpQLSd0I8GsEbGQLdaX4K_F6V2NbHZqN137WMZgnptUpzwd-kbDKA/viewform'
@@ -89,52 +90,50 @@ const reasons = {
 const statuses = {
   SENT: 'sent',
   FAILED: 'failed',
+  ADDING_DETAILS: 'adding_details',
   OPEN: 'open',
+  CLOSED: 'closed',
 }
 
 export default defineComponent({
-  name: 'ContentReportForm',
+  name: 'VContentReportForm',
   components: {
-    DoneMessage,
-    DmcaNotice,
-    ReportError,
-    OtherIssueForm,
+    VDoneMessage,
+    VDmcaNotice,
+    VReportError,
+    VOtherIssueForm,
+    VButton,
     VIcon,
   },
   props: ['image', 'providerName', 'reportServiceProp'],
   setup(props, { emit }) {
-    const selectedReason = ref(null)
-    const selectedOther = ref(false)
-    const selectedCopyright = ref(false)
     const reportStatus = ref(statuses.OPEN)
+    /** @type {import('@nuxtjs/composition-api').Ref<string|null>} */
     const reasonSelected = ref(null)
 
     const reportService = props.reportServiceProp || ReportService
-    const onIssueSelected = (val) => {
-      reasonSelected.value = val
-      if (![reasons.OTHER, reasons.DMCA].includes(val)) {
-        sendContentReport({})
-      }
-      if (selectedReason.value === 'other') {
-        selectedOther.value = true
-      } else if (selectedReason === 'dmca') {
-        selectedCopyright.value = true
+    const onIssueSelected = () => {
+      if (
+        reasonSelected.value &&
+        ![reasons.OTHER, reasons.DMCA].includes(reasonSelected.value)
+      ) {
+        sendContentReport()
       } else {
-        sendContentReport({})
+        reportStatus.value = statuses.ADDING_DETAILS
       }
     }
     const onBackClick = () => {
-      selectedOther.value = false
-      selectedCopyright.value = false
-    }
-    const backToReportStart = () => {
       reportStatus.value = statuses.OPEN
     }
-    const sendContentReport = async ({ description = '' }) => {
+    const backToReportStart = () => {
+      reasonSelected.value = null
+      reportStatus.value = statuses.OPEN
+    }
+    const sendContentReport = async ({ description = '' } = {}) => {
       try {
         await reportService.sendReport({
           identifier: props.image.id,
-          reason: selectedReason.value,
+          reason: reasonSelected.value,
           description,
         })
         reportStatus.value = statuses.SENT
@@ -143,8 +142,9 @@ export default defineComponent({
       }
     }
     const closeForm = () => {
-      reportStatus.value = statuses.OPEN
+      reportStatus.value = statuses.CLOSED
       emit('close-form')
+      console.log('emitted close-form')
     }
     const reportFailed = computed(() => reportStatus.value === statuses.FAILED)
     const isDone = computed(
@@ -152,12 +152,18 @@ export default defineComponent({
         reportStatus.value === statuses.SENT &&
         !(reasonSelected.value === reasons.DMCA)
     )
-    const showOtherForm = computed(() => reasonSelected.value === reasons.OTHER)
-    const showDmcaForm = computed(() => reasonSelected.value === reasons.DMCA)
+    const showOtherForm = computed(
+      () =>
+        reportStatus.value === statuses.ADDING_DETAILS &&
+        reasonSelected.value === reasons.OTHER
+    )
+    const showDmcaForm = computed(
+      () =>
+        reportStatus.value === statuses.ADDING_DETAILS &&
+        reasonSelected.value === reasons.DMCA
+    )
     return {
       reasonSelected,
-      selectedOther,
-      selectedCopyright,
       reportService,
       closeIcon,
       dmcaFormUrl,
