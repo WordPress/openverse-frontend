@@ -10,22 +10,22 @@
     </button>
     <VDmcaNotice
       v-if="showDmcaForm"
-      :image-u-r-l="image.foreign_landing_url"
-      :provider-name="providerName"
+      :image-url="image.foreign_landing_url"
+      :provider="providerName"
       :dmca-form-url="dmcaFormUrl"
-      @onBackClick="onBackClick"
+      @back-click="onBackClick"
     />
     <VDoneMessage
       v-else-if="isDone"
-      :image-u-r-l="image.foreign_landing_url"
-      :provider-name="providerName"
+      :image-url="image.foreign_landing_url"
+      :provider="providerName"
     />
     <VReportError v-else-if="reportFailed" @back-click="backToReportStart" />
 
     <VOtherIssueForm
       v-else-if="showOtherForm"
-      @onBackClick="onBackClick"
-      @sendContentReport="sendContentReport"
+      @back-click="onBackClick"
+      @send-report="sendContentReport"
     />
     <form v-else>
       <h5 class="b-header mb-4">
@@ -144,7 +144,6 @@ export default defineComponent({
     const closeForm = () => {
       reportStatus.value = statuses.CLOSED
       emit('close-form')
-      console.log('emitted close-form')
     }
     const reportFailed = computed(() => reportStatus.value === statuses.FAILED)
     const isDone = computed(

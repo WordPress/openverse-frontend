@@ -50,7 +50,7 @@ export default defineComponent({
   },
   setup(_, { emit }) {
     const onBackClick = () => {
-      emit('onBackClick')
+      emit('back-click')
     }
     const description = ref('')
     const descriptionHasMoreThan20Chars = computed(
@@ -58,7 +58,7 @@ export default defineComponent({
     )
 
     const sendContentReport = () =>
-      emit('sendContentReport', { description: description.value })
+      emit('send-report', { description: description.value })
     return {
       chevronLeftIcon,
       description,

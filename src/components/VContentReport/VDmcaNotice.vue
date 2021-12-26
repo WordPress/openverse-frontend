@@ -24,14 +24,12 @@
       <template #link>
         <a
           :aria-label="
-            $t('photo-details.aria.provider-report-form', {
-              provider: providerName,
-            })
+            $t('photo-details.aria.provider-report-form', { provider })
           "
-          :href="imageURL"
+          :href="imageUrl"
           target="_blank"
           rel="noopener"
-          >{{ providerName }}</a
+          >{{ provider }}</a
         >
       </template>
     </i18n>
@@ -62,18 +60,18 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    imageURL: {
+    imageUrl: {
       type: String,
       required: true,
     },
-    providerName: {
+    provider: {
       type: String,
       required: true,
     },
   },
   setup(_, { emit }) {
     const onBackClick = () => {
-      emit('onBackClick')
+      emit('back-click')
     }
     return { chevronLeftIcon, onBackClick }
   },

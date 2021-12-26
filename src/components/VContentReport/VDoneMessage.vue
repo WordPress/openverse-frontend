@@ -11,14 +11,12 @@
       <template #link>
         <a
           :aria-label="
-            $t('photo-details.aria.provider-report-form', {
-              provider: providerName,
-            })
+            $t('photo-details.aria.provider-report-form', { provider })
           "
-          :href="imageURL"
+          :href="imageUrl"
           target="_blank"
           rel="noopener"
-          >{{ providerName }}</a
+          >{{ provider }}</a
         >
       </template>
     </i18n>
@@ -28,6 +26,6 @@
 <script>
 export default {
   name: 'DoneMessage',
-  props: ['imageURL', 'providerName'],
+  props: ['imageUrl', 'provider'],
 }
 </script>
