@@ -1,0 +1,31 @@
+# this build is triggered when a new pre-release has been created
+# it creates a new docker build image based on the tag associated
+
+name: push_production
+
+on:
+  release:
+    types:
+      - 'prereleased'
+
+jobs:
+  push:
+    name: push
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://search.openverse.engineering
+
+    steps:
+      # download the source code into the runner
+      - name: checkout
+        uses: actions/checkout@v2
+
+      # build a new docker image and push it into the repository
+      - name: docker build
+        uses: ./.github/workflows/build.yaml@v1
+        with:
+          is_production: true
+
+
+
