@@ -3,25 +3,25 @@
 name-template: "v$RESOLVED_VERSION"
 tag-template: "v$RESOLVED_VERSION"
 categories:
-  - title: "New Features"
+  - title: New Features
     label: "🌟 goal: addition"
-  - title: "Improvements"
+  - title: Improvements
     label: "✨ goal: improvement"
-  - title: "Internal Improvements"
+  - title: Internal Improvements
     label: "🤖 aspect: dx"
-  - title: "Bug Fixes"
+  - title: Bug Fixes
     label: "🛠 goal: fix"
 change-template: "- $TITLE: #$NUMBER by @$AUTHOR"
 version-resolver:
   major:
     labels:
-      - "major"
+      - major
   minor:
     labels:
-      - "minor"
+      - minor
   patch:
     labels:
-      - "patch"
+      - patch
   default: patch
 template: |
   $CHANGES
