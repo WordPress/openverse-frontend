@@ -13,6 +13,7 @@
   >
     <VButton
       data-item-group-item
+      :as="as"
       class="flex justify-between focus-visible:ring-pink rounded min-w-full"
       :class="[$style.button, $style[`${contextProps.direction}-button`]]"
       variant="grouped"
@@ -76,6 +77,16 @@ export default defineComponent({
     isFirst: {
       type: Boolean,
       required: true,
+    },
+    /**
+     * To change the underlying component for the VButton,
+     * pass `as` prop.
+     * @variants 'button', 'a', 'NuxtLink'
+     */
+    as: {
+      type: String,
+      default: 'button',
+      validator: (val) => ['button', 'a', 'NuxtLink'].includes(val),
     },
   },
   setup(props) {

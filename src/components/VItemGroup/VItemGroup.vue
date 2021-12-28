@@ -68,7 +68,7 @@ export default defineComponent({
     },
     /**
      * Whether to render a bordered, separated list of items. When false each
-     * item will be have whitespace separating them instead of borders.
+     * item will have whitespace separating them instead of borders.
      *
      * @default true
      */
