@@ -3,19 +3,25 @@
     class="sticky top-0 flex py-4 px-6 md:px-7 align-center justify-between z-40 w-full bg-white"
     :class="{
       'border-b border-dark-charcoal-20':
-        isHeaderScrolled || isFilterSidebarVisible,
+        isHeaderScrolled || filterSidebar.isVisible,
     }"
   >
     <NuxtLink to="/">
       <VLogoLoader :status="isFetching ? 'loading' : 'idle'" />
     </NuxtLink>
-
-    <VFilterButton
+    <VHeaderFilter
       v-if="isSearch"
+      ref="filterRef"
       :is-header-scrolled="isHeaderScrolled"
-      :pressed="isFilterSidebarVisible"
-      @toggle="toggleFilterVisibility"
+      :is-md-screen="isMdScreen"
     />
+    <VButton
+      v-if="currentOverlay !== null"
+      variant="action-menu-secondary"
+      @click="closeOverlay"
+      >{{ $t('modal.close')
+      }}<VIcon :size="6" :icon-path="closeIcon" class="ms-2"
+    /></VButton>
   </div>
 </template>
 
@@ -31,18 +37,17 @@ import {
 import { isMinScreen } from '~/composables/use-media-query'
 import { useSearchRoute } from '~/composables/use-search-route'
 import { useWindowScroll } from '~/composables/use-window-scroll'
+import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
 
 import closeIcon from '~/assets/icons/close.svg'
 
-import VFilterButton from '~/components/VHeader/VFilterButton.vue'
-
 import VLogoLoader from '~/components/VLogoLoader/VLogoLoader.vue'
-import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
+import VIcon from '@/components/VIcon/VIcon.vue'
 
 const VHeader = defineComponent({
   name: 'VHeader',
   components: {
-    VFilterButton,
+    VIcon,
     VLogoLoader,
   },
   setup() {
@@ -50,15 +55,15 @@ const VHeader = defineComponent({
     const { isSearch } = useSearchRoute()
     const { isHeaderScrolled } = useWindowScroll()
     const isMdScreen = isMinScreen('md')
-    const { isFilterSidebarVisible, setFilterSidebarVisibility } =
-      useFilterSidebarVisibility({ mediaQuery: isMdScreen })
+    const filterSidebar = useFilterSidebarVisibility()
+    const filterRef = ref(null)
 
     /**
      * Set the active mobile menu view to the 'filters'
      * if the filter sidebar has been toggled open.
      */
     watch(
-      () => isFilterSidebarVisible.value,
+      () => filterSidebar.isVisible.value,
       (isVisible) => {
         if (isVisible) {
           setCurrentOverlay('filters')
@@ -67,9 +72,6 @@ const VHeader = defineComponent({
         }
       }
     )
-    const toggleFilterVisibility = () => {
-      setFilterSidebarVisibility(!isFilterSidebarVisible.value)
-    }
 
     /** @type {import('@nuxtjs/composition-api').Ref<null|'filters'|'content-switcher'>} */
     const currentOverlay = ref(null)
@@ -83,6 +85,9 @@ const VHeader = defineComponent({
       currentOverlay.value = overlay
     }
     const closeOverlay = () => {
+      if (currentOverlay.value === 'filters') {
+        filterRef.value.closeFilter()
+      }
       currentOverlay.value = null
     }
 
@@ -96,10 +101,11 @@ const VHeader = defineComponent({
       currentOverlay,
       isFetching,
       isHeaderScrolled,
+      isMdScreen,
       isSearch,
-      isFilterSidebarVisible,
+      filterSidebar,
+      filterRef,
 
-      toggleFilterVisibility,
       setCurrentOverlay,
       closeOverlay,
     }

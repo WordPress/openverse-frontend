@@ -1,14 +1,6 @@
 <template>
   <div class="browse-page">
     <div class="search columns">
-      <Component
-        :is="searchFilter.as"
-        v-if="isFilterSidebarVisible"
-        id="filter-sidebar"
-        :class="searchFilter.classes"
-        @close="onToggleSearchGridFilter"
-        ><VSearchGridFilter @close="onToggleSearchGridFilter"
-      /></Component>
       <div class="column search-grid-ctr">
         <SearchGridForm @onSearchFormSubmit="onSearchFormSubmit" />
         <SearchTypeTabs class="mb-4" />
@@ -29,7 +21,7 @@
               :key="$route.path"
               :media-results="results"
               :fetch-state="fetchState"
-              :is-filter-visible="isFilterSidebarVisible"
+              :is-filter-visible="isSidebarVisible"
               :search-term="query.q"
               :supported="supported"
               data-testid="search-results"
@@ -38,6 +30,10 @@
         </VSearchGrid>
         <VScrollButton v-show="showScrollButton" data-testid="scroll-button" />
       </div>
+      <VTeleportTarget
+        name="sidebar"
+        :class="isSidebarVisible ? 'flex-grow-0 w-80 h-full' : 'w-0'"
+      />
     </div>
   </div>
 </template>
@@ -58,32 +54,27 @@ import debounce from 'lodash.debounce'
 import { isMinScreen } from '~/composables/use-media-query.js'
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
 
-import AppModal from '~/components/AppModal.vue'
 import VScrollButton from '~/components/VScrollButton.vue'
 import VSearchGrid from '~/components/VSearchGrid.vue'
-import VSearchGridFilter from '~/components/VFilters/VSearchGridFilter.vue'
 import VFilterDisplay from '~/components/VFilters/VFilterDisplay.vue'
+import { VTeleportTarget } from '~/components/VTeleport'
 
 const BrowsePage = {
   name: 'browse-page',
   layout: 'default',
   components: {
-    AppModal,
     VFilterDisplay,
-    VSearchGridFilter,
+    VTeleportTarget,
     VScrollButton,
     VSearchGrid,
   },
   setup() {
     const isMdScreen = isMinScreen('md')
-    const { isFilterSidebarVisible, setFilterSidebarVisibility } =
-      useFilterSidebarVisibility({ mediaQuery: isMdScreen })
+    const { isVisible } = useFilterSidebarVisibility({ mediaQuery: isMdScreen })
 
     return {
       isMdScreen,
-      isFilterSidebarVisible,
-
-      setFilterSidebarVisibility,
+      isSidebarVisible: isVisible,
     }
   },
   scrollToTop: false,
@@ -135,14 +126,6 @@ const BrowsePage = {
     resultsCount() {
       return this.supported ? this.results.count : 0
     },
-    searchFilter() {
-      return {
-        classes: {
-          'column is-narrow grid-sidebar max-w-full bg-white': this.isMdScreen,
-        },
-        as: this.isMdScreen ? 'aside' : AppModal,
-      }
-    },
     supported() {
       if (this.searchType === AUDIO) {
         // Only show audio results if non-image results are supported
@@ -166,9 +149,6 @@ const BrowsePage = {
     },
     onSearchFormSubmit({ q }) {
       this.updateQuery({ q })
-    },
-    onToggleSearchGridFilter() {
-      this.setFilterSidebarVisibility(!this.isFilterSidebarVisible)
     },
     checkScrollLength() {
       this.showScrollButton = window.scrollY > 70

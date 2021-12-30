@@ -7,8 +7,9 @@ import { defaultWindow } from '~/composables/window'
 /**
  * Reactive Media Query.
  *
- * @param query
+ * @param {string} query
  * @param options
+ * @returns {import('@nuxtjs/composition-api').Ref<boolean>}
  */
 export function useMediaQuery(query, options = {}) {
   const { window = defaultWindow } = options
@@ -41,8 +42,11 @@ export function useMediaQuery(query, options = {}) {
 }
 
 /**
- * Check whether the curent screen meets
+ * Check whether the current screen meets
  * or exceeds the provided breakpoint size.
+ * @param {'sm'|'md'|'lg'|'xl'|'2xl'} breakpointName
+ * @param options
+ * @returns {import('@nuxtjs/composition-api').Ref<boolean>}
  */
 export const isMinScreen = (breakpointName, options = {}) => {
   return useMediaQuery(
@@ -53,6 +57,7 @@ export const isMinScreen = (breakpointName, options = {}) => {
 
 /**
  * Check if the user prefers reduced motion or not.
+ * @returns {import('@nuxtjs/composition-api').Ref<boolean>}
  */
 export function useReducedMotion(options = {}) {
   return useMediaQuery('(prefers-reduced-motion: reduce)', options)

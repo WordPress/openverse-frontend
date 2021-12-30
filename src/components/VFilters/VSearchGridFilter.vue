@@ -11,18 +11,13 @@
         {{ $t('filter-list.filter-by') }}
       </h4>
       <button
-        id="hide-filters-button"
+        v-if="isAnyFilterApplied"
+        id="clear-filter-button"
         type="button"
-        :aria-label="$t('filter-list.hide')"
-        class="text-sm font-medium my-auto"
-        @click="onToggleSearchGridFilter"
+        class="text-sm py-2 px-4 lowercase rounded color-dark-blue border border-dark-blue hover:text-white hover:bg-dark-gray hover:border-dark-gray"
+        @click="onClearFilters"
       >
-        <span class="text-trans-blue hidden md:block text-sm lowercase">{{
-          $t('filter-list.hide')
-        }}</span>
-        <span class="me-4 text-lg md:hidden">
-          <CloseIcon class="w-4 h-4" />
-        </span>
+        {{ $t('filter-list.clear') }}
       </button>
     </div>
     <form class="filters-form">
@@ -36,14 +31,6 @@
       />
     </form>
     <footer v-if="isAnyFilterApplied" class="flex justify-between">
-      <button
-        id="clear-filter-button"
-        type="button"
-        class="text-sm py-2 px-4 lowercase rounded color-dark-blue border border-dark-blue hover:text-white hover:bg-dark-gray hover:border-dark-gray"
-        @click="onClearFilters"
-      >
-        {{ $t('filter-list.clear') }}
-      </button>
       <button
         class="text-sm py-4 px-6 lowercase rounded bg-trans-blue text-white lg:hidden hover:bg-trans-blue-action"
         type="button"
@@ -61,13 +48,11 @@ import { CLEAR_FILTERS, TOGGLE_FILTER } from '~/constants/action-types'
 import { SEARCH } from '~/constants/store-modules'
 import { kebabize } from '~/utils/format-strings'
 
-import VFilterChecklist from '~/components/VFilters/VFilterChecklist'
-import CloseIcon from '~/assets/icons/close.svg?inline'
+import VFilterChecklist from '~/components/VFilters/VFilterChecklist.vue'
 
 export default {
   name: 'VSearchGridFilter',
   components: {
-    CloseIcon,
     VFilterChecklist,
   },
   computed: {
