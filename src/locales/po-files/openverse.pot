@@ -18,7 +18,28 @@ msgctxt "interpunct"
 msgid "•"
 msgstr ""
 
-#: src/components/VModal/VModalContent.vue:25
+msgctxt "search-type.image"
+msgid "Images"
+msgstr ""
+
+msgctxt "search-type.audio"
+msgid "Audio"
+msgstr ""
+
+msgctxt "search-type.all"
+msgid "All content"
+msgstr ""
+
+msgctxt "search-type.video"
+msgid "Videos"
+msgstr ""
+
+#: src/components/VHeader/VDesktopSwitcher.vue:16
+msgctxt "search-type.label"
+msgid "Type of content to search"
+msgstr ""
+
+#: src/components/VModal/VModalContent.vue:28
 msgctxt "modal.close"
 msgid "Close"
 msgstr ""
@@ -2032,7 +2053,7 @@ msgstr ""
 
 #: src/components/NavSection.vue:50
 msgctxt "header.aria.sr-search"
-msgid "sr search button"
+msgid "search button"
 msgstr ""
 
 msgctxt "notification.dismiss"

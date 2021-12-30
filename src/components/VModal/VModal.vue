@@ -22,6 +22,7 @@
       :hide="close"
       :aria-label="label"
       :aria-labelledby="labelledBy"
+      :mode="mode === 'full' ? 'mobile' : 'desktop'"
     >
       <slot name="default" />
     </VModalContent>
@@ -86,6 +87,11 @@ export default defineComponent({
      * @default undefined
      */
     labelledBy: { type: String },
+    mode: {
+      type: String,
+      default: 'default',
+      validator: (val) => ['default', 'full'].includes(val),
+    },
   },
   emits: [
     /**

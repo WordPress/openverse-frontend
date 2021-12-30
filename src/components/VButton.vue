@@ -166,7 +166,7 @@ const VButton = defineComponent({
           typeRef.value = undefined
           supportsDisabledAttributeRef.value = false
 
-          // No need to decalare `href` as an explicit prop as Vue preserves
+          // No need to declare `href` as an explicit prop as Vue preserves
           // the `attrs` object reference between renders and updates the properties
           // meaning we'll always have the latest values for the properties on the
           // attrs object
@@ -229,7 +229,8 @@ a.button {
 .primary {
   @apply bg-pink text-white focus-visible:ring-pink hover:bg-dark-pink hover:text-white;
 }
-
+.primary[aria-expanded='true'],
+.primary[aria-pressed='true'],
 .primary-pressed {
   @apply bg-dark-pink;
 }
@@ -237,31 +238,35 @@ a.button {
 .secondary {
   @apply bg-dark-charcoal text-white font-bold focus-visible:ring-pink hover:bg-dark-charcoal-80 hover:text-white;
 }
-
+.secondary[aria-expanded='true'],
+.secondary[aria-pressed='true'],
 .secondary-pressed {
   @apply bg-dark-charcoal-80;
 }
 
 .tertiary {
-  @apply bg-white text-black hover:bg-dark-charcoal hover:text-white border border-dark-charcoal-20 hover:border-tx focus-visible:ring-pink ring-offset-0;
+  @apply bg-white text-black border border-dark-charcoal-20 focus-visible:ring-pink ring-offset-0;
 }
-
+.tertiary[aria-expanded='true'],
+.tertiary[aria-pressed='true'],
 .tertiary-pressed {
   @apply bg-dark-charcoal text-white border-tx;
 }
 
 .action-menu {
-  @apply bg-white text-black border border-dark-charcoal-20 hover:border-dark-charcoal-20 focus-visible:ring-pink;
+  @apply bg-white text-black border border-tx hover:border-dark-charcoal-20 focus-visible:ring-pink;
 }
 
 .action-menu-secondary {
   @apply bg-white text-black border border-tx hover:border-dark-charcoal-20 focus-visible:ring-pink;
 }
-
+.action-menu-secondary[aria-expanded='true'],
+.action-menu-secondary[aria-pressed='true'],
 .action-menu-secondary-pressed {
   @apply border-tx bg-dark-charcoal text-white;
 }
-
+.action-menu[aria-expanded='true'],
+.action-menu[aria-pressed='true'],
 .action-menu-pressed {
   @apply border-tx bg-dark-charcoal text-white;
 }
@@ -270,6 +275,8 @@ a.button {
   @apply bg-dark-charcoal-10 text-black border border-tx hover:border-dark-charcoal-20 focus-visible:ring-pink;
 }
 
+.action-menu-muted[aria-expanded='true'],
+.action-menu-muted[aria-pressed='true'],
 .action-menu-muted-pressed {
   @apply border-tx bg-dark-charcoal text-white focus-visible:ring-pink;
 }
