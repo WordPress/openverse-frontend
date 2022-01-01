@@ -70,8 +70,13 @@ describe('SearchGridFilter', () => {
       localVue,
       mocks: {
         $store: storeMock,
+        $nuxt: {
+          context: {
+            i18n: { t: () => {} },
+            store: storeMock,
+          },
+        },
       },
-      stubs: { VIcon: true },
     }
   })
 
@@ -79,7 +84,6 @@ describe('SearchGridFilter', () => {
     storeMock.state.search.isFilterVisible = true
     await render(SearchGridFilter, options)
     expect(screen.getByTestId('filters-list')).toBeVisible()
-    expect(screen.getByTestId('filters-list')).toHaveClass('block')
   })
 
   xit('should not show search filters when isFilterVisible is false', async () => {

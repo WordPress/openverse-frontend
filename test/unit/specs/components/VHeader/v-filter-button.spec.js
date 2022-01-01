@@ -107,7 +107,7 @@ describe('VFilterButton', () => {
       const label = screen.queryByTestId('filterbutton-label')
 
       expect(icon).toBeVisible()
-      expect(label).not.toBeInTheDocument()
+      expect(label).not.toBeVisible()
     })
     it('only shows the count and label when filters are applied', () => {
       isMinScreen.mockImplementation(() => ({ value: false }))
