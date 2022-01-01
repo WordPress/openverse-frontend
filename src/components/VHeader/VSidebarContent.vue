@@ -13,7 +13,7 @@ import VSearchGridFilter from '@/components/VFilters/VSearchGridFilter'
  * Renders the inner content of a modal and manages focus.
  */
 const VModalContent = defineComponent({
-  name: 'VDesktopMenuModalContent',
+  name: 'VSidebarContent',
   components: { VTeleport, VSearchGridFilter },
   props: {
     visible: {
@@ -29,5 +29,3 @@ const VModalContent = defineComponent({
 
 export default VModalContent
 </script>
-
-<style module></style>

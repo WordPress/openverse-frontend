@@ -9,7 +9,7 @@
       @toggle="onTriggerClick"
     />
     <Component
-      :is="isMdScreen ? 'VDesktopMenuModalContent' : 'VMobileMenuModalContent'"
+      :is="isMdScreen ? 'VSidebarContent' : 'VMenuModal'"
       v-bind="options"
       @close="onTriggerClick"
     >
@@ -28,11 +28,11 @@ import {
   useContext,
   inject,
 } from '@nuxtjs/composition-api'
-import { useBodyScrollLock } from '@/composables/use-body-scroll-lock'
+import { useBodyScrollLock } from '~/composables/use-body-scroll-lock'
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
 
-import VMobileMenuModalContent from '@/components/VHeader/VMobileMenuModalContent.vue'
-import VDesktopMenuModalContent from '@/components/VHeader/VDesktopMenuModalContent.vue'
+import VMenuModal from '~/components/VHeader/VMenuModal.vue'
+import VSidebarContent from '~/components/VHeader/VSidebarContent.vue'
 import { VTeleport } from '~/components/VTeleport'
 import VFilterButton from '~/components/VHeader/VFilterButton.vue'
 import VSearchGridFilter from '~/components/VFilters/VSearchGridFilter.vue'
@@ -42,8 +42,8 @@ export default {
   components: {
     VFilterButton,
     VSearchGridFilter,
-    VDesktopMenuModalContent,
-    VMobileMenuModalContent,
+    VSidebarContent,
+    VMenuModal,
     VTeleport,
   },
   emits: [

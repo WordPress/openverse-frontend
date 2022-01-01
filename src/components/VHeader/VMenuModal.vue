@@ -53,7 +53,7 @@ import closeIcon from '~/assets/icons/close.svg'
  * Renders the inner content of a modal and manages focus.
  */
 const VModalContent = defineComponent({
-  name: 'VMobileMenuModalContent',
+  name: 'VMenuModal',
   components: { VTeleport, VButton, VIcon, FocusTrap },
   props: {
     visible: {
