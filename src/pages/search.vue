@@ -1,40 +1,39 @@
 <template>
-  <div class="browse-page">
-    <div class="search columns">
-      <div class="column search-grid-ctr">
-        <SearchGridForm @onSearchFormSubmit="onSearchFormSubmit" />
-        <SearchTypeTabs class="mb-4" />
-        <VFilterDisplay v-show="shouldShowFilterTags" />
-        <VSearchGrid
-          :id="`tab-${searchType}`"
-          role="tabpanel"
-          :aria-labelledby="searchType"
-          :fetch-state="fetchState"
-          :query="query"
-          :supported="supported"
-          :search-type="searchType"
-          :results-count="resultsCount"
-          data-testid="search-grid"
-        >
-          <template #media>
-            <NuxtChild
-              :key="$route.path"
-              :media-results="results"
-              :fetch-state="fetchState"
-              :is-filter-visible="isSidebarVisible"
-              :search-term="query.q"
-              :supported="supported"
-              data-testid="search-results"
-            />
-          </template>
-        </VSearchGrid>
-        <VScrollButton v-show="showScrollButton" data-testid="scroll-button" />
-      </div>
-      <VTeleportTarget
-        name="sidebar"
-        :class="isSidebarVisible ? 'flex-grow-0 w-80 h-full' : 'w-0'"
-      />
+  <div class="browse-page flex flex-row w-screen">
+    <div class="main-content w-full search-grid-ctr">
+      <SearchGridForm @onSearchFormSubmit="onSearchFormSubmit" />
+      <SearchTypeTabs class="mb-4" />
+      <VFilterDisplay v-show="shouldShowFilterTags" />
+      <VSearchGrid
+        :id="`tab-${searchType}`"
+        role="tabpanel"
+        :aria-labelledby="searchType"
+        :fetch-state="fetchState"
+        :query="query"
+        :supported="supported"
+        :search-type="searchType"
+        :results-count="resultsCount"
+        data-testid="search-grid"
+      >
+        <template #media>
+          <NuxtChild
+            :key="$route.path"
+            :media-results="results"
+            :fetch-state="fetchState"
+            :is-filter-visible="isVisible"
+            :search-term="query.q"
+            :supported="supported"
+            data-testid="search-results"
+          />
+        </template>
+      </VSearchGrid>
+      <VScrollButton v-show="showScrollButton" data-testid="scroll-button" />
     </div>
+    <VTeleportTarget
+      name="sidebar"
+      :class="{ 'sidebar-visible': isVisible }"
+      class="sidebar"
+    />
   </div>
 </template>
 
@@ -74,7 +73,7 @@ const BrowsePage = {
 
     return {
       isMdScreen,
-      isSidebarVisible: isVisible,
+      isVisible,
     }
   },
   scrollToTop: false,
@@ -199,9 +198,18 @@ export default BrowsePage
     flex: none;
   }
 }
-.grid-sidebar {
-  padding: 0;
-  border-right: 1px solid $color-transition-gray;
-  width: 21.875rem;
+
+@media (min-width: 768px) {
+  .sidebar {
+    width: 0;
+    flex-grow: 0;
+    max-height: 100vh;
+    height: 100%;
+  }
+  .sidebar-visible {
+    width: 316px;
+    flex-shrink: 0;
+    overflow-y: auto;
+  }
 }
 </style>

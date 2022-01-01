@@ -1,10 +1,13 @@
 <template>
   <div
-    class="p-4 search-filters h-auto max-h-full overflow-y-scroll block"
+    class="py-8 px-10 search-filters h-auto max-h-screen overflow-y-scroll"
+    :class="{
+      'bg-dark-charcoal-06 border-dark-charcoal-20': isMdScreen,
+    }"
     data-testid="filters-list"
     @onUpdateFilter="onUpdateFilter"
-    @onToggleSearchGridFilter="onToggleSearchGridFilter"
-    @onClearFilters="onClearFilters"
+    @onToggleSearchGridFilter="$emit('close')"
+    @onClearFilters="clearFilters"
   >
     <div class="flex items-center justify-between mt-4 mb-8">
       <h4 class="text-2xl">
@@ -14,8 +17,8 @@
         v-if="isAnyFilterApplied"
         id="clear-filter-button"
         type="button"
-        class="text-sm py-2 px-4 lowercase rounded color-dark-blue border border-dark-blue hover:text-white hover:bg-dark-gray hover:border-dark-gray"
-        @click="onClearFilters"
+        class="text-sm py-2 px-4 text-pink hover:border-dark-gray"
+        @click="clearFilters"
       >
         {{ $t('filter-list.clear') }}
       </button>
@@ -34,7 +37,7 @@
       <button
         class="text-sm py-4 px-6 lowercase rounded bg-trans-blue text-white lg:hidden hover:bg-trans-blue-action"
         type="button"
-        @click="onToggleSearchGridFilter"
+        @click="$emit('close')"
       >
         {{ $t('filter-list.show') }}
       </button>
@@ -43,10 +46,12 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { computed, useContext } from '@nuxtjs/composition-api'
+import { kebabize } from '~/utils/format-strings'
+
 import { CLEAR_FILTERS, TOGGLE_FILTER } from '~/constants/action-types'
 import { SEARCH } from '~/constants/store-modules'
-import { kebabize } from '~/utils/format-strings'
+import { isMinScreen } from '~/composables/use-media-query'
 
 import VFilterChecklist from '~/components/VFilters/VFilterChecklist.vue'
 
@@ -55,35 +60,39 @@ export default {
   components: {
     VFilterChecklist,
   },
-  computed: {
-    ...mapGetters(SEARCH, ['mediaFiltersForDisplay', 'isAnyFilterApplied']),
-    filters() {
-      return this.mediaFiltersForDisplay || {}
-    },
-    filterTypes() {
-      return Object.keys(this.filters)
-    },
-  },
-  methods: {
-    ...mapActions(SEARCH, {
-      toggleFilter: TOGGLE_FILTER,
-      clearFilters: CLEAR_FILTERS,
-    }),
-    filterTypeTitle(filterType) {
+  setup() {
+    const { i18n, store } = useContext()
+    const isMdScreen = isMinScreen('md')
+
+    const isAnyFilterApplied = computed(
+      () => store.getters[`${SEARCH}/isAnyFilterApplied`]
+    )
+    const filters = computed(() => {
+      return store.getters[`${SEARCH}/mediaFiltersForDisplay`] || {}
+    })
+    const filterTypes = computed(() => Object.keys(filters.value))
+    const filterTypeTitle = (filterType) => {
       if (filterType === 'searchBy') {
         return ''
       }
-      return this.$t(`filters.${kebabize(filterType)}.title`)
-    },
-    onUpdateFilter({ code, filterType }) {
-      this.toggleFilter({ code, filterType })
-    },
-    onClearFilters() {
-      this.clearFilters()
-    },
-    onToggleSearchGridFilter() {
-      this.$emit('close')
-    },
+      return i18n.t(`filters.${kebabize(filterType)}.title`)
+    }
+    const onUpdateFilter = ({ code, filterType }) => {
+      store.dispatch(`${SEARCH}/${TOGGLE_FILTER}`, { code, filterType })
+    }
+    const clearFilters = () => {
+      store.dispatch(`${SEARCH}/${CLEAR_FILTERS}`)
+    }
+
+    return {
+      isAnyFilterApplied,
+      filters,
+      filterTypes,
+      filterTypeTitle,
+      clearFilters,
+      onUpdateFilter,
+      isMdScreen,
+    }
   },
 }
 </script>
@@ -104,11 +113,11 @@ export default {
     background-color: transparent;
     border-radius: 20px;
   }
-  @include touch {
-    width: 21.875rem;
-    max-width: 100%;
-    max-height: 37rem;
-    overflow-x: hidden;
+}
+@media (min-width: 768px) {
+  .search-filters {
+    border-left-width: 1px;
+    border-right-width: 1px;
   }
 }
 </style>

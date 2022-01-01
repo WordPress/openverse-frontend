@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2021-12-16T22:08:56+00:00\n"
+"POT-Creation-Date: 2022-01-01T04:27:05+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -18,7 +18,7 @@ msgctxt "interpunct"
 msgid "•"
 msgstr ""
 
-#: src/components/VModal/VModalContent.vue:25
+#: src/components/VHeader/VMobileMenuModalContent.vue:26
 msgctxt "modal.close"
 msgid "Close"
 msgstr ""
@@ -862,22 +862,21 @@ msgctxt "browse-page.search-rating.feedback-thanks"
 msgid "Thank you for the feedback!"
 msgstr ""
 
-#: src/components/VFilters/VSearchGridFilter.vue:11
+#: src/components/VFilters/VSearchGridFilter.vue:14
 msgctxt "filter-list.filter-by"
 msgid "Filter results by"
 msgstr ""
 
-#: src/components/VFilters/VSearchGridFilter.vue:16
 msgctxt "filter-list.hide"
 msgid "Hide filters"
 msgstr ""
 
-#: src/components/VFilters/VSearchGridFilter.vue:45
+#: src/components/VFilters/VSearchGridFilter.vue:23
 msgctxt "filter-list.clear"
-msgid "Clear filters"
+msgid "Clear all"
 msgstr ""
 
-#: src/components/VFilters/VSearchGridFilter.vue:52
+#: src/components/VFilters/VSearchGridFilter.vue:42
 msgctxt "filter-list.show"
 msgid "Show results"
 msgstr ""
@@ -919,7 +918,7 @@ msgctxt "filters.license-explanation.link"
 msgid "here"
 msgstr ""
 
-#: src/components/VFilters/VFilterChecklist.vue:85
+#: src/components/VFilters/VFilterChecklist.vue:73
 msgctxt "filters.searchBy.title"
 msgid "Search By"
 msgstr ""

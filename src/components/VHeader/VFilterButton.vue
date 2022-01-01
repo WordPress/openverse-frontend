@@ -8,7 +8,7 @@
     @click="toggleFilters"
   >
     <VIcon v-if="showIcon" :icon-path="filterIcon" />
-    <span v-if="showLabel" data-testid="filterbutton-label">{{ label }}</span>
+    <span v-show="showLabel" data-testid="filterbutton-label">{{ label }}</span>
   </VButton>
 </template>
 

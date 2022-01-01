@@ -1,21 +1,33 @@
 <template>
-  <VTeleport v-if="visible" :to="modalTarget">
+  <VTeleport v-if="visible" to="modal">
     <!-- Prevent FocusTrap from trying to focus the first element. We already do that in a more flexible, adaptive way in our Dialog composables. -->
     <FocusTrap :initial-focus="() => false">
       <div
-        class="flex justify-center z-40 bg-dark-charcoal bg-opacity-75 overlay"
-        :class="overlayStyles"
+        class="flex justify-center z-50 fixed inset-0 bg-transparent min-h-screen"
       >
         <div
           ref="dialogRef"
           v-bind="$attrs"
-          class="flex flex-col w-full"
+          class="w-full flex flex-col"
           role="dialog"
           aria-modal="true"
           v-on="$listeners"
           @keydown="onKeyDown"
           @blur="onBlur"
         >
+          <!-- This should be the same height as the header -->
+          <div class="w-full flex justify-end h-20 px-6">
+            <VButton
+              size="disabled"
+              class="py-2"
+              variant="plain"
+              @click="hide()"
+            >
+              {{ $t('modal.close') }}
+              <VIcon :icon-path="closeIcon" class="ms-2" />
+            </VButton>
+          </div>
+
           <div
             class="w-full flex-grow align-bottom bg-white rounded-t-sm text-left overflow-y-auto"
           >
@@ -28,20 +40,21 @@
 </template>
 
 <script>
-import { defineComponent, toRefs, ref, computed } from '@nuxtjs/composition-api'
+import { defineComponent, toRefs, ref } from '@nuxtjs/composition-api'
 import { FocusTrap } from 'focus-trap-vue'
+import { VTeleport } from '~/components/VTeleport'
 import { useDialogContent } from '~/composables/use-dialog-content'
 import { warn } from '~/utils/warn'
+import VButton from '~/components/VButton.vue'
+import VIcon from '~/components/VIcon/VIcon.vue'
 import closeIcon from '~/assets/icons/close.svg'
-import { VTeleport } from '~/components/VTeleport'
-import { isMinScreen } from '@/composables/use-media-query'
 
 /**
  * Renders the inner content of a modal and manages focus.
  */
 const VModalContent = defineComponent({
-  name: 'VModalContent',
-  components: { VTeleport, FocusTrap },
+  name: 'VMobileMenuModalContent',
+  components: { VTeleport, VButton, VIcon, FocusTrap },
   props: {
     visible: {
       type: Boolean,
@@ -93,31 +106,12 @@ const VModalContent = defineComponent({
       hideOnEscRef: propsRefs.hideOnEsc,
       emit,
     })
-    const isMdScreen = isMinScreen('md')
 
-    const modalTarget = computed(() => {
-      return isMdScreen.value ? 'sidebar' : 'modal'
-    })
-    const overlayStyles = computed(() =>
-      // todo (obulat) adjust top margin for varying header height
-      isMdScreen.value ? '' : 'fixed inset-0 mt-20'
-    )
-    return {
-      dialogRef,
-      onKeyDown,
-      onBlur,
-      closeIcon,
-      modalTarget,
-      overlayStyles,
-    }
+    return { dialogRef, onKeyDown, onBlur, closeIcon }
   },
 })
 
 export default VModalContent
 </script>
 
-<style module>
-.overlay {
-  min-height: calc(100vh - 80px);
-}
-</style>
+<style module></style>

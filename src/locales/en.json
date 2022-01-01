@@ -413,7 +413,7 @@
   "filter-list": {
     "filter-by": "Filter results by",
     "hide": "Hide filters",
-    "clear": "Clear filters",
+    "clear": "Clear all",
     "show": "Show results",
     "category-aria": "filters list for {categoryName} category"
   },
