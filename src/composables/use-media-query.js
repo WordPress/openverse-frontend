@@ -12,12 +12,13 @@ import { defaultWindow } from '~/composables/window'
  * @returns {import('@nuxtjs/composition-api').Ref<boolean>}
  */
 export function useMediaQuery(query, options = {}) {
+  /** @type {import('@nuxtjs/composition-api').Ref<boolean>} */
+  const matches = ref(false)
   const { window = defaultWindow } = options
-  if (!window) return ref(false)
+  if (!window) return matches
 
   const mediaQuery = window.matchMedia(query)
-  /** @type {import('@nuxtjs/composition-api').Ref<boolean>} */
-  const matches = ref(mediaQuery.matches)
+  matches.value = mediaQuery.matches
 
   const handler = (/** @type MediaQueryListEvent */ event) => {
     matches.value = event.matches
