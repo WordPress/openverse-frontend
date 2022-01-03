@@ -58,11 +58,11 @@ const VFilterButton = defineComponent({
      * based on the viewport, the application of filters, and scrolling.
      */
     const variant = computed(() => {
-      // Show the borderd state by default, unless below md
-      let value = isMinScreenMD.value ? 'action-menu' : 'action-menu-secondary'
+      // Show the bordered state by default, unless below md
+      let value = isMinScreenMD.value ? 'tertiary' : 'action-menu'
 
       if (isHeaderScrolled.value) {
-        value = 'action-menu-secondary'
+        value = 'action-menu'
       }
       if (filtersAreApplied.value) {
         value = 'action-menu-muted'
@@ -105,10 +105,7 @@ const VFilterButton = defineComponent({
 
     // Hide the label entirely when no filters are applied on mobile.
     const showLabel = computed(() => {
-      if (!isMinScreenMD.value && !filtersAreApplied.value) {
-        return false
-      }
-      return true
+      return !(!isMinScreenMD.value && !filtersAreApplied.value)
     })
 
     return {
