@@ -9,7 +9,7 @@ import { useEventListener } from '~/composables/use-event-listener'
  *
  * @type {import('@nuxtjs/composition-api').Ref<boolean>}
  */
-export const isHeaderScrolled = ref(false)
+const isHeaderScrolled = ref(false)
 
 /**
  *
@@ -26,6 +26,7 @@ export function useWindowScroll({
     return {
       x: ref(0),
       y: ref(0),
+      isHeaderScrolled,
     }
   }
 
