@@ -1,24 +1,8 @@
 import pkg from './package.json'
 import locales from './src/locales/scripts/valid-locales.json'
-import stringToBoolean from './src/utils/string-to-boolean'
 import { VIEWPORTS } from './src/constants/screens'
-
-/**
- * Default environment variables are set on this key. Defaults are fallbacks to existing env vars.
- * All boolean values should be designed to be false by default.
- */
-export const env = {
-  apiUrl: process.env.API_URL ?? 'https://api.openverse.engineering/v1/',
-  enableGoogleAnalytics: stringToBoolean(process.env.ENABLE_GOOGLE_ANALYTICS),
-  googleAnalyticsUA: process.env.GOOGLE_ANALYTICS_UA ?? 'UA-2010376-36',
-  filterStorageKey: 'openverse-filter-visibility',
-  notificationStorageKey: 'openverse-show-notification',
-  enableInternalAnalytics: stringToBoolean(
-    process.env.ENABLE_INTERNAL_ANALYTICS
-  ),
-  /** Feature flag to enable non-image media */
-  enableAudio: stringToBoolean(process.env.ENABLE_AUDIO),
-}
+import { dev } from './src/utils/dev'
+import { env } from './src/utils/env'
 
 /**
  * The default metadata for the site. Can be extended and/or overwritten per page. And even in components!
@@ -126,18 +110,7 @@ export default {
     middleware: 'middleware',
   },
   components: {
-    dirs: [
-      '~/components',
-      '~/components/ContentReport',
-      '~/components/Filters',
-      '~/components/ImageDetails',
-      '~/components/ImageGrid',
-      '~/components/MediaInfo',
-      '~/components/VMetaSearch',
-      '~/components/MediaTag',
-      '~/components/Skeleton',
-      '~/components/VPopover',
-    ],
+    dirs: [{ path: '~/components', extensions: ['vue'], pathPrefix: false }],
   },
   plugins: [
     { src: '~/plugins/ab-test-init.js', mode: 'client' },
@@ -146,6 +119,7 @@ export default {
     { src: '~/plugins/migration-notice.js' },
   ],
   css: [
+    '~/styles/tailwind.css',
     '~/assets/fonts.css',
     '~/styles/vocabulary.scss',
     '~/styles/global.scss',
@@ -153,10 +127,10 @@ export default {
   ],
   head,
   env,
-  dev: process.env.NODE_ENV !== 'production',
+  dev,
   buildModules: [
     '@nuxtjs/composition-api/module',
-    '@nuxtjs/tailwindcss',
+    '@nuxt/postcss8',
     '@nuxtjs/style-resources',
     '@nuxtjs/svg',
     '@nuxtjs/eslint-module',
@@ -222,9 +196,13 @@ export default {
     environment: process.env.NODE_ENV,
     lazy: true,
   },
-  tailwindcss: {
-    // https://github.com/nuxt-community/tailwindcss-module/issues/114#issuecomment-698885369
-    configPath: '~~/tailwind.config.js',
+  build: {
+    postcss: {
+      plugins: {
+        tailwindcss: {},
+        autoprefixer: {},
+      },
+    },
   },
   storybook: {
     port: 6006, // standard port for Storybook

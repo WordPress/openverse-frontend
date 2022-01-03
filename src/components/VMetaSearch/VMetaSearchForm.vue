@@ -1,5 +1,9 @@
 <template>
-  <section :key="type" class="p-6 meta-search text-center mt-12">
+  <section
+    :key="type"
+    class="p-6 meta-search text-center mt-12"
+    data-testid="meta-search-form"
+  >
     <header class="mb-10">
       <i18n
         v-if="!noresult"
@@ -21,12 +25,8 @@
         tag="h4"
         class="b-header mb-2"
       >
-        <template #type>
-          {{ type }}
-        </template>
-        <template #query>
-          {{ query.q }}
-        </template>
+        <template #type>{{ type }}</template>
+        <template #query>{{ query.q }}</template>
       </i18n>
       <i18n path="meta-search.form.caption" tag="p">
         <template #type>{{ type }}</template>
@@ -51,7 +51,7 @@ import { AUDIO, IMAGE, VIDEO } from '~/constants/media'
 import VMetaSourceList from './VMetaSourceList.vue'
 
 export default {
-  name: 'VMetaSearch',
+  name: 'VMetaSearchForm',
   components: {
     VMetaSourceList,
   },
