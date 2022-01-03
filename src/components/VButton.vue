@@ -7,6 +7,7 @@
       $style[variant],
       pressed && $style[`${variant}-pressed`],
       $style[`size-${size}`],
+      isInGroup && $style['button-group'],
     ]"
     :aria-pressed="pressed"
     :aria-disabled="ariaDisabledRef"
@@ -22,7 +23,14 @@
 </template>
 
 <script>
-import { defineComponent, ref, watch, toRefs } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  ref,
+  watch,
+  toRefs,
+  inject,
+} from '@nuxtjs/composition-api'
+import { VButtonGroupContextKey } from '~/components/VButtonGroup.vue'
 import { warn } from '~/utils/warn'
 
 /**
@@ -54,7 +62,9 @@ const VButton = defineComponent({
      * @default 'button'
      */
     as: {
-      type: String,
+      type: /** @type {import('@nuxtjs/composition-api').PropType<'a' | 'button'>} */ (
+        String
+      ),
       default: 'button',
       validate: (v) => ['a', 'button'].includes(v),
     },
@@ -64,7 +74,9 @@ const VButton = defineComponent({
      * @default 'primary'
      */
     variant: {
-      type: String,
+      type: /** @type {import('@nuxtjs/composition-api').PropType<'primary' | 'secondary' | 'tertiary' | 'action-menu' | 'action-menu-muted' | 'grouped'>} */ (
+        String
+      ),
       default: 'primary',
       validate: (v) =>
         [
@@ -93,7 +105,9 @@ const VButton = defineComponent({
      * @default 'medium'
      */
     size: {
-      type: String,
+      type: /** @type {import('@nuxtjs/composition-api').PropType<'large' | 'medium' | 'small' | 'disabled'>} */ (
+        String
+      ),
       default: 'medium',
       validate: (v) => ['large', 'medium', 'small', 'disabled'].includes(v),
     },
@@ -127,14 +141,20 @@ const VButton = defineComponent({
      * @default 'button'
      */
     type: {
-      type: String,
+      type: /** @type {import('@nuxtjs/composition-api').PropType<'buton' | 'submit' | 'reset'>} */ (
+        String
+      ),
       default: 'button',
       validate: (v) => ['button', 'submit', 'reset'].includes(v),
     },
   },
-  /* eslint-disable no-unused-vars */
+  /**
+   * @param {Props} props
+   * @param {import('@nuxtjs/composition-api').SetupContext}
+   */
   setup(props, { attrs }) {
     const propsRef = toRefs(props)
+    const isInGroup = inject(VButtonGroupContextKey, false)
     const disabledAttributeRef = ref(propsRef.disabled.value)
     const ariaDisabledRef = ref()
     const trulyDisabledRef = ref()
@@ -188,6 +208,7 @@ const VButton = defineComponent({
     )
 
     return {
+      isInGroup,
       disabledAttributeRef,
       ariaDisabledRef,
       typeRef,
@@ -201,6 +222,18 @@ export default VButton
 <style module>
 .button {
   @apply flex items-center rounded-sm justify-center transition-shadow duration-100 ease-linear disabled:opacity-70 focus:outline-none focus-visible:ring no-underline appearance-none ring-offset-1;
+}
+
+.button-group {
+  @apply rounded-none me-1;
+}
+
+.button-group:first-of-type {
+  @apply rounded-s-sm;
+}
+
+.button-group:last-of-type {
+  @apply rounded-e-sm me-0;
 }
 
 .button[disabled='disabled'],
