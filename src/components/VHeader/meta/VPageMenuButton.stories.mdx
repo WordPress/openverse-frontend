@@ -1,0 +1,46 @@
+import {
+  ArgsTable,
+  Canvas,
+  Description,
+  Meta,
+  Story,
+} from '@storybook/addon-docs'
+import VPageMenuButton from '~/components/VHeader/VContentSwitcher/VPageMenuButton.vue'
+import imageIcon from '~/assets/icons/image-content.svg'
+
+<Meta
+  title="Components/VHeader/VContentSwitcher/VPageMenuButton"
+  component={VPageMenuButton}
+  argTypes={{}}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  template: `
+    <VPageMenuButton v-bind="$props" v-on="$props" />`,
+  components: { VPageMenuButton },
+  props: Object.keys(argTypes),
+})
+
+# Page Menu Button
+
+<Description of={VPageMenuButton} />
+
+<ArgsTable of={VPageMenuButton} />
+
+The button opens and closes the menu for selecting pages. Only visible on desktop.
+
+<Canvas>
+  <Story
+    name="Default"
+    args={{
+      activeItem: 'image',
+      icon: imageIcon,
+      a11yProps: {
+        'aria-expanded': false,
+        'aria-haspopup': 'dialog',
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>

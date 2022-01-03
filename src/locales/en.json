@@ -50,7 +50,7 @@
       "primary": "primary",
       "menu": "menu",
       "search": "search",
-      "sr-search": "sr search button"
+      "sr-search": "search button"
     },
     "licenses-nav-item": "The Licenses",
     "about-tab": "About",
@@ -682,5 +682,12 @@
   "interpunct": "•",
   "modal": {
     "close": "Close"
+  },
+  "search-type": {
+    "image": "Images",
+    "audio": "Audio",
+    "all": "All content",
+    "video": "Videos",
+    "label": "Type of content to search"
   }
 }

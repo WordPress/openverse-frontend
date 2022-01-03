@@ -1,0 +1,46 @@
+import {
+  ArgsTable,
+  Canvas,
+  Description,
+  Meta,
+  Story,
+} from '@storybook/addon-docs'
+import VContentSwitcherButton from '~/components/VHeader/VContentSwitcher/VContentSwitcherButton.vue'
+import imageIcon from '~/assets/icons/image-content.svg'
+
+<Meta
+  title="Components/VHeader/VContentSwitcher/VContentSwitcherButton"
+  component={VContentSwitcherButton}
+  argTypes={{}}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  template: `
+    <VContentSwitcherButton v-bind="$props" v-on="$props" />`,
+  components: { VContentSwitcherButton },
+  props: Object.keys(argTypes),
+})
+
+# Content Switcher Button
+
+<Description of={VContentSwitcherButton} />
+
+<ArgsTable of={VContentSwitcherButton} />
+
+The button opens and closes the menu for selecting the type of content to search.
+
+<Canvas>
+  <Story
+    name="Default"
+    args={{
+      activeItem: 'image',
+      icon: imageIcon,
+      a11yProps: {
+        'aria-expanded': false,
+        'aria-haspopup': 'dialog',
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
