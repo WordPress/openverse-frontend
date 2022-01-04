@@ -3,7 +3,9 @@
     class="bg-white border border-dark-charcoal/20 rounded-sm flex flex-col text-left py-4 ps-4 pe-16 hover:bg-dark-charcoal hover:text-white focus:bg-white focus:ring focus:ring-pink focus:outline-none focus:shadow-ring focus:text-black overflow-hidden"
   >
     <VIcon :icon-path="iconPath" />
-    <p class="capitalize font-semibold pt-1">{{ mediaType }}</p>
+    <p class="capitalize font-semibold pt-1">
+      {{ $t(`search-tab.${mediaType}`) }}
+    </p>
     <span>{{ resultsCountLabel }}</span>
   </button>
 </template>
