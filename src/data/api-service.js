@@ -1,11 +1,34 @@
 import axios from 'axios'
+import { warn } from '~/utils/warn'
 
 const DEFAULT_REQUEST_TIMEOUT = 30000
+
+const validateRequest = (errorCondition, message, config) => {
+  if (errorCondition) {
+    warn(
+      `There is a problem with the request url: ${message}.
+Please check the url: ${config.baseURL}${config.url}`
+    )
+  }
+}
 
 export const createApiService = (baseUrl = process.env.apiUrl) => {
   const client = axios.create({
     baseURL: baseUrl,
     timeout: DEFAULT_REQUEST_TIMEOUT,
+  })
+  client.interceptors.request.use(function (config) {
+    validateRequest(
+      !config.url.endsWith('/'),
+      'API request urls should have a trailing slash',
+      config
+    )
+    validateRequest(
+      config.url.includes('//'),
+      'API request urls should not have two slashes',
+      config
+    )
+    return config
   })
   client.interceptors.response.use(
     (response) => response,
