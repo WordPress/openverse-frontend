@@ -1,9 +1,9 @@
 <template>
   <button
-    class="border border-dark-charcoal/25 rounded-sm bg-white flex flex-col text-left p-4"
+    class="bg-white border border-dark-charcoal/25 rounded-sm flex flex-col text-left py-4 ps-4 pe-16 hover:bg-dark-charcoal hover:text-white focus:bg-white focus:ring focus:ring-pink focus:outline-none focus:shadow-ring focus:text-black overflow-hidden"
   >
     <VIcon :icon-path="iconPath" />
-    <p class="capitalize font-semibold">{{ mediaType }}</p>
+    <p class="capitalize font-semibold pt-1">{{ mediaType }}</p>
     <span>{{ resultsCountLabel }}</span>
   </button>
 </template>

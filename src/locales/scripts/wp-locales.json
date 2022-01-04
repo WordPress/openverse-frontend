@@ -1101,7 +1101,7 @@
     "facebookLocale": "id_ID",
     "wpLocale": "id_ID",
     "code": "id",
-    "translated": 64
+    "translated": 63
   },
   "ido": {
     "name": "Ido",
@@ -1576,7 +1576,7 @@
     "googleCode": "nl",
     "wpLocale": "nl_BE",
     "code": "nl-be",
-    "translated": 24
+    "translated": 23
   },
   "nl_NL": {
     "name": "Dutch",
