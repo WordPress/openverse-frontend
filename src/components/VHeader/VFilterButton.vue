@@ -7,7 +7,7 @@
     :aria-label="label"
     @click="toggleFilters"
   >
-    <VIcon v-if="showIcon" :icon-path="filterIcon" />
+    <VIcon v-show="showIcon" :icon-path="filterIcon" />
     <span v-show="showLabel" data-testid="filterbutton-label">{{ label }}</span>
   </VButton>
 </template>

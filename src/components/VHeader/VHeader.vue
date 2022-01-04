@@ -9,7 +9,12 @@
     <NuxtLink to="/">
       <VLogoLoader :status="isFetching ? 'loading' : 'idle'" />
     </NuxtLink>
-    <VHeaderFilter v-if="isSearch" @close="closeMenu" @open="openMenu" />
+    <VHeaderFilter
+      v-if="isSearch"
+      :hide-buttons="hideButtons"
+      @close="closeMenu"
+      @open="openMenu('filters')"
+    />
   </div>
 </template>
 
@@ -64,15 +69,19 @@ const VHeader = defineComponent({
       return store.getters['media/fetchState'].isFetching
     })
 
+    const hideButtons = computed(() => currentMenu.value !== null)
+
     return {
       closeIcon,
       currentMenu,
       isFetching,
       isHeaderScrolled,
+      isMdScreen,
       isSearch,
 
       closeMenu,
       openMenu,
+      hideButtons,
     }
   },
 })

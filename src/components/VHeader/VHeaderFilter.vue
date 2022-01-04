@@ -1,18 +1,14 @@
 <template>
   <div ref="nodeRef">
     <VFilterButton
-      v-show="isMdScreen || (!isMdScreen && !visibleRef)"
+      v-show="isMdScreen || (!isMdScreen && !visibleRef && !hideButtons)"
       ref="buttonRef"
       :is-header-scrolled="isHeaderScrolled"
       :pressed="visibleRef"
       v-bind="triggerA11yProps"
       @toggle="onTriggerClick"
     />
-    <Component
-      :is="isMdScreen ? 'VSidebarContent' : 'VMenuModal'"
-      v-bind="options"
-      @close="onTriggerClick"
-    >
+    <Component :is="filterComponent" v-bind="options" @close="onTriggerClick">
       <VSearchGridFilter @close="onTriggerClick" />
     </Component>
   </div>
@@ -46,6 +42,12 @@ export default {
     VMenuModal,
     VTeleport,
   },
+  props: {
+    hideButtons: {
+      type: Boolean,
+      required: true,
+    },
+  },
   emits: [
     /**
      * Fires when the popover opens, regardless of reason. There are no extra parameters.
@@ -70,11 +72,7 @@ export default {
     /** @type {import('@nuxtjs/composition-api').Ref<boolean>} */
     const isHeaderScrolled = inject('isHeaderScrolled')
 
-    onMounted(() => {
-      if (isMdScreen.value && filterSidebar.isVisible.value) {
-        open()
-      }
-    })
+    const filterComponent = ref(VMenuModal)
 
     const triggerA11yProps = reactive({
       'aria-expanded': false,
@@ -89,21 +87,20 @@ export default {
 
     const open = () => {
       visibleRef.value = true
-      filterSidebar.isVisible.value = true
       emit('open')
-      if (!isMdScreen.value) {
-        lock()
-      }
     }
 
     const close = () => {
       visibleRef.value = false
-      filterSidebar.isVisible.value = false
       emit('close')
-      if (!isMdScreen.value) {
-        unlock()
-      }
     }
+
+    watch([visibleRef], () => {
+      filterSidebar.setVisibility(visibleRef.value)
+      if (!isMdScreen) {
+        visibleRef ? lock() : unlock()
+      }
+    })
 
     const onTriggerClick = () => {
       if (visibleRef.value === true) {
@@ -112,19 +109,41 @@ export default {
         open()
       }
     }
-
-    const options = computed(() => {
-      return isMdScreen.value
-        ? { to: 'sidebar', visible: visibleRef.value }
-        : {
-            visible: visibleRef.value,
-            'trigger-element': nodeRef?.value?.firstChild,
-            hide: close,
-            'aria-label': i18n.t('header.filter-button.simple'),
-          }
+    const mobileOptions = {
+      visible: computed(() => visibleRef.value),
+      'trigger-element': computed(() => nodeRef?.value?.firstChild),
+      hide: close,
+      'aria-label': i18n.t('header.filter-button.simple'),
+    }
+    const desktopOptions = {
+      to: 'sidebar',
+      visible: computed(() => visibleRef.value),
+    }
+    /**
+     * @type {Ref<{'trigger-element'?: ComputedRef<HTMLElement|null>, hide?: close, visible: ComputedRef<boolean>, 'aria-label'?: string, to?: string}>}
+     */
+    const options = ref(mobileOptions)
+    onMounted(() => {
+      if (isMdScreen.value && filterSidebar.isVisible.value) {
+        open()
+      }
     })
+    watch(
+      [isMdScreen],
+      (isMdScreen) => {
+        if (isMdScreen) {
+          filterComponent.value = VSidebarContent
+          options.value = desktopOptions
+        } else {
+          filterComponent.value = VMenuModal
+          options.value = mobileOptions.value
+        }
+      },
+      { immediate: true }
+    )
 
     return {
+      filterComponent,
       modalRef,
       buttonRef,
       isHeaderScrolled,

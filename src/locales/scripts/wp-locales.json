@@ -467,7 +467,7 @@
     "facebookLocale": "el_GR",
     "wpLocale": "el",
     "code": "el",
-    "translated": 28
+    "translated": 38
   },
   "en_AU": {
     "name": "English (Australia)",
@@ -1101,7 +1101,7 @@
     "facebookLocale": "id_ID",
     "wpLocale": "id_ID",
     "code": "id",
-    "translated": 62
+    "translated": 64
   },
   "ido": {
     "name": "Ido",
@@ -1929,7 +1929,7 @@
     "facebookLocale": "sq_AL",
     "wpLocale": "sq",
     "code": "sq",
-    "translated": 98
+    "translated": 99
   },
   "sq_XK": {
     "name": "Shqip (Kosovo)",
