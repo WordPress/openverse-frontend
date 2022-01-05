@@ -27,11 +27,11 @@ import {
 import { useBodyScrollLock } from '~/composables/use-body-scroll-lock'
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
 
-import VMenuModal from '~/components/VHeader/VMenuModal.vue'
-import VSidebarContent from '~/components/VHeader/VSidebarContent.vue'
 import { VTeleport } from '~/components/VTeleport'
 import VFilterButton from '~/components/VHeader/VFilterButton.vue'
 import VSearchGridFilter from '~/components/VFilters/VSearchGridFilter.vue'
+import VModalContent from '~/components/VModal/VModalContent.vue'
+import VSidebarContent from '~/components/VHeader/VSidebarContent.vue'
 
 export default {
   name: 'VHeaderFilter',
@@ -39,7 +39,7 @@ export default {
     VFilterButton,
     VSearchGridFilter,
     VSidebarContent,
-    VMenuModal,
+    VModalContent,
     VTeleport,
   },
   props: {
@@ -72,18 +72,22 @@ export default {
     /** @type {import('@nuxtjs/composition-api').Ref<boolean>} */
     const isHeaderScrolled = inject('isHeaderScrolled')
 
-    const filterComponent = ref(VMenuModal)
+    /** @type {import('@nuxtjs/composition-api').Ref<import('@nuxtjs/composition-api').Component>} */
+    const filterComponent = ref(VModalContent)
 
     const triggerA11yProps = reactive({
       'aria-expanded': false,
       'aria-haspopup': 'dialog',
     })
+    const { lock, unlock } = useBodyScrollLock({ nodeRef })
 
     watch([visibleRef], ([visible]) => {
       triggerA11yProps['aria-expanded'] = visible
+      filterSidebar.setVisibility(visible)
+      if (!isMdScreen) {
+        visible ? lock() : unlock()
+      }
     })
-
-    const { lock, unlock } = useBodyScrollLock({ nodeRef })
 
     const open = () => {
       visibleRef.value = true
@@ -94,13 +98,6 @@ export default {
       visibleRef.value = false
       emit('close')
     }
-
-    watch([visibleRef], () => {
-      filterSidebar.setVisibility(visibleRef.value)
-      if (!isMdScreen) {
-        visibleRef ? lock() : unlock()
-      }
-    })
 
     const onTriggerClick = () => {
       if (visibleRef.value === true) {
@@ -114,13 +111,17 @@ export default {
       'trigger-element': computed(() => nodeRef?.value?.firstChild),
       hide: close,
       'aria-label': i18n.t('header.filter-button.simple'),
+      mode: 'mobile',
     }
     const desktopOptions = {
       to: 'sidebar',
       visible: computed(() => visibleRef.value),
     }
     /**
-     * @type {Ref<{'trigger-element'?: ComputedRef<HTMLElement|null>, hide?: close, visible: ComputedRef<boolean>, 'aria-label'?: string, to?: string}>}
+     * @type {Ref<{'trigger-element'?: ComputedRef<HTMLElement|null>,
+     * hide?: close, visible: ComputedRef<boolean>,
+     * 'aria-label'?: string,
+     * to?: string, mode?: string}>}
      */
     const options = ref(mobileOptions)
     onMounted(() => {
@@ -130,13 +131,13 @@ export default {
     })
     watch(
       [isMdScreen],
-      (isMdScreen) => {
+      ([isMdScreen]) => {
         if (isMdScreen) {
           filterComponent.value = VSidebarContent
           options.value = desktopOptions
         } else {
-          filterComponent.value = VMenuModal
-          options.value = mobileOptions.value
+          filterComponent.value = VModalContent
+          options.value = mobileOptions
         }
       },
       { immediate: true }

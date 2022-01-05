@@ -2,27 +2,35 @@
   <VTeleport v-if="visible" to="modal">
     <!-- Prevent FocusTrap from trying to focus the first element. We already do that in a more flexible, adaptive way in our Dialog composables. -->
     <FocusTrap :initial-focus="() => false">
-      <div
-        class="flex justify-center z-10 fixed inset-0 bg-dark-charcoal bg-opacity-75 min-h-screen"
-      >
+      <div :class="$style.overlay">
         <div
           ref="dialogRef"
           v-bind="$attrs"
-          class="w-4/5 flex flex-col"
+          class="flex flex-col"
+          :class="mode === 'mobile' ? 'w-full' : 'w-4/5'"
           role="dialog"
           aria-modal="true"
           v-on="$listeners"
           @keydown="onKeyDown"
           @blur="onBlur"
         >
-          <div class="w-full flex justify-end">
+          <!-- For mobile modal, the height should be the same  as the header height -->
+          <div
+            class="w-full flex justify-end"
+            :class="{ 'h-20 px-6': mode === 'mobile' }"
+          >
             <VButton
               size="disabled"
               variant="plain"
-              class="text-white py-2"
+              class="py-2"
+              :class="{ 'text-white': mode === 'desktop' }"
               @click="hide()"
             >
-              {{ $t('modal.close') }} <VIcon :icon-path="closeIcon" />
+              {{ $t('modal.close') }}
+              <VIcon
+                :icon-path="closeIcon"
+                :class="{ 'ms-2': mode === 'mobile' }"
+              />
             </VButton>
           </div>
 
@@ -40,9 +48,10 @@
 <script>
 import { defineComponent, toRefs, ref } from '@nuxtjs/composition-api'
 import { FocusTrap } from 'focus-trap-vue'
-import { VTeleport } from '~/components/VTeleport'
 import { useDialogContent } from '~/composables/use-dialog-content'
 import { warn } from '~/utils/warn'
+
+import { VTeleport } from '~/components/VTeleport'
 import VButton from '~/components/VButton.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'
 import closeIcon from '~/assets/icons/close.svg'
@@ -57,6 +66,11 @@ const VModalContent = defineComponent({
     visible: {
       type: Boolean,
       required: true,
+    },
+    mode: {
+      type: String,
+      default: 'desktop',
+      validator: (val) => ['desktop', 'mobile'].includes(val),
     },
     hide: {
       type: /** @type {import('@nuxtjs/composition-api').PropType<() => void>} */ (
@@ -112,4 +126,14 @@ const VModalContent = defineComponent({
 export default VModalContent
 </script>
 
-<style module></style>
+<style module>
+.overlay {
+  @apply flex justify-center z-50 fixed inset-0 min-h-screen;
+}
+.overlay-desktop {
+  @apply bg-dark-charcoal bg-opacity-75;
+}
+.overlay-mobile {
+  background: transparent;
+}
+</style>

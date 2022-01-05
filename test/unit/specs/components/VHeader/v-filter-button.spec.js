@@ -93,7 +93,7 @@ describe('VFilterButton', () => {
       const { container } = render(VFilterButton, options)
       const icon = container.querySelector('svg')
 
-      expect(icon).not.toBeInTheDocument()
+      expect(icon).not.toBeVisible()
     })
   })
 
@@ -119,7 +119,7 @@ describe('VFilterButton', () => {
       const icon = container.querySelector('svg')
       const button = screen.getByText(`${filterCount} Filters`)
 
-      expect(icon).not.toBeInTheDocument()
+      expect(icon).not.toBeVisible()
       expect(button).toBeVisible()
     })
     it('only shows the count when filters are applied and the user scrolls', () => {
@@ -133,7 +133,7 @@ describe('VFilterButton', () => {
       const icon = container.querySelector('svg')
       const button = screen.getByText(filterCount)
 
-      expect(icon).not.toBeInTheDocument()
+      expect(icon).not.toBeVisible()
       expect(button).toBeVisible()
     })
   })
