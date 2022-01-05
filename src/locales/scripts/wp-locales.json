@@ -670,7 +670,7 @@
     "facebookLocale": "es_MX",
     "wpLocale": "es_MX",
     "code": "es-mx",
-    "translated": 20
+    "translated": 31
   },
   "es_PE": {
     "name": "Spanish (Peru)",
@@ -1101,7 +1101,7 @@
     "facebookLocale": "id_ID",
     "wpLocale": "id_ID",
     "code": "id",
-    "translated": 63
+    "translated": 64
   },
   "ido": {
     "name": "Ido",
@@ -1286,7 +1286,7 @@
     "facebookLocale": "kn_IN",
     "wpLocale": "kn",
     "code": "kn",
-    "translated": 9
+    "translated": 17
   },
   "ko_KR": {
     "name": "Korean",
@@ -1576,7 +1576,7 @@
     "googleCode": "nl",
     "wpLocale": "nl_BE",
     "code": "nl-be",
-    "translated": 23
+    "translated": 24
   },
   "nl_NL": {
     "name": "Dutch",
