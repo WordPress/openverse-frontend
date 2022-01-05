@@ -1,6 +1,6 @@
 <template>
   <h1
-    class="capitalize leading-tight"
+    class="capitalize leading-tight sr-only md:not-sr-only"
     :class="{ 'text-[90px]': size === 'large' }"
   >
     <slot default />
