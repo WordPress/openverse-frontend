@@ -1,6 +1,9 @@
 <template>
   <button
     class="bg-white border border-dark-charcoal/20 rounded-sm flex flex-col text-left py-4 ps-4 pe-12 hover:bg-dark-charcoal hover:text-white focus:bg-white focus:ring focus:ring-pink focus:outline-none focus:shadow-ring focus:text-black overflow-hidden"
+    type="button"
+    :aria-selected="isSelected"
+    @click="$emit('selected', mediaType)"
   >
     <VIcon :icon-path="iconPath" />
     <p class="capitalize font-semibold pt-1">
@@ -36,6 +39,10 @@ export default defineComponent({
       type: Number,
       required: true,
     },
+    isSelected: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup(props) {
     const { i18n } = useContext()
@@ -58,3 +65,9 @@ export default defineComponent({
   },
 })
 </script>
+
+<style scoped>
+button[aria-selected='true'] {
+  @apply bg-dark-charcoal text-white;
+}
+</style>

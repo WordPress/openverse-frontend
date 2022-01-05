@@ -11,6 +11,9 @@ export default {
     resultsCount: {
       control: { type: 'number' },
     },
+    isSelected: {
+      control: { type: 'switch' },
+    },
   },
 }
 
@@ -25,9 +28,11 @@ const TwoVContentLinkStory = () => ({
   <div class="grid grid-cols-2 gap-4">
     <VContentLink
       v-for="(type, key) in types"
+      :key="key"
       :media-type="type.mediaType"
       :results-count="type.resultsCount"
-      :key="key"/>
+      :is-selected="selected == type.mediaType"
+      @selected="onSelected"/>
   </div>
   `,
   components: { VContentLink },
@@ -37,7 +42,13 @@ const TwoVContentLinkStory = () => ({
         { mediaType: 'image', resultsCount: 654321 },
         { mediaType: 'audio', resultsCount: 123456 },
       ],
+      selected: 'audio',
     }
+  },
+  methods: {
+    onSelected(mediaType) {
+      this.selected = mediaType
+    },
   },
 })
 
@@ -45,6 +56,7 @@ export const Default = VContentLinkStory.bind({})
 Default.args = {
   mediaType: 'image',
   resultsCount: 123456,
+  isSelected: false,
 }
 
 export const Mobile = TwoVContentLinkStory.bind({})
