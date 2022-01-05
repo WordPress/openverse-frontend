@@ -1,8 +1,9 @@
 <template>
   <button
     class="bg-white border border-dark-charcoal/20 rounded-sm flex flex-col text-left py-4 ps-4 pe-12 hover:bg-dark-charcoal hover:text-white focus:bg-white focus:ring focus:ring-pink focus:outline-none focus:shadow-ring focus:text-black overflow-hidden"
+    role="radio"
     type="button"
-    :aria-selected="isSelected"
+    :aria-checked="isSelected"
     @click="$emit('selected', mediaType)"
   >
     <VIcon :icon-path="iconPath" />
@@ -67,7 +68,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-button[aria-selected='true'] {
+button[aria-checked='true'] {
   @apply bg-dark-charcoal text-white;
 }
 </style>
