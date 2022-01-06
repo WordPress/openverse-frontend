@@ -276,7 +276,6 @@ a.button {
   @apply w-full font-semibold bg-dark-charcoal-06 focus-visible:ring-pink hover:bg-dark-charcoal-40 hover:text-white;
 }
 
-/* @todo This style needs specific hover styles */
 .full-pressed {
   @apply w-full font-semibold bg-dark-charcoal-06 text-dark-charcoal;
 }
