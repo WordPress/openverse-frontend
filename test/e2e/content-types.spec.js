@@ -37,26 +37,26 @@ const contentTypes = [
     name: 'All',
     url: '/search/?q=cat',
     supported: true,
-    sources: 5,
+    sources: 6,
   },
   {
     id: 'image',
     name: 'Image',
-    url: '/search/image?q=cat',
+    url: '/search/image/?q=cat',
     supported: true,
-    sources: 5,
+    sources: 6,
   },
   {
     id: 'audio',
     name: 'Audio',
-    url: '/search/audio?q=cat',
+    url: '/search/audio/?q=cat',
     supported: true,
     sources: 5,
   },
   {
     id: 'video',
     name: 'Video',
-    url: '/search/video?q=cat',
+    url: '/search/video/?q=cat',
     supported: false,
     sources: 4,
   },
@@ -100,16 +100,17 @@ for (const [i, contentType] of contentTypes.entries()) {
     }
 
     // MetaSearch form
-    const metaSearchFormText = contentType.supported
-      ? "Not finding what you're looking for? Try additional"
-      : 'Openverse does not yet support built-in '
-    const metaSearchForm = await page.locator(`text=${metaSearchFormText}`)
+    const metaSearchForm = await page.locator(
+      '[data-testid="meta-search-form"]'
+    )
     await expect(metaSearchForm).toHaveCount(1)
 
     const sourceButtons = await page.locator('.meta-search a')
     await expect(sourceButtons).toHaveCount(contentType.sources)
   })
-  test(`Can open ${contentType.name} page client-side`, async ({ page }) => {
+  test.skip(`Can open ${contentType.name} page client-side`, async ({
+    page,
+  }) => {
     const pageToOpen = (i + 1) % contentTypes.length
     await page.goto(contentTypes[pageToOpen].url)
 
@@ -152,10 +153,9 @@ for (const [i, contentType] of contentTypes.entries()) {
     }
 
     // MetaSearch form
-    const metaSearchFormText = contentType.supported
-      ? "Not finding what you're looking for? Try additional"
-      : 'Openverse does not yet support built-in '
-    const metaSearchForm = await page.locator(`text=${metaSearchFormText}`)
+    const metaSearchForm = await page.locator(
+      '[data-testid="meta-search-form"]'
+    )
     await expect(metaSearchForm).toHaveCount(1)
 
     const sourceButtons = await page.locator('.meta-search a')
