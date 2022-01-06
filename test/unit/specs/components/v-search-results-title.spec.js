@@ -6,7 +6,7 @@ describe('VSearchResultsTitle', () => {
     props: {
       size: 'large',
     },
-    scopedSlots: {
+    slots: {
       default: () => 'zack',
     },
   }
