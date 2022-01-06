@@ -105,7 +105,7 @@ export default defineComponent({
     VButton,
     VIcon,
   },
-  props: ['image', 'providerName', 'reportServiceProp'],
+  props: ['image', 'providerName', 'reportService'],
   setup(props, { emit }) {
     const reportStatus = ref(statuses.OPEN)
     /** @type {import('@nuxtjs/composition-api').Ref<string|null>} */
