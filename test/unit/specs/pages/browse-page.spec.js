@@ -35,7 +35,6 @@ describe('Search Grid Wrapper', () => {
         FilterDisplay: true,
         NuxtChild: true,
         ScrollButton: true,
-        SearchGridForm: true,
         SearchTypeTabs: true,
         SearchGridManualLoad: true,
       },

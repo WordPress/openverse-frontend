@@ -61,6 +61,7 @@
       "dismiss": "Dismiss",
       "okay": "OK"
     },
+    "loading": "Loading...",
     "filter-button": {
       "simple": "Filters",
       "with-count": "{count} Filter | {count} Filters"
