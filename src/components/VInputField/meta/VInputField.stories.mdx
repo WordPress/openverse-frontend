@@ -6,11 +6,11 @@ import {
   Story,
 } from '@storybook/addon-docs'
 
-import InputField from '~/components/InputField/InputField.vue'
+import VInputField from '~/components/VInputField/VInputField.vue'
 
 <Meta
   title="Components/Input field"
-  component={InputField}
+  component={VInputField}
   argTypes={{
     input: {
       action: 'input',
@@ -20,19 +20,19 @@ import InputField from '~/components/InputField/InputField.vue'
 
 export const Template = (args, { argTypes }) => ({
   template: `
-    <InputField v-bind="$props" v-on="$props">
+    <VInputField v-bind="$props" v-on="$props">
       Extra info
-    </InputField>
+    </VInputField>
   `,
-  components: { InputField },
+  components: { VInputField },
   props: Object.keys(argTypes),
 })
 
 # Input field
 
-<Description of={InputField} />
+<Description of={VInputField} />
 
-<ArgsTable of={InputField} />
+<ArgsTable of={VInputField} />
 
 The component emits an `input` event with the new contents of the field whenever
 the field receives an input.
@@ -53,13 +53,13 @@ The recommended way to use it is with `v-model` mapping to a `String`.
 export const vModelTemplate = () => ({
   template: `
     <div>
-      <InputField v-model="text">
+      <VInputField v-model="text">
         {{ text.length }}
-      </InputField>
+      </VInputField>
       {{ text }}
     </div>
   `,
-  components: { InputField },
+  components: { VInputField },
   data() {
     return {
       text: 'Hello, World!',
@@ -110,10 +110,10 @@ export const labelTemplate = () => ({
   template: `
     <div>
       <label for="field">Label:</label>
-      <InputField id="field"/>
+      <VInputField id="field"/>
     </div>
   `,
-  components: { InputField },
+  components: { VInputField },
 })
 
 <Canvas>
