@@ -1,5 +1,5 @@
 <template>
-  <div class="browse-page flex flex-row w-screen">
+  <div class="browse-page flex flex-row">
     <div class="main-content w-full search-grid-ctr">
       <SearchGridForm @onSearchFormSubmit="onSearchFormSubmit" />
       <SearchTypeTabs class="mb-4" />
@@ -29,11 +29,6 @@
       </VSearchGrid>
       <VScrollButton v-show="showScrollButton" data-testid="scroll-button" />
     </div>
-    <VTeleportTarget
-      name="sidebar"
-      :class="{ 'sidebar-visible': isVisible }"
-      class="sidebar"
-    />
   </div>
 </template>
 
@@ -56,20 +51,18 @@ import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-vis
 import VScrollButton from '~/components/VScrollButton.vue'
 import VSearchGrid from '~/components/VSearchGrid.vue'
 import VFilterDisplay from '~/components/VFilters/VFilterDisplay.vue'
-import { VTeleportTarget } from '~/components/VTeleport'
 
 const BrowsePage = {
   name: 'browse-page',
   layout: 'default',
   components: {
     VFilterDisplay,
-    VTeleportTarget,
     VScrollButton,
     VSearchGrid,
   },
   setup() {
     const isMdScreen = isMinScreen('md')
-    const { isVisible } = useFilterSidebarVisibility({ mediaQuery: isMdScreen })
+    const { isVisible } = useFilterSidebarVisibility()
 
     return {
       isMdScreen,
@@ -185,9 +178,6 @@ export default BrowsePage
 </script>
 
 <style lang="scss" scoped>
-.search {
-  margin: 0;
-}
 .search-grid-ctr {
   background-color: $color-wp-gray-0;
   min-height: 600px;
@@ -196,20 +186,6 @@ export default BrowsePage
   @include mobile {
     width: 100%;
     flex: none;
-  }
-}
-
-@media (min-width: 768px) {
-  .sidebar {
-    width: 0;
-    flex-grow: 0;
-    max-height: 100vh;
-    height: 100%;
-  }
-  .sidebar-visible {
-    width: 316px;
-    flex-shrink: 0;
-    overflow-y: auto;
   }
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="py-8 px-10 search-filters h-auto max-h-screen overflow-y-scroll"
+    class="py-8 px-10 search-filters"
     :class="{
       'bg-dark-charcoal-06 border-dark-charcoal-20': isMdScreen,
     }"
@@ -96,28 +96,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped>
-.search-filters {
-  /* Works on Firefox */
-  scrollbar-color: transparent transparent;
-  scrollbar-width: thin;
-  /* Works on Chrome, Edge, and Safari */
-  &::-webkit-scrollbar {
-    width: 12px;
-  }
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: transparent;
-    border-radius: 20px;
-  }
-}
-@media (min-width: 768px) {
-  .search-filters {
-    border-left-width: 1px;
-    border-right-width: 1px;
-  }
-}
-</style>
