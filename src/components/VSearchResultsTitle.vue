@@ -1,6 +1,6 @@
 <template>
   <h1
-    class="uppercase leading-tight sr-only md:not-sr-only"
+    class="leading-tight sr-only md:not-sr-only"
     :class="[size === 'large' ? 'text-[90px]' : 'text-6xl']"
   >
     <slot default />
@@ -25,3 +25,10 @@ const VSearchResultsTitle = defineComponent({
 })
 export default VSearchResultsTitle
 </script>
+
+<style scoped>
+/* Title case the user's search query */
+h1:first-letter {
+  text-transform: uppercase;
+}
+</style>
