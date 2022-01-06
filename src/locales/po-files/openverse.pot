@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2021-12-26T03:44:27+00:00\n"
+"POT-Creation-Date: 2022-01-06T04:23:46+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -394,18 +394,6 @@ msgctxt "photo-details.content-report.issue-description"
 msgid "Please describe the issue for us"
 msgstr ""
 
-msgctxt "photo-details.content-report.dmca"
-msgid "Infringes Copyright"
-msgstr ""
-
-msgctxt "photo-details.content-report.mature"
-msgid "Contains mature content"
-msgstr ""
-
-msgctxt "photo-details.content-report.other"
-msgid "Other"
-msgstr ""
-
 #: src/components/VContentReport/VContentReportForm.vue:56
 msgctxt "photo-details.content-report.caption"
 msgid "For security purposes, Openverse collects and retains anonymized IP addresses of those who complete and submit this form."
@@ -416,7 +404,7 @@ msgctxt "photo-details.content-report.next"
 msgid "Next"
 msgstr ""
 
-#: src/components/VContentReport/VDmcaNotice.vue:46
+#: src/components/VContentReport/VDmcaNotice.vue:44
 msgctxt "photo-details.content-report.back"
 msgid "Back"
 msgstr ""
@@ -437,11 +425,6 @@ msgctxt "photo-details.content-report.provider"
 msgid "We recommend doing the same at the source, ###link###."
 msgstr ""
 
-#: src/components/VContentReport/VDmcaNotice.vue:14
-msgctxt "photo-details.content-report.link"
-msgid "DMCA form"
-msgstr ""
-
 #. Do not translate words between ### ###.
 msgctxt "photo-details.content-report.aria-form"
 msgid "###provider### form"
@@ -452,15 +435,32 @@ msgctxt "photo-details.content-report.submission-error"
 msgid "There was an error with the report submission. Please try again."
 msgstr ""
 
-#. Do not translate words between ### ###.
-#: src/components/VContentReport/VDmcaNotice.vue:3
-msgctxt "photo-details.content-report.dmca-content"
-msgid "You must fill out this ###link### to report copyright infringement. No action will be taken until the form is filled out and submitted."
-msgstr ""
-
 #: src/components/VContentReport/VOtherIssueForm.vue:12
 msgctxt "photo-details.content-report.placeholder"
 msgid "Issue description required (with at least 20 characters)"
+msgstr ""
+
+#: src/components/VContentReport/VDmcaNotice.vue:14
+msgctxt "photo-details.content-report.dmca.link"
+msgid "DMCA form"
+msgstr ""
+
+#. Do not translate words between ### ###.
+#: src/components/VContentReport/VDmcaNotice.vue:3
+msgctxt "photo-details.content-report.dmca.content"
+msgid "You must fill out this ###link### to report copyright infringement. No action will be taken until the form is filled out and submitted."
+msgstr ""
+
+msgctxt "photo-details.content-report.reasons.dmca"
+msgid "Infringes Copyright"
+msgstr ""
+
+msgctxt "photo-details.content-report.reasons.mature"
+msgid "Contains mature content"
+msgstr ""
+
+msgctxt "photo-details.content-report.reasons.other"
+msgid "Other"
 msgstr ""
 
 #: src/components/CopyButton.vue:9

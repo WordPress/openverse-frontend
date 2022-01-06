@@ -48,7 +48,7 @@
             name="type"
             :value="reason"
           />
-          {{ $t(`photo-details.content-report.${reason}`) }}
+          {{ $t(`photo-details.content-report.reasons.${reason}`) }}
         </label>
       </fieldset>
 
