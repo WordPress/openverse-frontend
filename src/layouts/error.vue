@@ -25,9 +25,13 @@
       </p>
       <div class="bg-white">
         <SearchBar
-          label-text="Search Openverse"
+          :value="query"
+          autofocus
+          :label-text="$t('404.search-placeholder')"
           field-id="404-search"
-          placeholder="Search for content to resuse"
+          :placeholder="$t('404.search-placeholder')"
+          @input.prevent="setLocalQuery"
+          @submit="onSubmit"
         />
       </div>
     </header>
@@ -35,6 +39,14 @@
 </template>
 
 <script>
+import {
+  UPDATE_QUERY,
+  TOGGLE_FILTER,
+  FETCH_MEDIA,
+} from '~/constants/action-types'
+import { MEDIA, SEARCH } from '~/constants/store-modules'
+import { mapActions, mapGetters } from 'vuex'
+
 import Oops from '~/assets/oops.svg?inline'
 import Logo from '~/assets/logo.svg?inline'
 import SearchBar from '../components/Header/SearchBar/SearchBar.vue'
@@ -47,7 +59,35 @@ const Error = {
     Oops,
     SearchBar,
   },
+  computed: {
+    ...mapGetters(SEARCH, ['searchQueryParams']),
+  },
   layout: 'blank',
+  data() {
+    return {
+      query: '',
+    }
+  },
+  methods: {
+    ...mapActions(SEARCH, {
+      setSearchTerm: UPDATE_QUERY,
+      checkFilter: TOGGLE_FILTER,
+    }),
+    ...mapActions(MEDIA, { fetchMedia: FETCH_MEDIA }),
+    setLocalQuery(event) {
+      console.log(event)
+      this.query = event.target.value
+    },
+    onSubmit() {
+      this.setSearchTerm({ q: this.query })
+      this.fetchMedia({})
+      const newPath = this.localePath({
+        path: `/search/all`,
+        query: this.searchQueryParams,
+      })
+      this.$router.push(newPath)
+    },
+  },
 }
 export default Error
 </script>

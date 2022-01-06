@@ -2,7 +2,8 @@
   "404": {
     "title": "The content you’re looking for kind of disappeared.",
     "main": "Return to {link} or search something similar from the field below.",
-    "link-title": "Openverse"
+    "link-title": "Openverse",
+    "search-placeholder": "Search for content to resuse"
   },
   "hero": {
     "brand": "Openverse",
