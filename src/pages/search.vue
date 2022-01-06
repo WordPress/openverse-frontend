@@ -10,7 +10,6 @@
         ><VSearchGridFilter @close="onToggleSearchGridFilter"
       /></Component>
       <div class="column search-grid-ctr">
-        <SearchGridForm @onSearchFormSubmit="onSearchFormSubmit" />
         <SearchTypeTabs class="mb-4" />
         <VFilterDisplay v-show="shouldShowFilterTags" />
         <VSearchGrid
