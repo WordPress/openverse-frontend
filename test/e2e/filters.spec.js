@@ -30,9 +30,10 @@ test('can unset filters using filter tags', async ({ page }) => {
   await expect(cc0Tag).toHaveCount(1)
   page.on('requestfinished', (request) => {
     const url = request.url()
-    const baseUrl = 'https://api.openverse.engineering/v1/images/'
+    // Only check the URL for an image search query `?`, not thumbs or related requests
+    const baseUrl = 'https://api.openverse.engineering/v1/images/?'
     if (url.startsWith(baseUrl)) {
-      expect(url).toEqual(baseUrl + '?q=cat')
+      expect(url).toEqual(baseUrl + 'q=cat')
     }
   })
   await cc0Tag.click()
