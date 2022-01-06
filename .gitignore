@@ -27,4 +27,5 @@ src/locales/*.json
 storybook-static
 .vercel
 /src/locales/scripts/valid-locales.json
+/src/locales/scripts/wp-locales.json
 .zshrc
