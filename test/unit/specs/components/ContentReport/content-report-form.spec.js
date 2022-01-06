@@ -41,7 +41,7 @@ describe('VContentReportForm', () => {
     props = {
       image: { id: 1, url: 'http://foo.bar' },
       providerName: 'provider',
-      reportServiceProp,
+      reportService: reportServiceProp,
     }
 
     const localVue = createLocalVue()
@@ -73,7 +73,7 @@ describe('VContentReportForm', () => {
   })
 
   it('should render error message if report sending fails', async () => {
-    options.propsData.reportServiceProp = { sendReport: () => Promise.reject() }
+    options.propsData.reportService = { sendReport: () => Promise.reject() }
 
     const { getByText } = render(VContentReportForm, options)
     await fireEvent.click(getMatureInput())
@@ -109,7 +109,7 @@ describe('VContentReportForm', () => {
 
   it('should dispatch SEND_CONTENT_REPORT on next when mature is selected', async () => {
     const serviceMock = { sendReport: jest.fn() }
-    options.propsData.reportServiceProp = serviceMock
+    options.propsData.reportService = serviceMock
     render(VContentReportForm, options)
     await fireEvent.click(getMatureInput())
     await fireEvent.click(getNextButton())
@@ -123,7 +123,7 @@ describe('VContentReportForm', () => {
 
   it('should not dispatch SEND_CONTENT_REPORT on next when dmca is selected', async () => {
     const serviceMock = { sendReport: jest.fn() }
-    options.propsData.reportServiceProp = serviceMock
+    options.propsData.reportService = serviceMock
 
     render(VContentReportForm, options)
     await fireEvent.click(getDmcaInput())
@@ -134,7 +134,7 @@ describe('VContentReportForm', () => {
 
   it('should dispatch SEND_CONTENT_REPORT on other form submit', async () => {
     const serviceMock = { sendReport: jest.fn() }
-    options.propsData.reportServiceProp = serviceMock
+    options.propsData.reportService = serviceMock
 
     const { getByRole } = render(VContentReportForm, options)
     await fireEvent.click(getOtherInput())
@@ -151,7 +151,7 @@ describe('VContentReportForm', () => {
   })
 
   it('should not send other report if description is short', async () => {
-    options.propsData.reportServiceProp = { sendReport: jest.fn() }
+    options.propsData.reportService = { sendReport: jest.fn() }
 
     const { getByRole } = render(VContentReportForm, options)
     await fireEvent.click(getOtherInput())
