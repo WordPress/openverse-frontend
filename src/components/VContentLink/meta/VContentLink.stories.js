@@ -14,6 +14,10 @@ export default {
     isSelected: {
       control: { type: 'switch' },
     },
+    layout: {
+      options: ['stacked', 'horizontal'],
+      control: { type: 'radio' },
+    },
   },
 }
 
@@ -57,6 +61,20 @@ Default.args = {
   mediaType: 'image',
   resultsCount: 123456,
   isSelected: false,
+}
+
+const VContentLinkHorizontalStory = (args, { argTypes }) => ({
+  template: `<div class="max-w-md"><VContentLink v-bind="$props" /></div>`,
+  components: { VContentLink },
+  props: Object.keys(argTypes),
+})
+
+export const Horizontal = VContentLinkHorizontalStory.bind({})
+Horizontal.args = {
+  mediaType: 'audio',
+  resultsCount: 4561,
+  isSelected: false,
+  layout: 'horizontal',
 }
 
 export const Mobile = TwoVContentLinkStory.bind({})

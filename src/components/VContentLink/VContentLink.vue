@@ -1,16 +1,30 @@
 <template>
   <button
-    class="bg-white border border-dark-charcoal/20 rounded-sm flex flex-col text-left py-4 ps-4 pe-12 hover:bg-dark-charcoal hover:text-white focus:bg-white focus:ring focus:ring-pink focus:outline-none focus:shadow-ring focus:text-black overflow-hidden"
+    class="bg-white border border-dark-charcoal/50 rounded-sm flex hover:bg-dark-charcoal hover:text-white focus:bg-white focus:ring focus:ring-pink focus:outline-none focus:shadow-ring focus:text-black overflow-hidden"
+    :class="[
+      isStacked
+        ? 'flex-col items-start py-4 ps-4 pe-12'
+        : 'flex-row justify-between items-center w-full min-w-[22rem] p-6',
+    ]"
     role="radio"
     type="button"
     :aria-checked="isSelected"
     @click="$emit('selected', mediaType)"
   >
-    <VIcon :icon-path="iconPath" />
-    <p class="capitalize font-semibold pt-1">
-      {{ $t(`search-tab.${mediaType}`) }}
-    </p>
-    <span>{{ resultsCountLabel }}</span>
+    <div
+      class="flex"
+      :class="[isStacked ? 'flex-col items-start' : ' flex-row items-center']"
+    >
+      <VIcon :icon-path="iconPath" />
+      <p class="font-semibold" :class="[isStacked ? 'pt-1' : 'ps-2 text-2xl']">
+        {{
+          isStacked
+            ? $t(`search-tab.${mediaType}`)
+            : $t(`search-tab.see-${mediaType}`)
+        }}
+      </p>
+    </div>
+    <span :class="{ 'text-sr': !isStacked }">{{ resultsCountLabel }}</span>
   </button>
 </template>
 
@@ -21,11 +35,6 @@ import VIcon from '~/components/VIcon/VIcon.vue'
 
 import audioIcon from '~/assets/icons/audio-wave.svg'
 import imageIcon from '~/assets/icons/image.svg'
-
-const iconMapping = {
-  [AUDIO]: audioIcon,
-  [IMAGE]: imageIcon,
-}
 
 export default defineComponent({
   name: 'VContentLink',
@@ -44,6 +53,11 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    layout: {
+      type: String,
+      default: 'stacked',
+      validator: (val) => ['stacked', 'horizontal'].includes(val),
+    },
   },
   setup(props) {
     const { i18n } = useContext()
@@ -60,9 +74,15 @@ export default defineComponent({
       return i18n.tc(i18nKey, count, { localeCount })
     })
 
+    const iconMapping = {
+      [AUDIO]: audioIcon,
+      [IMAGE]: imageIcon,
+    }
     const iconPath = computed(() => iconMapping[props.mediaType])
 
-    return { iconPath, imageIcon, resultsCountLabel }
+    const isStacked = computed(() => props.layout == 'stacked')
+
+    return { iconPath, imageIcon, resultsCountLabel, isStacked }
   },
 })
 </script>
