@@ -1,7 +1,7 @@
 <template>
   <h1
     class="capitalize leading-tight sr-only md:not-sr-only"
-    :class="{ 'text-[90px]': size === 'large' }"
+    :class="[size === 'large' ? 'text-[90px]' : 'text-6xl']"
   >
     <slot default />
   </h1>
