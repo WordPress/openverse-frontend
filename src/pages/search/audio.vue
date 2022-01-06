@@ -16,7 +16,6 @@
       </template>
       <VLoadMore
         v-if="canLoadMore && !fetchState.isFinished"
-        :is-error="isError"
         :is-fetching="fetchState.isFetching"
         data-testid="load-more"
         @onLoadMore="onLoadMore"

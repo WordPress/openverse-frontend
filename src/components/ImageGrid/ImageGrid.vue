@@ -8,10 +8,8 @@
     </h5>
     <footer class="px-2">
       <VLoadMore
-        v-if="canLoadMore"
-        :is-error="isError"
+        v-if="canLoadMore && !fetchState.isFinished"
         :is-fetching="fetchState.isFetching"
-        :is-finished="fetchState.isFinished"
         data-testid="load-more"
         @onLoadMore="onLoadMore"
       />

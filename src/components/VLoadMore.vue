@@ -6,7 +6,7 @@
     :disabled="isFetching"
     @click="onLoadMore"
   >
-    <span>{{ buttonLabel }}</span>
+    {{ buttonLabel }}
   </VButton>
 </template>
 <script>
