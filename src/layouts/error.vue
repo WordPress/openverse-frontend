@@ -1,6 +1,6 @@
 <template>
   <main class="bg-yellow h-screen relative">
-    <Logo class="mt-6 ms-6 md:ms-10 md:mt-8 w-30 lg:w-80 h-auto" />
+    <Logo class="pt-6 md:pt-8 ms-6 md:ms-10 w-30 lg:w-80 h-auto" />
     <Oops
       aria-hidden="true"
       class="absolute opacity-5 fill-dark-charcoal -mt-[10%] -ml-[20%] lg:mx-auto w-[140%] lg:w-full px-6 lg:px-16"
@@ -24,14 +24,13 @@
         </i18n>
       </p>
       <div class="bg-white">
-        <SearchBar
-          :value="query"
-          autofocus
+        <VSearchBar
+          :value="searchTerm"
           :label-text="$t('404.search-placeholder')"
           field-id="404-search"
           :placeholder="$t('404.search-placeholder')"
-          @input.prevent="setLocalQuery"
-          @submit="onSubmit"
+          @input="setSearchTerm"
+          @submit="handleSearch"
         />
       </div>
     </header>
@@ -40,54 +39,58 @@
 
 <script>
 import {
-  UPDATE_QUERY,
-  TOGGLE_FILTER,
-  FETCH_MEDIA,
-} from '~/constants/action-types'
+  defineComponent,
+  ref,
+  useContext,
+  useRouter,
+} from '@nuxtjs/composition-api'
 import { MEDIA, SEARCH } from '~/constants/store-modules'
-import { mapActions, mapGetters } from 'vuex'
+import { FETCH_MEDIA, UPDATE_QUERY } from '~/constants/action-types'
 
 import Oops from '~/assets/oops.svg?inline'
 import Logo from '~/assets/logo.svg?inline'
-import SearchBar from '../components/Header/SearchBar/SearchBar.vue'
+import VSearchBar from '~/components/VHeader/VSearchBar/VSearchBar'
 
-const Error = {
-  name: 'home-page',
-  props: ['error'],
+const Error = defineComponent({
+  name: 'ErrorPage',
   components: {
     Logo,
     Oops,
-    SearchBar,
-  },
-  computed: {
-    ...mapGetters(SEARCH, ['searchQueryParams']),
+    VSearchBar,
   },
   layout: 'blank',
-  data() {
+  props: ['error'],
+  setup() {
+    const { app, store } = useContext()
+    const router = useRouter()
+
+    const searchTerm = ref('')
+    const setSearchTerm = (value) => {
+      searchTerm.value = value
+    }
+
+    const handleSearch = async () => {
+      await store.dispatch(`${SEARCH}/${UPDATE_QUERY}`, {
+        q: searchTerm.value,
+      })
+      await store.dispatch(`${MEDIA}/${FETCH_MEDIA}`, {
+        query: { q: searchTerm.value },
+      })
+
+      router.push(
+        app.localePath({
+          path: `/search`,
+          query: { q: searchTerm.value },
+        })
+      )
+    }
+
     return {
-      query: '',
+      searchTerm,
+      setSearchTerm,
+      handleSearch,
     }
   },
-  methods: {
-    ...mapActions(SEARCH, {
-      setSearchTerm: UPDATE_QUERY,
-      checkFilter: TOGGLE_FILTER,
-    }),
-    ...mapActions(MEDIA, { fetchMedia: FETCH_MEDIA }),
-    setLocalQuery(event) {
-      console.log(event)
-      this.query = event.target.value
-    },
-    onSubmit() {
-      this.setSearchTerm({ q: this.query })
-      this.fetchMedia({})
-      const newPath = this.localePath({
-        path: `/search/all`,
-        query: this.searchQueryParams,
-      })
-      this.$router.push(newPath)
-    },
-  },
-}
+})
 export default Error
 </script>

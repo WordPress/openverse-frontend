@@ -10,7 +10,7 @@
 </template>
 <script>
 export default {
-  name: 'FilterTag',
+  name: 'VFilterTag',
   props: {
     code: String,
     filterType: String,

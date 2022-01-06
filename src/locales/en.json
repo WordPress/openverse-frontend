@@ -1,9 +1,9 @@
 {
   "404": {
     "title": "The content you’re looking for kind of disappeared.",
-    "main": "Return to {link} or search something similar from the field below.",
+    "main": "Return to {link} or search for content with the field below.",
     "link-title": "Openverse",
-    "search-placeholder": "Search for content to resuse"
+    "search-placeholder": "Search for content to reuse"
   },
   "hero": {
     "brand": "Openverse",
@@ -61,7 +61,17 @@
     "licenses-nav-item": "The Licenses",
     "about-tab": "About",
     "resources-tab": "Resources",
-    "api-nav-item": "API"
+    "api-nav-item": "API",
+    "notification": {
+      "text": "{example_notification_text}",
+      "dismiss": "Dismiss",
+      "okay": "OK"
+    },
+    "loading": "Loading...",
+    "filter-button": {
+      "simple": "Filters",
+      "with-count": "{count} Filter | {count} Filters"
+    }
   },
   "footer": {
     "navigation": {
