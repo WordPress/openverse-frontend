@@ -9,16 +9,19 @@
       class="absolute lg:max-w-2xl space-y-4 top-1/4 z-10 left-0 right-0 mx-auto px-6 lg:px-0"
     >
       <h1 class="mb-6 lg:leading-tight text-4xl lg:text-[50px]">
-        The content you’re looking for kind of disappeared.
+        {{ $t('404.title') }}
       </h1>
       <p class="font-semibold">
-        Return to
-        <NuxtLink
-          class="underline text-current hover:text-current active:text-current"
-          to="/"
-          >Openverse</NuxtLink
-        >
-        or search something similar from the field below.
+        <i18n path="404.main">
+          <template #link>
+            <NuxtLink
+              class="underline text-current hover:text-current active:text-current"
+              to="/"
+            >
+              {{ $t('404.link-title') }}
+            </NuxtLink>
+          </template>
+        </i18n>
       </p>
       <div class="bg-white">
         <SearchBar

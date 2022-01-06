@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2021-12-16T09:49:12+00:00\n"
+"POT-Creation-Date: 2022-01-06T20:37:46+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -188,13 +188,13 @@ msgctxt "audio-thumbnail.alt"
 msgid "Cover art for \"###title###\" by ###creator###"
 msgstr ""
 
-#: src/components/VAudioTrack/Waveform.vue:12
+#: src/components/VAudioTrack/VWaveform.vue:12
 msgctxt "waveform.label"
 msgid "Audio seek bar"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VAudioTrack/Waveform.vue:513
+#: src/components/VAudioTrack/VWaveform.vue:514
 msgctxt "waveform.current-time"
 msgid "###time### seconds"
 msgstr ""
@@ -232,7 +232,7 @@ msgid "Not finding what you're looking for? Try additional ###type### sources."
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VMetaSearch/VMetaSearchForm.vue:4
+#: src/components/VMetaSearch/VMetaSearchForm.vue:8
 msgctxt "meta-search.form.no-results-title"
 msgid "No ###type### results for \"###query###\"."
 msgstr ""
@@ -727,7 +727,6 @@ msgctxt "browse-page.fetching-error"
 msgid "Error fetching ###type###:"
 msgstr ""
 
-#: src/components/AppModal.vue:13
 msgctxt "browse-page.aria.close"
 msgid "close"
 msgstr ""
@@ -1129,18 +1128,12 @@ msgctxt "search-tab.video"
 msgid "Video"
 msgstr ""
 
-#: src/layouts/error.vue:5
-msgctxt "error.not-found"
-msgid "Page Not Found"
-msgstr ""
-
-#: src/layouts/error.vue:7
 msgctxt "error.occurred"
 msgid "An error occurred"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/image/_id.vue:54
+#: src/pages/image/_id.vue:51
 msgctxt "error.image-not-found"
 msgid "Couldn't find image with id ###id###"
 msgstr ""
@@ -2136,4 +2129,20 @@ msgstr ""
 #: src/components/VHeroSection.vue:35
 msgctxt "hero.search.button"
 msgid "Search"
+msgstr ""
+
+#: src/layouts/error.vue:12
+msgctxt "404.title"
+msgid "The content you’re looking for kind of disappeared."
+msgstr ""
+
+#. Do not translate words between ### ###.
+#: src/layouts/error.vue:15
+msgctxt "404.main"
+msgid "Return to ###link### or search something similar from the field below."
+msgstr ""
+
+#: src/layouts/error.vue:21
+msgctxt "404.link-title"
+msgid "Openverse"
 msgstr ""
