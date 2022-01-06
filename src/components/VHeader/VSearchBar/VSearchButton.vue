@@ -2,7 +2,7 @@
   <VIconButton
     v-bind="$attrs"
     size="search"
-    class="search-button hover:text-white group-hover:text-white hover:bg-pink group-hover:bg-pink p-0.5px ps-1.5px focus:p-0 border border-s-0 focus:border-1.5 border-dark-charcoal-20 hover:border-pink group-hover:border-pink rounded-e-sm active:shadow-ring"
+    class="search-button hover:text-white group-hover:text-white hover:bg-pink group-hover:bg-pink p-0.5px ps-1.5px focus:p-0 border md:border border-dark-charcoal-20 hover:border-pink group-hover:border-pink rounded-e-sm active:shadow-ring"
     :icon-props="{ iconPath: searchIcon }"
     :aria-label="$t('search.search')"
     v-on="$listeners"
@@ -23,3 +23,15 @@ export default {
   },
 }
 </script>
+
+<style>
+/* @todo: Find a better way to override the VIconButton border styles */
+.search-button {
+  /* Negative margin removes a tiny gap between the button and the input borders */
+  margin-inline-start: -1px;
+  border-inline-start-color: transparent;
+}
+.search-button:hover {
+  border-inline-start-color: rgba(214, 212, 213, 1);
+}
+</style>
