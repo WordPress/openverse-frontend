@@ -210,7 +210,7 @@ export default {
     })
     const isLoaded = computed(() => props.image && !!props.image.url)
     const providerName = computed(() => {
-      props.image
+      return props.image
         ? store.getters['provider/getProviderName'](props.image.provider)
         : ''
     })
