@@ -111,7 +111,7 @@ export default defineComponent({
     /** @type {import('@nuxtjs/composition-api').Ref<string|null>} */
     const reasonSelected = ref(null)
 
-    const reportService = props.reportServiceProp || ReportService
+    const service = props.reportService || ReportService
     const onIssueSelected = () => {
       if (
         reasonSelected.value &&
@@ -131,7 +131,7 @@ export default defineComponent({
     }
     const sendContentReport = async ({ description = '' } = {}) => {
       try {
-        await reportService.sendReport({
+        await service.sendReport({
           identifier: props.image.id,
           reason: reasonSelected.value,
           description,
@@ -163,7 +163,6 @@ export default defineComponent({
     )
     return {
       reasonSelected,
-      reportService,
       closeIcon,
       dmcaFormUrl,
       isDone,
