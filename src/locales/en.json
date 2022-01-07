@@ -1,6 +1,6 @@
 {
   "404": {
-    "title": "The content you’re looking for kind of disappeared.",
+    "title": "The content you’re looking for seems to have disappeared.",
     "main": "Return to {link} or search for content with the field below.",
     "link-title": "Openverse",
     "search-placeholder": "Search for content to reuse"
