@@ -1,6 +1,6 @@
 <template>
   <main class="bg-yellow h-screen relative">
-    <Logo class="pt-6 md:pt-8 ms-6 md:ms-10 w-30 lg:w-80 h-auto" />
+    <Logo class="pt-6 lg:pt-8 ms-6 lg:ms-10 w-30 lg:w-80 h-auto" />
     <Oops
       aria-hidden="true"
       class="absolute opacity-5 fill-dark-charcoal -mt-[10%] -ml-[20%] lg:mx-auto w-[140%] lg:w-full px-6 lg:px-16"
