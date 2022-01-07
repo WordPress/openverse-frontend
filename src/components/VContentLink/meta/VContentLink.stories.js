@@ -12,7 +12,7 @@ export default {
       control: { type: 'number' },
     },
     isSelected: {
-      control: { type: 'switch' },
+      control: { type: 'boolean' },
     },
     layout: {
       options: ['stacked', 'horizontal'],
@@ -43,8 +43,8 @@ const TwoVContentLinkStory = () => ({
   data() {
     return {
       types: [
-        { mediaType: 'image', resultsCount: 654321 },
-        { mediaType: 'audio', resultsCount: 123456 },
+        { mediaType: 'image', resultsCount: 4321 },
+        { mediaType: 'audio', resultsCount: 1234 },
       ],
       selected: 'audio',
     }
@@ -59,7 +59,7 @@ const TwoVContentLinkStory = () => ({
 export const Default = VContentLinkStory.bind({})
 Default.args = {
   mediaType: 'image',
-  resultsCount: 123456,
+  resultsCount: 5708,
   isSelected: false,
 }
 

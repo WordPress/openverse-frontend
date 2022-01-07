@@ -1,6 +1,6 @@
 <template>
   <button
-    class="bg-white border border-dark-charcoal/50 rounded-sm flex hover:bg-dark-charcoal hover:text-white focus:bg-white focus:ring focus:ring-pink focus:outline-none focus:shadow-ring focus:text-black overflow-hidden"
+    class="bg-white border border-dark-charcoal/20 rounded-sm flex hover:bg-dark-charcoal hover:text-white focus:bg-white focus:ring focus:ring-pink focus:outline-none focus:shadow-ring focus:text-black overflow-hidden"
     :class="[
       isStacked
         ? 'flex-col items-start py-4 ps-4 pe-12'
@@ -29,7 +29,8 @@
 </template>
 
 <script>
-import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
+import { computed, defineComponent } from '@nuxtjs/composition-api'
+import { resultsCount } from '~/composables/use-i18n-utilities'
 import { AUDIO, IMAGE, mediaTypes } from '~/constants/media'
 import VIcon from '~/components/VIcon/VIcon.vue'
 
@@ -40,19 +41,31 @@ export default defineComponent({
   name: 'VContentLink',
   components: { VIcon },
   props: {
+    /**
+     * One of the media types supported.
+     */
     mediaType: {
       type: String,
       required: true,
       validator: (val) => mediaTypes.includes(val),
     },
+    /**
+     * The number of results that the search returned.
+     */
     resultsCount: {
       type: Number,
       required: true,
     },
+    /**
+     * Whether the indicated media type is currently selected.
+     */
     isSelected: {
       type: Boolean,
       default: false,
     },
+    /**
+     * `stacked` intended for mobile and `horizontal` for desktop.
+     */
     layout: {
       type: String,
       default: 'stacked',
@@ -60,25 +73,13 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { i18n } = useContext()
-
-    /**
-     * The translated string showing how many results were found for this media type.
-     *
-     * @returns {string}
-     */
-    const resultsCountLabel = computed(() => {
-      const count = props.resultsCount
-      const i18nKey = 'browse-page.all-result-count'
-      const localeCount = count.toLocaleString(i18n.locale)
-      return i18n.tc(i18nKey, count, { localeCount })
-    })
-
     const iconMapping = {
       [AUDIO]: audioIcon,
       [IMAGE]: imageIcon,
     }
     const iconPath = computed(() => iconMapping[props.mediaType])
+
+    const resultsCountLabel = computed(() => resultsCount(props.resultsCount))
 
     const isStacked = computed(() => props.layout == 'stacked')
 
