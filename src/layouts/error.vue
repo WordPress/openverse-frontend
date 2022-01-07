@@ -1,14 +1,14 @@
 <template>
-  <main class="bg-yellow h-screen relative">
-    <Logo class="pt-6 lg:pt-8 ms-6 lg:ms-10 w-30 lg:w-80 h-auto" />
+  <main class="bg-yellow h-screen relative page-404">
+    <Logo class="pt-6 lg:pt-8 ms-6 lg:ms-10 w-30 h-auto" />
     <Oops
       aria-hidden="true"
       class="absolute opacity-5 fill-dark-charcoal -mt-[10%] -ml-[20%] lg:mx-auto w-[140%] lg:w-full px-6 lg:px-16"
     />
     <header
-      class="absolute lg:max-w-2xl space-y-4 top-1/4 z-10 left-0 right-0 mx-auto px-6 lg:px-0"
+      class="absolute lg:max-w-2xl space-y-4 lg:space-y-6 top-1/4 z-10 left-0 right-0 mx-auto px-6 lg:px-0"
     >
-      <h1 class="mb-6 lg:leading-tight text-4xl lg:text-[50px]">
+      <h1 class="mb-6 lg:mb-10 lg:leading-tight text-3xl lg:text-6xl">
         {{ $t('404.title') }}
       </h1>
       <p class="font-semibold">
@@ -23,16 +23,14 @@
           </template>
         </i18n>
       </p>
-      <div class="bg-white">
-        <VSearchBar
-          :value="searchTerm"
-          :label-text="$t('404.search-placeholder')"
-          field-id="404-search"
-          :placeholder="$t('404.search-placeholder')"
-          @input="setSearchTerm"
-          @submit="handleSearch"
-        />
-      </div>
+      <VSearchBar
+        :value="searchTerm"
+        :label-text="$t('404.search-placeholder')"
+        field-id="404-search"
+        :placeholder="$t('404.search-placeholder')"
+        @input="setSearchTerm"
+        @submit="handleSearch"
+      />
     </header>
   </main>
 </template>
@@ -70,6 +68,8 @@ const Error = defineComponent({
     }
 
     const handleSearch = async () => {
+      if (searchTerm.value === '') return
+
       await store.dispatch(`${SEARCH}/${UPDATE_QUERY}`, {
         q: searchTerm.value,
       })
@@ -94,3 +94,20 @@ const Error = defineComponent({
 })
 export default Error
 </script>
+
+<style>
+/* Override the default search bar styles.
+   Maybe in the future this would warrant a
+   variant of the searchbar, but that seems
+   excessive for this one-off usage.
+*/
+.page-404 .search-bar > div:not(:focus):not(:focus-within) {
+  border-color: black;
+}
+.page-404
+  .search-bar:not(:hover)
+  button:not(:hover):not(:focus):not(:focus-within) {
+  border-color: black;
+  border-inline-start-color: transparent;
+}
+</style>

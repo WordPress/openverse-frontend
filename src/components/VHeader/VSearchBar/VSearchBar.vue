@@ -1,6 +1,6 @@
 <template>
   <form
-    class="search-bar group flex flex-row items-center"
+    class="search-bar group flex flex-row items-center bg-white rounded-sm"
     @submit.prevent="handleSearch"
   >
     <VInputField
