@@ -50,7 +50,7 @@ const contentTypes = [
     id: 'audio',
     name: 'Audio',
     url: '/search/audio/?q=cat',
-    supported: true,
+    supported: false,
     sources: 5,
   },
   {
@@ -90,13 +90,10 @@ for (const [i, contentType] of contentTypes.entries()) {
 
     // Load more
     if (contentType.supported) {
-      const loadMoreSection = await page.locator('[data-testid="load-more"]')
-      await expect(loadMoreSection).toHaveCount(1)
-      const expectedText =
-        contentType.id === 'audio' ? 'No more audio' : 'Load more'
-      await expect(loadMoreSection).toContainText(expectedText)
-    } else {
-      await expect(page.locator('[data-testid="load-more"]')).toHaveCount(0)
+      const loadMoreBtn = await page.locator(
+        'button:has-text("Load more results")'
+      )
+      await expect(loadMoreBtn).toHaveCount(1)
     }
 
     // MetaSearch form
