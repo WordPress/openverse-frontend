@@ -272,6 +272,14 @@ a.button {
   @apply bg-dark-charcoal-10 ring-offset-dark-charcoal-10;
 }
 
+.full {
+  @apply w-full font-semibold bg-dark-charcoal-06 focus-visible:ring-pink hover:bg-dark-charcoal-40 hover:text-white;
+}
+
+.full-pressed {
+  @apply w-full font-semibold bg-dark-charcoal-06 text-dark-charcoal;
+}
+
 .plain {
   @apply bg-tx focus-visible:ring-pink;
 }
