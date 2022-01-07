@@ -110,4 +110,7 @@ export default Error
   border-color: black;
   border-inline-start-color: transparent;
 }
+.page-404 .search-bar button {
+  border-width: 1px;
+}
 </style>
