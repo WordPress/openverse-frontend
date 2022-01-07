@@ -32,6 +32,10 @@
 export default {
   name: 'VInputField',
   inheritAttrs: false,
+  model: {
+    prop: 'modelValue',
+    event: 'update:modelValue',
+  },
   props: {
     /**
      * the textual content of the input field
