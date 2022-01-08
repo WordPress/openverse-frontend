@@ -1,73 +1,79 @@
 <template>
   <header
-    class="sticky top-0 flex py-4 px-4 md:px-7 items-center justify-between z-40 w-full bg-white gap-x-2"
+    class="sticky top-0 py-4 px-4 md:px-7 z-40 w-full bg-white"
     :class="{
       'border-b border-white': !isHeaderScrolled && !isFilterSidebarVisible,
       'border-b border-dark-charcoal-20':
         isSearchRoute && (isHeaderScrolled || isFilterSidebarVisible),
-      'flex-wrap gap-y-4': !isMinScreenMD && !isHeaderScrolled,
     }"
   >
-    <NuxtLink
-      to="/"
-      class="rounded-sm ring-offset-1 focus:outline-none focus-visible:ring focus-visible:ring-pink -ms-2 inline-flex items-center hover:bg-yellow"
-      :class="{
-        'pe-3': !isHeaderScrolled || !isSearchRoute,
-        'md:px-0': isSearchRoute,
-      }"
+    <div
+      class="flex items-center justify-between gap-x-2"
+      :class="{ 'flex-wrap gap-y-4': !isMinScreenMD && !isHeaderScrolled }"
     >
-      <VLogoLoader :status="isFetching ? 'loading' : 'idle'" />
-      <OpenverseLogoText
-        v-if="!isHeaderScrolled"
-        class="-ml-1 mt-1"
-        :class="{ 'md:hidden': isSearchRoute }"
-        width="95"
-        height="15"
-      />
-    </NuxtLink>
-
-    <VSearchBar
-      v-show="!isHomeRoute"
-      v-model.trim="searchTerm"
-      class="mx-auto md:ms-0 md:me-auto lg:w-1/2 2xl:w-1/3"
-      :class="{
-        'order-4 w-full md:order-none md:w-auto': !isHeaderScrolled,
-        'w-2/3': isHeaderScrolled,
-      }"
-      @submit="handleSearch"
-    >
-      <span
-        v-if="searchStatus"
-        class="info font-semibold text-xs text-dark-charcoal-70 group-hover:text-dark-charcoal group-focus:text-dark-charcoal mx-4"
+      <NuxtLink
+        to="/"
+        class="rounded-sm ring-offset-1 focus:outline-none focus-visible:ring focus-visible:ring-pink -ms-2 inline-flex items-center hover:bg-yellow"
+        :class="{
+          'pe-3': !isHeaderScrolled || !isSearchRoute,
+          'md:px-0': isSearchRoute,
+        }"
       >
-        {{ searchStatus }}
-      </span>
-    </VSearchBar>
+        <VLogoLoader :status="isFetching ? 'loading' : 'idle'" />
+        <OpenverseLogoText
+          v-if="!isHeaderScrolled"
+          class="-ml-1 mt-1"
+          :class="{ 'md:hidden': isSearchRoute }"
+          width="95"
+          height="15"
+        />
+      </NuxtLink>
 
-    <div ref="mobileDrawerTriggerRef">
-      <VFilterButton
-        v-show="isSearchRoute"
-        :is-header-scrolled="isHeaderScrolled"
-        :pressed="isFilterSidebarVisible || mobileDrawer === 'filters'"
-        v-bind="triggerA11yProps"
-        @toggle="
-          mobileDrawer === null
-            ? openMobileDrawer('filters')
-            : closeMobileDrawer()
-        "
-      />
-
-      <!-- Mobile Drawer -->
-
-      <!-- Filter Sidebar -->
-      <Component
-        :is="filterComponent"
-        v-bind="options"
-        @close="closeMobileDrawer"
+      <VSearchBar
+        v-show="!isHomeRoute"
+        v-model.trim="searchTerm"
+        class="mx-auto md:ms-0 md:me-auto lg:w-1/2 2xl:w-1/3"
+        :class="{
+          'order-4 w-full md:order-none md:w-auto': !isHeaderScrolled,
+          'w-2/3': isHeaderScrolled,
+        }"
+        @submit="handleSearch"
       >
-        <VSearchGridFilter @close="closeMobileDrawer" />
-      </Component>
+        <span
+          v-if="searchStatus"
+          class="info font-semibold text-xs text-dark-charcoal-70 group-hover:text-dark-charcoal group-focus:text-dark-charcoal mx-4"
+        >
+          {{ searchStatus }}
+        </span>
+      </VSearchBar>
+
+      <!-- @todo: This ref should be on the button, but I can't get it to work -->
+      <div ref="mobileDrawerTriggerRef">
+        <VFilterButton
+          v-show="isSearchRoute"
+          :is-header-scrolled="isHeaderScrolled"
+          :pressed="isFilterSidebarVisible || mobileDrawer === 'filters'"
+          v-bind="triggerA11yProps"
+          @toggle="
+            mobileDrawer === null
+              ? openMobileDrawer('filters')
+              : closeMobileDrawer()
+          "
+        />
+      </div>
     </div>
+
+    <!-- Mobile Drawer -->
+    <Component
+      :is="filterComponent"
+      v-bind="options"
+      @close="closeMobileDrawer"
+    >
+      <VSearchGridFilter
+        v-show="mobileDrawer === 'filters'"
+        @close="closeMobileDrawer"
+      />
+    </Component>
   </header>
 </template>
 
@@ -76,7 +82,6 @@ import OpenverseLogoText from '~/assets/icons/openverse-logo-text.svg?inline'
 import {
   computed,
   defineComponent,
-  // inject,
   onMounted,
   provide,
   reactive,
@@ -141,10 +146,8 @@ const VHeader = defineComponent({
       setVisibility: setFilterSidebarVisibility,
     } = useFilterSidebarVisibility({ mediaQuery: isMinScreenMD })
 
-    const isMdScreen = isMinScreen('md')
-
     provide('isHeaderScrolled', isHeaderScrolled)
-    provide('isMdScreen', isMdScreen)
+    provide('isMdScreen', isMinScreenMD)
 
     /**
      * The state of the mobile drawer/popover menu.
@@ -200,7 +203,7 @@ const VHeader = defineComponent({
       const visible = mobileDrawer !== null
       triggerA11yProps['aria-expanded'] = visible
       setFilterSidebarVisibility(visible)
-      if (isMdScreen) return
+      if (isMinScreenMD) return
       visible ? lock() : unlock()
     })
 
@@ -225,16 +228,16 @@ const VHeader = defineComponent({
      */
     const options = ref(mobileOptions)
     onMounted(() => {
-      if (isMdScreen.value && isFilterSidebarVisible.value) {
+      if (isMinScreenMD.value && isFilterSidebarVisible.value) {
         open()
       }
     })
 
     watch(
-      [isMdScreen],
-      ([isMdScreen]) => {
-        filterComponent.value = isMdScreen ? VSidebarContent : VModalContent
-        options.value = isMdScreen ? desktopOptions : mobileOptions
+      [isMinScreenMD],
+      ([isMinScreenMD]) => {
+        filterComponent.value = isMinScreenMD ? VSidebarContent : VModalContent
+        options.value = isMinScreenMD ? desktopOptions : mobileOptions
       },
       { immediate: true }
     )
@@ -309,7 +312,6 @@ const VHeader = defineComponent({
       isFilterSidebarVisible,
       isHeaderScrolled,
       isHomeRoute,
-      isMdScreen,
       isMinScreenMD,
       isSearchRoute,
       searchStatus,
