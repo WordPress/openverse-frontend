@@ -1,45 +1,78 @@
 <template>
-  <div>
-    <div
-      class="sticky top-0 flex py-4 px-6 md:px-7 align-center justify-between z-40 w-full bg-white"
+  <header
+    class="sticky top-0 flex py-4 px-4 md:px-7 items-center justify-between z-40 w-full bg-white gap-x-2"
+    :class="{
+      'border-b border-white': !isHeaderScrolled && !isFilterSidebarVisible,
+      'border-b border-dark-charcoal-20':
+        isSearchRoute && (isHeaderScrolled || isFilterSidebarVisible),
+      'flex-wrap gap-y-4': !isMinScreenMD && !isHeaderScrolled,
+    }"
+  >
+    <NuxtLink
+      to="/"
+      class="rounded-sm ring-offset-1 focus:outline-none focus-visible:ring focus-visible:ring-pink -ms-2 inline-flex items-center hover:bg-yellow"
       :class="{
-        'border-b border-dark-charcoal-20':
-          isHeaderScrolled || isFilterSidebarVisible,
+        'pe-3': !isHeaderScrolled || !isSearchRoute,
+        'md:px-0': isSearchRoute,
       }"
     >
-      <NuxtLink to="/">
-        <VLogoLoader :status="isFetching ? 'loading' : 'idle'" />
-      </NuxtLink>
+      <VLogoLoader :status="isFetching ? 'loading' : 'idle'" />
+      <OpenverseLogoText
+        v-if="!isHeaderScrolled"
+        class="-ml-1 mt-1"
+        :class="{ 'md:hidden': isSearchRoute }"
+        width="95"
+        height="15"
+      />
+    </NuxtLink>
 
-      <div ref="mobileDrawerTriggerRef">
-        <VFilterButton
-          v-show="isSearch"
-          :is-header-scrolled="isHeaderScrolled"
-          :pressed="isFilterSidebarVisible || mobileDrawer === 'filters'"
-          v-bind="triggerA11yProps"
-          @toggle="
-            mobileDrawer === null
-              ? openMobileDrawer('filters')
-              : closeMobileDrawer()
-          "
-        />
-      </div>
-    </div>
-
-    <!-- Mobile Drawer -->
-
-    <!-- Filter Sidebar -->
-    <Component
-      :is="filterComponent"
-      v-bind="options"
-      @close="closeMobileDrawer"
+    <VSearchBar
+      v-show="!isHomeRoute"
+      v-model.trim="searchTerm"
+      class="mx-auto md:ms-0 md:me-auto lg:w-1/2 2xl:w-1/3"
+      :class="{
+        'order-4 w-full md:order-none md:w-auto': !isHeaderScrolled,
+        'w-2/3': isHeaderScrolled,
+      }"
+      @submit="handleSearch"
     >
-      <VSearchGridFilter @close="closeMobileDrawer" />
-    </Component>
-  </div>
+      <span
+        v-if="searchStatus"
+        class="info font-semibold text-xs text-dark-charcoal-70 group-hover:text-dark-charcoal group-focus:text-dark-charcoal mx-4"
+      >
+        {{ searchStatus }}
+      </span>
+    </VSearchBar>
+
+    <div ref="mobileDrawerTriggerRef">
+      <VFilterButton
+        v-show="isSearchRoute"
+        :is-header-scrolled="isHeaderScrolled"
+        :pressed="isFilterSidebarVisible || mobileDrawer === 'filters'"
+        v-bind="triggerA11yProps"
+        @toggle="
+          mobileDrawer === null
+            ? openMobileDrawer('filters')
+            : closeMobileDrawer()
+        "
+      />
+
+      <!-- Mobile Drawer -->
+
+      <!-- Filter Sidebar -->
+      <Component
+        :is="filterComponent"
+        v-bind="options"
+        @close="closeMobileDrawer"
+      >
+        <VSearchGridFilter @close="closeMobileDrawer" />
+      </Component>
+    </div>
+  </header>
 </template>
 
 <script>
+import OpenverseLogoText from '~/assets/icons/openverse-logo-text.svg?inline'
 import {
   computed,
   defineComponent,
@@ -49,36 +82,64 @@ import {
   reactive,
   ref,
   useContext,
+  useRouter,
   watch,
+  watchEffect,
 } from '@nuxtjs/composition-api'
 import { useBodyScrollLock } from '~/composables/use-body-scroll-lock'
 import { isMinScreen } from '~/composables/use-media-query'
-import { useSearchRoute } from '~/composables/use-search-route'
+import {
+  useMatchSearchRoutes,
+  useMatchHomeRoute,
+} from '~/composables/use-match-routes'
 import { useWindowScroll } from '~/composables/use-window-scroll'
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
+import { FETCH_MEDIA, UPDATE_QUERY } from '~/constants/action-types'
+import { AUDIO, IMAGE } from '~/constants/media'
+import { MEDIA, SEARCH } from '~/constants/store-modules'
 
 import closeIcon from '~/assets/icons/close.svg'
 
 import VFilterButton from '~/components/VHeader/VFilterButton.vue'
 import VLogoLoader from '~/components/VLogoLoader/VLogoLoader.vue'
 import VModalContent from '~/components/VModal/VModalContent.vue'
-import VSidebarContent from '~/components/VHeader/VSidebarContent.vue'
+import VSearchBar from '~/components/VHeader/VSearchBar/VSearchBar.vue'
 import VSearchGridFilter from '~/components/VFilters/VSearchGridFilter.vue'
+import VSidebarContent from '~/components/VHeader/VSidebarContent.vue'
+
+const i18nKeys = {
+  [AUDIO]: {
+    noResult: 'browse-page.audio-no-results',
+    result: 'browse-page.audio-result-count',
+    more: 'browse-page.audio-result-count-more',
+  },
+  [IMAGE]: {
+    noResult: 'browse-page.image-no-results',
+    result: 'browse-page.image-result-count',
+    more: 'browse-page.image-result-count-more',
+  },
+}
 
 const VHeader = defineComponent({
   name: 'VHeader',
   components: {
     VFilterButton,
     VLogoLoader,
+    VSearchBar,
     VSearchGridFilter,
+    OpenverseLogoText,
   },
   setup() {
-    const { store, i18n } = useContext()
-    const { isSearch } = useSearchRoute()
+    const { app, i18n, store } = useContext()
     const { isHeaderScrolled } = useWindowScroll()
-
-    const filterSidebar = useFilterSidebarVisibility()
-    const isFilterSidebarVisible = computed(() => filterSidebar.isVisible.value)
+    const { matches: isSearchRoute } = useMatchSearchRoutes()
+    const { matches: isHomeRoute } = useMatchHomeRoute()
+    const router = useRouter()
+    const isMinScreenMD = isMinScreen('md', { shouldPassInSSR: true })
+    const {
+      isVisible: isFilterSidebarVisible,
+      setVisibility: setFilterSidebarVisibility,
+    } = useFilterSidebarVisibility({ mediaQuery: isMinScreenMD })
 
     const isMdScreen = isMinScreen('md')
 
@@ -102,6 +163,22 @@ const VHeader = defineComponent({
       mobileDrawer.value = menu
     }
 
+    /**
+     * Return a text representation of the result count.
+     * @param {number} count
+     * @returns {string}
+     */
+    const mediaCount = (count) => {
+      const countKey =
+        count === 0 ? 'noResult' : count >= 10000 ? 'more' : 'result'
+      const i18nKey = i18nKeys[store.state.search.query.mediaType][countKey]
+      const localeCount = count.toLocaleString(i18n.locale)
+      return i18n.tc(i18nKey, count, { localeCount })
+    }
+
+    /** @type {import('@nuxtjs/composition-api').ComputedRef<number>} */
+    const resultsCount = computed(() => store.getters['media/results'].count)
+
     const closeMobileDrawer = () => {
       mobileDrawer.value = null
     }
@@ -122,7 +199,7 @@ const VHeader = defineComponent({
     watch([mobileDrawer], ([mobileDrawer]) => {
       const visible = mobileDrawer !== null
       triggerA11yProps['aria-expanded'] = visible
-      filterSidebar.setVisibility(visible)
+      setFilterSidebarVisibility(visible)
       if (isMdScreen) return
       visible ? lock() : unlock()
     })
@@ -148,7 +225,7 @@ const VHeader = defineComponent({
      */
     const options = ref(mobileOptions)
     onMounted(() => {
-      if (isMdScreen.value && filterSidebar.isVisible.value) {
+      if (isMdScreen.value && isFilterSidebarVisible.value) {
         open()
       }
     })
@@ -162,13 +239,81 @@ const VHeader = defineComponent({
       { immediate: true }
     )
 
+    /**
+     * Status is hidden below the medium breakpoint.
+     * It shows Loading... or Number of results on bigger screens.
+     * @returns {string}
+     */
+    const setInitialStatus = () => {
+      if (!isMinScreenMD.value) return ''
+      if (isFetching.value) return i18n.t('header.loading')
+      return store.state.search.query.q === ''
+        ? ''
+        : mediaCount(resultsCount.value)
+    }
+
+    /** @type {import('@nuxtjs/composition-api').Ref<string>} */
+    const searchStatus = ref(setInitialStatus())
+
+    watchEffect(() => {
+      if (isMinScreenMD.value) {
+        searchStatus.value = isFetching.value
+          ? i18n.t('header.loading')
+          : mediaCount(resultsCount.value)
+      } else {
+        searchStatus.value = ''
+      }
+    })
+
+    const localSearchTerm = ref(store.state.search.query.q)
+    const searchTerm = computed({
+      get: () => localSearchTerm.value,
+      set: async (value) => {
+        localSearchTerm.value = value
+      },
+    })
+
+    watch(
+      () => store.state.search.query.q,
+      (newSearchTerm) => {
+        if (newSearchTerm !== localSearchTerm.value) {
+          localSearchTerm.value = newSearchTerm
+        }
+      }
+    )
+
+    const handleSearch = async () => {
+      // Don't do anything if search term hasn't changed
+      if (localSearchTerm.value === store.state.search.query.q) return
+
+      await store.dispatch(`${SEARCH}/${UPDATE_QUERY}`, {
+        q: localSearchTerm.value,
+      })
+
+      const searchType = store.state.search.searchType
+      const newPath = app.localePath({
+        path: `/search/${searchType === 'all' ? '' : searchType}`,
+        query: store.getters['search/searchQueryParams'],
+      })
+      router.push(newPath)
+
+      await store.dispatch(`${MEDIA}/${FETCH_MEDIA}`, {
+        ...store.getters['search/searchQueryParams'],
+      })
+    }
+
     return {
       closeIcon,
+      handleSearch,
       isFetching,
-      isHeaderScrolled,
-      isMdScreen,
-      isSearch,
       isFilterSidebarVisible,
+      isHeaderScrolled,
+      isHomeRoute,
+      isMdScreen,
+      isMinScreenMD,
+      isSearchRoute,
+      searchStatus,
+      searchTerm,
 
       // Mobile drawer state
       mobileDrawer,

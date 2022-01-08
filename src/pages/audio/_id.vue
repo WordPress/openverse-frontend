@@ -1,6 +1,6 @@
 <template>
   <div :aria-label="$t('photo-details.aria.main')" class="audio-page">
-    <AudioTrack :audio="audio" class="main-track" />
+    <VAudioTrack :audio="audio" class="main-track" />
     <MediaReuse
       data-testid="audio-attribution"
       :media="audio"
@@ -61,7 +61,7 @@ const AudioDetailPage = {
     try {
       await store.dispatch(`${MEDIA}/${FETCH_AUDIO}`, { id: route.params.id })
       return {
-        thumbnailURL: `${env.apiUrl}thumbs/${route.params.id}`,
+        thumbnailURL: `${env.apiUrl}audio/${route.params.id}/thumb/`,
         id: route.params.id,
       }
     } catch (err) {

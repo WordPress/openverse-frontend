@@ -1,7 +1,6 @@
 <template>
   <div class="browse-page flex flex-row">
     <div class="main-content w-full search-grid-ctr">
-      <SearchGridForm @onSearchFormSubmit="onSearchFormSubmit" />
       <SearchTypeTabs class="mb-4" />
       <VFilterDisplay v-show="shouldShowFilterTags" />
       <VSearchGrid

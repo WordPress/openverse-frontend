@@ -6,8 +6,8 @@
 
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
-import { VTeleport } from '~/components/VTeleport'
-import VSearchGridFilter from '@/components/VFilters/VSearchGridFilter'
+import VTeleport from '~/components/VTeleport/VTeleport.vue'
+import VSearchGridFilter from '~/components/VFilters/VSearchGridFilter.vue'
 
 /**
  * Renders the inner content of a modal and manages focus.
