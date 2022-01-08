@@ -13,6 +13,7 @@
 
       <div ref="mobileDrawerTriggerRef">
         <VFilterButton
+          v-show="isSearch"
           :is-header-scrolled="isHeaderScrolled"
           :pressed="isFilterSidebarVisible || mobileDrawer === 'filters'"
           v-bind="triggerA11yProps"
@@ -80,6 +81,7 @@ const VHeader = defineComponent({
     const isFilterSidebarVisible = computed(() => filterSidebar.isVisible.value)
 
     const isMdScreen = isMinScreen('md')
+
     provide('isHeaderScrolled', isHeaderScrolled)
     provide('isMdScreen', isMdScreen)
 
@@ -94,7 +96,6 @@ const VHeader = defineComponent({
     const filterComponent = ref(VModalContent)
 
     /**
-     *
      * @param {'filters'|'content-switcher'} menu
      */
     const openMobileDrawer = (menu) => {
@@ -155,15 +156,8 @@ const VHeader = defineComponent({
     watch(
       [isMdScreen],
       ([isMdScreen]) => {
-        if (isMdScreen) {
-          console.log('desktop!')
-          filterComponent.value = VSidebarContent
-          options.value = desktopOptions
-        } else {
-          console.log('mobile!')
-          filterComponent.value = VModalContent
-          options.value = mobileOptions
-        }
+        filterComponent.value = isMdScreen ? VSidebarContent : VModalContent
+        options.value = isMdScreen ? desktopOptions : mobileOptions
       },
       { immediate: true }
     )
@@ -178,6 +172,7 @@ const VHeader = defineComponent({
 
       // Mobile drawer state
       mobileDrawer,
+      mobileDrawerTriggerRef,
       closeMobileDrawer,
       openMobileDrawer,
       triggerA11yProps,
