@@ -189,6 +189,7 @@ module.exports = {
       ],
       heading: ['"Inter"', 'sans-serif'],
       mono: ['"JetBrains Mono"', 'monospace'],
+      serif: ['Times New Roman'],
       icons: ['"Vocabulary Icons"'],
     },
     extend: {

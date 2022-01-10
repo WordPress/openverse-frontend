@@ -32,6 +32,10 @@
 export default {
   name: 'VInputField',
   inheritAttrs: false,
+  model: {
+    prop: 'modelValue',
+    event: 'update:modelValue',
+  },
   props: {
     /**
      * the textual content of the input field
@@ -87,5 +91,9 @@ export default {
 <style scoped>
 .input-field:focus-within .info {
   @apply text-dark-charcoal;
+}
+
+.input-field input::placeholder {
+  font-weight: normal;
 }
 </style>
