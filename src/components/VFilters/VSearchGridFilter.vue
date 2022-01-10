@@ -1,7 +1,6 @@
 <template>
   <div
-    class="p-4 search-filters h-auto max-h-full overflow-y-scroll"
-    :class="[isFilterVisible ? 'block' : 'hidden']"
+    class="p-4 search-filters h-auto max-h-full overflow-y-scroll block"
     data-testid="filters-list"
     @onUpdateFilter="onUpdateFilter"
     @onToggleSearchGridFilter="onToggleSearchGridFilter"
@@ -14,19 +13,20 @@
       <button
         id="hide-filters-button"
         type="button"
+        :aria-label="$t('filter-list.hide')"
         class="text-sm font-medium my-auto"
         @click="onToggleSearchGridFilter"
       >
-        <span class="text-trans-blue hidden lg:block text-sm lowercase">{{
+        <span class="text-trans-blue hidden md:block text-sm lowercase">{{
           $t('filter-list.hide')
         }}</span>
-        <span class="me-4 text-lg lg:hidden">
+        <span class="me-4 text-lg md:hidden">
           <CloseIcon class="w-4 h-4" />
         </span>
       </button>
     </div>
     <form class="filters-form">
-      <FilterChecklist
+      <VFilterChecklist
         v-for="filterType in filterTypes"
         :key="filterType"
         :options="filters[filterType]"
@@ -56,22 +56,21 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapMutations, mapState } from 'vuex'
-import { SET_FILTER_IS_VISIBLE } from '~/constants/mutation-types'
+import { mapActions, mapGetters } from 'vuex'
 import { CLEAR_FILTERS, TOGGLE_FILTER } from '~/constants/action-types'
 import { SEARCH } from '~/constants/store-modules'
 import { kebabize } from '~/utils/format-strings'
-import FilterChecklist from '~/components/Filters/FilterChecklist'
+
+import VFilterChecklist from '~/components/VFilters/VFilterChecklist'
 import CloseIcon from '~/assets/icons/close.svg?inline'
 
 export default {
-  name: 'SearchGridFilter',
+  name: 'VSearchGridFilter',
   components: {
     CloseIcon,
-    FilterChecklist,
+    VFilterChecklist,
   },
   computed: {
-    ...mapState(SEARCH, ['isFilterVisible']),
     ...mapGetters(SEARCH, ['mediaFiltersForDisplay', 'isAnyFilterApplied']),
     filters() {
       return this.mediaFiltersForDisplay || {}
@@ -84,9 +83,6 @@ export default {
     ...mapActions(SEARCH, {
       toggleFilter: TOGGLE_FILTER,
       clearFilters: CLEAR_FILTERS,
-    }),
-    ...mapMutations(SEARCH, {
-      setFilterVisible: SET_FILTER_IS_VISIBLE,
     }),
     filterTypeTitle(filterType) {
       if (filterType === 'searchBy') {
@@ -101,9 +97,7 @@ export default {
       this.clearFilters()
     },
     onToggleSearchGridFilter() {
-      this.setFilterVisible({
-        isFilterVisible: !this.isFilterVisible,
-      })
+      this.$emit('close')
     },
   },
 }

@@ -2,7 +2,7 @@
   <div class="app">
     <MigrationNotice v-show="isReferredFromCc" />
     <TranslationStatusBanner />
-    <HeaderSection />
+    <VHeader />
     <main class="embedded">
       <Nuxt />
     </main>
@@ -12,13 +12,14 @@
 import iframeHeight from '~/mixins/iframe-height'
 
 import { NAV } from '~/constants/store-modules'
+import VHeader from '~/components/VHeader/VHeader.vue'
 
 import { useContext } from '@nuxtjs/composition-api'
 import TranslationStatusBanner from '~/components/TranslationStatusBanner.vue'
 
 const embeddedPage = {
   name: 'embedded',
-  components: { TranslationStatusBanner },
+  components: { VHeader, TranslationStatusBanner },
   layout: 'embedded',
   mixins: [iframeHeight],
   head() {
