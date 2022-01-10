@@ -92,4 +92,8 @@ export default {
 .input-field:focus-within .info {
   @apply text-dark-charcoal;
 }
+
+.input-field input::placeholder {
+  font-weight: normal;
+}
 </style>

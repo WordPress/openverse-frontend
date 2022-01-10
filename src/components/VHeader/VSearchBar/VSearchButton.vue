@@ -31,7 +31,10 @@ export default {
   margin-inline-start: -1px;
   border-inline-start-color: transparent;
 }
-.search-button:hover {
+.search-button.search-button:not(:hover):not(:focus):not(:focus-within) {
+  border-inline-start-color: transparent;
+}
+.search-button.search-button:hover {
   border-inline-start-color: rgba(214, 212, 213, 1);
 }
 </style>
