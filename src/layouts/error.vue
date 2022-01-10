@@ -1,9 +1,12 @@
 <template>
-  <main class="bg-yellow h-screen relative page-404">
-    <Logo class="pt-6 lg:pt-8 ms-6 lg:ms-10 w-30 h-auto" />
+  <main class="bg-yellow h-screen relative page-404 overflow-x-hidden">
+    <NuxtLink to="/" class="relative z-10">
+      <span class="sr-only">{{ $t('404.link-title') }}</span>
+      <Logo aria-hidden="true" class="pt-6 lg:pt-8 ms-6 lg:ms-10 w-30 h-auto" />
+    </NuxtLink>
     <Oops
       aria-hidden="true"
-      class="absolute opacity-5 fill-dark-charcoal -mt-[10%] -ml-[20%] lg:mx-auto w-[140%] lg:w-full px-6 lg:px-16"
+      class="absolute opacity-5 fill-dark-charcoal -mt-[10%] -ml-[20%] lg:mx-auto w-[140%] lg:w-full px-6 lg:px-16 z-0 pointer-events-none"
     />
     <header
       class="absolute lg:max-w-2xl space-y-4 lg:space-y-6 top-1/4 z-10 left-0 right-0 mx-auto px-6 lg:px-0"
