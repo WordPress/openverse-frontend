@@ -14,7 +14,7 @@ on:
 
   release:
     types:
-      - "prereleased"
+      - "released"
 
 # TODO: get the secrets via inputs, so we let the staging/production workflows retrieve their corresponding credentials
 env:
