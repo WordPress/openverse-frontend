@@ -1,28 +1,26 @@
 <template>
-  <div class="browse-page flex flex-row">
-    <div class="main-content w-full search-grid-ctr">
-      <VSearchGrid
-        :fetch-state="fetchState"
-        :query="query"
-        :supported="supported"
-        :search-type="searchType"
-        :results-count="resultsCount"
-        data-testid="search-grid"
-      >
-        <template #media>
-          <NuxtChild
-            :key="$route.path"
-            :media-results="results"
-            :fetch-state="fetchState"
-            :is-filter-visible="isVisible"
-            :search-term="query.q"
-            :supported="supported"
-            data-testid="search-results"
-          />
-        </template>
-      </VSearchGrid>
-      <VScrollButton v-show="showScrollButton" data-testid="scroll-button" />
-    </div>
+  <div class="browse-page flex flex-col w-full search-grid-ctr">
+    <VSearchGrid
+      :fetch-state="fetchState"
+      :query="query"
+      :supported="supported"
+      :search-type="searchType"
+      :results-count="resultsCount"
+      data-testid="search-grid"
+    >
+      <template #media>
+        <NuxtChild
+          :key="$route.path"
+          :media-results="results"
+          :fetch-state="fetchState"
+          :is-filter-visible="isVisible"
+          :search-term="query.q"
+          :supported="supported"
+          data-testid="search-results"
+        />
+      </template>
+    </VSearchGrid>
+    <VScrollButton v-show="showScrollButton" data-testid="scroll-button" />
   </div>
 </template>
 
@@ -55,12 +53,12 @@ const BrowsePage = {
     VSearchGrid,
   },
   setup() {
-    const isMdScreen = isMinScreen('md')
+    const isMinScreenMd = isMinScreen('md')
     const { isVisible } = useFilterSidebarVisibility()
     const showScrollButton = inject('showScrollButton')
 
     return {
-      isMdScreen,
+      isMinScreenMd,
       isVisible,
       showScrollButton,
     }
