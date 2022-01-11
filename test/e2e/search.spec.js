@@ -44,7 +44,6 @@ test.skip('shows search result metadata', async ({ page }) => {
   await expect(page.locator('.results-meta span.pe-6')).toContainText(
     /image results/
   )
-  await expect(page.locator('text=Are these results relevant?')).toHaveCount(1)
 
   // Click load more button
   const loadMoreButton = page.locator('button:has-text("Load more results")')

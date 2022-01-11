@@ -1,5 +1,5 @@
 <template>
-  <section class="px-4">
+  <section>
     <div
       class="image-grid pb-2"
       :style="{ '--columns': columns, '--gutter': '12px' }"

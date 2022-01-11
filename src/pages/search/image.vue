@@ -15,7 +15,7 @@ import { defineComponent, computed } from '@nuxtjs/composition-api'
 import { useLoadMore } from '~/composables/use-load-more'
 import { isMinScreen } from '~/composables/use-media-query.js'
 
-import VImageGrid from '~/components/VImageGrid/VImageGrid'
+import VImageGrid from '~/components/VImageGrid/VImageGrid.vue'
 
 const ImageSearch = defineComponent({
   name: 'ImageSearch',
