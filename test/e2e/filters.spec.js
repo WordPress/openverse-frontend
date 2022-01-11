@@ -25,6 +25,9 @@ test('can unset filters using filter tags', async ({ page }) => {
   await page.goto('/search/image?q=cat&license=cc0')
 
   const cc0Tag = page.locator('[aria-label="Remove CC0 filter"]')
+
+  await page.click('[aria-label="1 Filter"]')
+
   const cc0Checkbox = page.locator('aside >> text=CC0')
   await expect(cc0Checkbox).toBeChecked()
   await expect(cc0Tag).toHaveCount(1)
@@ -51,6 +54,8 @@ test('filters are updated when media type changes', async ({ page }) => {
     route.fulfill({ path: 'test/e2e/resources/mock_data.json' })
   )
   await page.goto('/search/image?q=cat&aspect_ratio=tall')
+
+  await page.click('[aria-label="1 Filter"]')
 
   const tallTag = page.locator('[aria-label="Remove Tall filter"]')
   const tallCheckbox = page.locator('aside >> text=Tall')
@@ -81,6 +86,9 @@ test('new media request is sent when a filter is selected', async ({
     }
   )
   await page.goto('/search/image?q=cat')
+
+  await page.click('[aria-label="Filters"]')
+
   const cc0Checkbox = page.locator('aside >> text=CC0')
   await expect(cc0Checkbox).not.toBeChecked()
   await cc0Checkbox.click()
