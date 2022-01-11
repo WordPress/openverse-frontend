@@ -40,7 +40,7 @@
 import { isLicense } from '~/utils/license'
 
 export default {
-  name: 'LicenseExplanationTooltip',
+  name: 'VLicenseExplanationTooltip',
 
   props: {
     license: {

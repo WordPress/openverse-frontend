@@ -1,6 +1,6 @@
 <template>
   <div
-    class="input-field group flex flex-row items-center gap-4 hover:bg-dark-charcoal-06 focus-within:bg-dark-charcoal-06 group-hover:bg-dark-charcoal-06 h-12 p-0.5px focus-within:p-0 border focus-within:border-1.5 border-dark-charcoal-20 rounded-sm overflow-hidden focus-within:border-pink"
+    class="input-field group flex flex-row items-center hover:bg-dark-charcoal-06 focus-within:bg-dark-charcoal-06 group-hover:bg-dark-charcoal-06 h-12 p-0.5px focus-within:p-0 border focus-within:border-1.5 border-dark-charcoal-20 rounded-sm overflow-hidden focus-within:border-pink"
     :class="[
       {
         // Padding is set to 1.5px to accommodate the border that will appear later.
@@ -12,39 +12,35 @@
     <label class="sr-only" :for="fieldId">{{ labelText }}</label>
     <input
       :id="fieldId"
-      v-model="text"
       v-bind="$attrs"
       :type="type"
-      class="flex-grow leading-none font-semibold bg-tx placeholder-dark-charcoal-70 ms-4 h-full focus:outline-none"
+      class="flex-1 leading-none font-semibold bg-tx placeholder-dark-charcoal-70 ms-4 h-full focus:outline-none"
+      :value="modelValue"
+      @input="updateModelValue"
       v-on="$listeners"
     />
-    <div
-      class="info font-semibold text-xs text-dark-charcoal-70 group-hover:text-dark-charcoal group-focus:text-dark-charcoal me-4"
-    >
-      <!-- @slot Extra information goes here -->
-      <slot />
-    </div>
+
+    <!-- @slot Extra information goes here -->
+    <slot />
   </div>
 </template>
 
 <script>
-import { computed } from '@nuxtjs/composition-api'
-
 /**
  * Provides a control to enter text as input.
  */
 export default {
-  name: 'InputField',
+  name: 'VInputField',
   inheritAttrs: false,
   model: {
-    prop: 'value',
-    event: 'input',
+    prop: 'modelValue',
+    event: 'update:modelValue',
   },
   props: {
     /**
      * the textual content of the input field
      */
-    value: {
+    modelValue: {
       type: String,
       default: '',
     },
@@ -73,22 +69,20 @@ export default {
       validator: (val) => val.every((item) => ['start', 'end'].includes(item)),
     },
   },
+  // using non-native event name to ensure the two are not mixed
+  emits: ['update:modelValue'],
   setup(props, { emit, attrs }) {
     const type = attrs['type'] ?? 'text'
 
-    const text = computed({
-      get() {
-        return props.value
-      },
-      set(value) {
-        emit('input', value)
-      },
-    })
+    const updateModelValue = (event) => {
+      emit('update:modelValue', event.target.value)
+    }
 
     return {
+      emit,
       type,
 
-      text,
+      updateModelValue,
     }
   },
 }
@@ -97,5 +91,9 @@ export default {
 <style scoped>
 .input-field:focus-within .info {
   @apply text-dark-charcoal;
+}
+
+.input-field input::placeholder {
+  font-weight: normal;
 }
 </style>

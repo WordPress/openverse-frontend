@@ -3,7 +3,7 @@
     <span v-if="isAnyFilterApplied" class="me-2 font-semibold mb-2">
       {{ $t('filters.filter-by') }}
     </span>
-    <FilterTag
+    <VFilterTag
       v-for="filter in appliedFilterTags"
       :key="filter.code"
       class="mx-1 mb-2 ms-2"
@@ -16,14 +16,15 @@
 </template>
 
 <script>
-import { TOGGLE_FILTER } from '~/constants/action-types'
-import FilterTag from '~/components/Filters/FilterTag'
 import { mapGetters } from 'vuex'
+import { TOGGLE_FILTER } from '~/constants/action-types'
 import { SEARCH } from '~/constants/store-modules'
+
+import VFilterTag from '~/components/VFilters/VFilterTag'
 
 export default {
   name: 'FilterDisplay',
-  components: { FilterTag },
+  components: { VFilterTag },
   computed: {
     ...mapGetters(SEARCH, ['appliedFilterTags', 'isAnyFilterApplied']),
   },
