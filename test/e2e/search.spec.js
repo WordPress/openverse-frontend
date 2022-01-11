@@ -33,7 +33,7 @@ test('does not show an error message before search', async ({ page }) => {
   await expect(page.locator('[data-testid="search-grid"] h4')).toHaveCount(1)
 })
 
-test('shows search result metadata', async ({ page }) => {
+test.skip('shows search result metadata', async ({ page }) => {
   await page.goto('/search/image?q=cat&source=rijksmuseum')
   await page.route('https://api.openverse.engineering/v1/images/**', (route) =>
     route.fulfill({ path: 'test/e2e/resources/last_page.json' })
@@ -67,4 +67,14 @@ test('navigates to the image detail page correctly', async ({ page }) => {
   await expect(page.locator('h1')).toHaveText(imgTitle)
   // Renders the breadcrumb link
   await expect(page.locator('text="Back to search results"')).toBeVisible()
+})
+
+test('the Back to search results link returns to the search page', async ({
+  page,
+}) => {
+  const url = '/search/image?q=honey'
+  await page.goto(url)
+  await page.locator('figure a').first().click()
+  await page.locator('text="Back to search results"').click()
+  await expect(page).toHaveURL(url)
 })
