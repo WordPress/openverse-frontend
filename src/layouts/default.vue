@@ -6,7 +6,11 @@
     <main
       ref="mainRef"
       class="main embedded overflow-x-hidden"
-      :class="{ 'has-sidebar': isSidebarVisible }"
+      :class="{
+        'has-sidebar': isSidebarVisible,
+        'mt-[81px]': !(!isHeaderScrolled && !isMinScreenMd),
+        'mt-[145px]': !isHeaderScrolled && !isMinScreenMd,
+      }"
     >
       <Nuxt ref="mainContentRef" class="min-w-0 main-page" />
       <VSidebarTarget class="sidebar" />
@@ -57,11 +61,11 @@ const embeddedPage = {
     const isReferredFromCc = store.state[NAV].isReferredFromCc
 
     const { isVisible: isFilterVisible } = useFilterSidebarVisibility()
-    const isMdScreen = isMinScreen('md')
+    const isMinScreenMd = isMinScreen('md')
     const { matches: isSearchRoute } = useMatchSearchRoutes()
 
     const isSidebarVisible = computed(
-      () => isSearchRoute.value && isMdScreen.value && isFilterVisible.value
+      () => isSearchRoute.value && isMinScreenMd.value && isFilterVisible.value
     )
 
     const isHeaderScrolled = ref(false)
@@ -85,6 +89,8 @@ const embeddedPage = {
     provide('isHeaderScrolled', isHeaderScrolled)
     provide('showScrollButton', showScrollButton)
     return {
+      isHeaderScrolled,
+      isMinScreenMd,
       isReferredFromCc,
       isSidebarVisible,
       mainContentRef,
@@ -97,10 +103,6 @@ export default embeddedPage
 <style lang="scss" scoped>
 .app {
   grid-template-rows: auto 1fr;
-  --header-height: 81px;
-}
-.main {
-  margin-top: var(--header-height);
 }
 
 .main:not(.has-sidebar) {
