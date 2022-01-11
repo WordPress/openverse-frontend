@@ -1,30 +1,33 @@
 <template>
   <section class="px-4">
     <div
-      class="image-grid pb-8"
+      class="image-grid pb-2"
       :style="{ '--columns': columns, '--gutter': '12px' }"
     >
       <div
         v-for="(column, index) in imageColumns"
         :key="index"
-        class="image-column"
+        class="image-column flex flex-col h-full"
       >
-        <VImageCell
-          v-for="item in column"
-          :key="item.index"
-          :ref="
-            (el) => {
-              imageRefs[item.index] = el
-            }
-          "
-          :data-focusindex="item.index"
-          :image="item.image"
-          @focus-leave="
-            (event) => {
-              focusEl(item.index + (event.shiftKey ? -1 : 1))
-            }
-          "
-        />
+        <div class="images flex flex-col">
+          <VImageCell
+            v-for="item in column"
+            :key="item.index"
+            :ref="
+              (el) => {
+                imageRefs[item.index] = el
+              }
+            "
+            :data-focusindex="item.index"
+            :image="item.image"
+            @focus-leave="
+              (event) => {
+                focusEl(item.index + (event.shiftKey ? -1 : 1))
+              }
+            "
+          />
+        </div>
+        <span class="last-item w-full bg-light-gray flex-grow" />
       </div>
     </div>
     <h5 v-if="isError" class="py-4">
@@ -140,10 +143,11 @@ export default defineComponent({
   column-gap: var(--gutter);
 }
 
-.image-grid .image-column {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
+.image-grid .image-column .images {
+  display: flex;
+  flex-direction: column;
   row-gap: var(--gutter);
+  padding-bottom: var(--gutter);
 }
 
 .image-grid .image-column img {

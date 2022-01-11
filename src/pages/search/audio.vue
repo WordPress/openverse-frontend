@@ -1,10 +1,10 @@
 <template>
-  <section>
+  <section class="px-6">
     <template v-if="supported">
-      <AudioTrack
+      <VAudioTrack
         v-for="audio in mediaResults.items"
         :key="audio.id"
-        class="px-6 mb-6"
+        class="mb-6"
         :audio="audio"
         :size="audioTrackSize"
         layout="row"
@@ -14,12 +14,9 @@
         <h5>{{ errorHeader }}</h5>
         <p>{{ fetchState.fetchingError }}</p>
       </template>
-      <LoadMoreButton
-        v-if="canLoadMore"
-        :is-error="isError"
+      <VLoadMore
+        v-if="canLoadMore && !fetchState.isFinished"
         :is-fetching="fetchState.isFetching"
-        :is-finished="fetchState.isFinished"
-        media-type="audio"
         data-testid="load-more"
         @onLoadMore="onLoadMore"
       />
@@ -31,16 +28,16 @@
 import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
 import { useLoadMore } from '~/composables/use-load-more'
 
-import AudioTrack from '~/components/AudioTrack/AudioTrack.vue'
-import LoadMoreButton from '~/components/ImageGrid/LoadMoreButton.vue'
+import VAudioTrack from '~/components/VAudioTrack/VAudioTrack.vue'
+import VLoadMore from '~/components/VLoadMore.vue'
 
 import { propTypes } from './search-page.types'
 
 const AudioSearch = defineComponent({
   name: 'AudioSearch',
   components: {
-    AudioTrack,
-    LoadMoreButton,
+    VAudioTrack,
+    VLoadMore,
   },
   props: propTypes,
   setup(props) {

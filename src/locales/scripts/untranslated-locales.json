@@ -1,46 +1,11 @@
 [
   {
-    "code": "nb",
-    "name": "Norwegian (Bokmål)",
-    "iso": "nb",
-    "wpLocale": "nb_NO",
+    "code": "pcm",
+    "name": "Nigerian Pidgin",
+    "wpLocale": "pcm",
     "dir": "ltr",
     "translated": 0,
-    "file": "nb.json"
-  },
-  {
-    "code": "szl",
-    "name": "Silesian",
-    "wpLocale": "szl",
-    "dir": "ltr",
-    "translated": 0,
-    "file": "szl.json"
-  },
-  {
-    "code": "srd",
-    "name": "Sardinian",
-    "iso": "sc",
-    "wpLocale": "srd",
-    "dir": "ltr",
-    "translated": 0,
-    "file": "srd.json"
-  },
-  {
-    "code": "gd",
-    "name": "Scottish Gaelic",
-    "iso": "gd",
-    "wpLocale": "gd",
-    "dir": "ltr",
-    "translated": 0,
-    "file": "gd.json"
-  },
-  {
-    "code": "nqo",
-    "name": "N’ko",
-    "wpLocale": "nqo",
-    "dir": "rtl",
-    "translated": 0,
-    "file": "nqo.json"
+    "file": "pcm.json"
   },
   {
     "code": "sq-xk",
@@ -50,15 +15,6 @@
     "dir": "ltr",
     "translated": 0,
     "file": "sq-xk.json"
-  },
-  {
-    "code": "sr",
-    "name": "Serbian",
-    "iso": "sr",
-    "wpLocale": "sr_RS",
-    "dir": "ltr",
-    "translated": 0,
-    "file": "sr.json"
   },
   {
     "code": "sna",
@@ -79,12 +35,12 @@
     "file": "ne.json"
   },
   {
-    "code": "skr",
-    "name": "Saraiki",
-    "wpLocale": "skr",
+    "code": "nqo",
+    "name": "N’ko",
+    "wpLocale": "nqo",
     "dir": "rtl",
     "translated": 0,
-    "file": "skr.json"
+    "file": "nqo.json"
   },
   {
     "code": "scn",
@@ -93,31 +49,6 @@
     "dir": "ltr",
     "translated": 0,
     "file": "scn.json"
-  },
-  {
-    "code": "mya",
-    "name": "Myanmar (Burmese)",
-    "iso": "my",
-    "wpLocale": "my_MM",
-    "dir": "ltr",
-    "translated": 0,
-    "file": "mya.json"
-  },
-  {
-    "code": "pcm",
-    "name": "Nigerian Pidgin",
-    "wpLocale": "pcm",
-    "dir": "ltr",
-    "translated": 0,
-    "file": "pcm.json"
-  },
-  {
-    "code": "pcd",
-    "name": "Picard",
-    "wpLocale": "pcd",
-    "dir": "ltr",
-    "translated": 0,
-    "file": "pcd.json"
   },
   {
     "code": "nn",
@@ -129,21 +60,74 @@
     "file": "nn.json"
   },
   {
-    "code": "sah",
-    "name": "Sakha",
-    "wpLocale": "sah",
+    "code": "sr",
+    "name": "Serbian",
+    "iso": "sr",
+    "wpLocale": "sr_RS",
     "dir": "ltr",
     "translated": 0,
-    "file": "sah.json"
+    "file": "sr.json"
   },
   {
-    "code": "pl",
-    "name": "Polish",
-    "iso": "pl",
-    "wpLocale": "pl_PL",
+    "code": "gd",
+    "name": "Scottish Gaelic",
+    "iso": "gd",
+    "wpLocale": "gd",
     "dir": "ltr",
     "translated": 0,
-    "file": "pl.json"
+    "file": "gd.json"
+  },
+  {
+    "code": "srd",
+    "name": "Sardinian",
+    "iso": "sc",
+    "wpLocale": "srd",
+    "dir": "ltr",
+    "translated": 0,
+    "file": "srd.json"
+  },
+  {
+    "code": "szl",
+    "name": "Silesian",
+    "wpLocale": "szl",
+    "dir": "ltr",
+    "translated": 0,
+    "file": "szl.json"
+  },
+  {
+    "code": "nb",
+    "name": "Norwegian (Bokmål)",
+    "iso": "nb",
+    "wpLocale": "nb_NO",
+    "dir": "ltr",
+    "translated": 0,
+    "file": "nb.json"
+  },
+  {
+    "code": "pirate",
+    "name": "English (Pirate)",
+    "wpLocale": "art_xpirate",
+    "dir": "ltr",
+    "translated": 0,
+    "file": "pirate.json"
+  },
+  {
+    "code": "oci",
+    "name": "Occitan",
+    "iso": "oc",
+    "wpLocale": "oci",
+    "dir": "ltr",
+    "translated": 0,
+    "file": "oci.json"
+  },
+  {
+    "code": "sa-in",
+    "name": "Sanskrit",
+    "iso": "sa",
+    "wpLocale": "sa_IN",
+    "dir": "ltr",
+    "translated": 0,
+    "file": "sa-in.json"
   },
   {
     "code": "pt-ao",
@@ -163,13 +147,12 @@
     "file": "rhg.json"
   },
   {
-    "code": "fa-af",
-    "name": "Persian (Afghanistan)",
-    "iso": "fa",
-    "wpLocale": "fa_AF",
-    "dir": "rtl",
+    "code": "pcd",
+    "name": "Picard",
+    "wpLocale": "pcd",
+    "dir": "ltr",
     "translated": 0,
-    "file": "fa-af.json"
+    "file": "pcd.json"
   },
   {
     "code": "roh",
@@ -181,13 +164,30 @@
     "file": "roh.json"
   },
   {
-    "code": "si",
-    "name": "Sinhala",
-    "iso": "si",
-    "wpLocale": "si_LK",
+    "code": "sah",
+    "name": "Sakha",
+    "wpLocale": "sah",
     "dir": "ltr",
     "translated": 0,
-    "file": "si.json"
+    "file": "sah.json"
+  },
+  {
+    "code": "fa-af",
+    "name": "Persian (Afghanistan)",
+    "iso": "fa",
+    "wpLocale": "fa_AF",
+    "dir": "rtl",
+    "translated": 0,
+    "file": "fa-af.json"
+  },
+  {
+    "code": "ory",
+    "name": "Oriya",
+    "iso": "or",
+    "wpLocale": "ory",
+    "dir": "ltr",
+    "translated": 0,
+    "file": "ory.json"
   },
   {
     "code": "fa",
@@ -199,13 +199,12 @@
     "file": "fa.json"
   },
   {
-    "code": "oci",
-    "name": "Occitan",
-    "iso": "oc",
-    "wpLocale": "oci",
-    "dir": "ltr",
+    "code": "skr",
+    "name": "Saraiki",
+    "wpLocale": "skr",
+    "dir": "rtl",
     "translated": 0,
-    "file": "oci.json"
+    "file": "skr.json"
   },
   {
     "code": "ps",
@@ -217,21 +216,21 @@
     "file": "ps.json"
   },
   {
-    "code": "sa-in",
-    "name": "Sanskrit",
-    "iso": "sa",
-    "wpLocale": "sa_IN",
-    "dir": "ltr",
-    "translated": 0,
-    "file": "sa-in.json"
-  },
-  {
     "code": "pap-aw",
     "name": "Papiamento (Aruba)",
     "wpLocale": "pap_AW",
     "dir": "ltr",
     "translated": 0,
     "file": "pap-aw.json"
+  },
+  {
+    "code": "pl",
+    "name": "Polish",
+    "iso": "pl",
+    "wpLocale": "pl_PL",
+    "dir": "ltr",
+    "translated": 0,
+    "file": "pl.json"
   },
   {
     "code": "pap-cw",
@@ -242,14 +241,6 @@
     "file": "pap-cw.json"
   },
   {
-    "code": "pirate",
-    "name": "English (Pirate)",
-    "wpLocale": "art_xpirate",
-    "dir": "ltr",
-    "translated": 0,
-    "file": "pirate.json"
-  },
-  {
     "code": "os",
     "name": "Ossetic",
     "iso": "os",
@@ -257,15 +248,6 @@
     "dir": "ltr",
     "translated": 0,
     "file": "os.json"
-  },
-  {
-    "code": "ory",
-    "name": "Oriya",
-    "iso": "or",
-    "wpLocale": "ory",
-    "dir": "ltr",
-    "translated": 0,
-    "file": "ory.json"
   },
   {
     "code": "snd",
@@ -286,13 +268,13 @@
     "file": "af.json"
   },
   {
-    "code": "sk",
-    "name": "Slovak",
-    "iso": "sk",
-    "wpLocale": "sk_SK",
+    "code": "si",
+    "name": "Sinhala",
+    "iso": "si",
+    "wpLocale": "si_LK",
     "dir": "ltr",
     "translated": 0,
-    "file": "sk.json"
+    "file": "si.json"
   },
   {
     "code": "uk",
@@ -535,12 +517,13 @@
     "file": "es-cr.json"
   },
   {
-    "code": "me",
-    "name": "Montenegrin",
-    "wpLocale": "me_ME",
-    "dir": "ltr",
+    "code": "ary",
+    "name": "Moroccan Arabic",
+    "iso": "ar",
+    "wpLocale": "ary",
+    "dir": "rtl",
     "translated": 0,
-    "file": "me.json"
+    "file": "ary.json"
   },
   {
     "code": "es-gt",
@@ -657,13 +640,13 @@
     "file": "zgh.json"
   },
   {
-    "code": "ary",
-    "name": "Moroccan Arabic",
-    "iso": "ar",
-    "wpLocale": "ary",
-    "dir": "rtl",
+    "code": "mya",
+    "name": "Myanmar (Burmese)",
+    "iso": "my",
+    "wpLocale": "my_MM",
+    "dir": "ltr",
     "translated": 0,
-    "file": "ary.json"
+    "file": "mya.json"
   },
   {
     "code": "lug",
@@ -675,13 +658,12 @@
     "file": "lug.json"
   },
   {
-    "code": "mn",
-    "name": "Mongolian",
-    "iso": "mn",
-    "wpLocale": "mn",
+    "code": "me",
+    "name": "Montenegrin",
+    "wpLocale": "me_ME",
     "dir": "ltr",
     "translated": 0,
-    "file": "mn.json"
+    "file": "me.json"
   },
   {
     "code": "art-xemoji",
@@ -1069,29 +1051,21 @@
     "file": "ka.json"
   },
   {
-    "code": "mfe",
-    "name": "Mauritian Creole",
-    "wpLocale": "mfe",
+    "code": "mn",
+    "name": "Mongolian",
+    "iso": "mn",
+    "wpLocale": "mn",
     "dir": "ltr",
     "translated": 0,
-    "file": "mfe.json"
+    "file": "mn.json"
   },
   {
-    "code": "lmo",
-    "name": "Lombard",
-    "wpLocale": "lmo",
+    "code": "dsb",
+    "name": "Lower Sorbian",
+    "wpLocale": "dsb",
     "dir": "ltr",
     "translated": 0,
-    "file": "lmo.json"
-  },
-  {
-    "code": "kir",
-    "name": "Kyrgyz",
-    "iso": "ky",
-    "wpLocale": "kir",
-    "dir": "ltr",
-    "translated": 0,
-    "file": "kir.json"
+    "file": "dsb.json"
   },
   {
     "code": "lo",
@@ -1147,21 +1121,12 @@
     "file": "lt.json"
   },
   {
-    "code": "dsb",
-    "name": "Lower Sorbian",
-    "wpLocale": "dsb",
+    "code": "lmo",
+    "name": "Lombard",
+    "wpLocale": "lmo",
     "dir": "ltr",
     "translated": 0,
-    "file": "dsb.json"
-  },
-  {
-    "code": "kmr",
-    "name": "Kurdish (Kurmanji)",
-    "iso": "ku",
-    "wpLocale": "kmr",
-    "dir": "ltr",
-    "translated": 0,
-    "file": "kmr.json"
+    "file": "lmo.json"
   },
   {
     "code": "lb",
@@ -1171,6 +1136,15 @@
     "dir": "ltr",
     "translated": 0,
     "file": "lb.json"
+  },
+  {
+    "code": "ckb",
+    "name": "Kurdish (Sorani)",
+    "iso": "ku",
+    "wpLocale": "ckb",
+    "dir": "rtl",
+    "translated": 0,
+    "file": "ckb.json"
   },
   {
     "code": "mk",
@@ -1235,22 +1209,30 @@
     "file": "mr.json"
   },
   {
-    "code": "ckb",
-    "name": "Kurdish (Sorani)",
-    "iso": "ku",
-    "wpLocale": "ckb",
-    "dir": "rtl",
-    "translated": 0,
-    "file": "ckb.json"
-  },
-  {
-    "code": "ko",
-    "name": "Korean",
-    "iso": "ko",
-    "wpLocale": "ko_KR",
+    "code": "mfe",
+    "name": "Mauritian Creole",
+    "wpLocale": "mfe",
     "dir": "ltr",
     "translated": 0,
-    "file": "ko.json"
+    "file": "mfe.json"
+  },
+  {
+    "code": "kir",
+    "name": "Kyrgyz",
+    "iso": "ky",
+    "wpLocale": "kir",
+    "dir": "ltr",
+    "translated": 0,
+    "file": "kir.json"
+  },
+  {
+    "code": "kmr",
+    "name": "Kurdish (Kurmanji)",
+    "iso": "ku",
+    "wpLocale": "kmr",
+    "dir": "ltr",
+    "translated": 0,
+    "file": "kmr.json"
   },
   {
     "code": "de-at",
@@ -1262,13 +1244,13 @@
     "file": "de-at.json"
   },
   {
-    "code": "hi",
-    "name": "Hindi",
-    "iso": "hi",
-    "wpLocale": "hi_IN",
+    "code": "hu",
+    "name": "Hungarian",
+    "iso": "hu",
+    "wpLocale": "hu_HU",
     "dir": "ltr",
     "translated": 0,
-    "file": "hi.json"
+    "file": "hu.json"
   },
   {
     "code": "de-ch",
@@ -1341,24 +1323,6 @@
     "file": "he.json"
   },
   {
-    "code": "hu",
-    "name": "Hungarian",
-    "iso": "hu",
-    "wpLocale": "hu_HU",
-    "dir": "ltr",
-    "translated": 0,
-    "file": "hu.json"
-  },
-  {
-    "code": "kin",
-    "name": "Kinyarwanda",
-    "iso": "rw",
-    "wpLocale": "kin",
-    "dir": "ltr",
-    "translated": 0,
-    "file": "kin.json"
-  },
-  {
     "code": "is",
     "name": "Icelandic",
     "iso": "is",
@@ -1366,6 +1330,15 @@
     "dir": "ltr",
     "translated": 0,
     "file": "is.json"
+  },
+  {
+    "code": "ko",
+    "name": "Korean",
+    "iso": "ko",
+    "wpLocale": "ko_KR",
+    "dir": "ltr",
+    "translated": 0,
+    "file": "ko.json"
   },
   {
     "code": "ido",
@@ -1436,6 +1409,15 @@
     "dir": "ltr",
     "translated": 0,
     "file": "km.json"
+  },
+  {
+    "code": "kin",
+    "name": "Kinyarwanda",
+    "iso": "rw",
+    "wpLocale": "kin",
+    "dir": "ltr",
+    "translated": 0,
+    "file": "kin.json"
   },
   {
     "code": "zul",

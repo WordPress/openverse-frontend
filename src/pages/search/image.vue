@@ -13,7 +13,7 @@ import { propTypes } from '~/pages/search/search-page.types'
 import { defineComponent, computed } from '@nuxtjs/composition-api'
 
 import { useLoadMore } from '~/composables/use-load-more'
-import { isScreen } from '~/composables/use-media-query.js'
+import { isMinScreen } from '~/composables/use-media-query.js'
 
 import VImageGrid from '~/components/VImageGrid/VImageGrid'
 
@@ -27,8 +27,8 @@ const ImageSearch = defineComponent({
     const { canLoadMore, onLoadMore } = useLoadMore(props)
 
     const defaultWindow = typeof window !== 'undefined' ? window : undefined
-    const isMdScreen = isScreen('md', defaultWindow)
-    const is2XlScreen = isScreen('2xl', defaultWindow)
+    const isMdScreen = isMinScreen('md', defaultWindow)
+    const is2XlScreen = isMinScreen('2xl', defaultWindow)
 
     const responsiveColumnCount = computed(() => {
       if (is2XlScreen.value) return 5
