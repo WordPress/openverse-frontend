@@ -37,7 +37,6 @@ import { queryStringToSearchType } from '~/utils/search-query-transform'
 import { ALL_MEDIA, AUDIO, IMAGE } from '~/constants/media'
 import { mapActions, mapGetters, mapState } from 'vuex'
 import { MEDIA, SEARCH } from '~/constants/store-modules'
-import debounce from 'lodash.debounce'
 
 import { isMinScreen } from '~/composables/use-media-query.js'
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
@@ -45,6 +44,7 @@ import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-vis
 import VScrollButton from '~/components/VScrollButton.vue'
 import VSearchGrid from '~/components/VSearchGrid.vue'
 import VFilterDisplay from '~/components/VFilters/VFilterDisplay.vue'
+import { inject } from '@nuxtjs/composition-api'
 
 const BrowsePage = {
   name: 'browse-page',
@@ -57,10 +57,12 @@ const BrowsePage = {
   setup() {
     const isMdScreen = isMinScreen('md')
     const { isVisible } = useFilterSidebarVisibility()
+    const showScrollButton = inject('showScrollButton')
 
     return {
       isMdScreen,
       isVisible,
+      showScrollButton,
     }
   },
   scrollToTop: false,
@@ -73,9 +75,6 @@ const BrowsePage = {
       await this.fetchMedia({})
     }
   },
-  data: () => ({
-    showScrollButton: false,
-  }),
   async asyncData({ route, store }) {
     if (process.server) {
       await store.dispatch(`${SEARCH}/${SET_SEARCH_STATE_FROM_URL}`, {
@@ -83,15 +82,6 @@ const BrowsePage = {
         query: route.query,
       })
     }
-  },
-  async created() {
-    this.debounceScrollHandling = debounce(this.checkScrollLength, 100)
-  },
-  mounted() {
-    window.addEventListener('scroll', this.debounceScrollHandling)
-  },
-  beforeDestroy() {
-    window.removeEventListener('scroll', this.debounceScrollHandling)
   },
   computed: {
     ...mapState(SEARCH, ['query', 'searchType']),
@@ -131,9 +121,6 @@ const BrowsePage = {
     },
     onSearchFormSubmit({ q }) {
       this.updateQuery({ q })
-    },
-    checkScrollLength() {
-      this.showScrollButton = window.scrollY > 70
     },
   },
   watch: {

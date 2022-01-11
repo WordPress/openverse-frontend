@@ -65,8 +65,10 @@ const embeddedPage = {
     )
 
     const isHeaderScrolled = ref(false)
-    const { isScrolled: isMainContentScrolled } = useScroll(mainContentRef)
-    const { isScrolled: isMainScrolled } = useScroll(mainRef)
+    const scrollY = ref(0)
+    const { isScrolled: isMainContentScrolled, y: mainContentY } =
+      useScroll(mainContentRef)
+    const { isScrolled: isMainScrolled, y: mainY } = useScroll(mainRef)
     watch(
       [isMainContentScrolled, isMainScrolled],
       ([isMainContentScrolled, isMainScrolled]) => {
@@ -75,7 +77,13 @@ const embeddedPage = {
           : isMainScrolled
       }
     )
+    watch([mainContentY, mainY], ([mainContentY, mainY]) => {
+      scrollY.value = isSidebarVisible.value ? mainContentY : mainY
+    })
+    const showScrollButton = computed(() => scrollY.value > 70)
+
     provide('isHeaderScrolled', isHeaderScrolled)
+    provide('showScrollButton', showScrollButton)
     return {
       isReferredFromCc,
       isSidebarVisible,
