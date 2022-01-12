@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-01-07T17:45:02+00:00\n"
+"POT-Creation-Date: 2022-01-12T20:51:27+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -268,63 +268,63 @@ msgctxt "audio-details.genre-label"
 msgid "Genre"
 msgstr ""
 
-#: src/components/AudioDetails/Related.vue:4
+#: src/components/AudioDetails/VRelatedAudio.vue:4
 msgctxt "audio-details.related-audios"
 msgid "Related audios"
 msgstr ""
 
-#: src/components/AudioDetails/Table.vue:16
+#: src/components/AudioDetails/VAudioDetails.vue:12
 msgctxt "audio-details.table.album"
 msgid "Album"
 msgstr ""
 
-#: src/components/AudioDetails/Table.vue:22
+#: src/components/AudioDetails/VAudioDetails.vue:18
 msgctxt "audio-details.table.category"
 msgid "Type"
 msgstr ""
 
-#: src/components/AudioDetails/Table.vue:29
+#: src/components/AudioDetails/VAudioDetails.vue:25
 msgctxt "audio-details.table.sample-rate"
 msgid "Sample Rate"
 msgstr ""
 
-#: src/components/AudioDetails/Table.vue:37
+#: src/components/AudioDetails/VAudioDetails.vue:33
 msgctxt "audio-details.table.filetype"
 msgid "Format"
 msgstr ""
 
-#: src/components/AudioDetails/Table.vue:45
+#: src/components/AudioDetails/VAudioDetails.vue:41
 msgctxt "audio-details.table.provider"
 msgid "Provider"
 msgstr ""
 
-#: src/components/AudioDetails/Table.vue:53
+#: src/components/AudioDetails/VAudioDetails.vue:49
 msgctxt "audio-details.table.source"
 msgid "Source"
 msgstr ""
 
-#: src/components/AudioDetails/Table.vue:61
+#: src/components/AudioDetails/VAudioDetails.vue:57
 msgctxt "audio-details.table.genre"
 msgid "Genre"
 msgstr ""
 
-#: src/components/ImageDetails/PhotoDetails.vue:12
+#: src/components/ImageDetails/VPhotoDetails.vue:11
 msgctxt "photo-details.back"
 msgid "Back to search results"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/ImageDetails/PhotoDetails.vue:63
+#: src/components/ImageDetails/VPhotoDetails.vue:59
 msgctxt "photo-details.creator"
 msgid "by ###name###"
 msgstr ""
 
-#: src/components/ImageDetails/PhotoDetails.vue:153
+#: src/components/ImageDetails/VPhotoDetails.vue:146
 msgctxt "photo-details.weblink"
 msgid "Go to image's website"
 msgstr ""
 
-#: src/components/ImageDetails/PhotoDetails.vue:31
+#: src/components/ImageDetails/VPhotoDetails.vue:29
 msgctxt "photo-details.legal-disclaimer"
 msgid "Openverse aggregates data from publicly available repositories of open content. Openverse does not host the content and does not verify that the content is properly CC-licensed or that the attribution information is accurate or complete. Please follow the link to the source of the content to independently verify before reuse."
 msgstr ""
@@ -334,17 +334,17 @@ msgctxt "photo-details.related-images"
 msgid "Related Images"
 msgstr ""
 
-#: src/components/ContentReport/ContentReportForm.vue:4
+#: src/components/VContentReport/VContentReportForm.vue:4
 msgctxt "photo-details.aria.close-form"
 msgid "close form"
 msgstr ""
 
-#: src/components/ContentReport/DmcaNotice.vue:10
+#: src/components/VContentReport/VDmcaNotice.vue:10
 msgctxt "photo-details.aria.dmca"
 msgid "dmca form"
 msgstr ""
 
-#: src/components/ImageDetails/PhotoDetails.vue:56
+#: src/components/ImageDetails/VPhotoDetails.vue:52
 msgctxt "photo-details.aria.details"
 msgid "image details"
 msgstr ""
@@ -354,19 +354,19 @@ msgctxt "photo-details.aria.main"
 msgid "main content"
 msgstr ""
 
-#: src/components/AudioDetails/Related.vue:2
+#: src/components/AudioDetails/VRelatedAudio.vue:2
 msgctxt "photo-details.aria.related"
 msgid "related images"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/ContentReport/DmcaNotice.vue:27
+#: src/components/VContentReport/VDmcaNotice.vue:27
 msgctxt "photo-details.aria.provider-report-form"
 msgid "###provider### form"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/ImageDetails/PhotoDetails.vue:73
+#: src/components/ImageDetails/VPhotoDetails.vue:69
 msgctxt "photo-details.aria.creator-url"
 msgid "author ###creator###"
 msgstr ""
@@ -379,86 +379,88 @@ msgctxt "photo-details.aria.attribution.tool"
 msgid "read more about the tool"
 msgstr ""
 
-#: src/components/ContentReport/ContentReportForm.vue:32
+#: src/components/ImageDetails/VPhotoDetails.vue:38
 msgctxt "photo-details.content-report.title"
 msgid "Report this content"
 msgstr ""
 
-#: src/components/ContentReport/ContentReportForm.vue:36
+#: src/components/VContentReport/VContentReportForm.vue:36
 msgctxt "photo-details.content-report.issue"
 msgid "What's the issue?"
 msgstr ""
 
-#: src/components/ContentReport/OtherIssueForm.vue:7
+#: src/components/VContentReport/VOtherIssueForm.vue:7
 msgctxt "photo-details.content-report.issue-description"
 msgid "Please describe the issue for us"
 msgstr ""
 
-#: src/components/ContentReport/ContentReportForm.vue:48
-msgctxt "photo-details.content-report.copyright"
-msgid "Infringes Copyright"
-msgstr ""
-
-#: src/components/ContentReport/ContentReportForm.vue:61
-msgctxt "photo-details.content-report.mature"
-msgid "Contains mature content"
-msgstr ""
-
-#: src/components/ContentReport/ContentReportForm.vue:74
-msgctxt "photo-details.content-report.other"
-msgid "Other"
-msgstr ""
-
-#: src/components/ContentReport/ContentReportForm.vue:80
+#: src/components/VContentReport/VContentReportForm.vue:56
 msgctxt "photo-details.content-report.caption"
 msgid "For security purposes, Openverse collects and retains anonymized IP addresses of those who complete and submit this form."
 msgstr ""
 
-#: src/components/ContentReport/ContentReportForm.vue:90
+#: src/components/VContentReport/VContentReportForm.vue:65
 msgctxt "photo-details.content-report.next"
 msgid "Next"
 msgstr ""
 
-#: src/components/ContentReport/DmcaNotice.vue:46
+#: src/components/VContentReport/VDmcaNotice.vue:44
 msgctxt "photo-details.content-report.back"
 msgid "Back"
 msgstr ""
 
-#: src/components/ContentReport/OtherIssueForm.vue:36
+#: src/components/VContentReport/VOtherIssueForm.vue:33
 msgctxt "photo-details.content-report.submit"
 msgid "Submit"
 msgstr ""
 
-#. Do not translate words between ### ###.
-#: src/components/ContentReport/DmcaNotice.vue:3
-msgctxt "photo-details.content-report.dmca.content"
-msgid "You must fill out this ###link### to report copyright infringement. No action will be taken until the form is filled out and submitted."
-msgstr ""
-
-#. Do not translate words between ### ###.
-#: src/components/ContentReport/DmcaNotice.vue:19
-msgctxt "photo-details.content-report.dmca.provider"
-msgid "We recommend doing the same at the source, ###link###."
-msgstr ""
-
-#: src/components/ContentReport/DoneMessage.vue:4
-msgctxt "photo-details.content-report.dmca.thanks"
+#: src/components/VContentReport/VDoneMessage.vue:4
+msgctxt "photo-details.content-report.thanks"
 msgid "Thank you for reporting an issue with the results of Openverse!"
 msgstr ""
 
-#: src/components/ContentReport/ReportError.vue:4
-msgctxt "photo-details.content-report.dmca.submission-error"
+#. Do not translate words between ### ###.
+#: src/components/VContentReport/VDmcaNotice.vue:19
+msgctxt "photo-details.content-report.provider"
+msgid "We recommend doing the same at the source, ###link###."
+msgstr ""
+
+#. Do not translate words between ### ###.
+msgctxt "photo-details.content-report.aria-form"
+msgid "###provider### form"
+msgstr ""
+
+#: src/components/VContentReport/VReportError.vue:4
+msgctxt "photo-details.content-report.submission-error"
 msgid "There was an error with the report submission. Please try again."
 msgstr ""
 
-#: src/components/ContentReport/DmcaNotice.vue:14
+#: src/components/VContentReport/VOtherIssueForm.vue:12
+msgctxt "photo-details.content-report.placeholder"
+msgid "Issue description required (with at least 20 characters)"
+msgstr ""
+
+#: src/components/VContentReport/VDmcaNotice.vue:14
 msgctxt "photo-details.content-report.dmca.link"
 msgid "DMCA form"
 msgstr ""
 
 #. Do not translate words between ### ###.
-msgctxt "photo-details.content-report.dmca.aria-form"
-msgid "###provider### form"
+#: src/components/VContentReport/VDmcaNotice.vue:3
+msgctxt "photo-details.content-report.dmca.content"
+msgid "You must fill out this ###link### to report copyright infringement. No action will be taken until the form is filled out and submitted."
+msgstr ""
+
+msgctxt "photo-details.content-report.reasons.dmca"
+msgid "Infringes Copyright"
+msgstr ""
+
+msgctxt "photo-details.content-report.reasons.mature"
+msgid "Contains mature content"
+msgstr ""
+
+msgctxt "photo-details.content-report.reasons.other"
+msgid "Other"
 msgstr ""
 
 #: src/components/CopyButton.vue:9
@@ -486,7 +488,7 @@ msgctxt "photo-details.survey.answer"
 msgid "by answering a few questions."
 msgstr ""
 
-#: src/components/ImageDetails/PhotoDetails.vue:107
+#: src/components/ImageDetails/VPhotoDetails.vue:102
 msgctxt "photo-details.information.title"
 msgid "Information"
 msgstr ""
@@ -525,7 +527,7 @@ msgctxt "photo-details.information.pixels"
 msgid "pixels"
 msgstr ""
 
-#: src/components/ImageDetails/PhotoDetails.vue:96
+#: src/components/ImageDetails/VPhotoDetails.vue:91
 msgctxt "photo-details.reuse.title"
 msgid "Reuse"
 msgstr ""
@@ -542,7 +544,7 @@ msgctxt "media-details.loading"
 msgid "Loading..."
 msgstr ""
 
-#: src/components/AudioDetails/Related.vue:18
+#: src/components/AudioDetails/VRelatedAudio.vue:18
 msgctxt "media-details.related-error"
 msgid "Error fetching related media"
 msgstr ""
@@ -564,7 +566,7 @@ msgctxt "media-details.reuse.audio"
 msgid "Audio"
 msgstr ""
 
-#: src/components/MediaInfo/CopyLicense.vue:209
+#: src/components/MediaInfo/CopyLicense.vue:213
 msgctxt "media-details.reuse.image"
 msgid "Image"
 msgstr ""
@@ -710,13 +712,7 @@ msgid_plural "Over ###localeCount### image results"
 msgstr[0] ""
 msgstr[1] ""
 
-#. Do not translate words between ### ###.
-#: src/components/ImageGrid/LoadMoreButton.vue:42
-msgctxt "browse-page.no-more"
-msgid "No more ###type### :("
-msgstr ""
-
-#: src/components/ImageGrid/LoadMoreButton.vue:45
+#: src/components/VLoadMore.vue:26
 msgctxt "browse-page.load"
 msgid "Load more results"
 msgstr ""
@@ -819,7 +815,7 @@ msgctxt "browse-page.search-form.image"
 msgid "images"
 msgstr ""
 
-#: src/pages/search/audio.vue:53
+#: src/pages/search/audio.vue:50
 msgctxt "browse-page.search-form.audio"
 msgid "audio"
 msgstr ""
@@ -1135,18 +1131,12 @@ msgctxt "search-tab.see-audio"
 msgid "See all audio"
 msgstr ""
 
-#: src/layouts/error.vue:5
-msgctxt "error.not-found"
-msgid "Page Not Found"
-msgstr ""
-
-#: src/layouts/error.vue:7
 msgctxt "error.occurred"
 msgid "An error occurred"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/image/_id.vue:51
+#: src/pages/image/_id.vue:54
 msgctxt "error.image-not-found"
 msgid "Couldn't find image with id ###id###"
 msgstr ""
@@ -2172,23 +2162,23 @@ msgctxt "hero.search.button"
 msgid "Search"
 msgstr ""
 
-#: src/layouts/error.vue:12
+#: src/layouts/error.vue:15
 msgctxt "404.title"
 msgid "The content you’re looking for seems to have disappeared."
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/layouts/error.vue:15
+#: src/layouts/error.vue:18
 msgctxt "404.main"
-msgid "Return to ###link### or search for content with the field below."
+msgid "Go to ###link### or search for something similar from the field below."
 msgstr ""
 
-#: src/layouts/error.vue:21
+#: src/layouts/error.vue:4
 msgctxt "404.link-title"
 msgid "Openverse"
 msgstr ""
 
-#: src/layouts/error.vue:28
+#: src/layouts/error.vue:31
 msgctxt "404.search-placeholder"
 msgid "Search for content to reuse"
 msgstr ""

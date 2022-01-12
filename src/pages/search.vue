@@ -209,7 +209,6 @@ export default BrowsePage
   margin: 0;
 }
 .search-grid-ctr {
-  background-color: $color-wp-gray-0;
   min-height: 600px;
   padding: 0;
 
