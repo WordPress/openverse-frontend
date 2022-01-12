@@ -175,12 +175,28 @@ export default DropdownButton
   @apply p-4 leading-6;
 }
 
+/*
+Note the bespoke `py-[0.86rem]` class used below is necessary
+to match the height of the small Audio play/pause button.
+
+This is currently the only application of the DropdownButton
+component (via the DownloadButton component) so as a stop-gap
+solution to get the redesign out the door in a timely manner it
+is necessary.
+
+In the future it would be nice to coordinate these sizes across
+all our buttons, regardless of content (icon vs text for example)
+so that don't have to worry about things like this. We should feel
+free to use sizes like 0.86rem if they're the right size, but it is
+good to avoid the long term effects of scattering too many ad-hoc
+sizes throughout the codebase.
+*/
 .dropdown-button-small {
-  @apply px-4 py-3 leading-3;
+  @apply px-4 py-[0.86rem] leading-3;
 }
 
 .dropdown-icon-button-small {
-  @apply px-0 py-3 leading-3 w-10;
+  @apply px-0 py-[0.86rem] leading-3 w-10;
 }
 
 .dropdown-button-active {
