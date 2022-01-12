@@ -419,7 +419,7 @@
     "facebookLocale": "de_DE",
     "wpLocale": "de_DE",
     "code": "de",
-    "translated": 98
+    "translated": 100
   },
   "dsb": {
     "name": "Lower Sorbian",
@@ -670,7 +670,7 @@
     "facebookLocale": "es_MX",
     "wpLocale": "es_MX",
     "code": "es-mx",
-    "translated": 31
+    "translated": 65
   },
   "es_PE": {
     "name": "Spanish (Peru)",
@@ -941,7 +941,7 @@
     "facebookLocale": "gl_ES",
     "wpLocale": "gl_ES",
     "code": "gl",
-    "translated": 98
+    "translated": 100
   },
   "gu": {
     "name": "Gujarati",
@@ -1929,7 +1929,7 @@
     "facebookLocale": "sq_AL",
     "wpLocale": "sq",
     "code": "sq",
-    "translated": 97
+    "translated": 99
   },
   "sq_XK": {
     "name": "Shqip (Kosovo)",
