@@ -9,7 +9,7 @@
         @close="onToggleSearchGridFilter"
         ><VSearchGridFilter @close="onToggleSearchGridFilter"
       /></Component>
-      <div class="column search-grid-ctr">
+      <div class="w-full">
         <SearchTypeTabs class="mb-4" />
         <VFilterDisplay v-show="shouldShowFilterTags" />
         <VSearchGrid

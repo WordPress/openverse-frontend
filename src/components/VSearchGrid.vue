@@ -1,12 +1,14 @@
 <template>
-  <section class="search-grid space-y-10">
-    <VSearchResultsTitle
-      v-if="query.q && isSupported"
-      class="leading-10"
-      :size="isAllView ? 'large' : 'default'"
-    >
-      {{ query.q }}
-    </VSearchResultsTitle>
+  <div class="search-grid space-y-10">
+    <header class="sr-only md:not-sr-only">
+      <VSearchResultsTitle
+        v-if="query.q && isSupported"
+        class="leading-10"
+        :size="isAllView ? 'large' : 'default'"
+      >
+        {{ query.q }}
+      </VSearchResultsTitle>
+    </header>
 
     <div>
       <slot name="media" />
@@ -19,7 +21,7 @@
         :supported="isSupported"
       />
     </div>
-  </section>
+  </div>
 </template>
 
 <script>
