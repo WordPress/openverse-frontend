@@ -22,7 +22,7 @@
             <VButton
               size="disabled"
               variant="plain"
-              class="py-2"
+              class="py-2 px-4"
               :class="{ 'text-white': mode === 'desktop' }"
               @click="hide()"
             >
