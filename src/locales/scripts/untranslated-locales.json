@@ -1,5 +1,14 @@
 [
   {
+    "code": "ne",
+    "name": "Nepali",
+    "iso": "ne",
+    "wpLocale": "ne_NP",
+    "dir": "ltr",
+    "translated": 0,
+    "file": "ne.json"
+  },
+  {
     "code": "pcm",
     "name": "Nigerian Pidgin",
     "wpLocale": "pcm",
@@ -26,13 +35,13 @@
     "file": "sna.json"
   },
   {
-    "code": "ne",
-    "name": "Nepali",
-    "iso": "ne",
-    "wpLocale": "ne_NP",
+    "code": "nb",
+    "name": "Norwegian (Bokmål)",
+    "iso": "nb",
+    "wpLocale": "nb_NO",
     "dir": "ltr",
     "translated": 0,
-    "file": "ne.json"
+    "file": "nb.json"
   },
   {
     "code": "nqo",
@@ -60,6 +69,14 @@
     "file": "nn.json"
   },
   {
+    "code": "szl",
+    "name": "Silesian",
+    "wpLocale": "szl",
+    "dir": "ltr",
+    "translated": 0,
+    "file": "szl.json"
+  },
+  {
     "code": "sr",
     "name": "Serbian",
     "iso": "sr",
@@ -78,6 +95,23 @@
     "file": "gd.json"
   },
   {
+    "code": "pl",
+    "name": "Polish",
+    "iso": "pl",
+    "wpLocale": "pl_PL",
+    "dir": "ltr",
+    "translated": 0,
+    "file": "pl.json"
+  },
+  {
+    "code": "pap-cw",
+    "name": "Papiamento (Curaçao and Bonaire)",
+    "wpLocale": "pap_CW",
+    "dir": "ltr",
+    "translated": 0,
+    "file": "pap-cw.json"
+  },
+  {
     "code": "srd",
     "name": "Sardinian",
     "iso": "sc",
@@ -85,40 +119,6 @@
     "dir": "ltr",
     "translated": 0,
     "file": "srd.json"
-  },
-  {
-    "code": "szl",
-    "name": "Silesian",
-    "wpLocale": "szl",
-    "dir": "ltr",
-    "translated": 0,
-    "file": "szl.json"
-  },
-  {
-    "code": "nb",
-    "name": "Norwegian (Bokmål)",
-    "iso": "nb",
-    "wpLocale": "nb_NO",
-    "dir": "ltr",
-    "translated": 0,
-    "file": "nb.json"
-  },
-  {
-    "code": "pirate",
-    "name": "English (Pirate)",
-    "wpLocale": "art_xpirate",
-    "dir": "ltr",
-    "translated": 0,
-    "file": "pirate.json"
-  },
-  {
-    "code": "oci",
-    "name": "Occitan",
-    "iso": "oc",
-    "wpLocale": "oci",
-    "dir": "ltr",
-    "translated": 0,
-    "file": "oci.json"
   },
   {
     "code": "sa-in",
@@ -130,15 +130,6 @@
     "file": "sa-in.json"
   },
   {
-    "code": "pt-ao",
-    "name": "Portuguese (Angola)",
-    "iso": "pt",
-    "wpLocale": "pt_AO",
-    "dir": "ltr",
-    "translated": 0,
-    "file": "pt-ao.json"
-  },
-  {
     "code": "rhg",
     "name": "Rohingya",
     "wpLocale": "rhg",
@@ -147,12 +138,12 @@
     "file": "rhg.json"
   },
   {
-    "code": "pcd",
-    "name": "Picard",
-    "wpLocale": "pcd",
+    "code": "pirate",
+    "name": "English (Pirate)",
+    "wpLocale": "art_xpirate",
     "dir": "ltr",
     "translated": 0,
-    "file": "pcd.json"
+    "file": "pirate.json"
   },
   {
     "code": "roh",
@@ -162,6 +153,14 @@
     "dir": "ltr",
     "translated": 0,
     "file": "roh.json"
+  },
+  {
+    "code": "pcd",
+    "name": "Picard",
+    "wpLocale": "pcd",
+    "dir": "ltr",
+    "translated": 0,
+    "file": "pcd.json"
   },
   {
     "code": "sah",
@@ -181,13 +180,13 @@
     "file": "fa-af.json"
   },
   {
-    "code": "ory",
-    "name": "Oriya",
-    "iso": "or",
-    "wpLocale": "ory",
+    "code": "oci",
+    "name": "Occitan",
+    "iso": "oc",
+    "wpLocale": "oci",
     "dir": "ltr",
     "translated": 0,
-    "file": "ory.json"
+    "file": "oci.json"
   },
   {
     "code": "fa",
@@ -224,21 +223,13 @@
     "file": "pap-aw.json"
   },
   {
-    "code": "pl",
-    "name": "Polish",
-    "iso": "pl",
-    "wpLocale": "pl_PL",
+    "code": "pt-ao",
+    "name": "Portuguese (Angola)",
+    "iso": "pt",
+    "wpLocale": "pt_AO",
     "dir": "ltr",
     "translated": 0,
-    "file": "pl.json"
-  },
-  {
-    "code": "pap-cw",
-    "name": "Papiamento (Curaçao and Bonaire)",
-    "wpLocale": "pap_CW",
-    "dir": "ltr",
-    "translated": 0,
-    "file": "pap-cw.json"
+    "file": "pt-ao.json"
   },
   {
     "code": "os",
@@ -248,6 +239,15 @@
     "dir": "ltr",
     "translated": 0,
     "file": "os.json"
+  },
+  {
+    "code": "ory",
+    "name": "Oriya",
+    "iso": "or",
+    "wpLocale": "ory",
+    "dir": "ltr",
+    "translated": 0,
+    "file": "ory.json"
   },
   {
     "code": "snd",

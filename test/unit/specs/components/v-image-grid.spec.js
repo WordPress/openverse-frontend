@@ -1,4 +1,4 @@
-import ImageGrid from '~/components/ImageGrid/ImageGrid'
+import ImageGrid from '~/components/VImageGrid/VImageGrid'
 import { render, screen } from '@testing-library/vue'
 import VueI18n from 'vue-i18n'
 import messages from '~/locales/en.json'
@@ -32,6 +32,7 @@ const options = {
     },
   },
 }
+
 describe('ImageGrid', () => {
   it('renders images without load more button if canLoadMore is false', () => {
     options.props.canLoadMore = false
