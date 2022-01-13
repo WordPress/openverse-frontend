@@ -6,11 +6,11 @@ import {
   Story,
 } from '@storybook/addon-docs'
 
-import AudioThumbnail from '~/components/AudioThumbnail/AudioThumbnail.vue'
+import VAudioThumbnail from '~/components/VAudioThumbnail/VAudioThumbnail.vue'
 
 <Meta
-  title="Components/Audio thumbnail"
-  components={AudioThumbnail}
+  title="Components/VAudioThumbnail"
+  components={VAudioThumbnail}
   argTypes={{
     toggle: {
       action: 'toggle',
@@ -21,18 +21,18 @@ import AudioThumbnail from '~/components/AudioThumbnail/AudioThumbnail.vue'
 export const Template = (args, { argTypes }) => ({
   template: `
     <div class="w-30">
-      <AudioThumbnail v-bind="$props" v-on="$props"/>
+      <VAudioThumbnail v-bind="$props" v-on="$props"/>
     </div>
   `,
-  components: { AudioThumbnail },
+  components: { VAudioThumbnail },
   props: Object.keys(argTypes),
 })
 
-# Audio thumbnail
+# VAudioThumbnail
 
-<Description of={AudioThumbnail} />
+<Description of={VAudioThumbnail} />
 
-<ArgsTable of={AudioThumbnail} />
+<ArgsTable of={VAudioThumbnail} />
 
 It does not have any intrinsic width and scales horizontally to take up the full
 width of the parent. It also does not have any rounding so the parent layout
@@ -129,7 +129,7 @@ André Karwath aka [Aka](https://commons.wikimedia.org/wiki/User:Aka)
 
 ## Fallback
 
-In the absence of album art, some generic imagery can be shown.
+In the absence of album art, a randomised artwork is generated.
 
 <Canvas>
   <Story
