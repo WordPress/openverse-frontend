@@ -1,20 +1,11 @@
-import {
-  computed,
-  reactive,
-  ref,
-  useContext,
-  // useRoute,
-  // useRouter,
-} from '@nuxtjs/composition-api'
+import { computed, reactive, ref, useContext } from '@nuxtjs/composition-api'
 import { SEARCH } from '~/constants/store-modules'
 import { UPDATE_QUERY } from '~/constants/action-types'
 
 export default function useContentType() {
   const { store } = useContext()
-  // const route = useRoute()
-  // const router = useRouter()
 
-  const contentTypes = reactive(['all', 'audio', 'image'])
+  const contentTypes = reactive(['all', 'image', 'audio', 'video'])
 
   const activeType = computed(() => store.state.search.searchType)
   const previousContentType = ref(activeType.value)
@@ -24,13 +15,6 @@ export default function useContentType() {
       searchType: contentType,
     })
     previousContentType.value = contentType
-    // const type = contentType === 'all' ? '' : contentType
-
-    // const newPath = app.localePath({
-    //   path: `/search/${type}`,
-    //   query: route.value.query,
-    // })
-    // router.push(newPath)
   }
   return {
     setActiveType,

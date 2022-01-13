@@ -31,6 +31,7 @@ import useContentType from '~/composables/use-content-type'
 import allIcon from '~/assets/icons/all-content.svg'
 import audioIcon from '~/assets/icons/audio-content.svg'
 import imageIcon from '~/assets/icons/image-content.svg'
+import videoIcon from '~/assets/icons/video-content.svg'
 import ellipsisIcon from '~/assets/icons/ellipsis.svg'
 
 import VContentSwitcherButton from '~/components/VHeader/VContentSwitcher/VContentSwitcherButton.vue'
@@ -44,6 +45,7 @@ const icons = {
   all: allIcon,
   audio: audioIcon,
   image: imageIcon,
+  video: videoIcon,
   ellipsis: ellipsisIcon,
 }
 
