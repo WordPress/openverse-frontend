@@ -53,7 +53,6 @@
 <script>
 import VLicense from '~/components/License/VLicense.vue'
 import VModal from '~/components/VModal/VModal.vue'
-import VImageResult from '~/components/VImageResult.vue'
 import VButton from '~/components/VButton.vue'
 
 const errorImage = require('~/assets/image_not_available_placeholder.png')
@@ -72,7 +71,7 @@ const toAbsolutePath = (url, prefix = 'https://') => {
 
 export default {
   name: 'ImageCell',
-  components: { VLicense, VModal, VImageResult, VButton },
+  components: { VLicense, VModal, VButton },
   props: ['image', 'shouldContainImage'],
   data() {
     return {
