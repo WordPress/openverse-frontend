@@ -32,7 +32,7 @@ test.beforeEach(async ({ context }) => {
 test('q query parameter is set as the search term', async ({ page }) => {
   await page.goto('/')
 
-  const searchInput = page.locator('input[type="search"]')
+  const searchInput = page.locator('main input[type="search"]')
   await searchInput.type('cat')
   await page.click('button:has-text("Search")')
 
@@ -45,16 +45,17 @@ test('selecting `audio` on homepage, you can search for audio', async ({
 }) => {
   await page.goto('/')
 
-  await page.type('input[type="search"]', 'cat')
+  await page.type('main input[type="search"]', 'cat')
   await page.click('button:has-text("Audio")')
   await page.click('button:has-text("Search")')
 
-  await expect(page.locator('input[type="search"]')).toHaveValue('cat')
-  const activeTabLabel = await page
-    .locator('[role="tab"][aria-selected="true"]')
-    .textContent()
-  expect(activeTabLabel.trim()).toEqual('Audio')
   await expect(page).toHaveURL('search/audio?q=cat')
+
+  const currentContentType = await page
+    .locator('[aria-current="page"]')
+    .textContent()
+  expect(currentContentType.trim()).toEqual('Audio')
+  await expect(page.locator('header input[type="search"]')).toHaveValue('cat')
 })
 
 test('selecting license type filter on homepage applies filters', async ({
@@ -62,16 +63,16 @@ test('selecting license type filter on homepage applies filters', async ({
 }) => {
   await page.goto('/')
 
-  await page.type('input[type="search"]', 'cat')
+  await page.type('main input[type="search"]', 'cat')
   await page.click('label:has-text("Use commercially")')
   await page.click('button:has-text("Search")')
 
-  await expect(page.locator('input[type="search"]')).toHaveValue('cat')
-  const activeTabLabel = await page
-    .locator('[role="tab"][aria-selected="true"]')
-    .textContent()
-  expect(activeTabLabel.trim()).toEqual('Image')
   await expect(page).toHaveURL('search/image?q=cat&license_type=commercial')
+  await expect(page.locator('header input[type="search"]')).toHaveValue('cat')
+  const currentContentType = await page
+    .locator('[aria-current="page"]')
+    .textContent()
+  expect(currentContentType.trim()).toEqual('Images')
 })
 
 test.skip('url filter parameters not used by current mediaType are discarded', async ({
@@ -84,7 +85,8 @@ test.skip('url filter parameters not used by current mediaType are discarded', a
   // search tab, such filters should be reset, and the query should be updated.
   await page.goto('/search/image?q=cat&categories=photograph')
 
-  await page.click('[role="tab"]:has-text("Audio")')
+  await page.click('[aria-label="Images"]')
+  await page.click('a:has-text("Audio")')
   await expect(page).toHaveURL('/search/audio?q=cat')
 })
 
@@ -97,7 +99,8 @@ test.skip('url filter types not used by current mediaType are discarded', async 
   // and the query should be updated.
   await page.goto('/search/image?q=cat&aspect_ratio=tall')
 
-  await page.click('[role="tab"]:has-text("Audio")')
+  await page.click('[aria-label="Images"]')
+  await page.click('a:has-text("Audio")')
   await expect(page).toHaveURL('/search/audio?q=cat')
 })
 

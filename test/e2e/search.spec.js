@@ -19,20 +19,6 @@ test.beforeEach(async ({ context }) => {
   )
 })
 
-test('does not show an error message before search', async ({ page }) => {
-  await page.goto('/search')
-
-  // The search meta data under the search input, should not be shown if no
-  // media had been fetched
-  await expect(page.locator('text=No image results')).not.toBeVisible()
-
-  // Load more button, should not be shown if the `q` parameter is not set
-  await expect(page.locator('button:has-text("Load more results")'))
-
-  // There should be no error messages when no search has been done
-  await expect(page.locator('[data-testid="search-grid"] h4')).toHaveCount(1)
-})
-
 test.skip('shows search result metadata', async ({ page }) => {
   await page.goto('/search/image?q=cat&source=rijksmuseum')
   await page.route('https://api.openverse.engineering/v1/images/**', (route) =>
