@@ -26,6 +26,7 @@ import {
   inject,
   ref,
   useContext,
+  useRoute,
   watch,
 } from '@nuxtjs/composition-api'
 import caretDownIcon from '~/assets/icons/caret-down.svg'
@@ -51,7 +52,8 @@ export default {
     },
   },
   setup(props) {
-    const { app, i18n, route } = useContext()
+    const { app, i18n } = useContext()
+    const { route } = useRoute()
     const isHeaderScrolled = inject('isHeaderScrolled')
     const isMinScreenMd = inject('isMinScreenMd')
 
@@ -76,14 +78,15 @@ export default {
     const localePath = (item, query) =>
       app.localePath({ path: `/search/${item === 'all' ? '' : item}/`, query })
 
+    // TODO (obulat): How do we mock useRoute()?
     const nuxtLinkProps = ref({
       'aria-current': 'page',
-      to: localePath(props.activeItem, route.value.query),
+      to: localePath(props.activeItem, route?.value?.query),
     })
     watch([route], ([route]) => {
       nuxtLinkProps.value = {
         'aria-current': 'page',
-        to: localePath(props.activeItem, route.query),
+        to: localePath(props.activeItem, route?.query),
       }
     })
 

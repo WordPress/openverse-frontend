@@ -22,7 +22,7 @@
   </VItemGroup>
 </template>
 <script>
-import { inject, useContext } from '@nuxtjs/composition-api'
+import { inject, useContext, useRoute } from '@nuxtjs/composition-api'
 import useContentType from '~/composables/use-content-type'
 
 import checkIcon from '~/assets/icons/checkmark.svg'
@@ -42,7 +42,8 @@ export default {
   },
   setup(_, { emit }) {
     const content = useContentType()
-    const { app, route } = useContext()
+    const { app } = useContext()
+    const { route } = useRoute()
     const isMinScreenMd = inject('isMinScreenMd')
     const handleClick = (item) => {
       emit('click', item)

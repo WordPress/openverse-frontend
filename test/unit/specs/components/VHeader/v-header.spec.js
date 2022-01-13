@@ -60,6 +60,7 @@ describe('VHeader', () => {
             fetchState: () => ({
               isFetching: false,
             }),
+            mediaType: () => 'image',
           },
         },
         search: {
@@ -79,7 +80,14 @@ describe('VHeader', () => {
       localVue,
       propsData: props,
       mocks: {
-        $nuxt: { context: { store: storeMock, i18n } },
+        $nuxt: {
+          context: {
+            store: storeMock,
+            i18n,
+            app: { localePath: (val) => val },
+          },
+          route: ref({ query: '/search/images' }),
+        },
       },
       stubs: { NuxtLink: true },
       provide: provided,
