@@ -1,69 +1,619 @@
 {
   "search": {
-    "result_count": 2,
-    "page_count": 0,
-    "page_size": 2,
+    "result_count": 5000,
+    "page_count": 250,
+    "page_size": 20,
+    "page": 1,
     "results": [
       {
-        "id": "8071128a-bebc-4c24-823d-6e26a2e6dfe2",
-        "title": "Soon and Very Soon (Negro Spiritual)",
-        "foreign_landing_url": "https://www.jamendo.com/track/382",
-        "creator": "Les Petits Chanteurs de Montigny",
-        "creator_url": "https://www.jamendo.com/artist/20/pcmontigny",
-        "url": "https://mp3d.jamendo.com/download/track/382/mp32",
-        "license": "by-sa",
-        "license_version": "2.0",
-        "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+      "id": "010356c6-ff57-44f1-bddc-675a2a1e5a38",
+      "title": "I'll Wait",
+      "foreign_landing_url": "https://www.jamendo.com/track/938331",
+      "creator": "Jonathan Dimmel",
+      "creator_url": "https://www.jamendo.com/artist/355753/Jonathan_Dimmel",
+      "url": "https://mp3d.jamendo.com/download/track/938331/mp32",
+      "license": "by-sa",
+      "license_version": "3.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "provider": "jamendo",
+      "source": "jamendo",
+      "category": "music",
+      "tags": [
+        {
+          "name": "vocal"
+        },
+        {
+          "name": "male"
+        },
+        {
+          "name": "speed_medium"
+        },
+        {
+          "name": "classicalguitar"
+        },
+        {
+          "name": "sentimental"
+        },
+        {
+          "name": "vocal"
+        },
+        {
+          "name": "emotional"
+        },
+        {
+          "name": "voice"
+        },
+        {
+          "name": "folky"
+        }
+      ],
+      "genres": [
+        "pop",
+        "folk",
+        "rock"
+      ],
+      "duration": 174000,
+      "thumbnail": "http://localhost:8000/v1/audio/010356c6-ff57-44f1-bddc-675a2a1e5a38/thumb/",
+      "waveform": "http://localhost:8000/v1/audio/010356c6-ff57-44f1-bddc-675a2a1e5a38/waveform/",
+      "detail_url": "http://localhost:8000/v1/audio/010356c6-ff57-44f1-bddc-675a2a1e5a38/",
+      "related_url": "http://localhost:8000/v1/audio/010356c6-ff57-44f1-bddc-675a2a1e5a38/related/"
+    },
+      {
+        "id": "8fd88d99-4d3a-4e2f-b0c8-c77c7c0151f6",
+        "title": "Leave and Never Look Back",
+        "foreign_landing_url": "https://www.jamendo.com/track/1174817",
+        "creator": "madelyn munsell",
+        "creator_url": "https://www.jamendo.com/artist/457898/madelyniris_(2)",
+        "url": "https://mp3d.jamendo.com/download/track/1174817/mp32",
+        "license": "by",
+        "license_version": "3.0",
+        "license_url": "https://creativecommons.org/licenses/by/3.0/",
         "provider": "jamendo",
         "source": "jamendo",
+        "category": "music",
         "tags": [
           {
-            "name": "chorale"
+            "name": "vocal"
           },
           {
-            "name": "happy"
+            "name": "female"
           },
           {
-            "name": "male"
+            "name": "speed_medium"
+          },
+          {
+            "name": "piano"
           },
           {
             "name": "vocal"
+          },
+          {
+            "name": "love"
+          },
+          {
+            "name": "voice"
+          },
+          {
+            "name": "lonely"
           }
         ],
-        "filetype": "mp3",
-        "fields_matched": ["tags.name"],
-        "genres": ["classical", "gospel"],
-        "detail_url": "http://localhost:8000/v1/audio/8071128a-bebc-4c24-823d-6e26a2e6dfe2",
-        "related_url": "http://localhost:8000/v1/recommendations/audio/8071128a-bebc-4c24-823d-6e26a2e6dfe2"
+        "genres": [
+          "pop",
+          "indie"
+        ],
+        "duration": 249000,
+        "thumbnail": "http://localhost:8000/v1/audio/8fd88d99-4d3a-4e2f-b0c8-c77c7c0151f6/thumb/",
+        "waveform": "http://localhost:8000/v1/audio/8fd88d99-4d3a-4e2f-b0c8-c77c7c0151f6/waveform/",
+        "detail_url": "http://localhost:8000/v1/audio/8fd88d99-4d3a-4e2f-b0c8-c77c7c0151f6/",
+        "related_url": "http://localhost:8000/v1/audio/8fd88d99-4d3a-4e2f-b0c8-c77c7c0151f6/related/"
       },
       {
-        "id": "73e00493-9189-42ed-955b-4f9d26d0d9f4",
-        "title": "Aimons nous...",
-        "foreign_landing_url": "https://www.jamendo.com/track/217",
-        "creator": "David TMX",
-        "creator_url": "https://www.jamendo.com/artist/14/david.tmx",
-        "url": "https://mp3d.jamendo.com/download/track/217/mp32",
-        "license": "by-nc-sa",
-        "license_version": "2.0",
-        "license_url": "https://creativecommons.org/licenses/by-nc-sa/2.0/",
+        "id": "c5e5452b-2abd-406b-8c7c-d2eb8a23aaa6",
+        "title": "Cali",
+        "foreign_landing_url": "https://www.jamendo.com/track/1428765",
+        "creator": "Barefoot McCoy",
+        "creator_url": "https://www.jamendo.com/artist/497744/Barefoot_McCoy",
+        "url": "https://mp3d.jamendo.com/download/track/1428765/mp32",
+        "license": "by-nc-nd",
+        "license_version": "3.0",
+        "license_url": "https://creativecommons.org/licenses/by-nc-nd/3.0/",
         "provider": "jamendo",
         "source": "jamendo",
+        "category": "music",
         "tags": [
           {
-            "name": "happy"
+            "name": "vocal"
           },
           {
             "name": "male"
           },
           {
+            "name": "speed_medium"
+          },
+          {
+            "name": "love"
+          },
+          {
             "name": "vocal"
+          },
+          {
+            "name": "uplifting"
+          },
+          {
+            "name": "voice"
+          },
+          {
+            "name": "california"
           }
         ],
-        "filetype": "mp3",
-        "fields_matched": ["tags.name"],
-        "genres": ["metal"],
-        "detail_url": "http://localhost:8000/v1/audio/73e00493-9189-42ed-955b-4f9d26d0d9f4",
-        "related_url": "http://localhost:8000/v1/recommendations/audio/73e00493-9189-42ed-955b-4f9d26d0d9f4"
+        "genres": [
+          "folk",
+          "indie",
+          "singersongwriter"
+        ],
+        "duration": 295000,
+        "thumbnail": "http://localhost:8000/v1/audio/c5e5452b-2abd-406b-8c7c-d2eb8a23aaa6/thumb/",
+        "waveform": "http://localhost:8000/v1/audio/c5e5452b-2abd-406b-8c7c-d2eb8a23aaa6/waveform/",
+        "detail_url": "http://localhost:8000/v1/audio/c5e5452b-2abd-406b-8c7c-d2eb8a23aaa6/",
+        "related_url": "http://localhost:8000/v1/audio/c5e5452b-2abd-406b-8c7c-d2eb8a23aaa6/related/"
+      },
+      {
+        "id": "64ad681f-49d5-4803-92c1-d2eb45d43c7f",
+        "title": "Remembering Ten",
+        "foreign_landing_url": "https://www.jamendo.com/track/484333",
+        "creator": "Jonathan Dimmel",
+        "creator_url": "https://www.jamendo.com/artist/355753/Jonathan_Dimmel",
+        "url": "https://mp3d.jamendo.com/download/track/484333/mp32",
+        "license": "by-nc-sa",
+        "license_version": "3.0",
+        "license_url": "https://creativecommons.org/licenses/by-nc-sa/3.0/",
+        "provider": "jamendo",
+        "source": "jamendo",
+        "category": "music",
+        "tags": [
+          {
+            "name": "vocal"
+          },
+          {
+            "name": "male"
+          },
+          {
+            "name": "speed_medium"
+          },
+          {
+            "name": "drums"
+          },
+          {
+            "name": "strings"
+          },
+          {
+            "name": "vocal"
+          },
+          {
+            "name": "soft"
+          },
+          {
+            "name": "emotional"
+          },
+          {
+            "name": "voice"
+          },
+          {
+            "name": "neutral"
+          }
+        ],
+        "genres": [
+          "pop",
+          "rock"
+        ],
+        "duration": 310000,
+        "thumbnail": "http://localhost:8000/v1/audio/64ad681f-49d5-4803-92c1-d2eb45d43c7f/thumb/",
+        "waveform": "http://localhost:8000/v1/audio/64ad681f-49d5-4803-92c1-d2eb45d43c7f/waveform/",
+        "detail_url": "http://localhost:8000/v1/audio/64ad681f-49d5-4803-92c1-d2eb45d43c7f/",
+        "related_url": "http://localhost:8000/v1/audio/64ad681f-49d5-4803-92c1-d2eb45d43c7f/related/"
+      },
+      {
+        "id": "59486ca0-9776-4b49-8d8c-8f167d9d3c47",
+        "title": "Summer",
+        "foreign_landing_url": "https://www.jamendo.com/track/1407840",
+        "creator": "Michael Ellis",
+        "creator_url": "https://www.jamendo.com/artist/438603/Michael_Ellis",
+        "url": "https://mp3d.jamendo.com/download/track/1407840/mp32",
+        "license": "by-nc-sa",
+        "license_version": "3.0",
+        "license_url": "https://creativecommons.org/licenses/by-nc-sa/3.0/",
+        "provider": "jamendo",
+        "source": "jamendo",
+        "category": "music",
+        "tags": [
+          {
+            "name": "vocal"
+          },
+          {
+            "name": "male"
+          },
+          {
+            "name": "speed_medium"
+          },
+          {
+            "name": "guitar"
+          },
+          {
+            "name": "electricguitar"
+          },
+          {
+            "name": "happy"
+          },
+          {
+            "name": "summer"
+          },
+          {
+            "name": "vocal"
+          },
+          {
+            "name": "voice"
+          },
+          {
+            "name": "holidays"
+          }
+        ],
+        "genres": [
+          "rock",
+          "pop",
+          "poprock"
+        ],
+        "duration": 201000,
+        "thumbnail": "http://localhost:8000/v1/audio/59486ca0-9776-4b49-8d8c-8f167d9d3c47/thumb/",
+        "waveform": "http://localhost:8000/v1/audio/59486ca0-9776-4b49-8d8c-8f167d9d3c47/waveform/",
+        "detail_url": "http://localhost:8000/v1/audio/59486ca0-9776-4b49-8d8c-8f167d9d3c47/",
+        "related_url": "http://localhost:8000/v1/audio/59486ca0-9776-4b49-8d8c-8f167d9d3c47/related/"
+      },
+      {
+        "id": "123506ae-5052-4d2f-b711-044b502ac439",
+        "title": "Chances",
+        "foreign_landing_url": "https://www.jamendo.com/track/1586071",
+        "creator": "The Devil Music Co.",
+        "creator_url": "https://www.jamendo.com/artist/509448/The_Devil_Music_Co._(2)",
+        "url": "https://mp3d.jamendo.com/download/track/1586071/mp32",
+        "license": "by-nc-nd",
+        "license_version": "3.0",
+        "license_url": "https://creativecommons.org/licenses/by-nc-nd/3.0/",
+        "provider": "jamendo",
+        "source": "jamendo",
+        "category": "music",
+        "tags": [
+          {
+            "name": "vocal"
+          },
+          {
+            "name": "male"
+          },
+          {
+            "name": "speed_medium"
+          },
+          {
+            "name": "peaceful"
+          },
+          {
+            "name": "vocal"
+          },
+          {
+            "name": "nostalgic"
+          },
+          {
+            "name": "voice"
+          }
+        ],
+        "genres": [
+          "pop"
+        ],
+        "duration": 246000,
+        "thumbnail": "http://localhost:8000/v1/audio/123506ae-5052-4d2f-b711-044b502ac439/thumb/",
+        "waveform": "http://localhost:8000/v1/audio/123506ae-5052-4d2f-b711-044b502ac439/waveform/",
+        "detail_url": "http://localhost:8000/v1/audio/123506ae-5052-4d2f-b711-044b502ac439/",
+        "related_url": "http://localhost:8000/v1/audio/123506ae-5052-4d2f-b711-044b502ac439/related/"
+      },
+      {
+        "id": "d80168c7-88c5-4e97-a3d0-9d5fc245a35f",
+        "title": "The Commonfield",
+        "foreign_landing_url": "https://www.jamendo.com/track/525910",
+        "creator": "Emerald Park",
+        "creator_url": "https://www.jamendo.com/artist/357612/Emerald_Park",
+        "url": "https://mp3d.jamendo.com/download/track/525910/mp32",
+        "license": "by-nc-nd",
+        "license_version": "3.0",
+        "license_url": "https://creativecommons.org/licenses/by-nc-nd/3.0/",
+        "provider": "jamendo",
+        "source": "jamendo",
+        "category": "music",
+        "tags": [
+          {
+            "name": "vocal"
+          },
+          {
+            "name": "male"
+          },
+          {
+            "name": "speed_medium"
+          },
+          {
+            "name": "acoustic"
+          },
+          {
+            "name": "vocal"
+          },
+          {
+            "name": "voice"
+          },
+          {
+            "name": "neutral"
+          }
+        ],
+        "genres": [
+          "rock"
+        ],
+        "duration": 301000,
+        "thumbnail": "http://localhost:8000/v1/audio/d80168c7-88c5-4e97-a3d0-9d5fc245a35f/thumb/",
+        "waveform": "http://localhost:8000/v1/audio/d80168c7-88c5-4e97-a3d0-9d5fc245a35f/waveform/",
+        "detail_url": "http://localhost:8000/v1/audio/d80168c7-88c5-4e97-a3d0-9d5fc245a35f/",
+        "related_url": "http://localhost:8000/v1/audio/d80168c7-88c5-4e97-a3d0-9d5fc245a35f/related/"
+      },
+      {
+        "id": "67faeac4-1e37-42c8-98b5-89e0de061823",
+        "title": "Boy",
+        "foreign_landing_url": "https://www.jamendo.com/track/553676",
+        "creator": "The Different",
+        "creator_url": "https://www.jamendo.com/artist/358416/The_Different",
+        "url": "https://mp3d.jamendo.com/download/track/553676/mp32",
+        "license": "by-nc-nd",
+        "license_version": "3.0",
+        "license_url": "https://creativecommons.org/licenses/by-nc-nd/3.0/",
+        "provider": "jamendo",
+        "source": "jamendo",
+        "category": "music",
+        "tags": [
+          {
+            "name": "vocal"
+          },
+          {
+            "name": "female"
+          },
+          {
+            "name": "speed_medium"
+          },
+          {
+            "name": "acousticguitar"
+          },
+          {
+            "name": "strings"
+          },
+          {
+            "name": "acoustic"
+          },
+          {
+            "name": "vocal"
+          },
+          {
+            "name": "voice"
+          },
+          {
+            "name": "neutral"
+          }
+        ],
+        "genres": [
+          "rock",
+          "folk"
+        ],
+        "duration": 219000,
+        "thumbnail": "http://localhost:8000/v1/audio/67faeac4-1e37-42c8-98b5-89e0de061823/thumb/",
+        "waveform": "http://localhost:8000/v1/audio/67faeac4-1e37-42c8-98b5-89e0de061823/waveform/",
+        "detail_url": "http://localhost:8000/v1/audio/67faeac4-1e37-42c8-98b5-89e0de061823/",
+        "related_url": "http://localhost:8000/v1/audio/67faeac4-1e37-42c8-98b5-89e0de061823/related/"
+      },
+      {
+        "id": "bec7fe97-7a3e-4452-af91-1f91943a5fd6",
+        "title": "Behind The Walls",
+        "foreign_landing_url": "https://www.jamendo.com/track/1111313",
+        "creator": "Non Camera",
+        "creator_url": "https://www.jamendo.com/artist/442829/Non_Camera",
+        "url": "https://mp3d.jamendo.com/download/track/1111313/mp32",
+        "license": "by",
+        "license_version": "3.0",
+        "license_url": "https://creativecommons.org/licenses/by/3.0/",
+        "provider": "jamendo",
+        "source": "jamendo",
+        "category": "music",
+        "tags": [
+          {
+            "name": "vocal"
+          },
+          {
+            "name": "male"
+          },
+          {
+            "name": "speed_medium"
+          },
+          {
+            "name": "piano"
+          },
+          {
+            "name": "electricguitar"
+          },
+          {
+            "name": "acoustic"
+          },
+          {
+            "name": "vocal"
+          },
+          {
+            "name": "voice"
+          },
+          {
+            "name": "pianorock"
+          }
+        ],
+        "genres": [
+          "pop",
+          "rock",
+          "indie"
+        ],
+        "duration": 286000,
+        "thumbnail": "http://localhost:8000/v1/audio/bec7fe97-7a3e-4452-af91-1f91943a5fd6/thumb/",
+        "waveform": "http://localhost:8000/v1/audio/bec7fe97-7a3e-4452-af91-1f91943a5fd6/waveform/",
+        "detail_url": "http://localhost:8000/v1/audio/bec7fe97-7a3e-4452-af91-1f91943a5fd6/",
+        "related_url": "http://localhost:8000/v1/audio/bec7fe97-7a3e-4452-af91-1f91943a5fd6/related/"
+      },
+      {
+        "id": "f7b131cd-d005-4978-9da9-aa7b183eca8b",
+        "title": "Strong",
+        "foreign_landing_url": "https://www.jamendo.com/track/1528165",
+        "creator": "JekK",
+        "creator_url": "https://www.jamendo.com/artist/440692/JEKK",
+        "url": "https://mp3d.jamendo.com/download/track/1528165/mp32",
+        "license": "by-nc-nd",
+        "license_version": "3.0",
+        "license_url": "https://creativecommons.org/licenses/by-nc-nd/3.0/",
+        "provider": "jamendo",
+        "source": "jamendo",
+        "category": "music",
+        "tags": [
+          {
+            "name": "vocal"
+          },
+          {
+            "name": "male"
+          },
+          {
+            "name": "speed_low"
+          },
+          {
+            "name": "synthesizer"
+          },
+          {
+            "name": "claps"
+          },
+          {
+            "name": "happy"
+          },
+          {
+            "name": "vocal"
+          },
+          {
+            "name": "voice"
+          },
+          {
+            "name": "vitamin"
+          }
+        ],
+        "genres": [
+          "pop",
+          "soul"
+        ],
+        "duration": 187000,
+        "thumbnail": "http://localhost:8000/v1/audio/f7b131cd-d005-4978-9da9-aa7b183eca8b/thumb/",
+        "waveform": "http://localhost:8000/v1/audio/f7b131cd-d005-4978-9da9-aa7b183eca8b/waveform/",
+        "detail_url": "http://localhost:8000/v1/audio/f7b131cd-d005-4978-9da9-aa7b183eca8b/",
+        "related_url": "http://localhost:8000/v1/audio/f7b131cd-d005-4978-9da9-aa7b183eca8b/related/"
+      },
+      {
+        "id": "7bc014a3-d1e5-40e1-bcc0-98a9084a9c14",
+        "title": "Skydiving (feat. Jasmine Kara)",
+        "foreign_landing_url": "https://www.jamendo.com/track/354778",
+        "creator": "Jonay",
+        "creator_url": "https://www.jamendo.com/artist/339779/Jonay",
+        "url": "https://mp3d.jamendo.com/download/track/354778/mp32",
+        "license": "by-sa",
+        "license_version": "3.0",
+        "license_url": "https://creativecommons.org/licenses/by-sa/3.0/",
+        "provider": "jamendo",
+        "source": "jamendo",
+        "category": "music",
+        "tags": [
+          {
+            "name": "vocal"
+          },
+          {
+            "name": "male"
+          },
+          {
+            "name": "speed_medium"
+          },
+          {
+            "name": "happy"
+          },
+          {
+            "name": "energetic"
+          },
+          {
+            "name": "adventure"
+          },
+          {
+            "name": "skydiving"
+          },
+          {
+            "name": "voice"
+          }
+        ],
+        "genres": [
+          "electronic",
+          "pop",
+          "rnb"
+        ],
+        "duration": 247000,
+        "thumbnail": "http://localhost:8000/v1/audio/7bc014a3-d1e5-40e1-bcc0-98a9084a9c14/thumb/",
+        "waveform": "http://localhost:8000/v1/audio/7bc014a3-d1e5-40e1-bcc0-98a9084a9c14/waveform/",
+        "detail_url": "http://localhost:8000/v1/audio/7bc014a3-d1e5-40e1-bcc0-98a9084a9c14/",
+        "related_url": "http://localhost:8000/v1/audio/7bc014a3-d1e5-40e1-bcc0-98a9084a9c14/related/"
+      },
+      {
+        "id": "b1111b94-45d6-4f15-b7be-16f60ec620aa",
+        "title": "When Waves Trying to Catch a Marvel",
+        "foreign_landing_url": "https://www.jamendo.com/track/25706",
+        "creator": "Antony Raijekov",
+        "creator_url": "https://www.jamendo.com/artist/2020/antony.raijekov",
+        "url": "https://mp3d.jamendo.com/download/track/25706/mp32",
+        "license": "by-nc-nd",
+        "license_version": "3.0",
+        "license_url": "https://creativecommons.org/licenses/by-nc-nd/3.0/",
+        "provider": "jamendo",
+        "source": "jamendo",
+        "category": "music",
+        "tags": [
+          {
+            "name": "instrumental"
+          },
+          {
+            "name": "neutral"
+          },
+          {
+            "name": "speed_medium"
+          },
+          {
+            "name": "drums"
+          },
+          {
+            "name": "doublebass"
+          },
+          {
+            "name": "happy"
+          },
+          {
+            "name": "norinebraun"
+          },
+          {
+            "name": "neutral"
+          }
+        ],
+        "genres": [
+          "jazz",
+          "triphop",
+          "nujazz"
+        ],
+        "duration": 221000,
+        "thumbnail": "http://localhost:8000/v1/audio/b1111b94-45d6-4f15-b7be-16f60ec620aa/thumb/",
+        "waveform": "http://localhost:8000/v1/audio/b1111b94-45d6-4f15-b7be-16f60ec620aa/waveform/",
+        "detail_url": "http://localhost:8000/v1/audio/b1111b94-45d6-4f15-b7be-16f60ec620aa/",
+        "related_url": "http://localhost:8000/v1/audio/b1111b94-45d6-4f15-b7be-16f60ec620aa/related/"
       }
     ]
   },

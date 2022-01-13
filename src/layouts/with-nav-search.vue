@@ -6,17 +6,18 @@
     <main class="embedded">
       <Nuxt />
     </main>
+    <VGlobalAudioSection />
   </div>
 </template>
 <script>
-import iframeHeight from '~/mixins/iframe-height'
+import { useContext } from '@nuxtjs/composition-api'
 
-import { NAV } from '~/constants/store-modules'
 import MigrationNotice from '~/components/MigrationNotice.vue'
 import VHeader from '~/components/VHeader/VHeader.vue'
-
 import TranslationStatusBanner from '~/components/TranslationStatusBanner.vue'
-import { useContext } from '@nuxtjs/composition-api'
+
+import iframeHeight from '~/mixins/iframe-height'
+import { NAV } from '~/constants/store-modules'
 
 const embeddedWithNavSearch = {
   name: 'embedded-with-nav-search',

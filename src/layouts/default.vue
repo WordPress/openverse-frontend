@@ -6,20 +6,26 @@
     <main class="embedded">
       <Nuxt />
     </main>
+    <VGlobalAudioSection />
   </div>
 </template>
 <script>
-import iframeHeight from '~/mixins/iframe-height'
-
-import { NAV } from '~/constants/store-modules'
-import VHeader from '~/components/VHeader/VHeader.vue'
-
 import { useContext } from '@nuxtjs/composition-api'
+
+import MigrationNotice from '~/components/MigrationNotice.vue'
+import VHeader from '~/components/VHeader/VHeader.vue'
 import TranslationStatusBanner from '~/components/TranslationStatusBanner.vue'
+
+import iframeHeight from '~/mixins/iframe-height'
+import { NAV } from '~/constants/store-modules'
 
 const embeddedPage = {
   name: 'embedded',
-  components: { VHeader, TranslationStatusBanner },
+  components: {
+    MigrationNotice,
+    TranslationStatusBanner,
+    VHeader,
+  },
   layout: 'embedded',
   mixins: [iframeHeight],
   head() {
