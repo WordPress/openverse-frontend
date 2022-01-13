@@ -291,6 +291,6 @@ a.button {
 }
 
 .plain {
-  @apply bg-tx focus-visible:ring-pink;
+  @apply bg-tx focus-visible:ring-pink p-0;
 }
 </style>

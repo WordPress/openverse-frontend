@@ -7,25 +7,35 @@
   >
     <figure class="search-grid_item">
       <i :style="`padding-bottom:${iPadding}%`" />
-      <NuxtLink
-        :to="localePath('/image/' + image.id)"
-        class="search-grid_image-ctr"
-        :style="`width: ${imageWidth}%; top: ${imageTop}%; left:${imageLeft}%;`"
-        @click="onGotoDetailPage($event, image)"
-      >
-        <img
-          ref="img"
-          loading="lazy"
-          :class="{
-            'search-grid_image': true,
-            'w-full': !shouldContainImage,
-          }"
-          :alt="image.title"
-          :src="getImageUrl(image)"
-          @load="getImgDimension"
-          @error="onImageLoadError($event, image)"
-        />
-      </NuxtLink>
+      <VModal :label="$t('photo-details.aria.main')">
+        <template #trigger="{ a11yProps }">
+          <VButton
+            as="a"
+            variant="plain"
+            :href="localePath('/image/' + image.id)"
+            class="search-grid_image-ctr"
+            :style="`width: ${imageWidth}%; top: ${imageTop}%; left:${imageLeft}%;`"
+            v-bind="a11yProps"
+            @click="onGotoDetailPage($event, image)"
+          >
+            <img
+              ref="img"
+              loading="lazy"
+              :class="{
+                'search-grid_image': true,
+                'w-full': !shouldContainImage,
+              }"
+              :alt="image.title"
+              :src="getImageUrl(image)"
+              @load="getImgDimension"
+              @error="onImageLoadError($event, image)"
+            />
+          </VButton>
+        </template>
+
+        <VImageResult :image-id="image.id" />
+      </VModal>
+
       <figcaption class="overlay overlay__top p-2">
         <VLicense
           :license="image.license"
@@ -42,6 +52,9 @@
 
 <script>
 import VLicense from '~/components/License/VLicense.vue'
+import VModal from '~/components/VModal/VModal.vue'
+import VImageResult from '~/components/VImageResult.vue'
+import VButton from '~/components/VButton.vue'
 
 const errorImage = require('~/assets/image_not_available_placeholder.png')
 
@@ -59,7 +72,7 @@ const toAbsolutePath = (url, prefix = 'https://') => {
 
 export default {
   name: 'ImageCell',
-  components: { VLicense },
+  components: { VLicense, VModal, VImageResult, VButton },
   props: ['image', 'shouldContainImage'],
   data() {
     return {
@@ -114,11 +127,8 @@ export default {
     onGotoDetailPage(event, image) {
       if (!event.metaKey && !event.ctrlKey) {
         event.preventDefault()
-        const detailRoute = this.localeRoute({
-          name: 'photo-detail-page',
-          params: { id: image.id, location: window.scrollY },
-        })
-        this.$router.push(detailRoute)
+        const detailRoute = this.localePath('/image/' + image.id)
+        history.pushState({}, null, detailRoute)
       }
     },
     onImageLoadError(event, image) {

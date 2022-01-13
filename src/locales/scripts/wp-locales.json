@@ -467,7 +467,7 @@
     "facebookLocale": "el_GR",
     "wpLocale": "el",
     "code": "el",
-    "translated": 37
+    "translated": 43
   },
   "en_AU": {
     "name": "English (Australia)",
@@ -670,7 +670,7 @@
     "facebookLocale": "es_MX",
     "wpLocale": "es_MX",
     "code": "es-mx",
-    "translated": 65
+    "translated": 76
   },
   "es_PE": {
     "name": "Spanish (Peru)",
@@ -2335,7 +2335,7 @@
     "facebookLocale": "zh_CN",
     "wpLocale": "zh_CN",
     "code": "zh-cn",
-    "translated": 59
+    "translated": 74
   },
   "zh_HK": {
     "name": "Chinese (Hong Kong)",

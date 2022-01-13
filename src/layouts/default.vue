@@ -6,6 +6,7 @@
     <main class="embedded">
       <Nuxt />
     </main>
+    <VModalTarget />
   </div>
 </template>
 <script>
@@ -13,13 +14,14 @@ import iframeHeight from '~/mixins/iframe-height'
 
 import { NAV } from '~/constants/store-modules'
 import VHeader from '~/components/VHeader/VHeader.vue'
+import VModalTarget from '~/components/VModal/VModalTarget.vue'
 
 import { useContext } from '@nuxtjs/composition-api'
 import TranslationStatusBanner from '~/components/TranslationStatusBanner.vue'
 
 const embeddedPage = {
   name: 'embedded',
-  components: { VHeader, TranslationStatusBanner },
+  components: { VHeader, TranslationStatusBanner, VModalTarget },
   layout: 'embedded',
   mixins: [iframeHeight],
   head() {
