@@ -1,12 +1,16 @@
 <template>
-  <div class="app">
+  <div class="app grid h-screen overflow-hidden">
     <MigrationNotice v-show="isReferredFromCc" />
     <TranslationStatusBanner />
     <VHeader />
     <main
       ref="mainRef"
-      class="main embedded"
-      :class="{ 'has-sidebar': isSidebarVisible }"
+      class="main embedded overflow-x-hidden"
+      :class="{
+        'has-sidebar': isSidebarVisible,
+        'mt-[81px]': !(!isHeaderScrolled && !isMinScreenMd),
+        'mt-[145px]': !isHeaderScrolled && !isMinScreenMd,
+      }"
     >
       <Nuxt ref="mainContentRef" class="min-w-0 main-page" />
       <VSidebarTarget class="sidebar" />
@@ -39,8 +43,9 @@ import VSidebarTarget from '~/components/VModal/VSidebarTarget.vue'
 const embeddedPage = {
   name: 'embedded',
   components: {
-    VHeader,
+    MigrationNotice,
     TranslationStatusBanner,
+    VHeader,
     VModalTarget,
     VSidebarTarget,
   },
@@ -56,16 +61,18 @@ const embeddedPage = {
     const isReferredFromCc = store.state[NAV].isReferredFromCc
 
     const { isVisible: isFilterVisible } = useFilterSidebarVisibility()
-    const isMdScreen = isMinScreen('md')
+    const isMinScreenMd = isMinScreen('md')
     const { matches: isSearchRoute } = useMatchSearchRoutes()
 
     const isSidebarVisible = computed(
-      () => isSearchRoute.value && isMdScreen.value && isFilterVisible.value
+      () => isSearchRoute.value && isMinScreenMd.value && isFilterVisible.value
     )
 
     const isHeaderScrolled = ref(false)
-    const { isScrolled: isMainContentScrolled } = useScroll(mainContentRef)
-    const { isScrolled: isMainScrolled } = useScroll(mainRef)
+    const scrollY = ref(0)
+    const { isScrolled: isMainContentScrolled, y: mainContentY } =
+      useScroll(mainContentRef)
+    const { isScrolled: isMainScrolled, y: mainY } = useScroll(mainRef)
     watch(
       [isMainContentScrolled, isMainScrolled],
       ([isMainContentScrolled, isMainScrolled]) => {
@@ -74,8 +81,16 @@ const embeddedPage = {
           : isMainScrolled
       }
     )
+    watch([mainContentY, mainY], ([mainContentY, mainY]) => {
+      scrollY.value = isSidebarVisible.value ? mainContentY : mainY
+    })
+    const showScrollButton = computed(() => scrollY.value > 70)
+
     provide('isHeaderScrolled', isHeaderScrolled)
+    provide('showScrollButton', showScrollButton)
     return {
+      isHeaderScrolled,
+      isMinScreenMd,
       isReferredFromCc,
       isSidebarVisible,
       mainContentRef,
@@ -87,15 +102,7 @@ export default embeddedPage
 </script>
 <style lang="scss" scoped>
 .app {
-  display: grid;
   grid-template-rows: auto 1fr;
-  height: 100vh;
-  overflow: hidden;
-  --header-height: 81px;
-}
-.main {
-  margin-top: var(--header-height);
-  overflow-x: hidden;
 }
 
 .main:not(.has-sidebar) {
@@ -142,7 +149,7 @@ export default embeddedPage
 }
 .main-page::-webkit-scrollbar-thumb {
   background-color: #6f6e6e;
-  border-radius: 4px;
+  border-radius: 0.25rem;
 }
 .main::-webkit-scrollbar {
   background-color: white;
@@ -153,7 +160,7 @@ export default embeddedPage
 }
 .main::-webkit-scrollbar-thumb {
   background-color: #6f6e6e;
-  border-radius: 4px;
+  border-radius: 0.25rem;
 }
 .sidebar::-webkit-scrollbar {
   background-color: #f3f2f2;
@@ -161,7 +168,7 @@ export default embeddedPage
 }
 .sidebar::-webkit-scrollbar-thumb {
   background-color: #6f6e6e;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   color: #3e58e1;
 }
 </style>

@@ -1,8 +1,9 @@
 <template>
-  <div ref="nodeRef">
+  <div ref="nodeRef" class="flex justify-end items-stretch">
     <VFilterButton
       v-show="isMinScreenMd || (!isMinScreenMd && !visibleRef && !hideButtons)"
       ref="buttonRef"
+      class="self-stretch"
       :pressed="visibleRef"
       v-bind="triggerA11yProps"
       @toggle="onTriggerClick"
@@ -29,8 +30,8 @@ import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-vis
 import VTeleport from '~/components/VTeleport/VTeleport.vue'
 import VFilterButton from '~/components/VHeader/VFilterButton.vue'
 import VSearchGridFilter from '~/components/VFilters/VSearchGridFilter.vue'
-import VModalContent from '~/components/VModal/VModalContent.vue'
 import VSidebarContent from '~/components/VHeader/VSidebarContent.vue'
+import VMobileModalContent from '@/components/VModal/VMobileModalContent'
 
 export default {
   name: 'VHeaderFilter',
@@ -38,7 +39,7 @@ export default {
     VFilterButton,
     VSearchGridFilter,
     VSidebarContent,
-    VModalContent,
+    VMobileModalContent,
     VTeleport,
   },
   props: {
@@ -73,7 +74,7 @@ export default {
     const isHeaderScrolled = inject('isHeaderScrolled')
 
     /** @type { import('@nuxtjs/composition-api').Ref<import('@nuxtjs/composition-api').Component> } */
-    const filterComponent = ref(VModalContent)
+    const filterComponent = ref(VMobileModalContent)
 
     const triggerA11yProps = reactive({
       'aria-expanded': false,
@@ -137,7 +138,7 @@ export default {
           filterComponent.value = VSidebarContent
           options.value = desktopOptions
         } else {
-          filterComponent.value = VModalContent
+          filterComponent.value = VMobileModalContent
           options.value = mobileOptions
         }
       },

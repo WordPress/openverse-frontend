@@ -1,8 +1,8 @@
 <template>
-  <div class="flex flex-row items-center flex-grow justify-between">
+  <div class="flex flex-row items-stretch flex-grow justify-between">
     <VPopover
       ref="pageMenuPopover"
-      class="mx-4"
+      class="flex mx-4 items-stretch"
       :label="$t('header.aria.menu')"
     >
       <template #trigger="{ a11yProps }">
@@ -12,7 +12,7 @@
     </VPopover>
     <VPopover
       ref="contentMenuPopover"
-      class="mx-4"
+      class="flex mx-4 items-stretch"
       :label="$t('search-type.label')"
     >
       <template #trigger="{ a11yProps }">

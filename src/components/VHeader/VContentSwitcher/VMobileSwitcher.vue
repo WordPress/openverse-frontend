@@ -3,6 +3,7 @@
     ref="modalRef"
     :label="$t('header.filter-button.simple')"
     mode="full"
+    class="flex justify-center"
     @open="$emit('open')"
     @close="$emit('close')"
   >

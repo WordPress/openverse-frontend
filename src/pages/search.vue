@@ -1,29 +1,26 @@
 <template>
-  <div class="browse-page flex flex-row">
-    <div class="main-content w-full search-grid-ctr">
-      <VFilterDisplay v-show="shouldShowFilterTags" />
-      <VSearchGrid
-        :fetch-state="fetchState"
-        :query="query"
-        :supported="supported"
-        :search-type="searchType"
-        :results-count="resultsCount"
-        data-testid="search-grid"
-      >
-        <template #media>
-          <NuxtChild
-            :key="$route.path"
-            :media-results="results"
-            :fetch-state="fetchState"
-            :is-filter-visible="isVisible"
-            :search-term="query.q"
-            :supported="supported"
-            data-testid="search-results"
-          />
-        </template>
-      </VSearchGrid>
-      <VScrollButton v-show="showScrollButton" data-testid="scroll-button" />
-    </div>
+  <div class="browse-page flex flex-col w-full search-grid-ctr">
+    <VSearchGrid
+      :fetch-state="fetchState"
+      :query="query"
+      :supported="supported"
+      :search-type="searchType"
+      :results-count="resultsCount"
+      data-testid="search-grid"
+    >
+      <template #media>
+        <NuxtChild
+          :key="$route.path"
+          :media-results="results"
+          :fetch-state="fetchState"
+          :is-filter-visible="isVisible"
+          :search-term="query.q"
+          :supported="supported"
+          data-testid="search-results"
+        />
+      </template>
+    </VSearchGrid>
+    <VScrollButton v-show="showScrollButton" data-testid="scroll-button" />
   </div>
 </template>
 
@@ -38,13 +35,14 @@ import { queryStringToSearchType } from '~/utils/search-query-transform'
 import { ALL_MEDIA, AUDIO, IMAGE } from '~/constants/media'
 import { mapActions, mapGetters, mapState } from 'vuex'
 import { MEDIA, SEARCH } from '~/constants/store-modules'
-import debounce from 'lodash.debounce'
 
+import { isMinScreen } from '~/composables/use-media-query.js'
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
 
 import VScrollButton from '~/components/VScrollButton.vue'
 import VSearchGrid from '~/components/VSearchGrid.vue'
 import VFilterDisplay from '~/components/VFilters/VFilterDisplay.vue'
+import { inject } from '@nuxtjs/composition-api'
 
 const BrowsePage = {
   name: 'browse-page',
@@ -55,10 +53,14 @@ const BrowsePage = {
     VSearchGrid,
   },
   setup() {
+    const isMinScreenMd = isMinScreen('md')
     const { isVisible } = useFilterSidebarVisibility()
+    const showScrollButton = inject('showScrollButton')
 
     return {
+      isMinScreenMd,
       isVisible,
+      showScrollButton,
     }
   },
   scrollToTop: false,
@@ -71,9 +73,6 @@ const BrowsePage = {
       await this.fetchMedia({})
     }
   },
-  data: () => ({
-    showScrollButton: false,
-  }),
   async asyncData({ route, store }) {
     if (process.server) {
       await store.dispatch(`${SEARCH}/${SET_SEARCH_STATE_FROM_URL}`, {
@@ -82,15 +81,6 @@ const BrowsePage = {
       })
     }
   },
-  async created() {
-    this.debounceScrollHandling = debounce(this.checkScrollLength, 100)
-  },
-  mounted() {
-    window.addEventListener('scroll', this.debounceScrollHandling)
-  },
-  beforeDestroy() {
-    window.removeEventListener('scroll', this.debounceScrollHandling)
-  },
   computed: {
     ...mapState(SEARCH, ['query', 'searchType']),
     ...mapGetters(SEARCH, ['searchQueryParams', 'isAnyFilterApplied']),
@@ -98,12 +88,6 @@ const BrowsePage = {
     mediaType() {
       // Default to IMAGE until media search/index is generalized
       return this.searchType !== ALL_MEDIA ? this.searchType : IMAGE
-    },
-    shouldShowFilterTags() {
-      return (
-        ['/search/', '/search/image'].includes(this.$route.path) &&
-        this.isAnyFilterApplied
-      )
     },
     /**
      * Number of search results. Returns 0 for unsupported types.
@@ -136,22 +120,18 @@ const BrowsePage = {
     onSearchFormSubmit({ q }) {
       this.updateQuery({ q })
     },
-    checkScrollLength() {
-      this.showScrollButton = window.scrollY > 70
-    },
   },
   watch: {
     query: {
       deep: true,
-      handler(query) {
-        const typePath = this.searchType === 'all' ? '' : this.searchType
+      handler() {
         const newPath = this.localePath({
-          path: `/search/${typePath}/`,
+          path: this.$route.path,
           query: this.searchQueryParams,
         })
         this.$router.push(newPath)
         if (this.supported) {
-          this.getMediaItems(query)
+          this.getMediaItems(this.query)
         }
       },
     },

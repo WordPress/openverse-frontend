@@ -22,7 +22,7 @@
   </VItemGroup>
 </template>
 <script>
-import { inject, useContext, useRoute } from '@nuxtjs/composition-api'
+import { useContext, useRoute } from '@nuxtjs/composition-api'
 import useContentType from '~/composables/use-content-type'
 
 import checkIcon from '~/assets/icons/checkmark.svg'
@@ -30,6 +30,7 @@ import checkIcon from '~/assets/icons/checkmark.svg'
 import VIcon from '~/components/VIcon/VIcon.vue'
 import VItem from '~/components/VItemGroup/VItem.vue'
 import VItemGroup from '~/components/VItemGroup/VItemGroup.vue'
+import { isMinScreen } from '@/composables/use-media-query'
 
 export default {
   name: 'VContentTypePopover',
@@ -43,8 +44,8 @@ export default {
   setup(_, { emit }) {
     const content = useContentType()
     const { app } = useContext()
-    const { route } = useRoute()
-    const isMinScreenMd = inject('isMinScreenMd')
+    const route = useRoute()
+    const isMinScreenMd = isMinScreen('md')
     const handleClick = (item) => {
       emit('click', item)
     }

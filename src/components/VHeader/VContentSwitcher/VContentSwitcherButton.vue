@@ -1,7 +1,8 @@
 <template>
   <VButton
-    class="flex flex-row font-semibold"
+    class="flex flex-row font-semibold px-3 py-2"
     :variant="buttonVariant"
+    size="disabled"
     :aria-label="buttonLabel"
     v-bind="a11yProps"
     @click="$emit('click')"
@@ -15,6 +16,7 @@
     >
     <VIcon
       v-show="isMinScreenMd"
+      class="text-dark-charcoal-40"
       :class="{ 'ms-2': isMinScreenMd }"
       :icon-path="caretDownIcon"
     />
@@ -53,7 +55,7 @@ export default {
   },
   setup(props) {
     const { app, i18n } = useContext()
-    const { route } = useRoute()
+    const route = useRoute()
     const isHeaderScrolled = inject('isHeaderScrolled')
     const isMinScreenMd = inject('isMinScreenMd')
 

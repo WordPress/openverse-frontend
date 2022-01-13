@@ -1,6 +1,6 @@
 <template>
   <header
-    class="fixed top-0 flex py-4 px-4 md:px-7 items-center justify-between z-40 w-full bg-white gap-x-2"
+    class="fixed top-0 flex py-4 px-4 md:px-7 items-center justify-between items-stretch z-40 w-full bg-white gap-x-2"
     :class="{
       'border-b border-white': !isHeaderScrolled && !isMenuOpen,
       'border-b border-dark-charcoal-20':
@@ -10,9 +10,9 @@
   >
     <NuxtLink
       to="/"
-      class="rounded-sm ring-offset-1 focus:outline-none focus-visible:ring focus-visible:ring-pink -ms-2 inline-flex items-center hover:bg-yellow"
+      class="one-third rounded-sm ring-offset-1 focus:outline-none focus-visible:ring focus-visible:ring-pink -ms-2 inline-flex items-center hover:bg-yellow"
       :class="{
-        'pe-3': !isHeaderScrolled || !isSearchRoute,
+        // 'pe-3': !isHeaderScrolled || !isSearchRoute,
         'md:px-0': isSearchRoute,
       }"
     >
@@ -46,12 +46,14 @@
 
     <VContentSwitcher
       v-if="isSearchRoute"
+      class="one-third"
       :hide-buttons="showCloseButton"
       @open="openMenuModal(menus.CONTENT_SWITCHER)"
       @close="close()"
     />
     <VHeaderFilter
       v-if="isSearchRoute"
+      class="one-third"
       :hide-buttons="showCloseButton"
       @open="openMenuModal(menus.FILTERS)"
       @close="close()"
@@ -280,3 +282,11 @@ const VHeader = defineComponent({
 
 export default VHeader
 </script>
+<style scoped>
+@media (max-width: 767px) {
+  .one-third {
+    flex-grow: 1;
+    flex-shrink: 0;
+  }
+}
+</style>
