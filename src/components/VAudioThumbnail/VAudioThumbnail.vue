@@ -38,7 +38,7 @@ import { ref } from '@nuxtjs/composition-api'
  * Displays the cover art for the audio in a square aspect ratio.
  */
 export default {
-  name: 'AudioThumbnail',
+  name: 'VAudioThumbnail',
   props: {
     /**
      * the details of the audio whose artwork is to be shown; The properties
