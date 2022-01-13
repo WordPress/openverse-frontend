@@ -228,11 +228,11 @@ export const getters = {
    * Returns the search result data related for selected media.
    * @param {import('./types').MediaState} state
    * @param getters
-   * @param rootState
    * @return {import('./types').MediaStoreResult}
    */
-  results(state, getters, rootState) {
-    return state.results[rootState.search.query.mediaType] || null
+  results(state, getters) {
+    const mediaType = getters.mediaType
+    return mediaType ? state.results[mediaType] : {}
   },
   /**
    * Search fetching state for selected media type.
@@ -261,7 +261,7 @@ export const getters = {
    * @returns {boolean}
    */
   unsupportedMediaType(state, getters, rootState) {
-    const mediaType = rootState.search.query.mediaType
+    const mediaType = rootState.search.searchType
     return (
       mediaType === VIDEO || (mediaType === AUDIO && !process.env.enableAudio)
     )
