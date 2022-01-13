@@ -8,8 +8,8 @@
       class="main embedded overflow-x-hidden"
       :class="{
         'has-sidebar': isSidebarVisible,
-        'mt-[81px]': !(!isHeaderScrolled && !isMinScreenMd),
-        'mt-[145px]': !isHeaderScrolled && !isMinScreenMd,
+        'mt-[81px]': !headerHasTwoRows,
+        'mt-[145px]': headerHasTwoRows,
       }"
     >
       <Nuxt ref="mainContentRef" class="min-w-0 main-page" />
@@ -88,11 +88,16 @@ const embeddedPage = {
 
     provide('isHeaderScrolled', isHeaderScrolled)
     provide('showScrollButton', showScrollButton)
+    const headerHasTwoRows = computed(
+      () => isSearchRoute && !isHeaderScrolled && !isMinScreenMd
+    )
     return {
       isHeaderScrolled,
       isMinScreenMd,
       isReferredFromCc,
       isSidebarVisible,
+      isSearchRoute,
+      headerHasTwoRows,
       mainContentRef,
       mainRef,
     }

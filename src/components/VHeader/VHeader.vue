@@ -1,11 +1,13 @@
 <template>
   <header
-    class="fixed top-0 flex py-4 px-4 md:px-7 items-center justify-between items-stretch z-40 w-full bg-white gap-x-2"
+    class="fixed top-0 flex py-4 px-4 md:px-7 items-stretch z-40 w-full bg-white gap-x-2"
     :class="{
       'border-b border-white': !isHeaderScrolled && !isMenuOpen,
       'border-b border-dark-charcoal-20':
         isSearchRoute && (isHeaderScrolled || isMenuOpen),
       'flex-wrap gap-y-4': !isMinScreenMd && !isHeaderScrolled,
+      'justify-between': isSearchRoute,
+      'justify-start': !isSearchRoute,
     }"
   >
     <div class="one-third items-stretch flex">
@@ -15,11 +17,12 @@
         :class="{
           'pe-3': !isHeaderScrolled || !isSearchRoute,
           'md:px-0': isSearchRoute,
+          'me-10 lg:me-30': !isSearchRoute,
         }"
       >
         <VLogoLoader :status="isFetching ? 'loading' : 'idle'" />
         <OpenverseLogoText
-          v-if="!isHeaderScrolled"
+          v-if="!isSearchRoute || (isSearchRoute && !isHeaderScrolled)"
           class="-ml-1 mt-1"
           :class="{ 'md:hidden': isSearchRoute }"
           width="95"
@@ -29,11 +32,13 @@
     </div>
 
     <VSearchBar
-      v-show="!isHomeRoute && !showCloseButton"
+      v-show="!isHomeRoute"
       v-model.trim="searchTerm"
-      class="mx-auto md:ms-0 md:me-auto lg:w-1/2 2xl:w-1/3"
+      class="md:ms-0 lg:w-1/2 2xl:w-1/3"
       :class="{
-        'order-4 w-full md:order-none md:w-auto': !isHeaderScrolled,
+        'order-4 md:order-none w-full md:w-auto':
+          isSearchRoute && !isHeaderScrolled,
+        'mx-auto md:me-auto': isSearchRoute,
         'w-2/3': isHeaderScrolled,
       }"
       @submit="handleSearch"
@@ -45,6 +50,8 @@
         {{ searchStatus }}
       </span>
     </VSearchBar>
+
+    <VPageMenu v-if="!isSearchRoute" />
 
     <VContentSwitcher
       v-if="isSearchRoute"
@@ -91,6 +98,7 @@ import VContentSwitcher from '~/components/VHeader/VContentSwitcher.vue'
 import VHeaderFilter from '~/components/VHeader/VHeaderFilter.vue'
 import VLogoLoader from '~/components/VLogoLoader/VLogoLoader.vue'
 import VSearchBar from '~/components/VHeader/VSearchBar/VSearchBar.vue'
+import VPageMenu from '~/components/VHeader/VPageMenu.vue'
 
 const i18nKeys = {
   [AUDIO]: {
@@ -117,6 +125,7 @@ const VHeader = defineComponent({
     VLogoLoader,
     VSearchBar,
     OpenverseLogoText,
+    VPageMenu,
   },
   setup() {
     const { app, i18n, store } = useContext()
@@ -198,18 +207,22 @@ const VHeader = defineComponent({
     const setInitialStatus = () => {
       if (!isMinScreenMd.value) return ''
       if (isFetching.value) return i18n.t('header.loading')
-      return store.state.search.query.q === ''
-        ? ''
-        : mediaCount(resultsCount.value)
+      if (store.state.search.query.q === '') return ''
+      if (!isSearchRoute.value) return ''
+      return mediaCount(resultsCount.value)
     }
 
     const searchStatus = ref(setInitialStatus())
 
     watchEffect(() => {
       if (isMinScreenMd.value) {
-        searchStatus.value = isFetching.value
-          ? i18n.t('header.loading')
-          : mediaCount(resultsCount.value)
+        if (isFetching.value) {
+          searchStatus.value = i18n.t('header.loading')
+        } else if (!isSearchRoute.value) {
+          searchStatus.value = ''
+        } else {
+          searchStatus.value = mediaCount(resultsCount.value)
+        }
       } else {
         searchStatus.value = ''
       }
@@ -223,14 +236,11 @@ const VHeader = defineComponent({
       },
     })
 
-    watch(
-      () => store.state.search.query.q,
-      (newSearchTerm) => {
-        if (newSearchTerm !== localSearchTerm.value) {
-          localSearchTerm.value = newSearchTerm
-        }
+    watch([store.state.search.query], ([newQuery]) => {
+      if (newQuery !== localSearchTerm.value) {
+        localSearchTerm.value = newQuery
       }
-    )
+    })
 
     const handleSearch = async () => {
       // Don't do anything if search term hasn't changed

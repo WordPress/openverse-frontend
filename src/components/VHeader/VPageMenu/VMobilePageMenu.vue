@@ -6,7 +6,7 @@
       @click="onTriggerClick"
     >
       <slot
-        name="content-switcher-button"
+        name="page-switcher-button"
         :a11y-props="triggerA11yProps"
         :visible="visibleRef"
       />
@@ -22,7 +22,6 @@
       :aria-label="$t('header.filter-button.simple')"
     >
       <nav class="p-4">
-        <slot name="content-switcher-content" />
         <slot name="page-switcher-content" />
       </nav>
     </VMobileModalContent>
@@ -36,7 +35,7 @@ import VMobileModalContent from '@/components/VModal/VMobileModalContent'
 import { useBodyScrollLock } from '@/composables/use-body-scroll-lock'
 
 export default {
-  name: 'VMobileSwitcher',
+  name: 'VMobilePageMenu',
   components: { VMobileModalContent },
   props: {
     /**

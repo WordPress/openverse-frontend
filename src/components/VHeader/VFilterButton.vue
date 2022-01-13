@@ -2,6 +2,10 @@
   <VButton
     :variant="variant"
     class="self-center gap-2 align-center font-semibold"
+    :class="{
+      'w-12': isHeaderScrolled && !isMinScreenMd,
+      'flex-shrink-0': isMinScreenMd,
+    }"
     :pressed="pressed"
     aria-controls="filter-sidebar"
     :aria-label="label"
@@ -99,10 +103,7 @@ const VFilterButton = defineComponent({
 
     // Hide the label entirely when no filters are applied on mobile.
     const showLabel = computed(() => {
-      if (!isMinScreenMd.value && !filtersAreApplied.value) {
-        return false
-      }
-      return true
+      return !(!isMinScreenMd.value && !filtersAreApplied.value)
     })
 
     return {
@@ -115,6 +116,8 @@ const VFilterButton = defineComponent({
         emit('toggle')
       },
       variant,
+      isMinScreenMd,
+      isHeaderScrolled,
     }
   },
 })

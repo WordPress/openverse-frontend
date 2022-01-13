@@ -1,6 +1,7 @@
 <template>
   <VButton
     class="flex flex-row font-semibold px-3 py-2"
+    :class="{ 'w-12': isHeaderScrolled && !isMinScreenMd }"
     :variant="buttonVariant"
     size="disabled"
     :aria-label="buttonLabel"
@@ -97,6 +98,7 @@ export default {
       buttonLabel,
       caretDownIcon,
       showLabel,
+      isHeaderScrolled,
       isMinScreenMd,
       nuxtLinkProps,
     }
