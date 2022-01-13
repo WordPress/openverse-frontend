@@ -157,7 +157,7 @@
 </template>
 
 <script>
-import { computed, ref, useContext } from '@nuxtjs/composition-api'
+import { computed, ref, useContext, useRouter } from '@nuxtjs/composition-api'
 
 import { USAGE_DATA } from '~/constants/store-modules'
 import {
@@ -200,7 +200,8 @@ export default {
     'thumbnail',
   ],
   setup(props, { emit }) {
-    const { router, store } = useContext()
+    const { store } = useContext()
+    const router = useRouter()
     const sketchFabfailure = ref(false)
     const activeTab = ref(0)
     const isReportFormVisible = ref(false)
@@ -234,7 +235,9 @@ export default {
       () => `${props.image.license_url}?ref=openverse`
     )
 
-    const goBackToSearchResults = () => router.back()
+    const goBackToSearchResults = () => {
+      router.back()
+    }
     const onImageLoad = (event) => emit('onImageLoaded', event)
 
     const tabClass = (tabIdx, tabClass) => {
