@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-01-24T13:49:13+00:00\n"
+"POT-Creation-Date: 2022-01-21T16:01:26+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -348,6 +348,69 @@ msgctxt "audio-details.table.genre"
 msgid "Genre"
 msgstr ""
 
+#: src/pages/image/new/_id.vue:4
+msgctxt "image-details.back"
+msgid "Back to search results"
+msgstr ""
+
+#. Do not translate words between ### ###.
+#: src/pages/image/new/_id.vue:24
+msgctxt "image-details.creator"
+msgid "by ###name###"
+msgstr ""
+
+#: src/pages/image/new/_id.vue:18
+msgctxt "image-details.weblink"
+msgid "Go to image's website"
+msgstr ""
+
+#: src/components/ImageDetails/VRelatedImages.vue:4
+msgctxt "image-details.related-images"
+msgid "Related images"
+msgstr ""
+
+#. Do not translate words between ### ###.
+msgctxt "image-details.aria.creator-url"
+msgid "Author ###creator###"
+msgstr ""
+
+#: src/components/VImageDetails/VImageDetails.vue:9
+msgctxt "image-details.report.short"
+msgid "Report"
+msgstr ""
+
+msgctxt "image-details.report.large"
+msgid "Report this content"
+msgstr ""
+
+#: src/components/VImageDetails/VImageDetails.vue:5
+msgctxt "image-details.information.title"
+msgid "Image information"
+msgstr ""
+
+#: src/components/VImageDetails/VImageDetails.vue:14
+msgctxt "image-details.information.type"
+msgid "Type"
+msgstr ""
+
+msgctxt "image-details.information.provider"
+msgid "Provider"
+msgstr ""
+
+#: src/components/VImageDetails/VImageDetails.vue:22
+msgctxt "image-details.information.dimensions"
+msgid "Dimensions"
+msgstr ""
+
+#: src/components/VImageDetails/VImageDetails.vue:18
+msgctxt "image-details.information.source"
+msgid "Source"
+msgstr ""
+
+msgctxt "image-details.information.pixels"
+msgid "pixels"
+msgstr ""
+
 #: src/components/ImageDetails/VPhotoDetails.vue:11
 msgctxt "photo-details.back"
 msgid "Back to search results"
@@ -417,6 +480,10 @@ msgstr ""
 
 msgctxt "photo-details.aria.attribution.tool"
 msgid "read more about the tool"
+msgstr ""
+
+msgctxt "photo-details.content-report.report"
+msgid "Report"
 msgstr ""
 
 #: src/components/ImageDetails/VPhotoDetails.vue:38
@@ -587,6 +654,23 @@ msgstr ""
 #: src/components/AudioDetails/VRelatedAudio.vue:18
 msgctxt "media-details.related-error"
 msgid "Error fetching related media"
+msgstr ""
+
+msgctxt "media-details.image-info"
+msgid "Image information"
+msgstr ""
+
+msgctxt "media-details.audio-info"
+msgid "Audio information"
+msgstr ""
+
+#: src/components/MediaInfo/VMediaInfo.vue:6
+msgctxt "media-details.content-report.report"
+msgid "Report"
+msgstr ""
+
+msgctxt "media-details.content-report.title"
+msgid "Report this content"
 msgstr ""
 
 #: src/components/MediaInfo/MediaLicense.vue:32

@@ -525,6 +525,12 @@
         "license": "read more about the license",
         "tool": "read more about the tool"
       }
+    },
+    "image-info": "Image information",
+    "audio-info": "Audio information",
+    "content-report": {
+      "report": "Report",
+      "title": "Report this content"
     }
   },
   "photo-details": {
@@ -556,6 +562,7 @@
       "copied": "Copied!"
     },
     "content-report": {
+      "report": "Report",
       "title": "Report this content",
       "issue": "What's the issue?",
       "issue-description": "Please describe the issue for us",
@@ -590,6 +597,27 @@
       "related": "related images",
       "provider-report-form": "{provider} form",
       "creator-url": "author {creator}"
+    }
+  },
+  "image-details": {
+    "back": "Back to search results",
+    "creator": "by {name}",
+    "weblink": "Go to image's website",
+    "information": {
+      "title": "Image information",
+      "type": "Type",
+      "provider": "Provider",
+      "dimensions": "Dimensions",
+      "source": "Source",
+      "pixels": "pixels"
+    },
+    "report": {
+      "short": "Report",
+      "large": "Report this content"
+    },
+    "related-images": "Related images",
+    "aria": {
+      "creator-url": "Author {creator}"
     }
   },
   "audio-details": {
