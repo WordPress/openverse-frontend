@@ -7,9 +7,9 @@ const isVisible = ref(false)
 
 /**
  * This composable keeps track of whether the filters (sidebar or modal) should be visible.
- * @param {import('@nuxtjs/composition-api').Ref<boolean>} [mediaQuery] - the minimum media query at which
+ * @param {object} props
+ * @param {import('@nuxtjs/composition-api').Ref<boolean>} [props.mediaQuery=isMinScreen('md')] - the minimum media query at which
  * the filters are shown as sidebar instead of the full-page modal.
- * @default isMinScreen('md')
  * @returns {{isVisible: import('@nuxtjs/composition-api').Ref<boolean>, setVisibility: (val: boolean) => void}}
  */
 export function useFilterSidebarVisibility({ mediaQuery } = {}) {
