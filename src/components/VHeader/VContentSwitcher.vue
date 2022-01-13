@@ -13,14 +13,17 @@
     </template>
     <template #content-switcher-button="{ a11yProps }">
       <VContentSwitcherButton
-        v-show="!hideButtons"
         :icon="icons[content.activeType.value]"
         :active-item="content.activeType.value"
         :a11y-props="a11yProps"
       />
     </template>
     <template #content-switcher-content>
-      <VContentTypePopover :icons="icons" @click="handleContentTypeClick" />
+      <VContentTypePopover
+        :icons="icons"
+        @click="handleContentTypeClick"
+        @select="handleContentTypeSelected"
+      />
     </template>
   </Component>
 </template>
@@ -59,7 +62,6 @@ export default {
   },
   props: {
     openMenu: {},
-    hideButtons: {},
   },
   setup() {
     /** @type {import('@nuxtjs/composition-api').Ref<boolean>} */
@@ -94,7 +96,12 @@ export default {
       content.setActiveType(val)
       menuModalRef.value?.closeMenu()
     }
-
+    const handleContentTypeSelected = (val) => {
+      if (val) {
+        content.setActiveType(val)
+      }
+      menuModalRef.value?.closeMenu()
+    }
     return {
       icons,
       isHeaderScrolled,
@@ -104,6 +111,7 @@ export default {
       content,
 
       handleContentTypeClick,
+      handleContentTypeSelected,
       menuModalRef,
     }
   },

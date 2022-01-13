@@ -6,43 +6,29 @@
         <div
           ref="dialogRef"
           v-bind="$attrs"
-          class="flex flex-col"
-          :class="mode === 'mobile' ? 'w-full' : 'w-4/5'"
+          class="flex flex-col w-full"
           role="dialog"
           aria-modal="true"
           v-on="$listeners"
           @keydown="onKeyDown"
           @blur="onBlur"
         >
-          <!-- For mobile modal, the height should be the same  as the header height -->
-          <div
-            class="w-full flex justify-end"
-            :class="{ 'h-20 px-6 py-6 shrink-0': mode === 'mobile' }"
-          >
+          <div class="w-full flex justify-between h-20 px-6 py-6 shrink-0">
             <NuxtLink
               to="/"
-              class="one-third rounded-sm ring-offset-1 focus:outline-none focus-visible:ring focus-visible:ring-pink -ms-2 inline-flex items-center hover:bg-yellow"
+              class="rounded-sm ring-offset-1 focus:outline-none focus-visible:ring focus-visible:ring-pink -ms-2 inline-flex items-center hover:bg-yellow"
             >
-              <OpenverseLogoText
-                v-if="!isHeaderScrolled"
-                class="-ml-1 mt-1"
-                :class="{ 'md:hidden': isSearchRoute }"
-                width="95"
-                height="15"
-              />
+              <VLogoLoader />
+              <OpenverseLogoText class="-ml-1 mt-1" width="95" height="15" />
             </NuxtLink>
             <VButton
               size="disabled"
               variant="plain"
               class="py-2 px-4"
-              :class="{ 'text-white': mode === 'desktop' }"
               @click="hide()"
             >
               {{ $t('modal.close') }}
-              <VIcon
-                :icon-path="closeIcon"
-                :class="{ 'ms-2': mode === 'mobile' }"
-              />
+              <VIcon :icon-path="closeIcon" class="ms-2" />
             </VButton>
           </div>
 
@@ -69,22 +55,25 @@ import OpenverseLogoText from '~/assets/icons/openverse-logo-text.svg?inline'
 import VTeleport from '~/components/VTeleport/VTeleport.vue'
 import VButton from '~/components/VButton.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'
+import VLogoLoader from '~/components/VLogoLoader/VLogoLoader.vue'
 
 /**
  * Renders the inner content of a modal and manages focus.
  */
 const VMobileModalContent = defineComponent({
-  name: 'VModalContent',
-  components: { OpenverseLogoText, VTeleport, VButton, VIcon, FocusTrap },
+  name: 'VMobileModalContent',
+  components: {
+    OpenverseLogoText,
+    VLogoLoader,
+    VTeleport,
+    VButton,
+    VIcon,
+    FocusTrap,
+  },
   props: {
     visible: {
       type: Boolean,
       required: true,
-    },
-    mode: {
-      type: String,
-      default: 'desktop',
-      validator: (val) => ['desktop', 'mobile'].includes(val),
     },
     hide: {
       type: /** @type {import('@nuxtjs/composition-api').PropType<() => void>} */ (
@@ -142,9 +131,6 @@ export default VMobileModalContent
 
 <style module>
 .overlay {
-  @apply flex justify-center z-50 fixed inset-0 min-h-screen;
-}
-.overlay-mobile {
-  background: white;
+  @apply flex justify-center z-50 fixed inset-0 min-h-screen bg-white;
 }
 </style>

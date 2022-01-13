@@ -1,7 +1,7 @@
 <template>
   <div ref="nodeRef" class="flex justify-end items-stretch">
     <VFilterButton
-      v-show="isMinScreenMd || (!isMinScreenMd && !visibleRef && !hideButtons)"
+      v-show="isMinScreenMd || (!isMinScreenMd && !visibleRef)"
       ref="buttonRef"
       class="self-stretch"
       :pressed="visibleRef"
@@ -41,12 +41,6 @@ export default {
     VSidebarContent,
     VMobileModalContent,
     VTeleport,
-  },
-  props: {
-    hideButtons: {
-      type: Boolean,
-      required: true,
-    },
   },
   emits: [
     /**

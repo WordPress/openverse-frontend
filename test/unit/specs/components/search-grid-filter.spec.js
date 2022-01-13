@@ -70,7 +70,12 @@ describe('SearchGridFilter', () => {
       localVue,
       mocks: {
         $store: storeMock,
-        $nuxt: { context: { i18n: { t: () => {} }, store: storeMock } },
+        $nuxt: {
+          context: {
+            i18n: { t: () => {} },
+            store: storeMock,
+          },
+        },
       },
       stubs: { VIcon: true },
     }

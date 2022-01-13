@@ -27,6 +27,8 @@
       @focus="isFocused = true"
       @blur="isFocused = false"
       @keydown="focusContext.onItemKeyPress"
+      @keydown.native="focusContext.onItemKeyPress"
+      @click.native="$emit('click')"
     >
       <div
         class="flex-grow whitespace-nowrap"

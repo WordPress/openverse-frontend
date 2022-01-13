@@ -8,23 +8,25 @@
       'flex-wrap gap-y-4': !isMinScreenMd && !isHeaderScrolled,
     }"
   >
-    <NuxtLink
-      to="/"
-      class="one-third rounded-sm ring-offset-1 focus:outline-none focus-visible:ring focus-visible:ring-pink -ms-2 inline-flex items-center hover:bg-yellow"
-      :class="{
-        // 'pe-3': !isHeaderScrolled || !isSearchRoute,
-        'md:px-0': isSearchRoute,
-      }"
-    >
-      <VLogoLoader :status="isFetching ? 'loading' : 'idle'" />
-      <OpenverseLogoText
-        v-if="!isHeaderScrolled"
-        class="-ml-1 mt-1"
-        :class="{ 'md:hidden': isSearchRoute }"
-        width="95"
-        height="15"
-      />
-    </NuxtLink>
+    <div class="one-third items-stretch flex">
+      <NuxtLink
+        to="/"
+        class="rounded-sm ring-offset-1 focus:outline-none focus-visible:ring focus-visible:ring-pink -ms-2 inline-flex items-center hover:bg-yellow"
+        :class="{
+          'pe-3': !isHeaderScrolled || !isSearchRoute,
+          'md:px-0': isSearchRoute,
+        }"
+      >
+        <VLogoLoader :status="isFetching ? 'loading' : 'idle'" />
+        <OpenverseLogoText
+          v-if="!isHeaderScrolled"
+          class="-ml-1 mt-1"
+          :class="{ 'md:hidden': isSearchRoute }"
+          width="95"
+          height="15"
+        />
+      </NuxtLink>
+    </div>
 
     <VSearchBar
       v-show="!isHomeRoute && !showCloseButton"
@@ -47,14 +49,12 @@
     <VContentSwitcher
       v-if="isSearchRoute"
       class="one-third"
-      :hide-buttons="showCloseButton"
       @open="openMenuModal(menus.CONTENT_SWITCHER)"
       @close="close()"
     />
     <VHeaderFilter
       v-if="isSearchRoute"
       class="one-third"
-      :hide-buttons="showCloseButton"
       @open="openMenuModal(menus.FILTERS)"
       @close="close()"
     />
