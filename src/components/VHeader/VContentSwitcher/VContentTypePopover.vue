@@ -8,9 +8,11 @@
     <VItem
       v-for="(item, idx) in content.types"
       :key="idx"
+      as="NuxtLink"
+      v-bind="linkProps(item)"
       :selected="item === content.activeType.value"
       :is-first="idx === 0"
-      @click="handleClick(item)"
+      @click.native="handleClick(item)"
     >
       <VIcon :icon-path="icons[item]" class="me-2 ms-4 my-4" />
       <span class="pe-20 py-4 font-semibold">{{
@@ -20,7 +22,7 @@
   </VItemGroup>
 </template>
 <script>
-import { inject } from '@nuxtjs/composition-api'
+import { inject, useContext } from '@nuxtjs/composition-api'
 import useContentType from '~/composables/use-content-type'
 
 import checkIcon from '~/assets/icons/checkmark.svg'
@@ -40,16 +42,25 @@ export default {
   },
   setup(_, { emit }) {
     const content = useContentType()
+    const { app, route } = useContext()
     const isMinScreenMd = inject('isMinScreenMd')
     const handleClick = (item) => {
       emit('click', item)
     }
-
+    const linkProps = (item) => {
+      const typePath = item === 'all' ? '' : item
+      const itemPath = app.localePath({
+        path: `/search/${typePath}`,
+        query: route.value.query,
+      })
+      return { to: itemPath }
+    }
     return {
       content,
       checkIcon,
       handleClick,
       isMinScreenMd,
+      linkProps,
     }
   },
 }
