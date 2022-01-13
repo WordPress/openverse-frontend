@@ -6,7 +6,7 @@
     :class="[
       $style.button,
       $style[variant],
-      pressed && $style[`${variant}-pressed`],
+      isActive && $style[`${variant}-pressed`],
       $style[`size-${size}`],
     ]"
     :aria-pressed="pressed"
@@ -23,7 +23,13 @@
 </template>
 
 <script>
-import { defineComponent, ref, watch, toRefs } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  ref,
+  watch,
+  toRefs,
+  computed,
+} from '@nuxtjs/composition-api'
 import { warn } from '~/utils/warn'
 
 /**
@@ -143,6 +149,13 @@ const VButton = defineComponent({
     const typeRef = ref(propsRef.type.value)
     const supportsDisabledAttributeRef = ref(true)
 
+    const isActive = computed(() => {
+      return (
+        propsRef.pressed.value ||
+        attrs['aria-pressed'] ||
+        attrs['aria-expanded']
+      )
+    })
     watch(
       [propsRef.disabled, propsRef.focusableWhenDisabled],
       ([disabled, focusableWhenDisabled]) => {
@@ -198,6 +211,7 @@ const VButton = defineComponent({
       disabledAttributeRef,
       ariaDisabledRef,
       typeRef,
+      isActive,
     }
   },
 })
@@ -234,8 +248,7 @@ a.button {
 .primary {
   @apply bg-pink text-white focus-visible:ring-pink hover:bg-dark-pink hover:text-white;
 }
-.primary[aria-expanded='true'],
-.primary[aria-pressed='true'],
+
 .primary-pressed {
   @apply bg-dark-pink;
 }
@@ -243,17 +256,15 @@ a.button {
 .secondary {
   @apply bg-dark-charcoal text-white font-bold focus-visible:ring-pink hover:bg-dark-charcoal-80 hover:text-white;
 }
-.secondary[aria-expanded='true'],
-.secondary[aria-pressed='true'],
+
 .secondary-pressed {
   @apply bg-dark-charcoal-80;
 }
 
 .tertiary {
-  @apply bg-white text-black border border-dark-charcoal-20 focus-visible:ring-pink ring-offset-0;
+  @apply bg-white text-black border border-dark-charcoal-20 focus-visible:border-tx focus-visible:ring-pink ring-offset-0;
 }
-.tertiary[aria-expanded='true'],
-.tertiary[aria-pressed='true'],
+
 .tertiary-pressed {
   @apply bg-dark-charcoal text-white border-tx;
 }
@@ -265,13 +276,11 @@ a.button {
 .action-menu-secondary {
   @apply bg-white text-black border border-tx hover:border-dark-charcoal-20 focus-visible:ring-pink;
 }
-.action-menu-secondary[aria-expanded='true'],
-.action-menu-secondary[aria-pressed='true'],
+
 .action-menu-secondary-pressed {
   @apply border-tx bg-dark-charcoal text-white;
 }
-.action-menu[aria-expanded='true'],
-.action-menu[aria-pressed='true'],
+
 .action-menu-pressed {
   @apply border-tx bg-dark-charcoal text-white;
 }
@@ -280,8 +289,6 @@ a.button {
   @apply bg-dark-charcoal-10 text-black border border-tx hover:border-dark-charcoal-20 focus-visible:ring-pink;
 }
 
-.action-menu-muted[aria-expanded='true'],
-.action-menu-muted[aria-pressed='true'],
 .action-menu-muted-pressed {
   @apply border-tx bg-dark-charcoal text-white focus-visible:ring-pink;
 }
