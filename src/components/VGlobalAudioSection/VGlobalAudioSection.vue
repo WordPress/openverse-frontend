@@ -14,6 +14,7 @@
     <!-- eslint-enable vuejs-accessibility/media-has-caption -->
 
     <VIconButton
+      v-if="audio"
       class="absolute top-0 end-0 border-none z-10"
       :icon-props="{ iconPath: icons.closeIcon }"
       @click="handleClose"
