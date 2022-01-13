@@ -73,9 +73,9 @@ describe('PhotoDetails', () => {
         $nuxt: {
           context: {
             route: routeMock,
-            router: routerMock,
             store: storeMock,
           },
+          router: routerMock,
         },
       },
       store: storeMock,
