@@ -90,6 +90,15 @@ export default defineComponent({
       validator: (val) => ['button', 'a', 'NuxtLink'].includes(val),
     },
   },
+  /**
+   * Setting `inheritAttrs` to false ensures that the $attrs are only passed to VButton component,
+   * and not the outer div. In Vue 3 this will also stops native events such as `click` from
+   * going up the tree. Adding `emits` should fix this:
+   * https://v3.vuejs.org/guide/migration/v-on-native-modifier-removed.html#_3-x-syntax
+   * However, with current Vue 2 setup, if VItem is a link (a or NuxtLink), it is
+   * necessary to add native modifier to handle click event: `@click.native='handler'`.
+   */
+  emits: ['click'],
   setup(props) {
     const focusContext = inject(VItemGroupFocusContextKey)
     const isFocused = ref(false)

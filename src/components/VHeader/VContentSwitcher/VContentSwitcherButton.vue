@@ -7,9 +7,12 @@
     @click="$emit('click')"
   >
     <VIcon :icon-path="icon" />
-    <span v-show="showLabel" :class="{ 'ms-2': showLabel }">{{
-      buttonLabel
-    }}</span>
+    <NuxtLink
+      v-show="showLabel"
+      v-bind="nuxtLinkProps"
+      :class="{ 'ms-2': showLabel }"
+      >{{ buttonLabel }}</NuxtLink
+    >
     <VIcon
       v-show="isMinScreenMd"
       :class="{ 'ms-2': isMinScreenMd }"
@@ -18,7 +21,13 @@
   </VButton>
 </template>
 <script>
-import { computed, inject, useContext } from '@nuxtjs/composition-api'
+import {
+  computed,
+  inject,
+  ref,
+  useContext,
+  watch,
+} from '@nuxtjs/composition-api'
 import caretDownIcon from '~/assets/icons/caret-down.svg'
 
 import VButton from '~/components/VButton.vue'
@@ -42,7 +51,7 @@ export default {
     },
   },
   setup(props) {
-    const { i18n } = useContext()
+    const { app, i18n, route } = useContext()
     const isHeaderScrolled = inject('isHeaderScrolled')
     const isMinScreenMd = inject('isMinScreenMd')
 
@@ -64,12 +73,27 @@ export default {
       () => isMinScreenMd.value || !isHeaderScrolled.value
     )
 
+    const localePath = (item, query) =>
+      app.localePath({ path: `/search/${item === 'all' ? '' : item}/`, query })
+
+    const nuxtLinkProps = ref({
+      'aria-current': 'page',
+      to: localePath(props.activeItem, route.value.query),
+    })
+    watch([route], ([route]) => {
+      nuxtLinkProps.value = {
+        'aria-current': 'page',
+        to: localePath(props.activeItem, route.query),
+      }
+    })
+
     return {
       buttonVariant,
       buttonLabel,
       caretDownIcon,
       showLabel,
       isMinScreenMd,
+      nuxtLinkProps,
     }
   },
 }
