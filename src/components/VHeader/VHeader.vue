@@ -1,6 +1,6 @@
 <template>
   <header
-    class="sticky top-0 flex py-4 px-4 md:px-7 items-center justify-between z-40 w-full bg-white gap-x-2"
+    class="sticky top-0 flex py-4 px-4 md:px-7 items-center justify-between z-20 w-full bg-white gap-x-2"
     :class="{
       'border-b border-white': !isHeaderScrolled && !isFilterSidebarVisible,
       'border-b border-dark-charcoal-20':

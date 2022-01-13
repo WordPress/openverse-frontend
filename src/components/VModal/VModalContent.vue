@@ -3,7 +3,7 @@
     <!-- Prevent FocusTrap from trying to focus the first element. We already do that in a more flexible, adaptive way in our Dialog composables. -->
     <FocusTrap :initial-focus="() => false">
       <div
-        class="flex justify-center z-10 fixed inset-0 bg-dark-charcoal bg-opacity-75 min-h-screen"
+        class="flex justify-center z-3g0 fixed inset-0 bg-dark-charcoal bg-opacity-75 min-h-screen"
       >
         <div
           ref="dialogRef"
