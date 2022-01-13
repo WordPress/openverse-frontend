@@ -57,7 +57,7 @@ const VButton = defineComponent({
     as: {
       type: String,
       default: 'button',
-      validate: (v) => ['a', 'button'].includes(v),
+      validate: (v) => ['a', 'button', 'NuxtLink'].includes(v),
     },
     /**
      * The variant of the button.
@@ -162,18 +162,23 @@ const VButton = defineComponent({
     watch(
       propsRef.as,
       (as) => {
-        if (as === 'a') {
+        if (['a', 'NuxtLink'].includes(as)) {
           typeRef.value = undefined
           supportsDisabledAttributeRef.value = false
-
-          // No need to declare `href` as an explicit prop as Vue preserves
-          // the `attrs` object reference between renders and updates the properties
-          // meaning we'll always have the latest values for the properties on the
-          // attrs object
-          if (!attrs.href || attrs.href === '#') {
-            warn(
-              'Do not use anchor elements without a valid `href` attribute. Use a `button` instead.'
-            )
+          if (as === 'a') {
+            // No need to declare `href` as an explicit prop as Vue preserves
+            // the `attrs` object reference between renders and updates the properties
+            // meaning we'll always have the latest values for the properties on the
+            // attrs object
+            if (!attrs.href || attrs.href === '#') {
+              warn(
+                'Do not use anchor elements without a valid `href` attribute. Use a `button` instead.'
+              )
+            }
+          } else {
+            if (!attrs.to) {
+              warn('NuxtLink needs a `to` attribute')
+            }
           }
         }
       },

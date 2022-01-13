@@ -199,7 +199,6 @@ const VHeader = defineComponent({
         : mediaCount(resultsCount.value)
     }
 
-    /** @type {import('@nuxtjs/composition-api').Ref<string>} */
     const searchStatus = ref(setInitialStatus())
 
     watchEffect(() => {

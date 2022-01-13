@@ -10,7 +10,6 @@
       :key="idx"
       :selected="item === content.activeType.value"
       :is-first="idx === 0"
-      size="medium"
       @click="handleClick(item)"
     >
       <VIcon :icon-path="icons[item]" class="me-2 ms-4 my-4" />

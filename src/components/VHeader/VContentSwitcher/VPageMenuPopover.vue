@@ -1,11 +1,10 @@
 <template>
-  <VItemGroup direction="vertical" :bordered="false" type="radiogroup">
+  <VItemGroup direction="vertical" :bordered="false">
     <VItem
       v-for="(page, idx) in pages.all"
       :key="page.id"
       :selected="page.id === pages.current"
       :is-first="idx === 0"
-      size="medium"
       v-bind="getLinkProps(page)"
     >
       <span class="pe-2">{{ $t(page.name) }}</span>

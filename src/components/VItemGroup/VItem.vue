@@ -63,6 +63,7 @@ import { warn } from '~/utils/warn'
 export default defineComponent({
   name: 'VItem',
   components: { VButton, VIcon },
+  inheritAttrs: false,
   props: {
     /**
      * Whether the item is selected/checked.
@@ -120,7 +121,7 @@ export default defineComponent({
       // If the group is not focused but this is the selected item, then this should be the focusable item when focusing into the group
       if (!focusContext.isGroupFocused.value && props.selected) return 0
 
-      // Otherwise the item should not be tabbable. The logic above guarantees that at least one other item in the group will be tabbable.
+      // Otherwise, the item should not be tabbable. The logic above guarantees that at least one other item in the group will be tabbable.
       return -1
     })
 
