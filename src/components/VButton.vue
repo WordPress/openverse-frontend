@@ -7,7 +7,6 @@
       $style[variant],
       pressed && $style[`${variant}-pressed`],
       $style[`size-${size}`],
-      isInGroup && $style['button-group'],
     ]"
     :aria-pressed="pressed"
     :aria-disabled="ariaDisabledRef"
@@ -23,14 +22,7 @@
 </template>
 
 <script>
-import {
-  defineComponent,
-  ref,
-  watch,
-  toRefs,
-  inject,
-} from '@nuxtjs/composition-api'
-import { VButtonGroupContextKey } from '~/components/VButtonGroup.vue'
+import { defineComponent, ref, watch, toRefs } from '@nuxtjs/composition-api'
 import { warn } from '~/utils/warn'
 
 /**
@@ -154,7 +146,6 @@ const VButton = defineComponent({
    */
   setup(props, { attrs }) {
     const propsRef = toRefs(props)
-    const isInGroup = inject(VButtonGroupContextKey, false)
     const disabledAttributeRef = ref(propsRef.disabled.value)
     const ariaDisabledRef = ref()
     const trulyDisabledRef = ref()
@@ -208,7 +199,6 @@ const VButton = defineComponent({
     )
 
     return {
-      isInGroup,
       disabledAttributeRef,
       ariaDisabledRef,
       typeRef,
@@ -222,18 +212,6 @@ export default VButton
 <style module>
 .button {
   @apply flex items-center rounded-sm justify-center transition-shadow duration-100 ease-linear disabled:opacity-70 focus:outline-none focus-visible:ring no-underline appearance-none ring-offset-1;
-}
-
-.button-group {
-  @apply rounded-none me-1;
-}
-
-.button-group:first-of-type {
-  @apply rounded-s-sm;
-}
-
-.button-group:last-of-type {
-  @apply rounded-e-sm me-0;
 }
 
 .button[disabled='disabled'],
