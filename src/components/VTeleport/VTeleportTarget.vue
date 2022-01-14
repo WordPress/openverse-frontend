@@ -6,6 +6,7 @@ export default defineComponent({
   name: 'VTeleportTarget',
   props: {
     name: { type: String, required: true },
+    element: { type: String, default: 'div' },
   },
   data: () => ({ children: [] }),
   created() {
@@ -21,7 +22,10 @@ export default defineComponent({
       )
   },
   render(h) {
-    return h('div', this.children.map((vm) => vm.$slots.default || []).flat())
+    return h(
+      this.element,
+      this.children.map((vm) => vm.$slots.default || []).flat()
+    )
   },
 })
 </script>
