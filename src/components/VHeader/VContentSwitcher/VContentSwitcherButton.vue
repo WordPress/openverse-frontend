@@ -9,12 +9,9 @@
     @click="$emit('click')"
   >
     <VIcon :icon-path="icon" />
-    <NuxtLink
-      v-show="showLabel"
-      v-bind="nuxtLinkProps"
-      :class="{ 'ms-2': showLabel }"
-      >{{ buttonLabel }}</NuxtLink
-    >
+    <span v-show="showLabel" :class="{ 'ms-2': showLabel }">{{
+      buttonLabel
+    }}</span>
     <VIcon
       v-show="isMinScreenMd"
       class="text-dark-charcoal-40"
@@ -24,14 +21,7 @@
   </VButton>
 </template>
 <script>
-import {
-  computed,
-  inject,
-  ref,
-  useContext,
-  useRoute,
-  watch,
-} from '@nuxtjs/composition-api'
+import { computed, inject, useContext } from '@nuxtjs/composition-api'
 import caretDownIcon from '~/assets/icons/caret-down.svg'
 
 import VButton from '~/components/VButton.vue'
@@ -55,8 +45,7 @@ export default {
     },
   },
   setup(props) {
-    const { app, i18n } = useContext()
-    const route = useRoute()
+    const { i18n } = useContext()
     const isHeaderScrolled = inject('isHeaderScrolled')
     const isMinScreenMd = inject('isMinScreenMd')
 
@@ -78,21 +67,6 @@ export default {
       () => isMinScreenMd.value || !isHeaderScrolled.value
     )
 
-    const localePath = (item, query) =>
-      app.localePath({ path: `/search/${item === 'all' ? '' : item}/`, query })
-
-    // TODO (obulat): How do we mock useRoute()?
-    const nuxtLinkProps = ref({
-      'aria-current': 'page',
-      to: localePath(props.activeItem, route?.value?.query),
-    })
-    watch([route], ([route]) => {
-      nuxtLinkProps.value = {
-        'aria-current': 'page',
-        to: localePath(props.activeItem, route?.query),
-      }
-    })
-
     return {
       buttonVariant,
       buttonLabel,
@@ -100,7 +74,6 @@ export default {
       showLabel,
       isHeaderScrolled,
       isMinScreenMd,
-      nuxtLinkProps,
     }
   },
 }

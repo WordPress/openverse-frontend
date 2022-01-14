@@ -19,11 +19,7 @@
       />
     </template>
     <template #content-switcher-content>
-      <VContentTypePopover
-        :icons="icons"
-        @click="handleContentTypeClick"
-        @select="handleContentTypeSelected"
-      />
+      <VContentTypePopover :icons="icons" @select="selectContentType" />
     </template>
   </Component>
 </template>
@@ -92,16 +88,11 @@ export default {
       }
     })
 
-    const handleContentTypeClick = (val) => {
+    const selectContentType = (val) => {
       content.setActiveType(val)
       menuModalRef.value?.closeMenu()
     }
-    const handleContentTypeSelected = (val) => {
-      if (val) {
-        content.setActiveType(val)
-      }
-      menuModalRef.value?.closeMenu()
-    }
+
     return {
       icons,
       isHeaderScrolled,
@@ -110,8 +101,7 @@ export default {
       switcherComponent,
       content,
 
-      handleContentTypeClick,
-      handleContentTypeSelected,
+      selectContentType,
       menuModalRef,
     }
   },

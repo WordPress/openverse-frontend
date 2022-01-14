@@ -4,7 +4,6 @@
     :bordered="!isMinScreenMd"
     type="radiogroup"
     class="z-10"
-    @select="handleSelect"
   >
     <VItem
       v-for="(item, idx) in content.types"
@@ -14,8 +13,6 @@
       :selected="item === content.activeType.value"
       :is-first="idx === 0"
       @click.native="handleClick(item)"
-      @keyup.native="handleKeyup(item)"
-      @click="handleSimpleClick"
     >
       <VIcon :icon-path="icons[item]" class="me-2 ms-4 my-4" />
       <span class="pe-20 py-4 font-semibold">{{
@@ -49,14 +46,9 @@ export default {
     const { app } = useContext()
     const route = useRoute()
     const isMinScreenMd = isMinScreen('md')
+
     const handleClick = (item) => {
-      emit('click', item)
-    }
-    const handleKeyup = (item) => {
-      emit('keyup', item)
-    }
-    const handleSelect = () => {
-      emit('select')
+      emit('select', item)
     }
     const linkProps = (item) => {
       const typePath = item === 'all' ? '' : item
@@ -70,10 +62,8 @@ export default {
       content,
       checkIcon,
       handleClick,
-      handleSelect,
       isMinScreenMd,
       linkProps,
-      handleKeyup,
     }
   },
 }

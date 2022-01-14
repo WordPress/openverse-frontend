@@ -98,7 +98,7 @@ export default defineComponent({
       validate: (v) => ['menu', 'radiogroup'].includes(v),
     },
   },
-  setup(props, { emit }) {
+  setup(props) {
     /** @type {import('@nuxtjs/composition-api').Ref<HTMLElement | undefined>} */
     const nodeRef = ref()
     const isFocused = ref(false)
@@ -163,7 +163,6 @@ export default defineComponent({
     const setSelected = (selected, previousSelected) => {
       if (previousSelected && !selected) selectedCount.value -= 1
       if (!previousSelected && selected) selectedCount.value += 1
-      emit('select')
     }
 
     const focusContext = {

@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { computed, reactive, ref, watch } from '@nuxtjs/composition-api'
+import { onMounted, reactive, ref, watch } from '@nuxtjs/composition-api'
 
 import VMobileModalContent from '@/components/VModal/VMobileModalContent'
 import { useBodyScrollLock } from '@/composables/use-body-scroll-lock'
@@ -69,6 +69,7 @@ export default {
   },
   setup(props, { emit }) {
     const modalRef = ref(null)
+    const triggerContainerRef = ref(null)
 
     const closeMenu = () => close()
 
@@ -80,7 +81,8 @@ export default {
       'aria-haspopup': 'dialog',
     })
 
-    const triggerRef = computed(() => nodeRef.value?.firstChild.firstChild)
+    const triggerRef = ref()
+    onMounted(() => (triggerRef.value = triggerContainerRef.value?.firstChild))
 
     watch([visibleRef], ([visible]) => {
       triggerA11yProps['aria-expanded'] = visible
@@ -112,6 +114,7 @@ export default {
       close,
       modalRef,
       nodeRef,
+      triggerContainerRef,
       closeMenu,
 
       triggerRef,
