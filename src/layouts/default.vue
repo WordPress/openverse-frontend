@@ -4,16 +4,13 @@
     <TranslationStatusBanner />
     <VHeader v-if="!isHomeRoute" />
     <main
-      ref="mainRef"
       class="main embedded overflow-x-hidden"
       :class="{
         'has-sidebar': isSidebarVisible,
-        'mt-[81px]': !headerHasTwoRows,
-        'mt-[145px]': headerHasTwoRows,
       }"
     >
       <Nuxt ref="mainContentRef" class="min-w-0 main-page" />
-      <VSidebarTarget class="sidebar" />
+      <VSidebarTarget v-show="!isHomeRoute" class="sidebar" />
     </main>
     <VModalTarget class="modal" />
   </div>
@@ -76,17 +73,11 @@ const embeddedPage = {
     const scrollY = ref(0)
     const { isScrolled: isMainContentScrolled, y: mainContentY } =
       useScroll(mainContentRef)
-    const { isScrolled: isMainScrolled, y: mainY } = useScroll(mainRef)
-    watch(
-      [isMainContentScrolled, isMainScrolled],
-      ([isMainContentScrolled, isMainScrolled]) => {
-        isHeaderScrolled.value = isSidebarVisible.value
-          ? isMainContentScrolled
-          : isMainScrolled
-      }
-    )
-    watch([mainContentY, mainY], ([mainContentY, mainY]) => {
-      scrollY.value = isSidebarVisible.value ? mainContentY : mainY
+    watch([isMainContentScrolled], ([isMainContentScrolled]) => {
+      isHeaderScrolled.value = isMainContentScrolled
+    })
+    watch([mainContentY], ([mainContentY]) => {
+      scrollY.value = mainContentY
     })
     const showScrollButton = computed(() => scrollY.value > 70)
 
@@ -118,70 +109,23 @@ export default embeddedPage
   grid-template-rows: auto 1fr;
 }
 
-.main:not(.has-sidebar) {
-  overflow-y: scroll;
-}
-.main.has-sidebar {
+.main {
   display: grid;
-  overflow: hidden;
   grid-template-columns: 1fr 316px;
-}
-.main.has-sidebar > * {
   height: 100%;
-  overflow-y: scroll;
-}
-.main-page,
-.modal {
-  /* Works on Firefox */
-  scrollbar-width: thin;
-  scrollbar-color: white transparent;
-}
-@media (min-width: 768px) {
-  .main,
-  .main-page,
-  .modal {
-    scrollbar-color: transparent transparent;
-  }
-  .main:hover,
-  .main-page:hover,
-  .modal:hover {
-    scrollbar-color: #eae9ea transparent;
-  }
+  overflow: hidden;
 }
 
-.sidebar {
-  scrollbar-color: #eae9ea #f3f2f2;
+.main > * {
+  overflow-y: scroll;
+  min-height: 100%;
 }
-/* Works on Chrome, Edge, and Safari */
-.main-page::-webkit-scrollbar,
-.sidebar::-webkit-scrollbar {
-  width: 0.5rem;
+
+.main > *:first-child {
+  grid-column: span 2;
 }
-.main-page::-webkit-scrollbar-track {
-  background-color: white;
-}
-.main-page::-webkit-scrollbar-thumb {
-  background-color: #6f6e6e;
-  border-radius: 0.25rem;
-}
-.main::-webkit-scrollbar {
-  background-color: white;
-  width: 0.5rem;
-}
-.main::-webkit-scrollbar-track {
-  background-color: white;
-}
-.main::-webkit-scrollbar-thumb {
-  background-color: #6f6e6e;
-  border-radius: 0.25rem;
-}
-.sidebar::-webkit-scrollbar {
-  background-color: #f3f2f2;
-  width: 0.5rem;
-}
-.sidebar::-webkit-scrollbar-thumb {
-  background-color: #6f6e6e;
-  border-radius: 0.25rem;
-  color: #3e58e1;
+
+.main.has-sidebar > *:first-child {
+  grid-column: 1;
 }
 </style>
