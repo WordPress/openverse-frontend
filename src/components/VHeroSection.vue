@@ -83,10 +83,10 @@ export default {
   name: 'VHeroSection',
   components: { HomeLicenseFilter, SearchTypeToggle },
   /**
-   * @return {{ form: { searchTerm: string, searchType: 'image' | 'audio' }, showSearchType: boolean }}
+   * @return {{ form: { searchTerm: string, searchType: 'image' | 'audio' | 'all' }, showSearchType: boolean }}
    */
   data: () => ({
-    form: { searchTerm: '', searchType: 'image' },
+    form: { searchTerm: '', searchType: 'all' },
     filters: { commercial: false, modification: false },
     showSearchType: process.env.enableAudio || false,
   }),
@@ -105,11 +105,9 @@ export default {
     }),
     ...mapActions(MEDIA, { fetchMedia: FETCH_MEDIA }),
     getPath() {
-      if (!process.env.enableAudio) return '/search/image'
+      if (!process.env.enableAudio || this.form.searchType === 'all')
+        return '/search'
       return `/search/${this.form.searchType}`
-    },
-    getMediaType() {
-      return this.form.searchType
     },
     toggleFilter({ code, checked }) {
       this.filters[code] = checked

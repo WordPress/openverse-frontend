@@ -585,6 +585,7 @@ const mutations = {
    * @param {Object} query
    */
   [SET_QUERY](state, { query }) {
+    console.log(query)
     if (!query.mediaType) {
       query = {
         ...query,

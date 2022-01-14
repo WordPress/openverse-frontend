@@ -119,7 +119,7 @@ const BrowsePage = {
     ...mapGetters(MEDIA, ['results', 'fetchState']),
     mediaType() {
       // Default to IMAGE until media search/index is generalized
-      return this.searchType !== ALL_MEDIA ? this.searchType : IMAGE
+      return this.searchType !== ALL_MEDIA ? this.searchType : ALL_MEDIA
     },
     shouldShowFilterTags() {
       return (
