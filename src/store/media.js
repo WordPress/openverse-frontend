@@ -22,15 +22,18 @@ import {
   SEND_RESULT_CLICKED_EVENT,
   SEND_SEARCH_QUERY_EVENT,
 } from '~/constants/usage-data-analytics-types'
-import { AUDIO, IMAGE, VIDEO } from '~/constants/media'
+import { AUDIO, IMAGE, VIDEO, ALL_MEDIA } from '~/constants/media'
 import { USAGE_DATA } from '~/constants/store-modules'
 import AudioService from '~/data/audio-service'
 import ImageService from '~/data/image-service'
+
+const supportedTypes = [IMAGE, AUDIO]
 
 /**
  * @return {import('./types').MediaState}
  */
 export const state = () => ({
+  supportedTypes,
   results: {
     audio: {
       count: 0,
@@ -97,6 +100,7 @@ export const createActions = (services) => ({
     if (!page) {
       commit(RESET_MEDIA, { mediaType })
     }
+
     await services[mediaType]
       .search(queryParams)
       .then(({ data }) => {
@@ -269,18 +273,30 @@ export const getters = {
 
 export const mutations = {
   [FETCH_START_MEDIA](_state, { mediaType }) {
-    _state.fetchState[mediaType].isFetching = true
-    _state.fetchState[mediaType].fetchingError = null
-    _state.fetchState[mediaType].isFinished = false
+    const mediaTypes =
+      mediaType !== ALL_MEDIA ? [mediaType] : _state.supportedTypes
+    for (const mType of mediaTypes) {
+      _state.fetchState[mType].isFetching = true
+      _state.fetchState[mType].fetchingError = null
+      _state.fetchState[mType].isFinished = false
+    }
   },
   [FETCH_END_MEDIA](_state, { mediaType }) {
-    _state.fetchState[mediaType].isFetching = false
+    const mediaTypes =
+      mediaType !== ALL_MEDIA ? [mediaType] : _state.supportedTypes
+    for (const mType of mediaTypes) {
+      _state.fetchState[mType].isFetching = false
+    }
   },
   [FETCH_MEDIA_ERROR](_state, params) {
     const { mediaType, errorMessage } = params
-    _state.fetchState[mediaType].isFetching = false
-    _state.fetchState[mediaType].fetchingError = errorMessage
-    _state.fetchState[mediaType].isFinished = true
+    const mediaTypes =
+      mediaType !== ALL_MEDIA ? [mediaType] : _state.supportedTypes
+    for (const mType of mediaTypes) {
+      _state.fetchState[mType].isFetching = false
+      _state.fetchState[mType].fetchingError = errorMessage
+      _state.fetchState[mType].isFinished = true
+    }
   },
   [SET_AUDIO](_state, params) {
     _state.audio = decodeMediaData(params.audio, AUDIO)

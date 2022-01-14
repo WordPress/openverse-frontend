@@ -119,7 +119,7 @@ const BrowsePage = {
     ...mapGetters(MEDIA, ['results', 'fetchState']),
     mediaType() {
       // Default to IMAGE until media search/index is generalized
-      return this.searchType !== ALL_MEDIA ? this.searchType : ALL_MEDIA
+      return this.searchType ?? ALL_MEDIA
     },
     shouldShowFilterTags() {
       return (
@@ -132,7 +132,7 @@ const BrowsePage = {
      * @returns {number}
      */
     resultsCount() {
-      return this.supported ? this.results.count : 0
+      return this.supported ? this.results?.count : 0 ?? 0
     },
     searchFilter() {
       return {
@@ -143,12 +143,7 @@ const BrowsePage = {
       }
     },
     supported() {
-      if (this.searchType === AUDIO) {
-        // Only show audio results if non-image results are supported
-        return process.env.enableAudio
-      } else {
-        return [IMAGE, ALL_MEDIA].includes(this.searchType)
-      }
+      return [IMAGE, AUDIO, ALL_MEDIA].includes(this.searchType)
     },
   },
   methods: {

@@ -88,7 +88,7 @@ export default {
   data: () => ({
     form: { searchTerm: '', searchType: 'all' },
     filters: { commercial: false, modification: false },
-    showSearchType: process.env.enableAudio || false,
+    showSearchType: true,
   }),
   computed: {
     ...mapGetters(SEARCH, ['searchQueryParams']),
@@ -105,8 +105,7 @@ export default {
     }),
     ...mapActions(MEDIA, { fetchMedia: FETCH_MEDIA }),
     getPath() {
-      if (!process.env.enableAudio || this.form.searchType === 'all')
-        return '/search'
+      if (this.form.searchType === 'all') return '/search'
       return `/search/${this.form.searchType}`
     },
     toggleFilter({ code, checked }) {
@@ -121,9 +120,7 @@ export default {
         }
       })
 
-      if (process.env.enableAudio) {
-        newQuery.searchType = this.form.searchType
-      }
+      newQuery.searchType = this.form.searchType
       this.setSearchTerm(newQuery)
       this.fetchMedia({})
 

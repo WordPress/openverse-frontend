@@ -203,6 +203,11 @@ export default {
         autoprefixer: {},
       },
     },
+    extend(config, ctx) {
+      if (ctx.isDev) {
+        config.devtool = ctx.isClient ? 'source-map' : 'inline-source-map'
+      }
+    },
   },
   storybook: {
     port: 6006, // standard port for Storybook
