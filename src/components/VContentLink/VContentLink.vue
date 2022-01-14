@@ -1,6 +1,6 @@
 <template>
   <button
-    class="bg-white border border-dark-charcoal/20 rounded-sm flex hover:bg-dark-charcoal hover:text-white focus:bg-white focus:ring focus:ring-pink focus:outline-none focus:shadow-ring focus:text-black overflow-hidden"
+    class="bg-white border border-dark-charcoal/20 rounded-sm flex hover:bg-dark-charcoal hover:text-white focus:bg-white focus:border-tx focus:ring focus:ring-pink focus:outline-none focus:shadow-ring focus:text-black overflow-hidden"
     :class="[
       isStacked
         ? 'flex-col items-start py-4 ps-4 pe-12'
