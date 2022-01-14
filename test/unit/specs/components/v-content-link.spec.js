@@ -1,6 +1,5 @@
 import VContentLink from '~/components/VContentLink/VContentLink.vue'
 import { render, screen } from '@testing-library/vue'
-import userEvent from '@testing-library/user-event'
 import VueI18n from 'vue-i18n'
 
 const enMessages = require('~/locales/en.json')
@@ -38,12 +37,5 @@ describe('VContentLink', () => {
     const btn = screen.getByRole('radio')
     expect(btn).toHaveAttribute('aria-checked')
     expect(btn.getAttribute('aria-checked')).toBeTruthy()
-  })
-
-  it('should emit selected event on click', () => {
-    const { emitted } = render(VContentLink, options)
-    const btn = screen.getByText('search-tab.image')
-    userEvent.click(btn)
-    expect(emitted().selected).toBeTruthy()
   })
 })

@@ -9,7 +9,7 @@
     role="radio"
     type="button"
     :aria-checked="isSelected"
-    @click="$emit('selected', mediaType)"
+    v-on="$listeners"
   >
     <div
       class="flex"
