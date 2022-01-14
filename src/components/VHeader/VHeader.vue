@@ -119,15 +119,18 @@ const VHeader = defineComponent({
      * @returns {string}
      */
     const mediaCount = (count) => {
+      console.log(store.state.search.query.mediaType)
       const countKey =
         count === 0 ? 'noResult' : count >= 10000 ? 'more' : 'result'
-      const i18nKey = i18nKeys[store.state.search.query.mediaType][countKey]
+      const i18nKey = i18nKeys[store.state.search.query.mediaType]?.[countKey]
       const localeCount = count.toLocaleString(i18n.locale)
       return i18n.tc(i18nKey, count, { localeCount })
     }
 
     /** @type {import('@nuxtjs/composition-api').ComputedRef<number>} */
-    const resultsCount = computed(() => store.getters['media/results'].count)
+    const resultsCount = computed(
+      () => store.getters['media/results']?.count ?? 0
+    )
 
     /**  @type {import('@nuxtjs/composition-api').ComputedRef<boolean>} */
     const isFetching = computed(() => {
