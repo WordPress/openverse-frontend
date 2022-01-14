@@ -35,13 +35,19 @@ const supportedTypes = [IMAGE, AUDIO]
 export const state = () => ({
   supportedTypes,
   results: {
-    audio: {
+    [AUDIO]: {
       count: 0,
       page: undefined,
       pageCount: 0,
       items: {},
     },
-    image: {
+    [IMAGE]: {
+      count: 0,
+      page: undefined,
+      pageCount: 0,
+      items: {},
+    },
+    [ALL_MEDIA]: {
       count: 0,
       page: undefined,
       pageCount: 0,
@@ -55,6 +61,11 @@ export const state = () => ({
       isFinished: false,
     },
     image: {
+      isFetching: false,
+      fetchingError: null,
+      isFinished: false,
+    },
+    all: {
       isFetching: false,
       fetchingError: null,
       isFinished: false,
@@ -113,17 +124,36 @@ export const createActions = (services) => ({
         )
       })
       .then((dataList) => {
-        for (const data of dataList) {
+        dataList.forEach((data, index) => {
           const mediaCount = data.result_count
           commit(SET_MEDIA, {
-            mediaType,
+            mediaType: mediaToFetch[index],
             media: data.results,
             mediaCount,
             pageCount: data.page_count,
             shouldPersistMedia,
             page: page,
           })
-          dispatch(HANDLE_NO_MEDIA, { mediaType, mediaCount })
+          dispatch(HANDLE_NO_MEDIA, {
+            mediaType: mediaToFetch[index],
+            mediaCount,
+          })
+        })
+        // If fetching all media, set 'all' to an aggregate of the other collected results
+        if (mediaType === ALL_MEDIA) {
+          const mediaCount = 50000
+          commit(SET_MEDIA, {
+            mediaType: ALL_MEDIA,
+            media: [],
+            mediaCount,
+            pageCount: 1,
+            shouldPersistMedia: true,
+            page: page,
+          })
+          dispatch(HANDLE_NO_MEDIA, {
+            mediaType: ALL_MEDIA,
+            mediaCount,
+          })
         }
       })
       .catch((error) => {
