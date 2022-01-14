@@ -8,19 +8,25 @@
     </main>
   </div>
 </template>
+
 <script>
-import iframeHeight from '~/mixins/iframe-height'
-
-import { NAV } from '~/constants/store-modules'
-import VHeader from '~/components/VHeader/VHeader.vue'
-
 import { useContext } from '@nuxtjs/composition-api'
+
+import VHeader from '~/components/VHeader/VHeader.vue'
+import MigrationNotice from '~/components/MigrationNotice.vue'
 import TranslationStatusBanner from '~/components/TranslationStatusBanner.vue'
 
-const embeddedPage = {
-  name: 'embedded',
-  components: { VHeader, TranslationStatusBanner },
-  layout: 'embedded',
+import iframeHeight from '~/mixins/iframe-height'
+import { NAV } from '~/constants/store-modules'
+
+const defaultLayout = {
+  name: 'default',
+  components: {
+    VHeader,
+    MigrationNotice,
+    TranslationStatusBanner,
+  },
+  layout: 'default',
   mixins: [iframeHeight],
   head() {
     return this.$nuxtI18nHead({ addSeoAttributes: true, addDirAttribute: true })
@@ -34,5 +40,5 @@ const embeddedPage = {
     }
   },
 }
-export default embeddedPage
+export default defaultLayout
 </script>
