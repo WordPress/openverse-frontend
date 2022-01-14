@@ -2,7 +2,7 @@
   <div class="app grid h-screen overflow-hidden">
     <MigrationNotice v-show="isReferredFromCc" />
     <TranslationStatusBanner />
-    <VHeader v-if="!isHomeRoute" />
+    <VHeader />
     <main
       class="main embedded overflow-x-hidden"
       :class="{ 'has-sidebar': isSidebarVisible }"
@@ -27,10 +27,7 @@ import {
 } from '@nuxtjs/composition-api'
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
 import { isMinScreen } from '~/composables/use-media-query'
-import {
-  useMatchHomeRoute,
-  useMatchSearchRoutes,
-} from '~/composables/use-match-routes'
+import { useMatchSearchRoutes } from '~/composables/use-match-routes'
 import { useScroll } from '~/composables/use-scroll'
 
 import MigrationNotice from '~/components/MigrationNotice.vue'
@@ -64,7 +61,6 @@ const embeddedPage = {
     const { isVisible: isFilterVisible } = useFilterSidebarVisibility()
     const isMinScreenMd = isMinScreen('md')
     const { matches: isSearchRoute } = useMatchSearchRoutes()
-    const { matches: isHomeRoute } = useMatchHomeRoute()
 
     const isSidebarVisible = computed(
       () => isSearchRoute.value && isMinScreenMd.value && isFilterVisible.value
@@ -84,16 +80,18 @@ const embeddedPage = {
 
     provide('isHeaderScrolled', isHeaderScrolled)
     provide('showScrollButton', showScrollButton)
+
     const headerHasTwoRows = computed(
-      () => isSearchRoute && !isHeaderScrolled && !isMinScreenMd
+      () =>
+        isSearchRoute.value && !isHeaderScrolled.value && !isMinScreenMd.value
     )
+    provide('headerHasTwoRows', headerHasTwoRows)
     return {
       isHeaderScrolled,
       isMinScreenMd,
       isReferredFromCc,
       isSidebarVisible,
       isSearchRoute,
-      isHomeRoute,
       headerHasTwoRows,
       mainContentRef,
       mainRef,

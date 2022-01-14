@@ -50,9 +50,17 @@
       </span>
     </VSearchBar>
 
-    <VHeaderFilter
+    <VPageMenu v-if="!isSearchRoute" />
+
+    <VContentSwitcher
       v-if="isSearchRoute"
       class="one-third"
+      @open="openMenuModal(menus.CONTENT_SWITCHER)"
+      @close="close()"
+    />
+    <VHeaderFilter
+      v-if="isSearchRoute"
+      class="one-third text-sr md:text-base"
       @open="openMenuModal(menus.FILTERS)"
       @close="close()"
     />
@@ -85,9 +93,11 @@ import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-vis
 import closeIcon from '~/assets/icons/close.svg'
 import OpenverseLogoText from '~/assets/icons/openverse-logo-text.svg?inline'
 
-import VSearchBar from '~/components/VHeader/VSearchBar/VSearchBar'
+import VContentSwitcher from '~/components/VHeader/VContentSwitcher.vue'
 import VHeaderFilter from '~/components/VHeader/VHeaderFilter.vue'
-import VLogoLoader from '~/components/VLogoLoader/VLogoLoader'
+import VLogoLoader from '~/components/VLogoLoader/VLogoLoader.vue'
+import VSearchBar from '~/components/VHeader/VSearchBar/VSearchBar.vue'
+import VPageMenu from '~/components/VHeader/VPageMenu.vue'
 
 const i18nKeys = {
   [AUDIO]: {
@@ -110,9 +120,11 @@ const VHeader = defineComponent({
   name: 'VHeader',
   components: {
     VHeaderFilter,
+    VContentSwitcher,
     VLogoLoader,
     VSearchBar,
     OpenverseLogoText,
+    VPageMenu,
   },
   setup() {
     const { app, i18n, store } = useContext()
@@ -123,6 +135,7 @@ const VHeader = defineComponent({
 
     const isHeaderScrolled = inject('isHeaderScrolled')
     const isMinScreenMd = isMinScreen('md', { shouldPassInSSR: true })
+    const headerHasTwoRows = inject('headerHasTwoRows')
     provide('isMinScreenMd', isMinScreenMd)
 
     const menuModalRef = ref(null)
@@ -177,7 +190,9 @@ const VHeader = defineComponent({
     }
 
     /** @type {import('@nuxtjs/composition-api').ComputedRef<number>} */
-    const resultsCount = computed(() => store.getters['media/results'].count)
+    const resultsCount = computed(
+      () => store.getters['media/results']?.count ?? 0
+    )
 
     /**
      * Status is hidden below the medium breakpoint.
@@ -268,6 +283,7 @@ const VHeader = defineComponent({
 
       isHeaderScrolled,
       isMinScreenMd,
+      headerHasTwoRows,
 
       isSearchRoute,
       isHomeRoute,
