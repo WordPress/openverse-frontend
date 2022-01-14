@@ -8,37 +8,43 @@
         <OpenverseLogoText class="w-80" />
       </h1>
       <h2>Browse through over 600 million items to reuse</h2>
-      <label for="">
-        <span class="sr-only">Cool</span>
-        <input type="text" />
-      </label>
+      <VSearchBar :value="featuredSearch.term" />
       <p>
         All Openverse content is under a creative Comons license or is in the
         public domain.
       </p>
     </header>
-    <div class="images w-1/2 xl:w-1/3 grid grid-cols-2 grid-rows-4">
-      <div
+    <div class="homepage-images w-1/2 xl:w-1/3 grid grid-cols-2 grid-rows-4">
+      <Transition
         v-for="(image, index) in featuredSearch.images"
-        :key="index"
-        class="p-4 xl:p-8 block aspect-square"
+        :key="image.alt"
+        tag="div"
+        name="fade"
+        mode="out-in"
       >
-        <NuxtLink
+        <div
+          :key="image.alt"
+          class="p-4 xl:p-8 block aspect-square"
+          :style="{ '--transition-index': `${index * 0.05}s` }"
+        >
+          <!-- <NuxtLink
           :to="image.url"
           class="aspect-square block rounded-full overflow-hidden h-full w-full"
-        >
+        > -->
           <img
-            class="object-cover h-full w-full"
-            :src="image.src"
+            class="object-cover h-full w-full rounded-full"
+            :src="require(`~/assets/homepage-images/${image.src}`)"
             :alt="image.alt"
           />
-        </NuxtLink>
-      </div>
+        </div>
+        <!-- </NuxtLink> -->
+      </Transition>
     </div>
   </main>
 </template>
 
 <script>
+import { ref, onMounted } from '@nuxtjs/composition-api'
 import OpenverseLogoText from '~/assets/icons/openverse-logo-text.svg?inline'
 
 const HomePage = {
@@ -48,49 +54,36 @@ const HomePage = {
     OpenverseLogoText,
   },
   setup() {
+    const makeImageArray = (prefix = '') =>
+      new Array(7).fill({}).map((_, index) => ({
+        src: `${prefix}-${index + 1}.jpg`,
+        alt: `${prefix} image ${index + 1}`,
+      }))
+
     const featuredSearches = [
       {
+        term: 'Universe',
+        images: makeImageArray('Universe'),
+      },
+      {
         term: 'Indigenous pottery',
-        images: [
-          {
-            url: '/about',
-            src: 'https://source.unsplash.com/1600x900/?party',
-            alt: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-          },
-          {
-            url: '/about',
-            src: 'https://source.unsplash.com/1600x900/?party',
-            alt: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-          },
-          {
-            url: '/about',
-            src: 'https://source.unsplash.com/1600x900/?party',
-            alt: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-          },
-          {
-            url: '/about',
-            src: 'https://source.unsplash.com/1600x900/?party',
-            alt: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-          },
-          {
-            url: '/about',
-            src: 'https://source.unsplash.com/1600x900/?party',
-            alt: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-          },
-          {
-            url: '/about',
-            src: 'https://source.unsplash.com/1600x900/?party',
-            alt: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-          },
-          {
-            url: '/about',
-            src: 'https://source.unsplash.com/1600x900/?party',
-            alt: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-          },
-        ],
+        images: makeImageArray('Pottery'),
+      },
+      {
+        term: 'Olympic games',
+        images: makeImageArray('Olympics'),
       },
     ]
-    const featuredSearch = featuredSearches[0]
+    const featuredSearch = ref(featuredSearches[1])
+    onMounted(() => {
+      setInterval(() => {
+        let activeIndex = featuredSearches.indexOf(featuredSearch.value)
+        featuredSearch.value =
+          featuredSearches[
+            activeIndex < featuredSearches.length - 1 ? activeIndex + 1 : 0
+          ]
+      }, 6000)
+    })
 
     return {
       featuredSearch,
@@ -101,8 +94,22 @@ const HomePage = {
 export default HomePage
 </script>
 
-<style scoped>
-.images > *:nth-child(even) {
+<style>
+.homepage-images > *:nth-child(even) {
   transform: translateY(50%);
+}
+
+.homepage-images > * {
+  transition-delay: var(--transition-index) !important;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: 0.5s;
 }
 </style>
