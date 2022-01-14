@@ -15,7 +15,8 @@
         to="/"
         class="rounded-sm ring-offset-1 focus:outline-none focus-visible:ring focus-visible:ring-pink -ms-2 inline-flex items-center hover:bg-yellow mr-auto"
         :class="{
-          'pe-3': !isSearchRoute || (isSearchRoute && !isHeaderScrolled),
+          'pe-3 md:pe-0': isSearchRoute && !isHeaderScrolled,
+          'md:pe-3': !isSearchRoute,
         }"
       >
         <VLogoLoader :status="isFetching ? 'loading' : 'idle'" />
