@@ -119,10 +119,11 @@ const VHeader = defineComponent({
      * @returns {string}
      */
     const mediaCount = (count) => {
-      console.log(store.state.search.query.mediaType)
+      if (store.getters['media/unsupportedMediaType']) return ''
+
       const countKey =
         count === 0 ? 'noResult' : count >= 10000 ? 'more' : 'result'
-      const i18nKey = i18nKeys[store.state.search.query.mediaType]?.[countKey]
+      const i18nKey = i18nKeys[store.state.search.query.mediaType][countKey]
       const localeCount = count.toLocaleString(i18n.locale)
       return i18n.tc(i18nKey, count, { localeCount })
     }
