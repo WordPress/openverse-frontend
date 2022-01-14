@@ -10,7 +10,7 @@
       }"
     >
       <Nuxt ref="mainContentRef" class="min-w-0 main-page" />
-      <VSidebarTarget v-show="!isHomeRoute" class="sidebar" />
+      <VSidebarTarget class="sidebar" />
     </main>
     <VModalTarget class="modal" />
   </div>
