@@ -5,7 +5,7 @@
       'border-b border-white': !isHeaderScrolled && !isMenuOpen,
       'border-b border-dark-charcoal-20':
         isSearchRoute && (isHeaderScrolled || isMenuOpen),
-      'flex-wrap gap-y-4': !isMinScreenMd && !isHeaderScrolled,
+      'flex-wrap gap-y-4': headerHasTwoRows,
       'justify-between': isSearchRoute,
       'justify-start': !isSearchRoute,
     }"
@@ -136,6 +136,7 @@ const VHeader = defineComponent({
 
     const isHeaderScrolled = inject('isHeaderScrolled')
     const isMinScreenMd = isMinScreen('md', { shouldPassInSSR: true })
+    const headerHasTwoRows = inject('headerHasTwoRows')
     provide('isMinScreenMd', isMinScreenMd)
 
     const menuModalRef = ref(null)
@@ -255,6 +256,7 @@ const VHeader = defineComponent({
 
       isHeaderScrolled,
       isMinScreenMd,
+      headerHasTwoRows,
 
       isSearchRoute,
       isHomeRoute,

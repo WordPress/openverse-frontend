@@ -88,9 +88,12 @@ const embeddedPage = {
 
     provide('isHeaderScrolled', isHeaderScrolled)
     provide('showScrollButton', showScrollButton)
+
     const headerHasTwoRows = computed(
-      () => isSearchRoute && !isHeaderScrolled && !isMinScreenMd
+      () =>
+        isSearchRoute.value && !isHeaderScrolled.value && !isMinScreenMd.value
     )
+    provide('headerHasTwoRows', headerHasTwoRows)
     return {
       isHeaderScrolled,
       isMinScreenMd,
