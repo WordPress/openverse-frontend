@@ -101,24 +101,30 @@ export const createActions = (services) => ({
       commit(RESET_MEDIA, { mediaType })
     }
 
-    await services[mediaType]
-      .search(queryParams)
-      .then(({ data }) => {
+    const mediaToFetch = mediaType !== ALL_MEDIA ? [mediaType] : supportedTypes
+
+    await Promise.all(
+      mediaToFetch.map((type) => services[type].search(queryParams))
+    )
+      .then((res) => {
         commit(FETCH_END_MEDIA, { mediaType })
-        return data
+        return res.map(({ data }, index) =>
+          services[mediaToFetch[index]].transformResults(data)
+        )
       })
-      .then(services[mediaType].transformResults)
-      .then((data) => {
-        const mediaCount = data.result_count
-        commit(SET_MEDIA, {
-          mediaType,
-          media: data.results,
-          mediaCount,
-          pageCount: data.page_count,
-          shouldPersistMedia,
-          page: page,
-        })
-        dispatch(HANDLE_NO_MEDIA, { mediaType, mediaCount })
+      .then((dataList) => {
+        for (const data of dataList) {
+          const mediaCount = data.result_count
+          commit(SET_MEDIA, {
+            mediaType,
+            media: data.results,
+            mediaCount,
+            pageCount: data.page_count,
+            shouldPersistMedia,
+            page: page,
+          })
+          dispatch(HANDLE_NO_MEDIA, { mediaType, mediaCount })
+        }
       })
       .catch((error) => {
         dispatch(HANDLE_MEDIA_ERROR, { mediaType, error })

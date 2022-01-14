@@ -46,18 +46,16 @@ export const mediaFilterKeys = {
     'searchBy',
     'mature',
   ],
-  audio: process.env.enableAudio
-    ? [
-        'licenses',
-        'licenseTypes',
-        'audioCategories',
-        'audioExtensions',
-        'durations',
-        'audioProviders',
-        'searchBy',
-        'mature',
-      ]
-    : [],
+  audio: [
+    'licenses',
+    'licenseTypes',
+    'audioCategories',
+    'audioExtensions',
+    'durations',
+    'audioProviders',
+    'searchBy',
+    'mature',
+  ],
   video: [],
   all: ['licenses', 'licenseTypes', 'searchBy', 'mature'],
 }
