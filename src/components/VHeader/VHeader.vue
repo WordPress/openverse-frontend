@@ -168,13 +168,6 @@ const VHeader = defineComponent({
     const close = () => {
       openMenu.value = null
     }
-    /**
-     * Only returns true on search route (?) on mobile screen.
-     * Necessary to show 'close' button in the header.
-     * @type {import('@nuxtjs/composition-api').ComputedRef<boolean>} */
-    const showCloseButton = computed(() => {
-      return !isMinScreenMd.value && openMenu.value !== null
-    })
 
     /**  @type {import('@nuxtjs/composition-api').ComputedRef<boolean>} */
     const isFetching = computed(() => {
@@ -236,12 +229,6 @@ const VHeader = defineComponent({
       },
     })
 
-    watch([store.state.search.query], ([newQuery]) => {
-      if (newQuery !== localSearchTerm.value) {
-        localSearchTerm.value = newQuery
-      }
-    })
-
     const handleSearch = async () => {
       // Don't do anything if search term hasn't changed
       if (localSearchTerm.value === store.state.search.query.q) return
@@ -271,8 +258,6 @@ const VHeader = defineComponent({
 
       isSearchRoute,
       isHomeRoute,
-
-      showCloseButton,
 
       menuModalRef,
 

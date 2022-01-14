@@ -48,7 +48,7 @@
       >
         <template #link>
           <a
-            :aria-label="$t('media-details.aria.attribution.tool')"
+            :aria-label="$t('photo-details.aria.attribution.tool')"
             :href="licenseUrl"
             target="_blank"
             rel="noopener"
