@@ -1,6 +1,6 @@
 <template>
   <VButton
-    class="flex flex-row font-semibold px-3 py-2"
+    class="flex flex-row font-semibold px-3 py-2 text-sr md:text-base"
     :class="{ 'w-12': isHeaderScrolled && !isMinScreenMd }"
     :variant="buttonVariant"
     size="disabled"

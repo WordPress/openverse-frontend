@@ -44,7 +44,7 @@
       @submit="handleSearch"
     >
       <span
-        v-if="searchStatus"
+        v-show="searchStatus"
         class="info font-semibold text-xs text-dark-charcoal-70 group-hover:text-dark-charcoal group-focus:text-dark-charcoal mx-4"
       >
         {{ searchStatus }}
@@ -61,7 +61,7 @@
     />
     <VHeaderFilter
       v-if="isSearchRoute"
-      class="one-third"
+      class="one-third text-sr md:text-base"
       @open="openMenuModal(menus.FILTERS)"
       @close="close()"
     />
