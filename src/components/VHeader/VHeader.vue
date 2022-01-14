@@ -5,7 +5,7 @@
       'border-b border-white': !isHeaderScrolled && !isMenuOpen,
       'border-b border-dark-charcoal-20':
         isSearchRoute && (isHeaderScrolled || isMenuOpen),
-      'flex-wrap gap-y-4': !isMinScreenMd && !isHeaderScrolled,
+      'flex-wrap gap-y-4': headerHasTwoRows,
       'justify-between': isSearchRoute,
       'justify-start': !isSearchRoute,
     }"
@@ -44,16 +44,24 @@
       @submit="handleSearch"
     >
       <span
-        v-if="searchStatus"
+        v-show="searchStatus"
         class="info font-semibold text-xs text-dark-charcoal-70 group-hover:text-dark-charcoal group-focus:text-dark-charcoal mx-4"
       >
         {{ searchStatus }}
       </span>
     </VSearchBar>
 
-    <VHeaderFilter
+    <VPageMenu v-if="!isSearchRoute" />
+
+    <VContentSwitcher
       v-if="isSearchRoute"
       class="one-third"
+      @open="openMenuModal(menus.CONTENT_SWITCHER)"
+      @close="close()"
+    />
+    <VHeaderFilter
+      v-if="isSearchRoute"
+      class="one-third text-sr md:text-base"
       @open="openMenuModal(menus.FILTERS)"
       @close="close()"
     />
@@ -61,7 +69,6 @@
 </template>
 
 <script>
-import OpenverseLogoText from '~/assets/icons/openverse-logo-text.svg?inline'
 import {
   computed,
   defineComponent,
@@ -85,10 +92,13 @@ import {
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
 
 import closeIcon from '~/assets/icons/close.svg'
+import OpenverseLogoText from '~/assets/icons/openverse-logo-text.svg?inline'
 
-import VSearchBar from '~/components/VHeader/VSearchBar/VSearchBar'
+import VContentSwitcher from '~/components/VHeader/VContentSwitcher.vue'
 import VHeaderFilter from '~/components/VHeader/VHeaderFilter.vue'
-import VLogoLoader from '~/components/VLogoLoader/VLogoLoader'
+import VLogoLoader from '~/components/VLogoLoader/VLogoLoader.vue'
+import VSearchBar from '~/components/VHeader/VSearchBar/VSearchBar.vue'
+import VPageMenu from '~/components/VHeader/VPageMenu.vue'
 
 const i18nKeys = {
   [AUDIO]: {
@@ -111,18 +121,22 @@ const VHeader = defineComponent({
   name: 'VHeader',
   components: {
     VHeaderFilter,
+    VContentSwitcher,
     VLogoLoader,
     VSearchBar,
     OpenverseLogoText,
+    VPageMenu,
   },
   setup() {
     const { app, i18n, store } = useContext()
     const router = useRouter()
+
     const { matches: isSearchRoute } = useMatchSearchRoutes()
     const { matches: isHomeRoute } = useMatchHomeRoute()
 
     const isHeaderScrolled = inject('isHeaderScrolled')
     const isMinScreenMd = isMinScreen('md', { shouldPassInSSR: true })
+    const headerHasTwoRows = inject('headerHasTwoRows')
     provide('isMinScreenMd', isMinScreenMd)
 
     const menuModalRef = ref(null)
@@ -185,10 +199,13 @@ const VHeader = defineComponent({
      * @returns {string}
      */
     const setInitialStatus = () => {
-      if (!isMinScreenMd.value) return ''
+      if (
+        !isMinScreenMd.value ||
+        !isSearchRoute.value ||
+        store.state.search.query.q === ''
+      )
+        return ''
       if (isFetching.value) return i18n.t('header.loading')
-      if (store.state.search.query.q === '') return ''
-      if (!isSearchRoute.value) return ''
       return mediaCount(resultsCount.value)
     }
 
@@ -216,23 +233,28 @@ const VHeader = defineComponent({
       },
     })
 
-    watch(
-      () => store.state.search.query.q,
-      (newSearchTerm) => {
-        if (newSearchTerm !== localSearchTerm.value) {
-          localSearchTerm.value = newSearchTerm
-        }
-      }
-    )
-
     const handleSearch = async () => {
-      // Don't do anything if search term hasn't changed
-      if (localSearchTerm.value === store.state.search.query.q) return
-
-      await store.dispatch(`${SEARCH}/${UPDATE_QUERY}`, {
-        q: localSearchTerm.value,
-      })
-
+      /**
+       * If search term hasn't changed, don't do anything on a search route,
+       * and change path to search path (all content types) from other pages.
+       * If is search route and search term hasn't changed: return
+       * If is not search route and search term hasn't changed: set the search type to all, set path.
+       * If is search route and search term changed: set the query, set path
+       * If is not search route, and search term changed: set search type to all, set query, set path
+       */
+      const searchTermChanged =
+        localSearchTerm.value !== store.state.search.query.q
+      if (isSearchRoute.value && !searchTermChanged) return
+      if (searchTermChanged) {
+        await store.dispatch(`${SEARCH}/${UPDATE_QUERY}`, {
+          q: localSearchTerm.value,
+        })
+      }
+      if (!isSearchRoute.value) {
+        await store.dispatch(`${SEARCH}/${UPDATE_QUERY}`, {
+          searchType: 'all',
+        })
+      }
       const searchType = store.state.search.searchType
       const newPath = app.localePath({
         path: `/search/${searchType === 'all' ? '' : searchType}`,
@@ -251,6 +273,7 @@ const VHeader = defineComponent({
 
       isHeaderScrolled,
       isMinScreenMd,
+      headerHasTwoRows,
 
       isSearchRoute,
       isHomeRoute,
