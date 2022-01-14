@@ -1,6 +1,6 @@
 <template>
   <header
-    class="fixed top-0 flex py-4 px-4 md:px-7 items-stretch z-40 w-full bg-white gap-x-2"
+    class="fixed top-0 flex py-4 px-4 md:px-7 items-stretch z-40 w-full bg-white md:gap-x-2"
     :class="{
       'border-b border-white': !isHeaderScrolled && !isMenuOpen,
       'border-b border-dark-charcoal-20':
@@ -15,7 +15,7 @@
         to="/"
         class="rounded-sm ring-offset-1 focus:outline-none focus-visible:ring focus-visible:ring-pink -ms-2 inline-flex items-center hover:bg-yellow"
         :class="{
-          'pe-3': !isHeaderScrolled || !isSearchRoute,
+          'md:pe-3': !isHeaderScrolled || !isSearchRoute,
           'md:px-0': isSearchRoute,
           'me-10 lg:me-30': !isSearchRoute,
         }"
