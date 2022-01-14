@@ -8,7 +8,7 @@
         <OpenverseLogoText class="w-80" />
       </h1>
       <h2>Browse through over 600 million items to reuse</h2>
-      <VSearchBar :value="featuredSearch.term" />
+      <VSearchBar :placeholder="featuredSearch.term" />
       <p>
         All Openverse content is under a creative Comons license or is in the
         public domain.
