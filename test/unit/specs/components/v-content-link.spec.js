@@ -37,6 +37,7 @@ describe('VContentLink', () => {
     render(VContentLink, options)
     const btn = screen.getByRole('radio')
     expect(btn).toHaveAttribute('aria-checked')
+    expect(btn.getAttribute('aria-checked')).toBeTruthy()
   })
 
   it('should emit selected event on click', () => {
