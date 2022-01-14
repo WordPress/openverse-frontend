@@ -19,6 +19,12 @@
       />
     </template>
     <template #content-switcher-content>
+      <h2
+        id="content-switcher-heading"
+        class="md:sr-only text-sr pb-4 uppercase font-semibold"
+      >
+        {{ $t('search-type.heading') }}
+      </h2>
       <VContentTypePopover :icons="icons" @select="selectContentType" />
     </template>
   </Component>

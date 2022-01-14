@@ -21,7 +21,7 @@
       :hide="close"
       :aria-label="$t('header.filter-button.simple')"
     >
-      <nav class="p-4">
+      <nav class="p-6" aria-labelledby="content-switcher-heading">
         <slot name="content-switcher-content" />
         <slot name="page-switcher-content" />
       </nav>

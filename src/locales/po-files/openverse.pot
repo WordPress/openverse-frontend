@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-01-14T06:16:01+00:00\n"
+"POT-Creation-Date: 2022-01-14T13:27:42+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -34,8 +34,14 @@ msgctxt "search-type.video"
 msgid "Videos"
 msgstr ""
 
+#: src/components/VHeader/VContentSwitcher/VDesktopSwitcher.vue:16
 msgctxt "search-type.label"
 msgid "Type of content to search"
+msgstr ""
+
+#: src/components/VHeader/VContentSwitcher.vue:26
+msgctxt "search-type.heading"
+msgid "Content types"
 msgstr ""
 
 #: src/components/VModal/VMobileModalContent.vue:30
@@ -2027,18 +2033,18 @@ msgctxt "header.api-nav-item"
 msgid "API"
 msgstr ""
 
-#: src/components/VHeader/VHeader.vue:189
+#: src/components/VHeader/VHeader.vue:208
 msgctxt "header.loading"
 msgid "Loading..."
 msgstr ""
 
-#: src/components/VHeader/VFilterButton.vue:85
+#: src/components/VHeader/VContentSwitcher/VMobileSwitcher.vue:22
 msgctxt "header.filter-button.simple"
 msgid "Filters"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VHeader/VFilterButton.vue:80
+#: src/components/VHeader/VFilterButton.vue:81
 msgctxt "header.filter-button.with-count"
 msgid "###count### Filter | ###count### Filters"
 msgstr ""

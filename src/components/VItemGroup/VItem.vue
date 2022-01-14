@@ -38,7 +38,7 @@
       </div>
       <VIcon
         v-if="!isInPopover && selected && contextProps.direction === 'vertical'"
-        :icon-path="check"
+        :icon-path="checkmark"
       />
     </VButton>
   </div>
@@ -52,7 +52,7 @@ import {
   computed,
   watch,
 } from '@nuxtjs/composition-api'
-import check from '~/assets/icons/check.svg'
+import checkmark from '~/assets/icons/checkmark.svg'
 import VButton from '~/components/VButton.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'
 import {
@@ -137,7 +137,7 @@ export default defineComponent({
     })
 
     return {
-      check,
+      checkmark,
       contextProps,
       isInPopover,
       isFocused,
