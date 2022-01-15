@@ -36,10 +36,7 @@ export default {
   },
   methods: {
     scrollToTop() {
-      const elementToScroll = this.isFilterVisible
-        ? this.$el.parentElement.parentElement
-        : this.$el.closest('main')
-      elementToScroll.scrollTo({
+      this.$el.parentElement.scrollTo({
         top: 0,
         left: 0,
         behavior: 'smooth',

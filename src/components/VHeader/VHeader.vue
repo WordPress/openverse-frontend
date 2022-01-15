@@ -1,6 +1,6 @@
 <template>
   <header
-    class="fixed top-0 flex py-4 px-4 md:px-7 items-stretch z-40 w-full bg-white gap-x-2"
+    class="flex py-4 px-4 md:px-7 items-stretch z-40 w-full bg-white md:gap-x-2"
     :class="{
       'border-b border-white': !isHeaderScrolled && !isMenuOpen,
       'border-b border-dark-charcoal-20':
@@ -13,11 +13,10 @@
     <div class="one-third items-stretch flex">
       <NuxtLink
         to="/"
-        class="rounded-sm ring-offset-1 focus:outline-none focus-visible:ring focus-visible:ring-pink -ms-2 inline-flex items-center hover:bg-yellow"
+        class="rounded-sm ring-offset-1 focus:outline-none focus-visible:ring focus-visible:ring-pink -ms-2 inline-flex items-center hover:bg-yellow mr-auto"
         :class="{
-          'pe-3': !isHeaderScrolled || !isSearchRoute,
-          'md:px-0': isSearchRoute,
-          'me-10 lg:me-30': !isSearchRoute,
+          'pe-3 md:pe-0': isSearchRoute && !isHeaderScrolled,
+          'md:pe-3': !isSearchRoute,
         }"
       >
         <VLogoLoader :status="isFetching ? 'loading' : 'idle'" />
@@ -44,7 +43,7 @@
       @submit="handleSearch"
     >
       <span
-        v-if="searchStatus"
+        v-show="searchStatus"
         class="info font-semibold text-xs text-dark-charcoal-70 group-hover:text-dark-charcoal group-focus:text-dark-charcoal mx-4"
       >
         {{ searchStatus }}
@@ -61,7 +60,6 @@
 </template>
 
 <script>
-import OpenverseLogoText from '~/assets/icons/openverse-logo-text.svg?inline'
 import {
   computed,
   defineComponent,
@@ -85,6 +83,7 @@ import {
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
 
 import closeIcon from '~/assets/icons/close.svg'
+import OpenverseLogoText from '~/assets/icons/openverse-logo-text.svg?inline'
 
 import VSearchBar from '~/components/VHeader/VSearchBar/VSearchBar'
 import VHeaderFilter from '~/components/VHeader/VHeaderFilter.vue'
@@ -118,6 +117,7 @@ const VHeader = defineComponent({
   setup() {
     const { app, i18n, store } = useContext()
     const router = useRouter()
+
     const { matches: isSearchRoute } = useMatchSearchRoutes()
     const { matches: isHomeRoute } = useMatchHomeRoute()
 
@@ -185,10 +185,13 @@ const VHeader = defineComponent({
      * @returns {string}
      */
     const setInitialStatus = () => {
-      if (!isMinScreenMd.value) return ''
+      if (
+        !isMinScreenMd.value ||
+        !isSearchRoute.value ||
+        store.state.search.query.q === ''
+      )
+        return ''
       if (isFetching.value) return i18n.t('header.loading')
-      if (store.state.search.query.q === '') return ''
-      if (!isSearchRoute.value) return ''
       return mediaCount(resultsCount.value)
     }
 
@@ -226,13 +229,27 @@ const VHeader = defineComponent({
     )
 
     const handleSearch = async () => {
-      // Don't do anything if search term hasn't changed
-      if (localSearchTerm.value === store.state.search.query.q) return
-
-      await store.dispatch(`${SEARCH}/${UPDATE_QUERY}`, {
-        q: localSearchTerm.value,
-      })
-
+      /**
+       * If search term hasn't changed, don't do anything on a search route,
+       * and change path to search path (all content types) from other pages.
+       * If is search route and search term hasn't changed: return
+       * If is not search route and search term hasn't changed: set the search type to all, set path.
+       * If is search route and search term changed: set the query, set path
+       * If is not search route, and search term changed: set search type to all, set query, set path
+       */
+      const searchTermChanged =
+        localSearchTerm.value !== store.state.search.query.q
+      if (isSearchRoute.value && !searchTermChanged) return
+      if (searchTermChanged) {
+        await store.dispatch(`${SEARCH}/${UPDATE_QUERY}`, {
+          q: localSearchTerm.value,
+        })
+      }
+      if (!isSearchRoute.value) {
+        await store.dispatch(`${SEARCH}/${UPDATE_QUERY}`, {
+          searchType: 'all',
+        })
+      }
       const searchType = store.state.search.searchType
       const newPath = app.localePath({
         path: `/search/${searchType === 'all' ? '' : searchType}`,

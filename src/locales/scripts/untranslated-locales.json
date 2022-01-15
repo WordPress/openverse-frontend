@@ -27,15 +27,6 @@
     "file": "nn.json"
   },
   {
-    "code": "pt-ao",
-    "name": "Portuguese (Angola)",
-    "iso": "pt",
-    "wpLocale": "pt_AO",
-    "dir": "ltr",
-    "translated": 0,
-    "file": "pt-ao.json"
-  },
-  {
     "code": "nb",
     "name": "Norwegian (Bokmål)",
     "iso": "nb",
@@ -43,6 +34,15 @@
     "dir": "ltr",
     "translated": 0,
     "file": "nb.json"
+  },
+  {
+    "code": "pl",
+    "name": "Polish",
+    "iso": "pl",
+    "wpLocale": "pl_PL",
+    "dir": "ltr",
+    "translated": 0,
+    "file": "pl.json"
   },
   {
     "code": "sna",
@@ -130,13 +130,12 @@
     "file": "srd.json"
   },
   {
-    "code": "sa-in",
-    "name": "Sanskrit",
-    "iso": "sa",
-    "wpLocale": "sa_IN",
+    "code": "pcd",
+    "name": "Picard",
+    "wpLocale": "pcd",
     "dir": "ltr",
     "translated": 0,
-    "file": "sa-in.json"
+    "file": "pcd.json"
   },
   {
     "code": "rhg",
@@ -147,13 +146,12 @@
     "file": "rhg.json"
   },
   {
-    "code": "pl",
-    "name": "Polish",
-    "iso": "pl",
-    "wpLocale": "pl_PL",
+    "code": "pirate",
+    "name": "English (Pirate)",
+    "wpLocale": "art_xpirate",
     "dir": "ltr",
     "translated": 0,
-    "file": "pl.json"
+    "file": "pirate.json"
   },
   {
     "code": "roh",
@@ -165,14 +163,6 @@
     "file": "roh.json"
   },
   {
-    "code": "pirate",
-    "name": "English (Pirate)",
-    "wpLocale": "art_xpirate",
-    "dir": "ltr",
-    "translated": 0,
-    "file": "pirate.json"
-  },
-  {
     "code": "sah",
     "name": "Sakha",
     "wpLocale": "sah",
@@ -181,21 +171,13 @@
     "file": "sah.json"
   },
   {
-    "code": "pcd",
-    "name": "Picard",
-    "wpLocale": "pcd",
+    "code": "sa-in",
+    "name": "Sanskrit",
+    "iso": "sa",
+    "wpLocale": "sa_IN",
     "dir": "ltr",
     "translated": 0,
-    "file": "pcd.json"
-  },
-  {
-    "code": "ory",
-    "name": "Oriya",
-    "iso": "or",
-    "wpLocale": "ory",
-    "dir": "ltr",
-    "translated": 0,
-    "file": "ory.json"
+    "file": "sa-in.json"
   },
   {
     "code": "fa-af",
@@ -205,6 +187,15 @@
     "dir": "rtl",
     "translated": 0,
     "file": "fa-af.json"
+  },
+  {
+    "code": "ory",
+    "name": "Oriya",
+    "iso": "or",
+    "wpLocale": "ory",
+    "dir": "ltr",
+    "translated": 0,
+    "file": "ory.json"
   },
   {
     "code": "skr",
@@ -231,6 +222,15 @@
     "dir": "rtl",
     "translated": 0,
     "file": "ps.json"
+  },
+  {
+    "code": "pt-ao",
+    "name": "Portuguese (Angola)",
+    "iso": "pt",
+    "wpLocale": "pt_AO",
+    "dir": "ltr",
+    "translated": 0,
+    "file": "pt-ao.json"
   },
   {
     "code": "pap-cw",
