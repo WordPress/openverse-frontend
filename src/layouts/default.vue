@@ -5,9 +5,7 @@
     <VHeader v-if="!isHomeRoute" />
     <main
       class="main embedded overflow-x-hidden"
-      :class="{
-        'has-sidebar': isSidebarVisible,
-      }"
+      :class="{ 'has-sidebar': isSidebarVisible }"
     >
       <Nuxt ref="mainContentRef" class="min-w-0 main-page" />
       <VSidebarTarget class="sidebar" />
