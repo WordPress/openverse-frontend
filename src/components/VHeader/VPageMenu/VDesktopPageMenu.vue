@@ -5,9 +5,9 @@
     :label="$t('header.aria.menu')"
   >
     <template #trigger="{ a11yProps }">
-      <slot name="page-switcher-button" :a11yProps="a11yProps" />
+      <VPageMenuButton :a11y-props="a11yProps" />
     </template>
-    <slot name="page-switcher-content" />
+    <VPageMenuPopover />
   </VPopover>
 </template>
 
@@ -15,10 +15,14 @@
 import { ref } from '@nuxtjs/composition-api'
 
 import VPopover from '~/components/VPopover/VPopover.vue'
+import VPageMenuButton from '@/components/VHeader/VPageMenu/VPageMenuButton.vue'
+import VPageMenuPopover from '@/components/VHeader/VPageMenu/VPageMenuPopover.vue'
 
 export default {
   name: 'VDesktopPageMenu',
   components: {
+    VPageMenuButton,
+    VPageMenuPopover,
     VPopover,
   },
   setup() {

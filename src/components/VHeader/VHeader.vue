@@ -1,11 +1,10 @@
 <template>
   <header
-    class="flex py-4 px-4 md:px-7 items-stretch z-40 w-full bg-white md:gap-x-2"
+    class="flex py-4 px-4 md:px-7 items-stretch z-40 w-full bg-white md:gap-x-2 flex-wrap gap-y-4"
     :class="{
       'border-b border-white': !isHeaderScrolled && !isMenuOpen,
       'border-b border-dark-charcoal-20':
         isSearchRoute && (isHeaderScrolled || isMenuOpen),
-      'flex-wrap gap-y-4': !isMinScreenMd && !isHeaderScrolled,
       'justify-between': isSearchRoute,
       'justify-start': !isSearchRoute,
     }"
@@ -50,10 +49,8 @@
       </span>
     </VSearchBar>
 
-    <VPageMenu v-if="!isSearchRoute" />
-
-    <VContentSwitcher
-      v-if="isSearchRoute"
+    <VHeaderMenu
+      :is-search-route="isSearchRoute"
       class="one-third"
       @open="openMenuModal(menus.CONTENT_SWITCHER)"
       @close="close()"
@@ -93,11 +90,10 @@ import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-vis
 import closeIcon from '~/assets/icons/close.svg'
 import OpenverseLogoText from '~/assets/icons/openverse-logo-text.svg?inline'
 
-import VContentSwitcher from '~/components/VHeader/VContentSwitcher.vue'
+import VHeaderMenu from '~/components/VHeader/VHeaderMenu.vue'
 import VHeaderFilter from '~/components/VHeader/VHeaderFilter.vue'
 import VLogoLoader from '~/components/VLogoLoader/VLogoLoader.vue'
 import VSearchBar from '~/components/VHeader/VSearchBar/VSearchBar.vue'
-import VPageMenu from '~/components/VHeader/VPageMenu.vue'
 
 const i18nKeys = {
   [AUDIO]: {
@@ -120,11 +116,10 @@ const VHeader = defineComponent({
   name: 'VHeader',
   components: {
     VHeaderFilter,
-    VContentSwitcher,
+    VHeaderMenu,
     VLogoLoader,
     VSearchBar,
     OpenverseLogoText,
-    VPageMenu,
   },
   setup() {
     const { app, i18n, store } = useContext()

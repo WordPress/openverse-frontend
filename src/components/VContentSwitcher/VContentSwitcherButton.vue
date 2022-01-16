@@ -22,11 +22,11 @@
 </template>
 <script>
 import { computed, inject, useContext } from '@nuxtjs/composition-api'
+import useContentType from '~/composables/use-content-type'
 import caretDownIcon from '~/assets/icons/caret-down.svg'
 
 import VButton from '~/components/VButton.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'
-import useContentType from '@/composables/use-content-type'
 
 export default {
   name: 'VContentSwitcherButton',
