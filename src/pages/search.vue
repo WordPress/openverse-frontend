@@ -32,6 +32,7 @@ import {
   UPDATE_SEARCH_TYPE,
 } from '~/constants/action-types'
 import { ALL_MEDIA, AUDIO, IMAGE } from '~/constants/media'
+import { areQueriesEqual } from '~/utils/search-query-transform'
 import { mapActions, mapGetters, mapState } from 'vuex'
 import { MEDIA, SEARCH } from '~/constants/store-modules'
 
@@ -42,7 +43,6 @@ import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-vis
 import VScrollButton from '~/components/VScrollButton.vue'
 import VSearchGrid from '~/components/VSearchGrid.vue'
 import VFilterDisplay from '~/components/VFilters/VFilterDisplay.vue'
-import { areQueriesEqual } from '@/utils/search-query-transform'
 
 const BrowsePage = {
   name: 'browse-page',

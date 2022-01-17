@@ -10,25 +10,11 @@
         :active-item="activeItem"
       />
     </template>
-    <VItemGroup
-      direction="vertical"
+    <VContentTypes
       :bordered="false"
-      type="radiogroup"
-      class="z-10"
-    >
-      <VItem
-        v-for="(item, idx) in content.types"
-        :key="idx"
-        :selected="item === activeItem"
-        :is-first="idx === 0"
-        @click.native="handleClick(item)"
-      >
-        <VIcon :icon-path="content.icons[item]" class="me-2 ms-4 my-4" />
-        <span class="pe-20 py-4 font-semibold">{{
-          $t(`search-type.${item}`)
-        }}</span>
-      </VItem>
-    </VItemGroup>
+      :active-item="activeItem"
+      @select="selectItem"
+    />
   </VPopover>
 </template>
 
@@ -66,14 +52,14 @@ export default {
       }
     }
 
-    const handleClick = (item) => {
+    const selectItem = (item) => {
       emit('select', item)
     }
 
     return {
       content,
       checkIcon,
-      handleClick,
+      selectItem,
       contentMenuPopover,
       closeMenu,
     }

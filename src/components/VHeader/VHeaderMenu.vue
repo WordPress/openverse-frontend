@@ -2,7 +2,7 @@
 import { inject, onMounted, ref } from '@nuxtjs/composition-api'
 import useContentType from '~/composables/use-content-type'
 
-import VMobileContentSwitcher from '~/components/VHeader/VContentSwitcher/VMobileContentSwitcher.vue'
+import VMobileContentSwitcher from '@/components/VContentSwitcher/VMobileMenuModal.vue'
 import VContentSwitcherPopover from '~/components/VContentSwitcher/VContentSwitcherPopover.vue'
 import VDesktopPageMenu from '~/components/VHeader/VPageMenu/VDesktopPageMenu.vue'
 import VMobilePageMenu from '~/components/VHeader/VPageMenu/VMobilePageMenu.vue'
@@ -62,6 +62,7 @@ export default {
       ])
     } else {
       return h(VMobileContentSwitcher, {
+        ref: 'menuModalRef',
         on: {
           open: () => {
             console.log('mobile open')

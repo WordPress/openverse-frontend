@@ -7,7 +7,7 @@
     <template #trigger="{ a11yProps }">
       <VPageMenuButton :a11y-props="a11yProps" />
     </template>
-    <VPageMenuPopover />
+    <VPageList layout="vertical" @click="closeMenu" />
   </VPopover>
 </template>
 
@@ -15,30 +15,30 @@
 import { ref } from '@nuxtjs/composition-api'
 
 import VPopover from '~/components/VPopover/VPopover.vue'
-import VPageMenuButton from '@/components/VHeader/VPageMenu/VPageMenuButton.vue'
-import VPageMenuPopover from '@/components/VHeader/VPageMenu/VPageMenuPopover.vue'
+import VPageMenuButton from '~/components/VHeader/VPageMenu/VPageMenuButton.vue'
+import VPageList from '~/components/VHeader/VPageMenu/VPageList.vue'
 
 export default {
   name: 'VDesktopPageMenu',
   components: {
     VPageMenuButton,
-    VPageMenuPopover,
+    VPageList,
     VPopover,
   },
   setup() {
-    const contentMenuPopover = ref(null)
+    const pageMenuPopover = ref(null)
 
     /**
      * Only the contentMenuPopover needs to be closed programmatically
      */
     const closeMenu = () => {
-      if (contentMenuPopover.value) {
-        contentMenuPopover.value.close()
+      if (pageMenuPopover.value) {
+        pageMenuPopover.value.close()
       }
     }
 
     return {
-      contentMenuPopover,
+      pageMenuPopover,
       closeMenu,
     }
   },

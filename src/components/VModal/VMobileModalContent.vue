@@ -13,7 +13,7 @@
           @keydown="onKeyDown"
           @blur="onBlur"
         >
-          <div class="w-full flex justify-between h-20 px-6 py-6 shrink-0">
+          <div class="w-full flex justify-between h-20 px-4 py-6 shrink-0">
             <NuxtLink
               to="/"
               class="rounded-sm ring-offset-1 focus:outline-none focus-visible:ring focus-visible:ring-pink -ms-2 inline-flex items-center hover:bg-yellow"

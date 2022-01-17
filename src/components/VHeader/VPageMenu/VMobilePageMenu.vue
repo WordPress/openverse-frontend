@@ -2,14 +2,10 @@
   <div ref="nodeRef" class="flex justify-center">
     <div
       ref="triggerContainerRef"
-      class="flex items-stretch"
+      class="flex items-stretch flex-shrink-0"
       @click="onTriggerClick"
     >
-      <slot
-        name="page-switcher-button"
-        :a11y-props="triggerA11yProps"
-        :visible="visibleRef"
-      />
+      <VPageMenuButton :a11y-props="triggerA11yProps" />
     </div>
     <VMobileModalContent
       :visible="visibleRef"
@@ -22,7 +18,7 @@
       :aria-label="$t('header.filter-button.simple')"
     >
       <nav class="p-4">
-        <slot name="page-switcher-content" />
+        <VPageList layout="columns" @click="closeMenu" />
       </nav>
     </VMobileModalContent>
   </div>
@@ -30,13 +26,15 @@
 
 <script>
 import { computed, reactive, ref, watch } from '@nuxtjs/composition-api'
+import { useBodyScrollLock } from '~/composables/use-body-scroll-lock'
 
-import VMobileModalContent from '@/components/VModal/VMobileModalContent'
-import { useBodyScrollLock } from '@/composables/use-body-scroll-lock'
+import VMobileModalContent from '~/components/VModal/VMobileModalContent.vue'
+import VPageMenuButton from '~/components/VHeader/VPageMenu/VPageMenuButton.vue'
+import VPageList from '~/components/VHeader/VPageMenu/VPageList.vue'
 
 export default {
   name: 'VMobilePageMenu',
-  components: { VMobileModalContent },
+  components: { VMobileModalContent, VPageMenuButton, VPageList },
   props: {
     /**
      * Whether the popover should hide when the <kbd>Escape</kbd> key is pressed.

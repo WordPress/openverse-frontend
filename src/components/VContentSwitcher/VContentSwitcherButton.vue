@@ -14,21 +14,21 @@
     }}</span>
     <VIcon
       v-show="isMinScreenMd"
-      class="text-dark-charcoal-40"
-      :class="{ 'ms-2': isMinScreenMd }"
+      class="text-dark-charcoal-40 md:ms-2"
       :icon-path="caretDownIcon"
     />
   </VButton>
 </template>
 <script>
+import { ALL_MEDIA, AUDIO, IMAGE } from '@/constants/media'
 import { computed, inject, useContext } from '@nuxtjs/composition-api'
 import useContentType from '~/composables/use-content-type'
+import { isMinScreen } from '~/composables/use-media-query'
+
 import caretDownIcon from '~/assets/icons/caret-down.svg'
 
 import VButton from '~/components/VButton.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'
-import { isMinScreen } from '@/composables/use-media-query'
-import { ALL_MEDIA, AUDIO, IMAGE } from '@/constants/media'
 
 export default {
   name: 'VContentSwitcherButton',

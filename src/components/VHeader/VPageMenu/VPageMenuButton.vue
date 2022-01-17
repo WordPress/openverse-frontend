@@ -5,7 +5,7 @@
     class="font-semibold p-2 w-12 leading-7"
     :aria-label="buttonLabel"
     v-bind="a11yProps"
-    @click="emit('click')"
+    @click="$emit('click')"
   >
     <VIcon :icon-path="ellipsisIcon" />
   </VButton>
@@ -24,13 +24,12 @@ export default {
   props: {
     a11yProps: {},
   },
-  setup(_, { emit }) {
+  setup() {
     const { i18n } = useContext()
     const buttonLabel = computed(() => i18n.t('header.aria.menu'))
     return {
       buttonLabel,
       ellipsisIcon,
-      emit,
     }
   },
 }

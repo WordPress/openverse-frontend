@@ -1,7 +1,8 @@
 <template>
   <header
-    class="flex py-4 px-4 md:px-7 items-stretch z-40 w-full bg-white md:gap-x-2 flex-wrap gap-y-4"
+    class="flex py-4 px-4 md:px-7 items-stretch z-40 w-full bg-white md:gap-x-2 gap-y-4"
     :class="{
+      'flex-wrap': isSearchRoute,
       'border-b border-white': !isHeaderScrolled && !isMenuOpen,
       'border-b border-dark-charcoal-20':
         isSearchRoute && (isHeaderScrolled || isMenuOpen),
@@ -9,7 +10,7 @@
       'justify-start': !isSearchRoute,
     }"
   >
-    <div class="one-third items-stretch flex">
+    <div class="items-stretch flex" :class="{ 'one-third': isSearchRoute }">
       <NuxtLink
         to="/"
         class="rounded-sm ring-offset-1 focus:outline-none focus-visible:ring focus-visible:ring-pink -ms-2 inline-flex items-center hover:bg-yellow mr-auto"
@@ -51,13 +52,14 @@
 
     <VHeaderMenu
       :is-search-route="isSearchRoute"
-      class="one-third"
+      :class="{ 'one-third': isSearchRoute }"
       @open="openMenuModal(menus.CONTENT_SWITCHER)"
       @close="close()"
     />
     <VHeaderFilter
       v-if="isSearchRoute"
-      class="one-third text-sr md:text-base"
+      class="text-sr md:text-base"
+      :class="{ 'one-third': isSearchRoute }"
       @open="openMenuModal(menus.FILTERS)"
       @close="close()"
     />

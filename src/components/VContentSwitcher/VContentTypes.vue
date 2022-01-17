@@ -1,16 +1,14 @@
 <template>
   <VItemGroup
     direction="vertical"
-    :bordered="!isMinScreenMd"
+    :bordered="bordered"
     type="radiogroup"
     class="z-10"
   >
     <VItem
       v-for="(item, idx) in content.types"
       :key="idx"
-      as="NuxtLink"
-      v-bind="linkProps(item)"
-      :selected="item === content.activeType.value"
+      :selected="item === activeItem"
       :is-first="idx === 0"
       @click.native="handleClick(item)"
     >
@@ -22,9 +20,8 @@
   </VItemGroup>
 </template>
 <script>
-import { useContext, useRoute } from '@nuxtjs/composition-api'
+import { supportedContentTypes } from '~/constants/media'
 import useContentType from '~/composables/use-content-type'
-import { isMinScreen } from '~/composables/use-media-query'
 
 import checkIcon from '~/assets/icons/checkmark.svg'
 
@@ -33,31 +30,30 @@ import VItem from '~/components/VItemGroup/VItem.vue'
 import VItemGroup from '~/components/VItemGroup/VItemGroup.vue'
 
 export default {
-  name: 'VContentTypePopover',
+  name: 'VContentTypes',
   components: { VIcon, VItem, VItemGroup },
+  props: {
+    bordered: {
+      type: Boolean,
+      default: true,
+      // !isMinScreenMd
+    },
+    activeItem: {
+      type: String,
+      required: true,
+      validator: (val) => supportedContentTypes.includes(val),
+    },
+  },
   setup(_, { emit }) {
-    const { app } = useContext()
-    const route = useRoute()
     const content = useContentType()
-    const isMinScreenMd = isMinScreen('md')
 
     const handleClick = (item) => {
       emit('select', item)
-    }
-    const linkProps = (item) => {
-      const typePath = item === 'all' ? '' : item
-      const itemPath = app.localePath({
-        path: `/search/${typePath}`,
-        query: route.value.query,
-      })
-      return { to: itemPath }
     }
     return {
       content,
       checkIcon,
       handleClick,
-      isMinScreenMd,
-      linkProps,
     }
   },
 }
