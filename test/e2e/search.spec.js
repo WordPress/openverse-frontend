@@ -50,6 +50,8 @@ test('navigates to the image detail page correctly', async ({ page }) => {
   const imgTitle = await figure.locator('img').getAttribute('alt')
 
   await page.locator('figure a').first().click()
+  // Until the image is loaded, the heading is 'Image' instead of the actual title
+  await page.waitForNavigation()
   const headingText = await page.locator('h1').textContent()
   expect(headingText.trim().toLowerCase()).toEqual(imgTitle.toLowerCase())
   // Renders the breadcrumb link
