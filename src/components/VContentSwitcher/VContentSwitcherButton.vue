@@ -1,7 +1,7 @@
 <template>
   <VButton
     class="flex flex-row font-semibold px-3 py-2 text-sr md:text-base"
-    :class="{ 'w-12': isHeaderScrolled && !isMinScreenMd }"
+    :class="{ 'w-12': isIconButton }"
     :variant="buttonVariant"
     size="disabled"
     :aria-label="buttonLabel"
@@ -27,6 +27,7 @@ import caretDownIcon from '~/assets/icons/caret-down.svg'
 
 import VButton from '~/components/VButton.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'
+import { isMinScreen } from '@/composables/use-media-query'
 
 export default {
   name: 'VContentSwitcherButton',
@@ -39,13 +40,15 @@ export default {
   },
   setup() {
     const { i18n } = useContext()
-    const isHeaderScrolled = inject('isHeaderScrolled')
-    const isMinScreenMd = inject('isMinScreenMd')
+    const isHeaderScrolled = inject('isHeaderScrolled', null)
+    const isMinScreenMd = isMinScreen('md', { shouldPassInSSR: true })
 
     const { icons, activeType: activeItem } = useContentType()
-
+    const isIconButton = computed(
+      () => isHeaderScrolled?.value && !isMinScreenMd.value
+    )
     const buttonVariant = computed(() => {
-      return isMinScreenMd.value && !isHeaderScrolled.value
+      return isMinScreenMd.value && !isHeaderScrolled?.value
         ? 'tertiary'
         : 'action-menu'
     })
@@ -64,6 +67,7 @@ export default {
 
     return {
       buttonVariant,
+      isIconButton,
       buttonLabel,
       caretDownIcon,
       showLabel,

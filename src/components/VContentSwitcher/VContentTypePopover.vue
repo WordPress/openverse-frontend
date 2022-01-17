@@ -24,13 +24,13 @@
 <script>
 import { useContext, useRoute } from '@nuxtjs/composition-api'
 import useContentType from '~/composables/use-content-type'
+import { isMinScreen } from '~/composables/use-media-query'
 
 import checkIcon from '~/assets/icons/checkmark.svg'
 
 import VIcon from '~/components/VIcon/VIcon.vue'
 import VItem from '~/components/VItemGroup/VItem.vue'
 import VItemGroup from '~/components/VItemGroup/VItemGroup.vue'
-import { isMinScreen } from '@/composables/use-media-query'
 
 export default {
   name: 'VContentTypePopover',
