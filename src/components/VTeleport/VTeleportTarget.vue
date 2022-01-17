@@ -11,7 +11,6 @@ export default defineComponent({
   },
   data: () => ({ children: [] }),
   created() {
-    console.log('created')
     if (this.name in targets) {
       warn(
         `VTeleportTarget: duplicate name ${this.name}, deleting previous teleport`
