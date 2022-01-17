@@ -13,14 +13,13 @@
       buttonLabel
     }}</span>
     <VIcon
-      v-show="isMinScreenMd"
-      class="text-dark-charcoal-40 md:ms-2"
+      class="hidden md:block text-dark-charcoal-40 md:ms-2"
       :icon-path="caretDownIcon"
     />
   </VButton>
 </template>
 <script>
-import { ALL_MEDIA, AUDIO, IMAGE } from '@/constants/media'
+import { ALL_MEDIA, AUDIO, IMAGE } from '~/constants/media'
 import { computed, inject, useContext } from '@nuxtjs/composition-api'
 import useContentType from '~/composables/use-content-type'
 import { isMinScreen } from '~/composables/use-media-query'
