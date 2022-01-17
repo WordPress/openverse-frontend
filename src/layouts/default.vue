@@ -13,6 +13,7 @@
       <VSidebarTarget class="sidebar" />
     </main>
     <VModalTarget class="modal" />
+    <VGlobalAudioSection />
   </div>
 </template>
 <script>
@@ -39,6 +40,7 @@ import TranslationStatusBanner from '~/components/TranslationStatusBanner.vue'
 import VHeader from '~/components/VHeader/VHeader.vue'
 import VModalTarget from '~/components/VModal/VModalTarget.vue'
 import VSidebarTarget from '~/components/VModal/VSidebarTarget.vue'
+import VGlobalAudioSection from '~/components/VGlobalAudioSection/VGlobalAudioSection.vue'
 
 const embeddedPage = {
   name: 'embedded',
@@ -48,6 +50,7 @@ const embeddedPage = {
     VHeader,
     VModalTarget,
     VSidebarTarget,
+    VGlobalAudioSection,
   },
   layout: 'embedded',
   mixins: [iframeHeight],
