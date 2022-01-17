@@ -650,7 +650,8 @@
   "audio-categories": {
     "title": "Audio Category",
     "music": "Music",
-    "sound-effects": "Sound Effects",
+    "sound": "Sound effects",
+    "sound-effects": "Sound effects",
     "podcast": "Podcast",
     "pronunciation": "Pronunciation"
   },
