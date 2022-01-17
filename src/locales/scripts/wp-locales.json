@@ -358,7 +358,7 @@
     "facebookLocale": "cs_CZ",
     "wpLocale": "cs_CZ",
     "code": "cs",
-    "translated": 97
+    "translated": 100
   },
   "cy": {
     "name": "Welsh",
@@ -385,7 +385,7 @@
     "facebookLocale": "da_DK",
     "wpLocale": "da_DK",
     "code": "da",
-    "translated": 95
+    "translated": 98
   },
   "de_AT": {
     "name": "German (Austria)",
@@ -419,7 +419,7 @@
     "facebookLocale": "de_DE",
     "wpLocale": "de_DE",
     "code": "de",
-    "translated": 97
+    "translated": 100
   },
   "dsb": {
     "name": "Lower Sorbian",
@@ -528,7 +528,7 @@
     "googleCode": "en",
     "wpLocale": "en_ZA",
     "code": "en-za",
-    "translated": 96
+    "translated": 95
   },
   "eo": {
     "name": "Esperanto",
@@ -553,7 +553,7 @@
     "facebookLocale": "es_LA",
     "wpLocale": "es_AR",
     "code": "es-ar",
-    "translated": 95
+    "translated": 94
   },
   "es_CL": {
     "name": "Spanish (Chile)",
@@ -670,7 +670,7 @@
     "facebookLocale": "es_MX",
     "wpLocale": "es_MX",
     "code": "es-mx",
-    "translated": 74
+    "translated": 85
   },
   "es_PE": {
     "name": "Spanish (Peru)",
@@ -848,7 +848,7 @@
     "facebookLocale": "fr_FR",
     "wpLocale": "fr_FR",
     "code": "fr",
-    "translated": 86
+    "translated": 92
   },
   "frp": {
     "name": "Arpitan",
@@ -941,7 +941,7 @@
     "facebookLocale": "gl_ES",
     "wpLocale": "gl_ES",
     "code": "gl",
-    "translated": 100
+    "translated": 99
   },
   "gu": {
     "name": "Gujarati",
@@ -1576,7 +1576,7 @@
     "googleCode": "nl",
     "wpLocale": "nl_BE",
     "code": "nl-be",
-    "translated": 23
+    "translated": 37
   },
   "nl_NL": {
     "name": "Dutch",
@@ -1589,7 +1589,7 @@
     "facebookLocale": "nl_NL",
     "wpLocale": "nl_NL",
     "code": "nl",
-    "translated": 94
+    "translated": 100
   },
   "nn_NO": {
     "name": "Norwegian (Nynorsk)",
@@ -1798,7 +1798,7 @@
     "facebookLocale": "ru_RU",
     "wpLocale": "ru_RU",
     "code": "ru",
-    "translated": 51
+    "translated": 50
   },
   "sa_IN": {
     "name": "Sanskrit",
@@ -2002,7 +2002,7 @@
     "facebookLocale": "sv_SE",
     "wpLocale": "sv_SE",
     "code": "sv",
-    "translated": 74
+    "translated": 73
   },
   "sw": {
     "name": "Swahili",

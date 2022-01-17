@@ -55,6 +55,7 @@ export default {
       return h('div', { class: 'flex flex-grow justify-between' }, [
         h(VDesktopPageMenu),
         h(VContentSwitcherPopover, {
+          props: { activeItem: this.content.activeType.value },
           ref: 'menuModalRef',
           on: { select: this.selectContentType },
         }),

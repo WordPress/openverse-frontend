@@ -28,6 +28,7 @@ import caretDownIcon from '~/assets/icons/caret-down.svg'
 import VButton from '~/components/VButton.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'
 import { isMinScreen } from '@/composables/use-media-query'
+import { ALL_MEDIA, AUDIO, IMAGE } from '@/constants/media'
 
 export default {
   name: 'VContentSwitcherButton',
@@ -37,8 +38,13 @@ export default {
       type: Object,
       required: true,
     },
+    activeItem: {
+      type: String,
+      default: ALL_MEDIA,
+      validator: (val) => [ALL_MEDIA, IMAGE, AUDIO].includes(val),
+    },
   },
-  setup() {
+  setup(props) {
     const { i18n } = useContext()
     const isHeaderScrolled = inject('isHeaderScrolled', null)
     const isMinScreenMd = isMinScreen('md', { shouldPassInSSR: true })
@@ -58,7 +64,7 @@ export default {
         audio: 'search-type.audio',
         all: 'search-type.all',
         video: 'search-type.video',
-      }[activeItem.value]
+      }[props.activeItem]
       return i18n.t(labelKey)
     })
     const showLabel = computed(

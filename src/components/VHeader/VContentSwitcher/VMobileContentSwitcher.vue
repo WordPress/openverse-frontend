@@ -47,7 +47,7 @@
           <VItem
             v-for="(page, idx) in pages.all"
             :key="page.id"
-            class="'w-1/2'"
+            class="w-1/2"
             :selected="page.id === pages.current"
             :is-first="idx === 0"
             v-bind="getLinkProps(page)"

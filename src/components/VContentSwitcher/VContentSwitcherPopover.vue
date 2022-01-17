@@ -5,7 +5,10 @@
     :label="$t('search-type.label')"
   >
     <template #trigger="{ a11yProps }">
-      <VContentSwitcherButton :a11y-props="a11yProps" />
+      <VContentSwitcherButton
+        :a11y-props="a11yProps"
+        :active-item="activeItem"
+      />
     </template>
     <VItemGroup
       direction="vertical"
@@ -16,7 +19,7 @@
       <VItem
         v-for="(item, idx) in content.types"
         :key="idx"
-        :selected="item === content.activeType.value"
+        :selected="item === activeItem"
         :is-first="idx === 0"
         @click.native="handleClick(item)"
       >
@@ -43,10 +46,17 @@ export default {
     VContentSwitcherButton,
     VPopover,
   },
-  setup(_, { emit }) {
+  props: {
+    activeItem: {
+      type: String,
+      required: true,
+    },
+  },
+  setup(props, { emit }) {
     const content = useContentType()
 
     const contentMenuPopover = ref(null)
+
     /**
      * Only the contentMenuPopover needs to be closed programmatically
      */
