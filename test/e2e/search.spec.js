@@ -50,7 +50,8 @@ test('navigates to the image detail page correctly', async ({ page }) => {
   const imgTitle = await figure.locator('img').getAttribute('alt')
 
   await page.locator('figure a').first().click()
-  await expect(page.locator('h1')).toHaveText(imgTitle)
+  const headingText = await page.locator('h1').textContent()
+  expect(headingText.trim().toLowerCase()).toEqual(imgTitle.toLowerCase())
   // Renders the breadcrumb link
   await expect(page.locator('text="Back to search results"')).toBeVisible()
 })
