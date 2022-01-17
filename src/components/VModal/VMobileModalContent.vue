@@ -24,7 +24,7 @@
             <VButton
               size="disabled"
               variant="plain"
-              class="py-2 px-4"
+              class="py-2 px-4 font-semibold text-sr"
               @click="hide()"
             >
               {{ $t('modal.close') }}
