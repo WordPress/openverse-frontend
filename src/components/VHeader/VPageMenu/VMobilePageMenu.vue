@@ -10,10 +10,6 @@
     <VMobileModalContent
       :visible="visibleRef"
       :trigger-element="triggerRef"
-      :hide-on-esc="hideOnEsc"
-      :hide-on-click-outside="hideOnClickOutside"
-      :auto-focus-on-show="autoFocusOnShow"
-      :auto-focus-on-hide="autoFocusOnHide"
       :hide="close"
       :aria-label="$t('header.filter-button.simple')"
     >
@@ -35,36 +31,7 @@ import VPageList from '~/components/VHeader/VPageMenu/VPageList.vue'
 export default {
   name: 'VMobilePageMenu',
   components: { VMobileModalContent, VPageMenuButton, VPageList },
-  props: {
-    /**
-     * Whether the popover should hide when the <kbd>Escape</kbd> key is pressed.
-     *
-     * @default true
-     */
-    hideOnEsc: { type: Boolean, default: undefined },
-    /**
-     * Whether the popover should hide when a click happens outside the popover content,
-     * excluding the trigger. When the trigger is clicked and the popover is open, nothing
-     * will happen.
-     *
-     * @default true
-     */
-    hideOnClickOutside: { type: Boolean, default: undefined },
-    /**
-     * Whether the popover content should automatically receive focus when the popover
-     * opens.
-     *
-     * @default true
-     */
-    autoFocusOnShow: { type: Boolean, default: undefined },
-    /**
-     * Whether the trigger should automatically receive focus when the popover closes.
-     *
-     * @default true
-     */
-    autoFocusOnHide: { type: Boolean, default: undefined },
-  },
-  setup(props, { emit }) {
+  setup(_, { emit }) {
     const modalRef = ref(null)
 
     const closeMenu = () => close()
