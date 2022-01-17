@@ -7,25 +7,7 @@
     >
       {{ query.q }}
     </VSearchResultsTitle>
-    <div
-      v-if="shouldShowMeta"
-      class="results-meta flex flex-col sm:flex-row items-start justify-between px-6"
-      data-testid="search-meta"
-    >
-      <div
-        class="font-semibold caption leading-10 flex flex-col sm:flex-row sm:me-auto justify-between"
-      >
-        <span class="pe-6">
-          {{ mediaCount }}
-        </span>
-        <VSearchRating
-          v-if="query.q"
-          :search-term="query.q"
-          class="leading-10"
-        />
-      </div>
-      <VSaferBrowsing />
-    </div>
+
     <slot name="media" />
 
     <VMetaSearchForm
@@ -42,8 +24,6 @@
 import { computed, useContext } from '@nuxtjs/composition-api'
 import { AUDIO, IMAGE } from '~/constants/media'
 
-import VSaferBrowsing from '~/components/VSaferBrowsing.vue'
-import VSearchRating from '~/components/VSearchRating.vue'
 import VMetaSearchForm from '~/components/VMetaSearch/VMetaSearchForm.vue'
 
 const i18nKeys = {
@@ -61,7 +41,7 @@ const i18nKeys = {
 
 export default {
   name: 'VSearchGrid',
-  components: { VMetaSearchForm, VSaferBrowsing, VSearchRating },
+  components: { VMetaSearchForm },
   props: {
     supported: {
       type: Boolean,

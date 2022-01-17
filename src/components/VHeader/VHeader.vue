@@ -74,7 +74,7 @@ import {
 
 import { MEDIA, SEARCH } from '~/constants/store-modules'
 import { FETCH_MEDIA, UPDATE_QUERY } from '~/constants/action-types'
-import { AUDIO, IMAGE } from '~/constants/media'
+import { ALL_MEDIA, AUDIO, IMAGE } from '~/constants/media'
 import { isMinScreen } from '~/composables/use-media-query'
 import {
   useMatchSearchRoutes,
@@ -90,6 +90,11 @@ import VHeaderFilter from '~/components/VHeader/VHeaderFilter.vue'
 import VLogoLoader from '~/components/VLogoLoader/VLogoLoader'
 
 const i18nKeys = {
+  [ALL_MEDIA]: {
+    noResult: 'browse-page.all-no-results',
+    result: 'browse-page.all-result-count',
+    more: 'browse-page.all-result-count-more',
+  },
   [AUDIO]: {
     noResult: 'browse-page.audio-no-results',
     result: 'browse-page.audio-result-count',
