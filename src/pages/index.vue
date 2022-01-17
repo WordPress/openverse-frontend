@@ -8,9 +8,17 @@
         <OpenverseLogoText class="w-80" />
       </h1>
       <h2>Browse through over 600 million items to reuse</h2>
-      <VSearchBar :placeholder="featuredSearch.term" />
+      <VSearchBar :placeholder="featuredSearch.term">
+        <VContentSwitcherPopover
+          v-if="isMounted && isMinScreenMd"
+          ref="contentSwitcher"
+          class="mx-3"
+          :active-item="contentType"
+          @select="setContentType"
+        />
+      </VSearchBar>
       <p>
-        All Openverse content is under a creative Comons license or is in the
+        All Openverse content is under a creative Commons license or is in the
         public domain.
       </p>
     </header>
@@ -44,16 +52,24 @@
 </template>
 
 <script>
+import { ALL_MEDIA } from '~/constants/media'
 import { ref, onMounted } from '@nuxtjs/composition-api'
+import { isMinScreen } from '~/composables/use-media-query'
+
 import OpenverseLogoText from '~/assets/icons/openverse-logo-text.svg?inline'
+import VContentSwitcherPopover from '~/components/VContentSwitcher/VContentSwitcherPopover.vue'
 
 const HomePage = {
   name: 'home-page',
   layout: 'blank',
   components: {
     OpenverseLogoText,
+    VContentSwitcherPopover,
   },
   setup() {
+    const contentSwitcher = ref(null)
+    const isMinScreenMd = isMinScreen('md', { shouldPassInSSR: true })
+
     const makeImageArray = (prefix = '') =>
       new Array(7).fill({}).map((_, index) => ({
         src: `${prefix}-${index + 1}.jpg`,
@@ -75,6 +91,14 @@ const HomePage = {
       },
     ]
     const featuredSearch = ref(featuredSearches[1])
+
+    const isMounted = ref(false)
+    const contentType = ref(ALL_MEDIA)
+    const setContentType = (type) => {
+      contentType.value = type
+      contentSwitcher.value?.closeMenu()
+    }
+
     onMounted(() => {
       setInterval(() => {
         let activeIndex = featuredSearches.indexOf(featuredSearch.value)
@@ -83,10 +107,16 @@ const HomePage = {
             activeIndex < featuredSearches.length - 1 ? activeIndex + 1 : 0
           ]
       }, 6000)
+      isMounted.value = true
     })
 
     return {
       featuredSearch,
+      contentSwitcher,
+      contentType,
+      setContentType,
+      isMounted,
+      isMinScreenMd,
     }
   },
 }

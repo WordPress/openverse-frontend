@@ -690,5 +690,13 @@
   "interpunct": "•",
   "modal": {
     "close": "Close"
+  },
+  "search-type": {
+    "image": "Images",
+    "audio": "Audio",
+    "all": "All content",
+    "video": "Videos",
+    "label": "Type of content to search",
+    "heading": "Content types"
   }
 }
