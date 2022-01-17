@@ -1,9 +1,9 @@
 import { computed, reactive, ref, useContext } from '@nuxtjs/composition-api'
 import { SEARCH } from '~/constants/store-modules'
 import { UPDATE_QUERY } from '~/constants/action-types'
-import allIcon from 'assets/icons/all-content.svg'
-import audioIcon from 'assets/icons/audio-content.svg'
-import imageIcon from 'assets/icons/image-content.svg'
+import allIcon from '~/assets/icons/all-content.svg'
+import audioIcon from '~/assets/icons/audio-content.svg'
+import imageIcon from '~/assets/icons/image-content.svg'
 
 const icons = {
   all: allIcon,

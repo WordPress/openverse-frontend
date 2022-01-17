@@ -16,8 +16,6 @@
       <VItem
         v-for="(item, idx) in content.types"
         :key="idx"
-        as="NuxtLink"
-        v-bind="linkProps(item)"
         :selected="item === content.activeType.value"
         :is-first="idx === 0"
         @click.native="handleClick(item)"
@@ -32,12 +30,12 @@
 </template>
 
 <script>
-import { ref, useContext, useRoute } from '@nuxtjs/composition-api'
-import useContentType from '@/composables/use-content-type'
-import checkIcon from 'assets/icons/checkmark.svg'
+import { ref } from '@nuxtjs/composition-api'
+import useContentType from '~/composables/use-content-type'
+import checkIcon from '~/assets/icons/checkmark.svg'
 
-import VPopover from '@/components/VPopover/VPopover.vue'
-import VContentSwitcherButton from '@/components/VContentSwitcher/VContentSwitcherButton.vue'
+import VPopover from '~/components/VPopover/VPopover.vue'
+import VContentSwitcherButton from '~/components/VContentSwitcher/VContentSwitcherButton.vue'
 
 export default {
   name: 'VContentSwitcherPopover',
@@ -46,8 +44,6 @@ export default {
     VPopover,
   },
   setup(_, { emit }) {
-    const { app } = useContext()
-    const route = useRoute()
     const content = useContentType()
 
     const contentMenuPopover = ref(null)
@@ -63,19 +59,11 @@ export default {
     const handleClick = (item) => {
       emit('select', item)
     }
-    const linkProps = (item) => {
-      const typePath = item === 'all' ? '' : item
-      const itemPath = app.localePath({
-        path: `/search/${typePath}`,
-        query: route.value.query,
-      })
-      return { to: itemPath }
-    }
+
     return {
       content,
       checkIcon,
       handleClick,
-      linkProps,
       contentMenuPopover,
       closeMenu,
     }

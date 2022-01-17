@@ -33,8 +33,6 @@
           <VItem
             v-for="(item, idx) in content.types"
             :key="idx"
-            as="NuxtLink"
-            v-bind="linkProps(item)"
             :selected="item === content.activeType.value"
             :is-first="idx === 0"
             @click.native="handleClick(item)"
@@ -71,19 +69,12 @@
 </template>
 
 <script>
-import {
-  onMounted,
-  reactive,
-  ref,
-  useContext,
-  useRoute,
-  watch,
-} from '@nuxtjs/composition-api'
+import { onMounted, reactive, ref, watch } from '@nuxtjs/composition-api'
 import { useBodyScrollLock } from '~/composables/use-body-scroll-lock'
 import useContentType from '~/composables/use-content-type'
 import usePages from '~/composables/use-pages'
 
-import externalLinkIcon from 'assets/icons/external-link.svg'
+import externalLinkIcon from '~/assets/icons/external-link.svg'
 
 import VMobileModalContent from '~/components/VModal/VMobileModalContent.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'
@@ -125,8 +116,6 @@ export default {
     autoFocusOnHide: { type: Boolean, default: undefined },
   },
   setup(props, { emit }) {
-    const { app } = useContext()
-    const route = useRoute()
     const content = useContentType()
     const pages = usePages()
 
@@ -174,14 +163,7 @@ export default {
     const handleClick = (item) => {
       emit('select', item)
     }
-    const linkProps = (item) => {
-      const typePath = item === 'all' ? '' : item
-      const itemPath = app.localePath({
-        path: `/search/${typePath}`,
-        query: route.value.query,
-      })
-      return { to: itemPath }
-    }
+
     const isLinkExternal = (item) => !item.link.startsWith('/')
     const getLinkProps = (item) => {
       return isLinkExternal(item)
@@ -206,7 +188,6 @@ export default {
       triggerA11yProps,
       visibleRef,
       handleClick,
-      linkProps,
     }
   },
 }
