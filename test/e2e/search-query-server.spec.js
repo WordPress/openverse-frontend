@@ -35,8 +35,12 @@ test.beforeEach(async ({ context }) => {
   )
   // Serve mock data on all image search requests
   await context.route(
-    'https://api.openverse.engineering/v1/images**',
-    (route) => route.fulfill({ path: 'test/e2e/resources/mock_data.json' })
+    'https://api.openverse.engineering/v1/images/**',
+    (route) =>
+      route.fulfill({
+        path: 'test/e2e/resources/mock_data.json',
+        headers: { 'Access-Control-Allow-Origin': '*' },
+      })
   )
 })
 

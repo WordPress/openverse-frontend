@@ -25,7 +25,11 @@ test.beforeEach(async ({ context }) => {
   // Serve mock data on all image search requests
   await context.route(
     'https://api.openverse.engineering/v1/images/**',
-    (route) => route.fulfill({ path: 'test/e2e/resources/mock_data.json' })
+    (route) =>
+      route.fulfill({
+        path: 'test/e2e/resources/mock_data.json',
+        headers: { 'Access-Control-Allow-Origin': '*' },
+      })
   )
 })
 
@@ -36,7 +40,7 @@ test('q query parameter is set as the search term', async ({ page }) => {
   await searchInput.type('cat')
   await page.click('button:has-text("Search")')
 
-  await expect(searchInput).toHaveValue('cat')
+  await expect(page.locator('header input[type="search"]')).toHaveValue('cat')
   await expect(page).toHaveURL('search/image?q=cat')
 })
 
