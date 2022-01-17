@@ -1,6 +1,7 @@
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
 import { targets } from './meta/targets'
+import { warn } from '@/utils/warn'
 
 export default defineComponent({
   name: 'VTeleportTarget',
@@ -10,8 +11,13 @@ export default defineComponent({
   },
   data: () => ({ children: [] }),
   created() {
-    if (this.name in targets)
-      throw new Error(`VTeleportTarget: duplicate name ${this.name}`)
+    console.log('created')
+    if (this.name in targets) {
+      warn(
+        `VTeleportTarget: duplicate name ${this.name}, deleting previous teleport`
+      )
+      delete targets[this.name]
+    }
     targets[this.name] = this
   },
   beforeDestroy() {
