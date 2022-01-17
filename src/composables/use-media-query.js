@@ -49,7 +49,7 @@ export function useMediaQuery(query, options = { shouldPassInSSR: false }) {
  * Check whether the current screen meets
  * or exceeds the provided breakpoint size.
  * @param {'sm'|'md'|'lg'|'xl'|'2xl'} breakpointName
- * @param {Parameters<typeof useMediaQuery>} options
+ * @param {Parameters<typeof useMediaQuery>[1]} options
  * @returns {import('@nuxtjs/composition-api').Ref<boolean>}
  */
 export const isMinScreen = (breakpointName, options = {}) => {
