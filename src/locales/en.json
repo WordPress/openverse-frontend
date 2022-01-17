@@ -57,7 +57,7 @@
       "primary": "primary",
       "menu": "menu",
       "search": "search",
-      "sr-search": "sr search button"
+      "sr-search": "search button"
     },
     "licenses-nav-item": "The Licenses",
     "about-tab": "About",
@@ -359,7 +359,7 @@
     "audio-categories": {
       "title": "Audio Category",
       "music": "Music",
-      "sound-effects": "Sound Effects",
+      "sound": "Sound effects",
       "podcast": "Podcast"
     },
     "image-categories": {
@@ -651,8 +651,9 @@
   "audio-categories": {
     "title": "Audio Category",
     "music": "Music",
-    "sound-effects": "Sound Effects",
-    "podcast": "Podcast"
+    "sound": "Sound effects",
+    "podcast": "Podcast",
+    "pronunciation": "Pronunciation"
   },
   "license-names": {
     "cc0": "CC0",
@@ -693,5 +694,12 @@
   "interpunct": "•",
   "modal": {
     "close": "Close"
+  },
+  "search-type": {
+    "image": "Images",
+    "audio": "Audio",
+    "all": "All content",
+    "video": "Videos",
+    "label": "Type of content to search"
   }
 }

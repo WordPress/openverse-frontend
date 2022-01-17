@@ -105,7 +105,7 @@ export const filterData = {
     },
     {
       code: 'soundEffects',
-      name: 'filters.audio-categories.sound-effects',
+      name: 'filters.audio-categories.sound',
       checked: false,
     },
     {
