@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-01-13T19:25:22+00:00\n"
+"POT-Creation-Date: 2022-01-17T06:57:32+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -198,7 +198,7 @@ msgid "Audio seek bar"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VAudioTrack/VWaveform.vue:514
+#: src/components/VAudioTrack/VWaveform.vue:516
 msgctxt "waveform.current-time"
 msgid "###time### seconds"
 msgstr ""
@@ -1116,7 +1116,7 @@ msgid "All"
 msgstr ""
 
 msgctxt "search-tab.image"
-msgid "Image"
+msgid "Images"
 msgstr ""
 
 msgctxt "search-tab.audio"
@@ -1127,18 +1127,26 @@ msgctxt "search-tab.video"
 msgid "Video"
 msgstr ""
 
+msgctxt "search-tab.see-image"
+msgid "See all images"
+msgstr ""
+
+msgctxt "search-tab.see-audio"
+msgid "See all audio"
+msgstr ""
+
 msgctxt "error.occurred"
 msgid "An error occurred"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/image/_id.vue:54
+#: src/pages/image/_id.vue:53
 msgctxt "error.image-not-found"
 msgid "Couldn't find image with id ###id###"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/audio/_id.vue:70
+#: src/pages/audio/_id.vue:69
 msgctxt "error.media-not-found"
 msgid "Couldn't find ###mediaType### with id ###id###"
 msgstr ""
@@ -2012,7 +2020,7 @@ msgctxt "header.api-nav-item"
 msgid "API"
 msgstr ""
 
-#: src/components/VHeader/VHeader.vue:144
+#: src/components/VHeader/VHeader.vue:148
 msgctxt "header.loading"
 msgid "Loading..."
 msgstr ""

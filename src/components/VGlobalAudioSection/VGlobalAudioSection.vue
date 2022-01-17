@@ -25,7 +25,9 @@
 <script>
 import {
   useStore,
+  useRoute,
   ref,
+  watch,
   onMounted,
   computed,
   onBeforeUnmount,
@@ -43,6 +45,7 @@ export default {
   name: 'VGlobalAudioSection',
   setup() {
     const store = useStore()
+    const route = useRoute()
 
     /* Audio element */
 
@@ -91,6 +94,19 @@ export default {
     const handleClose = () => {
       store.commit(`${ACTIVE}/${EJECT_ACTIVE_MEDIA_ITEM}`)
     }
+
+    /* Router observation */
+
+    const routeName = computed(() => route.value.name)
+    watch(routeName, (routeNameVal, oldRouteNameVal) => {
+      if (
+        oldRouteNameVal.includes('audio') &&
+        !routeNameVal.includes('audio')
+      ) {
+        audioEl.value.pause()
+        store.commit(`${ACTIVE}/${EJECT_ACTIVE_MEDIA_ITEM}`)
+      }
+    })
 
     return {
       icons: {

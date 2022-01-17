@@ -41,7 +41,7 @@ const contentTypes = [
   },
   {
     id: 'image',
-    name: 'Image',
+    name: 'Images',
     url: '/search/image/?q=cat',
     supported: true,
     sources: 6,
@@ -63,7 +63,7 @@ const contentTypes = [
 ]
 
 for (const [i, contentType] of contentTypes.entries()) {
-  test(`Can open ${contentType.name} page on SSR`, async ({ page }) => {
+  test(`Can open ${contentType.name} search page on SSR`, async ({ page }) => {
     await page.goto(contentType.url)
 
     // Selected content page

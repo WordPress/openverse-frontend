@@ -74,7 +74,7 @@ test('selecting license type filter on homepage applies filters', async ({
   const activeTabLabel = await page
     .locator('[role="tab"][aria-selected="true"]')
     .textContent()
-  expect(activeTabLabel.trim()).toEqual('Image')
+  expect(activeTabLabel.trim()).toEqual('Images')
   await expect(page).toHaveURL('search/image?q=cat&license_type=commercial')
 })
 
