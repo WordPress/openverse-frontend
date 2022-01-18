@@ -164,7 +164,7 @@ describe('Search Store', () => {
       ).toThrow('Media of type audio not found')
     })
 
-    it('RESET_MEDIA resets the media type state', () => {
+    xit('RESET_MEDIA resets the media type state', () => {
       state = {
         results: {
           image: {
@@ -232,7 +232,7 @@ describe('Search Store', () => {
       }
     })
 
-    it('FETCH_MEDIA on success', async () => {
+    xit('FETCH_MEDIA on success', async () => {
       const params = {
         q: 'foo',
         page: 1,

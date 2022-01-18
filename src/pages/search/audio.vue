@@ -2,7 +2,7 @@
   <section>
     <template v-if="supported">
       <VAudioTrack
-        v-for="audio in mediaResults.items"
+        v-for="audio in results"
         :key="audio.id"
         class="mb-6"
         :audio="audio"
@@ -41,6 +41,9 @@ const AudioSearch = defineComponent({
   },
   props: propTypes,
   setup(props) {
+    const results = computed(() =>
+      Object.values(props.mediaResults.audio.items)
+    )
     const { i18n } = useContext()
 
     const audioTrackSize = computed(() => (props.isFilterVisible ? 'l' : 'm'))
@@ -54,6 +57,7 @@ const AudioSearch = defineComponent({
     const { canLoadMore, onLoadMore } = useLoadMore(props)
 
     return {
+      results,
       audioTrackSize,
       isError,
       errorHeader,

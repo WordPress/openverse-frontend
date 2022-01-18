@@ -38,9 +38,8 @@
 
     <VLoadMore
       v-if="canLoadMore && !fetchState.isFinished"
-      :disabled="resultsLoading"
       class="mt-4"
-      :is-fetching="fetchState.isFetching"
+      :is-fetching="resultsLoading"
       data-testid="load-more"
       @onLoadMore="onLoadMore"
     />
@@ -55,7 +54,6 @@ import VAudioCell from '~/components/VAllResultsGrid/VAudioCell.vue'
 import VLoadMore from '~/components/VLoadMore.vue'
 
 import srand from '~/utils/srand'
-import { ALL_MEDIA } from '~/constants/media'
 
 export default defineComponent({
   name: 'VAllResultsGrid',
@@ -68,17 +66,21 @@ export default defineComponent({
       emit('load-more')
     }
 
+    /** @type {import('@nuxtjs/composition-api').ComputedRef<boolean>} */
     const resultsLoading = computed(() => {
       return (
-        store.state.media.fetchState[ALL_MEDIA].fetchingError ||
-        store.state.media.fetchState[ALL_MEDIA].isFetching ||
-        Object.keys(store.state.media.results[ALL_MEDIA].items).length === 0
+        Boolean(store.getters['media/fetchState'].fetchingError) ||
+        store.getters['media/fetchState'].isFetching
       )
     })
 
+    /**
+     *
+     * @type { ComputedRef<import('../../store/types').AudioDetail[] | import('../../store/types').ImageDetail[]> }
+     */
     const organizedMedia = computed(() => {
       if (resultsLoading.value) return []
-      const media = store.state.media.results[ALL_MEDIA].items ?? {}
+      const media = store.getters['media/mediaResults']
       const mediaKeys = Object.keys(media)
 
       // Seed the random number generator with the ID of
@@ -90,6 +92,7 @@ export default defineComponent({
       const randomIntegerInRange = (min, max) =>
         Math.floor(rand() * (max - min + 1)) + min
 
+      /** @type {import('../../store/types').AudioDetail[] | import('../../store/types').ImageDetail[]} */
       const newResults = []
       // first push all images to the results list
       for (const id of Object.keys(media['image'])) {
@@ -117,11 +120,12 @@ export default defineComponent({
     })
 
     const isError = computed(
-      () => !!store.state.media.fetchState[ALL_MEDIA].fetchingError
+      () => !!store.getters['media/fetchState'].fetchingError
     )
 
+    /** @type {import('@nuxtjs/composition-api').ComputedRef<import('../../store/types').FetchState>} */
     const fetchState = computed(() => {
-      return store.state.media.fetchState[ALL_MEDIA]
+      return store.getters['media/fetchState']
     })
 
     const errorHeader = computed(() => {
@@ -129,9 +133,9 @@ export default defineComponent({
       return i18n.t('browse-page.fetching-error', { type })
     })
 
-    const results = computed(() =>
-      Object.entries(store.state.media.results).slice(1)
-    )
+    const results = computed(() => {
+      return Object.entries(store.getters['media/results'])
+    })
 
     return {
       isError,
