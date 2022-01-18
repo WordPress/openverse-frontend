@@ -8,7 +8,7 @@
   >
     <a
       :href="href"
-      class="group relative focus:outline-none focus-visible:ring focus-visible:ring-offset-2 focus-visible:ring-pink"
+      class="group focus:outline-none focus-visible:ring focus-visible:ring-offset-2 focus-visible:ring-pink"
       @click="onGotoDetailPage($event, image)"
       @keydown.tab.prevent="onFocusLeave"
     >
@@ -16,9 +16,11 @@
         itemprop="image"
         itemscope=""
         itemtype="https://schema.org/ImageObject"
+        class="aspect-square relative"
       >
         <img
           ref="img"
+          class="w-full h-full object-cover"
           loading="lazy"
           :alt="image.title"
           :src="getImageUrl(image)"
@@ -54,7 +56,7 @@ const toAbsolutePath = (url, prefix = 'https://') => {
 }
 
 export default {
-  name: 'ImageCell',
+  name: 'VImageCell',
   components: { VLicense },
   props: ['image'],
   methods: {
@@ -70,7 +72,7 @@ export default {
       if (!event.metaKey && !event.ctrlKey) {
         event.preventDefault()
         const detailRoute = this.localeRoute({
-          name: 'PhotoDetailPage',
+          name: 'photo-detail-page',
           params: { id: image.id, location: window.scrollY },
         })
         this.$router.push(detailRoute)

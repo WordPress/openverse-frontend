@@ -91,7 +91,7 @@ export default defineComponent({
     size: {
       type: String,
       default: 'm',
-      validator: (val) => ['s', 'm', 'l'].includes(val),
+      validator: (val) => ['s', 'm', 'l', 'full'].includes(val),
     },
   },
   setup(props) {

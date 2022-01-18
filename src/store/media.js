@@ -27,6 +27,9 @@ import { USAGE_DATA } from '~/constants/store-modules'
 import AudioService from '~/data/audio-service'
 import ImageService from '~/data/image-service'
 
+// Note: images should always be first here,
+// and this only includes 'real' media. ALL is a
+// special case not used in this list.
 const supportedTypes = [IMAGE, AUDIO]
 
 /**
@@ -141,14 +144,25 @@ export const createActions = (services) => ({
         })
         // If fetching all media, set 'all' to an aggregate of the other collected results
         if (mediaType === ALL_MEDIA) {
-          const mediaCount = 50000
+          const mediaCount = dataList.reduce(
+            (acc, data) => acc + data.result_count,
+            0
+          )
           commit(SET_MEDIA, {
             mediaType: ALL_MEDIA,
-            media: [],
+            // todo: Instead of storing this object of all media, keyed by media type,
+            // and having duplicated results in memory, we should do...something else!
+            media: dataList.reduce(
+              (acc, data, index) => ({
+                ...acc,
+                [mediaToFetch[index]]: data.results,
+              }),
+              0
+            ),
             mediaCount,
             pageCount: 1,
             shouldPersistMedia: true,
-            page: page,
+            page,
           })
           dispatch(HANDLE_NO_MEDIA, {
             mediaType: ALL_MEDIA,

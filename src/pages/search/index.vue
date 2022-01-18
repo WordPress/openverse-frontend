@@ -1,22 +1,21 @@
 <template>
-  <!-- <ImageGrid
-    :images="mediaResults.items"
+  <VAllResultsGrid
+    :media="mediaResults.items"
     :can-load-more="canLoadMore"
     :fetch-state="fetchState"
     @load-more="onLoadMore"
-  /> -->
-  <VAllGrid />
+  />
 </template>
 
 <script>
 import { propTypes } from '~/pages/search/search-page.types'
 import { defineComponent } from '@nuxtjs/composition-api'
 import { useLoadMore } from '~/composables/use-load-more'
-import VAllGrid from '~/components/VAllGrid.vue'
+import VAllResultsGrid from '~/components/VAllResultsGrid/VAllResultsGrid.vue'
 
 const SearchIndex = defineComponent({
   name: 'SearchIndex',
-  components: { VAllGrid },
+  components: { VAllResultsGrid },
   props: propTypes,
   setup(props) {
     const { canLoadMore, onLoadMore } = useLoadMore(props)
