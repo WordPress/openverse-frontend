@@ -17,7 +17,11 @@
       v-else
       class="results-grid grid grid-cols-2 lg:grid-cols-5 2xl:grid-cols-6 gap-4"
     >
-      <div v-for="item in organizedMedia" :key="item.id">
+      <div
+        v-for="item in organizedMedia"
+        :key="item.id"
+        class="rounded-sm overflow-hidden"
+      >
         <VImageCell
           v-if="item.frontendMediaType === 'image'"
           :key="item.id"
