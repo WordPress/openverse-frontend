@@ -1,7 +1,7 @@
 <template>
   <section class="image-grid my-6">
     <div class="image-grid__cells">
-      <ImageCell v-for="(image, key) in images" :key="key" :image="image" />
+      <ImageCell v-for="(image, index) in images" :key="index" :image="image" />
     </div>
     <h5 v-if="isError" class="image-grid__notification py-4">
       {{ fetchState.fetchingError }}
