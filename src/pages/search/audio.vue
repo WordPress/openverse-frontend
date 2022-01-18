@@ -42,7 +42,7 @@ const AudioSearch = defineComponent({
   props: propTypes,
   setup(props) {
     const results = computed(() =>
-      Object.values(props.mediaResults.audio.items)
+      Object.values(props.mediaResults?.audio?.items ?? [])
     )
     const { i18n } = useContext()
 

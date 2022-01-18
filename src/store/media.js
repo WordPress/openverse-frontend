@@ -267,11 +267,10 @@ export const getters = {
         [AUDIO]: state.results[AUDIO].items,
       }
     } else {
-      return getters.mediaType
-        ? {
-            [getters.mediaType]: state.results[getters.mediaType].items,
-          }
-        : {}
+      console.info({ mediaType: getters.mediaType })
+      return {
+        [getters.mediaType]: state.results[getters.mediaType].items ?? {},
+      }
     }
   },
   resultCount(state, getters) {

@@ -17,7 +17,7 @@ const ImageSearch = defineComponent({
   props: propTypes,
   setup(props) {
     const results = computed(() =>
-      Object.values(props.mediaResults.image.items)
+      Object.values(props.mediaResults?.image?.items ?? [])
     )
     const { canLoadMore, onLoadMore } = useLoadMore(props)
     return { canLoadMore, onLoadMore, results }
