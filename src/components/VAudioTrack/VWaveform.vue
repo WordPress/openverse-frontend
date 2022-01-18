@@ -437,7 +437,13 @@ export default defineComponent({
         emit('seeked', currentFrac.value + delta)
       }
     }
+
+    const willBeHandled = (event) =>
+      ['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event)
+
     const handleKeys = (event) => {
+      if (!willBeHandled(event)) return
+
       event.preventDefault()
       if (['ArrowLeft', 'ArrowRight'].includes(event.key))
         return handleArrowKeys(event)
