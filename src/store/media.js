@@ -38,7 +38,7 @@ const supportedTypes = [IMAGE, AUDIO]
 export const state = () => ({
   supportedTypes,
   results: {
-    [AUDIO]: {
+    [ALL_MEDIA]: {
       count: 0,
       page: undefined,
       pageCount: 0,
@@ -50,7 +50,7 @@ export const state = () => ({
       pageCount: 0,
       items: {},
     },
-    [ALL_MEDIA]: {
+    [AUDIO]: {
       count: 0,
       page: undefined,
       pageCount: 0,

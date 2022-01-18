@@ -1,8 +1,22 @@
 <template>
   <div>
+    <div
+      class="results-grid grid grid-cols-2 lg:grid-cols-5 2xl:grid-cols-6 gap-4 mb-4"
+    >
+      <NuxtLink
+        v-for="[key, item] in results"
+        :key="key"
+        :to="{ path: `/search/${key}`, query: $route.query }"
+        class="lg:col-span-2"
+      >
+        <VContentLink :results-count="item.count" :media-type="key" />
+      </NuxtLink>
+    </div>
     <GridSkeleton v-if="organizedMedia.length === 0" is-for-tab="all" />
-    <div v-else class="grid grid-cols-2 lg:grid-cols-5 2xl:grid-cols-6 gap-4">
-      <!-- <VContentLink /> -->
+    <div
+      v-else
+      class="results-grid grid grid-cols-2 lg:grid-cols-5 2xl:grid-cols-6 gap-4"
+    >
       <div v-for="item in organizedMedia" :key="item.id">
         <VImageCell
           v-if="item.frontendMediaType === 'image'"
@@ -115,6 +129,10 @@ export default defineComponent({
       return i18n.t('browse-page.fetching-error', { type })
     })
 
+    const results = computed(() =>
+      Object.entries(store.state.media.results).slice(1)
+    )
+
     return {
       isError,
       errorHeader,
@@ -122,6 +140,7 @@ export default defineComponent({
       onLoadMore,
       fetchState,
       resultsLoading,
+      results,
     }
   },
 })
