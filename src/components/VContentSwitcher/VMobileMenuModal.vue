@@ -5,7 +5,10 @@
       class="flex items-stretch"
       @click="onTriggerClick"
     >
-      <VContentSwitcherButton :a11y-props="triggerA11yProps" />
+      <VContentSwitcherButton
+        :a11y-props="triggerA11yProps"
+        :active-item="activeItem"
+      />
     </div>
     <VMobileModalContent
       :visible="visibleRef"
@@ -53,6 +56,12 @@ export default {
     VContentTypes,
     VPageList,
     VContentSwitcherButton,
+  },
+  props: {
+    activeItem: {
+      type: String,
+      required: true,
+    },
   },
   setup(_, { emit }) {
     const content = useContentType()

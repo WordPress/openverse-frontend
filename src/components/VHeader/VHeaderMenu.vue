@@ -63,6 +63,7 @@ export default {
     } else {
       return h(VMobileContentSwitcher, {
         ref: 'menuModalRef',
+        props: { activeItem: this.content.activeType.value },
         on: {
           select: this.selectContentType,
         },
