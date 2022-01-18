@@ -1,5 +1,5 @@
 <template>
-  <section class="image-grid my-6">
+  <section class="image-grid my-6 -mx-2">
     <div class="image-grid__cells">
       <ImageCell v-for="(image, key) in images" :key="key" :image="image" />
     </div>

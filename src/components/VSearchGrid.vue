@@ -1,6 +1,6 @@
 <template>
   <section class="">
-    <header class="mb-10 mt-4">
+    <header class="mt-4" :class="isAllView ? 'mb-10' : 'mb-8'">
       <VSearchResultsTitle
         v-if="query.q && isSupported"
         class="leading-10"
