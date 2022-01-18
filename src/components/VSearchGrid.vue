@@ -24,11 +24,16 @@
 
 <script>
 import { computed, useContext } from '@nuxtjs/composition-api'
-import { AUDIO, IMAGE } from '~/constants/media'
+import { ALL_MEDIA, AUDIO, IMAGE } from '~/constants/media'
 
 import VMetaSearchForm from '~/components/VMetaSearch/VMetaSearchForm.vue'
 
 const i18nKeys = {
+  [ALL_MEDIA]: {
+    noResult: 'browse-page.all-no-results',
+    result: 'browse-page.all-result-count',
+    more: 'browse-page.all-result-count-more',
+  },
   [AUDIO]: {
     noResult: 'browse-page.audio-no-results',
     result: 'browse-page.audio-result-count',

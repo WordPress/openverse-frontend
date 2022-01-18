@@ -1,5 +1,5 @@
 <template>
-  <section class="px-6">
+  <section>
     <template v-if="supported">
       <VAudioTrack
         v-for="audio in mediaResults.items"

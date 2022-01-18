@@ -9,8 +9,7 @@
           }}</span>
           <div class="info">
             <VLicense
-              v-if="!isSmall"
-              class="mb-2 hidden group-hover:block group-focus:block"
+              class="mb-2 hidden md:group-hover:block md:group-focus:block"
               hide-name
               :license="audio.license"
             />
@@ -18,7 +17,7 @@
           </div>
         </div>
 
-        <div v-if="!isSmall" class="player flex flex-row">
+        <div class="hidden player md:flex flex-row">
           <slot name="play-pause" size="small" />
           <slot name="controller" :features="[]" />
         </div>
