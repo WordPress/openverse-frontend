@@ -346,7 +346,7 @@ const actions = {
       }
       commit(CLEAR_OTHER_MEDIA_TYPE_FILTERS, { searchType })
     }
-    if (queryParams !== {}) {
+    if (Object.keys(queryParams).length !== 0) {
       await dispatch(UPDATE_QUERY_FROM_FILTERS, queryParams)
     }
   },

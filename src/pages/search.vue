@@ -32,7 +32,7 @@ import {
   UPDATE_SEARCH_TYPE,
 } from '~/constants/action-types'
 import { ALL_MEDIA, AUDIO, IMAGE } from '~/constants/media'
-import { areQueriesEqual } from '~/utils/search-query-transform'
+import isEqual from 'lodash.isequal'
 import { mapActions, mapGetters, mapState } from 'vuex'
 import { MEDIA, SEARCH } from '~/constants/store-modules'
 
@@ -124,13 +124,31 @@ const BrowsePage = {
   watch: {
     query: {
       handler(newQuery, oldQuery) {
+        console.log('query changed')
         const newPath = this.localePath({
           path: `/search/${this.searchType === 'all' ? '' : this.searchType}/`,
           query: this.searchQueryParams,
         })
         this.$router.push(newPath)
-        if (!areQueriesEqual(oldQuery, newQuery) && this.supported) {
+        if (!isEqual(oldQuery, newQuery) && this.supported) {
           this.getMediaItems(this.query)
+        }
+      },
+    },
+    searchType: {
+      // This fix is necessary only until All search page is merged
+      handler(newQuery, oldQuery) {
+        if (
+          [ALL_MEDIA, IMAGE].includes(newQuery) &&
+          [ALL_MEDIA, IMAGE].includes(oldQuery)
+        ) {
+          const newPath = this.localePath({
+            path: `/search/${
+              this.searchType === 'all' ? '' : this.searchType
+            }/`,
+            query: this.searchQueryParams,
+          })
+          this.$router.push(newPath)
         }
       },
     },
