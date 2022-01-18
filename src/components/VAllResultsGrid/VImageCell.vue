@@ -3,7 +3,6 @@
     itemprop="contentUrl"
     :title="image.title"
     :to="localePath('/image/' + image.id)"
-    :style="`width: ${imageWidth}%; top: ${imageTop}%; left:${imageLeft}%;`"
     class="group focus:outline-none focus-visible:ring focus-visible:ring-offset-2 focus-visible:ring-pink"
     @click="onGotoDetailPage($event, image)"
   >
