@@ -1,12 +1,14 @@
 <template>
-  <section class="search-grid">
-    <VSearchResultsTitle
-      v-if="query.q && isSupported"
-      class="leading-10"
-      :size="isAllView ? 'large' : 'default'"
-    >
-      {{ query.q }}
-    </VSearchResultsTitle>
+  <section class="">
+    <header class="mb-10">
+      <VSearchResultsTitle
+        v-if="query.q && isSupported"
+        class="leading-10"
+        :size="isAllView ? 'large' : 'default'"
+      >
+        {{ query.q }}
+      </VSearchResultsTitle>
+    </header>
 
     <slot name="media" />
 

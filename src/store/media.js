@@ -127,6 +127,7 @@ export const createActions = (services) => ({
         )
       })
       .then((dataList) => {
+        // Call SET_MEDIA for each media type.
         dataList.forEach((data, index) => {
           const mediaCount = data.result_count
           commit(SET_MEDIA, {
@@ -135,7 +136,7 @@ export const createActions = (services) => ({
             mediaCount,
             pageCount: data.page_count,
             shouldPersistMedia,
-            page: page,
+            page,
           })
           dispatch(HANDLE_NO_MEDIA, {
             mediaType: mediaToFetch[index],
@@ -160,9 +161,7 @@ export const createActions = (services) => ({
               0
             ),
             mediaCount,
-            pageCount: 1,
             shouldPersistMedia: true,
-            page,
           })
           dispatch(HANDLE_NO_MEDIA, {
             mediaType: ALL_MEDIA,

@@ -9,7 +9,6 @@
     <a
       :href="href"
       class="group focus:outline-none focus-visible:ring focus-visible:ring-offset-2 focus-visible:ring-pink"
-      @click="onGotoDetailPage($event, image)"
       @keydown.tab.prevent="onFocusLeave"
     >
       <figure
@@ -67,16 +66,6 @@ export default {
     },
     getImageForeignUrl(image) {
       return toAbsolutePath(image.foreign_landing_url)
-    },
-    onGotoDetailPage(event, image) {
-      if (!event.metaKey && !event.ctrlKey) {
-        event.preventDefault()
-        const detailRoute = this.localeRoute({
-          name: 'photo-detail-page',
-          params: { id: image.id, location: window.scrollY },
-        })
-        this.$router.push(detailRoute)
-      }
     },
     onImageLoadError(event, image) {
       const element = event.target

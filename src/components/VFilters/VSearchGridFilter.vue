@@ -1,6 +1,6 @@
 <template>
   <div
-    class="py-8 px-10 search-filters"
+    class="py-8 px-10 min-h-full"
     :class="{
       'bg-dark-charcoal-06': isMinScreenMd,
     }"

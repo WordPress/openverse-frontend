@@ -1,9 +1,8 @@
 <template>
   <div>
-    <!-- <pre style="height: 200px; background: grey; overflow-y: scroll">
-      {{ JSON.stringify(media, null, 2) }}
-    </pre> -->
-    <div class="grid grid-cols-4 grid-rows-4">
+    <GridSkeleton v-if="organizedMedia.length === 0" is-for-tab="all" />
+    <div v-else class="grid grid-cols-2 lg:grid-cols-5 2xl:grid-cols-6 gap-4">
+      <!-- <VContentLink /> -->
       <div v-for="item in organizedMedia" :key="item.id">
         <VImageCell
           v-if="item.frontendMediaType === 'image'"
@@ -25,6 +24,8 @@
 
     <VLoadMore
       v-if="canLoadMore && !fetchState.isFinished"
+      :disabled="resultsLoading"
+      class="mt-4"
       :is-fetching="fetchState.isFetching"
       data-testid="load-more"
       @onLoadMore="onLoadMore"
@@ -40,59 +41,57 @@ import VAudioCell from '~/components/VAllResultsGrid/VAudioCell.vue'
 import VLoadMore from '~/components/VLoadMore.vue'
 
 import srand from '~/utils/srand'
+import { ALL_MEDIA } from '~/constants/media'
 
 export default defineComponent({
   name: 'VAllResultsGrid',
   components: { VImageCell, VAudioCell, VLoadMore },
-  props: {
-    media: {
-      default: () => [],
-    },
-    canLoadMore: {
-      type: Boolean,
-      default: true,
-    },
-    fetchState: {
-      required: true,
-    },
-  },
-  setup(props, { emit }) {
-    const { i18n } = useContext()
+  props: ['canLoadMore'],
+  setup(_, { emit }) {
+    const { i18n, store } = useContext()
 
     const onLoadMore = () => {
       emit('load-more')
     }
 
+    const resultsLoading = computed(() => {
+      return (
+        store.state.media.fetchState[ALL_MEDIA].fetchingError ||
+        store.state.media.fetchState[ALL_MEDIA].isFetching ||
+        Object.keys(store.state.media.results[ALL_MEDIA].items).length === 0
+      )
+    })
+
     const organizedMedia = computed(() => {
+      if (resultsLoading.value) return []
+      const media = store.state.media.results[ALL_MEDIA].items ?? {}
+      const mediaKeys = Object.keys(media)
+
       // Seed the random number generator with the ID of
       // the first and last search result, so the non-image
       // distribution is the same on repeated searches
-      let mediaKeys = Object.keys(props.media)
-      const firstID = Object.keys(props.media[mediaKeys[0]])[0]
-      const lastID = Object.keys(
-        props.media[mediaKeys[mediaKeys.length - 1]]
-      ).pop()
+      const firstID = Object.keys(media[mediaKeys[0]])[0]
+      const lastID = Object.keys(media[mediaKeys[mediaKeys.length - 1]]).pop()
       const rand = srand(firstID + lastID)
       const randomIntegerInRange = (min, max) =>
         Math.floor(rand() * (max - min + 1)) + min
 
       const newResults = []
       // first push all images to the results list
-      for (const id of Object.keys(props.media['image'])) {
-        const item = props.media['image'][id]
+      for (const id of Object.keys(media['image'])) {
+        const item = media['image'][id]
         item.frontendMediaType = 'image'
         newResults.push(item)
       }
 
       // push other items into the list, using a random index.
       let nonImageIndex = 1
-      for (const type of Object.keys(props.media).slice(1)) {
-        for (const id of Object.keys(props.media[type])) {
-          const item = props.media[type][id]
+      for (const type of Object.keys(media).slice(1)) {
+        for (const id of Object.keys(media[type])) {
+          const item = media[type][id]
           item.frontendMediaType = type
           newResults.splice(nonImageIndex, 0, item)
-          if (nonImageIndex > Object.keys(props.media['image']).length + 1)
-            break
+          if (nonImageIndex > Object.keys(media['image']).length + 1) break
           nonImageIndex = randomIntegerInRange(
             nonImageIndex + 1,
             nonImageIndex + 6
@@ -103,17 +102,26 @@ export default defineComponent({
       return newResults
     })
 
-    const isError = computed(() => !!props.fetchState.fetchingError)
+    const isError = computed(
+      () => !!store.state.media.fetchState[ALL_MEDIA].fetchingError
+    )
+
+    const fetchState = computed(() => {
+      return store.state.media.fetchState[ALL_MEDIA]
+    })
+
     const errorHeader = computed(() => {
       const type = i18n.t('browse-page.search-form.audio')
       return i18n.t('browse-page.fetching-error', { type })
     })
 
     return {
-      onLoadMore,
       isError,
       errorHeader,
       organizedMedia,
+      onLoadMore,
+      fetchState,
+      resultsLoading,
     }
   },
 })

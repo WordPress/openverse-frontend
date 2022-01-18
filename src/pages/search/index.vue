@@ -1,10 +1,5 @@
 <template>
-  <VAllResultsGrid
-    :media="mediaResults.items"
-    :can-load-more="canLoadMore"
-    :fetch-state="fetchState"
-    @load-more="onLoadMore"
-  />
+  <VAllResultsGrid :can-load-more="canLoadMore" @load-more="onLoadMore" />
 </template>
 
 <script>

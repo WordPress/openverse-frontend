@@ -1,5 +1,5 @@
 <template>
-  <div class="browse-page flex flex-col w-full search-grid-ctr">
+  <div class="browse-page flex flex-col w-full px-4 md:px-10">
     <VSearchGrid
       :fetch-state="fetchState"
       :query="query"
@@ -146,15 +146,3 @@ const BrowsePage = {
 
 export default BrowsePage
 </script>
-
-<style lang="scss" scoped>
-.search-grid-ctr {
-  min-height: 600px;
-  padding: 0;
-
-  @include mobile {
-    width: 100%;
-    flex: none;
-  }
-}
-</style>
