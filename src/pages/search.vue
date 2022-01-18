@@ -65,11 +65,7 @@ const BrowsePage = {
   },
   scrollToTop: false,
   async fetch() {
-    if (
-      this.supported &&
-      !Object.keys(this.results.items).length &&
-      this.query.q.trim() !== ''
-    ) {
+    if (this.supported && !this.resultCount && this.query.q.trim() !== '') {
       await this.fetchMedia({})
     }
   },
@@ -84,7 +80,7 @@ const BrowsePage = {
   computed: {
     ...mapState(SEARCH, ['query', 'searchType']),
     ...mapGetters(SEARCH, ['searchQueryParams', 'isAnyFilterApplied']),
-    ...mapGetters(MEDIA, ['results', 'fetchState']),
+    ...mapGetters(MEDIA, ['results', 'resultCount', 'fetchState']),
     mediaType() {
       // Default to IMAGE until media search/index is generalized
       return this.searchType ?? ALL_MEDIA
@@ -94,7 +90,7 @@ const BrowsePage = {
      * @returns {number}
      */
     resultsCount() {
-      return this.supported ? this.results?.count : 0 ?? 0
+      return this.supported ? this.resultCount : 0 ?? 0
     },
     supported() {
       return [IMAGE, AUDIO, ALL_MEDIA].includes(this.searchType)
@@ -136,6 +132,7 @@ const BrowsePage = {
      * @param oldRoute
      */
     $route(newRoute, oldRoute) {
+      console.log('route change handler')
       if (newRoute.path !== oldRoute.path) {
         const searchType = queryStringToSearchType(newRoute.path)
         this.updateSearchType({ searchType })

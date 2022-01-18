@@ -38,12 +38,6 @@ const supportedTypes = [IMAGE, AUDIO]
 export const state = () => ({
   supportedTypes,
   results: {
-    [ALL_MEDIA]: {
-      count: 0,
-      page: undefined,
-      pageCount: 0,
-      items: {},
-    },
     [IMAGE]: {
       count: 0,
       page: undefined,
@@ -68,11 +62,6 @@ export const state = () => ({
       fetchingError: null,
       isFinished: false,
     },
-    all: {
-      isFetching: false,
-      fetchingError: null,
-      isFinished: false,
-    },
   },
   audio: {},
   image: {},
@@ -92,11 +81,11 @@ export const createActions = (services) => ({
     { commit, dispatch, rootState, rootGetters },
     payload = {}
   ) {
-    const { page = undefined, shouldPersistMedia = false } = payload
+    const { page = undefined, shouldPersistMedia = false, ...params } = payload
 
     const queryParams = prepareSearchQueryParams({
       ...rootGetters['search/searchQueryParams'],
-      ...payload,
+      ...params,
     })
 
     // does not send event if user is paginating for more results
@@ -109,16 +98,20 @@ export const createActions = (services) => ({
       )
     }
     const mediaType = rootState.search.query.mediaType
+    const mediaToFetch = mediaType !== ALL_MEDIA ? [mediaType] : supportedTypes
 
     commit(FETCH_START_MEDIA, { mediaType })
     if (!page) {
       commit(RESET_MEDIA, { mediaType })
     }
 
-    const mediaToFetch = mediaType !== ALL_MEDIA ? [mediaType] : supportedTypes
-
     await Promise.all(
-      mediaToFetch.map((type) => services[type].search(queryParams))
+      mediaToFetch.map((type) =>
+        services[type].search({
+          ...queryParams,
+          page: typeof page === 'undefined' ? page : page[type],
+        })
+      )
     )
       .then((res) => {
         commit(FETCH_END_MEDIA, { mediaType })
@@ -143,31 +136,6 @@ export const createActions = (services) => ({
             mediaCount,
           })
         })
-        // If fetching all media, set 'all' to an aggregate of the other collected results
-        if (mediaType === ALL_MEDIA) {
-          const mediaCount = dataList.reduce(
-            (acc, data) => acc + data.result_count,
-            0
-          )
-          commit(SET_MEDIA, {
-            mediaType: ALL_MEDIA,
-            // todo: Instead of storing this object of all media, keyed by media type,
-            // and having duplicated results in memory, we should do...something else!
-            media: dataList.reduce(
-              (acc, data, index) => ({
-                ...acc,
-                [mediaToFetch[index]]: data.results,
-              }),
-              0
-            ),
-            mediaCount,
-            shouldPersistMedia: true,
-          })
-          dispatch(HANDLE_NO_MEDIA, {
-            mediaType: ALL_MEDIA,
-            mediaCount,
-          })
-        }
       })
       .catch((error) => {
         dispatch(HANDLE_MEDIA_ERROR, { mediaType, error })
@@ -281,10 +249,37 @@ export const getters = {
    * Returns the search result data related for selected media.
    * @param {import('./types').MediaState} state
    * @param getters
-   * @return {import('./types').MediaStoreResult}
+   * @return {import('./types').MediaStoreResult[] | {'audio': import('./types').MediaStoreResult, 'image': import('./types').MediaStoreResult}}
    */
   results(state, getters) {
-    return getters.mediaType ? state.results[getters.mediaType] : {}
+    if (getters.searchType === ALL_MEDIA) {
+      return { [IMAGE]: state.results[IMAGE], [AUDIO]: state.results[AUDIO] }
+    } else {
+      return getters.mediaType
+        ? { [getters.mediaType]: state.results[getters.mediaType] }
+        : {}
+    }
+  },
+  mediaResults(state, getters) {
+    if (getters.searchType === ALL_MEDIA) {
+      return {
+        [IMAGE]: state.results[IMAGE].items,
+        [AUDIO]: state.results[AUDIO].items,
+      }
+    } else {
+      return getters.mediaType
+        ? {
+            [getters.mediaType]: state.results[getters.mediaType].items,
+          }
+        : {}
+    }
+  },
+  resultCount(state, getters) {
+    if (getters.searchType === ALL_MEDIA) {
+      return state.results[IMAGE].count + state.results[AUDIO].count
+    } else {
+      return state.results[getters.searchType]?.count || 0
+    }
   },
   /**
    * Search fetching state for selected media type.
@@ -293,13 +288,30 @@ export const getters = {
    * @returns {import('./types').fetchState}
    */
   fetchState(state, getters) {
-    return (
-      state.fetchState[getters.mediaType] || {
-        isFetching: false,
-        fetchError: false,
-        isFinished: true,
+    if (getters.searchType === ALL_MEDIA) {
+      return {
+        isFetching:
+          state.fetchState[AUDIO].isFetching ||
+          state.fetchState[IMAGE].isFetching,
+        fetchError:
+          state.fetchState[AUDIO].fetchError ||
+          state.fetchState[IMAGE].fetchError,
+        isFinished:
+          state.fetchState[AUDIO].isFinished &&
+          state.fetchState[IMAGE].isFinished,
       }
-    )
+    } else {
+      return (
+        state.fetchState[getters.mediaType] || {
+          isFetching: false,
+          fetchError: false,
+          isFinished: true,
+        }
+      )
+    }
+  },
+  searchType(state, getters, rootState) {
+    return rootState.search.searchType
   },
   mediaType(state, getters, rootState) {
     return rootState.search.query.mediaType
@@ -378,15 +390,12 @@ export const mutations = {
   [MEDIA_NOT_FOUND](_state, params) {
     throw new Error(`Media of type ${params.mediaType} not found`)
   },
-  [RESET_MEDIA](_state, params) {
-    let mediaTypes
-    if (params && params.mediaType) {
-      mediaTypes = [params.mediaType]
-    } else {
-      mediaTypes = [AUDIO, IMAGE]
-    }
+  [RESET_MEDIA](_state, { mediaType }) {
+    const mediaTypes =
+      mediaType !== ALL_MEDIA ? [mediaType] : _state.supportedTypes
+
     mediaTypes.forEach((mediaType) => {
-      _state.results[mediaType].items = []
+      _state.results[mediaType].items = {}
       _state.results[mediaType].count = 0
       _state.results[mediaType].page = undefined
       _state.results[mediaType].pageCount = 0
