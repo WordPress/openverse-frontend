@@ -8,7 +8,6 @@ module.exports = srand
 /**
  * srand
  */
-
 function srand(seed) {
   let str
   // If we're passed a string, condense it down
