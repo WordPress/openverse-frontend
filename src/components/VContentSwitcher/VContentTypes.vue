@@ -36,7 +36,6 @@ export default {
     bordered: {
       type: Boolean,
       default: true,
-      // !isMinScreenMd
     },
     activeItem: {
       type: String,
