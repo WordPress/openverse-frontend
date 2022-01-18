@@ -1,7 +1,9 @@
 <template>
   <div :style="{ width }">
     <!-- Should be wrapped by a fixed width parent -->
-    <div class="box-track group relative bg-yellow h-0 w-full pt-full">
+    <div
+      class="box-track group relative bg-yellow h-0 w-full pt-full rounded-sm"
+    >
       <div class="absolute inset-0 flex flex-col">
         <div class="info flex-grow flex flex-col justify-between p-4">
           <span class="font-heading font-semibold leading-snug">{{

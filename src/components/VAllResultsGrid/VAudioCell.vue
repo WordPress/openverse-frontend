@@ -1,6 +1,7 @@
 <template>
   <NuxtLink
     :to="localePath(`/audio/${audio.id}`)"
+    class="block focus:bg-white focus:border-tx focus:ring focus:ring-pink focus:outline-none focus:shadow-ring rounded-sm"
     @click.native="navigateToSinglePage(audio)"
   >
     <VAudioTrack :audio="audio" layout="box" size="full" />

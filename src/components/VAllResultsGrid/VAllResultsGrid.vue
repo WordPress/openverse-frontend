@@ -7,7 +7,7 @@
         v-for="[key, item] in results"
         :key="key"
         :to="{ path: `/search/${key}`, query: $route.query }"
-        class="lg:col-span-2"
+        class="lg:col-span-2 focus:bg-white focus:border-tx focus:ring focus:ring-pink focus:outline-none focus:shadow-ring focus:text-black rounded-sm"
       >
         <VContentLink :results-count="item.count" :media-type="key" />
       </NuxtLink>
@@ -17,11 +17,7 @@
       v-else
       class="results-grid grid grid-cols-2 lg:grid-cols-5 2xl:grid-cols-6 gap-4"
     >
-      <div
-        v-for="item in organizedMedia"
-        :key="item.id"
-        class="rounded-sm overflow-hidden"
-      >
+      <div v-for="item in organizedMedia" :key="item.id">
         <VImageCell
           v-if="item.frontendMediaType === 'image'"
           :key="item.id"

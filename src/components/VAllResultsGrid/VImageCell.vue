@@ -3,18 +3,18 @@
     itemprop="contentUrl"
     :title="image.title"
     :to="localePath('/image/' + image.id)"
-    class="group focus:outline-none focus-visible:ring focus-visible:ring-offset-2 focus-visible:ring-pink"
+    class="group block focus:bg-white focus:ring focus:ring-pink focus:outline-none focus:shadow-ring focus:text-black rounded-sm"
     @click="onGotoDetailPage($event, image)"
   >
     <figure
       itemprop="image"
       itemscope=""
       itemtype="https://schema.org/ImageObject"
-      class="aspect-square relative"
+      class="aspect-square relative rounded-sm"
     >
       <img
         ref="img"
-        class="w-full h-full object-cover"
+        class="w-full h-full object-cover rounded-sm"
         loading="lazy"
         :alt="image.title"
         :src="getImageUrl(image)"
