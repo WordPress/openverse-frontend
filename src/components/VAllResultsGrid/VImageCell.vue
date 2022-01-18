@@ -1,45 +1,40 @@
 <template>
   <NuxtLink
-    v-slot="{ href }"
     itemprop="contentUrl"
-    :to="localePath('/image/' + image.id)"
     :title="image.title"
-    custom
+    :to="localePath('/image/' + image.id)"
+    :style="`width: ${imageWidth}%; top: ${imageTop}%; left:${imageLeft}%;`"
+    class="group focus:outline-none focus-visible:ring focus-visible:ring-offset-2 focus-visible:ring-pink"
+    @click="onGotoDetailPage($event, image)"
   >
-    <a
-      :href="href"
-      class="group focus:outline-none focus-visible:ring focus-visible:ring-offset-2 focus-visible:ring-pink"
-      @keydown.tab.prevent="onFocusLeave"
+    <figure
+      itemprop="image"
+      itemscope=""
+      itemtype="https://schema.org/ImageObject"
+      class="aspect-square relative"
     >
-      <figure
-        itemprop="image"
-        itemscope=""
-        itemtype="https://schema.org/ImageObject"
-        class="aspect-square relative"
+      <img
+        ref="img"
+        class="w-full h-full object-cover"
+        loading="lazy"
+        :alt="image.title"
+        :src="getImageUrl(image)"
+        :width="image.width"
+        :height="image.height"
+        itemprop="thumbnailUrl"
+        @error="onImageLoadError($event, image)"
+      />
+      <figcaption
+        class="absolute left-0 bottom-0 invisible group-hover:visible group-focus:visible bg-white p-1"
       >
-        <img
-          ref="img"
-          class="w-full h-full object-cover"
-          loading="lazy"
-          :alt="image.title"
-          :src="getImageUrl(image)"
-          :width="image.width"
-          :height="image.height"
-          itemprop="thumbnailUrl"
-          @error="onImageLoadError($event, image)"
+        <span class="sr-only">{{ image.title }}</span>
+        <VLicense
+          :license="image.license"
+          :bg-filled="true"
+          :hide-name="true"
         />
-        <figcaption
-          class="absolute left-0 bottom-0 invisible group-hover:visible group-focus:visible bg-white p-1"
-        >
-          <span class="sr-only">{{ image.title }}</span>
-          <VLicense
-            :license="image.license"
-            :bg-filled="true"
-            :hide-name="true"
-          />
-        </figcaption>
-      </figure>
-    </a>
+      </figcaption>
+    </figure>
   </NuxtLink>
 </template>
 

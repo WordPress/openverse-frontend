@@ -1,6 +1,6 @@
 <template>
   <section class="">
-    <header class="mb-10">
+    <header class="mb-10 mt-4">
       <VSearchResultsTitle
         v-if="query.q && isSupported"
         class="leading-10"
