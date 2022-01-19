@@ -13,14 +13,23 @@
       @click.native="handleClick(item)"
     >
       <VIcon :icon-path="content.icons[item]" class="me-2 ms-4 my-4" />
-      <span class="pe-20 py-4 font-semibold">{{
+      <span class="pe-6 md:pe-20 py-4 font-semibold">{{
         $t(`search-type.${item}`)
       }}</span>
+      <VPill
+        v-if="contentStatus[item] === statuses.BETA"
+        class="self-center ms-0 md:ms-auto"
+        >{{ $t('search-type.status-beta') }}</VPill
+      >
     </VItem>
   </VItemGroup>
 </template>
 <script>
-import { supportedContentTypes } from '~/constants/media'
+import {
+  contentStatus,
+  statuses,
+  supportedContentTypes,
+} from '~/constants/media'
 import useContentType from '~/composables/use-content-type'
 
 import checkIcon from '~/assets/icons/checkmark.svg'
@@ -28,10 +37,11 @@ import checkIcon from '~/assets/icons/checkmark.svg'
 import VIcon from '~/components/VIcon/VIcon.vue'
 import VItem from '~/components/VItemGroup/VItem.vue'
 import VItemGroup from '~/components/VItemGroup/VItemGroup.vue'
+import VPill from '~/components/VPill.vue'
 
 export default {
   name: 'VContentTypes',
-  components: { VIcon, VItem, VItemGroup },
+  components: { VIcon, VItem, VItemGroup, VPill },
   props: {
     bordered: {
       type: Boolean,
@@ -53,6 +63,8 @@ export default {
       content,
       checkIcon,
       handleClick,
+      contentStatus,
+      statuses,
     }
   },
 }
