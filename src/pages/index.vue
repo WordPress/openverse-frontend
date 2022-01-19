@@ -1,65 +1,113 @@
 <template>
   <main
-    class="bg-yellow h-screen flex justify-center items-center overflow-hidden"
+    class="flex flex-col lg:flex-row items-center justify-center gap-2 bg-yellow h-screen overflow-hidden"
   >
-    <header class="flex flex-col justify-center w-1/2 xl:w-2/3 pl-4 xl:pl-64">
-      <h1>
-        <span class="sr-only">Openverse</span>
-        <OpenverseLogoText class="w-80" />
+    <!-- TODO: Refine min-width for different breakpoints -->
+    <header
+      class="w-full sm:w-auto sm:min-w-[32rem] xl:min-w-[64rem] box-border px-4 sm:px-40 mx-auto mt-auto mb-0 sm:mb-auto lg:my-0 flex flex-col justify-center"
+    >
+      <h1 class="hidden sm:block">
+        <span class="sr-only">{{ $t('hero.brand') }}</span>
+        <!-- width and height chosen w.r.t. viewBox "0 0 280 42" -->
+        <OpenverseLogo width="420" height="63" class="sm:translate-x-[-98px]" />
       </h1>
-      <h2>Browse through over 600 million items to reuse</h2>
-      <VSearchBar :placeholder="featuredSearch.term" />
-      <p>
-        All Openverse content is under a creative Comons license or is in the
-        public domain.
-      </p>
-    </header>
-    <div class="homepage-images w-1/2 xl:w-1/3 grid grid-cols-2 grid-rows-4">
-      <Transition
-        v-for="(image, index) in featuredSearch.images"
-        :key="image.alt"
-        tag="div"
-        name="fade"
-        mode="out-in"
+      <h2 class="text-6xl mt-6">{{ $t('hero.subtitle') }}</h2>
+
+      <VSearchBar class="mt-8" :placeholder="featuredSearch.term" />
+
+      <i18n
+        path="hero.disclaimer.content"
+        tag="p"
+        class="hidden sm:block text-sr mt-4"
       >
-        <div
+        <template #license>
+          <a
+            href="https://creativecommons.org/licenses/"
+            class="text-dark-charcoal hover:text-dark-charcoal underline"
+            >{{ $t('hero.disclaimer.license') }}</a
+          >
+        </template>
+      </i18n>
+    </header>
+
+    <!-- Image carousel -->
+    <div
+      class="overflow-x-scroll lg:overflow-hidden w-full lg:w-auto lg:h-full"
+    >
+      <div
+        class="homepage-images flex flex-row lg:grid lg:grid-cols-2 lg:grid-rows-4 lg:w-[57.143vh] lg:h-[114.287vh]"
+      >
+        <Transition
+          v-for="(image, index) in featuredSearch.images"
           :key="image.alt"
-          class="p-4 xl:p-8 block aspect-square"
-          :style="{ '--transition-index': `${index * 0.05}s` }"
+          tag="div"
+          name="fade"
+          mode="out-in"
         >
-          <!-- <NuxtLink
-          :to="image.url"
-          class="aspect-square block rounded-full overflow-hidden h-full w-full"
-        > -->
-          <img
-            class="object-cover h-full w-full rounded-full"
-            :src="require(`~/assets/homepage_images/${image.src}`)"
-            :alt="image.alt"
-          />
-        </div>
-        <!-- </NuxtLink> -->
-      </Transition>
+          <div
+            :key="image.alt"
+            class="block aspect-square p-4 lg:p-[2vh] h-40 w-40 lg:h-auto lg:w-auto"
+            :style="{ '--transition-index': `${index * 0.05}s` }"
+          >
+            <!-- <NuxtLink
+            :to="image.url"
+            class="aspect-square block rounded-full overflow-hidden h-full w-full"
+          > -->
+            <img
+              class="object-cover h-full w-full rounded-full"
+              :src="require(`~/assets/homepage_images/${image.src}`)"
+              :alt="image.alt"
+              :title="image.title"
+            />
+          </div>
+          <!-- </NuxtLink> -->
+        </Transition>
+      </div>
     </div>
+
+    <i18n
+      path="hero.disclaimer.content"
+      tag="p"
+      class="sm:hidden text-sr p-4 mt-auto"
+    >
+      <template #license>
+        <a
+          href="https://creativecommons.org/licenses/"
+          class="text-dark-charcoal hover:text-dark-charcoal underline"
+          >{{ $t('hero.disclaimer.license') }}</a
+        >
+      </template>
+    </i18n>
   </main>
 </template>
 
 <script>
-import { ref, onMounted } from '@nuxtjs/composition-api'
-import OpenverseLogoText from '~/assets/icons/openverse-logo-text.svg?inline'
+import {
+  ref,
+  computed,
+  onMounted,
+  onBeforeUnmount,
+} from '@nuxtjs/composition-api'
+
+import imageInfo from '~/assets/homepage_images/image_info.json'
+
+import OpenverseLogo from '~/assets/logo.svg?inline'
 
 const HomePage = {
   name: 'home-page',
   layout: 'blank',
   components: {
-    OpenverseLogoText,
+    OpenverseLogo,
   },
   setup() {
     const makeImageArray = (prefix = '') =>
-      new Array(7).fill({}).map((_, index) => ({
-        src: `${prefix}-${index + 1}.jpg`,
-        alt: `${prefix} image ${index + 1}`,
-      }))
-
+      imageInfo.sets
+        .find((item) => item.prefix === prefix)
+        .images.map((item) => ({
+          src: `${prefix}-${item.index}.jpg`,
+          alt: item.title,
+          title: item.title,
+        }))
     const featuredSearches = [
       {
         term: 'Universe',
@@ -74,15 +122,22 @@ const HomePage = {
         images: makeImageArray('Olympics'),
       },
     ]
-    const featuredSearch = ref(featuredSearches[1])
+    const featuredSearch = computed(
+      () => featuredSearches[featuredSearchIdx.value]
+    )
+
+    const featuredSearchIdx = ref(0)
+    let rotInterval = null
     onMounted(() => {
-      setInterval(() => {
-        let activeIndex = featuredSearches.indexOf(featuredSearch.value)
-        featuredSearch.value =
-          featuredSearches[
-            activeIndex < featuredSearches.length - 1 ? activeIndex + 1 : 0
-          ]
+      rotInterval = setInterval(() => {
+        // featuredSearchIdx.value += 1
+        featuredSearchIdx.value %= featuredSearches.length
       }, 6000)
+    })
+    onBeforeUnmount(() => {
+      if (rotInterval) {
+        clearInterval(rotInterval)
+      }
     })
 
     return {
@@ -95,12 +150,18 @@ export default HomePage
 </script>
 
 <style>
-.homepage-images > *:nth-child(even) {
-  transform: translateY(50%);
-}
+@screen lg {
+  .homepage-images {
+    transform: translateY(-7.143vh);
+  }
 
-.homepage-images > * {
-  transition-delay: var(--transition-index) !important;
+  .homepage-images > *:nth-child(even) {
+    transform: translateY(50%);
+  }
+
+  .homepage-images > * {
+    transition-delay: var(--transition-index) !important;
+  }
 }
 
 .fade-enter,
