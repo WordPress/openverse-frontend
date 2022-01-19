@@ -1,8 +1,11 @@
 <template>
   <div>
-    <p class="px-6 py-4 bg-dark-charcoal-06 font-bold">
+    <a
+      class="px-6 py-4 flex flex-row items-center bg-dark-charcoal-06 font-semibold text-xs md:text-sr"
+    >
+      <VIcon :icon-path="chevron" class="-ml-2" />
       {{ $t('image-details.back') }}
-    </p>
+    </a>
 
     <div class="bg-dark-charcoal-06">
       <figure class="mx-6 mb-4 md:mb-6">
@@ -34,6 +37,7 @@
                 })
               "
               :href="image.creator_url"
+              class="text-pink"
             >
               <!-- TODO: keep handling source link clicked event? -->
               {{ image.creator }}
@@ -44,15 +48,14 @@
       </span>
     </section>
 
-    <!-- <MediaReuse
-        class="mt-10"
-        :media="{ license: image.license }"
-        :license-url="image.license_url"
-        full-license-name="CC BY"
-      /> -->
-
+    <!-- TODO: Refactor MediaReuse -->
+    <MediaReuse
+      class="mt-10"
+      :media="image"
+      :license-url="image.license_url"
+      full-license-name="CC BY"
+    />
     <VImageDetails :image="image" />
-
     <VRelatedImages :image-id="image.id" />
   </div>
 </template>
@@ -60,14 +63,20 @@
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
 
-// import MediaReuse from '~/components/MediaInfo/MediaReuse.vue'
+import MediaReuse from '~/components/MediaInfo/MediaReuse.vue'
 import VImageDetails from '~/components/VImageDetails/VImageDetails.vue'
 import VButton from '~/components/VButton.vue'
+import VIcon from '~/components/VIcon/VIcon.vue'
+
+import chevron from '~/assets/icons/chevron-left.svg'
 
 const VImageDetailsPage = defineComponent({
   name: 'VImageDetailsPage',
-  components: { /* MediaReuse, */ VButton, VImageDetails },
+  components: { MediaReuse, VButton, VIcon, VImageDetails },
   layout: 'blank',
+  setup() {
+    return { chevron }
+  },
   data() {
     return {
       image: {
@@ -176,19 +185,12 @@ const VImageDetailsPage = defineComponent({
       },
     }
   },
-  // setup() {
-  //   return {}
-  // },
 })
 
 export default VImageDetailsPage
 </script>
 
 <style scoped>
-a:not(.btn-main) {
-  @apply text-pink;
-}
-
 section,
 aside {
   @apply px-6 mb-10 md:px-16 md:my-16 md:max-w-screen-lg lg:mx-auto;
