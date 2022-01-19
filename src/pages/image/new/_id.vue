@@ -6,17 +6,20 @@
 
     <div class="bg-dark-charcoal-06">
       <figure class="mx-6 mb-4 md:mb-6">
-        <img :src="image.url" alt="" class="mx-auto" />
+        <img :src="image.url" :alt="image.title" class="mx-auto" />
         <!-- TODO: SketchFabViewer -->
       </figure>
     </div>
 
-    <div
+    <section
       class="px-6 md:px-16 flex flex-row flex-wrap justify-between md:flex-row-reverse"
     >
-      <VButton class="w-full mb-4 md:w-auto md:mb-0 font-bold">{{
-        $t('image-details.weblink')
-      }}</VButton>
+      <VButton
+        as="a"
+        class="btn-main w-full mb-4 md:w-auto md:mb-0 font-bold"
+        :href="image.foreign_landing_url"
+        >{{ $t('image-details.weblink') }}</VButton
+      >
       <span>
         <h1 class="text-base md:text-3xl">
           {{ image.title }}
@@ -39,7 +42,7 @@
           </template>
         </i18n>
       </span>
-    </div>
+    </section>
 
     <!-- <MediaReuse
         class="mt-10"
@@ -182,12 +185,12 @@ export default VImageDetailsPage
 </script>
 
 <style scoped>
-a {
+a:not(.btn-main) {
   @apply text-pink;
 }
 
 section,
 aside {
-  @apply px-6 md:px-16 my-10 md:my-16 md:max-w-lg;
+  @apply px-6 mb-10 md:px-16 md:my-16 md:max-w-screen-lg lg:mx-auto;
 }
 </style>
