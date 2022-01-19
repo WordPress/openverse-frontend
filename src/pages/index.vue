@@ -142,7 +142,7 @@ const HomePage = {
     let rotInterval = null
     onMounted(() => {
       rotInterval = setInterval(() => {
-        // featuredSearchIdx.value += 1
+        featuredSearchIdx.value += 1
         featuredSearchIdx.value %= featuredSearches.length
       }, 6000)
     })
