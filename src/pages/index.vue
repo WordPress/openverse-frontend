@@ -49,7 +49,7 @@
       class="flex-grow overflow-x-scroll lg:overflow-hidden w-full lg:w-auto lg:h-full px-6"
     >
       <div
-        class="homepage-images flex flex-row gap-6 lg:gap-0 items-center lg:grid lg:grid-cols-2 lg:grid-rows-4 lg:w-[57.143vh] lg:h-[114.287vh]"
+        class="homepage-images flex flex-row gap-4 lg:gap-0 items-center lg:grid lg:grid-cols-2 lg:grid-rows-4 lg:w-[57.143vh] lg:h-[114.287vh]"
       >
         <Transition
           v-for="(image, index) in featuredSearch.images"
