@@ -12,7 +12,7 @@
     <dl>
       <div>
         <dt>{{ $t('image-details.information.type') }}</dt>
-        <dd>{{ image.filetype }}</dd>
+        <dd class="uppercase">{{ imageType }}</dd>
       </div>
       <div>
         <dt>{{ $t('image-details.information.source') }}</dt>
@@ -30,7 +30,7 @@
         <dt>{{ $t('image-details.information.dimensions') }}</dt>
         <dd>
           <!-- eslint-disable @intlify/vue-i18n/no-raw-text -->
-          {{ image.width }} &times; {{ image.height }}
+          {{ imageWidth }} &times; {{ imageHeight }}
           {{ $t('photo-details.information.pixels') }}
         </dd>
       </div>
@@ -55,6 +55,15 @@ const VImageDetails = defineComponent({
     image: {
       type: Object,
       required: true,
+    },
+    imageWidth: {
+      type: Number,
+    },
+    imageHeight: {
+      type: Number,
+    },
+    imageType: {
+      type: String,
     },
   },
 })

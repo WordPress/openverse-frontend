@@ -3,13 +3,18 @@
     <a
       class="px-6 py-4 flex flex-row items-center bg-dark-charcoal-06 font-semibold text-xs md:text-sr"
     >
-      <VIcon :icon-path="chevron" class="-ml-2" />
+      <Chevron class="-ml-2" />
       {{ $t('image-details.back') }}
     </a>
 
     <div class="bg-dark-charcoal-06">
       <figure class="mx-6 mb-4 md:mb-6">
-        <img :src="image.url" :alt="image.title" class="mx-auto" />
+        <img
+          :src="image.url"
+          :alt="image.title"
+          class="mx-auto max-h-screen"
+          @load="onImageLoaded"
+        />
         <!-- TODO: SketchFabViewer -->
       </figure>
     </div>
@@ -21,13 +26,20 @@
         as="a"
         class="btn-main w-full mb-4 md:w-auto md:mb-0 font-bold"
         :href="image.foreign_landing_url"
+        target="blank"
+        rel="noopener noreferrer"
         >{{ $t('image-details.weblink') }}</VButton
       >
       <span>
         <h1 class="text-base md:text-3xl">
           {{ image.title }}
         </h1>
-        <i18n path="image-details.creator" tag="span" class="font-bold">
+        <i18n
+          v-if="image.creator"
+          path="image-details.creator"
+          tag="span"
+          class="font-bold"
+        >
           <template #name>
             <a
               v-if="image.creator_url"
@@ -37,6 +49,8 @@
                 })
               "
               :href="image.creator_url"
+              target="blank"
+              rel="noopener noreferrer"
               class="text-pink"
             >
               <!-- TODO: keep handling source link clicked event? -->
@@ -55,137 +69,79 @@
       :license-url="image.license_url"
       full-license-name="CC BY"
     />
-    <VImageDetails :image="image" />
+    <VImageDetails
+      :image="image"
+      :image-width="imageWidth"
+      :image-height="imageHeight"
+      :image-type="imageType"
+    />
     <VRelatedImages :image-id="image.id" />
   </div>
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
-
+import axios from 'axios'
+import { mapActions, mapState } from 'vuex'
+import { FETCH_IMAGE } from '~/constants/action-types'
+import { MEDIA } from '~/constants/store-modules'
 import MediaReuse from '~/components/MediaInfo/MediaReuse.vue'
 import VImageDetails from '~/components/VImageDetails/VImageDetails.vue'
 import VButton from '~/components/VButton.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'
 
-import chevron from '~/assets/icons/chevron-left.svg'
+import Chevron from '~/assets/icons/chevron-left.svg?inline'
 
-const VImageDetailsPage = defineComponent({
+const VImageDetailsPage = {
   name: 'VImageDetailsPage',
-  components: { MediaReuse, VButton, VIcon, VImageDetails },
+  components: { MediaReuse, Chevron, VButton, VIcon, VImageDetails },
   layout: 'blank',
-  setup() {
-    return { chevron }
-  },
   data() {
     return {
-      image: {
-        id: '58cefb7b-8008-4016-b3bc-b4246fa3baec',
-        title: 'Galah (Eolophus roseicapilla)',
-        foreign_landing_url:
-          'https://www.flickr.com/photos/16520061@N08/1917526108',
-        creator: 'David Cook Wildlife Photography',
-        creator_url: 'https://www.flickr.com/photos/16520061@N08',
-        url: 'https://live.staticflickr.com/2002/1917526108_1f9a8564c1_b.jpg',
-        filesize: null,
-        filetype: null,
-        license: 'by',
-        license_version: '2.0',
-        license_url: 'https://creativecommons.org/licenses/by/2.0/',
-        provider: 'flickr',
-        source: 'flickr',
-        category: null,
-        tags: [
-          {
-            name: 'australia',
-          },
-          {
-            name: 'australianbirds',
-          },
-          {
-            name: 'birds',
-          },
-          {
-            name: 'cacatuaroseicapilla',
-          },
-          {
-            name: 'eolophusroseicapilla',
-          },
-          {
-            name: 'galah',
-          },
-          {
-            name: 'kookr',
-          },
-          {
-            name: 'nsw',
-          },
-          {
-            name: 'wamboin',
-          },
-          {
-            name: 'animal',
-            accuracy: 0.96539,
-          },
-          {
-            name: 'avian',
-            accuracy: 0.94129,
-          },
-          {
-            name: 'beak',
-            accuracy: 0.94514,
-          },
-          {
-            name: 'bird',
-            accuracy: 0.99636,
-          },
-          {
-            name: 'feather',
-            accuracy: 0.94206,
-          },
-          {
-            name: 'nature',
-            accuracy: 0.9596,
-          },
-          {
-            name: 'one',
-            accuracy: 0.92752,
-          },
-          {
-            name: 'parrot',
-            accuracy: 0.97829,
-          },
-          {
-            name: 'portrait',
-            accuracy: 0.92445,
-          },
-          {
-            name: 'wild',
-            accuracy: 0.93848,
-          },
-          {
-            name: 'wildlife',
-            accuracy: 0.97757,
-          },
-          {
-            name: 'wing',
-            accuracy: 0.94363,
-          },
-        ],
-        attribution:
-          '"Galah (Eolophus roseicapilla)" by David Cook Wildlife Photography is licensed under CC-BY 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by/2.0/.',
-        height: 1024,
-        width: 768,
-        thumbnail:
-          'http://api.openverse.engineering/v1/images/58cefb7b-8008-4016-b3bc-b4246fa3baec/thumb/',
-        detail_url:
-          'http://api.openverse.engineering/v1/images/58cefb7b-8008-4016-b3bc-b4246fa3baec/',
-        related_url:
-          'http://api.openverse.engineering/v1/images/58cefb7b-8008-4016-b3bc-b4246fa3baec/related/',
-      },
+      breadCrumbURL: '',
+      shouldShowBreadcrumb: false,
+      imageWidth: 0,
+      imageHeight: 0,
+      imageType: 'Unknown',
+      thumbnailURL: '',
+      imageId: null,
     }
   },
-})
+  computed: {
+    ...mapState(MEDIA, ['image']),
+  },
+  async asyncData({ route }) {
+    return {
+      imageId: route.params.id,
+    }
+  },
+  async fetch() {
+    try {
+      await this.fetchImage({ id: this.imageId })
+    } catch (err) {
+      const errorMessage = this.$t('error.image-not-found', {
+        id: this.imageId,
+      })
+      this.$nuxt.error({
+        statusCode: 404,
+        message: errorMessage,
+      })
+    }
+  },
+  methods: {
+    ...mapActions(MEDIA, { fetchImage: FETCH_IMAGE }),
+    onImageLoaded(event) {
+      this.imageWidth = this.image.width || event.target.naturalWidth
+      this.imageHeight = this.image.height || event.target.naturalHeight
+      if (this.image.filetype) {
+        this.imageType = this.image.filetype
+      } else {
+        axios.head(event.target.src).then((res) => {
+          this.imageType = res.headers['content-type']
+        })
+      }
+    },
+  },
+}
 
 export default VImageDetailsPage
 </script>
