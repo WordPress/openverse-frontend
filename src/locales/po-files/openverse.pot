@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-01-18T06:42:25+00:00\n"
+"POT-Creation-Date: 2022-01-19T10:51:29+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2116,6 +2116,7 @@ msgctxt "notification.translation.link"
 msgid "contributing a translation"
 msgstr ""
 
+#: src/pages/index.vue:10
 msgctxt "hero.brand"
 msgid "Openverse"
 msgstr ""
@@ -2127,7 +2128,7 @@ msgstr ""
 
 #: src/components/VHeroSection.vue:9
 msgctxt "hero.subtitle"
-msgid "Browse over 500 million images, available for reuse"
+msgid "Browse over 600 million items to reuse"
 msgstr ""
 
 #: src/components/SearchTypeToggle.vue:19
@@ -2175,14 +2176,14 @@ msgid "I want something I can"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VHeroSection.vue:45
-msgctxt "hero.caption.content"
-msgid "All our content is under Creative Commons licenses or in the public domain. ###link### about CC licenses and tools."
+#: src/pages/index.vue:18
+msgctxt "hero.disclaimer.content"
+msgid "All our content is under a ###license### or in the public domain."
 msgstr ""
 
-#: src/components/VHeroSection.vue:53
-msgctxt "hero.caption.link"
-msgid "Learn more"
+#: src/pages/index.vue:27
+msgctxt "hero.disclaimer.license"
+msgid "Creative Commons license"
 msgstr ""
 
 #: src/components/VHeroSection.vue:28
