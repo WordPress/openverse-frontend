@@ -1,18 +1,23 @@
 <template>
   <main
-    class="flex flex-col lg:flex-row items-center justify-center gap-2 bg-yellow h-screen overflow-hidden"
+    class="flex flex-col lg:flex-row justify-center gap-6 lg:gap-0 bg-yellow h-screen overflow-hidden"
   >
     <!-- TODO: Refine min-width for different breakpoints -->
     <header
-      class="w-full sm:w-auto sm:min-w-[32rem] xl:min-w-[64rem] box-border px-4 sm:px-40 mx-auto mt-auto mb-0 sm:mb-auto lg:my-0 flex flex-col justify-center"
+      class="flex-grow w-full lg:w-auto lg:min-w-[32rem] xl:min-w-[64rem] box-border px-6 lg:pl-30 lg:pr-0 xl:px-40 mx-auto flex flex-col justify-center"
     >
-      <h1 class="hidden sm:block">
-        <span class="sr-only">{{ $t('hero.brand') }}</span>
-        <!-- width and height chosen w.r.t. viewBox "0 0 280 42" -->
-        <OpenverseLogo width="420" height="63" class="sm:translate-x-[-98px]" />
-      </h1>
-      <h2 class="text-6xl mt-6">{{ $t('hero.subtitle') }}</h2>
+      <NuxtLink to="/" class="relative z-10">
+        <h1>
+          <span class="sr-only">{{ $t('hero.brand') }}</span>
+          <!-- width and height chosen w.r.t. viewBox "0 0 280 42" -->
+          <OpenverseLogo
+            aria-hidden="true"
+            class="lg:-translate-x-24 w-30 lg:h-[63px] lg:w-auto pt-6 lg:pt-0"
+          />
+        </h1>
+      </NuxtLink>
 
+      <h2 class="text-6xl mt-auto lg:mt-6">{{ $t('hero.subtitle') }}</h2>
       <VSearchBar class="mt-8" :placeholder="featuredSearch.term">
         <VContentSwitcherPopover
           v-if="isMounted && isMinScreenMd"
@@ -23,10 +28,11 @@
         />
       </VSearchBar>
 
+      <!-- Disclaimer for large screens -->
       <i18n
         path="hero.disclaimer.content"
         tag="p"
-        class="hidden sm:block text-sr mt-4"
+        class="hidden lg:block text-sr mt-4"
       >
         <template #license>
           <a
@@ -40,10 +46,10 @@
 
     <!-- Image carousel -->
     <div
-      class="overflow-x-scroll lg:overflow-hidden w-full lg:w-auto lg:h-full"
+      class="flex-grow overflow-x-scroll lg:overflow-hidden w-full lg:w-auto lg:h-full px-6"
     >
       <div
-        class="homepage-images flex flex-row lg:grid lg:grid-cols-2 lg:grid-rows-4 lg:w-[57.143vh] lg:h-[114.287vh]"
+        class="homepage-images flex flex-row gap-6 lg:gap-0 items-center lg:grid lg:grid-cols-2 lg:grid-rows-4 lg:w-[57.143vh] lg:h-[114.287vh]"
       >
         <Transition
           v-for="(image, index) in featuredSearch.images"
@@ -51,31 +57,28 @@
           name="fade"
           mode="out-in"
         >
-          <div
+          <NuxtLink
             :key="image.identifier"
-            class="homepage-image block aspect-square p-4 lg:p-[2vh] h-40 w-40 lg:h-auto lg:w-auto"
+            :to="getImageUrl(image.identifier)"
+            class="homepage-image block aspect-square h-40 w-40 lg:h-auto lg:w-auto lg:m-[2vh] rounded-full"
             :style="{ '--transition-index': `${index * 0.05}s` }"
           >
-            <!-- <NuxtLink
-            :to="image.url"
-            class="aspect-square block rounded-full overflow-hidden h-full w-full"
-          > -->
             <img
               class="object-cover h-full w-full rounded-full"
               :src="require(`~/assets/homepage_images/${image.src}`)"
               :alt="image.title"
               :title="image.title"
             />
-          </div>
-          <!-- </NuxtLink> -->
+          </NuxtLink>
         </Transition>
       </div>
     </div>
 
+    <!-- Disclaimer as footer for small screens -->
     <i18n
       path="hero.disclaimer.content"
       tag="p"
-      class="sm:hidden text-sr p-4 mt-auto"
+      class="lg:hidden text-sr p-6 mt-auto"
     >
       <template #license>
         <a
@@ -94,6 +97,7 @@ import {
   computed,
   onMounted,
   onBeforeUnmount,
+  useRouter,
 } from '@nuxtjs/composition-api'
 
 import VContentSwitcherPopover from '~/components/VContentSwitcher/VContentSwitcherPopover.vue'
@@ -113,13 +117,17 @@ const HomePage = {
     VContentSwitcherPopover,
   },
   setup() {
-    const makeImageArray = (prefix = '') =>
+    const router = useRouter()
+
+    const makeImageArray = (prefix) =>
       imageInfo.sets
         .find((item) => item.prefix === prefix)
         .images.map((item) => ({
           ...item,
           src: `${prefix}-${item.index}.jpg`,
         }))
+    const getImageUrl = (identifier) =>
+      router.resolve({ name: 'image-id', params: { id: identifier } }).href
     const featuredSearches = [
       {
         term: 'Universe',
@@ -171,6 +179,7 @@ const HomePage = {
 
     return {
       featuredSearch,
+      getImageUrl,
 
       isMounted,
 
@@ -195,10 +204,10 @@ export default HomePage
   .homepage-image:nth-child(even) {
     transform: translateY(50%);
   }
+}
 
-  .homepage-image {
-    transition-delay: var(--transition-index) !important;
-  }
+.homepage-image {
+  transition-delay: var(--transition-index) !important;
 }
 
 .fade-enter,
