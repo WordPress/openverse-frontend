@@ -47,14 +47,13 @@
       >
         <Transition
           v-for="(image, index) in featuredSearch.images"
-          :key="image.alt"
-          tag="div"
+          :key="image.identifier"
           name="fade"
           mode="out-in"
         >
           <div
-            :key="image.alt"
-            class="block aspect-square p-4 lg:p-[2vh] h-40 w-40 lg:h-auto lg:w-auto"
+            :key="image.identifier"
+            class="homepage-image block aspect-square p-4 lg:p-[2vh] h-40 w-40 lg:h-auto lg:w-auto"
             :style="{ '--transition-index': `${index * 0.05}s` }"
           >
             <!-- <NuxtLink
@@ -64,7 +63,7 @@
             <img
               class="object-cover h-full w-full rounded-full"
               :src="require(`~/assets/homepage_images/${image.src}`)"
-              :alt="image.alt"
+              :alt="image.title"
               :title="image.title"
             />
           </div>
@@ -118,9 +117,8 @@ const HomePage = {
       imageInfo.sets
         .find((item) => item.prefix === prefix)
         .images.map((item) => ({
+          ...item,
           src: `${prefix}-${item.index}.jpg`,
-          alt: item.title,
-          title: item.title,
         }))
     const featuredSearches = [
       {
@@ -194,11 +192,11 @@ export default HomePage
     transform: translateY(-7.143vh);
   }
 
-  .homepage-images > *:nth-child(even) {
+  .homepage-image:nth-child(even) {
     transform: translateY(50%);
   }
 
-  .homepage-images > * {
+  .homepage-image {
     transition-delay: var(--transition-index) !important;
   }
 }
