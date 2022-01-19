@@ -60,7 +60,7 @@
           <NuxtLink
             :key="image.identifier"
             :to="getImageUrl(image.identifier)"
-            class="homepage-image block aspect-square h-40 w-40 lg:h-auto lg:w-auto lg:m-[2vh] rounded-full"
+            class="homepage-image block aspect-square h-30 w-30 lg:h-auto lg:w-auto lg:m-[2vh] rounded-full"
             :style="{ '--transition-index': `${index * 0.05}s` }"
           >
             <img
