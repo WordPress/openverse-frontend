@@ -8,6 +8,7 @@
     <VItem
       v-for="(item, idx) in content.types"
       :key="idx"
+      :class="{ 'mb-1': !bordered }"
       :selected="item === activeItem"
       :is-first="idx === 0"
       @click.native="handleClick(item)"
