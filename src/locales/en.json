@@ -511,10 +511,7 @@
         "html": "HTML",
         "plain": "Plain text"
       },
-      "attribution": {
-        "main": "This image was marked with a {link} license.",
-        "license": "license."
-      }
+      "attribution": "This image was marked with a {link} license:"
     },
     "provider-label": "Provider",
     "source-label": "Source",

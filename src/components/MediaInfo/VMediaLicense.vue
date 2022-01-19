@@ -1,13 +1,17 @@
 <template>
   <div class="media-attribution">
-    <h5 class="b-header mb-6">
+    <h5 class="text-base mb-4">
       {{ headerText }}
     </h5>
     <template v-if="isLicense">
-      <i18n path="media-details.reuse.attribution" tag="span" class="block">
+      <i18n
+        path="media-details.reuse.attribution"
+        tag="span"
+        class="block text-sm"
+      >
         <template #link>
           <a
-            class="uppercase"
+            class="uppercase text-pink"
             :href="licenseUrl"
             target="_blank"
             rel="noopener"
@@ -63,9 +67,7 @@ import LicenseElements from '~/components/LicenseElements.vue'
 
 export default {
   name: 'MediaLicense',
-  components: {
-    LicenseElements,
-  },
+  components: { LicenseElements },
   props: {
     fullLicenseName: String,
     license: String,

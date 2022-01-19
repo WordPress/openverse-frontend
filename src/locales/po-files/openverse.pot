@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-01-21T16:01:26+00:00\n"
+"POT-Creation-Date: 2022-01-21T16:04:08+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -348,18 +348,18 @@ msgctxt "audio-details.table.genre"
 msgid "Genre"
 msgstr ""
 
-#: src/pages/image/new/_id.vue:4
+#: src/pages/image/new/_id.vue:7
 msgctxt "image-details.back"
 msgid "Back to search results"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/image/new/_id.vue:24
+#: src/pages/image/new/_id.vue:37
 msgctxt "image-details.creator"
 msgid "by ###name###"
 msgstr ""
 
-#: src/pages/image/new/_id.vue:18
+#: src/pages/image/new/_id.vue:31
 msgctxt "image-details.weblink"
 msgid "Go to image's website"
 msgstr ""
@@ -397,7 +397,7 @@ msgctxt "image-details.information.provider"
 msgid "Provider"
 msgstr ""
 
-#: src/components/VImageDetails/VImageDetails.vue:22
+#: src/components/VImageDetails/VImageDetails.vue:30
 msgctxt "image-details.information.dimensions"
 msgid "Dimensions"
 msgstr ""
@@ -673,12 +673,12 @@ msgctxt "media-details.content-report.title"
 msgid "Report this content"
 msgstr ""
 
-#: src/components/MediaInfo/MediaLicense.vue:32
+#: src/components/MediaInfo/MediaLicense.vue:28
 msgctxt "media-details.aria.attribution.license"
 msgid "read more about the license"
 msgstr ""
 
-#: src/components/MediaInfo/MediaLicense.vue:51
+#: src/components/MediaInfo/MediaLicense.vue:47
 msgctxt "media-details.aria.attribution.tool"
 msgid "read more about the tool"
 msgstr ""
@@ -707,12 +707,8 @@ msgstr ""
 
 #. Do not translate words between ### ###.
 #: src/components/MediaInfo/MediaLicense.vue:7
-msgctxt "media-details.reuse.attribution.main"
-msgid "This image was marked with a ###link### license."
-msgstr ""
-
-msgctxt "media-details.reuse.attribution.license"
-msgid "license."
+msgctxt "media-details.reuse.attribution"
+msgid "This image was marked with a ###link### license:"
 msgstr ""
 
 #: src/components/MediaInfo/CopyLicense.vue:4
@@ -771,23 +767,23 @@ msgid "a copy of this license,"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/MediaInfo/MediaLicense.vue:44
+#: src/components/MediaInfo/MediaLicense.vue:40
 msgctxt "media-details.reuse.tool.content"
 msgid "Read more about the tool ###link###"
 msgstr ""
 
-#: src/components/MediaInfo/MediaLicense.vue:56
+#: src/components/MediaInfo/MediaLicense.vue:52
 msgctxt "media-details.reuse.tool.link"
 msgid "here"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/MediaInfo/MediaLicense.vue:24
+#: src/components/MediaInfo/MediaLicense.vue:20
 msgctxt "media-details.reuse.license.content"
 msgid "Read more about the license ###link###"
 msgstr ""
 
-#: src/components/MediaInfo/MediaLicense.vue:37
+#: src/components/MediaInfo/MediaLicense.vue:33
 msgctxt "media-details.reuse.license.link"
 msgid "here"
 msgstr ""
