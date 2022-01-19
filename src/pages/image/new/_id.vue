@@ -62,13 +62,7 @@
       </span>
     </section>
 
-    <!-- TODO: Refactor MediaReuse -->
-    <MediaReuse
-      class="mt-10"
-      :media="image"
-      :license-url="image.license_url"
-      full-license-name="CC BY"
-    />
+    <VMediaReuse :media="image" />
     <VImageDetails
       :image="image"
       :image-width="imageWidth"
@@ -84,7 +78,7 @@ import axios from 'axios'
 import { mapActions, mapState } from 'vuex'
 import { FETCH_IMAGE } from '~/constants/action-types'
 import { MEDIA } from '~/constants/store-modules'
-import MediaReuse from '~/components/MediaInfo/MediaReuse.vue'
+import MediaReuse from '~/components/MediaInfo/VMediaReuse.vue'
 import VImageDetails from '~/components/VImageDetails/VImageDetails.vue'
 import VButton from '~/components/VButton.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'

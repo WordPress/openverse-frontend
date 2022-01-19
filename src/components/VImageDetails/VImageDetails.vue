@@ -45,7 +45,6 @@
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
 
-// import VContentReportForm from '~/components/VContentReport/VContentReportForm.vue'
 import FlagSvg from '~/assets/icons/flag.svg?inline'
 
 const VImageDetails = defineComponent({
@@ -74,6 +73,7 @@ export default VImageDetails
 dl {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  grid-gap: 1rem;
 }
 
 dt,
