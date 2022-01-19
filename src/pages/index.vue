@@ -13,7 +13,15 @@
       </h1>
       <h2 class="text-6xl mt-6">{{ $t('hero.subtitle') }}</h2>
 
-      <VSearchBar class="mt-8" :placeholder="featuredSearch.term" />
+      <VSearchBar class="mt-8" :placeholder="featuredSearch.term">
+        <VContentSwitcherPopover
+          v-if="isMounted && isMinScreenMd"
+          ref="contentSwitcher"
+          class="mx-3"
+          :active-item="contentType"
+          @select="setContentType"
+        />
+      </VSearchBar>
 
       <i18n
         path="hero.disclaimer.content"
@@ -89,6 +97,11 @@ import {
   onBeforeUnmount,
 } from '@nuxtjs/composition-api'
 
+import VContentSwitcherPopover from '~/components/VContentSwitcher/VContentSwitcherPopover.vue'
+
+import { isMinScreen } from '~/composables/use-media-query'
+import { ALL_MEDIA } from '~/constants/media'
+
 import imageInfo from '~/assets/homepage_images/image_info.json'
 
 import OpenverseLogo from '~/assets/logo.svg?inline'
@@ -98,6 +111,7 @@ const HomePage = {
   layout: 'blank',
   components: {
     OpenverseLogo,
+    VContentSwitcherPopover,
   },
   setup() {
     const makeImageArray = (prefix = '') =>
@@ -140,8 +154,33 @@ const HomePage = {
       }
     })
 
+    const isMounted = ref(false)
+    onMounted(() => {
+      isMounted.value = true
+    })
+    onBeforeUnmount(() => {
+      isMounted.value = false
+    })
+
+    const isMinScreenMd = isMinScreen('md', { shouldPassInSSR: true })
+
+    const contentSwitcher = ref(null)
+    const contentType = ref(ALL_MEDIA)
+    const setContentType = (type) => {
+      contentType.value = type
+      contentSwitcher.value?.closeMenu()
+    }
+
     return {
       featuredSearch,
+
+      isMounted,
+
+      isMinScreenMd,
+
+      contentSwitcher,
+      contentType,
+      setContentType,
     }
   },
 }
