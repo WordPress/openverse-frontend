@@ -97,6 +97,15 @@ const Error = defineComponent({
       handleSearch,
     }
   },
+  head: {
+    meta: [
+      {
+        hid: 'theme-color',
+        name: 'theme-color',
+        content: '#ffe033',
+      },
+    ],
+  },
 })
 export default Error
 </script>

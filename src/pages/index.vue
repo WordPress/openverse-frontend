@@ -116,6 +116,15 @@ const HomePage = {
     OpenverseLogo,
     VContentSwitcherPopover,
   },
+  head: {
+    meta: [
+      {
+        hid: 'theme-color',
+        name: 'theme-color',
+        content: '#ffe033',
+      },
+    ],
+  },
   setup() {
     const router = useRouter()
 
