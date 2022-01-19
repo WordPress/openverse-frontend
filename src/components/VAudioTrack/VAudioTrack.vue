@@ -150,11 +150,18 @@ export default defineComponent({
         }
       }
     }
+
     const updateTimeLoop = () => {
       updateTime()
       if (status.value === 'playing') {
         // Audio is playing, keep looping
         window.requestAnimationFrame(updateTimeLoop)
+      } else {
+        // Update time one last time on the next frame to try to fix
+        // some weird, difficult to reproduce, seemingly machine
+        // dependent bugs, described in the PR discussion below:
+        // https://github.com/WordPress/openverse-frontend/pull/633
+        window.requestAnimationFrame(updateTime)
       }
     }
 
