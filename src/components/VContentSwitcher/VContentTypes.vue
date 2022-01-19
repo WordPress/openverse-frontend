@@ -13,12 +13,14 @@
       @click.native="handleClick(item)"
     >
       <VIcon :icon-path="content.icons[item]" class="me-2 ms-4 my-4" />
-      <span class="pe-20 py-4 font-semibold">{{
+      <span class="pe-6 md:pe-20 py-4 font-semibold">{{
         $t(`search-type.${item}`)
       }}</span>
-      <VPill v-if="contentStatus[item] === statuses.BETA" class="self-center">{{
-        $t('search-type.status-beta')
-      }}</VPill>
+      <VPill
+        v-if="contentStatus[item] === statuses.BETA"
+        class="self-center ms-0 md:ms-auto"
+        >{{ $t('search-type.status-beta') }}</VPill
+      >
     </VItem>
   </VItemGroup>
 </template>
