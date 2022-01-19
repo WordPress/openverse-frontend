@@ -33,7 +33,7 @@
         > -->
           <img
             class="object-cover h-full w-full rounded-full"
-            :src="require(`~/assets/homepage-images/${image.src}`)"
+            :src="require(`~/assets/homepage_images/${image.src}`)"
             :alt="image.alt"
           />
         </div>
