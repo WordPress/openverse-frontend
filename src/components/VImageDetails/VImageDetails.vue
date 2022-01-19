@@ -16,7 +16,15 @@
       </div>
       <div>
         <dt>{{ $t('image-details.information.source') }}</dt>
-        <dd>{{ image.source }}</dd>
+        <dd>
+          <a
+            :href="image.foreign_landing_url"
+            target="blank"
+            rel="noopener noreferrer"
+            class="text-pink"
+            >{{ image.source }}</a
+          >
+        </dd>
       </div>
       <div>
         <dt>{{ $t('image-details.information.dimensions') }}</dt>
