@@ -1,5 +1,9 @@
 import { watch } from '@nuxtjs/composition-api'
-import { getFirstTabbableIn, hasFocusWithin, ensureFocus } from 'reakit-utils'
+import {
+  getFirstTabbableIn,
+  hasFocusWithin,
+  ensureFocus,
+} from 'reakit-utils/tabbable'
 import { warn } from '~/utils/warn'
 
 export const noFocusableElementWarning =
