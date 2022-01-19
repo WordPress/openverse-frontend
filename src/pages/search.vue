@@ -1,43 +1,26 @@
 <template>
-  <div class="browse-page">
-    <div class="search columns">
-      <Component
-        :is="searchFilter.as"
-        v-if="isFilterSidebarVisible"
-        id="filter-sidebar"
-        :class="searchFilter.classes"
-        @close="onToggleSearchGridFilter"
-        ><VSearchGridFilter @close="onToggleSearchGridFilter"
-      /></Component>
-      <div class="column search-grid-ctr">
-        <SearchTypeTabs class="mb-4" />
-        <VFilterDisplay v-show="shouldShowFilterTags" />
-        <VSearchGrid
-          :id="`tab-${searchType}`"
-          role="tabpanel"
-          :aria-labelledby="searchType"
+  <div class="browse-page flex flex-col w-full search-grid-ctr">
+    <VSearchGrid
+      :fetch-state="fetchState"
+      :query="query"
+      :supported="supported"
+      :search-type="searchType"
+      :results-count="resultsCount"
+      data-testid="search-grid"
+    >
+      <template #media>
+        <NuxtChild
+          :key="$route.path"
+          :media-results="results"
           :fetch-state="fetchState"
-          :query="query"
+          :is-filter-visible="isVisible"
+          :search-term="query.q"
           :supported="supported"
-          :search-type="searchType"
-          :results-count="resultsCount"
-          data-testid="search-grid"
-        >
-          <template #media>
-            <NuxtChild
-              :key="$route.path"
-              :media-results="results"
-              :fetch-state="fetchState"
-              :is-filter-visible="isFilterSidebarVisible"
-              :search-term="query.q"
-              :supported="supported"
-              data-testid="search-results"
-            />
-          </template>
-        </VSearchGrid>
-        <VScrollButton v-show="showScrollButton" data-testid="scroll-button" />
-      </div>
-    </div>
+          data-testid="search-results"
+        />
+      </template>
+    </VSearchGrid>
+    <VScrollButton v-show="showScrollButton" data-testid="scroll-button" />
   </div>
 </template>
 
@@ -48,41 +31,36 @@ import {
   SET_SEARCH_STATE_FROM_URL,
   UPDATE_SEARCH_TYPE,
 } from '~/constants/action-types'
-import { queryStringToSearchType } from '~/utils/search-query-transform'
 import { ALL_MEDIA, AUDIO, IMAGE } from '~/constants/media'
+import isEqual from 'lodash.isequal'
 import { mapActions, mapGetters, mapState } from 'vuex'
 import { MEDIA, SEARCH } from '~/constants/store-modules'
-import debounce from 'lodash.debounce'
 
+import { inject } from '@nuxtjs/composition-api'
 import { isMinScreen } from '~/composables/use-media-query.js'
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
 
-import AppModal from '~/components/AppModal.vue'
 import VScrollButton from '~/components/VScrollButton.vue'
 import VSearchGrid from '~/components/VSearchGrid.vue'
-import VSearchGridFilter from '~/components/VFilters/VSearchGridFilter.vue'
 import VFilterDisplay from '~/components/VFilters/VFilterDisplay.vue'
 
 const BrowsePage = {
   name: 'browse-page',
   layout: 'default',
   components: {
-    AppModal,
     VFilterDisplay,
-    VSearchGridFilter,
     VScrollButton,
     VSearchGrid,
   },
   setup() {
-    const isMdScreen = isMinScreen('md')
-    const { isFilterSidebarVisible, setFilterSidebarVisibility } =
-      useFilterSidebarVisibility({ mediaQuery: isMdScreen })
+    const isMinScreenMd = isMinScreen('md')
+    const { isVisible } = useFilterSidebarVisibility()
+    const showScrollButton = inject('showScrollButton')
 
     return {
-      isMdScreen,
-      isFilterSidebarVisible,
-
-      setFilterSidebarVisibility,
+      isMinScreenMd,
+      isVisible,
+      showScrollButton,
     }
   },
   scrollToTop: false,
@@ -95,23 +73,13 @@ const BrowsePage = {
       await this.fetchMedia({})
     }
   },
-  data: () => ({
-    showScrollButton: false,
-  }),
-  async created() {
-    this.debounceScrollHandling = debounce(this.checkScrollLength, 100)
+  async asyncData({ route, store }) {
     if (process.server) {
-      await this.setSearchStateFromUrl({
-        path: this.$route.path,
-        query: this.$route.query,
+      await store.dispatch(`${SEARCH}/${SET_SEARCH_STATE_FROM_URL}`, {
+        path: route.path,
+        query: route.query,
       })
     }
-  },
-  mounted() {
-    window.addEventListener('scroll', this.debounceScrollHandling)
-  },
-  beforeDestroy() {
-    window.removeEventListener('scroll', this.debounceScrollHandling)
   },
   computed: {
     ...mapState(SEARCH, ['query', 'searchType']),
@@ -121,26 +89,12 @@ const BrowsePage = {
       // Default to IMAGE until media search/index is generalized
       return this.searchType !== ALL_MEDIA ? this.searchType : IMAGE
     },
-    shouldShowFilterTags() {
-      return (
-        ['/search/', '/search/image'].includes(this.$route.path) &&
-        this.isAnyFilterApplied
-      )
-    },
     /**
      * Number of search results. Returns 0 for unsupported types.
      * @returns {number}
      */
     resultsCount() {
       return this.supported ? this.results.count : 0
-    },
-    searchFilter() {
-      return {
-        classes: {
-          'column is-narrow grid-sidebar max-w-full bg-white': this.isMdScreen,
-        },
-        as: this.isMdScreen ? 'aside' : AppModal,
-      }
     },
     supported() {
       if (this.searchType === AUDIO) {
@@ -166,37 +120,37 @@ const BrowsePage = {
     onSearchFormSubmit({ q }) {
       this.updateQuery({ q })
     },
-    onToggleSearchGridFilter() {
-      this.setFilterSidebarVisibility(!this.isFilterSidebarVisible)
-    },
-    checkScrollLength() {
-      this.showScrollButton = window.scrollY > 70
-    },
   },
   watch: {
     query: {
-      deep: true,
-      handler() {
+      handler(newQuery, oldQuery) {
+        console.log('query changed')
         const newPath = this.localePath({
-          path: this.$route.path,
+          path: `/search/${this.searchType === 'all' ? '' : this.searchType}/`,
           query: this.searchQueryParams,
         })
         this.$router.push(newPath)
-        if (this.supported) {
+        if (!isEqual(oldQuery, newQuery) && this.supported) {
           this.getMediaItems(this.query)
         }
       },
     },
-    /**
-     * Updates the search type only if the route's path changes.
-     * @param newRoute
-     * @param oldRoute
-     */
-    $route(newRoute, oldRoute) {
-      if (newRoute.path !== oldRoute.path) {
-        const searchType = queryStringToSearchType(newRoute.path)
-        this.updateSearchType({ searchType })
-      }
+    searchType: {
+      // This fix is necessary only until All search page is merged
+      handler(newQuery, oldQuery) {
+        if (
+          [ALL_MEDIA, IMAGE].includes(newQuery) &&
+          [ALL_MEDIA, IMAGE].includes(oldQuery)
+        ) {
+          const newPath = this.localePath({
+            path: `/search/${
+              this.searchType === 'all' ? '' : this.searchType
+            }/`,
+            query: this.searchQueryParams,
+          })
+          this.$router.push(newPath)
+        }
+      },
     },
   },
 }
@@ -205,9 +159,6 @@ export default BrowsePage
 </script>
 
 <style lang="scss" scoped>
-.search {
-  margin: 0;
-}
 .search-grid-ctr {
   min-height: 600px;
   padding: 0;
@@ -216,10 +167,5 @@ export default BrowsePage
     width: 100%;
     flex: none;
   }
-}
-.grid-sidebar {
-  padding: 0;
-  border-right: 1px solid $color-transition-gray;
-  width: 21.875rem;
 }
 </style>

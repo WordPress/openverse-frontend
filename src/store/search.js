@@ -109,7 +109,7 @@ export const filterData = {
     },
     {
       code: 'soundEffects',
-      name: 'filters.audio-categories.sound-effects',
+      name: 'filters.audio-categories.sound',
       checked: false,
     },
     {
@@ -346,7 +346,9 @@ const actions = {
       }
       commit(CLEAR_OTHER_MEDIA_TYPE_FILTERS, { searchType })
     }
-    await dispatch(UPDATE_QUERY_FROM_FILTERS, queryParams)
+    if (Object.keys(queryParams).length !== 0) {
+      await dispatch(UPDATE_QUERY_FROM_FILTERS, queryParams)
+    }
   },
   /**
    * Toggles a filter's checked parameter

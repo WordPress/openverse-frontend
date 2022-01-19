@@ -1,10 +1,13 @@
 <template>
-  <article class="row-track flex flex-row" :class="`size-${size}`">
+  <article
+    class="row-track flex flex-row"
+    :class="[`size-${size}`, { 'items-start': isSmall }]"
+  >
     <div
       class="relative flex-shrink-0 rounded-sm overflow-hidden"
       :class="isLarge ? 'w-30 me-6' : 'w-20 me-4'"
     >
-      <AudioThumbnail :audio="audio" />
+      <VAudioThumbnail :audio="audio" />
       <div v-if="isSmall" class="absolute bottom-0 end-0">
         <slot name="play-pause" size="tiny" />
       </div>
@@ -71,7 +74,7 @@
         <slot name="play-pause" :size="isLarge ? 'medium' : 'large'" />
         <slot
           name="controller"
-          :waveform-props="{ features: ['timestamps', 'duration', 'seek'] }"
+          :features="['timestamps', 'duration', 'seek']"
         />
       </div>
     </div>
@@ -80,13 +83,13 @@
 
 <script>
 import { computed, defineComponent } from '@nuxtjs/composition-api'
-import AudioThumbnail from '~/components/AudioThumbnail/AudioThumbnail.vue'
+import VAudioThumbnail from '~/components/VAudioThumbnail/VAudioThumbnail.vue'
 import VLicense from '~/components/License/VLicense.vue'
 
 export default defineComponent({
   name: 'VRowLayout',
   components: {
-    AudioThumbnail,
+    VAudioThumbnail,
     VLicense,
   },
   props: ['audio', 'size'],
@@ -127,7 +130,7 @@ export default defineComponent({
   @apply rounded-ts-sm rounded-bs-sm flex-shrink-0;
 }
 
-.row-track .audio-controller {
+.row-track .waveform {
   @apply flex-grow;
   --waveform-background-color: theme('colors.white');
 }
