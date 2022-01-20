@@ -89,7 +89,7 @@ const propTypes = {
  * controls to play, pause or seek to a point on the track.
  */
 export default defineComponent({
-  name: 'VAudioTrack',
+  name: 'VGlobalAudioTrack',
   components: {
     VPlayPause,
     VWaveform,
