@@ -128,27 +128,13 @@ const HomePage = {
   setup() {
     const router = useRouter()
 
-    const makeImageArray = (prefix) =>
-      imageInfo.sets
-        .find((item) => item.prefix === prefix)
-        .images.map((item) => ({
-          ...item,
-          src: `${prefix}-${item.index}.jpg`,
-        }))
-    const featuredSearches = [
-      {
-        term: 'Universe',
-        images: makeImageArray('Universe'),
-      },
-      {
-        term: 'Indigenous pottery',
-        images: makeImageArray('Pottery'),
-      },
-      {
-        term: 'Olympic games',
-        images: makeImageArray('Olympics'),
-      },
-    ]
+    const featuredSearches = imageInfo.sets.map((setItem) => ({
+      ...setItem,
+      images: setItem.images.map((imageItem) => ({
+        ...imageItem,
+        src: `${setItem.prefix}-${imageItem.index}.jpg`,
+      })),
+    }))
 
     const featuredSearchIdx = ref(-1) // immediately updates to 0 on mount
     const nextIdx = () => {

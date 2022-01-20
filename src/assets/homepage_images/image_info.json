@@ -1,6 +1,7 @@
 {
   "sets": [
     {
+      "term": "Universe",
       "prefix": "Universe",
       "images": [
         {
@@ -41,6 +42,7 @@
       ]
     },
     {
+      "term": "Indigenous pottery",
       "prefix": "Pottery",
       "images": [
         {
@@ -81,6 +83,7 @@
       ]
     },
     {
+      "term": "Olympic games",
       "prefix": "Olympics",
       "images": [
         {
