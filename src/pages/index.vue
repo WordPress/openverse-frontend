@@ -22,10 +22,21 @@
       </h2>
       <VSearchBar
         v-model.trim="searchTerm"
-        class="max-w-[40rem] mt-4 lg:mt-8"
-        :placeholder="featuredSearchText"
+        class="max-w-[40rem] mt-4 lg:mt-8 relative"
+        :placeholder="featuredSearch.term"
         @submit="handleSearch"
+        @blur="toggleAnimatedText"
+        @focus="toggleAnimatedText"
       >
+        <span
+          v-show="showAnimatedText && searchTerm === ''"
+          type="text"
+          aria-hidden
+          class="bg-white ml-4 w-[30ch] rounded-sm absolute block left-0 pointer-events-none text-dark-charcoal-60 group-hover:bg-dark-charcoal-06 group-focus:bg-dark-charcoal-06 group-focus-within:bg-dark-charcoal-06"
+          @click="toggleAnimatedText"
+        >
+          {{ featuredSearchText }}
+        </span>
         <VContentSwitcherPopover
           v-if="isMounted && isMinScreenMd"
           ref="contentSwitcher"
@@ -107,6 +118,7 @@ import {
   useRouter,
   useStore,
   useContext,
+  computed,
 } from '@nuxtjs/composition-api'
 
 import VContentSwitcherPopover from '~/components/VContentSwitcher/VContentSwitcherPopover.vue'
@@ -155,12 +167,18 @@ const HomePage = {
     }))
 
     const featuredSearchIdx = ref(-1) // immediately updates to 0 on mount
+    const featuredSearch = computed(
+      () =>
+        featuredSearches[
+          featuredSearchIdx.value >= 0 ? featuredSearchIdx.value : 0
+        ]
+    )
+
     const nextIdx = () => {
       featuredSearchIdx.value =
         (featuredSearchIdx.value + 1) % featuredSearches.length
-      const featuredSearch = featuredSearches[featuredSearchIdx.value]
-      typeText(featuredSearch.term, () => {
-        setImages(featuredSearch.images)
+      typeText(featuredSearch.value.term, () => {
+        setImages(featuredSearch.value.images)
       })
     }
 
@@ -238,7 +256,14 @@ const HomePage = {
       })
     }
 
+    const showAnimatedText = ref(true)
+    const toggleAnimatedText = () => {
+      console.log('Just toggled to', toggleAnimatedText)
+      showAnimatedText.value = !showAnimatedText.value
+    }
+
     return {
+      featuredSearch,
       featuredSearchText,
       featuredSearchImages,
 
@@ -252,6 +277,9 @@ const HomePage = {
 
       searchTerm,
       handleSearch,
+
+      showAnimatedText,
+      toggleAnimatedText,
     }
   },
 }

@@ -12,6 +12,7 @@
       type="search"
       name="q"
       :model-value="searchText"
+      v-on="{ blur: $listeners.blur, focus: $listeners.focus }"
       @update:modelValue="updateSearchText"
     >
       <!-- @slot Extra information such as loading message or result count goes here. -->
