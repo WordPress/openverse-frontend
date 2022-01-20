@@ -33,7 +33,6 @@
           type="text"
           aria-hidden
           class="bg-white ml-4 w-[30ch] rounded-sm absolute block left-0 pointer-events-none text-dark-charcoal-60 group-hover:bg-dark-charcoal-06 group-focus:bg-dark-charcoal-06 group-focus-within:bg-dark-charcoal-06"
-          @click="toggleAnimatedText"
         >
           {{ featuredSearchText }}
         </span>
@@ -258,7 +257,6 @@ const HomePage = {
 
     const showAnimatedText = ref(true)
     const toggleAnimatedText = () => {
-      console.log('Just toggled to', toggleAnimatedText)
       showAnimatedText.value = !showAnimatedText.value
     }
 
