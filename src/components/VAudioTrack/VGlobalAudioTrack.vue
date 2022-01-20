@@ -34,8 +34,6 @@ import {
   ref,
   useStore,
   watch,
-  onUnmounted,
-  onMounted,
 } from '@nuxtjs/composition-api'
 
 import { useActiveAudio } from '~/composables/use-active-audio'
@@ -48,21 +46,13 @@ import VRowLayout from '~/components/VAudioTrack/layouts/VRowLayout.vue'
 import VBoxLayout from '~/components/VAudioTrack/layouts/VBoxLayout.vue'
 import VGlobalLayout from '~/components/VAudioTrack/layouts/VGlobalLayout.vue'
 
-import { ACTIVE } from '~/constants/store-modules'
-import {
-  PAUSE_ACTIVE_MEDIA_ITEM,
-  SET_ACTIVE_MEDIA_ITEM,
-} from '~/constants/mutation-types'
-
 const propTypes = {
   /**
    * the information about the track, typically from a track's detail endpoint
    */
   audio: {
-    type: /** @type {import('@nuxtjs/composition-api').PropType<{ url: string, duration: number, id: string }>} */ (
-      Object
-    ),
-    required: /** @type {true} */ (true),
+    type: Object,
+    required: true,
   },
   /**
    * the arrangement of the contents on the canvas; This determines the
@@ -118,57 +108,23 @@ export default defineComponent({
     const store = useStore()
 
     const activeAudio = useActiveAudio()
-    /**
-     * We can only create the local audio object on the client,
-     * so the initialization of this variable is hidden inside
-     * the `onMounted` hook.
-     *
-     * Rather than initialize everything for this component
-     * inside the onMounted hook, we can just use a closure
-     * around this variable to make everything else present
-     * on the top level of the setup function's scope and limit
-     * the behavior of the `onMounted` hook to just initializing
-     * the audio object for this instance.
-     *
-     * However, when navigating to an audio result page, if
-     * the globally active audio already matches the result
-     * that was clicked on, hijack that object instead and
-     * treat it as the local audio for this instance.
-     *
-     * @type {HTMLAudioElement | undefined}
-     * */
-    let localAudio =
-      activeAudio.obj.value?.src === props.audio.url
-        ? activeAudio.obj.value
-        : undefined
 
     const status = ref('paused')
     const currentTime = ref(0)
 
-    const updateTimeLoop = () => {
-      if (localAudio && status.value === 'playing') {
-        currentTime.value = localAudio.currentTime
-        window.requestAnimationFrame(updateTimeLoop)
-      }
-    }
-
     const setPlaying = () => {
       status.value = 'playing'
-      activeAudio.obj.value = localAudio
-      store.commit(`${ACTIVE}/${SET_ACTIVE_MEDIA_ITEM}`, {
-        type: 'audio',
-        id: props.audio.id,
-      })
       updateTimeLoop()
     }
-    const setPaused = () => {
-      status.value = 'paused'
-      store.commit(`${ACTIVE}/${PAUSE_ACTIVE_MEDIA_ITEM}`)
-    }
+    const setPaused = () => (status.value = 'paused')
     const setPlayed = () => (status.value = 'played')
-    const setTimeWhenPaused = () => {
-      if (status.value !== 'playing' && localAudio) {
-        currentTime.value = localAudio.currentTime
+    /**
+     * @param {Event} event
+     */
+    const setTimeWhenPaused = (event) => {
+      if (status.value !== 'playing' && event.target) {
+        currentTime.value =
+          /** @type {HTMLAudioElement} */ (event.target).currentTime ?? 0
         if (status.value === 'played') {
           // Set to pause to remove replay icon
           status.value = 'paused'
@@ -176,69 +132,58 @@ export default defineComponent({
       }
     }
 
-    onMounted(() => {
-      if (!localAudio) localAudio = new Audio(props.audio.url)
-
-      localAudio.addEventListener('play', setPlaying)
-      localAudio.addEventListener('pause', setPaused)
-      localAudio.addEventListener('ended', setPlayed)
-      localAudio.addEventListener('timeupdate', setTimeWhenPaused)
-
-      /**
-       * Similar to the behavior in the global audio track,
-       * if the local audio was set to an already existing and
-       * matching active global track, then we'll need to initialize
-       * the status based on the `paused` and `ended` booleans
-       * on the audio object.
-       *
-       * For newly initialized audio objects, this is harmless,
-       * but it is essential for making sure page transitions
-       * preserve the existing, already manipulated audio
-       * object's state.
-       *
-       * Unlike the global audio track, however, this will not
-       * always result in a status of `playing` in practice,
-       * as the state of the active global track could be any
-       * of the three statuses we track when the page transition
-       * happens. For example, the audio track on the result page
-       * could have been played through (and thus `ended`), or it
-       * could be paused mid-way (and thus `paused`), or neither
-       * and thus would be playing.
-       */
-      if (localAudio.paused) {
-        if (localAudio.ended) {
-          setPlayed()
-        } else {
-          setPaused()
-        }
-      } else {
-        setPlaying()
+    const updateTimeLoop = () => {
+      if (activeAudio.obj.value && status.value === 'playing') {
+        currentTime.value = activeAudio.obj.value.currentTime
+        window.requestAnimationFrame(updateTimeLoop)
       }
-
-      currentTime.value = localAudio.currentTime
-    })
-
-    onUnmounted(() => {
-      localAudio?.removeEventListener('play', setPlaying)
-      localAudio?.removeEventListener('pause', setPaused)
-      localAudio?.removeEventListener('ended', setPlayed)
-      localAudio?.removeEventListener('timeupdate', setTimeWhenPaused)
-    })
-
-    const play = () => {
-      localAudio?.play()
     }
-    const pause = () => localAudio?.pause()
 
     watch(
       activeAudio.obj,
-      (audio) => {
-        if (audio !== localAudio && status.value === 'playing') {
-          localAudio?.pause()
+      (audio, _, onInvalidate) => {
+        if (!audio) return
+        audio.addEventListener('play', setPlaying)
+        audio.addEventListener('pause', setPaused)
+        audio.addEventListener('ended', setPlayed)
+        audio.addEventListener('timeupdate', setTimeWhenPaused)
+        currentTime.value = audio.currentTime
+
+        /**
+         * By the time the `activeAudio` is updated and a rerender
+         * happens (triggering this watch function), all the events
+         * we've registered above will already have fired, so we
+         * need to derive the current status of the audio from the
+         * `paused` and `ended` booleans on the audio object.
+         *
+         * In practice this will always result in the status being
+         * set to `playing` as the active audio is only updated when
+         * a new track is set to play. But for good measure we might
+         * as well do this robustly and make sure that the status is
+         * always synced any time the active audio hanges.
+         */
+        if (audio.paused) {
+          if (audio.ended) {
+            setPlayed()
+          } else {
+            setPaused()
+          }
+        } else {
+          setPlaying()
         }
+
+        onInvalidate(() => {
+          audio.removeEventListener('play', setPlaying)
+          audio.removeEventListener('pause', setPaused)
+          audio.removeEventListener('ended', setPlayed)
+          audio.removeEventListener('timeupdate', setTimeWhenPaused)
+        })
       },
       { immediate: true }
     )
+
+    const play = () => activeAudio.obj.value?.play()
+    const pause = () => activeAudio.obj.value?.pause()
 
     /* Timekeeping */
 
@@ -268,8 +213,9 @@ export default defineComponent({
      * @param {number} frac
      */
     const handleSeeked = (frac) => {
-      if (!localAudio) return
-      localAudio.currentTime = frac * duration.value
+      if (activeAudio.obj.value) {
+        activeAudio.obj.value.currentTime = frac * duration.value
+      }
     }
 
     /* Layout */
