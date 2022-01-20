@@ -18,7 +18,7 @@
       </NuxtLink>
 
       <h2 class="text-6xl mt-auto lg:mt-6">{{ $t('hero.subtitle') }}</h2>
-      <VSearchBar class="mt-8" :placeholder="featuredSearch.term">
+      <VSearchBar class="mt-8" :placeholder="featuredSearchText">
         <VContentSwitcherPopover
           v-if="isMounted && isMinScreenMd"
           ref="contentSwitcher"
@@ -52,10 +52,11 @@
         class="homepage-images flex flex-row gap-4 lg:gap-0 items-center lg:grid lg:grid-cols-2 lg:grid-rows-4 lg:w-[57.143vh] lg:h-[114.287vh]"
       >
         <Transition
-          v-for="(image, index) in featuredSearch.images"
+          v-for="(image, index) in featuredSearchImages"
           :key="image.identifier"
           name="fade"
           mode="out-in"
+          appear
         >
           <NuxtLink
             :key="image.identifier"
@@ -94,7 +95,6 @@
 <script>
 import {
   ref,
-  computed,
   onMounted,
   onBeforeUnmount,
   useRouter,
@@ -135,8 +135,6 @@ const HomePage = {
           ...item,
           src: `${prefix}-${item.index}.jpg`,
         }))
-    const getImageUrl = (identifier) =>
-      router.resolve({ name: 'image-id', params: { id: identifier } }).href
     const featuredSearches = [
       {
         term: 'Universe',
@@ -151,23 +149,47 @@ const HomePage = {
         images: makeImageArray('Olympics'),
       },
     ]
-    const featuredSearch = computed(
-      () => featuredSearches[featuredSearchIdx.value]
-    )
 
-    const featuredSearchIdx = ref(0)
+    const featuredSearchIdx = ref(-1) // immediately updates to 0 on mount
+    const nextIdx = () => {
+      featuredSearchIdx.value =
+        (featuredSearchIdx.value + 1) % featuredSearches.length
+      const featuredSearch = featuredSearches[featuredSearchIdx.value]
+      typeText(featuredSearch.term, () => {
+        setImages(featuredSearch.images)
+      })
+    }
+
     let rotInterval = null
     onMounted(() => {
-      rotInterval = setInterval(() => {
-        featuredSearchIdx.value += 1
-        featuredSearchIdx.value %= featuredSearches.length
-      }, 6000)
+      nextIdx()
+      rotInterval = setInterval(nextIdx, 6000)
     })
     onBeforeUnmount(() => {
       if (rotInterval) {
         clearInterval(rotInterval)
       }
     })
+
+    const featuredSearchText = ref('')
+    const typeText = (text, callback) => {
+      let length = 0
+      const typeInterval = setInterval(() => {
+        length += 1
+        featuredSearchText.value = text.substring(0, length)
+        if (length === text.length) {
+          clearInterval(typeInterval)
+          callback()
+        }
+      }, 100)
+    }
+
+    const featuredSearchImages = ref([])
+    const setImages = (images) => {
+      featuredSearchImages.value = images
+    }
+    const getImageUrl = (identifier) =>
+      router.resolve({ name: 'image-id', params: { id: identifier } }).href
 
     const isMounted = ref(false)
     onMounted(() => {
@@ -187,8 +209,10 @@ const HomePage = {
     }
 
     return {
-      featuredSearch,
       getImageUrl,
+      featuredSearchImages,
+
+      featuredSearchText,
 
       isMounted,
 
