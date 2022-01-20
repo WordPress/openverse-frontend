@@ -49,12 +49,43 @@ export default {
       required: true,
     },
   },
-  setup() {
+  setup(props) {
     /* Switching */
 
     const ok = ref(true)
     const handleError = () => {
       ok.value = false
+    }
+
+    /* PRNG */
+
+    /**
+     * Small Fast Counter is a seedable pseudo-random number generator.
+     * @see {@link https://github.com/bryc/code/blob/master/jshash/PRNGs.md#sfc32}
+     */
+    const sfc32 = (a, b, c, d) => () => {
+      a |= 0
+      b |= 0
+      c |= 0
+      d |= 0
+      let t = (((a + b) | 0) + d) | 0
+      d = (d + 1) | 0
+      a = b ^ (b >>> 9)
+      b = (c + (c << 3)) | 0
+      c = (c << 21) | (c >>> 11)
+      c = (c + t) | 0
+      return (t >>> 0) / 4294967296
+    }
+    const rand = (seed) => sfc32(0x9e3779b9, 0x243f6a88, 0xb7e15162, seed)
+    const hash = (str) => {
+      let hash = 0
+      if (str.length === 0) return hash
+      for (let i = 0; i < str.length; i++) {
+        let chr = str.charCodeAt(i)
+        hash = (hash << 5) - hash + chr
+        hash |= 0 // Convert to 32bit integer
+      }
+      return hash
     }
 
     /* Math utilities */
@@ -102,8 +133,9 @@ export default {
     const minRadius = 2
     const maxRadius = 27
 
+    const random = rand(hash(props.audio.title ?? ''))
     const ctrlPts = Array.from({ length: 4 }, (_, idx) => [
-      Math.random() * canvasSize,
+      random() * canvasSize,
       (idx / 3) * canvasSize,
     ])
 
