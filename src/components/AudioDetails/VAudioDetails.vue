@@ -5,8 +5,8 @@
     <div class="mb-6 audio-info__grid">
       <VAudioThumbnail :audio="audio" />
       <div class="audio-info__data">
-        <p>{{ audio.description }}</p>
-        <VAudioTags :tags="audio.tags" :show-header="false" class="mt-6 mb-6" />
+        <p v-if="audio.description" class="mb-6">{{ audio.description }}</p>
+        <VAudioTags :tags="audio.tags" :show-header="false" class="mb-6" />
         <dl v-if="audio">
           <div v-if="audio.audio_set">
             <dt>{{ $t('audio-details.table.album') }}</dt>
