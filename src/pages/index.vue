@@ -225,7 +225,7 @@ const HomePage = {
     const searchTerm = ref('')
     const handleSearch = async () => {
       await store.dispatch(`${SEARCH}/${UPDATE_QUERY}`, {
-        q: searchTerm.value,
+        q: searchTerm.value || featuredSearches[featuredSearchIdx.value].term,
       })
       const newPath = app.localePath({
         path: `/search/${contentType.value === 'all' ? '' : contentType.value}`,
