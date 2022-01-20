@@ -18,7 +18,12 @@
       </NuxtLink>
 
       <h2 class="text-6xl mt-auto lg:mt-6">{{ $t('hero.subtitle') }}</h2>
-      <VSearchBar class="mt-8" :placeholder="featuredSearchText">
+      <VSearchBar
+        v-model.trim="searchTerm"
+        class="mt-8"
+        :placeholder="featuredSearchText"
+        @submit="handleSearch"
+      >
         <VContentSwitcherPopover
           v-if="isMounted && isMinScreenMd"
           ref="contentSwitcher"
@@ -100,12 +105,17 @@ import {
   onMounted,
   onBeforeUnmount,
   useRouter,
+  useStore,
+  useContext,
 } from '@nuxtjs/composition-api'
 
 import VContentSwitcherPopover from '~/components/VContentSwitcher/VContentSwitcherPopover.vue'
 
 import { isMinScreen } from '~/composables/use-media-query'
+
 import { ALL_MEDIA } from '~/constants/media'
+import { MEDIA, SEARCH } from '~/constants/store-modules'
+import { FETCH_MEDIA, UPDATE_QUERY } from '~/constants/action-types'
 
 import imageInfo from '~/assets/homepage_images/image_info.json'
 
@@ -128,7 +138,9 @@ const HomePage = {
     ],
   },
   setup() {
+    const { app } = useContext()
     const router = useRouter()
+    const store = useStore()
 
     const featuredSearches = imageInfo.sets.map((setItem) => ({
       ...setItem,
@@ -202,9 +214,28 @@ const HomePage = {
 
     const contentSwitcher = ref(null)
     const contentType = ref(ALL_MEDIA)
-    const setContentType = (type) => {
+    const setContentType = async (type) => {
       contentType.value = type
       contentSwitcher.value?.closeMenu()
+      await store.dispatch(`${SEARCH}/${UPDATE_QUERY}`, {
+        searchType: type,
+      })
+    }
+
+    const searchTerm = ref('')
+    const handleSearch = async () => {
+      await store.dispatch(`${SEARCH}/${UPDATE_QUERY}`, {
+        q: searchTerm.value,
+      })
+      const newPath = app.localePath({
+        path: `/search/${contentType.value === 'all' ? '' : contentType.value}`,
+        query: store.getters['search/searchQueryParams'],
+      })
+      router.push(newPath)
+
+      await store.dispatch(`${MEDIA}/${FETCH_MEDIA}`, {
+        ...store.getters['search/searchQueryParams'],
+      })
     }
 
     return {
@@ -218,6 +249,9 @@ const HomePage = {
       contentSwitcher,
       contentType,
       setContentType,
+
+      searchTerm,
+      handleSearch,
     }
   },
 }
