@@ -146,10 +146,18 @@ const HomePage = {
       })
     }
 
+    const rotationTime = 6e3 // ms
     let rotInterval = null
     onMounted(() => {
       nextIdx()
-      rotInterval = setInterval(nextIdx, 6000)
+      rotInterval = setInterval(nextIdx, rotationTime)
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') {
+          rotInterval = setInterval(nextIdx, rotationTime)
+        } else if (document.visibilityState === 'hidden' && rotInterval) {
+          clearInterval(rotInterval)
+        }
+      })
     })
     onBeforeUnmount(() => {
       if (rotInterval) {
