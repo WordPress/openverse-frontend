@@ -220,6 +220,12 @@ export default defineComponent({
      * into our local audio, then we need to initialize
      * the local state syncing from the audio object
      * to our local refs.
+     *
+     * This lives here instead of closer to where `localAudio`
+     * is defined because `initLocalAudio` and several of
+     * the functions it depends on also all depend on the
+     * `localAudio` variable. This is the earliest in
+     * `setup` that this can be called.
      */
     if (localAudio) initLocalAudio()
 
