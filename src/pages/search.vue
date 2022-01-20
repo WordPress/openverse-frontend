@@ -116,7 +116,6 @@ const BrowsePage = {
   watch: {
     query: {
       handler(newQuery, oldQuery) {
-        console.log('query changed')
         const newPath = this.localePath({
           path: `/search/${this.searchType === 'all' ? '' : this.searchType}/`,
           query: this.searchQueryParams,
@@ -133,7 +132,6 @@ const BrowsePage = {
      * @param oldRoute
      */
     $route(newRoute, oldRoute) {
-      console.log('route change handler')
       if (newRoute.path !== oldRoute.path) {
         const searchType = queryStringToSearchType(newRoute.path)
         this.updateSearchType({ searchType })

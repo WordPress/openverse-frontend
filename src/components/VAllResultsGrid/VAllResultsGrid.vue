@@ -81,7 +81,6 @@ export default defineComponent({
     const organizedMedia = computed(() => {
       if (resultsLoading.value) return []
       const media = store.getters['media/mediaResults']
-      console.log({ media })
       const mediaKeys = Object.keys(media)
 
       // Seed the random number generator with the ID of
