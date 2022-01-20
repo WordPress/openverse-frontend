@@ -2,43 +2,53 @@ import findIndex from 'lodash.findindex'
 import prepareSearchQueryParams from '~/utils/prepare-search-query-params'
 import decodeMediaData from '~/utils/decode-media-data'
 import {
+  FETCH_ALL_MEDIA,
   FETCH_AUDIO,
   FETCH_IMAGE,
   FETCH_MEDIA,
   FETCH_SINGLE_MEDIA_TYPE,
   HANDLE_MEDIA_ERROR,
   HANDLE_NO_MEDIA,
-  CLEAR_MEDIA,
 } from '~/constants/action-types'
 import {
   FETCH_END_MEDIA,
   FETCH_MEDIA_ERROR,
   FETCH_START_MEDIA,
   MEDIA_NOT_FOUND,
+  RESET_ALL_MEDIA,
   RESET_MEDIA,
+  SET_ALL_MEDIA_IDS,
   SET_AUDIO,
   SET_IMAGE,
   SET_MEDIA,
+  UPDATE_ITEMS_PER_PAGE,
+  UPDATE_LOADED_COUNT,
 } from '~/constants/mutation-types'
 import {
   SEND_RESULT_CLICKED_EVENT,
   SEND_SEARCH_QUERY_EVENT,
 } from '~/constants/usage-data-analytics-types'
-import { AUDIO, IMAGE, VIDEO, ALL_MEDIA } from '~/constants/media'
+import {
+  ALL_MEDIA,
+  AUDIO,
+  IMAGE,
+  supportedMediaTypes,
+  VIDEO,
+} from '~/constants/media'
 import { USAGE_DATA } from '~/constants/store-modules'
 import AudioService from '~/data/audio-service'
 import ImageService from '~/data/image-service'
+import srand from '@/utils/srand'
 
-// Note: images should always be first here,
-// and this only includes 'real' media. ALL is a
-// special case not used in this list.
-const supportedTypes = [IMAGE, AUDIO]
+const ITEMS_PER_PAGE = 20
+const NON_IMAGE_TYPES = [...supportedMediaTypes].filter(
+  (type) => type !== IMAGE
+)
 
 /**
  * @return {import('./types').MediaState}
  */
 export const state = () => ({
-  supportedTypes,
   results: {
     [IMAGE]: {
       count: 0,
@@ -52,6 +62,15 @@ export const state = () => ({
       pageCount: 0,
       items: {},
     },
+  },
+  allMediaResults: {
+    count: 0,
+    page: 0,
+    pageCount: 0,
+    itemIds: [],
+    // loaded to show on all view
+    loaded: { [AUDIO]: 0, [IMAGE]: 0 },
+    mediaTypePerPage: { [AUDIO]: 0, [IMAGE]: ITEMS_PER_PAGE },
   },
   fetchState: {
     audio: {
@@ -70,6 +89,93 @@ export const state = () => ({
 })
 
 export const createActions = (services) => ({
+  async [FETCH_ALL_MEDIA]({ commit, dispatch, state }, payload = {}) {
+    const { shouldPersistMedia = false, params } = payload
+
+    if (!shouldPersistMedia) {
+      commit(RESET_ALL_MEDIA)
+      await Promise.all(
+        supportedMediaTypes.map((mediaType) =>
+          dispatch(FETCH_SINGLE_MEDIA_TYPE, {
+            mediaType,
+            shouldPersistMedia,
+            ...params,
+          })
+        )
+      )
+      // Calculate the rate of image to other types
+      const totalCount = supportedMediaTypes
+        .map((mediaType) => state.results[mediaType].count)
+        .reduce((a, b) => a + b, 0)
+
+      const mediaRates = { [IMAGE]: ITEMS_PER_PAGE }
+      NON_IMAGE_TYPES.forEach((type) => {
+        const actualRate = Math.ceil(
+          (state.results[type].count / totalCount) * ITEMS_PER_PAGE
+        )
+        mediaRates[type] = Math.max(actualRate, 5)
+        mediaRates[IMAGE] -= mediaRates[type]
+      })
+      commit(UPDATE_ITEMS_PER_PAGE, { rates: mediaRates })
+    }
+    // Additional audio:
+    /** @typedef {Object<string, mediaType>[]} IdList */
+
+    /**
+     *
+     * @type {Object.<mediaType, IdList>}
+     */
+    let newItemsIds = {}
+    for (const mediaType of supportedMediaTypes) {
+      const previouslyShownCount = state.allMediaResults.loaded[mediaType]
+      const pageItemsCount = state.allMediaResults.mediaTypePerPage[mediaType]
+      const existingItemsCount = Object.keys(
+        state.results[mediaType].items
+      ).length
+      // If we need to load new items
+      if (previouslyShownCount + pageItemsCount >= existingItemsCount) {
+        await dispatch(FETCH_SINGLE_MEDIA_TYPE, {
+          shouldPersistMedia,
+          mediaType: mediaType,
+        })
+      }
+      newItemsIds[mediaType] = Object.keys(state.results[mediaType].items)
+        .slice(previouslyShownCount, previouslyShownCount + pageItemsCount)
+        .map((key) => ({ id: key, mediaType: mediaType }))
+      commit(UPDATE_LOADED_COUNT, { mediaType, pageItemsCount })
+    }
+    /**
+     * Returns a list of ids that have images and other media randomly distributed.
+     * @param {Object.<mediaType, IdList>} newItemsIds
+     * @returns {IdList}
+     */
+    function randomizeIds(newItemsIds) {
+      // first push all images to the results list
+      const newResults = [...newItemsIds[IMAGE]]
+      // Seed the random number generator with the ID of
+      // the first and last search result, so the non-image
+      // distribution is the same on repeated searches
+      const firstID = newItemsIds[IMAGE][0].id
+      const randomIntegerInRange = (rand, min, max) => {
+        return Math.floor(rand(max, min))
+      }
+      const rand = srand(firstID)
+      for (const type of NON_IMAGE_TYPES) {
+        const indices = new Array(newItemsIds[type].length)
+          .fill(0)
+          .map(() => randomIntegerInRange(rand, 0, ITEMS_PER_PAGE))
+          .sort()
+        newItemsIds[type].forEach((item, idx) => {
+          newResults.splice(indices[idx], 0, item)
+        })
+      }
+
+      return newResults
+    }
+    newItemsIds = randomizeIds(newItemsIds)
+
+    commit(SET_ALL_MEDIA_IDS, { ids: newItemsIds })
+  },
   /**
    *
    * @param {import('vuex').ActionContext} context
@@ -78,18 +184,11 @@ export const createActions = (services) => ({
    */
   async [FETCH_MEDIA]({ dispatch, rootState }, payload = {}) {
     const mediaType = rootState.search.query.mediaType
-    const mediaToFetch = mediaType !== ALL_MEDIA ? [mediaType] : [IMAGE, AUDIO]
-
-    await Promise.all(
-      mediaToFetch.map((type) =>
-        dispatch(FETCH_SINGLE_MEDIA_TYPE, { mediaType: type, ...payload })
-      )
-    )
-  },
-  // Do not use with ALL_MEDIA
-  async [CLEAR_MEDIA]({ commit }, payload = {}) {
-    const { mediaType } = payload
-    commit(RESET_MEDIA, { mediaType })
+    if (mediaType === ALL_MEDIA) {
+      await dispatch(FETCH_ALL_MEDIA, payload)
+    } else {
+      await dispatch(FETCH_SINGLE_MEDIA_TYPE, { mediaType, ...payload })
+    }
   },
   /**
    *
@@ -102,23 +201,17 @@ export const createActions = (services) => ({
    * @return {Promise<void>}
    */
   async [FETCH_SINGLE_MEDIA_TYPE](
-    { commit, dispatch, rootState, rootGetters },
+    { commit, dispatch, state, rootState, rootGetters },
     payload
   ) {
-    const {
-      mediaType,
-      page = undefined,
-      shouldPersistMedia = false,
-      ...params
-    } = payload
-
+    const { mediaType, shouldPersistMedia = false, ...params } = payload
     const queryParams = prepareSearchQueryParams({
       ...rootGetters['search/searchQueryParams'],
       ...params,
     })
 
     // does not send event if user is paginating for more results
-    if (!page) {
+    if (!shouldPersistMedia) {
       const sessionId = rootState.user.usageSessionId
       await dispatch(
         `${USAGE_DATA}/${SEND_SEARCH_QUERY_EVENT}`,
@@ -126,11 +219,14 @@ export const createActions = (services) => ({
         { root: true }
       )
     }
-
+    const mediaPage = shouldPersistMedia
+      ? (state.results[mediaType].page ?? 1) + 1
+      : 1
     commit(FETCH_START_MEDIA, { mediaType })
+    if (!shouldPersistMedia) {
+      commit(RESET_MEDIA, { mediaType })
+    }
     try {
-      const mediaPage = typeof page === 'undefined' ? page : page[mediaType]
-
       const res = await services[mediaType].search({
         ...queryParams,
         page: mediaPage,
@@ -275,6 +371,12 @@ export const getters = {
         : {}
     }
   },
+  allMediaResults(state) {
+    return state.allMediaResults.itemIds.map((item) => {
+      let { id, mediaType } = item
+      return state.results[mediaType].items[id]
+    })
+  },
   mediaResults(state, getters) {
     if (getters.searchType === ALL_MEDIA) {
       return {
@@ -293,7 +395,7 @@ export const getters = {
        * API returns 10 000 if there are more than 10 000 results,
        * Count for all media also returns at most 10 000.
        */
-      const count = supportedTypes
+      const count = supportedMediaTypes
         .map((type) => state.results[type].count)
         .reduce((a, b) => a + b, 0)
       return count > 10000 ? 10000 : count
@@ -346,7 +448,9 @@ export const getters = {
    */
   unsupportedMediaType(state, getters, rootState) {
     const mediaType = rootState.search.searchType
-    return mediaType === VIDEO
+    return (
+      mediaType === VIDEO || (mediaType === AUDIO && !process.env.enableAudio)
+    )
   },
 }
 
@@ -417,6 +521,26 @@ export const mutations = {
     _state.results[mediaType].count = 0
     _state.results[mediaType].page = undefined
     _state.results[mediaType].pageCount = 0
+  },
+  [UPDATE_ITEMS_PER_PAGE](_state, { rates }) {
+    _state.allMediaResults.mediaTypePerPage = rates
+  },
+  [SET_ALL_MEDIA_IDS](_state, { ids }) {
+    _state.allMediaResults.itemIds = [..._state.allMediaResults.itemIds, ...ids]
+  },
+  [UPDATE_LOADED_COUNT](_state, { mediaType, pageItemsCount }) {
+    _state.allMediaResults.loaded[mediaType] += pageItemsCount
+  },
+  [RESET_ALL_MEDIA](_state) {
+    _state.allMediaResults.count = 0
+    _state.allMediaResults.page = 0
+    _state.allMediaResults.pageCount = 0
+    _state.allMediaResults.itemIds = []
+    _state.allMediaResults.loaded = { [AUDIO]: 0, [IMAGE]: 0 }
+    _state.allMediaResults.mediaTypePerPage = {
+      [AUDIO]: 0,
+      [IMAGE]: ITEMS_PER_PAGE,
+    }
   },
 }
 

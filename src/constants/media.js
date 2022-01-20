@@ -3,7 +3,7 @@ export const IMAGE = 'image'
 export const VIDEO = 'video'
 export const ALL_MEDIA = 'all'
 
-/** @typedef {typeof AUDIO | typeof IMAGE | typeof VIDEO | typeof ALL_MEDIA} MediaType */
+/** @typedef {'audio'|'image'|'video'|'all'} MediaType */
 
 /**
  * Media types that the API supports.

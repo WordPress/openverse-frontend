@@ -11,17 +11,7 @@ import { MEDIA } from '~/constants/store-modules'
 export const useLoadMore = (props) => {
   const { store } = useContext()
 
-  const searchParams = computed(() => {
-    const pages = {}
-    Object.keys(props.mediaResults).forEach((key) => {
-      const mediaPage = props.mediaResults[key]?.page || 0
-      pages[key] = mediaPage ? mediaPage + 1 : undefined
-    })
-    return {
-      page: pages,
-      shouldPersistMedia: true,
-    }
-  })
+  const searchParams = computed(() => ({ shouldPersistMedia: true }))
 
   const canLoadMore = computed(() => {
     return props.searchTerm.trim() !== ''

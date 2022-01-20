@@ -335,12 +335,11 @@ describe('Search Store', () => {
       })
     })
 
-    it('FETCH_SINGLE_MEDIA_TYPE does not reset images if page is defined', async () => {
+    it('FETCH_SINGLE_MEDIA_TYPE does not reset images if shouldPersistMedia is true', async () => {
       const mediaType = IMAGE
       const params = {
         q: 'foo',
-        page: 1,
-        shouldPersistMedia: false,
+        shouldPersistMedia: true,
         mediaType,
       }
       const action = createActions(services)[FETCH_SINGLE_MEDIA_TYPE]
