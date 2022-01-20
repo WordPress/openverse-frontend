@@ -62,13 +62,13 @@
         >
           <NuxtLink
             :key="image.identifier"
-            :to="getImageUrl(image.identifier)"
+            :to="image.url"
             class="homepage-image block aspect-square h-30 w-30 lg:h-auto lg:w-auto lg:m-[2vh] rounded-full"
             :style="{ '--transition-index': `${index * 0.05}s` }"
           >
             <img
               class="object-cover h-full w-full rounded-full"
-              :src="require(`~/assets/homepage_images/${image.src}`)"
+              :src="image.src"
               :alt="image.title"
               :title="image.title"
             />
@@ -134,7 +134,11 @@ const HomePage = {
       ...setItem,
       images: setItem.images.map((imageItem) => ({
         ...imageItem,
-        src: `${setItem.prefix}-${imageItem.index}.jpg`,
+        src: require(`~/assets/homepage_images/${setItem.prefix}-${imageItem.index}.jpg`),
+        url: router.resolve({
+          name: 'image-id',
+          params: { id: imageItem.identifier },
+        }).href,
       })),
     }))
 
@@ -185,8 +189,6 @@ const HomePage = {
     const setImages = (images) => {
       featuredSearchImages.value = images
     }
-    const getImageUrl = (identifier) =>
-      router.resolve({ name: 'image-id', params: { id: identifier } }).href
 
     const isMounted = ref(false)
     onMounted(() => {
@@ -206,10 +208,8 @@ const HomePage = {
     }
 
     return {
-      getImageUrl,
-      featuredSearchImages,
-
       featuredSearchText,
+      featuredSearchImages,
 
       isMounted,
 
