@@ -14,7 +14,7 @@
       "button": "Search"
     },
     "disclaimer": {
-      "content": "All our content is under a {license} or in the public domain.",
+      "content": "All Openverse content is under a {license} or is in the public domain.",
       "license": "Creative Commons license"
     },
     "license-filter": {
