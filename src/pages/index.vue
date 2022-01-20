@@ -2,7 +2,7 @@
   <main
     class="flex flex-col lg:flex-row justify-center gap-6 lg:gap-0 bg-yellow h-screen overflow-hidden"
   >
-    <!-- TODO: Refine min-width for different breakpoints -->
+    <!-- TODO: Refine min-width for different breakpoints, remove magic numbers -->
     <header
       class="flex-grow w-full lg:w-auto lg:min-w-[32rem] xl:min-w-[64rem] box-border px-6 lg:pl-30 lg:pr-0 xl:px-40 mx-auto flex flex-col justify-center"
     >
@@ -48,8 +48,10 @@
     <div
       class="flex-grow overflow-x-scroll lg:overflow-hidden w-full lg:w-auto lg:h-full px-6"
     >
+      <!-- Height is 114.286vh i.e. 100vh * 8/7 (so that 0.75, 1, 1, 0.75 circles are visible) -->
+      <!-- Width is 57.143vh i.e. half of height (because grid dimensions are 4 ⨯ 2) -->
       <div
-        class="homepage-images flex flex-row gap-4 lg:gap-0 items-center lg:grid lg:grid-cols-2 lg:grid-rows-4 lg:w-[57.143vh] lg:h-[114.287vh]"
+        class="homepage-images flex flex-row gap-4 lg:gap-0 items-center lg:grid lg:grid-cols-2 lg:grid-rows-4 lg:w-[57.143vh] lg:h-[114.286vh]"
       >
         <Transition
           v-for="(image, index) in featuredSearchImages"
@@ -166,6 +168,7 @@ const HomePage = {
     })
 
     const featuredSearchText = ref('')
+    const keystrokeTime = 100 // ms
     const typeText = (text, callback) => {
       let length = 0
       const typeInterval = setInterval(() => {
@@ -175,7 +178,7 @@ const HomePage = {
           clearInterval(typeInterval)
           callback()
         }
-      }, 100)
+      }, keystrokeTime)
     }
 
     const featuredSearchImages = ref([])
