@@ -17,10 +17,12 @@
         </h1>
       </NuxtLink>
 
-      <h2 class="text-6xl mt-auto lg:mt-6">{{ $t('hero.subtitle') }}</h2>
+      <h2 class="text-4xl lg:text-6xl mt-auto lg:mt-6">
+        {{ $t('hero.subtitle') }}
+      </h2>
       <VSearchBar
         v-model.trim="searchTerm"
-        class="mt-8"
+        class="mt-4 lg:mt-8"
         :placeholder="featuredSearchText"
         @submit="handleSearch"
       >
