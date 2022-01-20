@@ -3,7 +3,7 @@
   <section class="audio-info">
     <h4 class="b-header mb-6">Audio information</h4>
     <div class="mb-6 audio-info__grid">
-      <img :src="audio.thumbnail" alt="thumbnail" width="110" height="110" />
+      <VAudioThumbnail :audio="audio" />
       <div class="audio-info__data">
         <p>{{ audio.description }}</p>
         <VAudioTags :tags="audio.tags" :show-header="false" class="mt-6 mb-6" />
