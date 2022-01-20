@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-01-20T16:15:26+00:00\n"
+"POT-Creation-Date: 2022-01-20T16:25:56+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2134,7 +2134,7 @@ msgstr ""
 
 #: src/components/VHeroSection.vue:9
 msgctxt "hero.subtitle"
-msgid "Browse over 600 million items to reuse"
+msgid "Browse through over 600 million items to reuse"
 msgstr ""
 
 #: src/components/SearchTypeToggle.vue:19
@@ -2182,12 +2182,12 @@ msgid "I want something I can"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/index.vue:37
+#: src/pages/index.vue:39
 msgctxt "hero.disclaimer.content"
 msgid "All Openverse content is under a ###license### or is in the public domain."
 msgstr ""
 
-#: src/pages/index.vue:46
+#: src/pages/index.vue:48
 msgctxt "hero.disclaimer.license"
 msgid "Creative Commons license"
 msgstr ""
