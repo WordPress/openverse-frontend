@@ -35,7 +35,7 @@ export default {
     numElems: {
       type: Number,
       default: function () {
-        if (this.isForTab === 'all') return 10
+        if (this.isForTab === 'all') return 20
         if (this.isForTab === 'image') return 30
         return 8
       },
