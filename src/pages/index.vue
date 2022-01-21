@@ -142,7 +142,7 @@ const HomePage = {
       })),
     }))
 
-    const featuredSearchIdx = Math.floor((Math.random() * 10) % 3)
+    const featuredSearchIdx = Math.floor(Math.random() * 3)
     const featuredSearch = featuredSearches[featuredSearchIdx]
 
     const isMinScreenMd = isMinScreen('md', { shouldPassInSSR: true })
