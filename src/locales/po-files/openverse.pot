@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-01-19T04:47:22+00:00\n"
+"POT-Creation-Date: 2022-01-21T05:43:54+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -44,7 +44,7 @@ msgctxt "search-type.heading"
 msgid "Content types"
 msgstr ""
 
-#: src/components/VContentSwitcher/VContentTypes.vue:20
+#: src/components/VContentSwitcher/VContentTypes.vue:27
 msgctxt "search-type.status-beta"
 msgid "Beta"
 msgstr ""
@@ -218,7 +218,7 @@ msgid "Loading..."
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VAudioThumbnail/VAudioThumbnail.vue:142
+#: src/components/VAudioThumbnail/VAudioThumbnail.vue:102
 msgctxt "audio-thumbnail.alt"
 msgid "Cover art for \"###title###\" by ###creator###"
 msgstr ""
@@ -229,7 +229,7 @@ msgid "Audio seek bar"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VAudioTrack/VWaveform.vue:516
+#: src/components/VAudioTrack/VWaveform.vue:533
 msgctxt "waveform.current-time"
 msgid "###time### seconds"
 msgstr ""
@@ -2021,6 +2021,10 @@ msgctxt "header.meta-search-nav-item"
 msgid "Meta Search"
 msgstr ""
 
+msgctxt "header.privacy-nav-item"
+msgid "Privacy"
+msgstr ""
+
 #: src/components/NavSection.vue:119
 msgctxt "header.feedback-nav-item"
 msgid "Feedback"
@@ -2127,6 +2131,7 @@ msgctxt "notification.translation.link"
 msgid "contributing a translation"
 msgstr ""
 
+#: src/pages/index.vue:11
 msgctxt "hero.brand"
 msgid "Openverse"
 msgstr ""
@@ -2138,7 +2143,7 @@ msgstr ""
 
 #: src/components/VHeroSection.vue:9
 msgctxt "hero.subtitle"
-msgid "Browse over 500 million images, available for reuse"
+msgid "Browse through over 600 million items to reuse"
 msgstr ""
 
 #: src/components/SearchTypeToggle.vue:19
@@ -2186,14 +2191,14 @@ msgid "I want something I can"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VHeroSection.vue:45
-msgctxt "hero.caption.content"
-msgid "All our content is under Creative Commons licenses or in the public domain. ###link### about CC licenses and tools."
+#: src/pages/index.vue:39
+msgctxt "hero.disclaimer.content"
+msgid "All Openverse content is under a ###license### or is in the public domain."
 msgstr ""
 
-#: src/components/VHeroSection.vue:53
-msgctxt "hero.caption.link"
-msgid "Learn more"
+#: src/pages/index.vue:48
+msgctxt "hero.disclaimer.license"
+msgid "Creative Commons license"
 msgstr ""
 
 #: src/components/VHeroSection.vue:28
@@ -2206,13 +2211,13 @@ msgctxt "hero.search.button"
 msgid "Search"
 msgstr ""
 
-#: src/layouts/error.vue:15
+#: src/layouts/error.vue:18
 msgctxt "404.title"
 msgid "The content you’re looking for seems to have disappeared."
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/layouts/error.vue:18
+#: src/layouts/error.vue:21
 msgctxt "404.main"
 msgid "Go to ###link### or search for something similar from the field below."
 msgstr ""
@@ -2222,7 +2227,7 @@ msgctxt "404.link-title"
 msgid "Openverse"
 msgstr ""
 
-#: src/layouts/error.vue:31
+#: src/layouts/error.vue:34
 msgctxt "404.search-placeholder"
 msgid "Search for content to reuse"
 msgstr ""

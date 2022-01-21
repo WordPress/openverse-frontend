@@ -24,7 +24,7 @@
           {{ $t('search-type.heading') }}
         </h2>
         <VContentTypes
-          :bordered="true"
+          :bordered="false"
           :active-item="content.activeType.value"
           @select="selectItem"
         />

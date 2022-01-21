@@ -14,7 +14,7 @@
       @click.native="handleClick(item)"
     >
       <VIcon :icon-path="content.icons[item]" class="me-2 ms-4 my-4" />
-      <span class="pe-6 md:pe-20 py-4 font-semibold">{{
+      <span class="pe-20 py-4 font-semibold">{{
         $t(`search-type.${item}`)
       }}</span>
       <VPill
@@ -31,6 +31,7 @@ import {
   statuses,
   supportedContentTypes,
 } from '~/constants/media'
+
 import useContentType from '~/composables/use-content-type'
 
 import checkIcon from '~/assets/icons/checkmark.svg'
