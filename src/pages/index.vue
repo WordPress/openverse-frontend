@@ -60,20 +60,28 @@
         class="homepage-images flex flex-row gap-4 lg:gap-0 items-center lg:grid lg:grid-cols-2 lg:grid-rows-4 lg:w-[57.143vh] lg:h-[114.286vh]"
         aria-hidden
       >
-        <NuxtLink
-          v-for="(image, index) in featuredSearch.images"
-          :key="image.identifier"
-          :to="image.url"
-          class="homepage-image block aspect-square h-30 w-30 lg:h-auto lg:w-auto lg:m-[2vh] rounded-full"
-          :style="{ '--transition-index': `${index * 0.05}s` }"
-        >
-          <img
-            class="object-cover h-full w-full rounded-full"
-            :src="image.src"
-            :alt="image.title"
-            :title="image.title"
-          />
-        </NuxtLink>
+        <ClientOnly>
+          <Transition
+            v-for="(image, index) in featuredSearch.images"
+            :key="image.identifier"
+            name="fade"
+            mode="out-in"
+            appear
+          >
+            <NuxtLink
+              :to="image.url"
+              class="homepage-image block aspect-square h-30 w-30 lg:h-auto lg:w-auto lg:m-[2vh] rounded-full"
+              :style="{ '--transition-index': `${index * 0.05}s` }"
+            >
+              <img
+                class="object-cover h-full w-full rounded-full"
+                :src="image.src"
+                :alt="image.title"
+                :title="image.title"
+              />
+            </NuxtLink>
+          </Transition>
+        </ClientOnly>
       </div>
     </div>
 
