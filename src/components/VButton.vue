@@ -232,7 +232,7 @@ export default VButton
 
 <style module>
 .button {
-  @apply flex items-center rounded-sm justify-center transition-shadow duration-100 ease-linear disabled:opacity-70 focus:outline-none no-underline appearance-none ring-offset-1;
+  @apply flex items-center rounded-sm justify-center transition-shadow duration-100 ease-linear disabled:opacity-70 focus:outline-none focus-visible:outline-none no-underline appearance-none ring-offset-1;
 }
 
 .button[disabled='disabled'],

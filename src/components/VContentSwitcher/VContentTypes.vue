@@ -1,6 +1,7 @@
 <template>
   <VItemGroup
     direction="vertical"
+    :size="size"
     :bordered="bordered"
     :heading="$t('search-type.heading')"
     type="radiogroup"
@@ -30,6 +31,11 @@ export default {
   name: 'VContentTypes',
   components: { VItemGroup, VContentItem },
   props: {
+    /**
+     * Size refers to the screen size.
+     * The actual component size on 'small' screen is large,
+     * and on 'medium' screen, the component is smaller.
+     */
     size: {
       type: String,
       default: 'small',

@@ -11,7 +11,7 @@
     @focusin="isFocused = true"
     @focusout="isFocused = false"
   >
-    <h2 v-if="showHeading" class="text-sr p-6 uppercase font-semibold">
+    <h2 v-if="showHeading" class="text-sr p-6 pb-4 uppercase font-semibold">
       {{ heading }}
     </h2>
     <!--
@@ -37,6 +37,7 @@ import { useI18n } from '~/composables/use-i18n'
  * @property {'vertical' | 'horizontal'} direction
  * @property {boolean} bordered
  * @property {'menu' | 'radiogroup'} type
+ * @property {'small' | 'medium'} size
  */
 
 /**
@@ -112,6 +113,16 @@ export default defineComponent({
     heading: {
       type: String,
       required: false,
+    },
+    /**
+     * Screen size, opposite of the item group size.
+     *
+     * @default 'small'
+     */
+    size: {
+      type: String,
+      default: 'small',
+      validate: (val) => ['small', 'medium'].includes(val),
     },
   },
   setup(props) {

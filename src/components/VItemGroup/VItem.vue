@@ -14,10 +14,14 @@
     <VButton
       data-item-group-item
       :as="as"
-      class="flex justify-between rounded min-w-full group relative hover:bg-dark-charcoal-10"
-      :class="[$style.button, $style[`${contextProps.direction}-button`]]"
+      class="flex justify-between rounded min-w-full group relative hover:bg-dark-charcoal-10 px-2 py-2"
+      :class="[
+        $style.button,
+        $style[`${contextProps.direction}-button`],
+        $style[`${contextProps.size}-button`],
+      ]"
       variant="grouped"
-      size="small"
+      size="disabled"
       :pressed="selected"
       :role="contextProps.type === 'radiogroup' ? 'radio' : 'menuitemcheckbox'"
       :aria-checked="selected"
@@ -31,8 +35,11 @@
       @click.native="$emit('click')"
     >
       <div
-        class="flex-grow whitespace-nowrap group-focus-visible:ring group-focus-visible:ring-pink my-0 rounded"
-        :class="$style[`${contextProps.direction}-content`]"
+        class="flex-grow whitespace-nowrap my-0 rounded-sm px-2 py-3 md:group-focus-visible:ring md:group-focus-visible:ring-pink"
+        :class="[
+          $style[`${contextProps.direction}-content`],
+          $style[`${contextProps.size}-content`],
+        ]"
       >
         <slot name="default" />
       </div>
@@ -154,6 +161,14 @@ export default defineComponent({
   @apply z-10;
 }
 
+.small-button {
+  @apply focus-visible:ring focus-visible:ring-pink;
+}
+
+.medium-content {
+  @apply group-focus-visible:ring group-focus-visible:ring-pink;
+}
+
 .vertical {
   @apply min-w-max;
 }
@@ -175,7 +190,7 @@ export default defineComponent({
 }
 
 .vertical-content {
-  @apply flex flex-row;
+  @apply flex flex-row items-center;
 }
 
 .vertical-popover-item {
