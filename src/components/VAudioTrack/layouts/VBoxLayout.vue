@@ -6,7 +6,7 @@
     >
       <div class="absolute inset-0 flex flex-col">
         <div class="info flex-grow flex flex-col justify-between p-4">
-          <span class="font-heading font-semibold leading-snug">{{
+          <span class="font-heading font-semibold leading-snug line-clamp-3">{{
             audio.title
           }}</span>
           <div class="info">

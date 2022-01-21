@@ -18,6 +18,7 @@ specifiers:
   '@nuxtjs/svg': ^0.3.0
   '@playwright/test': ^1.16.2
   '@popperjs/core': ^2.11.2
+  '@tailwindcss/line-clamp': ^0.3.1
   '@testing-library/jest-dom': ^5.16.1
   '@testing-library/user-event': ^13.2.1
   '@testing-library/vue': ^5.8.2
@@ -87,6 +88,7 @@ dependencies:
   '@nuxtjs/sitemap': 2.4.0
   '@nuxtjs/svg': 0.3.0
   '@popperjs/core': 2.11.2
+  '@tailwindcss/line-clamp': 0.3.1_tailwindcss@3.0.9
   axios: 0.21.4
   axios-mock-adapter: 1.20.0_axios@0.21.4
   babel-core: 7.0.0-bridge.0
@@ -5324,6 +5326,14 @@ packages:
       - webpack-cli
       - webpack-command
     dev: true
+
+  /@tailwindcss/line-clamp/0.3.1_tailwindcss@3.0.9:
+    resolution: {integrity: sha512-pNr0T8LAc3TUx/gxCfQZRe9NB2dPEo/cedPHzUGIPxqDMhgjwNm6jYxww4W5l0zAsAddxr+XfZcqttGiFDgrGg==}
+    peerDependencies:
+      tailwindcss: '>=2.0.0 || >=3.0.0 || >=3.0.0-alpha.1'
+    dependencies:
+      tailwindcss: 3.0.9_67faf65efc23bbcb8667813493b8c465
+    dev: false
 
   /@testing-library/dom/7.31.2:
     resolution: {integrity: sha512-3UqjCpey6HiTZT92vODYLPxTBWlM8ZOOjr3LX5F37/VRipW2M1kX6I/Cm4VXzteZqfGfagg8yXywpcOgQBlNsQ==}
