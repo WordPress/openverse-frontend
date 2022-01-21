@@ -12,7 +12,11 @@
     <dl>
       <div>
         <dt>{{ $t('image-details.information.type') }}</dt>
-        <dd class="uppercase">{{ imageType }}</dd>
+        <dd class="uppercase">{{ imgType }}</dd>
+      </div>
+      <div v-if="providerName != sourceName">
+        <dt>{{ $t('image-details.information.provider') }}</dt>
+        <dd>{{ providerName }}</dd>
       </div>
       <div>
         <dt>{{ $t('image-details.information.source') }}</dt>
@@ -22,7 +26,7 @@
             target="blank"
             rel="noopener noreferrer"
             class="text-pink"
-            >{{ image.source }}</a
+            >{{ sourceName }}</a
           >
         </dd>
       </div>
@@ -43,7 +47,7 @@
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
 
 import FlagSvg from '~/assets/icons/flag.svg?inline'
 
@@ -64,6 +68,29 @@ const VImageDetails = defineComponent({
     imageType: {
       type: String,
     },
+  },
+  setup(props) {
+    const { store } = useContext()
+
+    const imgType = computed(() => {
+      if (props.imageType) {
+        if (props.imageType.split('/').length > 1) {
+          return props.imageType.split('/')[1].toUpperCase()
+        }
+        return props.imageType
+      }
+      return 'Unknown'
+    })
+
+    function getProviderName(nameCode) {
+      return nameCode ? store.getters['provider/getProviderName'](nameCode) : ''
+    }
+
+    const providerName = computed(() => getProviderName(props.image.provider))
+
+    const sourceName = computed(() => getProviderName(props.image.source))
+
+    return { imgType, providerName, sourceName }
   },
 })
 export default VImageDetails
