@@ -330,7 +330,6 @@ describe('Search Store', () => {
       expect(context.commit).toHaveBeenCalledWith(FETCH_START_MEDIA, {
         mediaType,
       })
-      expect(context.commit).toHaveBeenCalledWith(RESET_MEDIA, { mediaType })
       expect(context.commit).toHaveBeenCalledWith(FETCH_END_MEDIA, {
         mediaType,
       })
