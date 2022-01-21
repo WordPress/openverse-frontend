@@ -8,6 +8,7 @@
     <VContentItem
       v-for="(item, idx) in content.types"
       :key="item"
+      :class="{ 'mb-1': !bordered }"
       :item="item"
       :item-id="idx"
       :icon="content.icons[item]"

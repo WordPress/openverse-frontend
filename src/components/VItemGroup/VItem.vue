@@ -14,7 +14,7 @@
     <VButton
       data-item-group-item
       :as="as"
-      class="flex justify-between focus-visible:ring-pink rounded min-w-full"
+      class="flex justify-between rounded min-w-full group relative hover:bg-dark-charcoal-10"
       :class="[$style.button, $style[`${contextProps.direction}-button`]]"
       variant="grouped"
       size="small"
@@ -31,13 +31,14 @@
       @click.native="$emit('click')"
     >
       <div
-        class="flex-grow whitespace-nowrap"
+        class="flex-grow whitespace-nowrap group-focus-visible:ring group-focus-visible:ring-pink my-0 rounded"
         :class="$style[`${contextProps.direction}-content`]"
       >
         <slot name="default" />
       </div>
       <VIcon
         v-if="!isInPopover && selected && contextProps.direction === 'vertical'"
+        class="absolute end-5"
         :icon-path="checkmark"
       />
     </VButton>
