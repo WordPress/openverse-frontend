@@ -9,12 +9,17 @@
       <span class="pe-20 font-semibold leading-[2.25rem]">{{
         $t(`search-type.${item}`)
       }}</span>
+      <VPill v-if="status === 'beta'">{{
+        $t('search-type.status-beta')
+      }}</VPill>
     </div>
   </VItem>
 </template>
 
 <script>
+import { computed } from '@nuxtjs/composition-api'
 import { defineComponent } from '@vue/composition-api'
+import { contentStatus } from '~/constants/media'
 /** @typedef {import('@nuxtjs/composition-api').ExtractPropTypes<typeof propTypes>} Props */
 const propTypes = {
   item: { type: String, required: true },
@@ -25,6 +30,14 @@ const propTypes = {
 const VContentItem = defineComponent({
   name: 'VContentItem',
   props: propTypes,
+  setup(props) {
+    const status = computed(() => {
+      return contentStatus[props.item]
+    })
+    return {
+      status,
+    }
+  },
 })
 export default VContentItem
 </script>
