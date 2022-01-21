@@ -1,6 +1,7 @@
 <template>
   <div>
     <div
+      v-if="!noResults"
       class="results-grid grid grid-cols-2 lg:grid-cols-5 2xl:grid-cols-6 gap-4 mb-4"
     >
       <NuxtLink
@@ -12,12 +13,15 @@
         <VContentLink :results-count="item.count" :media-type="key" />
       </NuxtLink>
     </div>
-    <GridSkeleton v-if="organizedMedia.length === 0" is-for-tab="all" />
+    <GridSkeleton
+      v-if="resultsLoading && allMedia.length === 0"
+      is-for-tab="all"
+    />
     <div
       v-else
       class="results-grid grid grid-cols-2 lg:grid-cols-5 2xl:grid-cols-6 gap-4"
     >
-      <div v-for="item in organizedMedia" :key="item.id">
+      <div v-for="item in allMedia" :key="item.id">
         <VImageCell
           v-if="item.frontendMediaType === 'image'"
           :key="item.id"
@@ -78,17 +82,15 @@ export default defineComponent({
      *
      * @type { ComputedRef<import('../../store/types').AudioDetail[] | import('../../store/types').ImageDetail[]> }
      */
-    const organizedMedia = computed(() => {
-      if (resultsLoading.value) return []
+    const allMedia = computed(() => {
+      // if (resultsLoading.value) return []
       const media = store.getters['media/mediaResults']
       const mediaKeys = Object.keys(media)
 
       // Seed the random number generator with the ID of
       // the first and last search result, so the non-image
       // distribution is the same on repeated searches
-      const firstID = Object.keys(media[mediaKeys[0]])[0]
-      const lastID = Object.keys(media[mediaKeys[mediaKeys.length - 1]]).pop()
-      const rand = srand(firstID + lastID)
+      const rand = srand(Object.keys(media[mediaKeys[0]])[0])
       const randomIntegerInRange = (min, max) =>
         Math.floor(rand() * (max - min + 1)) + min
 
@@ -108,7 +110,7 @@ export default defineComponent({
           const item = media[type][id]
           item.frontendMediaType = type
           newResults.splice(nonImageIndex, 0, item)
-          if (nonImageIndex > Object.keys(media['image']).length + 1) break
+          if (nonImageIndex > newResults.length + 1) break
           nonImageIndex = randomIntegerInRange(
             nonImageIndex + 1,
             nonImageIndex + 6
@@ -137,14 +139,19 @@ export default defineComponent({
       return Object.entries(store.getters['media/results'])
     })
 
+    const noResults = computed(
+      () => fetchState.value.isFinished && allMedia.value.length === 0
+    )
+
     return {
       isError,
       errorHeader,
-      organizedMedia,
+      allMedia,
       onLoadMore,
       fetchState,
       resultsLoading,
       results,
+      noResults,
     }
   },
 })

@@ -1,8 +1,11 @@
 <template>
   <section class="">
-    <header class="mt-4" :class="isAllView ? 'mb-10' : 'mb-8'">
+    <header
+      v-if="query.q && isSupported && !noresult"
+      class="mt-4"
+      :class="isAllView ? 'mb-10' : 'mb-8'"
+    >
       <VSearchResultsTitle
-        v-if="query.q && isSupported"
         class="leading-10"
         :size="isAllView ? 'large' : 'default'"
       >

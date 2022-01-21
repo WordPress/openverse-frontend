@@ -1,26 +1,23 @@
 <template>
   <section>
-    <template v-if="supported">
-      <VAudioTrack
-        v-for="audio in results"
-        :key="audio.id"
-        class="mb-6"
-        :audio="audio"
-        :size="audioTrackSize"
-        layout="row"
-      />
-
-      <template v-if="isError" class="m-auto w-1/2 text-center pt-6">
-        <h5>{{ errorHeader }}</h5>
-        <p>{{ fetchState.fetchingError }}</p>
-      </template>
-      <VLoadMore
-        v-if="canLoadMore && !fetchState.isFinished"
-        :is-fetching="fetchState.isFetching"
-        data-testid="load-more"
-        @onLoadMore="onLoadMore"
-      />
-    </template>
+    <GridSkeleton
+      v-if="results.length === 0 && !fetchState.isFinished"
+      is-for-tab="audio"
+    />
+    <VAudioTrack
+      v-for="audio in results"
+      :key="audio.id"
+      class="mb-6"
+      :audio="audio"
+      :size="audioTrackSize"
+      layout="row"
+    />
+    <VLoadMore
+      v-if="canLoadMore && !fetchState.isFinished"
+      :is-fetching="fetchState.isFetching"
+      data-testid="load-more"
+      @onLoadMore="onLoadMore"
+    />
   </section>
 </template>
 

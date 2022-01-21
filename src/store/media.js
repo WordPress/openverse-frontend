@@ -8,6 +8,7 @@ import {
   FETCH_SINGLE_MEDIA_TYPE,
   HANDLE_MEDIA_ERROR,
   HANDLE_NO_MEDIA,
+  CLEAR_MEDIA,
 } from '~/constants/action-types'
 import {
   FETCH_END_MEDIA,
@@ -75,16 +76,20 @@ export const createActions = (services) => ({
    * @param {object} [payload]
    * @return {Promise<void>}
    */
-  async [FETCH_MEDIA]({ dispatch, state, rootState }, payload = {}) {
+  async [FETCH_MEDIA]({ dispatch, rootState }, payload = {}) {
     const mediaType = rootState.search.query.mediaType
-    const mediaToFetch = (
-      mediaType !== ALL_MEDIA ? [mediaType] : supportedTypes
-    ).filter((type) => !state.fetchState[type].isFinished)
+    const mediaToFetch = mediaType !== ALL_MEDIA ? [mediaType] : [IMAGE, AUDIO]
+
     await Promise.all(
-      mediaToFetch.map((mediaType) =>
-        dispatch(FETCH_SINGLE_MEDIA_TYPE, { mediaType, ...payload })
+      mediaToFetch.map((type) =>
+        dispatch(FETCH_SINGLE_MEDIA_TYPE, { mediaType: type, ...payload })
       )
     )
+  },
+  // Do not use with ALL_MEDIA
+  async [CLEAR_MEDIA]({ commit }, payload = {}) {
+    const { mediaType } = payload
+    commit(RESET_MEDIA, { mediaType })
   },
   /**
    *
@@ -123,9 +128,6 @@ export const createActions = (services) => ({
     }
 
     commit(FETCH_START_MEDIA, { mediaType })
-    if (!page) {
-      commit(RESET_MEDIA, { mediaType })
-    }
     try {
       const mediaPage = typeof page === 'undefined' ? page : page[mediaType]
 
@@ -344,9 +346,7 @@ export const getters = {
    */
   unsupportedMediaType(state, getters, rootState) {
     const mediaType = rootState.search.searchType
-    return (
-      mediaType === VIDEO || (mediaType === AUDIO && !process.env.enableAudio)
-    )
+    return mediaType === VIDEO
   },
 }
 

@@ -32,7 +32,6 @@ import {
   UPDATE_SEARCH_TYPE,
 } from '~/constants/action-types'
 import { ALL_MEDIA, AUDIO, IMAGE } from '~/constants/media'
-import isEqual from 'lodash.isequal'
 import { mapActions, mapGetters, mapState } from 'vuex'
 import { MEDIA, SEARCH } from '~/constants/store-modules'
 import { queryStringToSearchType } from '~/utils/search-query-transform'
@@ -104,28 +103,11 @@ const BrowsePage = {
       updateSearchType: UPDATE_SEARCH_TYPE,
       updateQuery: UPDATE_QUERY,
     }),
-    async getMediaItems(params) {
-      if (this.query.q.trim() !== '') {
-        await this.fetchMedia({ ...params })
-      }
-    },
     onSearchFormSubmit({ q }) {
       this.updateQuery({ q })
     },
   },
   watch: {
-    query: {
-      handler(newQuery, oldQuery) {
-        const newPath = this.localePath({
-          path: `/search/${this.searchType === 'all' ? '' : this.searchType}/`,
-          query: this.searchQueryParams,
-        })
-        this.$router.push(newPath)
-        if (!isEqual(oldQuery, newQuery) && this.supported) {
-          this.getMediaItems(this.query)
-        }
-      },
-    },
     /**
      * Updates the search type only if the route's path changes.
      * @param newRoute
@@ -136,23 +118,6 @@ const BrowsePage = {
         const searchType = queryStringToSearchType(newRoute.path)
         this.updateSearchType({ searchType })
       }
-    },
-    searchType: {
-      // This fix is necessary only until All search page is merged
-      handler(newQuery, oldQuery) {
-        if (
-          [ALL_MEDIA, IMAGE].includes(newQuery) &&
-          [ALL_MEDIA, IMAGE].includes(oldQuery)
-        ) {
-          const newPath = this.localePath({
-            path: `/search/${
-              this.searchType === 'all' ? '' : this.searchType
-            }/`,
-            query: this.searchQueryParams,
-          })
-          this.$router.push(newPath)
-        }
-      },
     },
   },
 }

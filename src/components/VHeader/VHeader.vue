@@ -80,7 +80,11 @@ import {
 } from '@nuxtjs/composition-api'
 
 import { MEDIA, SEARCH } from '~/constants/store-modules'
-import { FETCH_MEDIA, UPDATE_QUERY } from '~/constants/action-types'
+import {
+  CLEAR_MEDIA,
+  FETCH_MEDIA,
+  UPDATE_QUERY,
+} from '~/constants/action-types'
 import { ALL_MEDIA, AUDIO, IMAGE } from '~/constants/media'
 import { isMinScreen } from '~/composables/use-media-query'
 import {
@@ -255,17 +259,18 @@ const VHeader = defineComponent({
       const searchTermChanged =
         localSearchTerm.value !== store.state.search.query.q
       if (isSearchRoute.value && !searchTermChanged) return
+      const searchType = store.state.search.searchType
       if (searchTermChanged) {
+        await Promise.all(
+          [IMAGE, AUDIO].map((mediaType) =>
+            store.dispatch(`${MEDIA}/${CLEAR_MEDIA}`, { mediaType })
+          )
+        )
         await store.dispatch(`${SEARCH}/${UPDATE_QUERY}`, {
           q: localSearchTerm.value,
+          searchType,
         })
       }
-      if (!isSearchRoute.value) {
-        await store.dispatch(`${SEARCH}/${UPDATE_QUERY}`, {
-          searchType: 'all',
-        })
-      }
-      const searchType = store.state.search.searchType
       const newPath = app.localePath({
         path: `/search/${searchType === 'all' ? '' : searchType}`,
         query: store.getters['search/searchQueryParams'],

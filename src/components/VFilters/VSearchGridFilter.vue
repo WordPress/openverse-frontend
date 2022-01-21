@@ -49,8 +49,12 @@
 import { computed, useContext } from '@nuxtjs/composition-api'
 import { kebabize } from '~/utils/format-strings'
 
-import { CLEAR_FILTERS, TOGGLE_FILTER } from '~/constants/action-types'
-import { SEARCH } from '~/constants/store-modules'
+import {
+  CLEAR_FILTERS,
+  FETCH_MEDIA,
+  TOGGLE_FILTER,
+} from '~/constants/action-types'
+import { MEDIA, SEARCH } from '~/constants/store-modules'
 import { isMinScreen } from '~/composables/use-media-query'
 
 import VFilterChecklist from '~/components/VFilters/VFilterChecklist.vue'
@@ -77,11 +81,20 @@ export default {
       }
       return i18n.t(`filters.${kebabize(filterType)}.title`)
     }
-    const onUpdateFilter = ({ code, filterType }) => {
-      store.dispatch(`${SEARCH}/${TOGGLE_FILTER}`, { code, filterType })
+
+    const fetchMedia = async () => {
+      await store.dispatch(`${MEDIA}/${FETCH_MEDIA}`, {
+        ...store.getters['search/searchQueryParams'],
+      })
     }
-    const clearFilters = () => {
-      store.dispatch(`${SEARCH}/${CLEAR_FILTERS}`)
+
+    const onUpdateFilter = async ({ code, filterType }) => {
+      await store.dispatch(`${SEARCH}/${TOGGLE_FILTER}`, { code, filterType })
+      await fetchMedia()
+    }
+    const clearFilters = async () => {
+      await store.dispatch(`${SEARCH}/${CLEAR_FILTERS}`)
+      await fetchMedia()
     }
 
     return {
