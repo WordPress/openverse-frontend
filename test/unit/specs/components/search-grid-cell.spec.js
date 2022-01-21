@@ -44,7 +44,7 @@ describe('SearchGridCell', () => {
     const link = wrapper.find('.search-grid_image-ctr')
     await link.trigger('click')
     expect(localeRouteMock).toHaveBeenCalledWith({
-      name: 'PhotoDetailPage',
+      name: 'VImageDetailsPage',
       params: { id: 0, location: 0 },
     })
   })

@@ -115,7 +115,7 @@ export default {
       if (!event.metaKey && !event.ctrlKey) {
         event.preventDefault()
         const detailRoute = this.localeRoute({
-          name: 'PhotoDetailPage',
+          name: 'VImageDetailsPage',
           params: { id: image.id, location: window.scrollY },
         })
         this.$router.push(detailRoute)

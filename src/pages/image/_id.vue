@@ -1,16 +1,78 @@
 <template>
-  <div :aria-label="$t('photo-details.aria.main')">
-    <VPhotoDetails
+  <div>
+    <a
+      v-if="shouldShowBreadcrumb"
+      class="px-6 py-4 flex flex-row items-center bg-dark-charcoal-06 font-semibold text-xs md:text-sr"
+      :href="breadcrumbUrl"
+      @click.prevent="$router.back()"
+    >
+      <Chevron class="-ml-2" />
+      {{ $t('image-details.back') }}
+    </a>
+
+    <div class="bg-dark-charcoal-06">
+      <figure class="mx-6 mb-4 md:mb-6">
+        <img
+          :src="image.url"
+          :alt="image.title"
+          class="mx-auto max-h-screen"
+          @load="onImageLoaded"
+        />
+        <!-- TODO: SketchFabViewer -->
+      </figure>
+    </div>
+
+    <section
+      class="px-6 md:px-16 flex flex-row flex-wrap justify-between md:flex-row-reverse"
+    >
+      <VButton
+        as="a"
+        class="btn-main w-full mb-4 md:w-auto md:mb-0 font-bold"
+        :href="image.foreign_landing_url"
+        target="blank"
+        rel="noopener noreferrer"
+        >{{ $t('image-details.weblink') }}</VButton
+      >
+      <span>
+        <h1 class="text-base md:text-3xl">
+          {{ image.title }}
+        </h1>
+        <i18n
+          v-if="image.creator"
+          path="image-details.creator"
+          tag="span"
+          class="font-bold"
+        >
+          <template #name>
+            <a
+              v-if="image.creator_url"
+              :aria-label="
+                $t('photo-details.aria.creator-url', {
+                  creator: image.creator,
+                })
+              "
+              :href="image.creator_url"
+              target="blank"
+              rel="noopener noreferrer"
+              class="text-pink"
+            >
+              <!-- TODO: keep handling source link clicked event? -->
+              {{ image.creator }}
+            </a>
+            <span v-else>{{ image.creator }}</span>
+          </template>
+        </i18n>
+      </span>
+    </section>
+
+    <VMediaReuse :media="image" />
+    <VImageDetails
       :image="image"
-      :thumbnail="thumbnailURL"
-      :bread-crumb-u-r-l="breadCrumbURL"
-      :should-show-breadcrumb="shouldShowBreadcrumb"
       :image-width="imageWidth"
       :image-height="imageHeight"
       :image-type="imageType"
-      @onImageLoaded="onImageLoaded"
     />
-    <RelatedImages :image-id="imageId" />
+    <!-- <VRelatedImages /> -->
   </div>
 </template>
 
@@ -19,16 +81,20 @@ import axios from 'axios'
 import { mapActions, mapState } from 'vuex'
 import { FETCH_IMAGE } from '~/constants/action-types'
 import { MEDIA } from '~/constants/store-modules'
-import RelatedImages from '~/components/ImageDetails/RelatedImages.vue'
-import VPhotoDetails from '~/components/ImageDetails/VPhotoDetails.vue'
+import MediaReuse from '~/components/MediaInfo/VMediaReuse.vue'
+import VImageDetails from '~/components/VImageDetails/VImageDetails.vue'
+// import VRelatedImages from '~/components/VImageDetails/VRelatedImages.vue'
+import VButton from '~/components/VButton.vue'
+import VIcon from '~/components/VIcon/VIcon.vue'
 
-const PhotoDetailPage = {
-  name: 'PhotoDetailPage',
-  components: { RelatedImages, VPhotoDetails },
+import Chevron from '~/assets/icons/chevron-left.svg?inline'
+
+const VImageDetailsPage = {
+  name: 'VImageDetailsPage',
+  components: { MediaReuse, Chevron, VButton, VIcon, VImageDetails },
   data() {
     return {
-      breadCrumbURL: '',
-      isPrimaryImageLoaded: false,
+      breadcrumbUrl: '',
       shouldShowBreadcrumb: false,
       imageWidth: 0,
       imageHeight: 0,
@@ -40,9 +106,8 @@ const PhotoDetailPage = {
   computed: {
     ...mapState(MEDIA, ['image']),
   },
-  async asyncData({ env, route }) {
+  async asyncData({ route }) {
     return {
-      thumbnailURL: `${env.apiUrl}images/${route.params.id}/thumb/`,
       imageId: route.params.id,
     }
   },
@@ -63,19 +128,22 @@ const PhotoDetailPage = {
     nextPage((_this) => {
       if (from.path === '/search/' || from.path === '/search/image') {
         _this.shouldShowBreadcrumb = true
-        _this.breadCrumbURL = from.fullPath
+        _this.breadcrumbUrl = from.fullPath
       }
     })
   },
   methods: {
     ...mapActions(MEDIA, { fetchImage: FETCH_IMAGE }),
     onImageLoaded(event) {
-      this.imageWidth = event.target.naturalWidth
-      this.imageHeight = event.target.naturalHeight
-      this.isPrimaryImageLoaded = true
-      axios.head(event.target.src).then((res) => {
-        this.imageType = res.headers['content-type']
-      })
+      this.imageWidth = this.image.width || event.target.naturalWidth
+      this.imageHeight = this.image.height || event.target.naturalHeight
+      if (this.image.filetype) {
+        this.imageType = this.image.filetype
+      } else {
+        axios.head(event.target.src).then((res) => {
+          this.imageType = res.headers['content-type']
+        })
+      }
     },
   },
   head() {
@@ -86,5 +154,12 @@ const PhotoDetailPage = {
   },
 }
 
-export default PhotoDetailPage
+export default VImageDetailsPage
 </script>
+
+<style scoped>
+section,
+aside {
+  @apply px-6 mb-10 md:px-16 md:my-16 md:max-w-screen-lg lg:mx-auto;
+}
+</style>
