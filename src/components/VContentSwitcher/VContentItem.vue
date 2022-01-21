@@ -4,7 +4,7 @@
     :is-first="itemId === 0"
     @click.native="$emit('click', item)"
   >
-    <div class="flex flex-row items-center py-3">
+    <div class="flex flex-row items-center py-2">
       <VIcon :icon-path="icon" class="me-2" />
       <span class="pe-20 font-semibold leading-[2.25rem]">{{
         $t(`search-type.${item}`)
