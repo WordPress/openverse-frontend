@@ -11,6 +11,9 @@
     @focusin="isFocused = true"
     @focusout="isFocused = false"
   >
+    <h2 v-if="showHeading" class="text-sr p-6 uppercase font-semibold">
+      {{ heading }}
+    </h2>
     <!--
       @slot The items in the item group. Should all be `VItem`s
     -->
@@ -24,6 +27,7 @@ import {
   provide,
   ref,
   readonly,
+  computed,
 } from '@nuxtjs/composition-api'
 import { ensureFocus } from 'reakit-utils/ensureFocus'
 import { useI18n } from '~/composables/use-i18n'
@@ -101,6 +105,14 @@ export default defineComponent({
       default: 'menu',
       validate: (v) => ['menu', 'radiogroup'].includes(v),
     },
+    /**
+     * The heading text to show at the top of the Item Group.
+     * Optional.
+     */
+    heading: {
+      type: String,
+      required: false,
+    },
   },
   setup(props) {
     /** @type {import('@nuxtjs/composition-api').Ref<HTMLElement | undefined>} */
@@ -169,6 +181,8 @@ export default defineComponent({
       if (!previousSelected && selected) selectedCount.value += 1
     }
 
+    const showHeading = computed(() => Boolean(props.heading))
+
     const focusContext = {
       isGroupFocused: readonly(isFocused),
       onItemKeyPress,
@@ -178,7 +192,7 @@ export default defineComponent({
 
     provide(VItemGroupFocusContextKey, focusContext)
 
-    return { isFocused, nodeRef }
+    return { isFocused, nodeRef, showHeading }
   },
 })
 </script>

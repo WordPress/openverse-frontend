@@ -15,7 +15,7 @@
 import { defineComponent } from '@vue/composition-api'
 /** @typedef {import('@nuxtjs/composition-api').ExtractPropTypes<typeof propTypes>} Props */
 const propTypes = {
-  item: { type: Object, required: true },
+  item: { type: String, required: true },
   itemId: { type: Number, required: true },
   selected: { type: Boolean, default: false },
   icon: { type: String, required: true },
