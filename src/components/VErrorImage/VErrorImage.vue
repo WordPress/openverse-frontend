@@ -38,7 +38,6 @@ export default {
         return [errorItem.error, image]
       })
     )
-    console.log(images)
     const image = computed(() => images[props.errorCode])
 
     return {
