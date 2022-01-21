@@ -10,20 +10,18 @@
       {{ $t('image-details.back') }}
     </a>
 
-    <div class="bg-dark-charcoal-06">
-      <figure class="mx-6 mb-4 md:mb-6">
-        <img
-          :src="image.url"
-          :alt="image.title"
-          class="mx-auto max-h-screen"
-          @load="onImageLoaded"
-        />
-        <!-- TODO: SketchFabViewer -->
-      </figure>
-    </div>
+    <figure class="w-full mb-4 px-6 bg-dark-charcoal-06">
+      <img
+        :src="image.url"
+        :alt="image.title"
+        class="max-h-screen md:mx-auto"
+        @load="onImageLoaded"
+      />
+      <!-- TODO: Add SketchFabViewer -->
+    </figure>
 
     <section
-      class="px-6 md:px-16 flex flex-row flex-wrap justify-between md:flex-row-reverse"
+      class="flex flex-row flex-wrap justify-between md:flex-row-reverse"
     >
       <VButton
         as="a"
@@ -92,6 +90,7 @@ import Chevron from '~/assets/icons/chevron-left.svg?inline'
 const VImageDetailsPage = {
   name: 'VImageDetailsPage',
   components: { MediaReuse, Chevron, VButton, VIcon, VImageDetails },
+  // layout: 'blank',
   data() {
     return {
       breadcrumbUrl: '',
