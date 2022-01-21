@@ -2149,6 +2149,7 @@ msgctxt "hero.search-type.all"
 msgid "All"
 msgstr ""
 
+#: src/components/VHeader/VSearchBar/VSearchBar.vue:9
 msgctxt "hero.aria.search"
 msgid "search"
 msgstr ""
@@ -2177,18 +2178,19 @@ msgid "I want something I can"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/index.vue:39
+#: src/pages/index.vue:41
 msgctxt "hero.disclaimer.content"
 msgid "All Openverse content is under a ###license### or is in the public domain."
 msgstr ""
 
-#: src/pages/index.vue:48
+#: src/pages/index.vue:50
 msgctxt "hero.disclaimer.license"
 msgid "Creative Commons license"
 msgstr ""
 
+#: src/pages/index.vue:26
 msgctxt "hero.search.placeholder"
-msgid "Search all content"
+msgid "Search for content"
 msgstr ""
 
 msgctxt "hero.search.button"
