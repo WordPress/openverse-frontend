@@ -31,4 +31,29 @@ function attributionHtml(image, licenseUrl, fullLicenseName) {
   return `<p style="font-size: 0.9rem;font-style: italic;">${imageTag}${imgLink}${creator}${licenseLink}${licenseImgLink}</p>`
 }
 
+/**
+ * Get the HTML markup for attributing the given media item.
+ *
+ * @param mediaItem - the media item, image or audio from the API, to attribute
+ * @returns {string} the HTML markup of the attribution
+ */
+export const getAttributionHtml = (mediaItem) => {
+  if (!mediaItem) return ''
+
+  let title = `"${mediaItem.title}"`
+  if (mediaItem.foreign_landing_url) {
+    title = `<a href="${mediaItem.foreign_landing_url}">${title}</a>`
+  }
+
+  let creator = mediaItem.creator
+  if (mediaItem.creator_url) {
+    creator = `<a href="${mediaItem.creator_url}">${creator}</a>`
+  }
+
+  let license = `${mediaItem.license} ${mediaItem.license_version}`
+  license = `<a href="${mediaItem.license_url}">${license.toUpperCase()}</a>`
+
+  return `${title} by ${creator} is licensed under ${license}.`
+}
+
 export default attributionHtml

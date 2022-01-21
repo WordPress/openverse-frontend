@@ -1,0 +1,43 @@
+import { Canvas, Description, Meta, Story } from '@storybook/addon-docs'
+
+import VErrorImage from '~/components/VErrorImage/VErrorImage.vue'
+
+import { NO_RESULT, SERVER_TIMEOUT } from '@/constants/errors.js'
+
+<Meta title="Components/VErrorImage" component={VErrorImage} />
+
+export const Template = (args, { argTypes }) => ({
+  template: `<VErrorImage v-bind="$props" class="w-120"/>`,
+  components: { VErrorImage },
+  props: Object.keys(argTypes),
+})
+
+# VNoResultImage
+
+<Description of={VErrorImage} />
+
+The image has no fixed dimension so applying a width or height to the component
+is recommended. You can use Tailwind JIT to apply a dynamic `w-[<width>]` or
+`h-[<height>]` utility.
+
+<Canvas>
+  <Story
+    name="No result"
+    args={{
+      errorCode: NO_RESULT,
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story
+    name="Server timeout"
+    args={{
+      errorCode: SERVER_TIMEOUT,
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>

@@ -702,6 +702,10 @@
   "modal": {
     "close": "Close"
   },
+  "error-images": {
+    "depressed-musician": "A depressed pianist rests their head in their hands.",
+    "waiting-for-a-bite": "Three boys sit on a broken log while two of them fish."
+  },
   "search-type": {
     "image": "Images",
     "audio": "Audio",
