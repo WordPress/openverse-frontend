@@ -35,7 +35,7 @@
       @click.native="$emit('click')"
     >
       <div
-        class="flex-grow whitespace-nowrap my-0 rounded-sm px-2 py-3 md:group-focus-visible:ring md:group-focus-visible:ring-pink"
+        class="flex-grow whitespace-nowrap my-0 rounded-sm px-2 group-focus-visible:ring group-focus-visible:ring-pink md:group-focus-visible:ring-tx"
         :class="[
           $style[`${contextProps.direction}-content`],
           $style[`${contextProps.size}-content`],
@@ -114,6 +114,7 @@ export default defineComponent({
     const isFocused = ref(false)
     const isInPopover = inject(VPopoverContentContextKey, false)
     const contextProps = inject(VItemGroupContextKey)
+    console.log('vitem', contextProps)
 
     if (isInPopover && contextProps.bordered) {
       warn('Bordered popover items are not supported')
@@ -161,11 +162,11 @@ export default defineComponent({
   @apply z-10;
 }
 
-.small-button {
+.medium-button {
   @apply focus-visible:ring focus-visible:ring-pink;
 }
 
-.medium-content {
+.small-content {
   @apply group-focus-visible:ring group-focus-visible:ring-pink;
 }
 

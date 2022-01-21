@@ -115,7 +115,7 @@ export default defineComponent({
       required: false,
     },
     /**
-     * Screen size, opposite of the item group size.
+     * Size of the item group corresponds to the size of the component.
      *
      * @default 'small'
      */

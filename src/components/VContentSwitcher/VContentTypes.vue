@@ -32,9 +32,8 @@ export default {
   components: { VItemGroup, VContentItem },
   props: {
     /**
-     * Size refers to the screen size.
-     * The actual component size on 'small' screen is large,
-     * and on 'medium' screen, the component is smaller.
+     * 'Small' size for mobile screens,
+     * 'medium' size for larger screens.
      */
     size: {
       type: String,
