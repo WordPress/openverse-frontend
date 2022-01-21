@@ -42,13 +42,11 @@ import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-vis
 
 import VScrollButton from '~/components/VScrollButton.vue'
 import VSearchGrid from '~/components/VSearchGrid.vue'
-import VFilterDisplay from '~/components/VFilters/VFilterDisplay.vue'
 
 const BrowsePage = {
   name: 'browse-page',
   layout: 'default',
   components: {
-    VFilterDisplay,
     VScrollButton,
     VSearchGrid,
   },

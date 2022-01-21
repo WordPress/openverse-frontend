@@ -925,11 +925,6 @@ msgctxt "filters.title"
 msgid "Filters"
 msgstr ""
 
-#: src/components/VFilters/VFilterDisplay.vue:4
-msgctxt "filters.filter-by"
-msgid "Filter By"
-msgstr ""
-
 #. Do not translate words between ### ###.
 #: src/components/VFilters/VFilterTag.vue:4
 msgctxt "filters.aria.remove-filter"

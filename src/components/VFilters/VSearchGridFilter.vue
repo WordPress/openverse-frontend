@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { computed, useContext } from '@nuxtjs/composition-api'
+import { computed, useContext, useRouter } from '@nuxtjs/composition-api'
 import { kebabize } from '~/utils/format-strings'
 
 import {
@@ -66,6 +66,7 @@ export default {
   },
   setup() {
     const { i18n, store } = useContext()
+    const router = useRouter()
     const isMinScreenMd = isMinScreen('md')
 
     const isAnyFilterApplied = computed(
@@ -82,7 +83,8 @@ export default {
       return i18n.t(`filters.${kebabize(filterType)}.title`)
     }
 
-    const fetchMedia = async () => {
+    const updateSearch = async () => {
+      await router.push({ query: store.getters['search/searchQueryParams'] })
       await store.dispatch(`${MEDIA}/${FETCH_MEDIA}`, {
         ...store.getters['search/searchQueryParams'],
       })
@@ -90,11 +92,12 @@ export default {
 
     const onUpdateFilter = async ({ code, filterType }) => {
       await store.dispatch(`${SEARCH}/${TOGGLE_FILTER}`, { code, filterType })
-      await fetchMedia()
+      await updateSearch()
     }
     const clearFilters = async () => {
       await store.dispatch(`${SEARCH}/${CLEAR_FILTERS}`)
-      await fetchMedia()
+
+      await updateSearch()
     }
 
     return {
