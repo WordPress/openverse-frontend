@@ -35,3 +35,28 @@ export const Template = (args, { argTypes }) => ({
     {Template.bind({})}
   </Story>
 </Canvas>
+
+## v-model
+
+The recommended way to use it is with `v-model` mapping to a `String`.
+
+export const vModelTemplate = () => ({
+  template: `
+    <div>
+      {{ item }}
+      <VContentSwitcherPopover v-model="item"/>
+    </div>
+  `,
+  components: { VContentSwitcherPopover },
+  data() {
+    return {
+      item: 'all',
+    }
+  },
+})
+
+<Canvas>
+  <Story height="480px" name="v-model">
+    {vModelTemplate.bind({})}
+  </Story>
+</Canvas>
