@@ -1,12 +1,9 @@
 <template>
   <div :aria-label="$t('photo-details.aria.main')" class="audio-page">
     <VAudioTrack :audio="audio" class="main-track" />
-    <MediaReuse
+    <VMediaReuse
       data-testid="audio-attribution"
       :media="audio"
-      :license-url="licenseUrl"
-      :full-license-name="fullLicenseName"
-      :attribution-html="attributionHtml()"
       class="my-16 px-4 md:px-0"
     />
     <VAudioDetails
