@@ -29,7 +29,7 @@
       :aria-labelledby="tab"
       role="tabpanel"
       tabindex="0"
-      class="border border-dark-charcoal-20 p-6"
+      class="border border-dark-charcoal-20 p-6 font-sm"
       :class="{ hidden: activeTab !== tab }"
     >
       <template v-if="activeTab === 'rich'">
@@ -88,13 +88,28 @@
           </template>
         </i18n>
       </template>
+      <template v-if="activeTab === 'html'">
+        <label for="attribution-html">
+          <textarea
+            id="attribution-html"
+            class="w-full font-mono h-auto resize-none"
+            :value="attributionHtml"
+            rows="4"
+            dir="ltr"
+          />
+        </label>
+      </template>
     </div>
   </div>
 </template>
 
 <script>
-import { defineComponent, ref, useContext } from '@nuxtjs/composition-api'
-
+import {
+  computed,
+  defineComponent,
+  ref,
+  useContext,
+} from '@nuxtjs/composition-api'
 import {
   SEND_DETAIL_PAGE_EVENT,
   DETAIL_PAGE_EVENTS,
@@ -103,6 +118,7 @@ import {
   // ATTRIBUTION,
   USAGE_DATA,
 } from '~/constants/store-modules'
+import getAttributionHtml from '~/utils/attribution-html'
 import { isPublicDomain } from '~/utils/license'
 
 const VCopyLicense = defineComponent({
@@ -125,6 +141,11 @@ const VCopyLicense = defineComponent({
 
     const isPDM = () => isPublicDomain(props.fullLicenseName)
 
+    const attributionHtml = computed(() => {
+      const licenseUrl = `${props.media.license_url}&atype=html`
+      return getAttributionHtml(props.media, licenseUrl, props.fullLicenseName)
+    })
+
     const sendDetailPageEvent = (eventType) => {
       const eventData = {
         eventType,
@@ -142,6 +163,7 @@ const VCopyLicense = defineComponent({
 
     return {
       activeTab,
+      attributionHtml,
       isPDM,
       onCreatorLinkClicked,
       onSourceLinkClicked,

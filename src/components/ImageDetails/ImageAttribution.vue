@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import attributionHtml from '~/utils/attribution-html'
+import getAttributionHtml from '~/utils/attribution-html'
 import CopyLicense from '~/components/MediaInfo/CopyLicense.vue'
 import MediaLicense from '~/components/MediaInfo/MediaLicense.vue'
 
@@ -43,7 +43,7 @@ export default {
     },
     attributionHtml() {
       const licenseUrl = `${this.licenseUrl}&atype=html`
-      return attributionHtml(this.image, licenseUrl, this.fullLicenseName)
+      return getAttributionHtml(this.image, licenseUrl, this.fullLicenseName)
     },
   },
 }
