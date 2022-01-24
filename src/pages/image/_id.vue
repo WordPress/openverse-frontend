@@ -12,6 +12,7 @@
 
     <figure class="w-full mb-4 px-6 bg-dark-charcoal-06">
       <img
+        id="main-image"
         :src="image.url"
         :alt="image.title"
         class="max-h-[90vh] md:mx-auto"
@@ -47,7 +48,7 @@
             <a
               v-if="image.creator_url"
               :aria-label="
-                $t('photo-details.aria.creator-url', {
+                $t('media-details.aria.creator-url', {
                   creator: image.creator,
                 })
               "
@@ -57,10 +58,8 @@
               class="text-pink"
               @click="onCreatorLinkClicked"
               @keyup.enter="onCreatorLinkClicked"
+              >{{ image.creator }}</a
             >
-              <!-- TODO: keep handling source link clicked event? -->
-              {{ image.creator }}
-            </a>
             <span v-else>{{ image.creator }}</span>
           </template>
         </i18n>

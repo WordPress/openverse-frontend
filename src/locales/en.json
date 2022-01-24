@@ -523,7 +523,8 @@
       "attribution": {
         "license": "read more about the license",
         "tool": "read more about the tool"
-      }
+      },
+      "creator-url": "author {name}"
     },
     "image-info": "Image information",
     "audio-info": "Audio information",
