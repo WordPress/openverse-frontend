@@ -97,6 +97,7 @@
           :value="attributionHtml"
           rows="4"
           dir="ltr"
+          readonly
         />
       </label>
 
