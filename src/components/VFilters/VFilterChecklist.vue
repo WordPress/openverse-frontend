@@ -1,12 +1,12 @@
 <template>
   <fieldset class="mb-8" @click.stop="hideLicenseExplanationVisibility">
-    <legend v-if="title" class="text-2xl font-semibold mb-2">
+    <legend v-if="title" class="text-sm font-semibold">
       {{ title }}
     </legend>
     <div
       v-for="(item, index) in options"
       :key="index"
-      class="flex justify-between items-center mt-3"
+      class="flex justify-between items-center mt-4"
     >
       <VCheckbox
         :id="item.code"
