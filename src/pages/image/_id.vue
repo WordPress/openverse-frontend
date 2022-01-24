@@ -14,7 +14,7 @@
       <img
         :src="image.url"
         :alt="image.title"
-        class="max-h-screen md:mx-auto"
+        class="max-h-[90vh] md:mx-auto"
         @load="onImageLoaded"
       />
       <!-- TODO: Add SketchFabViewer -->
@@ -90,7 +90,6 @@ import Chevron from '~/assets/icons/chevron-left.svg?inline'
 const VImageDetailsPage = {
   name: 'VImageDetailsPage',
   components: { MediaReuse, Chevron, VButton, VIcon, VImageDetails },
-  // layout: 'blank',
   data() {
     return {
       breadcrumbUrl: '',

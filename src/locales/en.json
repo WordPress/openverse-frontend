@@ -497,7 +497,7 @@
         "link": "here"
       },
       "credit": {
-        "text": "{title}{creator}{marked-licensed}{license}{view-legal}",
+        "text": "\"{title}\"{creator}{marked-licensed}{license}{view-legal}",
         "creator-text": " by {creator-name}",
         "marked": "is marked with",
         "licensed": "is licensed under",
@@ -506,7 +506,7 @@
         "copy-text": "a copy of this license,"
       },
       "copy-license": {
-        "title": "Credit the Creator",
+        "title": "Credit the creator",
         "rich": "Rich Text",
         "html": "HTML",
         "plain": "Plain text"

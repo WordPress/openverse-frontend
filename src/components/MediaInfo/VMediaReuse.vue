@@ -10,6 +10,11 @@
         :full-license-name="fullLicenseName"
         class="column"
       />
+      <VCopyLicense
+        :media="media"
+        :full-license-name="fullLicenseName"
+        class="column"
+      />
     </div>
   </section>
 </template>
@@ -17,11 +22,12 @@
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
 import { getFullLicenseName } from '~/utils/license'
+import VCopyLicense from '~/components/MediaInfo/VCopyLicense.vue'
 import VMediaLicense from '~/components/MediaInfo/VMediaLicense.vue'
 
 const VMediaReuse = defineComponent({
   name: 'VMediaReuse',
-  components: { VMediaLicense },
+  components: { VCopyLicense, VMediaLicense },
   props: {
     media: {
       type: Object,
