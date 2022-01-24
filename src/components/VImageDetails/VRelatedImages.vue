@@ -41,6 +41,13 @@ export default {
     if (props.service) {
       relatedOptions.service = props.service
     }
+    /**
+     * Fetches related images on `imageId` change
+     * @param {object} props
+     * @param {string} props.imageId
+     * @param {any} props.service
+     * @return {{ images: Ref<ImageDetail[]> }}
+     */
     const { media: images } = useRelated(relatedOptions)
 
     return { images }
