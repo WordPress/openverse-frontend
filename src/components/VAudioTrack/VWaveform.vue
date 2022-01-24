@@ -468,9 +468,19 @@ export default defineComponent({
       }
     }
 
-    const willBeHandled = (event) =>
-      ['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)
+    const handleSpacebar = () => {
+      emit('toggle-playback')
+    }
 
+    /**
+     * @param {KeyboardEvent} event
+     */
+    const willBeHandled = (event) =>
+      ['ArrowLeft', 'ArrowRight', 'Home', 'End', ' '].includes(event.key)
+
+    /**
+     * @param {KeyboardEvent} event
+     */
     const handleKeys = (event) => {
       if (!willBeHandled(event)) return
 
@@ -479,6 +489,7 @@ export default defineComponent({
         return handleArrowKeys(event)
       if (event.key === 'Home') return handlePosKeys(0)
       if (event.key === 'End') return handlePosKeys(1)
+      if (event.key === ' ') return handleSpacebar()
     }
 
     /* v-on */
