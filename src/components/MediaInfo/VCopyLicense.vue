@@ -3,6 +3,7 @@
     <h5 class="mb-4 md:text-2xl">
       {{ $t('media-details.reuse.copy-license.title') }}
     </h5>
+
     <nav class="flex borber-b-none" role="tablist">
       <button
         v-for="(tab, idx) in tabs"
@@ -22,6 +23,7 @@
         {{ $t(`media-details.reuse.copy-license.${tab}`) }}
       </button>
     </nav>
+
     <div
       v-for="(tab, idx) in tabs"
       :id="`tab-${tab}`"
@@ -32,73 +34,117 @@
       class="border border-dark-charcoal-20 p-6 font-sm"
       :class="{ hidden: activeTab !== tab }"
     >
-      <template v-if="activeTab === 'rich'">
-        <i18n
-          id="attribution"
-          path="media-details.reuse.credit.text"
-          tag="span"
+      <i18n
+        v-if="tab === 'rich'"
+        id="attribution-rich"
+        path="media-details.reuse.credit.text"
+        tag="p"
+      >
+        <template #title>
+          <a
+            :href="media.foreign_landing_url"
+            target="_blank"
+            rel="noopener"
+            class="text-pink"
+            @click="onSourceLinkClicked"
+            @keyup.enter="onSourceLinkClicked"
+            >{{ media.title }}</a
+          ></template
         >
-          <template #title>
-            <a
-              :href="media.foreign_landing_url"
-              target="_blank"
-              rel="noopener"
-              class="text-pink"
-              @click="onSourceLinkClicked"
-              @keyup.enter="onSourceLinkClicked"
-              >{{ media.title }}</a
-            ></template
+        <template #creator>
+          <i18n
+            v-if="media.creator"
+            path="media-details.reuse.credit.creator-text"
+            tag="span"
           >
-          <template #creator>
-            <i18n
-              v-if="media.creator"
-              path="media-details.reuse.credit.creator-text"
-              tag="span"
-            >
-              <template #creator-name>
-                <a
-                  v-if="media.creator_url"
-                  :href="media.creator_url"
-                  target="_blank"
-                  rel="noopener"
-                  class="text-pink"
-                  @click="onCreatorLinkClicked"
-                  @keyup.enter="onCreatorLinkClicked"
-                  >{{ media.creator }}</a
-                >
-                <span v-else>{{ media.creator }}</span>
-              </template>
-            </i18n>
-          </template>
-          <template #marked-licensed>
-            {{
-              isPDM
-                ? $t('media-details.reuse.credit.marked')
-                : $t('media-details.reuse.credit.licensed')
-            }}
-          </template>
-          <template #license>
-            <a
-              class="uppercase text-pink"
-              :href="media.license_url"
-              target="_blank"
-              rel="noopener"
-              >{{ fullLicenseName }}</a
-            >
-          </template>
-        </i18n>
-      </template>
-      <template v-if="activeTab === 'html'">
-        <label for="attribution-html">
-          <textarea
-            id="attribution-html"
-            class="w-full font-mono h-auto resize-none"
-            :value="attributionHtml"
-            rows="4"
-            dir="ltr"
-          />
-        </label>
-      </template>
+            <template #creator-name>
+              <a
+                v-if="media.creator_url"
+                :href="media.creator_url"
+                target="_blank"
+                rel="noopener"
+                class="text-pink"
+                @click="onCreatorLinkClicked"
+                @keyup.enter="onCreatorLinkClicked"
+                >{{ media.creator }}</a
+              >
+              <span v-else>{{ media.creator }}</span>
+            </template>
+          </i18n>
+        </template>
+        <template #marked-licensed>
+          {{
+            isPDM
+              ? $t('media-details.reuse.credit.marked')
+              : $t('media-details.reuse.credit.licensed')
+          }}
+        </template>
+        <template #license>
+          <a
+            class="uppercase text-pink"
+            :href="licenseUrl"
+            target="_blank"
+            rel="noopener"
+            >{{ fullLicenseName }}</a
+          >
+        </template>
+      </i18n>
+
+      <label v-if="tab === 'html'" for="attribution-html">
+        <textarea
+          id="attribution-html"
+          class="w-full font-mono h-auto resize-none"
+          :value="attributionHtml"
+          rows="4"
+          dir="ltr"
+        />
+      </label>
+
+      <i18n
+        v-if="tab === 'plain'"
+        id="attribution-plain"
+        path="media-details.reuse.credit.text"
+        tag="p"
+      >
+        <template #title>{{ media.title }}</template>
+        <template #creator>
+          <i18n
+            v-if="media.creator"
+            path="media-details.reuse.credit.creator-text"
+          >
+            <template #creator-name>{{ media.creator }}</template>
+          </i18n>
+        </template>
+        <template #marked-licensed>
+          {{
+            isPDM
+              ? $t('media-details.reuse.credit.marked')
+              : $t('media-details.reuse.credit.licensed')
+          }}
+        </template>
+        <template #license> {{ fullLicenseName }}</template>
+        <template #view-legal>
+          <i18n path="media-details.reuse.credit.view-legal-text">
+            <template #terms-copy>
+              {{
+                isPDM
+                  ? $t('media-details.reuse.credit.terms-text')
+                  : $t('media-details.reuse.credit.copy-text')
+              }}
+            </template>
+            <template v-if="licenseUrl" #URL>
+              {{ licenseUrl }}
+            </template>
+          </i18n>
+        </template>
+      </i18n>
+
+      <CopyButton
+        :id="`copyattr-${tab}`"
+        :el="`#attribution-${tab}`"
+        class="mt-10"
+        @copied="(e) => onCopyAttribution(tab, e)"
+      />
     </div>
   </div>
 </template>
@@ -110,14 +156,12 @@ import {
   ref,
   useContext,
 } from '@nuxtjs/composition-api'
+import { COPY_ATTRIBUTION } from '~/constants/action-types'
 import {
   SEND_DETAIL_PAGE_EVENT,
   DETAIL_PAGE_EVENTS,
 } from '~/constants/usage-data-analytics-types'
-import {
-  // ATTRIBUTION,
-  USAGE_DATA,
-} from '~/constants/store-modules'
+import { ATTRIBUTION, USAGE_DATA } from '~/constants/store-modules'
 import getAttributionHtml from '~/utils/attribution-html'
 import { isPublicDomain } from '~/utils/license'
 
@@ -138,6 +182,10 @@ const VCopyLicense = defineComponent({
     const tabs = ['rich', 'html', 'plain']
 
     const setActiveTab = (tabIdx) => (activeTab.value = tabIdx)
+
+    const licenseUrl = computed(
+      () => `${props.media.license_url}?ref=openverse`
+    )
 
     const isPDM = () => isPublicDomain(props.fullLicenseName)
 
@@ -161,12 +209,22 @@ const VCopyLicense = defineComponent({
     const onSourceLinkClicked = () =>
       sendDetailPageEvent(DETAIL_PAGE_EVENTS.SOURCE_CLICKED)
 
+    const onCopyAttribution = (type, event) => {
+      store.dispatch(`${ATTRIBUTION}/${COPY_ATTRIBUTION}`, {
+        type,
+        content: event.content,
+      })
+      sendDetailPageEvent(DETAIL_PAGE_EVENTS.ATTRIBUTION_CLICKED)
+    }
+
     return {
       activeTab,
       attributionHtml,
       isPDM,
+      licenseUrl,
       onCreatorLinkClicked,
       onSourceLinkClicked,
+      onCopyAttribution,
       tabs,
       setActiveTab,
     }

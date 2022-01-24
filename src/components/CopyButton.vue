@@ -1,17 +1,18 @@
 <template>
-  <button
+  <VButton
     :id="id"
     type="button"
-    class="button tiny donate"
+    class="text-sr"
+    variant="secondary"
     :data-clipboard-target="el"
   >
     <span v-if="!success">
-      {{ $t('photo-details.copy.copy') }}
+      {{ $t('media-details.reuse.copy-license.copy-text') }}
     </span>
     <span v-else>
-      {{ $t('photo-details.copy.copied') }}
+      {{ $t('media-details.reuse.copy-license.copied') }}
     </span>
-  </button>
+  </VButton>
 </template>
 
 <script>
