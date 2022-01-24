@@ -29,6 +29,8 @@
         :href="image.foreign_landing_url"
         target="blank"
         rel="noopener noreferrer"
+        @click="onSourceLinkClicked"
+        @keyup.enter="onSourceLinkClicked"
         >{{ $t('image-details.weblink') }}</VButton
       >
       <span>
@@ -53,6 +55,8 @@
               target="blank"
               rel="noopener noreferrer"
               class="text-pink"
+              @click="onCreatorLinkClicked"
+              @keyup.enter="onCreatorLinkClicked"
             >
               <!-- TODO: keep handling source link clicked event? -->
               {{ image.creator }}
@@ -78,7 +82,12 @@
 import axios from 'axios'
 import { mapActions, mapState } from 'vuex'
 import { FETCH_IMAGE } from '~/constants/action-types'
-import { MEDIA } from '~/constants/store-modules'
+import { MEDIA, USAGE_DATA } from '~/constants/store-modules'
+import {
+  DETAIL_PAGE_EVENTS,
+  SEND_DETAIL_PAGE_EVENT,
+} from '~/constants/usage-data-analytics-types'
+
 import MediaReuse from '~/components/MediaInfo/VMediaReuse.vue'
 import VImageDetails from '~/components/VImageDetails/VImageDetails.vue'
 // import VRelatedImages from '~/components/VImageDetails/VRelatedImages.vue'
@@ -97,7 +106,6 @@ const VImageDetailsPage = {
       imageWidth: 0,
       imageHeight: 0,
       imageType: 'Unknown',
-      thumbnailURL: '',
       imageId: null,
     }
   },
@@ -132,6 +140,7 @@ const VImageDetailsPage = {
   },
   methods: {
     ...mapActions(MEDIA, { fetchImage: FETCH_IMAGE }),
+    ...mapActions(USAGE_DATA, { sendEvent: SEND_DETAIL_PAGE_EVENT }),
     onImageLoaded(event) {
       this.imageWidth = this.image.width || event.target.naturalWidth
       this.imageHeight = this.image.height || event.target.naturalHeight
@@ -142,6 +151,18 @@ const VImageDetailsPage = {
           this.imageType = res.headers['content-type']
         })
       }
+    },
+    onSourceLinkClicked() {
+      this.sendEvent({
+        eventType: DETAIL_PAGE_EVENTS.SOURCE_CLICKED,
+        resultUuid: this.imageId,
+      })
+    },
+    onCreatorLinkClicked() {
+      this.sendEvent({
+        eventType: DETAIL_PAGE_EVENTS.CREATOR_CLICKED,
+        resultUuid: this.imageId,
+      })
     },
   },
   head() {
