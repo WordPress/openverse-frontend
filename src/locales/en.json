@@ -532,68 +532,6 @@
       "title": "Report this content"
     }
   },
-  "photo-details": {
-    "back": "Back to search results",
-    "creator": "by {name}",
-    "reuse": {
-      "title": "Reuse"
-    },
-    "information": {
-      "title": "Information",
-      "type": "Type:",
-      "provider": "Provider:",
-      "dimensions": "Dimensions:",
-      "source": "Source:",
-      "license": "License",
-      "tags": "Tags",
-      "pixels": "pixels"
-    },
-    "survey": {
-      "content": "How are you using this image?",
-      "link": "Let us know",
-      "answer": "by answering a few questions."
-    },
-    "weblink": "Go to image's website",
-    "legal-disclaimer": "Openverse aggregates data from publicly available repositories of open content. Openverse does not host the content and does not verify that the content is properly CC-licensed or that the attribution information is accurate or complete. Please follow the link to the source of the content to independently verify before reuse.",
-    "related-images": "Related Images",
-    "content-report": {
-      "report": "Report",
-      "title": "Report this content",
-      "issue": "What's the issue?",
-      "issue-description": "Please describe the issue for us",
-      "reasons": {
-        "dmca": "Infringes Copyright",
-        "mature": "Contains mature content",
-        "other": "Other"
-      },
-      "dmca": {
-        "link": "DMCA form",
-        "content": "You must fill out this {link} to report copyright infringement. No action will be taken until the form is filled out and submitted."
-      },
-      "caption": "For security purposes, Openverse collects and retains anonymized IP addresses of those who complete and submit this form.",
-      "next": "Next",
-      "back": "Back",
-      "submit": "Submit",
-      "thanks": "Thank you for reporting an issue with the results of Openverse!",
-      "provider": "We recommend doing the same at the source, {link}.",
-      "aria-form": "{provider} form",
-      "submission-error": "There was an error with the report submission. Please try again.",
-      "placeholder": "Issue description required (with at least 20 characters)"
-    },
-    "aria": {
-      "close-form": "close form",
-      "dmca": "dmca form",
-      "attribution": {
-        "license": "read more about the license",
-        "tool": "read more about the tool"
-      },
-      "details": "image details",
-      "main": "main content",
-      "related": "related images",
-      "provider-report-form": "{provider} form",
-      "creator-url": "author {creator}"
-    }
-  },
   "image-details": {
     "back": "Back to search results",
     "creator": "by {name}",
