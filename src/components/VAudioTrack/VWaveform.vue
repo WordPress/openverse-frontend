@@ -94,7 +94,7 @@
     <div
       v-if="isInteractive"
       class="focus-indicator hidden absolute z-30 top-0 flex flex-col items-center justify-between bg-black h-full"
-      :style="{ width: `${barWidth}px`, left: `${seekSpaceBefore}px` }"
+      :style="{ width: `${barWidth}px`, left: `${progressBarWidth}px` }"
     >
       <div
         v-for="(classes, name) in {
@@ -382,7 +382,6 @@ export default defineComponent({
       return waveformDimens.value.width * frac
     })
     const seekIndex = computed(() => getPeaksInWidth(seekBarWidth.value))
-    const seekSpaceBefore = computed(() => spaceBefore(seekIndex.value))
 
     /* Seek timestamp */
 
@@ -538,7 +537,6 @@ export default defineComponent({
       seekFrac,
       seekBarWidth,
       seekIndex,
-      seekSpaceBefore,
 
       seekTimestamp,
       seekTimestampEl,
