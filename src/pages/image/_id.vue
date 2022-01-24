@@ -74,7 +74,7 @@
       :image-height="imageHeight"
       :image-type="imageType"
     />
-    <!-- <VRelatedImages /> -->
+    <VRelatedImages :image-id="imageId" />
   </div>
 </template>
 
@@ -90,7 +90,7 @@ import {
 
 import MediaReuse from '~/components/MediaInfo/VMediaReuse.vue'
 import VImageDetails from '~/components/VImageDetails/VImageDetails.vue'
-// import VRelatedImages from '~/components/VImageDetails/VRelatedImages.vue'
+import VRelatedImages from '~/components/VImageDetails/VRelatedImages.vue'
 import VButton from '~/components/VButton.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'
 
@@ -98,7 +98,14 @@ import Chevron from '~/assets/icons/chevron-left.svg?inline'
 
 const VImageDetailsPage = {
   name: 'VImageDetailsPage',
-  components: { MediaReuse, Chevron, VButton, VIcon, VImageDetails },
+  components: {
+    MediaReuse,
+    Chevron,
+    VButton,
+    VIcon,
+    VImageDetails,
+    VRelatedImages,
+  },
   data() {
     return {
       breadcrumbUrl: '',

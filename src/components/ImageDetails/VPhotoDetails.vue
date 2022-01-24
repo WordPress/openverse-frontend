@@ -175,12 +175,10 @@ import VIcon from '~/components/VIcon/VIcon.vue'
 import VContentReportForm from '~/components/VContentReport/VContentReportForm.vue'
 import SketchFabViewer from '~/components/SketchFabViewer.vue'
 import ImageInfo from '~/components/ImageDetails/ImageInfo.vue'
-import ImageAttribution from '~/components/ImageDetails/ImageAttribution.vue'
 
 export default {
   name: 'VPhotoDetails',
   components: {
-    ImageAttribution,
     ImageInfo,
     ReuseSurvey,
     SketchFabViewer,
