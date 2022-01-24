@@ -33,9 +33,9 @@
             :href="licenseUrl"
             target="_blank"
             rel="noopener"
+            class="text-pink"
+            >{{ $t('media-details.reuse.license.link') }}</a
           >
-            {{ $t('media-details.reuse.license.link') }}
-          </a>
         </template>
       </i18n>
     </template>
@@ -52,9 +52,9 @@
             :href="licenseUrl"
             target="_blank"
             rel="noopener"
+            class="text-pink"
+            >{{ $t('media-details.reuse.tool.link') }}</a
           >
-            {{ $t('media-details.reuse.tool.link') }}
-          </a>
         </template>
       </i18n>
     </template>

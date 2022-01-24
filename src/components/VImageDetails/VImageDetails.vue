@@ -35,13 +35,9 @@
         <dd>
           <!-- eslint-disable @intlify/vue-i18n/no-raw-text -->
           {{ imageWidth }} &times; {{ imageHeight }}
-          {{ $t('photo-details.information.pixels') }}
+          {{ $t('image-details.information.pixels') }}
         </dd>
       </div>
-      <!-- <div>
-        <dt>{{ $t("image-details.information.") }}</dt>
-        <dd>{{ image. }}</dd>
-      </div> -->
     </dl>
   </section>
 </template>
