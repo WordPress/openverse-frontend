@@ -34,6 +34,8 @@ export const useFocusOnShow = ({
     ([dialog, visible, autoFocusOnShow, initialFocusElement]) => {
       if (!dialog || !visible || !autoFocusOnShow) return
 
+      const isActive = () => hasFocusWithin(dialog)
+
       if (initialFocusElement) {
         return ensureFocus(initialFocusElement, {
           preventScroll: true,
@@ -42,7 +44,6 @@ export const useFocusOnShow = ({
       }
 
       const tabbable = getFirstTabbableIn(dialog, true)
-      const isActive = () => hasFocusWithin(dialog)
 
       if (tabbable) {
         ensureFocus(tabbable, { preventScroll: true, isActive })
