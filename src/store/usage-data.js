@@ -17,13 +17,12 @@ const disabled = !stringToBoolean(process.env.enableInternalAnalytics)
  */
 const handleUsageEvent = (eventName, context) => (promise) =>
   promise.catch((error) =>
-    context
-      .$sentryReady()
-      .then((sentry) =>
-        sentry.captureException(error, (scope) =>
-          scope.setTag('eventName', eventName)
-        )
-      )
+    context.$sentryReady().then((sentry) =>
+      sentry.captureException(error, (scope) => {
+        scope.setTag('event_name', eventName)
+        scope.setTag('request_url', error.config.url)
+      })
+    )
   )
 
 /**
