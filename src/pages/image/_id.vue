@@ -87,9 +87,9 @@ import {
   SEND_DETAIL_PAGE_EVENT,
 } from '~/constants/usage-data-analytics-types'
 
-import MediaReuse from '~/components/MediaInfo/VMediaReuse.vue'
 import VImageDetails from '~/components/VImageDetails/VImageDetails.vue'
 import VRelatedImages from '~/components/VImageDetails/VRelatedImages.vue'
+import VMediaReuse from '~/components/VMediaInfo/VMediaReuse.vue'
 import VButton from '~/components/VButton.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'
 
@@ -98,11 +98,11 @@ import Chevron from '~/assets/icons/chevron-left.svg?inline'
 const VImageDetailsPage = {
   name: 'VImageDetailsPage',
   components: {
-    MediaReuse,
     Chevron,
     VButton,
     VIcon,
     VImageDetails,
+    VMediaReuse,
     VRelatedImages,
   },
   data() {

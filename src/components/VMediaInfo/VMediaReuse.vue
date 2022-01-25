@@ -22,8 +22,8 @@
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
 import { getFullLicenseName } from '~/utils/license'
-import VCopyLicense from '~/components/MediaInfo/VCopyLicense.vue'
-import VMediaLicense from '~/components/MediaInfo/VMediaLicense.vue'
+import VCopyLicense from '~/components/VMediaInfo/VCopyLicense.vue'
+import VMediaLicense from '~/components/VMediaInfo/VMediaLicense.vue'
 
 const VMediaReuse = defineComponent({
   name: 'VMediaReuse',

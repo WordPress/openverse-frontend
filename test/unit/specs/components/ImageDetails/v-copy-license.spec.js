@@ -1,4 +1,4 @@
-import VCopyLicense from '~/components/MediaInfo/VCopyLicense.vue'
+import VCopyLicense from '~/components/VMediaInfo/VCopyLicense.vue'
 import { COPY_ATTRIBUTION } from '~/constants/action-types'
 import {
   DETAIL_PAGE_EVENTS,
