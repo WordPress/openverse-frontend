@@ -17,7 +17,7 @@
 
 <script>
 import { computed, defineComponent } from '@nuxtjs/composition-api'
-import { i18nResultsCount } from '~/composables/use-i18n-utilities'
+import { useI18nResultsCount } from '~/composables/use-i18n-utilities'
 import { AUDIO, IMAGE, supportedMediaTypes } from '~/constants/media'
 import VIcon from '~/components/VIcon/VIcon.vue'
 
@@ -51,17 +51,10 @@ export default defineComponent({
   },
   setup(props) {
     const iconPath = computed(() => iconMapping[props.mediaType])
-    const resultsCountLabel = computed(() =>
-      i18nResultsCount(props.resultsCount, props.mediaType)
-    )
+    const { getI18nCount } = useI18nResultsCount()
+    const resultsCountLabel = computed(() => getI18nCount(props.resultsCount))
 
     return { iconPath, imageIcon, resultsCountLabel }
   },
 })
 </script>
-
-<style scoped>
-button[aria-checked='true'] {
-  @apply bg-dark-charcoal text-white;
-}
-</style>

@@ -85,14 +85,14 @@ import {
   FETCH_MEDIA,
   UPDATE_QUERY,
 } from '~/constants/action-types'
-import { ALL_MEDIA, AUDIO, IMAGE } from '~/constants/media'
+import { AUDIO, IMAGE } from '~/constants/media'
 import { isMinScreen } from '~/composables/use-media-query'
 import {
   useMatchSearchRoutes,
   useMatchHomeRoute,
 } from '~/composables/use-match-routes'
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
-import { i18nResultsCount } from '~/composables/use-i18n-utilities'
+import { useI18nResultsCount } from '~/composables/use-i18n-utilities'
 
 import closeIcon from '~/assets/icons/close.svg'
 import OpenverseLogoText from '~/assets/icons/openverse-logo-text.svg?inline'
@@ -166,7 +166,7 @@ const VHeader = defineComponent({
 
     /** @type {import('@nuxtjs/composition-api').ComputedRef<number>} */
     const resultsCount = computed(() => store.getters['media/resultCount'])
-
+    const { getI18nCount } = useI18nResultsCount()
     /**
      * Status is hidden below the medium breakpoint.
      * It shows Loading... or Number of results on bigger screens.
@@ -180,7 +180,7 @@ const VHeader = defineComponent({
       )
         return ''
       if (isFetching.value) return i18n.t('header.loading')
-      return i18nResultsCount(resultsCount.value, ALL_MEDIA)
+      return getI18nCount(resultsCount.value)
     }
 
     const searchStatus = ref(setStatus())
