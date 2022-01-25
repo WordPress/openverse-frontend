@@ -22,19 +22,21 @@
     </figure>
 
     <section
-      class="flex flex-row flex-wrap justify-between md:flex-row-reverse"
+      id="title-button"
+      class="flex flex-row md:flex-row-reverse flex-wrap justify-between md:mt-8"
     >
       <VButton
         as="a"
-        class="btn-main w-full mb-4 md:w-auto md:mb-0 font-bold"
         :href="image.foreign_landing_url"
         target="blank"
         rel="noopener noreferrer"
+        class="btn-main flex-initial w-full md:w-max mb-4 md:mb-0"
+        size="large"
         @click="onSourceLinkClicked"
         @keyup.enter="onSourceLinkClicked"
         >{{ $t('image-details.weblink') }}</VButton
       >
-      <span>
+      <span class="flex-1">
         <h1 class="text-base md:text-3xl">
           {{ image.title }}
         </h1>
@@ -185,6 +187,10 @@ export default VImageDetailsPage
 <style scoped>
 section,
 aside {
-  @apply px-6 mb-10 md:px-16 md:my-16 md:max-w-screen-lg lg:mx-auto;
+  @apply px-6 md:px-16 mb-10 md:mb-16 md:max-w-screen-lg lg:mx-auto;
+}
+
+.btn-main {
+  @apply py-3 md:py-4 md:px-6 text-sr md:text-2xl font-semibold;
 }
 </style>
