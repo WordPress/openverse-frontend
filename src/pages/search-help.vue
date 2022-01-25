@@ -262,7 +262,7 @@ const SearchHelpPage = {
   },
   head() {
     return {
-      title: `Search guide - Openverse`,
+      title: `${this.$t('search-guide.title')} - ${this.$t('hero.brand')}`,
     }
   },
 }

@@ -192,7 +192,7 @@ const SourcePage = {
   },
   head() {
     return {
-      title: `Sources - Openverse`,
+      title: `${this.$t('sources.title')} - ${this.$t('hero.brand')}`,
     }
   },
 }

@@ -81,7 +81,7 @@ const PhotoDetailPage = {
   head() {
     const title = this.image.title
     return {
-      title: `${title} - Openverse`,
+      title: `${title} - ${this.$t('hero.brand')}`,
     }
   },
 }

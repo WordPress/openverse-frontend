@@ -83,7 +83,7 @@ export const FeedbackPage = {
   },
   head() {
     return {
-      title: `Feedback - Openverse`,
+      title: `${this.$t('feedback.title')} - ${this.$t('hero.brand')}`,
     }
   },
   methods: {

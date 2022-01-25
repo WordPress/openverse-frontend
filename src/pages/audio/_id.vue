@@ -90,7 +90,7 @@ const AudioDetailPage = {
   head() {
     const title = this.audio.title
     return {
-      title: `${title} - Openverse`,
+      title: `${title} - ${this.$t('hero.brand')}`,
     }
   },
 }
