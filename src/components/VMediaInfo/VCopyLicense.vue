@@ -14,7 +14,7 @@
         class="px-6 py-4 border-t border-x rounded-sm bg-white z-10 font-bold relative pb-[.625rem]"
         :class="[
           activeTab === tab
-            ? 'border-t-dark-charcoal-20 border-x-dark-charcoal-20'
+            ? 'border-t-dark-charcoal-20 border-x-dark-charcoal-20 -mb-0.5'
             : 'border-b-tx border-t-tx border-x-tx',
         ]"
         @click.prevent="setActiveTab(tab)"
