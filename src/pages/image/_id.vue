@@ -10,12 +10,12 @@
       {{ $t('image-details.back') }}
     </a>
 
-    <figure class="w-full mb-4 px-6 bg-dark-charcoal-06">
+    <figure class="w-full mb-4 pt-4 md:pt-8 px-6 bg-dark-charcoal-06">
       <img
         id="main-image"
         :src="image.url"
         :alt="image.title"
-        class="max-h-[90vh] md:mx-auto"
+        class="max-h-[90vh] md:mx-auto rounded-t-sm"
         @load="onImageLoaded"
       />
       <!-- TODO: Add SketchFabViewer -->
