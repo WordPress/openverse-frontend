@@ -24,6 +24,8 @@ describe('i18nResultsCount in a component', () => {
     resultCount | mediaType | expectedText
     ${0}        | ${IMAGE}  | ${'No image results'}
     ${0}        | ${AUDIO}  | ${'No audio results'}
+    ${1}        | ${IMAGE}  | ${'1 image result'}
+    $10}        | ${AUDIO}  | ${'1 audio result'}
     ${10}       | ${IMAGE}  | ${'10 image results'}
     ${10}       | ${AUDIO}  | ${'10 audio results'}
     ${10000}    | ${IMAGE}  | ${'Over 10,000 image results'}
