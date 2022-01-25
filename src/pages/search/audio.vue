@@ -46,14 +46,14 @@ const AudioSearch = defineComponent({
   props: propTypes,
   setup(props) {
     const store = useStore()
+    const { i18n } = useContext()
 
     const query = computed(() => store.state.search.query.q)
-    useMeta({ title: `${query.value} - ${this.$t('hero.brand')}` })
+    useMeta({ title: `${query.value} - ${i18n.t('hero.brand')}` })
 
     const results = computed(() =>
       Object.values(props.mediaResults?.audio?.items ?? [])
     )
-    const { i18n } = useContext()
     const isMinScreenMd = isMinScreen('md', { shouldPassInSSR: false })
     const audioTrackSize = computed(() => {
       return !isMinScreenMd.value ? 's' : props.isFilterVisible ? 'l' : 'm'
