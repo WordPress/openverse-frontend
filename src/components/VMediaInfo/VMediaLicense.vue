@@ -1,6 +1,6 @@
 <template>
   <div class="media-attribution">
-    <h5 class="mb-4 md:text-2xl">
+    <h5 class="mb-4 text-base md:text-2xl font-semibold">
       {{ headerText }}
     </h5>
     <template v-if="isLicense">

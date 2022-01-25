@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h5 class="mb-4 md:text-2xl">
+    <h5 class="mb-4 text-base md:text-2xl font-semibold">
       {{ $t('media-details.reuse.copy-license.title') }}
     </h5>
 
@@ -11,7 +11,7 @@
         role="tab"
         :aria-controls="`tab-${tab}`"
         :aria-selected="activeTab === tab"
-        class="px-6 py-4 border-t border-x rounded-sm bg-white z-10 font-bold relative pb-[.625rem]"
+        class="py-3 md:py-4 px-4 md:px-6 border-t border-x rounded-sm bg-white font-bold relative pb-[.625rem]"
         :class="[
           activeTab === tab
             ? 'border-t-dark-charcoal-20 border-x-dark-charcoal-20 -mb-0.5'
@@ -31,7 +31,7 @@
       :aria-labelledby="tab"
       role="tabpanel"
       tabindex="0"
-      class="border border-dark-charcoal-20 p-6 font-sm"
+      class="border border-dark-charcoal-20 p-4 md:p-6 font-sm"
       :class="{ hidden: activeTab !== tab }"
     >
       <i18n
