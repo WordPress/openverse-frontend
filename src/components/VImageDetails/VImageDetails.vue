@@ -6,7 +6,12 @@
       </h3>
       <span
         class="flex flex-row justify-end items-center text-sr text-dark-charcoal-70 font-semibold"
-        >{{ $t('image-details.report.short') }} <FlagSvg class="ms-2"
+      >
+        <span class="hidden md:inline">{{
+          $t('image-details.report.large')
+        }}</span>
+        <span class="md:hidden">{{ $t('image-details.report.short') }}</span>
+        <FlagSvg class="ms-2"
       /></span>
     </div>
     <dl>
@@ -101,10 +106,10 @@ dl {
 
 dt,
 dd {
-  @apply text-sm;
+  @apply text-sm md:text-base;
 }
 
 dd {
-  @apply font-bold mt-2 md:text-base;
+  @apply font-bold mt-2;
 }
 </style>
