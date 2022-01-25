@@ -31,6 +31,7 @@ const VMediaReuse = defineComponent({
   props: {
     media: {
       type: Object,
+      required: true,
     },
   },
   setup(props) {
