@@ -18,7 +18,7 @@
 <script>
 import { computed, defineComponent } from '@nuxtjs/composition-api'
 import { useI18nResultsCount } from '~/composables/use-i18n-utilities'
-import { AUDIO, IMAGE, supportedMediaTypes } from '~/constants/media'
+import { AUDIO, IMAGE, supportedContentTypes } from '~/constants/media'
 import VIcon from '~/components/VIcon/VIcon.vue'
 
 import audioIcon from '~/assets/icons/audio-wave.svg'
@@ -39,7 +39,7 @@ export default defineComponent({
     mediaType: {
       type: String,
       required: true,
-      validator: (val) => supportedMediaTypes.includes(val),
+      validator: (val) => supportedContentTypes.includes(val),
     },
     /**
      * The number of results that the search returned.
