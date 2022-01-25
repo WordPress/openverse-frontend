@@ -7,7 +7,7 @@
       <i18n
         path="media-details.reuse.attribution"
         tag="span"
-        class="block text-sm"
+        class="block text-sm md:text-base"
       >
         <template #link>
           <a
@@ -20,7 +20,7 @@
           </a>
         </template>
       </i18n>
-      <LicenseElements :license="license" />
+      <LicenseElements :license="license" class="md:py-4" />
       <i18n
         v-if="!isLicense"
         path="media-details.reuse.license.content"
@@ -40,7 +40,7 @@
       </i18n>
     </template>
     <template v-else>
-      <LicenseElements :license="license" />
+      <LicenseElements :license="license" class="md:py-4" />
       <i18n
         path="media-details.reuse.tool.content"
         tag="span"

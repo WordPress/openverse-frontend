@@ -1,6 +1,6 @@
 <template>
   <div v-if="license">
-    <ul class="my-2">
+    <ul>
       <li
         v-for="(li, index) in splitLicenses"
         :key="index"
