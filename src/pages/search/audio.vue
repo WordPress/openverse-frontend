@@ -22,7 +22,13 @@
 </template>
 
 <script>
-import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
+import {
+  computed,
+  defineComponent,
+  useContext,
+  useMeta,
+  useStore,
+} from '@nuxtjs/composition-api'
 import { useLoadMore } from '~/composables/use-load-more'
 
 import VAudioTrack from '~/components/VAudioTrack/VAudioTrack.vue'
@@ -39,6 +45,11 @@ const AudioSearch = defineComponent({
   },
   props: propTypes,
   setup(props) {
+    const store = useStore()
+
+    const query = computed(() => store.state.search.query.q)
+    useMeta({ title: `${query.value} - Openverse` })
+
     const results = computed(() =>
       Object.values(props.mediaResults?.audio?.items ?? [])
     )
@@ -66,6 +77,7 @@ const AudioSearch = defineComponent({
       onLoadMore,
     }
   },
+  head: {},
 })
 export default AudioSearch
 </script>
