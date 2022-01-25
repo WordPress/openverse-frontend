@@ -24,7 +24,7 @@
         v-if="filterType === 'licenses'"
         :ref="`${item.code}licenseIcon`"
         :aria-label="$t('browse-page.aria.license-explanation')"
-        class="appearance-none"
+        class="text-dark-charcoal-70 appearance-none"
         type="button"
         @click.stop="toggleLicenseExplanationVisibility(item.code)"
       >
