@@ -78,6 +78,12 @@ const PhotoDetailPage = {
       })
     },
   },
+  head() {
+    const title = this.image.title
+    return {
+      title: `${title} - Openverse`,
+    }
+  },
 }
 
 export default PhotoDetailPage
