@@ -6,7 +6,7 @@
       :href="breadcrumbUrl"
       @click.prevent="$router.back()"
     >
-      <Chevron class="-ml-2" />
+      <Chevron class="-ms-2" />
       {{ $t('image-details.back') }}
     </a>
 
