@@ -172,20 +172,12 @@ export default {
     ],
     lazy: true,
     langDir: 'locales',
-    strategy: 'no_prefix',
     defaultLocale: 'en',
     /**
      * This section is critical for the current, iframed production environment
      * {@link https://i18n.nuxtjs.org/options-reference/#detectbrowserlanguage}
      * */
-    detectBrowserLanguage: {
-      useCookie: true,
-      cookieKey: 'i18n_redirected',
-      alwaysRedirect: true,
-      cookieCrossOrigin: true,
-      cookieSecure: true,
-    },
-    baseUrl: 'http://localhost:8443',
+    detectBrowserLanguage: false,
     vueI18n: '~/plugins/vue-i18n.js',
   },
   /**
