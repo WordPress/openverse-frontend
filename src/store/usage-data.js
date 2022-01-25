@@ -12,39 +12,52 @@ const disabled = !stringToBoolean(process.env.enableInternalAnalytics)
 /**
  * Catch api event failures, mainly to prevent SSR errors on test domains that cannot communicate with our API server.
  * Alternatively, just disable internal analytics on those servers with ENABLE_INTERNAL_ANALYTICS=true in the environment.
+ * @param {string} eventName
+ * @param {import('vue').default} context
  */
-const handleUsageEvent = (eventName) => (promise) =>
+const handleUsageEvent = (eventName, context) => (promise) =>
   promise.catch((error) =>
-    console.error({
-      message: `Failed to execute api event: ${eventName}.`,
-      error,
-    })
+    context
+      .$sentryReady()
+      .then((sentry) =>
+        sentry.captureException(error, (scope) =>
+          scope.setTag('eventName', eventName)
+        )
+      )
   )
 
+/**
+ *
+ * @param {typeof UsageDataService} usageDataService
+ */
 export const createActions = (usageDataService) => ({
-  async [SEND_SEARCH_QUERY_EVENT](context, params) {
+  [SEND_SEARCH_QUERY_EVENT](context, params) {
     if (disabled) return
-    await handleUsageEvent(SEND_SEARCH_QUERY_EVENT)(
-      usageDataService.sendSearchQueryEvent(params)
-    )
+    handleUsageEvent(
+      SEND_SEARCH_QUERY_EVENT,
+      this
+    )(usageDataService.sendSearchQueryEvent(params))
   },
-  async [SEND_RESULT_CLICKED_EVENT](context, params) {
+  [SEND_RESULT_CLICKED_EVENT](context, params) {
     if (disabled) return
-    await handleUsageEvent(SEND_RESULT_CLICKED_EVENT)(
-      usageDataService.sendResultClickedEvent(params)
-    )
+    handleUsageEvent(
+      SEND_RESULT_CLICKED_EVENT,
+      this
+    )(usageDataService.sendResultClickedEvent(params))
   },
-  async [SEND_SEARCH_RATING_EVENT](context, params) {
+  [SEND_SEARCH_RATING_EVENT](context, params) {
     if (disabled) return
-    await handleUsageEvent(SEND_SEARCH_RATING_EVENT)(
-      usageDataService.sendSearchRatingEvent(params)
-    )
+    handleUsageEvent(
+      SEND_SEARCH_RATING_EVENT,
+      this
+    )(usageDataService.sendSearchRatingEvent(params))
   },
-  async [SEND_DETAIL_PAGE_EVENT](context, params) {
+  [SEND_DETAIL_PAGE_EVENT](context, params) {
     if (disabled) return
-    await handleUsageEvent(SEND_DETAIL_PAGE_EVENT)(
-      usageDataService.sendDetailPageEvent(params)
-    )
+    handleUsageEvent(
+      SEND_DETAIL_PAGE_EVENT,
+      this
+    )(usageDataService.sendDetailPageEvent(params))
   },
 })
 
