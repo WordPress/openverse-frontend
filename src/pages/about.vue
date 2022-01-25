@@ -98,6 +98,11 @@
 <script>
 const AboutPage = {
   name: 'about-page',
+  head() {
+    return {
+      title: `About - Openverse`,
+    }
+  },
 }
 
 export default AboutPage

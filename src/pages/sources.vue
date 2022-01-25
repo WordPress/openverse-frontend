@@ -190,6 +190,11 @@ const SourcePage = {
       this.sort = { direction, field }
     },
   },
+  head() {
+    return {
+      title: `Sources - Openverse`,
+    }
+  },
 }
 
 export default SourcePage

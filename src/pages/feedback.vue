@@ -81,6 +81,11 @@ export const FeedbackPage = {
       },
     }
   },
+  head() {
+    return {
+      title: `Feedback - Openverse`,
+    }
+  },
   methods: {
     tabClass(tabIdx, tabClass) {
       return {

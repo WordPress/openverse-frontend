@@ -86,6 +86,11 @@ const AboutPage = {
       isPlaying: true,
     }
   },
+  head() {
+    return {
+      title: `Web extension - Openverse`,
+    }
+  },
   methods: {
     togglePlay() {
       if (this.isPlaying) {

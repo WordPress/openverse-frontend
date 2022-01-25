@@ -118,6 +118,11 @@
 <script>
 export default {
   name: 'MetaSearchPage',
+  head() {
+    return {
+      title: `Meta Search - Openverse`,
+    }
+  },
 }
 </script>
 

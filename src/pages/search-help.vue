@@ -260,6 +260,11 @@ const SearchHelpPage = {
       return `https://search.creativecommons.org/search?q=provider%3A%20"${providerCode}"`
     },
   },
+  head() {
+    return {
+      title: `Search guide - Openverse`,
+    }
+  },
 }
 
 export default SearchHelpPage
