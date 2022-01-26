@@ -29,7 +29,7 @@
         {{ $t('photo-details.legal-disclaimer') }}
       </p>
 
-      <VPopover z-pos="20">
+      <VPopover ref="reportPopoverRef" :z-pos="20">
         <template #trigger>
           <VButton
             variant="action-button"
@@ -211,6 +211,7 @@ export default {
     const sketchFabfailure = ref(false)
     const activeTab = ref(0)
     const isReportFormVisible = ref(false)
+    const reportPopoverRef = ref(null)
 
     const imgUrl = computed(() => {
       return isLoaded.value ? props.image.url : props.thumbnail
@@ -254,8 +255,16 @@ export default {
     }
     const setActiveTab = (tabIdx) => (activeTab.value = tabIdx)
 
-    const onCloseReportForm = () => (isReportFormVisible.value = false)
+    const onCloseReportForm = () => {
+      isReportFormVisible.value = false
+      if (reportPopoverRef.value) {
+        reportPopoverRef.value?.close()
+      }
+    }
     const toggleReportFormVisibility = () => {
+      if (isReportFormVisible.value && reportPopoverRef.value) {
+        reportPopoverRef.value?.close()
+      }
       isReportFormVisible.value = !isReportFormVisible.value
     }
 
@@ -302,6 +311,7 @@ export default {
       setActiveTab,
 
       providerName,
+      reportPopoverRef,
     }
   },
 }
