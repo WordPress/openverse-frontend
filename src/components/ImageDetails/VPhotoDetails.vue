@@ -29,7 +29,11 @@
         {{ $t('photo-details.legal-disclaimer') }}
       </p>
 
-      <VPopover ref="reportPopoverRef" :z-pos="20">
+      <VPopover
+        ref="reportPopoverRef"
+        :z-pos="20"
+        :aria-label="$t('photo-details.content-report.title')"
+      >
         <template #trigger>
           <VButton
             variant="action-button"
