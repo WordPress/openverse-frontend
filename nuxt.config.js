@@ -207,6 +207,7 @@ export default {
       plugins: {
         tailwindcss: {},
         autoprefixer: {},
+        'postcss-focus-visible': {},
       },
     },
     // Enables use of IDE debuggers

@@ -42,6 +42,8 @@
 </template>
 
 <script>
+import '~/utils/safe-focus-visible-polyfill'
+
 import {
   defineComponent,
   ref,
