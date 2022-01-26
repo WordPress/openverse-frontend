@@ -104,6 +104,10 @@ export default defineComponent({
      * @default undefined
      */
     labelledBy: { type: String },
+    /**
+     * the z-index to apply to the popover content
+     */
+    zPos: { type: Number },
   },
   emits: [
     /**
