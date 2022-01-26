@@ -29,23 +29,29 @@
         {{ $t('photo-details.legal-disclaimer') }}
       </p>
 
-      <VButton
-        variant="action-button"
-        size="disabled"
-        class="report py-2 mt-2"
-        @click="reportForm.toggleVisibility"
-      >
-        {{ $t('photo-details.content-report.title') }}
-        <VIcon :icon-path="icons.flag" class="text-trans-blue ms-2 text-sm" />
-      </VButton>
-      <VContentReportForm
-        v-if="isReportFormVisible"
-        :image="image"
-        :provider-name="providerName"
-        data-testid="content-report-form"
-        class="mt-2 text-left"
-        @close-form="reportForm.close()"
-      />
+      <VPopover z-pos="20">
+        <template #trigger>
+          <VButton
+            variant="action-button"
+            size="disabled"
+            class="report py-2 mt-2"
+            @click="reportForm.toggleVisibility"
+          >
+            {{ $t('photo-details.content-report.title') }}
+            <VIcon
+              :icon-path="icons.flag"
+              class="text-trans-blue ms-2 text-sm"
+            />
+          </VButton>
+        </template>
+        <VContentReportForm
+          :image="image"
+          :provider-name="providerName"
+          data-testid="content-report-form"
+          class="mt-2 text-left w-80 whitespace-normal"
+          @close-form="reportForm.close()"
+        />
+      </VPopover>
     </div>
     <div
       role="region"
@@ -176,6 +182,7 @@ import VContentReportForm from '~/components/VContentReport/VContentReportForm.v
 import SketchFabViewer from '~/components/SketchFabViewer.vue'
 import ImageInfo from '~/components/ImageDetails/ImageInfo.vue'
 import ImageAttribution from '~/components/ImageDetails/ImageAttribution.vue'
+import VPopover from '~/components/VPopover/VPopover.vue'
 
 export default {
   name: 'VPhotoDetails',
@@ -187,6 +194,7 @@ export default {
     VButton,
     VIcon,
     VContentReportForm,
+    VPopover,
   },
   props: [
     'image',
