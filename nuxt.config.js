@@ -123,6 +123,7 @@ export default {
     { src: '~/plugins/url-change.js' },
     { src: '~/plugins/migration-notice.js' },
     { src: '~/plugins/ua-parse.js' },
+    { src: '~/plugins/focus-visible', mode: 'client' },
   ],
   css: [
     '~/styles/tailwind.css',

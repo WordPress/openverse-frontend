@@ -15,8 +15,6 @@
   </div>
 </template>
 <script>
-import '~/utils/safe-focus-visible-polyfill'
-
 import iframeHeight from '~/mixins/iframe-height'
 
 import { NAV } from '~/constants/store-modules'
