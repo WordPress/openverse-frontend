@@ -41,6 +41,7 @@ export const propTypes = {
   },
   zPos: {
     type: Number,
+    default: 20,
   },
 }
 

@@ -17,6 +17,7 @@
       />
     </div>
     <VPopoverContent
+      :z-pos="zPos"
       :visible="visibleRef"
       :trigger-element="triggerRef"
       :placement="placement"
@@ -132,11 +133,7 @@ export default defineComponent({
     const triggerRef = computed(() => triggerContainerRef.value?.firstChild)
 
     watch([visibleRef], ([visible]) => {
-      if (visible) {
-        triggerA11yProps['aria-expanded'] = true
-      } else {
-        triggerA11yProps['aria-expanded'] = false
-      }
+      triggerA11yProps['aria-expanded'] = visible
     })
 
     const open = () => {
