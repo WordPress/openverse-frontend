@@ -873,7 +873,7 @@ msgstr ""
 
 #: src/components/VFilters/VSearchGridFilter.vue:14
 msgctxt "filter-list.filter-by"
-msgid "Filter results by"
+msgid "Filter by"
 msgstr ""
 
 msgctxt "filter-list.hide"
@@ -964,7 +964,7 @@ msgid "Enable Mature Content"
 msgstr ""
 
 msgctxt "filters.sizes.title"
-msgid "Image Size"
+msgid "Image size"
 msgstr ""
 
 msgctxt "filters.sizes.small"
@@ -980,7 +980,7 @@ msgid "Large"
 msgstr ""
 
 msgctxt "filters.aspect-ratios.title"
-msgid "Aspect Ratio"
+msgid "Aspect ratio"
 msgstr ""
 
 msgctxt "filters.aspect-ratios.tall"
@@ -996,7 +996,7 @@ msgid "Square"
 msgstr ""
 
 msgctxt "filters.image-extensions.title"
-msgid "File Type"
+msgid "File type"
 msgstr ""
 
 msgctxt "filters.image-extensions.jpg"
@@ -1016,7 +1016,7 @@ msgid "SVGs"
 msgstr ""
 
 msgctxt "filters.audio-extensions.title"
-msgid "File Type"
+msgid "File type"
 msgstr ""
 
 msgctxt "filters.audio-extensions.mp3"
@@ -1032,7 +1032,7 @@ msgid "FLACs"
 msgstr ""
 
 msgctxt "filters.image-categories.title"
-msgid "Image Type"
+msgid "Image type"
 msgstr ""
 
 msgctxt "filters.image-categories.photograph"
@@ -1048,7 +1048,7 @@ msgid "Digitized Artworks"
 msgstr ""
 
 msgctxt "filters.audio-categories.title"
-msgid "Audio Category"
+msgid "Audio category"
 msgstr ""
 
 msgctxt "filters.audio-categories.music"
@@ -1084,7 +1084,7 @@ msgid "Modify or adapt"
 msgstr ""
 
 msgctxt "filters.licenses.title"
-msgid "License or Public Domain"
+msgid "Licenses"
 msgstr ""
 
 msgctxt "filters.licenses.cc0"
