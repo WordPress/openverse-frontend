@@ -34,11 +34,11 @@
         :z-pos="20"
         :aria-label="$t('photo-details.content-report.title')"
       >
-        <template #trigger>
+        <template #trigger="{ a11yProps }">
           <VButton
-            variant="action-button"
-            size="disabled"
-            class="report py-2 mt-2"
+            v-bind="a11yProps"
+            variant="plain"
+            class="mt-2"
             @click="reportForm.toggleVisibility"
           >
             {{ $t('photo-details.content-report.title') }}
