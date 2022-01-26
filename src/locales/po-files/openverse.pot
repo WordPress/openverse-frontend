@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-01-26T07:59:16+00:00\n"
+"POT-Creation-Date: 2022-01-26T10:18:21+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -47,6 +47,14 @@ msgstr ""
 #: src/components/VContentSwitcher/VContentItem.vue:13
 msgctxt "search-type.status-beta"
 msgid "Beta"
+msgstr ""
+
+msgctxt "search-type.see-image"
+msgid "See all images"
+msgstr ""
+
+msgctxt "search-type.see-audio"
+msgid "See all audio"
 msgstr ""
 
 #: src/components/VModal/VMobileModalContent.vue:30
@@ -354,12 +362,12 @@ msgid "Back to search results"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/ImageDetails/VPhotoDetails.vue:63
+#: src/components/ImageDetails/VPhotoDetails.vue:57
 msgctxt "photo-details.creator"
 msgid "by ###name###"
 msgstr ""
 
-#: src/components/ImageDetails/VPhotoDetails.vue:150
+#: src/components/ImageDetails/VPhotoDetails.vue:144
 msgctxt "photo-details.weblink"
 msgid "Go to image's website"
 msgstr ""
@@ -384,7 +392,7 @@ msgctxt "photo-details.aria.dmca"
 msgid "dmca form"
 msgstr ""
 
-#: src/components/ImageDetails/VPhotoDetails.vue:58
+#: src/components/ImageDetails/VPhotoDetails.vue:52
 msgctxt "photo-details.aria.details"
 msgid "image details"
 msgstr ""
@@ -406,7 +414,7 @@ msgid "###provider### form"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/ImageDetails/VPhotoDetails.vue:73
+#: src/components/ImageDetails/VPhotoDetails.vue:67
 msgctxt "photo-details.aria.creator-url"
 msgid "author ###creator###"
 msgstr ""
@@ -419,7 +427,7 @@ msgctxt "photo-details.aria.attribution.tool"
 msgid "read more about the tool"
 msgstr ""
 
-#: src/components/ImageDetails/VPhotoDetails.vue:40
+#: src/components/ImageDetails/VPhotoDetails.vue:38
 msgctxt "photo-details.content-report.title"
 msgid "Report this content"
 msgstr ""
@@ -528,7 +536,7 @@ msgctxt "photo-details.survey.answer"
 msgid "by answering a few questions."
 msgstr ""
 
-#: src/components/ImageDetails/VPhotoDetails.vue:106
+#: src/components/ImageDetails/VPhotoDetails.vue:100
 msgctxt "photo-details.information.title"
 msgid "Information"
 msgstr ""
@@ -567,7 +575,7 @@ msgctxt "photo-details.information.pixels"
 msgid "pixels"
 msgstr ""
 
-#: src/components/ImageDetails/VPhotoDetails.vue:95
+#: src/components/ImageDetails/VPhotoDetails.vue:89
 msgctxt "photo-details.reuse.title"
 msgid "Reuse"
 msgstr ""
@@ -1137,30 +1145,6 @@ msgctxt "filters.licenses.by-nc-nd"
 msgid "BY-NC-ND"
 msgstr ""
 
-msgctxt "search-tab.all"
-msgid "All"
-msgstr ""
-
-msgctxt "search-tab.image"
-msgid "Images"
-msgstr ""
-
-msgctxt "search-tab.audio"
-msgid "Audio"
-msgstr ""
-
-msgctxt "search-tab.video"
-msgid "Video"
-msgstr ""
-
-msgctxt "search-tab.see-image"
-msgid "See all images"
-msgstr ""
-
-msgctxt "search-tab.see-audio"
-msgid "See all audio"
-msgstr ""
-
 msgctxt "error.occurred"
 msgid "An error occurred"
 msgstr ""
@@ -1183,23 +1167,6 @@ msgstr ""
 
 msgctxt "error.audio"
 msgid "audio"
-msgstr ""
-
-msgctxt "collections.title"
-msgid "Browse collections"
-msgstr ""
-
-msgctxt "collections.museum"
-msgid "Museum Collections"
-msgstr ""
-
-msgctxt "collections.other"
-msgid "Other Collections"
-msgstr ""
-
-#. Do not translate words between ### ###.
-msgctxt "collections.collection-size"
-msgid "Collection size: ###count### images"
 msgstr ""
 
 #: src/pages/extension.vue:91
@@ -2085,14 +2052,6 @@ msgctxt "header.aria.sr-search"
 msgid "search button"
 msgstr ""
 
-msgctxt "notification.dismiss"
-msgid "Dismiss"
-msgstr ""
-
-msgctxt "notification.okay"
-msgid "OK"
-msgstr ""
-
 #. Do not translate words between ### ###.
 #: src/components/TranslationStatusBanner.vue:7
 msgctxt "notification.translation.text"
@@ -2109,38 +2068,14 @@ msgctxt "hero.brand"
 msgid "Openverse"
 msgstr ""
 
-msgctxt "hero.title"
-msgid "Search for content to reuse"
-msgstr ""
-
 #: src/pages/index.vue:21
 msgctxt "hero.subtitle"
 msgid "Browse through over 600 million items to reuse"
 msgstr ""
 
-msgctxt "hero.search-type.audio"
-msgid "Audio"
-msgstr ""
-
-msgctxt "hero.search-type.image"
-msgid "Images"
-msgstr ""
-
-msgctxt "hero.search-type.prompt"
-msgid "I would like to find:"
-msgstr ""
-
-msgctxt "hero.search-type.all"
-msgid "All"
-msgstr ""
-
 #: src/components/VHeader/VSearchBar/VSearchBar.vue:9
 msgctxt "hero.aria.search"
 msgid "search"
-msgstr ""
-
-msgctxt "hero.aria.caption"
-msgid "about cc licenses"
 msgstr ""
 
 msgctxt "hero.aria.search-type"
@@ -2174,10 +2109,6 @@ msgstr ""
 #: src/pages/index.vue:26
 msgctxt "hero.search.placeholder"
 msgid "Search for content"
-msgstr ""
-
-msgctxt "hero.search.button"
-msgid "Search"
 msgstr ""
 
 #: src/layouts/error.vue:18
