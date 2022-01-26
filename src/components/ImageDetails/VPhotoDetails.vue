@@ -31,7 +31,7 @@
 
       <VPopover
         ref="reportPopoverRef"
-        :z-pos="20"
+        :z-index="20"
         :aria-label="$t('photo-details.content-report.title')"
       >
         <template #trigger="{ a11yProps }">

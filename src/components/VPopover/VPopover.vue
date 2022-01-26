@@ -17,7 +17,7 @@
       />
     </div>
     <VPopoverContent
-      :z-pos="zPos"
+      :z-index="zIndex"
       :visible="visibleRef"
       :trigger-element="triggerRef"
       :placement="placement"
@@ -108,7 +108,7 @@ export default defineComponent({
     /**
      * the z-index to apply to the popover content
      */
-    zPos: { type: Number },
+    zIndex: { type: Number },
   },
   emits: [
     /**

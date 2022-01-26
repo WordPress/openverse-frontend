@@ -39,9 +39,8 @@ export const propTypes = {
     default: 'bottom-end',
     validate: (v) => popoverPlacements.includes(v),
   },
-  zPos: {
+  zIndex: {
     type: Number,
-    default: 20,
   },
 }
 
