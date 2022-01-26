@@ -6,6 +6,7 @@ import {
 } from '~/constants/usage-data-analytics-types'
 import stringToBoolean from '~/utils/string-to-boolean'
 import UsageDataService from '~/data/usage-data-service'
+import { sentry as sentryConfig } from '~/utils/sentry-config'
 
 const disabled = !stringToBoolean(process.env.enableInternalAnalytics)
 
@@ -16,13 +17,16 @@ const disabled = !stringToBoolean(process.env.enableInternalAnalytics)
  * @param {import('vue').default} context
  */
 const handleUsageEvent = (eventName, context) => (promise) =>
-  promise.catch((error) =>
-    context.$sentryReady().then((sentry) =>
-      sentry.captureException(error, (scope) => {
-        scope.setTag('event_name', eventName)
-        scope.setTag('request_url', error.config.url)
-      })
-    )
+  promise.catch(
+    (error) =>
+      // $sentryReady won't exist if sentry has been disabled
+      !sentryConfig.disabled &&
+      context.$sentryReady().then((sentry) =>
+        sentry.captureException(error, (scope) => {
+          scope.setTag('event_name', eventName)
+          scope.setTag('request_url', error.config.url)
+        })
+      )
   )
 
 /**
@@ -37,7 +41,7 @@ export const createActions = (usageDataService) => ({
       this
     )(usageDataService.sendSearchQueryEvent(params))
   },
-  [SEND_RESULT_CLICKED_EVENT](context, params) {
+  async [SEND_RESULT_CLICKED_EVENT](context, params) {
     if (disabled) return
     handleUsageEvent(
       SEND_RESULT_CLICKED_EVENT,
