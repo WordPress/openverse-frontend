@@ -1,8 +1,8 @@
 <template>
   <header
-    class="flex py-4 px-4 md:px-7 items-stretch z-40 w-full bg-white md:gap-x-2 gap-y-4"
+    class="flex py-4 px-4 md:px-7 items-stretch z-40 w-full bg-white gap-x-2 gap-y-4"
     :class="{
-      'flex-wrap': isSearchRoute,
+      'flex-wrap md:flex-nowrap': isSearchRoute,
       'border-b border-white': !isHeaderScrolled && !isMenuOpen,
       'border-b border-dark-charcoal-20':
         isSearchRoute && (isHeaderScrolled || isMenuOpen),
@@ -10,7 +10,7 @@
       'justify-start': !isSearchRoute,
     }"
   >
-    <div class="items-stretch flex" :class="{ 'one-third': isSearchRoute }">
+    <div class="items-stretch flex">
       <NuxtLink
         to="/"
         class="rounded-sm ring-offset-1 focus:outline-none focus-visible:ring focus-visible:ring-pink -ms-2 inline-flex items-center hover:bg-yellow mr-auto"
@@ -33,12 +33,12 @@
     <VSearchBar
       v-show="!isHomeRoute"
       v-model.trim="searchTerm"
-      class="md:ms-0 lg:w-1/2 2xl:w-1/3"
+      class="md:w-full lg:w-1/2 2xl:w-1/3"
       :class="{
         'order-4 md:order-none w-full md:w-auto':
           isSearchRoute && !isHeaderScrolled,
-        'mx-auto md:me-auto': isSearchRoute,
-        'w-2/3': isHeaderScrolled,
+        'md:me-auto': isSearchRoute,
+        'search-bar-mobile-scrolled': isSearchRoute && isHeaderScrolled,
       }"
       @submit="handleSearch"
     >
@@ -52,14 +52,12 @@
 
     <VHeaderMenu
       :is-search-route="isSearchRoute"
-      :class="{ 'one-third': isSearchRoute }"
       @open="openMenuModal(menus.CONTENT_SWITCHER)"
       @close="close()"
     />
     <VHeaderFilter
       v-if="isSearchRoute"
       class="text-sr md:text-base"
-      :class="{ 'one-third': isSearchRoute }"
       @open="openMenuModal(menus.FILTERS)"
       @close="close()"
     />
@@ -313,9 +311,9 @@ export default VHeader
 </script>
 <style scoped>
 @media (max-width: 767px) {
-  .one-third {
-    flex-grow: 1;
-    flex-shrink: 0;
+  .search-bar-mobile-scrolled {
+    /* outer padding, inner gaps, logo, content switcher and filter button */
+    width: calc(100vw - 48px - 16px - 3 * 48px);
   }
 }
 </style>
