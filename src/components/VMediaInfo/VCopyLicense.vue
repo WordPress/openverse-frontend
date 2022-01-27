@@ -11,7 +11,7 @@
         role="tab"
         :aria-controls="`tab-${tab}`"
         :aria-selected="activeTab === tab"
-        class="py-3 md:py-4 px-4 md:px-6 border-t border-x rounded-sm bg-white font-bold relative pb-[.625rem]"
+        class="py-3 md:py-4 px-4 md:px-6 border-t border-x rounded-sm bg-white text-sm md:text-base font-semibold relative pb-[.625rem]"
         :class="[
           activeTab === tab
             ? 'border-t-dark-charcoal-20 border-x-dark-charcoal-20 -mb-0.5'
@@ -31,7 +31,7 @@
       :aria-labelledby="tab"
       role="tabpanel"
       tabindex="0"
-      class="border border-dark-charcoal-20 p-4 md:p-6 font-sm"
+      class="border border-dark-charcoal-20 p-4 md:p-6 text-sm md:text-base"
       :class="{ hidden: activeTab !== tab }"
     >
       <i18n

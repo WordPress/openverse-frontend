@@ -37,14 +37,14 @@
         >{{ $t('image-details.weblink') }}</VButton
       >
       <span class="flex-1">
-        <h1 class="text-base md:text-3xl leading-[130%]">
+        <h1 class="text-base md:text-3xl font-semibold leading-[130%]">
           {{ image.title }}
         </h1>
         <i18n
           v-if="image.creator"
           path="image-details.creator"
           tag="span"
-          class="font-bold leading-[130%]"
+          class="font-semibold leading-[130%]"
         >
           <template #name>
             <a
@@ -98,6 +98,7 @@ import Chevron from '~/assets/icons/chevron-left.svg?inline'
 
 const VImageDetailsPage = {
   name: 'VImageDetailsPage',
+  layout: 'blank',
   components: {
     Chevron,
     VButton,
