@@ -313,9 +313,9 @@ export default VHeader
 <style scoped>
 @media (max-width: 767px) {
   .search-bar-mobile-scrolled {
-    /* outer padding, inner gaps, logo, content switcher and filter button */
-    /* Logo width is 42 ??? */
-    width: calc(100vw - 32px - 24px - 3 * 40px);
+    /* outer padding, inner gaps, (logo, content switcher and filter button), additional content switcher padding */
+    /* width: calc(100vw - 2rem - 1.5rem - 3 * 2.5rem - 0.25rem); */
+    width: calc(100vw - 11.25rem);
   }
 }
 </style>

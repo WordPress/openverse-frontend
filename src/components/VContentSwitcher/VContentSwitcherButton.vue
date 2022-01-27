@@ -1,6 +1,6 @@
 <template>
   <VButton
-    class="flex flex-row font-semibold px-2 py-2 text-sr md:text-base"
+    class="flex flex-row font-semibold ps-2 pe-3 py-2 text-sr md:text-base"
     :class="{ 'w-10 h-10': isIconButton }"
     :variant="buttonVariant"
     size="disabled"
