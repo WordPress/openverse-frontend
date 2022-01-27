@@ -2,7 +2,7 @@
   <div>
     <a
       v-if="shouldShowBreadcrumb"
-      class="px-6 py-4 flex flex-row items-center bg-dark-charcoal-06 font-semibold text-xs md:text-sr"
+      class="px-6 pt-4 flex flex-row items-center bg-dark-charcoal-06 font-semibold text-dark-charcoal text-xs md:text-sr"
       :href="breadcrumbUrl"
       @click.prevent="$router.back()"
     >
@@ -57,7 +57,6 @@
               :href="image.creator_url"
               target="blank"
               rel="noopener noreferrer"
-              class="text-pink"
               @click="onCreatorLinkClicked"
               @keyup.enter="onCreatorLinkClicked"
               >{{ image.creator }}</a

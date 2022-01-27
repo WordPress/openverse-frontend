@@ -45,7 +45,6 @@
             :href="media.foreign_landing_url"
             target="_blank"
             rel="noopener"
-            class="text-pink"
             @click="onSourceLinkClicked"
             @keyup.enter="onSourceLinkClicked"
             >{{ media.title }}</a
@@ -63,7 +62,6 @@
                 :href="media.creator_url"
                 target="_blank"
                 rel="noopener"
-                class="text-pink"
                 @click="onCreatorLinkClicked"
                 @keyup.enter="onCreatorLinkClicked"
                 >{{ media.creator }}</a
@@ -81,7 +79,7 @@
         </template>
         <template #license>
           <a
-            class="uppercase text-pink"
+            class="uppercase"
             :href="licenseUrl"
             target="_blank"
             rel="noopener"
