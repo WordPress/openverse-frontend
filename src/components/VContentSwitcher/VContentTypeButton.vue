@@ -6,7 +6,7 @@
     :aria-pressed="selected"
     @click="handleClick"
   >
-    <VIcon :icon-path="iconPath" class="me-2 flex-shrink-0" />
+    <VIcon :icon-path="iconPath" class="me-1 flex-shrink-0" />
     <span>{{ $t(`search-type.${contentType}`) }}</span>
   </button>
 </template>
@@ -41,7 +41,7 @@ export default defineComponent({
     contentType: {
       type: String,
       required: true,
-      validator: (val) => supportedContentTypes.includes(val),
+      validator: (v) => supportedContentTypes.includes(v),
     },
     selected: {
       type: Boolean,
@@ -57,7 +57,7 @@ export default defineComponent({
 </script>
 <style module>
 .button {
-  @apply flex flex-row items-center p-2 rounded-sm text-sr font-semibold bg-tx border border-dark-charcoal  focus-visible:outline-none focus-visible:ring focus-visible:ring-pink focus-visible:border-tx;
+  @apply flex flex-row items-center p-2 pe-3 rounded-sm text-sr font-semibold bg-tx border border-dark-charcoal focus-visible:outline-none focus-visible:ring focus-visible:ring-pink focus-visible:border-tx hover:text-white hover:bg-dark-charcoal;
 }
 .button-pressed {
   @apply text-white bg-dark-charcoal;
