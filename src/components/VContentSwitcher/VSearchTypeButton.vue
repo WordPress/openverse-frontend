@@ -1,7 +1,7 @@
 <template>
   <VButton
     class="flex flex-row font-semibold py-2 text-sr md:text-base"
-    :class="sizeClasses"
+    :class="[sizeClasses, 'max-w-[8rem] md:max-w-[10.5rem]' ? showLabel : '']"
     :variant="buttonVariant"
     size="disabled"
     :aria-label="buttonLabel"
@@ -12,7 +12,7 @@
     <span
       v-show="showLabel"
       class="hidden xs:block"
-      :class="{ 'ms-2 md:w-20 text-left': showLabel }"
+      :class="{ 'ms-2 truncate text-left': showLabel }"
       >{{ buttonLabel }}</span
     >
     <VIcon
