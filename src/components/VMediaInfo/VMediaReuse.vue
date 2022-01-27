@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { computed, defineComponent } from '@nuxtjs/composition-api'
 import { getFullLicenseName } from '~/utils/license'
 import VCopyLicense from '~/components/VMediaInfo/VCopyLicense.vue'
 import VMediaLicense from '~/components/VMediaInfo/VMediaLicense.vue'
@@ -35,9 +35,8 @@ const VMediaReuse = defineComponent({
     },
   },
   setup(props) {
-    const fullLicenseName = getFullLicenseName(
-      props.media.license,
-      props.media.license_version
+    const fullLicenseName = computed(() =>
+      getFullLicenseName(props.media.license, props.media.license_version)
     )
 
     return { fullLicenseName }
