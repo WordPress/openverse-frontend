@@ -12,33 +12,18 @@
       'flex-nowrap': !isSearchRoute && isHeaderScrolled,
     }"
   >
-    <div class="items-stretch flex">
-      <NuxtLink
-        to="/"
-        class="rounded-sm ring-offset-1 focus:outline-none focus-visible:ring focus-visible:ring-pink -ms-2 inline-flex items-center hover:bg-yellow mr-auto"
-        :class="{
-          'pe-3 md:pe-0': isSearchRoute && !isHeaderScrolled,
-          'md:pe-3': !isSearchRoute,
-        }"
-      >
-        <VLogoLoader :status="isFetching ? 'loading' : 'idle'" />
-        <OpenverseLogoText
-          v-if="!isHeaderScrolled"
-          class="-ml-1 mt-1"
-          :class="{ 'md:hidden': isSearchRoute }"
-          width="95"
-          height="15"
-        />
-      </NuxtLink>
-    </div>
+    <VLogo
+      :is-fetching="isFetching"
+      :is-header-scrolled="isHeaderScrolled"
+      :is-search-route="isSearchRoute"
+    />
 
     <VSearchBar
       v-model.trim="searchTerm"
-      class="md:w-full lg:w-1/2 2xl:w-1/3 h-10 md:h-12"
+      class="md:w-full lg:w-1/2 2xl:w-1/3"
       :size="isMinScreenMd ? 'medium' : isHeaderScrolled ? 'small' : 'large'"
       :class="{
         'order-4 md:order-none w-full md:w-auto': !isHeaderScrolled,
-        'h-10 md:h-12': isHeaderScrolled,
         'search-bar-mobile-scrolled': isSearchRoute && isHeaderScrolled,
       }"
       @submit="handleSearch"
@@ -87,18 +72,17 @@ import {
 import { ALL_MEDIA, AUDIO, IMAGE } from '~/constants/media'
 import { isMinScreen } from '~/composables/use-media-query'
 import {
-  useMatchSearchRoutes,
   useMatchHomeRoute,
+  useMatchSearchRoutes,
 } from '~/composables/use-match-routes'
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
 
 import closeIcon from '~/assets/icons/close.svg'
-import OpenverseLogoText from '~/assets/icons/openverse-logo-text.svg?inline'
 
 import VHeaderMenu from '~/components/VHeader/VHeaderMenu.vue'
 import VHeaderFilter from '~/components/VHeader/VHeaderFilter.vue'
-import VLogoLoader from '~/components/VLogoLoader/VLogoLoader.vue'
 import VSearchBar from '~/components/VHeader/VSearchBar/VSearchBar.vue'
+import VLogo from '~/components/VHeader/VLogo.vue'
 
 const i18nKeys = {
   [ALL_MEDIA]: {
@@ -125,11 +109,10 @@ const menus = {
 const VHeader = defineComponent({
   name: 'VHeader',
   components: {
+    VLogo,
     VHeaderFilter,
     VHeaderMenu,
-    VLogoLoader,
     VSearchBar,
-    OpenverseLogoText,
   },
   setup() {
     const { app, i18n, store } = useContext()
