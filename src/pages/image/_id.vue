@@ -15,7 +15,7 @@
         id="main-image"
         :src="image.url"
         :alt="image.title"
-        class="max-h-[90vh] md:mx-auto rounded-t-sm"
+        class="h-full max-h-[500px] md:mx-auto rounded-t-sm"
         @load="onImageLoaded"
       />
       <!-- TODO: Add SketchFabViewer -->
