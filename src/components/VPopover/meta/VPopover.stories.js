@@ -54,9 +54,9 @@ const ControlStory = (args, { argTypes }) => ({
       <template #trigger="{ visible, a11yProps }">
         <VButton :pressed="visible" v-bind="a11yProps">{{ visible ? 'Close' : 'Open' }}</VButton>
       </template>
-      <template #default="{ controls }">
+      <template #default="{ close }">
         <div class="p-4">
-        <VButton @click="controls.close">Close popover</VButton>
+        <VButton @click="close">Close popover</VButton>
         </div>
       </template>
     </VPopover>

@@ -29,8 +29,11 @@
       :aria-label="label"
       :aria-labelledby="labelledBy"
     >
-      <!-- @slot The content of the popover -->
-      <slot name="default" :controls="{ close }" />
+      <!--
+        @slot The content of the popover
+          @binding {function} close
+      -->
+      <slot name="default" :close="close" />
     </VPopoverContent>
   </div>
 </template>
