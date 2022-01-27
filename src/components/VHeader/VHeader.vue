@@ -1,13 +1,15 @@
 <template>
   <header
-    class="flex py-4 px-4 md:px-7 items-stretch z-40 w-full bg-white gap-x-2 gap-y-4"
+    class="flex px-4 md:px-7 items-stretch z-40 w-full bg-white gap-x-2 gap-y-4 flex-wrap md:flex-nowrap"
     :class="{
-      'flex-wrap md:flex-nowrap': isSearchRoute,
+      'py-3 md:py-4': !isHeaderScrolled,
+      'py-3': isHeaderScrolled,
       'border-b border-white': !isHeaderScrolled && !isMenuOpen,
       'border-b border-dark-charcoal-20':
         isSearchRoute && (isHeaderScrolled || isMenuOpen),
       'justify-between': isSearchRoute,
-      'justify-start': !isSearchRoute,
+      'justify-between md:justify-start': !isSearchRoute,
+      'flex-nowrap': !isSearchRoute && isHeaderScrolled,
     }"
   >
     <div class="items-stretch flex">
@@ -21,7 +23,7 @@
       >
         <VLogoLoader :status="isFetching ? 'loading' : 'idle'" />
         <OpenverseLogoText
-          v-if="!isSearchRoute || (isSearchRoute && !isHeaderScrolled)"
+          v-if="!isHeaderScrolled"
           class="-ml-1 mt-1"
           :class="{ 'md:hidden': isSearchRoute }"
           width="95"
@@ -31,13 +33,12 @@
     </div>
 
     <VSearchBar
-      v-show="!isHomeRoute"
       v-model.trim="searchTerm"
-      class="md:w-full lg:w-1/2 2xl:w-1/3"
+      class="md:w-full lg:w-1/2 2xl:w-1/3 h-10 md:h-12"
+      :size="isMinScreenMd ? 'medium' : isHeaderScrolled ? 'small' : 'large'"
       :class="{
-        'order-4 md:order-none w-full md:w-auto':
-          isSearchRoute && !isHeaderScrolled,
-        'md:me-auto': isSearchRoute,
+        'order-4 md:order-none w-full md:w-auto': !isHeaderScrolled,
+        'h-10 md:h-12': isHeaderScrolled,
         'search-bar-mobile-scrolled': isSearchRoute && isHeaderScrolled,
       }"
       @submit="handleSearch"
@@ -313,7 +314,8 @@ export default VHeader
 @media (max-width: 767px) {
   .search-bar-mobile-scrolled {
     /* outer padding, inner gaps, logo, content switcher and filter button */
-    width: calc(100vw - 48px - 16px - 3 * 48px);
+    /* Logo width is 42 ??? */
+    width: calc(100vw - 32px - 24px - 3 * 40px);
   }
 }
 </style>

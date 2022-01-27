@@ -1,10 +1,6 @@
 <template>
   <div ref="nodeRef" class="flex justify-center">
-    <div
-      ref="triggerContainerRef"
-      class="flex items-stretch"
-      @click="onTriggerClick"
-    >
+    <div ref="triggerContainerRef" @click="onTriggerClick">
       <VContentSwitcherButton
         :a11y-props="triggerA11yProps"
         :active-item="activeItem"
