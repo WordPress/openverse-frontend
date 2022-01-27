@@ -12,7 +12,7 @@
       'flex-nowrap': !isSearchRoute && isHeaderScrolled,
     }"
   >
-    <VLogo
+    <VLogoButton
       :is-fetching="isFetching"
       :is-header-scrolled="isHeaderScrolled"
       :is-search-route="isSearchRoute"
@@ -82,7 +82,7 @@ import closeIcon from '~/assets/icons/close.svg'
 import VHeaderMenu from '~/components/VHeader/VHeaderMenu.vue'
 import VHeaderFilter from '~/components/VHeader/VHeaderFilter.vue'
 import VSearchBar from '~/components/VHeader/VSearchBar/VSearchBar.vue'
-import VLogo from '~/components/VHeader/VLogo.vue'
+import VLogoButton from '~/components/VHeader/VLogoButton.vue'
 
 const i18nKeys = {
   [ALL_MEDIA]: {
@@ -109,7 +109,7 @@ const menus = {
 const VHeader = defineComponent({
   name: 'VHeader',
   components: {
-    VLogo,
+    VLogoButton,
     VHeaderFilter,
     VHeaderMenu,
     VSearchBar,

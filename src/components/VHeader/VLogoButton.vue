@@ -18,11 +18,12 @@
   </NuxtLink>
 </template>
 <script>
+import { defineComponent } from '@nuxtjs/composition-api'
 import OpenverseLogoText from '~/assets/icons/openverse-logo-text.svg?inline'
 import VLogoLoader from '~/components/VLogoLoader/VLogoLoader.vue'
 
-export default {
-  name: 'VLogo',
+const VLogoButton = defineComponent({
+  name: 'VLogoButton',
   components: { OpenverseLogoText, VLogoLoader },
   props: {
     isFetching: {
@@ -38,7 +39,8 @@ export default {
       required: true,
     },
   },
-}
+})
+export default VLogoButton
 </script>
 <style scoped>
 @media (max-width: 370px) {

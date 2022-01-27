@@ -14,7 +14,7 @@
           @blur="onBlur"
         >
           <div class="w-full flex justify-between px-4 py-3 shrink-0">
-            <VLogo
+            <VLogoButton
               :is-fetching="false"
               :is-header-scrolled="false"
               :is-search-route="true"
@@ -52,7 +52,7 @@ import closeIcon from '~/assets/icons/close.svg'
 import VTeleport from '~/components/VTeleport/VTeleport.vue'
 import VButton from '~/components/VButton.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'
-import VLogo from '~/components/VHeader/VLogo.vue'
+import VLogoButton from '~/components/VHeader/VLogoButton.vue'
 
 /**
  * Renders the inner content of a modal and manages focus.
@@ -60,7 +60,7 @@ import VLogo from '~/components/VHeader/VLogo.vue'
 const VMobileModalContent = defineComponent({
   name: 'VMobileModalContent',
   components: {
-    VLogo,
+    VLogoButton,
     VTeleport,
     VButton,
     VIcon,
