@@ -3,16 +3,15 @@
     <h3 v-if="showHeader" class="b-header">
       {{ header }}
     </h3>
-    <div>
+    <ul class="flex gap-2">
       <MediaTag
         v-for="(tag, index) in getValidTags()"
         :key="index"
-        class="me-4 inline"
+        tag="li"
         @click="searchByTagName"
+        >{{ tag.name }}</MediaTag
       >
-        {{ tag.name }}
-      </MediaTag>
-    </div>
+    </ul>
   </div>
 </template>
 
