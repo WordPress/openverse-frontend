@@ -1,12 +1,9 @@
 <template>
-  <div class="app grid h-screen overflow-hidden">
+  <div class="app grid h-screen">
     <MigrationNotice v-show="isReferredFromCc" />
     <TranslationStatusBanner />
     <VHeader />
-    <main
-      class="main embedded overflow-x-hidden"
-      :class="{ 'has-sidebar': isSidebarVisible }"
-    >
+    <main class="main" :class="{ 'has-sidebar': isSidebarVisible }">
       <Nuxt ref="mainContentRef" class="min-w-0 main-page" />
       <VSidebarTarget class="sidebar" />
     </main>
@@ -109,7 +106,6 @@ export default embeddedPage
   display: grid;
   grid-template-columns: 1fr 316px;
   height: 100%;
-  overflow: hidden;
 }
 
 .main > * {
