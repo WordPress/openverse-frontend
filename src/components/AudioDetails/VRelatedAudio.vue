@@ -9,7 +9,7 @@
         :key="audio.id"
         :audio="audio"
         layout="row"
-        size="m"
+        size="l"
         class="mb-12"
       />
       <LoadingIcon v-show="$fetchState.pending" />
