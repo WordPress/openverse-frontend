@@ -25,3 +25,6 @@ export const useMatchSearchRoutes = () =>
   useMatchRoute(['search', 'search-image', 'search-audio', 'search-video'])
 
 export const useMatchHomeRoute = () => useMatchRoute(['index'])
+
+export const useMatchDetailsPageRoute = () =>
+  useMatchRoute(['audio-id', 'image-id'])

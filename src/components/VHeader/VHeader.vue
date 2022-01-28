@@ -21,7 +21,7 @@
       >
         <VLogoLoader :status="isFetching ? 'loading' : 'idle'" />
         <OpenverseLogoText
-          v-if="!isSearchRoute || (isSearchRoute && !isHeaderScrolled)"
+          v-if="shouldShowLogoText"
           class="-ml-1 mt-1"
           :class="{ 'md:hidden': isSearchRoute }"
           width="95"
@@ -89,6 +89,7 @@ import { AUDIO, IMAGE } from '~/constants/media'
 import { isMinScreen } from '~/composables/use-media-query'
 import {
   useMatchSearchRoutes,
+  useMatchDetailsPageRoute,
   useMatchHomeRoute,
 } from '~/composables/use-match-routes'
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
@@ -122,6 +123,13 @@ const VHeader = defineComponent({
 
     const { matches: isSearchRoute } = useMatchSearchRoutes()
     const { matches: isHomeRoute } = useMatchHomeRoute()
+    const { matches: isDetailsPage } = useMatchDetailsPageRoute()
+
+    const shouldShowLogoText = computed(
+      () =>
+        (!isSearchRoute || (isSearchRoute && !isHeaderScrolled)) &&
+        !isDetailsPage
+    )
 
     const isHeaderScrolled = inject('isHeaderScrolled')
     const isMinScreenMd = isMinScreen('md', { shouldPassInSSR: true })
@@ -249,6 +257,8 @@ const VHeader = defineComponent({
 
       isSearchRoute,
       isHomeRoute,
+
+      shouldShowLogoText,
 
       menuModalRef,
 
