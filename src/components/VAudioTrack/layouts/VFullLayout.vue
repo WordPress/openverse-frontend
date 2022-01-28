@@ -1,14 +1,19 @@
 <template>
   <div class="full-track w-full">
-    <slot name="controller" />
+    <slot
+      name="controller"
+      :usable-frac="0.8"
+      :layout="layout"
+      :features="['seek']"
+    />
 
     <div
-      class="flex flex-row flex-wrap items-top mx-6 sm:mx-16 my-4 sm:my-6 gap-6"
+      class="flex flex-row flex-wrap items-top px-4 lg:px-0 lg:max-w-5xl mx-auto gap-6 mt-6"
     >
       <slot name="play-pause" :size="isSmall ? 'small' : 'medium'" />
 
       <div class="audio-info order-2 sm:order-1 w-full sm:w-auto">
-        <h1 class="text-base sm:text-3xl font-heading font-semibold">
+        <h1 class="text-lg sm:text-3xl font-heading font-semibold">
           {{ audio.title }}
         </h1>
         <div
@@ -23,12 +28,13 @@
               <a
                 class="p-px rounded-sm focus:outline-none focus:ring focus:ring-pink"
                 :href="audio.creator_url"
-                >{{ audio.creator }}</a
               >
+                {{ audio.creator }}
+              </a>
             </template>
           </i18n>
 
-          <span v-if="!isSmall" class="text-dark-charcoal-70">{{
+          <span class="hidden lg:block text-dark-charcoal-70">{{
             $t('interpunct')
           }}</span>
 
@@ -127,7 +133,7 @@ export default defineComponent({
 
 <style>
 .full-track .waveform {
-  @apply h-30 rounded-sm;
+  @apply h-[185px] rounded-sm;
 }
 
 .full-track .play-pause {

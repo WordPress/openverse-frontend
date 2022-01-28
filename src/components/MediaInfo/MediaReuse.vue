@@ -1,6 +1,8 @@
 <template>
   <section class="media-reuse">
-    <h4 class="b-header mb-6">{{ $t('media-details.reuse.title') }}</h4>
+    <h4 class="text-2xl lg:text-3xl mb-6">
+      {{ $t('media-details.reuse.title') }}
+    </h4>
     <div class="columns">
       <MediaLicense
         :license="media.license"

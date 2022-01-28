@@ -1,6 +1,6 @@
 <template>
   <main>
-    <VAudioTrack :audio="audio" class="main-track" />
+    <VAudioTrack layout="full" :audio="audio" class="main-track" />
     <div class="mt-10 flex flex-col gap-10 px-4 lg:px-0 lg:max-w-5xl mx-auto">
       <MediaReuse
         data-testid="audio-attribution"

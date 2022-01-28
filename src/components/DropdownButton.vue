@@ -4,7 +4,9 @@
     <div class="flex">
       <slot
         :button-props="{
-          class: `dropdown-button rounded-s-sm rounded-e-none dropdown-button-${size}`,
+          class: `dropdown-button rounded-s-sm ${
+            isSingleItem ? 'rounded-e-sm' : 'rounded-e-none'
+          } dropdown-button-${size}`,
           type: 'button',
         }"
       />

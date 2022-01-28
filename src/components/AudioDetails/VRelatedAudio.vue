@@ -1,6 +1,6 @@
 <template>
   <aside :aria-label="$t('photo-details.aria.related')">
-    <h4 class="b-header mb-6">
+    <h4 class="text-base lg:text-3xl mb-6">
       {{ $t('audio-details.related-audios') }}
     </h4>
     <template v-if="!$fetchState.error">

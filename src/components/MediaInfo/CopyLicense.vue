@@ -1,6 +1,6 @@
 <template>
   <div class="copy-license">
-    <h5 class="b-header mb-6">
+    <h5 class="text-base lg:text-3xl mb-6">
       {{ $t('media-details.reuse.copy-license.title') }}
     </h5>
     <section class="tabs boxed">
