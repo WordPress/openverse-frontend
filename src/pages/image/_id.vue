@@ -23,7 +23,7 @@
 
     <section
       id="title-button"
-      class="flex flex-row md:flex-row-reverse flex-wrap justify-between md:mt-8"
+      class="flex flex-row md:flex-row-reverse flex-wrap justify-between md:mt-6"
     >
       <VButton
         as="a"
