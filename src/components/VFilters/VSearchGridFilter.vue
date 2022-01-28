@@ -110,7 +110,7 @@ export default {
 .filters {
   border-inline-start: 1px solid transparent;
 }
-@media (min-width: 768px) {
+@screen md {
   .filters {
     /* dark-charcoal-20*/
     border-inline-start: 1px solid #d6d4d5;
