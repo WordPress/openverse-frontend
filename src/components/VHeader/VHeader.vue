@@ -2,8 +2,8 @@
   <header
     class="flex px-4 md:px-7 items-stretch z-40 w-full bg-white gap-x-2 gap-y-4 flex-wrap md:flex-nowrap"
     :class="{
-      'py-3 md:py-4': !isHeaderScrolled,
       'py-3': isHeaderScrolled,
+      'py-4': !isHeaderScrolled,
       'border-b border-white': !isHeaderScrolled && !isMenuOpen,
       'border-b border-dark-charcoal-20':
         isSearchRoute && (isHeaderScrolled || isMenuOpen),

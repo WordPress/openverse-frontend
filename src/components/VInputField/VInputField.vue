@@ -6,8 +6,8 @@
         // Padding is set to 1.5px to accommodate the border that will appear later.
         'border-s-0 ps-1.5px rounded-s-none': connectionSides.includes('start'),
         'border-e-0 pe-1.5px rounded-e-none': connectionSides.includes('end'),
-        [sizeClass]: true,
       },
+      sizeClass,
     ]"
   >
     <input
@@ -30,7 +30,7 @@
 import { computed } from '@nuxtjs/composition-api'
 
 const FIELD_SIZES = {
-  small: 'h-10 md:h-12',
+  small: 'h-10',
   medium: 'h-12',
   large: 'h-14',
   standalone: 'h-14 md:h-[69px]',
