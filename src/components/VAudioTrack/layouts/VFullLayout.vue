@@ -2,9 +2,8 @@
   <div class="full-track w-full">
     <slot
       name="controller"
-      :usable-frac="0.8"
-      :layout="layout"
-      :features="['seek']"
+      :usable-frac="0.75"
+      :features="['seek', 'duration']"
     />
 
     <div
@@ -133,7 +132,7 @@ export default defineComponent({
 
 <style>
 .full-track .waveform {
-  @apply h-[185px] rounded-sm;
+  @apply h-[241px] rounded-sm;
 }
 
 .full-track .play-pause {

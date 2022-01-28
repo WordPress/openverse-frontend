@@ -362,7 +362,7 @@ msgid "Genre"
 msgstr ""
 
 #: src/components/ImageDetails/VPhotoDetails.vue:11
-msgctxt "photo-details.back"
+msgctxt "single-result.back"
 msgid "Back to search results"
 msgstr ""
 

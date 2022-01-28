@@ -8,7 +8,7 @@
         @click.prevent="goBackToSearchResults"
       >
         <VIcon :icon-path="icons.chevronLeft" class="me-2" />
-        {{ $t('photo-details.back') }}
+        {{ $t('single-result.back') }}
       </a>
 
       <img

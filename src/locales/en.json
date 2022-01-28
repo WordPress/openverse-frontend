@@ -491,8 +491,10 @@
       }
     }
   },
+  "single-result": {
+    "back": "Back to search results"
+  },
   "photo-details": {
-    "back": "Back to search results",
     "creator": "by {name}",
     "reuse": {
       "title": "Reuse"
