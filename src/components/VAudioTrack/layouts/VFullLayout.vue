@@ -7,16 +7,18 @@
     />
 
     <div
-      class="flex flex-row flex-wrap items-top px-4 lg:px-0 lg:max-w-5xl mx-auto gap-6 mt-6"
+      class="flex flex-row flex-wrap lg:flex-nowrap items-top px-4 lg:px-0 lg:max-w-5xl mx-auto gap-6 mt-6"
     >
       <slot name="play-pause" :size="isSmall ? 'small' : 'medium'" />
 
-      <div class="audio-info order-2 sm:order-1 w-full sm:w-auto">
-        <h1 class="text-lg sm:text-3xl font-heading font-semibold">
+      <div class="audio-info order-2 lg:order-1 w-full lg:w-auto">
+        <h1
+          class="text-lg lg:text-3xl font-heading font-semibold lg:line-clamp-2"
+        >
           {{ audio.title }}
         </h1>
         <div
-          class="subtitle mt-1 flex flex-col sm:flex-row sm:items-center gap-2"
+          class="subtitle mt-1 flex flex-col lg:flex-row lg:items-center gap-2"
         >
           <i18n
             as="span"
@@ -42,7 +44,7 @@
       </div>
 
       <DownloadButton
-        class="ms-auto order-1 sm:order-2"
+        class="ms-auto order-1 lg:order-2"
         :formats="getFormats(audio)"
         :size="isSmall ? 'small' : 'medium'"
       />
