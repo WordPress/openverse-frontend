@@ -18,8 +18,8 @@ import {
   AUDIO,
   IMAGE,
   supportedContentTypes,
-} from '@/constants/media'
-import VIcon from '@/components/VIcon/VIcon.vue'
+} from '~/constants/media'
+import VIcon from '~/components/VIcon/VIcon.vue'
 
 import audioIcon from 'assets/icons/audio-wave.svg'
 import imageIcon from 'assets/icons/image.svg'
