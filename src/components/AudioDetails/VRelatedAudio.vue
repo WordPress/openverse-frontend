@@ -9,7 +9,7 @@
         :key="audio.id"
         :audio="audio"
         layout="row"
-        size="m"
+        :size="audioTrackSize"
         class="mb-12"
       />
       <LoadingIcon v-show="$fetchState.pending" />
@@ -21,8 +21,9 @@
 </template>
 
 <script>
-import { ref } from '@nuxtjs/composition-api'
+import { computed, ref } from '@nuxtjs/composition-api'
 import { AUDIO } from '~/constants/media'
+import { isMinScreen } from '~/composables/use-media-query'
 import useRelated from '~/composables/use-related'
 
 export default {
@@ -42,6 +43,11 @@ export default {
    * @return {{ audios: Ref<AudioDetail[]> }}
    */
   setup(props) {
+    const isMinScreenMd = isMinScreen('md', { shouldPassInSSR: false })
+    const audioTrackSize = computed(() => {
+      return !isMinScreenMd.value ? 's' : 'm'
+    })
+
     const mainAudioId = ref(props.audioId)
     const relatedOptions = {
       mediaType: AUDIO,
@@ -52,7 +58,7 @@ export default {
       relatedOptions.service = props.service
     }
     const { media: audios } = useRelated(relatedOptions)
-    return { audios }
+    return { audios, audioTrackSize }
   },
 }
 </script>
