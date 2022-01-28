@@ -1,25 +1,18 @@
 <template>
-  <div :aria-label="$t('photo-details.aria.main')" class="audio-page">
+  <main>
     <VAudioTrack :audio="audio" class="main-track" />
-    <MediaReuse
-      data-testid="audio-attribution"
-      :media="audio"
-      :license-url="licenseUrl"
-      :full-license-name="fullLicenseName"
-      :attribution-html="attributionHtml()"
-      class="my-16 px-4 md:px-0"
-    />
-    <VAudioDetails
-      data-testid="audio-info"
-      :audio="audio"
-      class="my-16 px-4 lg:px-0"
-    />
-    <VRelatedAudio
-      v-if="audio.id"
-      class="my-16 px-4 lg:px-0"
-      :audio-id="audio.id"
-    />
-  </div>
+    <div class="mt-10 flex flex-col gap-10 px-4 lg:px-0 lg:max-w-5xl mx-auto">
+      <MediaReuse
+        data-testid="audio-attribution"
+        :media="audio"
+        :license-url="licenseUrl"
+        :full-license-name="fullLicenseName"
+        :attribution-html="attributionHtml()"
+      />
+      <VAudioDetails data-testid="audio-info" :audio="audio" />
+      <VRelatedAudio v-if="audio.id" :audio-id="audio.id" />
+    </div>
+  </main>
 </template>
 
 <script>

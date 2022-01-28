@@ -54,9 +54,9 @@ export default {
       relatedOptions.service = props.service
     }
 
-    const isMinScreenMd = isMinScreen('md', { shouldPassInSSR: true })
+    const isMinScreenLg = isMinScreen('lg', { shouldPassInSSR: true })
     const audioTrackSize = computed(() => {
-      return isMinScreenMd.value ? 'l' : 's'
+      return isMinScreenLg.value ? 'l' : 's'
     })
 
     const { media: audios } = useRelated(relatedOptions)
