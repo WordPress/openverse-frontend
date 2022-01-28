@@ -43,7 +43,6 @@
     />
     <VHeaderFilter
       v-if="isSearchRoute"
-      class="text-sr md:text-base"
       @open="openMenuModal(menus.FILTERS)"
       @close="close()"
     />
