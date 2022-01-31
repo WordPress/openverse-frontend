@@ -507,7 +507,8 @@
       "provider": "Provider",
       "dimensions": "Dimensions",
       "source": "Source",
-      "pixels": "pixels"
+      "pixels": "pixels",
+      "unknown": "Unknown"
     },
     "report": {
       "short": "Report",

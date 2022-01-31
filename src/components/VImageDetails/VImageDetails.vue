@@ -19,7 +19,7 @@
         <dt>{{ $t('image-details.information.type') }}</dt>
         <dd class="uppercase">{{ imgType }}</dd>
       </div>
-      <div v-if="providerName != sourceName">
+      <div v-if="providerName !== sourceName">
         <dt>{{ $t('image-details.information.provider') }}</dt>
         <dd>{{ providerName }}</dd>
       </div>
@@ -71,7 +71,7 @@ const VImageDetails = defineComponent({
     },
   },
   setup(props) {
-    const { store } = useContext()
+    const { store, i18n } = useContext()
 
     const imgType = computed(() => {
       if (props.imageType) {
@@ -80,7 +80,7 @@ const VImageDetails = defineComponent({
         }
         return props.imageType
       }
-      return 'Unknown'
+      return i18n.t('image-details.information.unknown')
     })
 
     function getProviderName(nameCode) {
