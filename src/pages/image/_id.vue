@@ -12,13 +12,19 @@
 
     <figure class="w-full mb-4 pt-4 md:pt-8 px-6 bg-dark-charcoal-06">
       <img
+        v-if="!sketchFabUid"
         id="main-image"
         :src="image.url"
         :alt="image.title"
-        class="h-full max-h-[500px] md:mx-auto rounded-t-sm"
+        class="h-full max-h-[500px] sm:mx-auto rounded-t-sm"
         @load="onImageLoaded"
       />
-      <!-- TODO: Add SketchFabViewer -->
+      <SketchFabViewer
+        v-if="sketchFabUid"
+        :uid="sketchFabUid"
+        class="sm:mx-auto rounded-t-sm"
+        @failure="sketchFabfailure = true"
+      />
     </figure>
 
     <section
@@ -88,11 +94,12 @@ import {
   SEND_DETAIL_PAGE_EVENT,
 } from '~/constants/usage-data-analytics-types'
 
-import VImageDetails from '~/components/VImageDetails/VImageDetails.vue'
-import VRelatedImages from '~/components/VImageDetails/VRelatedImages.vue'
-import VMediaReuse from '~/components/VMediaInfo/VMediaReuse.vue'
 import VButton from '~/components/VButton.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'
+import VImageDetails from '~/components/VImageDetails/VImageDetails.vue'
+import VMediaReuse from '~/components/VMediaInfo/VMediaReuse.vue'
+import VRelatedImages from '~/components/VImageDetails/VRelatedImages.vue'
+import SketchFabViewer from '~/components/SketchFabViewer.vue'
 
 import Chevron from '~/assets/icons/chevron-left.svg?inline'
 
@@ -105,6 +112,7 @@ const VImageDetailsPage = {
     VImageDetails,
     VMediaReuse,
     VRelatedImages,
+    SketchFabViewer,
   },
   data() {
     return {
@@ -114,10 +122,19 @@ const VImageDetailsPage = {
       imageHeight: 0,
       imageType: 'Unknown',
       imageId: null,
+      sketchFabfailure: false,
     }
   },
   computed: {
     ...mapState(MEDIA, ['image']),
+    sketchFabUid() {
+      if (this.image.source !== 'sketchfab' || this.sketchFabfailure) {
+        return null
+      }
+      return this.image.url
+        .split('https://media.sketchfab.com/models/')[1]
+        .split('/')[0]
+    },
   },
   async asyncData({ route }) {
     return {
