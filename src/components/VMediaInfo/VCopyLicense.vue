@@ -155,17 +155,19 @@ import {
   ref,
   useContext,
 } from '@nuxtjs/composition-api'
+import CopyButton from '~/components/CopyButton.vue'
 import { COPY_ATTRIBUTION } from '~/constants/action-types'
+import { ATTRIBUTION, USAGE_DATA } from '~/constants/store-modules'
 import {
   SEND_DETAIL_PAGE_EVENT,
   DETAIL_PAGE_EVENTS,
 } from '~/constants/usage-data-analytics-types'
-import { ATTRIBUTION, USAGE_DATA } from '~/constants/store-modules'
 import getAttributionHtml from '~/utils/attribution-html'
 import { isPublicDomain } from '~/utils/license'
 
 const VCopyLicense = defineComponent({
   name: 'VCopyLicense',
+  components: { CopyButton },
   props: {
     media: {
       type: Object,

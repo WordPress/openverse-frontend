@@ -6,21 +6,19 @@ import {
 } from '~/constants/usage-data-analytics-types'
 
 import render from '../../../test-utils/render'
-import i18n from '../../../test-utils/i18n'
 import { ATTRIBUTION, USAGE_DATA } from '~/constants/store-modules'
 
 describe('VCopyLicense', () => {
   let options = null
   let props = null
-  const $t = (key) => i18n.messages[key]
+  let dispatchMock = null
+
   const copyData = {
     type: 'Bar',
     event: {
       content: 'Foo',
     },
   }
-
-  let dispatchMock = null
 
   beforeEach(() => {
     dispatchMock = jest.fn()
@@ -34,21 +32,22 @@ describe('VCopyLicense', () => {
         foreign_landing_url: 'http://foo.bar',
         license: 'BY',
         license_version: '1.0',
+        license_url: 'http://license.com',
         creator: 'John',
         creator_url: 'http://creator.com',
       },
-      licenseUrl: 'http://license.com',
       fullLicenseName: 'LICENSE',
-      attributionHtml: '<div>attribution</div>',
     }
     options = {
-      stubs: { CopyButton: true },
       propsData: props,
       mocks: {
-        $store: {
-          dispatch: dispatchMock,
+        $nuxt: {
+          context: {
+            store: {
+              dispatch: dispatchMock,
+            },
+          },
         },
-        $t,
       },
     }
   })
@@ -58,7 +57,7 @@ describe('VCopyLicense', () => {
     expect(wrapper.find('.copy-license')).toBeDefined()
   })
 
-  it.skip('should dispatch COPY_ATTRIBUTION', () => {
+  it('should dispatch COPY_ATTRIBUTION', () => {
     const wrapper = render(VCopyLicense, options)
     wrapper.vm.onCopyAttribution(copyData.type, copyData.event)
     expect(dispatchMock).toHaveBeenCalledWith(
@@ -70,7 +69,7 @@ describe('VCopyLicense', () => {
     )
   })
 
-  it.skip('should dispatch SEND_DETAIL_PAGE_EVENT on copy attribution', () => {
+  it('should dispatch SEND_DETAIL_PAGE_EVENT on copy attribution', () => {
     const wrapper = render(VCopyLicense, options)
     wrapper.vm.onCopyAttribution(copyData.type, copyData.event)
     expect(dispatchMock).toHaveBeenCalledWith(
