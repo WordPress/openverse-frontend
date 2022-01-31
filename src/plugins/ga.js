@@ -1,8 +1,10 @@
+import { defineNuxtPlugin, useRouter } from '#app'
 import stringToBoolean from '~/utils/string-to-boolean'
 import GoogleAnalytics from '~/analytics/google-analytics'
 
 /* eslint-disable */
-export default ({ app }) => {
+export default defineNuxtPlugin(() => {
+  const router = useRouter()
   // Exit early if analytics is diasabled
   if (!stringToBoolean(process.env.enableGoogleAnalytics)) {
     return
@@ -41,7 +43,7 @@ export default ({ app }) => {
   /*
    ** Every time the route changes (fired on initialization too)
    */
-  app.router.afterEach((to, _) => {
+  router.afterEach((to, _) => {
     analytics.sendPageView(to)
   })
-}
+})

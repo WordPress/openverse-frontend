@@ -23,13 +23,7 @@
 </template>
 
 <script>
-import {
-  defineComponent,
-  ref,
-  watch,
-  toRefs,
-  computed,
-} from '@nuxtjs/composition-api'
+import { defineComponent, ref, watch, toRefs, computed } from '#app'
 import { warn } from '~/utils/warn'
 
 /**
@@ -61,9 +55,7 @@ const VButton = defineComponent({
      * @default 'button'
      */
     as: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<'a' | 'button'>} */ (
-        String
-      ),
+      type: /** @type {import('#app').PropType<'a' | 'button'>} */ (String),
       default: 'button',
       validate: (v) => ['a', 'button', 'NuxtLink'].includes(v),
     },
@@ -73,7 +65,7 @@ const VButton = defineComponent({
      * @default 'primary'
      */
     variant: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<'primary' | 'secondary' | 'tertiary' | 'action-menu' | 'action-menu-muted' | 'grouped'>} */ (
+      type: /** @type {import('#app').PropType<'primary' | 'secondary' | 'tertiary' | 'action-menu' | 'action-menu-muted' | 'grouped'>} */ (
         String
       ),
       default: 'primary',
@@ -105,7 +97,7 @@ const VButton = defineComponent({
      * @default 'medium'
      */
     size: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<'large' | 'medium' | 'small' | 'disabled'>} */ (
+      type: /** @type {import('#app').PropType<'large' | 'medium' | 'small' | 'disabled'>} */ (
         String
       ),
       default: 'medium',
@@ -141,7 +133,7 @@ const VButton = defineComponent({
      * @default 'button'
      */
     type: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<'buton' | 'submit' | 'reset'>} */ (
+      type: /** @type {import('#app').PropType<'buton' | 'submit' | 'reset'>} */ (
         String
       ),
       default: 'button',
@@ -150,7 +142,7 @@ const VButton = defineComponent({
   },
   /**
    * @param {Props} props
-   * @param {import('@nuxtjs/composition-api').SetupContext}
+   * @param {import('#app').SetupContext}
    */
   setup(props, { attrs }) {
     const propsRef = toRefs(props)

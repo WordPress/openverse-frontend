@@ -1,8 +1,9 @@
-import { ref } from '@nuxtjs/composition-api'
-
-/** @type {import('@nuxtjs/composition-api').Ref<HTMLAudioElement | undefined>} */
-const obj = ref(undefined)
+import { useState } from '#app'
 
 export function useActiveAudio() {
+  const obj = useState(
+    'active-audio',
+    () => /** @type {HTMLAudioElement | undefined} */ (undefined)
+  )
   return Object.freeze({ obj })
 }

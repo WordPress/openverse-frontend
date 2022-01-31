@@ -21,7 +21,7 @@
 
 <script>
 import Checkmark from '~/assets/icons/checkmark.svg?inline'
-import { computed, defineComponent, ref, watch } from '@nuxtjs/composition-api'
+import { computed, defineComponent, ref, watch } from '#app'
 
 const VCheckbox = defineComponent({
   name: 'VCheckbox',

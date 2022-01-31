@@ -1,4 +1,5 @@
-import { computed, useContext } from '@nuxtjs/composition-api'
+import { computed } from '#app'
+import { useStore } from '~/composables/use-store'
 import { FETCH_MEDIA } from '~/constants/action-types'
 import { MEDIA } from '~/constants/store-modules'
 
@@ -6,10 +7,10 @@ import { MEDIA } from '~/constants/store-modules'
  * Fetches media on 'Load More' button click.
  *
  * @param {import('../pages/search/search-page.types').Props} props
- * @returns {{ onLoadMore: ((function(): Promise<void>)|void), canLoadMore: import('@nuxtjs/composition-api').ComputedRef<boolean>}}
+ * @returns {{ onLoadMore: ((function(): Promise<void>)|void), canLoadMore: import('#app').ComputedRef<boolean>}}
  */
 export const useLoadMore = (props) => {
-  const { store } = useContext()
+  const store = useStore()
 
   const searchParams = computed(() => {
     const pages = {}

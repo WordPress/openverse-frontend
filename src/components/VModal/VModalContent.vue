@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { defineComponent, toRefs, ref } from '@nuxtjs/composition-api'
+import { defineComponent, toRefs, ref } from '#app'
 import { FocusTrap } from 'focus-trap-vue'
 import VTeleport from '~/components/VTeleport/VTeleport'
 import { useDialogContent } from '~/composables/use-dialog-content'
@@ -59,9 +59,7 @@ const VModalContent = defineComponent({
       required: true,
     },
     hide: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<() => void>} */ (
-        Function
-      ),
+      type: /** @type {import('#app').PropType<() => void>} */ (Function),
       required: true,
     },
     hideOnEsc: {
@@ -81,12 +79,12 @@ const VModalContent = defineComponent({
       default: true,
     },
     triggerElement: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<HTMLElement>} */ (
+      type: /** @type {import('#app').PropType<HTMLElement>} */ (
         process.server ? Object : HTMLElement
       ),
     },
     initialFocusElement: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<HTMLElement>} */ (
+      type: /** @type {import('#app').PropType<HTMLElement>} */ (
         process.server ? Object : HTMLElement
       ),
       required: false,

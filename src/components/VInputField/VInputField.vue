@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { computed } from '@nuxtjs/composition-api'
+import { computed } from '#app'
 
 const FIELD_SIZES = {
   small: 'h-10',

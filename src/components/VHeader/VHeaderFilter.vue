@@ -18,15 +18,8 @@
 </template>
 
 <script>
-import {
-  ref,
-  watch,
-  reactive,
-  computed,
-  onMounted,
-  useContext,
-  inject,
-} from '@nuxtjs/composition-api'
+import { ref, watch, reactive, computed, onMounted, inject } from '#app'
+import { useI18n } from '~/composables/use-i18n'
 import { useBodyScrollLock } from '~/composables/use-body-scroll-lock'
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
 
@@ -57,20 +50,20 @@ export default {
   ],
   setup(_, { emit }) {
     const modalRef = ref(null)
-    /** @type { import('@nuxtjs/composition-api').Ref<boolean> } */
+    /** @type { import('#app').Ref<boolean> } */
     const visibleRef = ref(false)
     const nodeRef = ref(null)
 
-    /** @type { import('@nuxtjs/composition-api').Ref<HTMLElement | undefined> } */
+    /** @type { import('#app').Ref<HTMLElement | undefined> } */
     const buttonRef = ref()
     const filterSidebar = useFilterSidebarVisibility()
-    const { i18n } = useContext()
-    /** @type { import('@nuxtjs/composition-api').Ref<boolean> } */
+    const i18n = useI18n()
+    /** @type { import('#app').Ref<boolean> } */
     const isMinScreenMd = inject('isMinScreenMd')
-    /** @type { import('@nuxtjs/composition-api').Ref<boolean> } */
+    /** @type { import('#app').Ref<boolean> } */
     const isHeaderScrolled = inject('isHeaderScrolled')
 
-    /** @type { import('@nuxtjs/composition-api').Ref<import('@nuxtjs/composition-api').Component> } */
+    /** @type { import('#app').Ref<import('#app').Component> } */
     const filterComponent = ref(VMobileModalContent)
 
     const triggerA11yProps = reactive({
@@ -117,9 +110,9 @@ export default {
       visible: visibleRef,
     }
     /**
-     * @type { import('@nuxtjs/composition-api').Ref<{
-     * 'trigger-element'?: import('@nuxtjs/composition-api').ComputedRef<HTMLElement|null>,
-     * hide?: () => {}, visible: import('@nuxtjs/composition-api').Ref<boolean>,
+     * @type { import('#app').Ref<{
+     * 'trigger-element'?: import('#app').ComputedRef<HTMLElement|null>,
+     * hide?: () => {}, visible: import('#app').Ref<boolean>,
      * 'aria-label': [string], to?: string, mode?: string }> }
      */
     const options = ref(mobileOptions)

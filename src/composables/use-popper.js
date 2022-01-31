@@ -1,4 +1,4 @@
-import { ref, watch } from '@nuxtjs/composition-api'
+import { ref, watch } from '#app'
 import { createPopper } from '@popperjs/core'
 
 /**

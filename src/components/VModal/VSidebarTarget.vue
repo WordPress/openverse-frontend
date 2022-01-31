@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent } from '#app'
 import VTeleportTarget from '~/components/VTeleport/VTeleportTarget.vue'
 
 export default defineComponent({

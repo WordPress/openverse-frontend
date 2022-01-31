@@ -6,6 +6,6 @@
  * @see https://github.com/sindresorhus/eslint-plugin-unicorn/issues/686
  */
 /**
- * @type {Record<string, import('vue').Component>}
+ * @type {Record<string, import('#app').Component>}
  */
 export const targets = {}

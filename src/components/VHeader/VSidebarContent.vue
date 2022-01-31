@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent } from '#app'
 
 import VTeleport from '~/components/VTeleport/VTeleport.vue'
 import VSearchGridFilter from '~/components/VFilters/VSearchGridFilter'

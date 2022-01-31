@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent } from '#app'
 import caretDown from '~/assets/icons/caret-down.svg'
 import * as keycodes from '~/utils/key-codes'
 
@@ -66,9 +66,7 @@ const DropdownButton = defineComponent({
       required: false,
     },
     size: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<'medium' | 'small'>} */ (
-        String
-      ),
+      type: /** @type {import('#app').PropType<'medium' | 'small'>} */ (String),
       default: 'medium',
       validator: (v) => ['medium', 'small'].includes(v),
     },

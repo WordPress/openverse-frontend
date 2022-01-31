@@ -1,4 +1,5 @@
-import { computed, ref, useContext } from '@nuxtjs/composition-api'
+import { computed, ref } from '#app'
+import { useStore } from '~/composables/use-store'
 import { supportedContentTypes } from '~/constants/media'
 import { SEARCH } from '~/constants/store-modules'
 import { UPDATE_QUERY } from '~/constants/action-types'
@@ -14,7 +15,7 @@ const icons = {
 const contentTypes = [...supportedContentTypes]
 
 export default function useContentType() {
-  const { store } = useContext()
+  const store = useStore()
 
   const activeType = computed(() => store.state.search.searchType)
   const previousContentType = ref(activeType.value)

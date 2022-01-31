@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent } from '#app'
 
 import VIconButton from '~/components/VIconButton/VIconButton.vue'
 
@@ -43,7 +43,7 @@ export default defineComponent({
      * @todo This type def should be extracted for reuse across components
      */
     layout: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<'full' | 'box' | 'row' | 'global'>} */ (
+      type: /** @type {import('#app').PropType<'full' | 'box' | 'row' | 'global'>} */ (
         String
       ),
       default: 'full',

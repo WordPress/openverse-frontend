@@ -6,4 +6,4 @@ export const propTypes = {
   },
 }
 
-/** @typedef {import('@nuxtjs/composition-api').ExtractPropTypes<typeof propTypes>} Props */
+/** @typedef {import('#app').ExtractPropTypes<typeof propTypes>} Props */

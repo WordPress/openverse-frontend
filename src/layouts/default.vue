@@ -18,13 +18,8 @@
 import iframeHeight from '~/mixins/iframe-height'
 
 import { NAV } from '~/constants/store-modules'
-import {
-  computed,
-  provide,
-  ref,
-  useContext,
-  watch,
-} from '@nuxtjs/composition-api'
+import { computed, provide, ref, watch } from '#app'
+import { useStore } from '~/composables/use-store'
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
 import { isMinScreen } from '~/composables/use-media-query'
 import { useMatchSearchRoutes } from '~/composables/use-match-routes'
@@ -55,7 +50,7 @@ const embeddedPage = {
   setup() {
     const mainContentRef = ref(null)
     const mainRef = ref(null)
-    const { store } = useContext()
+    const store = useStore()
     const isReferredFromCc = store.state[NAV].isReferredFromCc
 
     const { isVisible: isFilterVisible } = useFilterSidebarVisibility()

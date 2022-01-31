@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { ref, onMounted } from '@nuxtjs/composition-api'
+import { ref, onMounted } from '#app'
 
 import { rand, hash } from '~/utils/prng'
 import { lerp, dist, bezier } from '~/utils/math'

@@ -1,7 +1,8 @@
-import { computed, useContext, useRoute } from '@nuxtjs/composition-api'
+import { computed, useRoute } from '#app'
+import { useApp } from '~/composables/use-app'
 
 export default function usePages() {
-  const { app } = useContext()
+  const app = useApp()
 
   const pages = [
     {
@@ -52,7 +53,7 @@ export default function usePages() {
   ]
 
   const route = useRoute()
-  const currentPageId = computed(() => route.value.name)
+  const currentPageId = computed(() => route.name)
 
   return { all: pages, current: currentPageId }
 }

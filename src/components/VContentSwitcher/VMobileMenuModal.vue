@@ -27,13 +27,7 @@
 </template>
 
 <script>
-import {
-  onMounted,
-  reactive,
-  ref,
-  watch,
-  computed,
-} from '@nuxtjs/composition-api'
+import { onMounted, reactive, ref, watch, computed } from '#app'
 import { useBodyScrollLock } from '~/composables/use-body-scroll-lock'
 import useContentType from '~/composables/use-content-type'
 import usePages from '~/composables/use-pages'
@@ -65,7 +59,7 @@ export default {
     const content = useContentType()
     const pages = usePages()
 
-    /** @type {import('@nuxtjs/composition-api').Ref<import('vue/types/vue').Vue | null>} */
+    /** @type {import('#app').Ref<import('vue/types/vue').Vue | null>} */
     const contentTypesNode = ref(null)
     const modalRef = ref(null)
     const triggerContainerRef = ref(null)

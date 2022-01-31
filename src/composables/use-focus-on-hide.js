@@ -1,4 +1,4 @@
-import { watch } from '@vue/composition-api'
+import { watch } from '#app'
 import { isTabbable } from 'reakit-utils/tabbable'
 import { getActiveElement } from 'reakit-utils/getActiveElement'
 import { contains } from 'reakit-utils/contains'

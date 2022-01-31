@@ -1,15 +1,15 @@
-import { ref, useRoute, useRouter } from '@nuxtjs/composition-api'
+import { ref, useRoute, useRouter } from '#app'
 
 /**
  * Reactive property that returns true only on the matching routes.
  * Note that routes are matched by name, not the url path.
  *
- * @returns {{matches: import('@nuxtjs/composition-api').Ref<boolean>}}
+ * @returns {{matches: import('#app').Ref<boolean>}}
  */
 export const useMatchRoute = (routes = []) => {
   const route = useRoute()
   const router = useRouter()
-  const matches = ref(routes.includes(route.value.name))
+  const matches = ref(routes.includes(route.name))
   router.beforeEach((to, from, next) => {
     matches.value = routes.includes(to.name)
     next()

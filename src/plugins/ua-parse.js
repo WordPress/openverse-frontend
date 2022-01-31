@@ -1,16 +1,16 @@
 import useragent from 'express-useragent'
+import { defineNuxtPlugin } from '#app'
 
-export default function (context, inject) {
+export default defineNuxtPlugin((nuxtApp) => {
   let userAgent
 
-  if (typeof context.req !== 'undefined') {
-    userAgent = context.req.headers['user-agent']
+  if (typeof nuxtApp.nuxt2Context.req !== 'undefined') {
+    userAgent = nuxtApp.nuxt2Context.req.headers['user-agent']
   } else if (typeof navigator !== 'undefined') {
     userAgent = navigator.userAgent
   }
 
   const ua = useragent.parse(userAgent)
 
-  context.$ua = ua
-  inject('ua', ua)
-}
+  nuxtApp.provide('ua', ua)
+})

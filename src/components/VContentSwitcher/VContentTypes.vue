@@ -25,7 +25,7 @@ import useContentType from '~/composables/use-content-type'
 
 import VItemGroup from '~/components/VItemGroup/VItemGroup.vue'
 import VContentItem from '~/components/VContentSwitcher/VContentItem.vue'
-import { computed, defineComponent } from '@nuxtjs/composition-api'
+import { computed, defineComponent } from '#app'
 
 export default defineComponent({
   name: 'VContentTypes',

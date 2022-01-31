@@ -40,13 +40,7 @@
 
 <script>
 import VPopoverContent from '~/components/VPopover/VPopoverContent.vue'
-import {
-  defineComponent,
-  ref,
-  watch,
-  reactive,
-  computed,
-} from '@nuxtjs/composition-api'
+import { defineComponent, ref, watch, reactive, computed } from '#app'
 
 export default defineComponent({
   name: 'VPopover',
@@ -92,7 +86,7 @@ export default defineComponent({
      * @default 'bottom'
      */
     placement: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<import('@popperjs/core').Placement>} */ (
+      type: /** @type {import('#app').PropType<import('@popperjs/core').Placement>} */ (
         String
       ),
     },
@@ -125,7 +119,7 @@ export default defineComponent({
   ],
   setup(_, { emit }) {
     const visibleRef = ref(false)
-    /** @type {import('@nuxtjs/composition-api').Ref<HTMLElement | undefined>} */
+    /** @type {import('#app').Ref<HTMLElement | undefined>} */
     const triggerContainerRef = ref()
 
     const triggerA11yProps = reactive({

@@ -1,13 +1,11 @@
 import { useI18nResultsCount } from '~/composables/use-i18n-utilities'
-jest.mock('@nuxtjs/composition-api', () => ({
-  useContext: () => ({
-    i18n: {
-      tc: (fullKey, resultsCount, { localeCount }) => ({
-        fullKey,
-        resultsCount,
-        localeCount,
-      }),
-    },
+jest.mock('~/composables/use-i18n', () => ({
+  useI18n: () => ({
+    tc: (fullKey, resultsCount, { localeCount }) => ({
+      fullKey,
+      resultsCount,
+      localeCount,
+    }),
     locale: 'en',
   }),
 }))

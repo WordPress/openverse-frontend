@@ -3,25 +3,25 @@
     <h4 class="b-header mb-6">
       {{ $t('audio-details.related-audios') }}
     </h4>
-    <template v-if="!$fetchState.error">
+    <template v-if="!error">
       <VAudioTrack
-        v-for="audio in audios"
+        v-for="audio in media"
         :key="audio.id"
         :audio="audio"
         layout="row"
         size="m"
         class="mb-12"
       />
-      <LoadingIcon v-show="$fetchState.pending" />
+      <LoadingIcon v-if="pending" />
     </template>
-    <p v-show="!!$fetchState.error">
+    <p v-else>
       {{ $t('media-details.related-error') }}
     </p>
   </aside>
 </template>
 
 <script>
-import { ref } from '@nuxtjs/composition-api'
+import { ref } from '#app'
 import { AUDIO } from '~/constants/media'
 import useRelated from '~/composables/use-related'
 
@@ -39,7 +39,7 @@ export default {
    * @param {object} props
    * @param {string} props.audioId
    * @param {any} props.service
-   * @return {{ audios: Ref<AudioDetail[]> }}
+   * @return {{ audios: import('#app').Ref<AudioDetail[]> }}
    */
   setup(props) {
     const mainAudioId = ref(props.audioId)
@@ -51,8 +51,8 @@ export default {
     if (props.service) {
       relatedOptions.service = props.service
     }
-    const { media: audios } = useRelated(relatedOptions)
-    return { audios }
+    const { media, pending, error } = useRelated(relatedOptions)
+    return { media, pending, error }
   },
 }
 </script>

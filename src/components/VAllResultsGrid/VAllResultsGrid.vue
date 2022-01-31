@@ -51,7 +51,9 @@
 </template>
 
 <script>
-import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
+import { computed, defineComponent } from '#app'
+import { useStore } from '~/composables/use-store'
+import { useI18n } from '~/composables/use-i18n'
 
 import VImageCell from '~/components/VAllResultsGrid/VImageCell.vue'
 import VAudioCell from '~/components/VAllResultsGrid/VAudioCell.vue'
@@ -64,13 +66,14 @@ export default defineComponent({
   components: { VImageCell, VAudioCell, VLoadMore },
   props: ['canLoadMore'],
   setup(_, { emit }) {
-    const { i18n, store } = useContext()
+    const i18n = useI18n()
+    const store = useStore()
 
     const onLoadMore = () => {
       emit('load-more')
     }
 
-    /** @type {import('@nuxtjs/composition-api').ComputedRef<boolean>} */
+    /** @type {import('#app').ComputedRef<boolean>} */
     const resultsLoading = computed(() => {
       return (
         Boolean(store.getters['media/fetchState'].fetchingError) ||
@@ -125,7 +128,7 @@ export default defineComponent({
       () => !!store.getters['media/fetchState'].fetchingError
     )
 
-    /** @type {import('@nuxtjs/composition-api').ComputedRef<import('../../store/types').FetchState>} */
+    /** @type {import('#app').ComputedRef<import('../../store/types').FetchState>} */
     const fetchState = computed(() => {
       return store.getters['media/fetchState']
     })

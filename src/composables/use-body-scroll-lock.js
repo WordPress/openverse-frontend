@@ -1,11 +1,11 @@
-import { ref } from '@nuxtjs/composition-api'
+import { ref } from '#app'
 import { getDocument } from 'reakit-utils/getDocument'
 
 /**
  * Creates a utility for locking body scrolling for a particular node.
  *
  * @param {object} props
- * @param {import('@nuxtjs/composition-api').Ref<HTMLElement>} props.nodeRef
+ * @param {import('#app').Ref<HTMLElement>} props.nodeRef
  */
 export function useBodyScrollLock({ nodeRef }) {
   const locked = ref(false)

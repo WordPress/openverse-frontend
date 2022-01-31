@@ -43,7 +43,10 @@
 </template>
 
 <script>
-import { computed, useContext, useRouter } from '@nuxtjs/composition-api'
+import { computed, useRouter } from '#app'
+import { useI18n } from '~/composables/use-i18n'
+import { useStore } from '~/composables/use-store'
+
 import { kebabize } from '~/utils/format-strings'
 
 import {
@@ -61,7 +64,8 @@ export default {
     VFilterChecklist,
   },
   setup() {
-    const { i18n, store } = useContext()
+    const i18n = useI18n()
+    const store = useStore()
     const router = useRouter()
 
     const isAnyFilterApplied = computed(

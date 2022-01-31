@@ -161,7 +161,8 @@
 </template>
 
 <script>
-import { computed, ref, useContext, useRouter } from '@nuxtjs/composition-api'
+import { computed, ref, useRouter } from '#app'
+import { useStore } from '~/composables/use-store'
 
 import { USAGE_DATA } from '~/constants/store-modules'
 import {
@@ -206,7 +207,7 @@ export default {
     'thumbnail',
   ],
   setup(props, { emit }) {
-    const { store } = useContext()
+    const store = useStore()
     const router = useRouter()
     const sketchFabfailure = ref(false)
     const activeTab = ref(0)

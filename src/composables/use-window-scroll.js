@@ -1,15 +1,8 @@
 // code taken from Vueuse
 import throttle from 'lodash.throttle'
 import { defaultWindow } from '~/composables/window'
-import { ref } from '@nuxtjs/composition-api'
+import { ref, useState } from '#app'
 import { useEventListener } from '~/composables/use-event-listener'
-
-/**
- * Whether the page has been scrolled down at all
- *
- * @type {import('@nuxtjs/composition-api').Ref<boolean>}
- */
-const isWindowScrolled = ref(false)
 
 /**
  *
@@ -22,6 +15,8 @@ export function useWindowScroll({
   window = defaultWindow,
   throttleMs = 200,
 } = {}) {
+  const isWindowScrolled = useState('window-scrolled', () => false)
+
   if (!window) {
     return {
       x: ref(0),

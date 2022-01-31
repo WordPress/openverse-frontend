@@ -6,9 +6,7 @@ export const propTypes = {
     required: true,
   },
   hide: {
-    type: /** @type {import('@nuxtjs/composition-api').PropType<() => void>} */ (
-      Function
-    ),
+    type: /** @type {import('#app').PropType<() => void>} */ (Function),
     required: true,
   },
   hideOnEsc: {
@@ -28,12 +26,12 @@ export const propTypes = {
     default: true,
   },
   triggerElement: {
-    type: /** @type {import('@nuxtjs/composition-api').PropType<HTMLElement>} */ (
+    type: /** @type {import('#app').PropType<HTMLElement>} */ (
       process.server ? Object : HTMLElement
     ),
   },
   placement: {
-    type: /** @type {import('@nuxtjs/composition-api').PropType<import('@popperjs/core').Placement>} */ (
+    type: /** @type {import('#app').PropType<import('@popperjs/core').Placement>} */ (
       String
     ),
     default: 'bottom-end',
@@ -44,4 +42,4 @@ export const propTypes = {
   },
 }
 
-/** @typedef {import('@nuxtjs/composition-api').ExtractPropTypes<typeof propTypes>} Props */
+/** @typedef {import('#app').ExtractPropTypes<typeof propTypes>} Props */

@@ -1,5 +1,5 @@
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent } from '#app'
 import { targets } from './meta/targets'
 import { warn } from '~/utils/warn'
 

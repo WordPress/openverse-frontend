@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { render, screen } from '@testing-library/vue'
+import { render, screen, waitFor } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
 import VButton from '~/components/VButton.vue'
 import VPopover from '~/components/VPopover/VPopover.vue'
@@ -36,9 +36,6 @@ const TestWrapper = Vue.component('TestWrapper', {
   `,
 })
 
-const nextTick = async () =>
-  await new Promise((resolve) => setTimeout(resolve, 1))
-
 const getPopover = () => screen.getByText(/code is poetry/i)
 const queryPopover = () => screen.queryByText(/code is poetry/i)
 const getTrigger = () => screen.getByRole('button')
@@ -47,9 +44,8 @@ const clickOutside = () => userEvent.click(getExternalArea())
 
 const doOpen = async (trigger = getTrigger(), verify = true) => {
   await userEvent.click(trigger)
-  await nextTick()
   if (verify) {
-    expectOpen()
+    await waitFor(() => expectOpen())
   }
 }
 

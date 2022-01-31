@@ -1,19 +1,13 @@
 import { sendWindowMessage } from '~/utils/send-message.js'
 import untranslatedLocales from '../locales/scripts/untranslated-locales.json'
-import {
-  computed,
-  onMounted,
-  onUnmounted,
-  reactive,
-  ref,
-  useContext,
-} from '@nuxtjs/composition-api'
+import { computed, onMounted, onUnmounted, reactive, ref } from '#app'
+import { useI18n } from '~/composables/use-i18n'
 import { StorageSerializers, useStorage } from '~/composables/use-storage'
 
 const BASE_URL = 'https://translate.wordpress.org/projects/meta/openverse/'
 
 export default function useI18nSync() {
-  const { i18n } = useContext()
+  const i18n = useI18n()
 
   const currentLocale = computed(() => {
     return i18n.locales.find((item) => item.code === i18n.locale)

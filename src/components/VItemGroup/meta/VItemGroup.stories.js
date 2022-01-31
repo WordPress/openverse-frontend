@@ -4,7 +4,7 @@ import VIcon from '~/components/VIcon/VIcon.vue'
 import VPopover from '~/components/VPopover/VPopover.vue'
 import VButton from '~/components/VButton.vue'
 
-import { ref } from '@nuxtjs/composition-api'
+import { ref } from '#app'
 
 import close from '~/assets/icons/close.svg'
 import pause from '~/assets/icons/pause.svg'

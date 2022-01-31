@@ -36,11 +36,11 @@ import {
   computed,
   defineComponent,
   ref,
-  useStore,
   watch,
   onUnmounted,
   useRoute,
-} from '@nuxtjs/composition-api'
+} from '#app'
+import { useStore } from '~/composables/use-store'
 
 import { useActiveAudio } from '~/composables/use-active-audio'
 
@@ -63,7 +63,7 @@ const propTypes = {
    * the information about the track, typically from a track's detail endpoint
    */
   audio: {
-    type: /** @type {import('@nuxtjs/composition-api').PropType<import('~/store/types').AudioDetail>} */ (
+    type: /** @type {import('#app').PropType<import('~/store/types').AudioDetail>} */ (
       Object
     ),
     required: /** @type {true} */ (true),
@@ -74,7 +74,7 @@ const propTypes = {
    * @todo This type def should be extracted for reuse across components
    */
   layout: {
-    type: /** @type {import('@nuxtjs/composition-api').PropType<'full' | 'box' | 'row' | 'global'>} */ (
+    type: /** @type {import('#app').PropType<'full' | 'box' | 'row' | 'global'>} */ (
       String
     ),
     default: 'full',
@@ -88,9 +88,7 @@ const propTypes = {
    * sizes to choose from.
    */
   size: {
-    type: /** @type {import('@nuxtjs/composition-api').PropType<'s' | 'm' | 'l'>} */ (
-      String
-    ),
+    type: /** @type {import('#app').PropType<'s' | 'm' | 'l'>} */ (String),
     default: 'm',
     /**
      * @param {string} val
@@ -240,7 +238,7 @@ export default defineComponent({
       localAudio.removeEventListener('timeupdate', setTimeWhenPaused)
 
       if (
-        route.value.params.id == props.audio.id ||
+        route.params.id == props.audio.id ||
         store.getters[`${MEDIA}/results`]?.items?.[props.audio.id]
       ) {
         /**
@@ -343,7 +341,9 @@ export default defineComponent({
       box: 'VBoxLayout',
       global: 'VGlobalLayout',
     }
-    const layoutComponent = computed(() => layoutMappings[props.layout])
+    const layoutComponent = computed(
+      () => layoutMappings[props.layout] || 'VFullLayout'
+    )
 
     /**
      * A ref used on the play/pause button,

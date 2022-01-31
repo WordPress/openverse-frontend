@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { defineComponent, toRefs, ref } from '@nuxtjs/composition-api'
+import { defineComponent, toRefs, ref } from '#app'
 import { FocusTrap } from 'focus-trap-vue'
 import { useDialogContent } from '~/composables/use-dialog-content'
 import { warn } from '~/utils/warn'
@@ -72,9 +72,7 @@ const VMobileModalContent = defineComponent({
       required: true,
     },
     hide: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<() => void>} */ (
-        Function
-      ),
+      type: /** @type {import('#app').PropType<() => void>} */ (Function),
       required: true,
     },
     hideOnEsc: {
@@ -94,12 +92,12 @@ const VMobileModalContent = defineComponent({
       default: true,
     },
     triggerElement: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<HTMLElement>} */ (
+      type: /** @type {import('#app').PropType<HTMLElement>} */ (
         process.server ? Object : HTMLElement
       ),
     },
     initialFocusElement: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<HTMLElement>} */ (
+      type: /** @type {import('#app').PropType<HTMLElement>} */ (
         process.server ? Object : HTMLElement
       ),
       required: false,

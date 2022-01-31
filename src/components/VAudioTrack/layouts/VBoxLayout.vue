@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { computed, defineComponent } from '@nuxtjs/composition-api'
+import { computed, defineComponent } from '#app'
 
 import VLicense from '~/components/License/VLicense.vue'
 

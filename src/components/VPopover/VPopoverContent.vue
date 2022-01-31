@@ -14,14 +14,14 @@
 </template>
 
 <script>
-import { defineComponent, toRefs, ref, provide } from '@nuxtjs/composition-api'
+import { defineComponent, toRefs, ref, provide } from '#app'
 import { usePopoverContent } from '~/composables/use-popover-content'
 import { warn } from '~/utils/warn'
 
 import { propTypes } from './VPopoverContent.types'
 
 /**
- * @type {import('@nuxtjs/composition-api').InjectionKey<boolean>}
+ * @type {import('#app').InjectionKey<boolean>}
  */
 export const VPopoverContentContextKey = Symbol('VPopoverContentContextKey')
 
@@ -36,7 +36,7 @@ export default defineComponent({
   emits: ['keydown', 'blur'],
   /**
    * @param {import('./VPopoverContent.types').Props} props
-   * @param {import('@nuxtjs/composition-api').SetupContext} context
+   * @param {import('#app').SetupContext} context
    */
   setup(props, { emit, attrs }) {
     provide(VPopoverContentContextKey, true)

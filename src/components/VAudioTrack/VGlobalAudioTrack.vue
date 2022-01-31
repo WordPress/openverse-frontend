@@ -29,13 +29,8 @@
 </template>
 
 <script>
-import {
-  computed,
-  defineComponent,
-  ref,
-  useStore,
-  watch,
-} from '@nuxtjs/composition-api'
+import { computed, defineComponent, ref, watch } from '#app'
+import { useStore } from '~/composables/use-store'
 
 import { useActiveAudio } from '~/composables/use-active-audio'
 
@@ -61,7 +56,7 @@ const propTypes = {
    * @todo This type def should be extracted for reuse across components
    */
   layout: {
-    type: /** @type {import('@nuxtjs/composition-api').PropType<'full' | 'box' | 'row' | 'global'>} */ (
+    type: /** @type {import('#app').PropType<'full' | 'box' | 'row' | 'global'>} */ (
       String
     ),
     default: 'full',
@@ -75,9 +70,7 @@ const propTypes = {
    * sizes to choose from.
    */
   size: {
-    type: /** @type {import('@nuxtjs/composition-api').PropType<'s' | 'm' | 'l'>} */ (
-      String
-    ),
+    type: /** @type {import('#app').PropType<'s' | 'm' | 'l'>} */ (String),
     default: 'm',
     /**
      * @param {string} val
@@ -104,7 +97,7 @@ export default defineComponent({
   },
   props: propTypes,
   /**
-   * @param {import('@nuxtjs/composition-api').ExtractPropTypes<typeof propTypes>} props
+   * @param {import('#app').ExtractPropTypes<typeof propTypes>} props
    */
   setup(props) {
     const store = useStore()
@@ -240,7 +233,9 @@ export default defineComponent({
       box: 'VBoxLayout',
       global: 'VGlobalLayout',
     }
-    const layoutComponent = computed(() => layoutMappings[props.layout])
+    const layoutComponent = computed(
+      () => layoutMappings[props.layout] || 'VFullLayout'
+    )
 
     return {
       status,

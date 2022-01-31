@@ -1,18 +1,16 @@
-import { onMounted, ref } from '@nuxtjs/composition-api'
+import { onMounted, useState } from '#app'
 import local from '~/utils/local'
 import { isMinScreen } from '~/composables/use-media-query'
-
-/** @type {import('@nuxtjs/composition-api').Ref<boolean>} */
-const isVisible = ref(false)
 
 /**
  * This composable keeps track of whether the filters (sidebar or modal) should be visible.
  * @param {object} props
- * @param {import('@nuxtjs/composition-api').Ref<boolean>} [props.mediaQuery=isMinScreen('md')] - the minimum media query at which
+ * @param {import('#app').Ref<boolean>} [props.mediaQuery=isMinScreen('md')] - the minimum media query at which
  * the filters are shown as sidebar instead of the full-page modal.
- * @returns {{isVisible: import('@nuxtjs/composition-api').Ref<boolean>, setVisibility: (val: boolean) => void}}
+ * @returns {{isVisible: import('#app').Ref<boolean>, setVisibility: (val: boolean) => void}}
  */
 export function useFilterSidebarVisibility({ mediaQuery } = {}) {
+  const isVisible = useState('sidebar-visibility', () => false)
   if (!mediaQuery) {
     mediaQuery = isMinScreen('md')
   }

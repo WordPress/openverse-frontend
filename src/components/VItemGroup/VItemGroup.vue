@@ -22,13 +22,7 @@
 </template>
 
 <script>
-import {
-  defineComponent,
-  provide,
-  ref,
-  readonly,
-  computed,
-} from '@nuxtjs/composition-api'
+import { defineComponent, provide, ref, readonly, computed } from '#app'
 import { ensureFocus } from 'reakit-utils/ensureFocus'
 import { useI18n } from '~/composables/use-i18n'
 import * as keycodes from '~/utils/key-codes'
@@ -42,20 +36,20 @@ import * as keycodes from '~/utils/key-codes'
  */
 
 /**
- * @type {import('@nuxtjs/composition-api').InjectionKey<VItemGroupContext>}
+ * @type {import('#app').InjectionKey<VItemGroupContext>}
  */
 export const VItemGroupContextKey = Symbol('VItemGroupContext')
 
 /**
  * @typedef VItemGroupFocusContext
- * @property {import('@nuxtjs/composition-api').Readonly<import('@nuxtjs/composition-api').Ref<boolean>>} isGroupFocused
+ * @property {import('#app').Readonly<import('#app').Ref<boolean>>} isGroupFocused
  * @property {(event: KeyboardEvent) => void} onItemKeyPress
- * @property {import('@nuxtjs/composition-api').Readonly<import('@nuxtjs/composition-api').Ref<number>>} selectedCount
+ * @property {import('#app').Readonly<import('#app').Ref<number>>} selectedCount
  * @property {(selected: boolean, previousSelected: boolean) => void} setSelected
  */
 
 /**
- * @type {import('@nuxtjs/composition-api').InjectionKey<VItemGroupFocusContext>}
+ * @type {import('#app').InjectionKey<VItemGroupFocusContext>}
  */
 export const VItemGroupFocusContextKey = Symbol('VItemGroupFocusContext')
 
@@ -75,7 +69,7 @@ export default defineComponent({
      * @default 'vertical'
      */
     direction: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<'vertical' | 'horizontal' | 'columns' >} */ (
+      type: /** @type {import('#app').PropType<'vertical' | 'horizontal' | 'columns' >} */ (
         String
       ),
       default: 'vertical',
@@ -106,7 +100,7 @@ export default defineComponent({
      * @default 'menu'
      */
     type: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<'menu' | 'radiogroup'>} */ (
+      type: /** @type {import('#app').PropType<'menu' | 'radiogroup'>} */ (
         String
       ),
       default: 'menu',
@@ -132,7 +126,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    /** @type {import('@nuxtjs/composition-api').Ref<HTMLElement | undefined>} */
+    /** @type {import('#app').Ref<HTMLElement | undefined>} */
     const nodeRef = ref()
     const isFocused = ref(false)
     provide(VItemGroupContextKey, props)

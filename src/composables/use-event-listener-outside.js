@@ -1,4 +1,4 @@
-import { watch, ref } from '@nuxtjs/composition-api'
+import { watch, ref } from '#app'
 import { getDocument } from 'reakit-utils/getDocument'
 import { contains } from 'reakit-utils/contains'
 

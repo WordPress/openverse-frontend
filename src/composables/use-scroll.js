@@ -1,6 +1,6 @@
 // code taken from Vueuse
 import throttle from 'lodash.throttle'
-import { ref } from '@nuxtjs/composition-api'
+import { ref } from '#app'
 import { useEventListener } from '~/composables/use-event-listener'
 
 /**
@@ -11,12 +11,12 @@ import { useEventListener } from '~/composables/use-event-listener'
  * Set to 0 to remove throttling
  */
 export function useScroll(element, { throttleMs = 200 } = {}) {
-  /** @type { import('@nuxtjs/composition-api').Ref<number> } */
+  /** @type { import('#app').Ref<number> } */
   const y = ref(0)
   /**
    * Whether the element has been scrolled down at all
    *
-   * @type { import('@nuxtjs/composition-api').Ref<boolean> }
+   * @type { import('#app').Ref<boolean> }
    */
   const isScrolled = ref(false)
 

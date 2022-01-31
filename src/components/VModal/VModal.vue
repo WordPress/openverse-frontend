@@ -30,13 +30,7 @@
 </template>
 
 <script>
-import {
-  defineComponent,
-  ref,
-  watch,
-  reactive,
-  computed,
-} from '@nuxtjs/composition-api'
+import { defineComponent, ref, watch, reactive, computed } from '#app'
 import { useBodyScrollLock } from '~/composables/use-body-scroll-lock'
 import VModalContent from '~/components/VModal/VModalContent.vue'
 
@@ -96,7 +90,7 @@ export default defineComponent({
      * @default undefined
      */
     initialFocusElement: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<HTMLElement>} */ (
+      type: /** @type {import('#app').PropType<HTMLElement>} */ (
         process.server ? Object : HTMLElement
       ),
       default: undefined,
@@ -116,7 +110,7 @@ export default defineComponent({
     const visibleRef = ref(false)
     const nodeRef = ref()
 
-    /** @type {import('@nuxtjs/composition-api').Ref<HTMLElement | undefined>} */
+    /** @type {import('#app').Ref<HTMLElement | undefined>} */
     const triggerContainerRef = ref()
 
     const triggerA11yProps = reactive({

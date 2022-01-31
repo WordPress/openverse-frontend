@@ -7,18 +7,18 @@
       {{ $t('photo-details.related-images') }}
     </h3>
     <ImageGrid
-      :images="images"
+      :images="media"
       :can-load-more="false"
       :fetch-state="{
-        isFetching: $fetchState.pending,
-        fetchingError: $fetchState.error,
+        isFetching: pending,
+        fetchingError: error,
       }"
     />
   </aside>
 </template>
 
 <script>
-import { ref } from '@nuxtjs/composition-api'
+import { ref } from '#app'
 import useRelated from '~/composables/use-related'
 import { IMAGE } from '~/constants/media'
 import ImageGrid from '~/components/ImageGrid/ImageGrid'
@@ -50,9 +50,9 @@ export default {
     if (props.service) {
       relatedOptions.service = props.service
     }
-    const { media: images } = useRelated(relatedOptions)
+    const { media, error, pending } = useRelated(relatedOptions)
 
-    return { images }
+    return { media, error, pending }
   },
 }
 </script>

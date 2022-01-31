@@ -34,6 +34,7 @@
         :label-text="$t('404.search-placeholder')"
         field-id="404-search"
         :placeholder="$t('404.search-placeholder')"
+        size="standalone"
         @input="setSearchTerm"
         @submit="handleSearch"
       />
@@ -42,12 +43,9 @@
 </template>
 
 <script>
-import {
-  defineComponent,
-  ref,
-  useContext,
-  useRouter,
-} from '@nuxtjs/composition-api'
+import { defineComponent, ref, useRouter } from '#app'
+import { useApp } from '~/composables/use-app'
+import { useStore } from '~/composables/use-store'
 import { MEDIA, SEARCH } from '~/constants/store-modules'
 import { FETCH_MEDIA, UPDATE_QUERY } from '~/constants/action-types'
 
@@ -65,7 +63,8 @@ const Error = defineComponent({
   layout: 'blank',
   props: ['error'],
   setup() {
-    const { app, store } = useContext()
+    const app = useApp()
+    const store = useStore()
     const router = useRouter()
 
     const searchTerm = ref('')

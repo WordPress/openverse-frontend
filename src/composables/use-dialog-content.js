@@ -16,7 +16,7 @@ import { useFocusOnBlur } from '~/composables/use-focus-on-blur'
  * @property {() => void} hideRef
  */
 
-/** @typedef {import('./types').ToRefs<InnerProps> & { emit: import('@nuxtjs/composition-api').SetupContext['emit']}} Props */
+/** @typedef {import('./types').ToRefs<InnerProps> & { emit: import('#app').SetupContext['emit']}} Props */
 
 /**
  * @param {Props} props

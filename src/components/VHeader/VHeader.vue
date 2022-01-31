@@ -56,11 +56,13 @@ import {
   inject,
   provide,
   ref,
-  useContext,
-  useRouter,
   watch,
   watchEffect,
-} from '@nuxtjs/composition-api'
+  useRouter,
+} from '#app'
+import { useApp } from '~/composables/use-app'
+import { useI18n } from '~/composables/use-i18n'
+import { useStore } from '~/composables/use-store'
 
 import { MEDIA, SEARCH } from '~/constants/store-modules'
 import {
@@ -98,7 +100,9 @@ const VHeader = defineComponent({
     VSearchBar,
   },
   setup() {
-    const { app, i18n, store } = useContext()
+    const app = useApp()
+    const i18n = useI18n()
+    const store = useStore()
     const router = useRouter()
 
     const { matches: isSearchRoute } = useMatchSearchRoutes()
@@ -122,7 +126,7 @@ const VHeader = defineComponent({
     })
 
     /**
-     * @type {import('@nuxtjs/composition-api').Ref<null|'filters'|'content-switcher'>}
+     * @type {import('#app').Ref<null|'filters'|'content-switcher'>}
      */
     const openMenu = ref(null)
     const isMenuOpen = computed(() => openMenu.value !== null)
@@ -140,12 +144,12 @@ const VHeader = defineComponent({
       openMenu.value = null
     }
 
-    /**  @type {import('@nuxtjs/composition-api').ComputedRef<boolean>} */
+    /**  @type {import('#app').ComputedRef<boolean>} */
     const isFetching = computed(() => {
       return store.getters['media/fetchState'].isFetching
     })
 
-    /** @type {import('@nuxtjs/composition-api').ComputedRef<number>} */
+    /** @type {import('#app').ComputedRef<number>} */
     const resultsCount = computed(() => store.getters['media/resultCount'])
     const { getI18nCount } = useI18nResultsCount()
     /**

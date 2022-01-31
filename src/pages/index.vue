@@ -114,7 +114,9 @@
 </template>
 
 <script>
-import { ref, useContext, useRouter, useStore } from '@nuxtjs/composition-api'
+import { ref, useRouter } from '#app'
+import { useStore } from '~/composables/use-store'
+import { useApp } from '~/composables/use-app'
 
 import { isMinScreen } from '~/composables/use-media-query'
 
@@ -148,7 +150,7 @@ const HomePage = {
     ],
   },
   setup() {
-    const { app } = useContext()
+    const app = useApp()
     const router = useRouter()
     const store = useStore()
 

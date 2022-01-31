@@ -22,13 +22,9 @@
 </template>
 
 <script>
-import {
-  computed,
-  defineComponent,
-  useContext,
-  useMeta,
-  useStore,
-} from '@nuxtjs/composition-api'
+import { computed, defineComponent, useNuxt2Meta as useMeta } from '#app'
+import { useStore } from '~/composables/use-store'
+import { useI18n } from '~/composables/use-i18n'
 import { useLoadMore } from '~/composables/use-load-more'
 
 import VAudioTrack from '~/components/VAudioTrack/VAudioTrack.vue'
@@ -46,7 +42,7 @@ const AudioSearch = defineComponent({
   props: propTypes,
   setup(props) {
     const store = useStore()
-    const { i18n } = useContext()
+    const i18n = useI18n()
 
     const query = computed(() => store.state.search.query.q)
     useMeta({ title: `${query.value} - ${i18n.t('hero.brand')}` })

@@ -11,7 +11,8 @@
   </VButton>
 </template>
 <script>
-import { computed, useContext } from '@nuxtjs/composition-api'
+import { computed } from '#app'
+import { useI18n } from '~/composables/use-i18n'
 
 import ellipsisIcon from '~/assets/icons/ellipsis.svg'
 
@@ -25,7 +26,7 @@ export default {
     a11yProps: {},
   },
   setup() {
-    const { i18n } = useContext()
+    const i18n = useI18n()
     const buttonLabel = computed(() => i18n.t('header.aria.menu'))
     return {
       buttonLabel,

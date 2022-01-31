@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import { computed, defineComponent, ref } from '@nuxtjs/composition-api'
+import { computed, defineComponent, ref } from '#app'
 import VDmcaNotice from './VDmcaNotice'
 import VOtherIssueForm from './VOtherIssueForm'
 import VDoneMessage from './VDoneMessage'
@@ -108,7 +108,7 @@ export default defineComponent({
   props: ['image', 'providerName', 'reportService'],
   setup(props, { emit }) {
     const reportStatus = ref(statuses.OPEN)
-    /** @type {import('@nuxtjs/composition-api').Ref<string|null>} */
+    /** @type {import('#app').Ref<string|null>} */
     const reasonSelected = ref(null)
 
     const service = props.reportService || ReportService

@@ -79,9 +79,7 @@ export default {
       },
     },
     size: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<'medium' | 'small'>} */ (
-        String
-      ),
+      type: /** @type {import('#app').PropType<'medium' | 'small'>} */ (String),
       default: 'medium',
       validator: (v) => ['medium', 'small'].includes(v),
     },

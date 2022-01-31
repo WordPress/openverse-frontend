@@ -1,12 +1,7 @@
 <script>
-import {
-  inject,
-  onMounted,
-  ref,
-  useContext,
-  useRouter,
-  useStore,
-} from '@nuxtjs/composition-api'
+import { inject, onMounted, ref, useRouter } from '#app'
+import { useApp } from '~/composables/use-app'
+import { useStore } from '~/composables/use-store'
 import useContentType from '~/composables/use-content-type'
 
 import VMobileMenuModal from '~/components/VContentSwitcher/VMobileMenuModal.vue'
@@ -33,12 +28,12 @@ export default {
     },
   },
   setup() {
-    /** @type {import('@nuxtjs/composition-api').Ref<boolean>} */
+    /** @type {import('#app').Ref<boolean>} */
     const isMinScreenMd = inject('isMinScreenMd')
-    /** @type {import('@nuxtjs/composition-api').Ref<null|HTMLElement>} */
+    /** @type {import('#app').Ref<null|HTMLElement>} */
     const menuModalRef = ref(null)
     const content = useContentType()
-    const { app } = useContext()
+    const app = useApp()
     const store = useStore()
     const router = useRouter()
 

@@ -53,13 +53,7 @@
 </template>
 
 <script>
-import {
-  defineComponent,
-  inject,
-  ref,
-  computed,
-  watch,
-} from '@nuxtjs/composition-api'
+import { defineComponent, inject, ref, computed, watch } from '#app'
 import checkmark from '~/assets/icons/checkmark.svg'
 import VButton from '~/components/VButton.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'

@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { ref } from '@nuxtjs/composition-api'
+import { ref } from '#app'
 import useContentType from '~/composables/use-content-type'
 import checkIcon from '~/assets/icons/checkmark.svg'
 

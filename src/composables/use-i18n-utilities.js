@@ -1,4 +1,4 @@
-import { useContext } from '@nuxtjs/composition-api'
+import { useI18n } from '~/composables/use-i18n'
 
 /**
  * Not using dynamically-generated keys to ensure that
@@ -14,7 +14,7 @@ const i18nKeys = {
  * Returns the localized text for the number of search results.
  */
 export function useI18nResultsCount() {
-  const { i18n } = useContext()
+  const i18n = useI18n()
   /**
    * @param {number} resultsCount
    * @returns {string}

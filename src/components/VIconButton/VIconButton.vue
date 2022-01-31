@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { computed } from '@nuxtjs/composition-api'
+import { computed } from '#app'
 
 import VIcon from '~/components/VIcon/VIcon.vue'
 

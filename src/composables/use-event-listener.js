@@ -1,10 +1,4 @@
-import {
-  isRef,
-  watch,
-  onMounted,
-  onBeforeUnmount,
-  unref,
-} from '@nuxtjs/composition-api'
+import { isRef, watch, onMounted, onBeforeUnmount, unref } from '#app'
 
 /**
  * Use an event listener. Shamelessly stolen from https://logaretm.com/blog/my-favorite-5-vuejs-composables/#useeventlistener

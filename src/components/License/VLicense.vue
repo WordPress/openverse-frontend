@@ -24,7 +24,8 @@
 </template>
 
 <script>
-import { computed, useContext } from '@nuxtjs/composition-api'
+import { computed } from '#app'
+import { useI18n } from '~/composables/use-i18n'
 
 import VIcon from '~/components/VIcon/VIcon.vue'
 
@@ -76,7 +77,7 @@ export default {
     },
   },
   setup(props) {
-    const { i18n } = useContext()
+    const i18n = useI18n()
     const isDeprecated = computed(() =>
       DEPRECATED_LICENSES.includes(props.license)
     )
@@ -92,7 +93,7 @@ export default {
       () => CC_LICENSES.includes(props.license) || props.license === 'cc0'
     )
     /**
-     * @type {import('@nuxtjs/composition-api').ComputedRef<{ readable: string, full: string }>}
+     * @type {import('#app').ComputedRef<{ readable: string, full: string }>}
      */
     const licenseName = computed(() => {
       if (isDeprecated.value) {

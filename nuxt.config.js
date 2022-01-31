@@ -1,3 +1,4 @@
+import { defineNuxtConfig } from '@nuxt/bridge'
 import pkg from './package.json'
 import locales from './src/locales/scripts/valid-locales.json'
 import { VIEWPORTS } from './src/constants/screens'
@@ -98,7 +99,10 @@ const head = {
   ],
 }
 
-export default {
+export default defineNuxtConfig({
+  bridge: {
+    autoImports: false,
+  },
   // eslint-disable-next-line no-undef
   version: pkg.version, // used to purge cache :)
   cache: {
@@ -137,7 +141,6 @@ export default {
   env,
   dev,
   buildModules: [
-    '@nuxtjs/composition-api/module',
     '@nuxt/postcss8',
     '@nuxtjs/style-resources',
     '@nuxtjs/svg',
@@ -236,4 +239,4 @@ export default {
       },
     },
   },
-}
+})

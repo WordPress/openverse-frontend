@@ -20,7 +20,8 @@
 </template>
 <script>
 import { ALL_MEDIA, AUDIO, IMAGE } from '~/constants/media'
-import { computed, inject, useContext } from '@nuxtjs/composition-api'
+import { computed, inject } from '#app'
+import { useI18n } from '~/composables/use-i18n'
 import useContentType from '~/composables/use-content-type'
 import { isMinScreen } from '~/composables/use-media-query'
 
@@ -44,7 +45,7 @@ export default {
     },
   },
   setup(props) {
-    const { i18n } = useContext()
+    const i18n = useI18n()
     const isHeaderScrolled = inject('isHeaderScrolled', null)
     const isMinScreenMd = isMinScreen('md', { shouldPassInSSR: true })
 

@@ -5,7 +5,7 @@ import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import VueI18n from 'vue-i18n'
 import messages from '../../../../../src/locales/en.json'
-import { ref } from '@nuxtjs/composition-api'
+import { ref } from '#app'
 
 describe('VFilterButton', () => {
   let options = {}

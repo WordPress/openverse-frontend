@@ -18,7 +18,7 @@
   </NuxtLink>
 </template>
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent } from '#app'
 import OpenverseLogoText from '~/assets/icons/openverse-logo-text.svg?inline'
 import VLogoLoader from '~/components/VLogoLoader/VLogoLoader.vue'
 

@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { computed, defineComponent } from '@nuxtjs/composition-api'
+import { computed, defineComponent } from '#app'
 import { useI18nResultsCount } from '~/composables/use-i18n-utilities'
 import { AUDIO, IMAGE, supportedMediaTypes } from '~/constants/media'
 import VIcon from '~/components/VIcon/VIcon.vue'
