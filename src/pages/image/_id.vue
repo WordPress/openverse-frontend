@@ -98,7 +98,6 @@ import Chevron from '~/assets/icons/chevron-left.svg?inline'
 
 const VImageDetailsPage = {
   name: 'VImageDetailsPage',
-  layout: 'blank',
   components: {
     Chevron,
     VButton,
