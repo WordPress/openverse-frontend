@@ -1,5 +1,5 @@
 <template>
-  <div class="app grid h-screen">
+  <div class="app grid h-screen overflow-hidden">
     <MigrationNotice v-show="isReferredFromCc" />
     <TranslationStatusBanner />
     <VHeader />
@@ -106,6 +106,7 @@ export default embeddedPage
   display: grid;
   grid-template-columns: 1fr 316px;
   height: 100%;
+  overflow: hidden;
 }
 
 .main > * {
