@@ -2,7 +2,6 @@
   <VButton
     :id="id"
     type="button"
-    class="text-sr"
     variant="secondary"
     :data-clipboard-target="el"
   >
@@ -60,8 +59,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.button {
-  @apply py-0 px-3 mt-4;
-  font-size: 15px;
+button {
+  @apply py-2 px-3 text-sr;
 }
 </style>

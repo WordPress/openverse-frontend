@@ -11,11 +11,11 @@
         role="tab"
         :aria-controls="`tab-${tab}`"
         :aria-selected="activeTab === tab"
-        class="py-3 md:py-4 px-4 md:px-6 border-t border-x rounded-sm bg-white text-sm md:text-base font-semibold relative pb-[.625rem]"
+        class="py-3 md:py-4 px-4 md:px-6 border-t border-x rounded-t-sm bg-white text-sm md:text-base font-semibold relative"
         :class="[
           activeTab === tab
-            ? 'border-t-dark-charcoal-20 border-x-dark-charcoal-20 -mb-0.5'
-            : 'border-b-tx border-t-tx border-x-tx',
+            ? 'border-t-dark-charcoal-20 border-x-dark-charcoal-20 -mb-[1px]'
+            : 'border-tx',
         ]"
         @click.prevent="setActiveTab(tab)"
         @keyup.enter.prevent="setActiveTab(tab)"
@@ -141,7 +141,7 @@
       <CopyButton
         :id="`copyattr-${tab}`"
         :el="`#attribution-${tab}`"
-        class="mt-10"
+        class="mt-6 md:mt-10"
         @copied="(e) => onCopyAttribution(tab, e)"
       />
     </div>
