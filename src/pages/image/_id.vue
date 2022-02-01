@@ -156,7 +156,10 @@ const VImageDetailsPage = {
   },
   beforeRouteEnter(to, from, nextPage) {
     nextPage((_this) => {
-      if (from.path === '/search/' || from.path === '/search/image') {
+      if (
+        from.name === _this.localeRoute({ path: '/search/' }).name ||
+        from.name === _this.localeRoute({ path: '/search/image' }).name
+      ) {
         _this.shouldShowBreadcrumb = true
         _this.breadcrumbUrl = from.fullPath
       }
