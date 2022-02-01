@@ -63,7 +63,7 @@ const PhotoDetailPage = {
     nextPage((_this) => {
       if (
         from.name === _this.localeRoute({ path: '/search/' }).name ||
-        _this.localeRoute({ path: '/search/image' }).name
+        from.name === _this.localeRoute({ path: '/search/image' }).name
       ) {
         _this.shouldShowBreadcrumb = true
         _this.breadCrumbURL = from.fullPath
