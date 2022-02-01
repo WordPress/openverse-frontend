@@ -1,10 +1,6 @@
 <template>
-  <div ref="nodeRef" class="flex justify-center">
-    <div
-      ref="triggerContainerRef"
-      class="flex items-stretch"
-      @click="onTriggerClick"
-    >
+  <div ref="nodeRef" class="mobile-menu ms-auto md:ms-0">
+    <div ref="triggerContainerRef" @click="onTriggerClick">
       <VContentSwitcherButton
         :a11y-props="triggerA11yProps"
         :active-item="activeItem"
@@ -15,9 +11,11 @@
       :trigger-element="triggerRef"
       :hide="close"
       :aria-label="$t('header.filter-button.simple')"
+      :initial-focus-element="initialFocusElement"
     >
       <nav class="p-6" aria-labelledby="content-switcher-heading">
         <VContentTypes
+          ref="contentTypesNode"
           size="small"
           :active-item="content.activeType.value"
           @select="selectItem"
@@ -29,7 +27,13 @@
 </template>
 
 <script>
-import { onMounted, reactive, ref, watch } from '@nuxtjs/composition-api'
+import {
+  onMounted,
+  reactive,
+  ref,
+  watch,
+  computed,
+} from '@nuxtjs/composition-api'
 import { useBodyScrollLock } from '~/composables/use-body-scroll-lock'
 import useContentType from '~/composables/use-content-type'
 import usePages from '~/composables/use-pages'
@@ -61,6 +65,8 @@ export default {
     const content = useContentType()
     const pages = usePages()
 
+    /** @type {import('@nuxtjs/composition-api').Ref<import('vue/types/vue').Vue | null>} */
+    const contentTypesNode = ref(null)
     const modalRef = ref(null)
     const triggerContainerRef = ref(null)
 
@@ -76,6 +82,10 @@ export default {
 
     const triggerRef = ref()
     onMounted(() => (triggerRef.value = triggerContainerRef.value?.firstChild))
+
+    const initialFocusElement = computed(() =>
+      contentTypesNode.value?.$el?.querySelector('[aria-checked="true"]')
+    )
 
     watch([visibleRef], ([visible]) => {
       triggerA11yProps['aria-expanded'] = visible
@@ -130,6 +140,8 @@ export default {
       triggerA11yProps,
       visibleRef,
       selectItem,
+      initialFocusElement,
+      contentTypesNode,
     }
   },
 }

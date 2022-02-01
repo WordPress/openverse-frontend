@@ -29,23 +29,29 @@
         {{ $t('photo-details.legal-disclaimer') }}
       </p>
 
-      <VButton
-        variant="action-button"
-        size="disabled"
-        class="report py-2 mt-2"
-        @click="reportForm.toggleVisibility"
+      <VPopover
+        :z-index="20"
+        :aria-label="$t('photo-details.content-report.title')"
       >
-        {{ $t('photo-details.content-report.title') }}
-        <VIcon :icon-path="icons.flag" class="text-trans-blue ms-2 text-sm" />
-      </VButton>
-      <VContentReportForm
-        v-if="isReportFormVisible"
-        :image="image"
-        :provider-name="providerName"
-        data-testid="content-report-form"
-        class="mt-2 text-left"
-        @close-form="reportForm.close()"
-      />
+        <template #trigger="{ a11yProps }">
+          <VButton v-bind="a11yProps" variant="plain" class="mt-2">
+            {{ $t('photo-details.content-report.title') }}
+            <VIcon
+              :icon-path="icons.flag"
+              class="text-trans-blue ms-2 text-sm"
+            />
+          </VButton>
+        </template>
+        <template #default="{ close }">
+          <VContentReportForm
+            :image="image"
+            :provider-name="providerName"
+            data-testid="content-report-form"
+            class="mt-2 text-left w-80 whitespace-normal"
+            @close-form="close"
+          />
+        </template>
+      </VPopover>
     </div>
     <div
       role="region"
@@ -176,6 +182,7 @@ import VContentReportForm from '~/components/VContentReport/VContentReportForm.v
 import SketchFabViewer from '~/components/SketchFabViewer.vue'
 import ImageInfo from '~/components/ImageDetails/ImageInfo.vue'
 import ImageAttribution from '~/components/ImageDetails/ImageAttribution.vue'
+import VPopover from '~/components/VPopover/VPopover.vue'
 
 export default {
   name: 'VPhotoDetails',
@@ -187,6 +194,7 @@ export default {
     VButton,
     VIcon,
     VContentReportForm,
+    VPopover,
   },
   props: [
     'image',
@@ -202,7 +210,6 @@ export default {
     const router = useRouter()
     const sketchFabfailure = ref(false)
     const activeTab = ref(0)
-    const isReportFormVisible = ref(false)
 
     const imgUrl = computed(() => {
       return isLoaded.value ? props.image.url : props.thumbnail
@@ -246,11 +253,6 @@ export default {
     }
     const setActiveTab = (tabIdx) => (activeTab.value = tabIdx)
 
-    const onCloseReportForm = () => (isReportFormVisible.value = false)
-    const toggleReportFormVisibility = () => {
-      isReportFormVisible.value = !isReportFormVisible.value
-    }
-
     const sendEvent = (eventType) => {
       const eventData = {
         eventType,
@@ -269,7 +271,6 @@ export default {
       isLoaded,
       sketchFabUid,
       sketchFabfailure,
-      isReportFormVisible,
       goBackToSearchResults,
       linkClicked: {
         photoSource: onPhotoSourceLinkClicked,
@@ -278,10 +279,6 @@ export default {
       license: {
         url: licenseUrl.value,
         fullName: fullLicenseName.value,
-      },
-      reportForm: {
-        close: onCloseReportForm,
-        toggleVisibility: toggleReportFormVisibility,
       },
       icons: {
         chevronLeft,

@@ -1,8 +1,9 @@
 <template>
   <VPopover
     ref="contentMenuPopover"
-    class="flex mx-4 items-stretch"
+    class="flex items-stretch"
     :label="$t('search-type.label')"
+    placement="bottom-start"
   >
     <template #trigger="{ a11yProps }">
       <VContentSwitcherButton
@@ -33,6 +34,10 @@ export default {
     VContentSwitcherButton,
     VPopover,
     VContentTypes,
+  },
+  model: {
+    prop: 'activeItem',
+    event: 'select',
   },
   props: {
     activeItem: {

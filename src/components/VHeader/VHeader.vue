@@ -1,44 +1,30 @@
 <template>
   <header
-    class="flex py-4 px-4 md:px-7 items-stretch z-40 w-full bg-white md:gap-x-2 gap-y-4"
+    class="flex px-4 md:px-7 items-stretch z-40 w-full bg-white gap-x-2 gap-y-4 flex-wrap md:flex-nowrap"
     :class="{
-      'flex-wrap': isSearchRoute,
+      'py-3': isHeaderScrolled,
+      'py-4': !isHeaderScrolled,
       'border-b border-white': !isHeaderScrolled && !isMenuOpen,
       'border-b border-dark-charcoal-20':
         isSearchRoute && (isHeaderScrolled || isMenuOpen),
       'justify-between': isSearchRoute,
-      'justify-start': !isSearchRoute,
+      'justify-between md:justify-start': !isSearchRoute,
+      'flex-nowrap': !isSearchRoute && isHeaderScrolled,
     }"
   >
-    <div class="items-stretch flex" :class="{ 'one-third': isSearchRoute }">
-      <NuxtLink
-        to="/"
-        class="rounded-sm ring-offset-1 focus:outline-none focus-visible:ring focus-visible:ring-pink -ms-2 inline-flex items-center hover:bg-yellow mr-auto"
-        :class="{
-          'pe-3 md:pe-0': isSearchRoute && !isHeaderScrolled,
-          'md:pe-3': !isSearchRoute,
-        }"
-      >
-        <VLogoLoader :status="isFetching ? 'loading' : 'idle'" />
-        <OpenverseLogoText
-          v-if="!isSearchRoute || (isSearchRoute && !isHeaderScrolled)"
-          class="-ml-1 mt-1"
-          :class="{ 'md:hidden': isSearchRoute }"
-          width="95"
-          height="15"
-        />
-      </NuxtLink>
-    </div>
+    <VLogoButton
+      :is-fetching="isFetching"
+      :is-header-scrolled="isHeaderScrolled"
+      :is-search-route="isSearchRoute"
+    />
 
     <VSearchBar
-      v-show="!isHomeRoute"
       v-model.trim="searchTerm"
-      class="md:ms-0 lg:w-1/2 2xl:w-1/3"
+      class="md:w-full lg:w-1/2 2xl:w-1/3"
+      :size="isMinScreenMd ? 'medium' : isHeaderScrolled ? 'small' : 'large'"
       :class="{
-        'order-4 md:order-none w-full md:w-auto':
-          isSearchRoute && !isHeaderScrolled,
-        'mx-auto md:me-auto': isSearchRoute,
-        'w-2/3': isHeaderScrolled,
+        'order-4 md:order-none w-full md:w-auto': !isHeaderScrolled,
+        'search-bar-mobile-scrolled': isSearchRoute && isHeaderScrolled,
       }"
       @submit="handleSearch"
     >
@@ -52,14 +38,11 @@
 
     <VHeaderMenu
       :is-search-route="isSearchRoute"
-      :class="{ 'one-third': isSearchRoute }"
       @open="openMenuModal(menus.CONTENT_SWITCHER)"
       @close="close()"
     />
     <VHeaderFilter
       v-if="isSearchRoute"
-      class="text-sr md:text-base"
-      :class="{ 'one-third': isSearchRoute }"
       @open="openMenuModal(menus.FILTERS)"
       @close="close()"
     />
@@ -85,39 +68,22 @@ import {
   FETCH_MEDIA,
   UPDATE_QUERY,
 } from '~/constants/action-types'
-import { ALL_MEDIA, AUDIO, IMAGE } from '~/constants/media'
+import { AUDIO, IMAGE } from '~/constants/media'
 import { isMinScreen } from '~/composables/use-media-query'
 import {
-  useMatchSearchRoutes,
   useMatchHomeRoute,
+  useMatchSearchRoutes,
 } from '~/composables/use-match-routes'
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
+import { useI18nResultsCount } from '~/composables/use-i18n-utilities'
 
 import closeIcon from '~/assets/icons/close.svg'
-import OpenverseLogoText from '~/assets/icons/openverse-logo-text.svg?inline'
 
 import VHeaderMenu from '~/components/VHeader/VHeaderMenu.vue'
 import VHeaderFilter from '~/components/VHeader/VHeaderFilter.vue'
-import VLogoLoader from '~/components/VLogoLoader/VLogoLoader.vue'
 import VSearchBar from '~/components/VHeader/VSearchBar/VSearchBar.vue'
+import VLogoButton from '~/components/VHeader/VLogoButton.vue'
 
-const i18nKeys = {
-  [ALL_MEDIA]: {
-    noResult: 'browse-page.all-no-results',
-    result: 'browse-page.all-result-count',
-    more: 'browse-page.all-result-count-more',
-  },
-  [AUDIO]: {
-    noResult: 'browse-page.audio-no-results',
-    result: 'browse-page.audio-result-count',
-    more: 'browse-page.audio-result-count-more',
-  },
-  [IMAGE]: {
-    noResult: 'browse-page.image-no-results',
-    result: 'browse-page.image-result-count',
-    more: 'browse-page.image-result-count-more',
-  },
-}
 const menus = {
   FILTERS: 'filters',
   CONTENT_SWITCHER: 'content-switcher',
@@ -126,11 +92,10 @@ const menus = {
 const VHeader = defineComponent({
   name: 'VHeader',
   components: {
+    VLogoButton,
     VHeaderFilter,
     VHeaderMenu,
-    VLogoLoader,
     VSearchBar,
-    OpenverseLogoText,
   },
   setup() {
     const { app, i18n, store } = useContext()
@@ -180,30 +145,15 @@ const VHeader = defineComponent({
       return store.getters['media/fetchState'].isFetching
     })
 
-    /**
-     * Return a text representation of the result count.
-     * @param {number} count
-     * @returns {string}
-     */
-    const mediaCount = (count) => {
-      if (store.getters['media/unsupportedMediaType']) return ''
-
-      const countKey =
-        count === 0 ? 'noResult' : count >= 10000 ? 'more' : 'result'
-      const i18nKey = i18nKeys[store.state.search.searchType][countKey]
-      const localeCount = count.toLocaleString(i18n.locale)
-      return i18n.tc(i18nKey, count, { localeCount })
-    }
-
     /** @type {import('@nuxtjs/composition-api').ComputedRef<number>} */
     const resultsCount = computed(() => store.getters['media/resultCount'])
-
+    const { getI18nCount } = useI18nResultsCount()
     /**
      * Status is hidden below the medium breakpoint.
      * It shows Loading... or Number of results on bigger screens.
      * @returns {string}
      */
-    const setInitialStatus = () => {
+    const setStatus = () => {
       if (
         !isMinScreenMd.value ||
         !isSearchRoute.value ||
@@ -211,24 +161,12 @@ const VHeader = defineComponent({
       )
         return ''
       if (isFetching.value) return i18n.t('header.loading')
-      return mediaCount(resultsCount.value)
+      return getI18nCount(resultsCount.value)
     }
 
-    const searchStatus = ref(setInitialStatus())
+    const searchStatus = ref(setStatus())
 
-    watchEffect(() => {
-      if (isMinScreenMd.value) {
-        if (isFetching.value) {
-          searchStatus.value = i18n.t('header.loading')
-        } else if (!isSearchRoute.value) {
-          searchStatus.value = ''
-        } else {
-          searchStatus.value = mediaCount(resultsCount.value)
-        }
-      } else {
-        searchStatus.value = ''
-      }
-    })
+    watchEffect(() => setStatus())
 
     const localSearchTerm = ref(store.state.search.query.q)
     const searchTerm = computed({
@@ -313,9 +251,10 @@ export default VHeader
 </script>
 <style scoped>
 @media (max-width: 767px) {
-  .one-third {
-    flex-grow: 1;
-    flex-shrink: 0;
+  .search-bar-mobile-scrolled {
+    /* outer padding, inner gaps, (logo, content switcher and filter button), additional content switcher padding */
+    /* width: calc(100vw - 2rem - 1.5rem - 3 * 2.5rem - 0.25rem); */
+    width: calc(100vw - 11.25rem);
   }
 }
 </style>
