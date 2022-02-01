@@ -6,7 +6,8 @@
     <header
       class="flex-grow w-full lg:w-auto lg:min-w-[32rem] xl:min-w-[64rem] box-border px-6 lg:pl-30 lg:pr-0 xl:px-40 mx-auto flex flex-col justify-center"
     >
-      <NuxtLink to="/" class="relative z-10">
+      <VLogoButton class="lg:hidden" :auto-resize-logo="false" />
+      <NuxtLink to="/" class="relative z-10 hidden lg:block">
         <h1>
           <span class="sr-only">{{ $t('hero.brand') }}</span>
           <!-- width and height chosen w.r.t. viewBox "0 0 280 42" -->
@@ -128,6 +129,7 @@ import OpenverseLogo from '~/assets/logo.svg?inline'
 import VContentSwitcherPopover from '~/components/VContentSwitcher/VContentSwitcherPopover.vue'
 import VContentTypeButton from '~/components/VContentSwitcher/VContentTypeButton.vue'
 import VSearchBar from '~/components/VHeader/VSearchBar/VSearchBar.vue'
+import VLogoButton from '~/components/VHeader/VLogoButton.vue'
 
 const HomePage = {
   name: 'home-page',
@@ -137,6 +139,7 @@ const HomePage = {
     VContentSwitcherPopover,
     VContentTypeButton,
     VSearchBar,
+    VLogoButton,
   },
   head: {
     meta: [
