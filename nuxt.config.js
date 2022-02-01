@@ -174,8 +174,15 @@ export default {
     langDir: 'locales',
     defaultLocale: 'en',
     /**
-     * This section is critical for the current, iframed production environment
-     * {@link https://i18n.nuxtjs.org/options-reference/#detectbrowserlanguage}
+     * `detectBrowserLanguage` must be false to prevent nuxt/i18n from automatically
+     * setting the locale based on headers or the client-side `navigator` object.
+     *
+     * Such detection is handled at the parent level in WP.org.
+     *
+     * More info about the Nuxt i18n:
+     *
+     * - [detectBrowserLanguage](https://i18n.nuxtjs.org/options-reference/#detectbrowserlanguage)
+     * - [Browser language detection info](https://i18n.nuxtjs.org/browser-language-detection)
      * */
     detectBrowserLanguage: false,
     vueI18n: '~/plugins/vue-i18n.js',
