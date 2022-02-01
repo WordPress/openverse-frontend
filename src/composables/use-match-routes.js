@@ -18,7 +18,6 @@ export const useMatchRoute = (routes = []) => {
     (route) => app.localeRoute({ name: route }).name
   )
   const matches = ref(localizedRoutes.includes(route.value.name))
-  console.log(route.value.name)
   router.beforeEach((to, from, next) => {
     matches.value = localizedRoutes.includes(to.name)
     next()
