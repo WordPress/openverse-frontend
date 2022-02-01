@@ -26,5 +26,3 @@ jobs:
         uses: ./.github/workflows/build.yaml@v1
         with:
           is_production: false
-
-

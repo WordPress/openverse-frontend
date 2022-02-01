@@ -83,4 +83,3 @@ jobs:
           tags: ${{ steps.metadata_production.outputs.tags }}
           labels: ${{ steps.metadata_production.outputs.labels }}
           push: true
-
