@@ -45,7 +45,7 @@ import { mapState } from 'vuex'
 import { FETCH_AUDIO } from '~/constants/action-types'
 import iframeHeight from '~/mixins/iframe-height'
 import { AUDIO } from '~/constants/media'
-import attributionHtml from '~/utils/attribution-html'
+import getAttributionHtml from '~/utils/attribution-html'
 import { getFullLicenseName } from '~/utils/license'
 import { MEDIA } from '~/constants/store-modules'
 
@@ -93,7 +93,10 @@ const AudioDetailPage = {
   },
   beforeRouteEnter(to, from, nextPage) {
     nextPage((_this) => {
-      if (from.path === '/search/' || from.path === '/search/audio') {
+      if (
+        from.name === _this.localeRoute({ path: '/search/' }).name ||
+        from.name === _this.localeRoute({ path: '/search/audio' }).name
+      ) {
         _this.shouldShowBreadcrumb = true
         _this.breadCrumbURL = from.fullPath
       }
@@ -102,7 +105,7 @@ const AudioDetailPage = {
   methods: {
     attributionHtml() {
       const licenseUrl = `${this.licenseUrl}&atype=html`
-      return attributionHtml(this.audio, licenseUrl, this.fullLicenseName)
+      return getAttributionHtml(this.audio, licenseUrl, this.fullLicenseName)
     },
     goBack() {
       this.$router.back()
