@@ -16,13 +16,13 @@
         id="main-image"
         :src="image.url"
         :alt="image.title"
-        class="h-full max-h-[500px] sm:mx-auto rounded-t-sm"
+        class="h-full max-h-[500px] mx-auto rounded-t-sm"
         @load="onImageLoaded"
       />
       <SketchFabViewer
         v-if="sketchFabUid"
         :uid="sketchFabUid"
-        class="sm:mx-auto rounded-t-sm"
+        class="mx-auto rounded-t-sm"
         @failure="sketchFabfailure = true"
       />
     </figure>
