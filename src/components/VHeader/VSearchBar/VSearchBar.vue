@@ -6,6 +6,7 @@
     <VInputField
       v-bind="$attrs"
       class="flex-grow search-field"
+      :class="{ 'border-0': isHomeRoute }"
       :label-text="$t('hero.aria.search')"
       :connection-sides="['end']"
       :size="size"
