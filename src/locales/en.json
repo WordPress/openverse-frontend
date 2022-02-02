@@ -9,6 +9,7 @@
     "brand": "Openverse",
     "subtitle": "Browse through over 600 million items to reuse",
     "search": {
+      "button": "Search",
       "placeholder": "Search for content"
     },
     "disclaimer": {

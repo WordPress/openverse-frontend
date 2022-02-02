@@ -18,12 +18,13 @@
       <!-- @slot Extra information such as loading message or result count goes here. -->
       <slot />
     </VInputField>
-    <VSearchButton type="submit" :size="size" />
+    <VSearchButton type="submit" :size="size" :is-home-route="isHomeRoute" />
   </form>
 </template>
 
 <script>
 import { computed, defineComponent } from '@nuxtjs/composition-api'
+import { useMatchHomeRoute } from '~/composables/use-match-routes'
 
 import VInputField from '~/components/VInputField/VInputField.vue'
 import VSearchButton from '~/components/VHeader/VSearchBar/VSearchButton.vue'
@@ -56,6 +57,8 @@ const VSearchBar = defineComponent({
   },
   emits: ['input', 'submit'],
   setup(props, { emit }) {
+    const { matches: isHomeRoute } = useMatchHomeRoute()
+
     const searchText = computed(() => props.value)
     const updateSearchText = (val) => {
       emit('input', val)
@@ -67,6 +70,7 @@ const VSearchBar = defineComponent({
 
     return {
       handleSearch,
+      isHomeRoute,
       searchText,
       updateSearchText,
     }

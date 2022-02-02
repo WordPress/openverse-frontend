@@ -1,12 +1,20 @@
 <template>
-  <VIconButton
-    v-bind="$attrs"
-    :size="`search-${size}`"
-    class="search-button hover:text-white group-hover:text-white hover:bg-pink group-hover:bg-pink p-0.5px ps-1.5px focus:p-0 border md:border border-dark-charcoal-20 hover:border-pink group-hover:border-pink rounded-e-sm active:shadow-ring"
-    :icon-props="{ iconPath: searchIcon }"
-    :aria-label="$t('search.search')"
-    v-on="$listeners"
-  />
+  <div>
+    <VButton
+      v-if="isHomeRoute"
+      class="hidden md:inline-block cta-search-button font-semibold h-full text-2xl"
+      >{{ $t('hero.search.button') }}</VButton
+    >
+    <VIconButton
+      v-bind="$attrs"
+      :size="`search-${size}`"
+      class="search-button hover:text-white group-hover:text-white hover:bg-pink group-hover:bg-pink p-0.5px ps-1.5px focus:p-0 border md:border border-dark-charcoal-20 hover:border-pink group-hover:border-pink rounded-e-sm active:shadow-ring"
+      :class="{ 'md:hidden': isHomeRoute }"
+      :icon-props="{ iconPath: searchIcon }"
+      :aria-label="$t('search.search')"
+      v-on="$listeners"
+    />
+  </div>
 </template>
 
 <script>
@@ -24,6 +32,10 @@ export default {
       required: true,
       validator: (v) => ['small', 'medium', 'large', 'standalone'].includes(v),
     },
+    isHomeRoute: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup() {
     return { searchIcon }
@@ -31,7 +43,11 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.cta-search-button {
+  @apply py-6 px-10 rounded-s-none;
+}
+
 /* @todo: Find a better way to override the VIconButton border styles */
 .search-button {
   /* Negative margin removes a tiny gap between the button and the input borders */
