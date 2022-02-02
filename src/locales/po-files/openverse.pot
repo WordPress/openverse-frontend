@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-02-02T20:29:37+00:00\n"
+"POT-Creation-Date: 2022-02-02T21:33:33+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -182,7 +182,7 @@ msgctxt "audio-categories.pronunciation"
 msgid "Pronunciation"
 msgstr ""
 
-#: src/components/VHeader/VSearchBar/VSearchButton.vue:14
+#: src/components/VHeader/VSearchBar/VSearchButton.vue:6
 msgctxt "search.search"
 msgid "Search"
 msgstr ""
@@ -1951,11 +1951,6 @@ msgstr ""
 #: src/pages/index.vue:63
 msgctxt "hero.disclaimer.license"
 msgid "Creative Commons license"
-msgstr ""
-
-#: src/components/VHeader/VSearchBar/VSearchButton.vue:6
-msgctxt "hero.search.button"
-msgid "Search"
 msgstr ""
 
 #: src/pages/index.vue:39

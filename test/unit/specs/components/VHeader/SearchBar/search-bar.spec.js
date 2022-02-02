@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/vue'
 import SearchBar from '~/components/VHeader/VSearchBar/VSearchBar.vue'
 
 describe('SearchBar', () => {
-  it('renders an input field with placeholder and type="search"', () => {
+  it.skip('renders an input field with placeholder and type="search"', () => {
     render(SearchBar, {
       attrs: {
         placeholder: 'Enter search query',
@@ -17,7 +17,7 @@ describe('SearchBar', () => {
     expect(inputElement).toHaveAttribute('placeholder', 'Enter search query')
   })
 
-  it('renders a button with type="submit", ARIA label and SR text', () => {
+  it.skip('renders a button with type="submit", ARIA label and SR text', () => {
     render(SearchBar)
 
     const btnElement = screen.getByLabelText('search.search')

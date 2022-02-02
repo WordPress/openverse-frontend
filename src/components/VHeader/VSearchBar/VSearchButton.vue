@@ -6,7 +6,7 @@
       :aria-label="$t('search.search')"
       class="inline-block cta-search-button font-semibold h-full text-2xl"
       v-on="$listeners"
-      >{{ $t('hero.search.button') }}</VButton
+      >{{ $t('search.search') }}</VButton
     >
     <VIconButton
       v-else
