@@ -1,15 +1,19 @@
 {
+  "404": {
+    "title": "The content you’re looking for seems to have disappeared.",
+    "main": "Go to {link} or search for something similar from the field below.",
+    "link-title": "Openverse",
+    "search-placeholder": "Search for content to reuse"
+  },
   "hero": {
     "brand": "Openverse",
-    "title": "Search for content to reuse",
-    "subtitle": "Browse over 500 million images, available for reuse",
+    "subtitle": "Browse through over 600 million items to reuse",
     "search": {
-      "placeholder": "Search all content",
-      "button": "Search"
+      "placeholder": "Search for content"
     },
-    "caption": {
-      "content": "All our content is under Creative Commons licenses or in the public domain. {link} about CC licenses and tools.",
-      "link": "Learn more"
+    "disclaimer": {
+      "content": "All Openverse content is under a {license} or is in the public domain.",
+      "license": "Creative Commons license"
     },
     "license-filter": {
       "label": "I want something I can"
@@ -20,28 +24,21 @@
     },
     "aria": {
       "search": "search",
-      "caption": "about cc licenses",
       "search-type": "search type"
-    },
-    "search-type": {
-      "audio": "Audio",
-      "image": "Images",
-      "prompt": "I would like to find:"
     }
   },
   "notification": {
     "translation": {
       "text": "The translation for {locale} locale is incomplete. Help us get to 100 percent by {link}.",
       "link": "contributing a translation"
-    },
-    "dismiss": "Dismiss",
-    "okay": "OK"
+    }
   },
   "header": {
     "about-nav-item": "Our Story",
     "source-nav-item": "Sources",
     "search-guide-nav-item": "Search Guide",
     "meta-search-nav-item": "Meta Search",
+    "privacy-nav-item": "Privacy",
     "feedback-nav-item": "Feedback",
     "support-nav-item": "Support Us",
     "extension-nav-item": "Web extension",
@@ -50,12 +47,22 @@
       "primary": "primary",
       "menu": "menu",
       "search": "search",
-      "sr-search": "sr search button"
+      "sr-search": "search button"
     },
     "licenses-nav-item": "The Licenses",
     "about-tab": "About",
     "resources-tab": "Resources",
-    "api-nav-item": "API"
+    "api-nav-item": "API",
+    "notification": {
+      "text": "{example_notification_text}",
+      "dismiss": "Dismiss",
+      "okay": "OK"
+    },
+    "loading": "Loading...",
+    "filter-button": {
+      "simple": "Filters",
+      "with-count": "{count} Filter|{count} Filters"
+    }
   },
   "footer": {
     "navigation": {
@@ -293,31 +300,18 @@
     },
     "conclusion": "Have your favourite content while browsing the web"
   },
-  "collections": {
-    "title": "Browse collections",
-    "museum": "Museum Collections",
-    "other": "Other Collections",
-    "collection-size": "Collection size: {count} images"
-  },
   "error": {
-    "not-found": "Page Not Found",
     "occurred": "An error occurred",
     "image-not-found": "Couldn't find image with id {id}",
     "media-not-found": "Couldn't find {mediaType} with id {id}",
     "image": "image",
     "audio": "audio"
   },
-  "search-tab": {
-    "all": "All",
-    "image": "Image",
-    "audio": "Audio",
-    "video": "Video"
-  },
   "filters": {
     "title": "Filters",
     "filter-by": "Filter By",
     "licenses": {
-      "title": "License or Public Domain",
+      "title": "Licenses",
       "cc0": "CC0",
       "pdm": "Public Domain Mark",
       "by": "BY",
@@ -339,38 +333,38 @@
       "title": "Source"
     },
     "audio-categories": {
-      "title": "Audio Category",
+      "title": "Audio category",
       "music": "Music",
-      "sound-effects": "Sound Effects",
+      "sound": "Sound effects",
       "podcast": "Podcast"
     },
     "image-categories": {
-      "title": "Image Type",
+      "title": "Image type",
       "photograph": "Photographs",
       "illustration": "Illustrations",
       "digitized-artwork": "Digitized Artworks"
     },
     "audio-extensions": {
-      "title": "File Type",
+      "title": "File type",
       "mp3": "MP3s",
       "ogg": "OGGs",
       "flac": "FLACs"
     },
     "image-extensions": {
-      "title": "File Type",
+      "title": "File type",
       "jpg": "JPEGs",
       "png": "PNGs",
       "gif": "GIFs",
       "svg": "SVGs"
     },
     "aspect-ratios": {
-      "title": "Aspect Ratio",
+      "title": "Aspect ratio",
       "tall": "Tall",
       "wide": "Wide",
       "square": "Square"
     },
     "sizes": {
-      "title": "Image Size",
+      "title": "Image size",
       "small": "Small",
       "medium": "Medium",
       "large": "Large"
@@ -393,8 +387,8 @@
       "creator": "Creator"
     },
     "license-explanation": {
-      "tool": "Read more about the tool {link}",
-      "license": "Read more about the license {link}",
+      "tool": "Read more about the tool {link}.",
+      "license": "Read more about the license {link}.",
       "link": "here"
     },
     "aria": {
@@ -402,7 +396,7 @@
     }
   },
   "filter-list": {
-    "filter-by": "Filter results by",
+    "filter-by": "Filter by",
     "hide": "Hide filters",
     "clear": "Clear filters",
     "show": "Show results",
@@ -410,15 +404,8 @@
   },
   "browse-page": {
     "all-no-results": "No results",
-    "audio-no-results": "No audio results",
-    "image-no-results": "No image results",
     "all-result-count": "{localeCount} result|{localeCount} results",
-    "audio-result-count": "{localeCount} audio result|{localeCount} audio results",
-    "image-result-count": "{localeCount} image result|{localeCount} image results",
-    "all-result-count-more": "Over {localeCount} results",
-    "audio-result-count-more": "Over {localeCount} audio results",
-    "image-result-count-more": "Over {localeCount} image results",
-    "no-more": "No more {type} :(",
+    "all-result-count-more": "Over {localeCount} result|Over {localeCount} results",
     "load": "Load more results",
     "fetching-error": "Error fetching {type}:",
     "search-rating": {
@@ -445,11 +432,6 @@
       "cc0": "This work has been marked as dedicated to the public domain.",
       "pdm": "This work is marked as being in the public domain."
     },
-    "safer-browsing": {
-      "title": "Safer Browsing",
-      "caption": "By default, search results will not include results that have been reported as mature by users and sources.",
-      "label": "Show Mature Content"
-    },
     "aria": {
       "close": "close",
       "scroll": "scroll to top",
@@ -475,11 +457,11 @@
         "link": "here"
       },
       "tool": {
-        "content": "Read more about the tool {link}",
+        "content": "Read more about the tool {link}.",
         "link": "here"
       },
       "credit": {
-        "text": "{title}{creator}{marked-licensed}{license}{view-legal}",
+        "text": "\"{title}\"{creator}{marked-licensed}{license}{view-legal}",
         "creator-text": " by {creator-name}",
         "marked": "is marked with",
         "licensed": "is licensed under",
@@ -488,84 +470,53 @@
         "copy-text": "a copy of this license,"
       },
       "copy-license": {
-        "title": "Credit the Creator",
+        "title": "Credit the creator",
         "rich": "Rich Text",
         "html": "HTML",
-        "plain": "Plain text"
+        "plain": "Plain text",
+        "copy-text": "Copy text",
+        "copied": "Copied!"
       },
-      "attribution": {
-        "main": "This image was marked with a {link} license.",
-        "license": "license."
-      }
+      "attribution": "This image was marked with a {link} license:"
     },
     "provider-label": "Provider",
     "source-label": "Source",
     "loading": "Loading...",
-    "related-error": "Error fetching related media"
-  },
-  "photo-details": {
-    "back": "Back to search results",
-    "creator": "by {name}",
-    "reuse": {
-      "title": "Reuse"
-    },
-    "information": {
-      "title": "Information",
-      "type": "Type:",
-      "provider": "Provider:",
-      "dimensions": "Dimensions:",
-      "source": "Source:",
-      "license": "License",
-      "tags": "Tags",
-      "pixels": "pixels"
-    },
-    "survey": {
-      "content": "How are you using this image?",
-      "link": "Let us know",
-      "answer": "by answering a few questions."
-    },
-    "weblink": "Go to image's website",
-    "legal-disclaimer": "Openverse aggregates data from publicly available repositories of open content. Openverse does not host the content and does not verify that the content is properly CC-licensed or that the attribution information is accurate or complete. Please follow the link to the source of the content to independently verify before reuse.",
-    "related-images": "Related Images",
-    "copy": {
-      "copy": "Copy",
-      "copied": "Copied!"
-    },
-    "content-report": {
-      "title": "Report this content",
-      "issue": "What's the issue?",
-      "issue-description": "Please describe the issue for us",
-      "reasons": {
-        "dmca": "Infringes Copyright",
-        "mature": "Contains mature content",
-        "other": "Other"
-      },
-      "dmca": {
-        "link": "DMCA form",
-        "content": "You must fill out this {link} to report copyright infringement. No action will be taken until the form is filled out and submitted."
-      },
-      "caption": "For security purposes, Openverse collects and retains anonymized IP addresses of those who complete and submit this form.",
-      "next": "Next",
-      "back": "Back",
-      "submit": "Submit",
-      "thanks": "Thank you for reporting an issue with the results of Openverse!",
-      "provider": "We recommend doing the same at the source, {link}.",
-      "aria-form": "{provider} form",
-      "submission-error": "There was an error with the report submission. Please try again.",
-      "placeholder": "Issue description required (with at least 20 characters)"
-    },
+    "related-error": "Error fetching related media",
     "aria": {
-      "close-form": "close form",
-      "dmca": "dmca form",
       "attribution": {
         "license": "read more about the license",
         "tool": "read more about the tool"
       },
-      "details": "image details",
-      "main": "main content",
-      "related": "related images",
-      "provider-report-form": "{provider} form",
-      "creator-url": "author {creator}"
+      "creator-url": "author {name}"
+    },
+    "image-info": "Image information",
+    "audio-info": "Audio information",
+    "content-report": {
+      "report": "Report",
+      "title": "Report this content"
+    }
+  },
+  "image-details": {
+    "back": "Back to search results",
+    "creator": "by {name}",
+    "weblink": "Go to image's website",
+    "information": {
+      "title": "Image information",
+      "type": "Type",
+      "provider": "Provider",
+      "dimensions": "Dimensions",
+      "source": "Source",
+      "pixels": "pixels",
+      "unknown": "Unknown"
+    },
+    "report": {
+      "short": "Report",
+      "large": "Report this content"
+    },
+    "related-images": "Related images",
+    "aria": {
+      "creator-url": "Author {creator}"
     }
   },
   "audio-details": {
@@ -607,7 +558,7 @@
   },
   "waveform": {
     "label": "Audio seek bar",
-    "current-time": "{time} seconds"
+    "current-time": "{time} second|{time} seconds"
   },
   "audio-thumbnail": {
     "alt": "Cover art for \"{title}\" by {creator}"
@@ -615,6 +566,7 @@
   "audio-track": {
     "aria-label": "Audio Player",
     "messages": {
+      "blink_seek_disabled": "Seeking for Jamendo tracks is limited to Firefox and Safari.",
       "err_aborted": "You aborted playback.",
       "err_network": "A network error occurred.",
       "err_decode": "Could not decode audio.",
@@ -634,8 +586,9 @@
   "audio-categories": {
     "title": "Audio Category",
     "music": "Music",
-    "sound-effects": "Sound Effects",
-    "podcast": "Podcast"
+    "sound": "Sound effects",
+    "podcast": "Podcast",
+    "pronunciation": "Pronunciation"
   },
   "license-names": {
     "cc0": "CC0",
@@ -676,5 +629,16 @@
   "interpunct": "•",
   "modal": {
     "close": "Close"
+  },
+  "search-type": {
+    "image": "Images",
+    "audio": "Audio",
+    "all": "All content",
+    "video": "Videos",
+    "label": "Type of content to search",
+    "heading": "Content types",
+    "status-beta": "Beta",
+    "see-image": "See all images",
+    "see-audio": "See all audio"
   }
 }

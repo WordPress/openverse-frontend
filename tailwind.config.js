@@ -8,7 +8,10 @@ module.exports = {
   ],
   theme: {
     screens: Object.fromEntries(
-      Array.from(SCREEN_SIZES, ([name, width]) => [name, `${width}px`])
+      Array.from(SCREEN_SIZES, ([name, width]) => [
+        name,
+        `${width}px`,
+      ]).reverse()
     ),
     colors: {
       // Accents
@@ -76,6 +79,7 @@ module.exports = {
       4: '1.00rem',
       5: '1.25rem',
       6: '1.50rem',
+      7: '1.75rem',
       8: '2.00rem',
       10: '2.50rem',
       12: '3.00rem',
@@ -84,6 +88,7 @@ module.exports = {
       20: '5.00rem',
       24: '6.00rem',
       30: '7.50rem',
+      40: '10.00rem',
       64: '16.00rem',
       70: '17.50rem',
       80: '20.00rem',
@@ -185,6 +190,7 @@ module.exports = {
       ],
       heading: ['"Inter"', 'sans-serif'],
       mono: ['"JetBrains Mono"', 'monospace'],
+      serif: ['Times New Roman'],
       icons: ['"Vocabulary Icons"'],
     },
     extend: {
@@ -197,5 +203,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require('tailwindcss-rtl')],
+  plugins: [require('tailwindcss-rtl'), require('@tailwindcss/line-clamp')],
 }

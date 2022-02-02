@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-01-06T04:23:46+00:00\n"
+"POT-Creation-Date: 2022-02-01T19:06:38+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -18,12 +18,51 @@ msgctxt "interpunct"
 msgid "•"
 msgstr ""
 
-#: src/components/VModal/VModalContent.vue:25
+msgctxt "search-type.image"
+msgid "Images"
+msgstr ""
+
+msgctxt "search-type.audio"
+msgid "Audio"
+msgstr ""
+
+msgctxt "search-type.all"
+msgid "All content"
+msgstr ""
+
+msgctxt "search-type.video"
+msgid "Videos"
+msgstr ""
+
+#: src/components/VContentSwitcher/VContentSwitcherPopover.vue:5
+msgctxt "search-type.label"
+msgid "Type of content to search"
+msgstr ""
+
+#: src/components/VContentSwitcher/VContentTypes.vue:6
+msgctxt "search-type.heading"
+msgid "Content types"
+msgstr ""
+
+#: src/components/VContentSwitcher/VContentItem.vue:13
+msgctxt "search-type.status-beta"
+msgid "Beta"
+msgstr ""
+
+msgctxt "search-type.see-image"
+msgid "See all images"
+msgstr ""
+
+msgctxt "search-type.see-audio"
+msgid "See all audio"
+msgstr ""
+
+#: src/components/VModal/VMobileModalContent.vue:28
 msgctxt "modal.close"
 msgid "Close"
 msgstr ""
 
-#: src/components/DownloadButton.vue:14
+#: src/components/DownloadButton.vue:15
 msgctxt "download-button.download"
 msgid "Download"
 msgstr ""
@@ -49,7 +88,7 @@ msgctxt "migration-notice.read"
 msgid "Read more"
 msgstr ""
 
-#: src/components/DropdownButton.vue:71
+#: src/components/DropdownButton.vue:83
 msgctxt "dropdown-button.aria.arrow-label"
 msgid "Dropdown"
 msgstr ""
@@ -126,15 +165,19 @@ msgctxt "audio-categories.music"
 msgid "Music"
 msgstr ""
 
-msgctxt "audio-categories.sound-effects"
-msgid "Sound Effects"
+msgctxt "audio-categories.sound"
+msgid "Sound effects"
 msgstr ""
 
 msgctxt "audio-categories.podcast"
 msgid "Podcast"
 msgstr ""
 
-#: src/components/Header/SearchBar/SearchButton.vue:7
+msgctxt "audio-categories.pronunciation"
+msgid "Pronunciation"
+msgstr ""
+
+#: src/components/VHeader/VSearchBar/VSearchButton.vue:7
 msgctxt "search.search"
 msgid "Search"
 msgstr ""
@@ -162,6 +205,11 @@ msgctxt "audio-track.creator"
 msgid "by ###creator###"
 msgstr ""
 
+#: src/components/VAudioTrack/layouts/VRowLayout.vue:108
+msgctxt "audio-track.messages.blink_seek_disabled"
+msgid "Seeking for Jamendo tracks is limited to Firefox and Safari."
+msgstr ""
+
 msgctxt "audio-track.messages.err_aborted"
 msgid "You aborted playback."
 msgstr ""
@@ -183,7 +231,7 @@ msgid "Loading..."
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/AudioThumbnail/AudioThumbnail.vue:33
+#: src/components/VAudioThumbnail/VAudioThumbnail.vue:102
 msgctxt "audio-thumbnail.alt"
 msgid "Cover art for \"###title###\" by ###creator###"
 msgstr ""
@@ -194,10 +242,12 @@ msgid "Audio seek bar"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VAudioTrack/VWaveform.vue:514
+#: src/components/VAudioTrack/VWaveform.vue:570
 msgctxt "waveform.current-time"
-msgid "###time### seconds"
-msgstr ""
+msgid "###time### second"
+msgid_plural "###time### seconds"
+msgstr[0] ""
+msgstr[1] ""
 
 msgctxt "browsers.chrome"
 msgid "Chrome"
@@ -215,7 +265,7 @@ msgctxt "browsers.edge"
 msgid "Edge"
 msgstr ""
 
-#: src/components/VMetaSearch/VMetaSearchForm.vue:39
+#: src/components/VMetaSearch/VMetaSearchForm.vue:43
 msgctxt "meta-search.caption"
 msgid "Openverse does not currently index the sources listed above, but through this interface is offering convenient access to search services provided by other independent organizations. Openverse has no control over the results that are returned. Do not assume that the results displayed in this search portal are under a CC license. Always verify that the work is actually under a CC license by following the link. If you are in doubt, you should contact the copyright holder directly, or try to contact the site where you found the content."
 msgstr ""
@@ -232,13 +282,13 @@ msgid "Not finding what you're looking for? Try additional ###type### sources."
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VMetaSearch/VMetaSearchForm.vue:4
+#: src/components/VMetaSearch/VMetaSearchForm.vue:8
 msgctxt "meta-search.form.no-results-title"
 msgid "No ###type### results for \"###query###\"."
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VMetaSearch/VMetaSearchForm.vue:27
+#: src/components/VMetaSearch/VMetaSearchForm.vue:31
 msgctxt "meta-search.form.caption"
 msgid "Click on a source below to directly search other collections of CC-licensed ###type###.###break###Please note that Use filters are not supported for ###filter###."
 msgstr ""
@@ -268,268 +318,115 @@ msgctxt "audio-details.genre-label"
 msgid "Genre"
 msgstr ""
 
-#: src/components/AudioDetails/Related.vue:4
+#: src/components/AudioDetails/VRelatedAudio.vue:4
 msgctxt "audio-details.related-audios"
 msgid "Related audios"
 msgstr ""
 
-#: src/components/AudioDetails/Table.vue:16
+#: src/components/AudioDetails/VAudioDetails.vue:12
 msgctxt "audio-details.table.album"
 msgid "Album"
 msgstr ""
 
-#: src/components/AudioDetails/Table.vue:22
+#: src/components/AudioDetails/VAudioDetails.vue:18
 msgctxt "audio-details.table.category"
 msgid "Type"
 msgstr ""
 
-#: src/components/AudioDetails/Table.vue:29
+#: src/components/AudioDetails/VAudioDetails.vue:25
 msgctxt "audio-details.table.sample-rate"
 msgid "Sample Rate"
 msgstr ""
 
-#: src/components/AudioDetails/Table.vue:37
+#: src/components/AudioDetails/VAudioDetails.vue:33
 msgctxt "audio-details.table.filetype"
 msgid "Format"
 msgstr ""
 
-#: src/components/AudioDetails/Table.vue:45
+#: src/components/AudioDetails/VAudioDetails.vue:41
 msgctxt "audio-details.table.provider"
 msgid "Provider"
 msgstr ""
 
-#: src/components/AudioDetails/Table.vue:53
+#: src/components/AudioDetails/VAudioDetails.vue:49
 msgctxt "audio-details.table.source"
 msgid "Source"
 msgstr ""
 
-#: src/components/AudioDetails/Table.vue:61
+#: src/components/AudioDetails/VAudioDetails.vue:57
 msgctxt "audio-details.table.genre"
 msgid "Genre"
 msgstr ""
 
-#: src/components/ImageDetails/VPhotoDetails.vue:11
-msgctxt "photo-details.back"
+#: src/pages/image/_id.vue:10
+msgctxt "image-details.back"
 msgid "Back to search results"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/ImageDetails/VPhotoDetails.vue:59
-msgctxt "photo-details.creator"
+#: src/pages/image/_id.vue:49
+msgctxt "image-details.creator"
 msgid "by ###name###"
 msgstr ""
 
-#: src/components/ImageDetails/VPhotoDetails.vue:146
-msgctxt "photo-details.weblink"
+#: src/pages/image/_id.vue:43
+msgctxt "image-details.weblink"
 msgid "Go to image's website"
 msgstr ""
 
-#: src/components/ImageDetails/VPhotoDetails.vue:29
-msgctxt "photo-details.legal-disclaimer"
-msgid "Openverse aggregates data from publicly available repositories of open content. Openverse does not host the content and does not verify that the content is properly CC-licensed or that the attribution information is accurate or complete. Please follow the link to the source of the content to independently verify before reuse."
-msgstr ""
-
-#: src/components/ImageDetails/RelatedImages.vue:7
-msgctxt "photo-details.related-images"
-msgid "Related Images"
-msgstr ""
-
-#: src/components/VContentReport/VContentReportForm.vue:4
-msgctxt "photo-details.aria.close-form"
-msgid "close form"
-msgstr ""
-
-#: src/components/VContentReport/VDmcaNotice.vue:10
-msgctxt "photo-details.aria.dmca"
-msgid "dmca form"
-msgstr ""
-
-#: src/components/ImageDetails/VPhotoDetails.vue:52
-msgctxt "photo-details.aria.details"
-msgid "image details"
-msgstr ""
-
-#: src/pages/audio/_id.vue:2
-msgctxt "photo-details.aria.main"
-msgid "main content"
-msgstr ""
-
-#: src/components/AudioDetails/Related.vue:2
-msgctxt "photo-details.aria.related"
-msgid "related images"
+#: src/components/VImageDetails/VRelatedImages.vue:4
+msgctxt "image-details.related-images"
+msgid "Related images"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VContentReport/VDmcaNotice.vue:27
-msgctxt "photo-details.aria.provider-report-form"
-msgid "###provider### form"
+msgctxt "image-details.aria.creator-url"
+msgid "Author ###creator###"
 msgstr ""
 
-#. Do not translate words between ### ###.
-#: src/components/ImageDetails/VPhotoDetails.vue:69
-msgctxt "photo-details.aria.creator-url"
-msgid "author ###creator###"
+#: src/components/VImageDetails/VImageDetails.vue:13
+msgctxt "image-details.report.short"
+msgid "Report"
 msgstr ""
 
-msgctxt "photo-details.aria.attribution.license"
-msgid "read more about the license"
-msgstr ""
-
-msgctxt "photo-details.aria.attribution.tool"
-msgid "read more about the tool"
-msgstr ""
-
-#: src/components/ImageDetails/VPhotoDetails.vue:38
-msgctxt "photo-details.content-report.title"
+#: src/components/VImageDetails/VImageDetails.vue:11
+msgctxt "image-details.report.large"
 msgid "Report this content"
 msgstr ""
 
-#: src/components/VContentReport/VContentReportForm.vue:36
-msgctxt "photo-details.content-report.issue"
-msgid "What's the issue?"
+#: src/components/VImageDetails/VImageDetails.vue:5
+msgctxt "image-details.information.title"
+msgid "Image information"
 msgstr ""
 
-#: src/components/VContentReport/VOtherIssueForm.vue:7
-msgctxt "photo-details.content-report.issue-description"
-msgid "Please describe the issue for us"
+#: src/components/VImageDetails/VImageDetails.vue:19
+msgctxt "image-details.information.type"
+msgid "Type"
 msgstr ""
 
-#: src/components/VContentReport/VContentReportForm.vue:56
-msgctxt "photo-details.content-report.caption"
-msgid "For security purposes, Openverse collects and retains anonymized IP addresses of those who complete and submit this form."
+#: src/components/VImageDetails/VImageDetails.vue:23
+msgctxt "image-details.information.provider"
+msgid "Provider"
 msgstr ""
 
-#: src/components/VContentReport/VContentReportForm.vue:65
-msgctxt "photo-details.content-report.next"
-msgid "Next"
+#: src/components/VImageDetails/VImageDetails.vue:39
+msgctxt "image-details.information.dimensions"
+msgid "Dimensions"
 msgstr ""
 
-#: src/components/VContentReport/VDmcaNotice.vue:44
-msgctxt "photo-details.content-report.back"
-msgid "Back"
+#: src/components/VImageDetails/VImageDetails.vue:27
+msgctxt "image-details.information.source"
+msgid "Source"
 msgstr ""
 
-#: src/components/VContentReport/VOtherIssueForm.vue:33
-msgctxt "photo-details.content-report.submit"
-msgid "Submit"
-msgstr ""
-
-#: src/components/VContentReport/VDoneMessage.vue:4
-msgctxt "photo-details.content-report.thanks"
-msgid "Thank you for reporting an issue with the results of Openverse!"
-msgstr ""
-
-#. Do not translate words between ### ###.
-#: src/components/VContentReport/VDmcaNotice.vue:19
-msgctxt "photo-details.content-report.provider"
-msgid "We recommend doing the same at the source, ###link###."
-msgstr ""
-
-#. Do not translate words between ### ###.
-msgctxt "photo-details.content-report.aria-form"
-msgid "###provider### form"
-msgstr ""
-
-#: src/components/VContentReport/VReportError.vue:4
-msgctxt "photo-details.content-report.submission-error"
-msgid "There was an error with the report submission. Please try again."
-msgstr ""
-
-#: src/components/VContentReport/VOtherIssueForm.vue:12
-msgctxt "photo-details.content-report.placeholder"
-msgid "Issue description required (with at least 20 characters)"
-msgstr ""
-
-#: src/components/VContentReport/VDmcaNotice.vue:14
-msgctxt "photo-details.content-report.dmca.link"
-msgid "DMCA form"
-msgstr ""
-
-#. Do not translate words between ### ###.
-#: src/components/VContentReport/VDmcaNotice.vue:3
-msgctxt "photo-details.content-report.dmca.content"
-msgid "You must fill out this ###link### to report copyright infringement. No action will be taken until the form is filled out and submitted."
-msgstr ""
-
-msgctxt "photo-details.content-report.reasons.dmca"
-msgid "Infringes Copyright"
-msgstr ""
-
-msgctxt "photo-details.content-report.reasons.mature"
-msgid "Contains mature content"
-msgstr ""
-
-msgctxt "photo-details.content-report.reasons.other"
-msgid "Other"
-msgstr ""
-
-#: src/components/CopyButton.vue:9
-msgctxt "photo-details.copy.copy"
-msgid "Copy"
-msgstr ""
-
-#: src/components/CopyButton.vue:12
-msgctxt "photo-details.copy.copied"
-msgid "Copied!"
-msgstr ""
-
-#: src/components/ImageDetails/ReuseSurvey.vue:3
-msgctxt "photo-details.survey.content"
-msgid "How are you using this image?"
-msgstr ""
-
-#: src/components/ImageDetails/ReuseSurvey.vue:11
-msgctxt "photo-details.survey.link"
-msgid "Let us know"
-msgstr ""
-
-#: src/components/ImageDetails/ReuseSurvey.vue:13
-msgctxt "photo-details.survey.answer"
-msgid "by answering a few questions."
-msgstr ""
-
-#: src/components/ImageDetails/VPhotoDetails.vue:102
-msgctxt "photo-details.information.title"
-msgid "Information"
-msgstr ""
-
-#: src/components/ImageDetails/ImageInfo.vue:6
-msgctxt "photo-details.information.type"
-msgid "Type:"
-msgstr ""
-
-#: src/components/ImageDetails/ImageInfo.vue:19
-msgctxt "photo-details.information.provider"
-msgid "Provider:"
-msgstr ""
-
-#: src/components/ImageDetails/ImageInfo.vue:10
-msgctxt "photo-details.information.dimensions"
-msgid "Dimensions:"
-msgstr ""
-
-#: src/components/ImageDetails/ImageInfo.vue:25
-msgctxt "photo-details.information.source"
-msgid "Source:"
-msgstr ""
-
-msgctxt "photo-details.information.license"
-msgid "License"
-msgstr ""
-
-#: src/components/ImageDetails/ImageInfo.vue:42
-msgctxt "photo-details.information.tags"
-msgid "Tags"
-msgstr ""
-
-#: src/components/ImageDetails/ImageInfo.vue:16
-msgctxt "photo-details.information.pixels"
+#: src/components/VImageDetails/VImageDetails.vue:43
+msgctxt "image-details.information.pixels"
 msgid "pixels"
 msgstr ""
 
-#: src/components/ImageDetails/VPhotoDetails.vue:91
-msgctxt "photo-details.reuse.title"
-msgid "Reuse"
+#: src/components/VImageDetails/VImageDetails.vue:83
+msgctxt "image-details.information.unknown"
+msgid "Unknown"
 msgstr ""
 
 msgctxt "media-details.provider-label"
@@ -544,12 +441,44 @@ msgctxt "media-details.loading"
 msgid "Loading..."
 msgstr ""
 
-#: src/components/AudioDetails/Related.vue:18
+#: src/components/AudioDetails/VRelatedAudio.vue:18
 msgctxt "media-details.related-error"
 msgid "Error fetching related media"
 msgstr ""
 
-#: src/components/MediaInfo/MediaReuse.vue:3
+msgctxt "media-details.image-info"
+msgid "Image information"
+msgstr ""
+
+msgctxt "media-details.audio-info"
+msgid "Audio information"
+msgstr ""
+
+msgctxt "media-details.content-report.report"
+msgid "Report"
+msgstr ""
+
+msgctxt "media-details.content-report.title"
+msgid "Report this content"
+msgstr ""
+
+#. Do not translate words between ### ###.
+#: src/pages/image/_id.vue:59
+msgctxt "media-details.aria.creator-url"
+msgid "author ###name###"
+msgstr ""
+
+#: src/components/VMediaInfo/VMediaLicense.vue:32
+msgctxt "media-details.aria.attribution.license"
+msgid "read more about the license"
+msgstr ""
+
+#: src/components/VMediaInfo/VMediaLicense.vue:51
+msgctxt "media-details.aria.attribution.tool"
+msgid "read more about the tool"
+msgstr ""
+
+#: src/components/VMediaInfo/VMediaReuse.vue:2
 msgctxt "media-details.reuse.title"
 msgid "Reuse content"
 msgstr ""
@@ -566,24 +495,19 @@ msgctxt "media-details.reuse.audio"
 msgid "Audio"
 msgstr ""
 
-#: src/components/MediaInfo/CopyLicense.vue:213
 msgctxt "media-details.reuse.image"
 msgid "Image"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/MediaInfo/MediaLicense.vue:7
-msgctxt "media-details.reuse.attribution.main"
-msgid "This image was marked with a ###link### license."
+#: src/components/VMediaInfo/VMediaLicense.vue:7
+msgctxt "media-details.reuse.attribution"
+msgid "This image was marked with a ###link### license:"
 msgstr ""
 
-msgctxt "media-details.reuse.attribution.license"
-msgid "license."
-msgstr ""
-
-#: src/components/MediaInfo/CopyLicense.vue:4
+#: src/components/VMediaInfo/VCopyLicense.vue:4
 msgctxt "media-details.reuse.copy-license.title"
-msgid "Credit the Creator"
+msgid "Credit the creator"
 msgstr ""
 
 msgctxt "media-details.reuse.copy-license.rich"
@@ -598,76 +522,78 @@ msgctxt "media-details.reuse.copy-license.plain"
 msgid "Plain text"
 msgstr ""
 
-#. Do not translate words between ### ###.
-#: src/components/MediaInfo/CopyLicense.vue:32
-msgctxt "media-details.reuse.credit.text"
-msgid "###title######creator######marked-licensed######license######view-legal###"
+#: src/components/CopyButton.vue:9
+msgctxt "media-details.reuse.copy-license.copy-text"
+msgid "Copy text"
+msgstr ""
+
+#: src/components/CopyButton.vue:12
+msgctxt "media-details.reuse.copy-license.copied"
+msgid "Copied!"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/MediaInfo/CopyLicense.vue:49
+#: src/components/VMediaInfo/VCopyLicense.vue:37
+msgctxt "media-details.reuse.credit.text"
+msgid "\"###title###\"###creator######marked-licensed######license######view-legal###"
+msgstr ""
+
+#. Do not translate words between ### ###.
+#: src/components/VMediaInfo/VCopyLicense.vue:54
 msgctxt "media-details.reuse.credit.creator-text"
 msgid " by ###creator-name###"
 msgstr ""
 
-#: src/components/MediaInfo/CopyLicense.vue:71
+#: src/components/VMediaInfo/VCopyLicense.vue:76
 msgctxt "media-details.reuse.credit.marked"
 msgid "is marked with"
 msgstr ""
 
-#: src/components/MediaInfo/CopyLicense.vue:72
+#: src/components/VMediaInfo/VCopyLicense.vue:77
 msgctxt "media-details.reuse.credit.licensed"
 msgid "is licensed under"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/MediaInfo/CopyLicense.vue:150
+#: src/components/VMediaInfo/VCopyLicense.vue:126
 msgctxt "media-details.reuse.credit.view-legal-text"
 msgid ". To view ###terms-copy###visit ###URL###"
 msgstr ""
 
-#: src/components/MediaInfo/CopyLicense.vue:154
+#: src/components/VMediaInfo/VCopyLicense.vue:130
 msgctxt "media-details.reuse.credit.terms-text"
 msgid "the terms,"
 msgstr ""
 
-#: src/components/MediaInfo/CopyLicense.vue:155
+#: src/components/VMediaInfo/VCopyLicense.vue:131
 msgctxt "media-details.reuse.credit.copy-text"
 msgid "a copy of this license,"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/MediaInfo/MediaLicense.vue:44
+#: src/components/VMediaInfo/VMediaLicense.vue:44
 msgctxt "media-details.reuse.tool.content"
-msgid "Read more about the tool ###link###"
+msgid "Read more about the tool ###link###."
 msgstr ""
 
-#: src/components/MediaInfo/MediaLicense.vue:56
+#: src/components/VMediaInfo/VMediaLicense.vue:56
 msgctxt "media-details.reuse.tool.link"
 msgid "here"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/MediaInfo/MediaLicense.vue:24
+#: src/components/VMediaInfo/VMediaLicense.vue:24
 msgctxt "media-details.reuse.license.content"
 msgid "Read more about the license ###link###"
 msgstr ""
 
-#: src/components/MediaInfo/MediaLicense.vue:37
+#: src/components/VMediaInfo/VMediaLicense.vue:37
 msgctxt "media-details.reuse.license.link"
 msgid "here"
 msgstr ""
 
 msgctxt "browse-page.all-no-results"
 msgid "No results"
-msgstr ""
-
-msgctxt "browse-page.audio-no-results"
-msgid "No audio results"
-msgstr ""
-
-msgctxt "browse-page.image-no-results"
-msgid "No image results"
 msgstr ""
 
 #. Do not translate words between ### ###.
@@ -678,53 +604,19 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. Do not translate words between ### ###.
-msgctxt "browse-page.audio-result-count"
-msgid "###localeCount### audio result"
-msgid_plural "###localeCount### audio results"
-msgstr[0] ""
-msgstr[1] ""
-
-#. Do not translate words between ### ###.
-msgctxt "browse-page.image-result-count"
-msgid "###localeCount### image result"
-msgid_plural "###localeCount### image results"
-msgstr[0] ""
-msgstr[1] ""
-
-#. Do not translate words between ### ###.
 msgctxt "browse-page.all-result-count-more"
-msgid "Over ###localeCount### results"
+msgid "Over ###localeCount### result"
 msgid_plural "Over ###localeCount### results"
 msgstr[0] ""
 msgstr[1] ""
 
-#. Do not translate words between ### ###.
-msgctxt "browse-page.audio-result-count-more"
-msgid "Over ###localeCount### audio results"
-msgid_plural "Over ###localeCount### audio results"
-msgstr[0] ""
-msgstr[1] ""
-
-#. Do not translate words between ### ###.
-msgctxt "browse-page.image-result-count-more"
-msgid "Over ###localeCount### image results"
-msgid_plural "Over ###localeCount### image results"
-msgstr[0] ""
-msgstr[1] ""
-
-#. Do not translate words between ### ###.
-#: src/components/ImageGrid/LoadMoreButton.vue:42
-msgctxt "browse-page.no-more"
-msgid "No more ###type### :("
-msgstr ""
-
-#: src/components/ImageGrid/LoadMoreButton.vue:45
+#: src/components/VLoadMore.vue:26
 msgctxt "browse-page.load"
 msgid "Load more results"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/ImageGrid/ImageGrid.vue:53
+#: src/components/ImageGrid/ImageGrid.vue:56
 msgctxt "browse-page.fetching-error"
 msgid "Error fetching ###type###:"
 msgstr ""
@@ -738,7 +630,6 @@ msgctxt "browse-page.aria.scroll"
 msgid "scroll to top"
 msgstr ""
 
-#: src/components/SearchGridForm.vue:25
 msgctxt "browse-page.aria.search"
 msgid "search"
 msgstr ""
@@ -747,7 +638,7 @@ msgctxt "browse-page.aria.remove-filter"
 msgid "remove filter"
 msgstr ""
 
-#: src/components/Filters/FilterChecklist.vue:26
+#: src/components/VFilters/VFilterChecklist.vue:26
 msgctxt "browse-page.aria.license-explanation"
 msgid "license explanation"
 msgstr ""
@@ -766,22 +657,7 @@ msgctxt "browse-page.aria.relevance.no"
 msgid "relevant result? answer: no"
 msgstr ""
 
-#: src/components/VSaferBrowsing.vue:9
-msgctxt "browse-page.safer-browsing.title"
-msgid "Safer Browsing"
-msgstr ""
-
-#: src/components/VSaferBrowsing.vue:21
-msgctxt "browse-page.safer-browsing.caption"
-msgid "By default, search results will not include results that have been reported as mature by users and sources."
-msgstr ""
-
-#: src/components/VSaferBrowsing.vue:33
-msgctxt "browse-page.safer-browsing.label"
-msgid "Show Mature Content"
-msgstr ""
-
-#: src/components/Filters/LicenseExplanationTooltip.vue:8
+#: src/components/VFilters/VLicenseExplanationTooltip.vue:8
 msgctxt "browse-page.license-description.title"
 msgid "License CC"
 msgstr ""
@@ -811,17 +687,16 @@ msgid "This work is marked as being in the public domain."
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/SearchGridForm.vue:79
 msgctxt "browse-page.search-form.placeholder"
 msgid "Search all ###type###"
 msgstr ""
 
-#: src/components/ImageGrid/ImageGrid.vue:52
+#: src/components/ImageGrid/ImageGrid.vue:55
 msgctxt "browse-page.search-form.image"
 msgid "images"
 msgstr ""
 
-#: src/pages/search/audio.vue:53
+#: src/components/VAllResultsGrid/VAllResultsGrid.vue:134
 msgctxt "browse-page.search-form.audio"
 msgid "audio"
 msgstr ""
@@ -838,7 +713,6 @@ msgctxt "browse-page.search-form.collection-placeholder"
 msgid "Search this collection"
 msgstr ""
 
-#: src/components/SearchGridForm.vue:52
 msgctxt "browse-page.search-form.button"
 msgid "Search"
 msgstr ""
@@ -863,22 +737,21 @@ msgctxt "browse-page.search-rating.feedback-thanks"
 msgid "Thank you for the feedback!"
 msgstr ""
 
-#: src/components/Filters/SearchGridFilter.vue:12
+#: src/components/VFilters/VSearchGridFilter.vue:11
 msgctxt "filter-list.filter-by"
-msgid "Filter results by"
+msgid "Filter by"
 msgstr ""
 
-#: src/components/Filters/SearchGridFilter.vue:21
 msgctxt "filter-list.hide"
 msgid "Hide filters"
 msgstr ""
 
-#: src/components/Filters/SearchGridFilter.vue:45
+#: src/components/VFilters/VSearchGridFilter.vue:20
 msgctxt "filter-list.clear"
 msgid "Clear filters"
 msgstr ""
 
-#: src/components/Filters/SearchGridFilter.vue:52
+#: src/components/VFilters/VSearchGridFilter.vue:39
 msgctxt "filter-list.show"
 msgid "Show results"
 msgstr ""
@@ -888,40 +761,38 @@ msgctxt "filter-list.category-aria"
 msgid "filters list for ###categoryName### category"
 msgstr ""
 
-#: src/components/SearchGridForm.vue:15
 msgctxt "filters.title"
 msgid "Filters"
 msgstr ""
 
-#: src/components/Filters/FilterDisplay.vue:4
 msgctxt "filters.filter-by"
 msgid "Filter By"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/Filters/FilterTag.vue:4
+#: src/components/VFilters/VFilterTag.vue:4
 msgctxt "filters.aria.remove-filter"
 msgid "Remove ###label### filter"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/Filters/LicenseExplanationTooltip.vue:12
+#: src/components/VFilters/VLicenseExplanationTooltip.vue:12
 msgctxt "filters.license-explanation.tool"
-msgid "Read more about the tool ###link###"
+msgid "Read more about the tool ###link###."
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/Filters/LicenseExplanationTooltip.vue:24
+#: src/components/VFilters/VLicenseExplanationTooltip.vue:24
 msgctxt "filters.license-explanation.license"
-msgid "Read more about the license ###link###"
+msgid "Read more about the license ###link###."
 msgstr ""
 
-#: src/components/Filters/LicenseExplanationTooltip.vue:20
+#: src/components/VFilters/VLicenseExplanationTooltip.vue:20
 msgctxt "filters.license-explanation.link"
 msgid "here"
 msgstr ""
 
-#: src/components/Filters/FilterChecklist.vue:83
+#: src/components/VFilters/VFilterChecklist.vue:74
 msgctxt "filters.searchBy.title"
 msgid "Search By"
 msgstr ""
@@ -959,7 +830,7 @@ msgid "Enable Mature Content"
 msgstr ""
 
 msgctxt "filters.sizes.title"
-msgid "Image Size"
+msgid "Image size"
 msgstr ""
 
 msgctxt "filters.sizes.small"
@@ -975,7 +846,7 @@ msgid "Large"
 msgstr ""
 
 msgctxt "filters.aspect-ratios.title"
-msgid "Aspect Ratio"
+msgid "Aspect ratio"
 msgstr ""
 
 msgctxt "filters.aspect-ratios.tall"
@@ -991,7 +862,7 @@ msgid "Square"
 msgstr ""
 
 msgctxt "filters.image-extensions.title"
-msgid "File Type"
+msgid "File type"
 msgstr ""
 
 msgctxt "filters.image-extensions.jpg"
@@ -1011,7 +882,7 @@ msgid "SVGs"
 msgstr ""
 
 msgctxt "filters.audio-extensions.title"
-msgid "File Type"
+msgid "File type"
 msgstr ""
 
 msgctxt "filters.audio-extensions.mp3"
@@ -1027,7 +898,7 @@ msgid "FLACs"
 msgstr ""
 
 msgctxt "filters.image-categories.title"
-msgid "Image Type"
+msgid "Image type"
 msgstr ""
 
 msgctxt "filters.image-categories.photograph"
@@ -1043,15 +914,15 @@ msgid "Digitized Artworks"
 msgstr ""
 
 msgctxt "filters.audio-categories.title"
-msgid "Audio Category"
+msgid "Audio category"
 msgstr ""
 
 msgctxt "filters.audio-categories.music"
 msgid "Music"
 msgstr ""
 
-msgctxt "filters.audio-categories.sound-effects"
-msgid "Sound Effects"
+msgctxt "filters.audio-categories.sound"
+msgid "Sound effects"
 msgstr ""
 
 msgctxt "filters.audio-categories.podcast"
@@ -1079,7 +950,7 @@ msgid "Modify or adapt"
 msgstr ""
 
 msgctxt "filters.licenses.title"
-msgid "License or Public Domain"
+msgid "Licenses"
 msgstr ""
 
 msgctxt "filters.licenses.cc0"
@@ -1114,40 +985,18 @@ msgctxt "filters.licenses.by-nc-nd"
 msgid "BY-NC-ND"
 msgstr ""
 
-msgctxt "search-tab.all"
-msgid "All"
-msgstr ""
-
-msgctxt "search-tab.image"
-msgid "Image"
-msgstr ""
-
-msgctxt "search-tab.audio"
-msgid "Audio"
-msgstr ""
-
-msgctxt "search-tab.video"
-msgid "Video"
-msgstr ""
-
-#: src/layouts/error.vue:5
-msgctxt "error.not-found"
-msgid "Page Not Found"
-msgstr ""
-
-#: src/layouts/error.vue:7
 msgctxt "error.occurred"
 msgid "An error occurred"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/image/_id.vue:57
+#: src/pages/image/_id.vue:148
 msgctxt "error.image-not-found"
 msgid "Couldn't find image with id ###id###"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/audio/_id.vue:70
+#: src/pages/audio/_id.vue:66
 msgctxt "error.media-not-found"
 msgid "Couldn't find ###mediaType### with id ###id###"
 msgstr ""
@@ -1160,23 +1009,7 @@ msgctxt "error.audio"
 msgid "audio"
 msgstr ""
 
-msgctxt "collections.title"
-msgid "Browse collections"
-msgstr ""
-
-msgctxt "collections.museum"
-msgid "Museum Collections"
-msgstr ""
-
-msgctxt "collections.other"
-msgid "Other Collections"
-msgstr ""
-
-#. Do not translate words between ### ###.
-msgctxt "collections.collection-size"
-msgid "Collection size: ###count### images"
-msgstr ""
-
+#: src/pages/extension.vue:91
 msgctxt "extension.title"
 msgid "Web extension"
 msgstr ""
@@ -1962,27 +1795,26 @@ msgctxt "footer.navigation.terms"
 msgid "Terms"
 msgstr ""
 
-#: src/components/NavSection.vue:71
 msgctxt "header.about-nav-item"
 msgid "Our Story"
 msgstr ""
 
-#: src/components/NavSection.vue:79
 msgctxt "header.source-nav-item"
 msgid "Sources"
 msgstr ""
 
-#: src/components/NavSection.vue:103
 msgctxt "header.search-guide-nav-item"
 msgid "Search Guide"
 msgstr ""
 
-#: src/components/NavSection.vue:111
 msgctxt "header.meta-search-nav-item"
 msgid "Meta Search"
 msgstr ""
 
-#: src/components/NavSection.vue:119
+msgctxt "header.privacy-nav-item"
+msgid "Privacy"
+msgstr ""
+
 msgctxt "header.feedback-nav-item"
 msgid "Feedback"
 msgstr ""
@@ -1991,62 +1823,75 @@ msgctxt "header.support-nav-item"
 msgid "Support Us"
 msgstr ""
 
-#: src/components/NavSection.vue:134
 msgctxt "header.extension-nav-item"
 msgid "Web extension"
 msgstr ""
 
-#: src/components/NavSection.vue:173
 msgctxt "header.placeholder"
 msgid "Search all content"
 msgstr ""
 
-#: src/components/NavSection.vue:88
 msgctxt "header.licenses-nav-item"
 msgid "The Licenses"
 msgstr ""
 
-#: src/components/NavSection.vue:63
 msgctxt "header.about-tab"
 msgid "About"
 msgstr ""
 
-#: src/components/NavSection.vue:95
 msgctxt "header.resources-tab"
 msgid "Resources"
 msgstr ""
 
-#: src/components/NavSection.vue:128
 msgctxt "header.api-nav-item"
 msgid "API"
 msgstr ""
 
-#: src/components/NavSection.vue:6
+#: src/components/VHeader/VHeader.vue:163
+msgctxt "header.loading"
+msgid "Loading..."
+msgstr ""
+
+#: src/components/VContentSwitcher/VMobileMenuModal.vue:13
+msgctxt "header.filter-button.simple"
+msgid "Filters"
+msgstr ""
+
+#. Do not translate words between ### ###.
+#: src/components/VHeader/VFilterButton.vue:81
+msgctxt "header.filter-button.with-count"
+msgid "###count### Filter"
+msgid_plural "###count### Filters"
+msgstr[0] ""
+msgstr[1] ""
+
+msgctxt "header.notification.text"
+msgid "{example_notification_text}"
+msgstr ""
+
+msgctxt "header.notification.dismiss"
+msgid "Dismiss"
+msgstr ""
+
+msgctxt "header.notification.okay"
+msgid "OK"
+msgstr ""
+
 msgctxt "header.aria.primary"
 msgid "primary"
 msgstr ""
 
-#: src/components/NavSection.vue:23
+#: src/components/VHeader/VPageMenu/VDesktopPageMenu.vue:5
 msgctxt "header.aria.menu"
 msgid "menu"
 msgstr ""
 
-#: src/components/NavSection.vue:43
 msgctxt "header.aria.search"
 msgid "search"
 msgstr ""
 
-#: src/components/NavSection.vue:50
 msgctxt "header.aria.sr-search"
-msgid "sr search button"
-msgstr ""
-
-msgctxt "notification.dismiss"
-msgid "Dismiss"
-msgstr ""
-
-msgctxt "notification.okay"
-msgid "OK"
+msgid "search button"
 msgstr ""
 
 #. Do not translate words between ### ###.
@@ -2060,46 +1905,21 @@ msgctxt "notification.translation.link"
 msgid "contributing a translation"
 msgstr ""
 
+#: src/pages/about.vue:103
 msgctxt "hero.brand"
 msgid "Openverse"
 msgstr ""
 
-#: src/components/VHeroSection.vue:6
-msgctxt "hero.title"
-msgid "Search for content to reuse"
-msgstr ""
-
-#: src/components/VHeroSection.vue:9
+#: src/pages/index.vue:21
 msgctxt "hero.subtitle"
-msgid "Browse over 500 million images, available for reuse"
+msgid "Browse through over 600 million items to reuse"
 msgstr ""
 
-#: src/components/SearchTypeToggle.vue:19
-msgctxt "hero.search-type.audio"
-msgid "Audio"
-msgstr ""
-
-#: src/components/SearchTypeToggle.vue:10
-msgctxt "hero.search-type.image"
-msgid "Images"
-msgstr ""
-
-#: src/components/VHeroSection.vue:40
-msgctxt "hero.search-type.prompt"
-msgid "I would like to find:"
-msgstr ""
-
-#: src/components/VHeroSection.vue:24
+#: src/components/VHeader/VSearchBar/VSearchBar.vue:9
 msgctxt "hero.aria.search"
 msgid "search"
 msgstr ""
 
-#: src/components/VHeroSection.vue:50
-msgctxt "hero.aria.caption"
-msgid "about cc licenses"
-msgstr ""
-
-#: src/components/SearchTypeToggle.vue:2
 msgctxt "hero.aria.search-type"
 msgid "search type"
 msgstr ""
@@ -2113,28 +1933,43 @@ msgctxt "hero.locale.icon"
 msgid "locale"
 msgstr ""
 
-#: src/components/HomeLicenseFilter.vue:4
 msgctxt "hero.license-filter.label"
 msgid "I want something I can"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VHeroSection.vue:45
-msgctxt "hero.caption.content"
-msgid "All our content is under Creative Commons licenses or in the public domain. ###link### about CC licenses and tools."
+#: src/pages/index.vue:51
+msgctxt "hero.disclaimer.content"
+msgid "All Openverse content is under a ###license### or is in the public domain."
 msgstr ""
 
-#: src/components/VHeroSection.vue:53
-msgctxt "hero.caption.link"
-msgid "Learn more"
+#: src/pages/index.vue:60
+msgctxt "hero.disclaimer.license"
+msgid "Creative Commons license"
 msgstr ""
 
-#: src/components/VHeroSection.vue:28
+#: src/pages/index.vue:36
 msgctxt "hero.search.placeholder"
-msgid "Search all content"
+msgid "Search for content"
 msgstr ""
 
-#: src/components/VHeroSection.vue:35
-msgctxt "hero.search.button"
-msgid "Search"
+#: src/layouts/error.vue:18
+msgctxt "404.title"
+msgid "The content you’re looking for seems to have disappeared."
+msgstr ""
+
+#. Do not translate words between ### ###.
+#: src/layouts/error.vue:21
+msgctxt "404.main"
+msgid "Go to ###link### or search for something similar from the field below."
+msgstr ""
+
+#: src/layouts/error.vue:4
+msgctxt "404.link-title"
+msgid "Openverse"
+msgstr ""
+
+#: src/layouts/error.vue:34
+msgctxt "404.search-placeholder"
+msgid "Search for content to reuse"
 msgstr ""

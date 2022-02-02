@@ -1,52 +1,63 @@
 <template>
   <section>
-    <template v-if="supported">
-      <VAudioTrack
-        v-for="audio in mediaResults.items"
-        :key="audio.id"
-        class="px-6 mb-6"
-        :audio="audio"
-        :size="audioTrackSize"
-        layout="row"
-      />
-
-      <template v-if="isError" class="m-auto w-1/2 text-center pt-6">
-        <h5>{{ errorHeader }}</h5>
-        <p>{{ fetchState.fetchingError }}</p>
-      </template>
-      <LoadMoreButton
-        v-if="canLoadMore"
-        :is-error="isError"
-        :is-fetching="fetchState.isFetching"
-        :is-finished="fetchState.isFinished"
-        media-type="audio"
-        data-testid="load-more"
-        @onLoadMore="onLoadMore"
-      />
-    </template>
+    <GridSkeleton
+      v-if="results.length === 0 && !fetchState.isFinished"
+      is-for-tab="audio"
+    />
+    <VAudioTrack
+      v-for="audio in results"
+      :key="audio.id"
+      class="mb-8 md:mb-10"
+      :audio="audio"
+      :size="audioTrackSize"
+      layout="row"
+    />
+    <VLoadMore
+      v-if="canLoadMore && !fetchState.isFinished"
+      :is-fetching="fetchState.isFetching"
+      data-testid="load-more"
+      @onLoadMore="onLoadMore"
+    />
   </section>
 </template>
 
 <script>
-import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
+import {
+  computed,
+  defineComponent,
+  useContext,
+  useMeta,
+  useStore,
+} from '@nuxtjs/composition-api'
 import { useLoadMore } from '~/composables/use-load-more'
 
 import VAudioTrack from '~/components/VAudioTrack/VAudioTrack.vue'
-import LoadMoreButton from '~/components/ImageGrid/LoadMoreButton.vue'
+import VLoadMore from '~/components/VLoadMore.vue'
 
 import { propTypes } from './search-page.types'
+import { isMinScreen } from '@/composables/use-media-query'
 
 const AudioSearch = defineComponent({
   name: 'AudioSearch',
   components: {
     VAudioTrack,
-    LoadMoreButton,
+    VLoadMore,
   },
   props: propTypes,
   setup(props) {
+    const store = useStore()
     const { i18n } = useContext()
 
-    const audioTrackSize = computed(() => (props.isFilterVisible ? 'm' : 's'))
+    const query = computed(() => store.state.search.query.q)
+    useMeta({ title: `${query.value} - ${i18n.t('hero.brand')}` })
+
+    const results = computed(() =>
+      Object.values(props.mediaResults?.audio?.items ?? [])
+    )
+    const isMinScreenMd = isMinScreen('md', { shouldPassInSSR: false })
+    const audioTrackSize = computed(() => {
+      return !isMinScreenMd.value ? 's' : props.isFilterVisible ? 'l' : 'm'
+    })
 
     const isError = computed(() => !!props.fetchState.fetchingError)
     const errorHeader = computed(() => {
@@ -57,6 +68,7 @@ const AudioSearch = defineComponent({
     const { canLoadMore, onLoadMore } = useLoadMore(props)
 
     return {
+      results,
       audioTrackSize,
       isError,
       errorHeader,
@@ -65,6 +77,7 @@ const AudioSearch = defineComponent({
       onLoadMore,
     }
   },
+  head: {},
 })
 export default AudioSearch
 </script>

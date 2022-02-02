@@ -118,7 +118,11 @@
 <script>
 export default {
   name: 'MetaSearchPage',
-  layout: 'with-nav-search',
+  head() {
+    return {
+      title: `${this.$t('meta-search-page.title')} - ${this.$t('hero.brand')}`,
+    }
+  },
 }
 </script>
 

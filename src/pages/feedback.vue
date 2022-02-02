@@ -71,7 +71,6 @@ const suggestionForm =
 
 export const FeedbackPage = {
   name: 'feedback-page',
-  layout: 'with-nav-search',
   data() {
     return {
       activeTab: 0,
@@ -80,6 +79,11 @@ export const FeedbackPage = {
         report: `${bugForm}?embedded=true`,
         improve: `${suggestionForm}?embedded=true`,
       },
+    }
+  },
+  head() {
+    return {
+      title: `${this.$t('feedback.title')} - ${this.$t('hero.brand')}`,
     }
   },
   methods: {

@@ -3,6 +3,7 @@ import locales from './src/locales/scripts/valid-locales.json'
 import { VIEWPORTS } from './src/constants/screens'
 import { dev } from './src/utils/dev'
 import { env } from './src/utils/env'
+import { sentry } from './src/utils/sentry-config'
 
 /**
  * The default metadata for the site. Can be extended and/or overwritten per page. And even in components!
@@ -41,6 +42,11 @@ const meta = [
     vmid: 'monetization',
     name: 'monetization',
     content: '$ilp.uphold.com/edR8erBDbRyq',
+  },
+  {
+    hid: 'theme-color',
+    name: 'theme-color',
+    content: '#ffffff',
   },
 ]
 
@@ -117,6 +123,8 @@ export default {
     { src: '~/plugins/ga.js', mode: 'client' },
     { src: '~/plugins/url-change.js' },
     { src: '~/plugins/migration-notice.js' },
+    { src: '~/plugins/ua-parse.js' },
+    { src: '~/plugins/focus-visible', mode: 'client' },
   ],
   css: [
     '~/styles/tailwind.css',
@@ -166,20 +174,19 @@ export default {
     ],
     lazy: true,
     langDir: 'locales',
-    strategy: 'no_prefix',
     defaultLocale: 'en',
     /**
-     * This section is critical for the current, iframed production environment
-     * {@link https://i18n.nuxtjs.org/options-reference/#detectbrowserlanguage}
+     * `detectBrowserLanguage` must be false to prevent nuxt/i18n from automatically
+     * setting the locale based on headers or the client-side `navigator` object.
+     *
+     * Such detection is handled at the parent level in WP.org.
+     *
+     * More info about the Nuxt i18n:
+     *
+     * - [detectBrowserLanguage](https://i18n.nuxtjs.org/options-reference/#detectbrowserlanguage)
+     * - [Browser language detection info](https://i18n.nuxtjs.org/browser-language-detection)
      * */
-    detectBrowserLanguage: {
-      useCookie: true,
-      cookieKey: 'i18n_redirected',
-      alwaysRedirect: true,
-      cookieCrossOrigin: true,
-      cookieSecure: true,
-    },
-    baseUrl: 'http://localhost:8443',
+    detectBrowserLanguage: false,
     vueI18n: '~/plugins/vue-i18n.js',
   },
   /**
@@ -188,20 +195,18 @@ export default {
    * {@link https://github.com/nuxt-community/redirect-module#usage}
    */
   redirect: [{ from: '^/photos/(.*)$', to: '/image/$1', statusCode: 301 }],
-  sentry: {
-    dsn:
-      process.env.SENTRY_DSN ||
-      'https://53da8fbcebeb48a6bf614a212629df6b@o787041.ingest.sentry.io/5799642',
-    disabled: process.env.NODE_ENV === 'development',
-    environment: process.env.NODE_ENV,
-    lazy: true,
-  },
+  sentry,
   build: {
     postcss: {
       plugins: {
         tailwindcss: {},
         autoprefixer: {},
+        'postcss-focus-visible': {},
       },
+    },
+    // Enables use of IDE debuggers
+    extend(config, ctx) {
+      config.devtool = ctx.isClient ? 'source-map' : 'inline-source-map'
     },
   },
   storybook: {

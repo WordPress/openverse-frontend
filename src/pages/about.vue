@@ -98,7 +98,11 @@
 <script>
 const AboutPage = {
   name: 'about-page',
-  layout: 'with-nav-search',
+  head() {
+    return {
+      title: `${this.$t('about.title')} - ${this.$t('hero.brand')}`,
+    }
+  },
 }
 
 export default AboutPage

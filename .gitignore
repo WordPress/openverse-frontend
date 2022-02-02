@@ -11,6 +11,7 @@ yarn-error.log*
 /test/selenium-webdriver/geckodriver.log
 /test/selenium-webdriver/screenshots/*
 selenium-debug.log
+.pnpm-debug.log
 .env
 .idea
 .vscode
@@ -27,4 +28,6 @@ src/locales/*.json
 storybook-static
 .vercel
 /src/locales/scripts/valid-locales.json
+/src/locales/scripts/untranslated-locales.json
+/src/locales/scripts/wp-locales.json
 .zshrc

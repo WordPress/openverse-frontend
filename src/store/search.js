@@ -36,8 +36,8 @@ import {
 // The order of the keys here is the same as in the side filter display
 export const mediaFilterKeys = {
   image: [
-    'licenses',
     'licenseTypes',
+    'licenses',
     'imageCategories',
     'imageExtensions',
     'aspectRatios',
@@ -46,20 +46,18 @@ export const mediaFilterKeys = {
     'searchBy',
     'mature',
   ],
-  audio: process.env.enableAudio
-    ? [
-        'licenses',
-        'licenseTypes',
-        'audioCategories',
-        'audioExtensions',
-        'durations',
-        'audioProviders',
-        'searchBy',
-        'mature',
-      ]
-    : [],
+  audio: [
+    'licenseTypes',
+    'licenses',
+    'audioCategories',
+    'audioExtensions',
+    'durations',
+    'audioProviders',
+    'searchBy',
+    'mature',
+  ],
   video: [],
-  all: ['licenses', 'licenseTypes', 'searchBy', 'mature'],
+  all: ['licenseTypes', 'licenses', 'searchBy', 'mature'],
 }
 
 export const mediaSpecificFilters = {
@@ -71,9 +69,7 @@ export const mediaSpecificFilters = {
     'sizes',
     'imageProviders',
   ],
-  audio: process.env.enableAudio
-    ? ['audioCategories', 'audioExtensions', 'durations', 'audioProviders']
-    : [],
+  audio: ['audioCategories', 'audioExtensions', 'durations', 'audioProviders'],
   video: [],
 }
 
@@ -109,7 +105,7 @@ export const filterData = {
     },
     {
       code: 'soundEffects',
-      name: 'filters.audio-categories.sound-effects',
+      name: 'filters.audio-categories.sound',
       checked: false,
     },
     {
@@ -168,23 +164,14 @@ export const filterData = {
   ],
   mature: false,
 }
-const supportedTabTypes = [AUDIO, IMAGE]
-if (process.env.enableAudio) {
-  supportedTabTypes.unshift(ALL_MEDIA)
+
+const searchTabToMediaType = {
+  [ALL_MEDIA]: ALL_MEDIA,
+  [AUDIO]: AUDIO,
+  [IMAGE]: IMAGE,
+  [VIDEO]: null,
 }
-const searchTabToMediaType = process.env.enableAudio
-  ? {
-      [ALL_MEDIA]: IMAGE,
-      [AUDIO]: AUDIO,
-      [IMAGE]: IMAGE,
-      [VIDEO]: null,
-    }
-  : {
-      [ALL_MEDIA]: IMAGE,
-      [AUDIO]: null,
-      [IMAGE]: IMAGE,
-      [VIDEO]: null,
-    }
+
 /**
  * Returns true if any of the filters' checked property is true
  * except for `mature` filter, as it is not displayed as a tag
@@ -346,7 +333,9 @@ const actions = {
       }
       commit(CLEAR_OTHER_MEDIA_TYPE_FILTERS, { searchType })
     }
-    await dispatch(UPDATE_QUERY_FROM_FILTERS, queryParams)
+    if (Object.keys(queryParams).length !== 0) {
+      await dispatch(UPDATE_QUERY_FROM_FILTERS, queryParams)
+    }
   },
   /**
    * Toggles a filter's checked parameter

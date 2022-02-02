@@ -1,24 +1,18 @@
 <template>
-  <section class="search-grid">
-    <div
-      v-if="shouldShowMeta"
-      class="results-meta flex flex-col sm:flex-row items-start justify-between px-6"
-      data-testid="search-meta"
+  <section class="">
+    <header
+      v-if="query.q && isSupported"
+      class="mt-4"
+      :class="isAllView ? 'mb-10' : 'mb-8'"
     >
-      <div
-        class="font-semibold caption leading-10 flex flex-col sm:flex-row sm:me-auto justify-between"
+      <VSearchResultsTitle
+        class="leading-10"
+        :size="isAllView ? 'large' : 'default'"
       >
-        <span class="pe-6">
-          {{ mediaCount }}
-        </span>
-        <VSearchRating
-          v-if="query.q"
-          :search-term="query.q"
-          class="leading-10"
-        />
-      </div>
-      <VSaferBrowsing />
-    </div>
+        {{ query.q }}
+      </VSearchResultsTitle>
+    </header>
+
     <slot name="media" />
 
     <VMetaSearchForm
@@ -32,29 +26,14 @@
 </template>
 
 <script>
-import { computed, useContext } from '@nuxtjs/composition-api'
-import { AUDIO, IMAGE } from '~/constants/media'
+import { computed } from '@nuxtjs/composition-api'
+import { supportedContentTypes } from '~/constants/media'
 
-import VSaferBrowsing from '~/components/VSaferBrowsing.vue'
-import VSearchRating from '~/components/VSearchRating.vue'
 import VMetaSearchForm from '~/components/VMetaSearch/VMetaSearchForm.vue'
-
-const i18nKeys = {
-  [AUDIO]: {
-    noResult: 'browse-page.audio-no-results',
-    result: 'browse-page.audio-result-count',
-    more: 'browse-page.audio-result-count-more',
-  },
-  [IMAGE]: {
-    noResult: 'browse-page.image-no-results',
-    result: 'browse-page.image-result-count',
-    more: 'browse-page.image-result-count-more',
-  },
-}
 
 export default {
   name: 'VSearchGrid',
-  components: { VMetaSearchForm, VSaferBrowsing, VSearchRating },
+  components: { VMetaSearchForm },
   props: {
     supported: {
       type: Boolean,
@@ -77,31 +56,6 @@ export default {
     },
   },
   setup(props) {
-    const { i18n } = useContext()
-    const shouldShowMeta = computed(() => {
-      return (
-        props.supported &&
-        props.query.q.trim() !== '' &&
-        !props.fetchState.isFetching
-      )
-    })
-    /**
-     * The translated string showing how many results were found for
-     * this media type.
-     *
-     * @returns {string}
-     */
-    const mediaCount = computed(() => {
-      if (!props.supported) return
-
-      const count = props.resultsCount
-      const countKey =
-        count === 0 ? 'noResult' : count >= 10000 ? 'more' : 'result'
-      const i18nKey = i18nKeys[props.query.mediaType][countKey]
-      const localeCount = count.toLocaleString(i18n.locale)
-      return i18n.tc(i18nKey, count, { localeCount })
-    })
-
     const noresult = computed(() => {
       // noresult is hard-coded for search types that are not currently
       // supported by Openverse built-in search
@@ -110,18 +64,20 @@ export default {
         : false
     })
     const isSupported = computed(() => {
-      return props.searchType === 'all' ? true : props.supported
+      return supportedContentTypes.includes(props.searchType)
     })
     const metaSearchFormType = computed(() => {
       return props.searchType === 'all' ? 'image' : props.searchType
     })
+    const isAllView = computed(() => {
+      return props.searchType === 'all'
+    })
 
     return {
-      mediaCount,
       noresult,
-      shouldShowMeta,
       isSupported,
       metaSearchFormType,
+      isAllView,
     }
   },
 }

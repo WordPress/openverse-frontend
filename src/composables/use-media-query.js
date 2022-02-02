@@ -2,20 +2,26 @@
  which, in turn, is ported from https://github.com/logaretm/vue-use-web by Abdelrahman Awad */
 import { onBeforeUnmount, ref } from '@nuxtjs/composition-api'
 import { SCREEN_SIZES } from '~/constants/screens.js'
+import { defaultWindow } from '~/composables/window'
 
 /**
  * Reactive Media Query.
  *
- * @param query
+ * @param {string} query
  * @param options
  */
-export function useMediaQuery(query, options = {}) {
-  const { window } = options
-  if (!window) return ref(false)
+export function useMediaQuery(query, options = { shouldPassInSSR: false }) {
+  /** @type {import('@nuxtjs/composition-api').Ref<boolean>} */
+  const matches = ref(false)
+  const { window = defaultWindow } = options
+  if (!window) {
+    matches.value = options.shouldPassInSSR
+    return matches
+  }
 
   const mediaQuery = window.matchMedia(query)
   /** @type {import('@nuxtjs/composition-api').Ref<boolean>} */
-  const matches = ref(mediaQuery.matches)
+  matches.value = mediaQuery.matches
 
   const handler = (/** @type MediaQueryListEvent */ event) => {
     matches.value = event.matches
@@ -40,9 +46,13 @@ export function useMediaQuery(query, options = {}) {
 }
 
 /**
- * Check whether the screen meets the current breakpoint size.
+ * Check whether the current screen meets
+ * or exceeds the provided breakpoint size.
+ * @param {'sm'|'md'|'lg'|'xl'|'2xl'} breakpointName
+ * @param {Parameters<typeof useMediaQuery>[1]} options
+ * @returns {import('@nuxtjs/composition-api').Ref<boolean>}
  */
-export const isScreen = (breakpointName, options = {}) => {
+export const isMinScreen = (breakpointName, options = {}) => {
   return useMediaQuery(
     `(min-width: ${SCREEN_SIZES.get(breakpointName)}px)`,
     options
@@ -51,6 +61,7 @@ export const isScreen = (breakpointName, options = {}) => {
 
 /**
  * Check if the user prefers reduced motion or not.
+ * @returns {import('@nuxtjs/composition-api').Ref<boolean>}
  */
 export function useReducedMotion(options = {}) {
   return useMediaQuery('(prefers-reduced-motion: reduce)', options)

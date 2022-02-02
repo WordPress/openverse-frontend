@@ -7,6 +7,7 @@
  * On error: shows error message
  */
 const { expect, test } = require('@playwright/test')
+
 test.beforeEach(async ({ context }) => {
   // Block any image or audio (jamendo.com) requests for each test in this file.
   await context.route(/\.(png|jpeg|jpg|svg)$/, (route) => route.abort())
@@ -17,20 +18,6 @@ test.beforeEach(async ({ context }) => {
     'https://api.openverse.engineering/v1/thumbs/**',
     (route) => route.fulfill({ path: 'test/e2e/resources/sample_image.jpg' })
   )
-})
-
-test('does not show an error message before search', async ({ page }) => {
-  await page.goto('/search')
-
-  // The search meta data under the search input, should not be shown if no
-  // media had been fetched
-  await expect(page.locator('text=No image results')).not.toBeVisible()
-
-  // Load more button, should not be shown if the `q` parameter is not set
-  await expect(page.locator('button:has-text("Load more results")'))
-
-  // There should be no error messages when no search has been done
-  await expect(page.locator('[data-testid="search-grid"] h4')).toHaveCount(1)
 })
 
 test.skip('shows search result metadata', async ({ page }) => {
@@ -64,7 +51,11 @@ test('navigates to the image detail page correctly', async ({ page }) => {
   const imgTitle = await figure.locator('img').getAttribute('alt')
 
   await page.locator('figure a').first().click()
-  await expect(page.locator('h1')).toHaveText(imgTitle)
+  // Until the image is loaded, the heading is 'Image' instead of the actual title
+  await page.locator('#main-image').waitFor()
+
+  const headingText = await page.locator('h1').textContent()
+  expect(headingText.trim().toLowerCase()).toEqual(imgTitle.toLowerCase())
   // Renders the breadcrumb link
   await expect(page.locator('text="Back to search results"')).toBeVisible()
 })

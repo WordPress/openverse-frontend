@@ -2,10 +2,11 @@
   <Component
     :is="as"
     :type="typeRef"
+    class="transition-colors flex items-center rounded-sm justify-center transition-shadow duration-100 ease-linear disabled:opacity-70 no-underline appearance-none ring-offset-1 focus:outline-none focus-visible:ring focus-visible:ring-pink"
     :class="[
       $style.button,
       $style[variant],
-      pressed && $style[`${variant}-pressed`],
+      isActive && $style[`${variant}-pressed`],
       $style[`size-${size}`],
     ]"
     :aria-pressed="pressed"
@@ -22,7 +23,13 @@
 </template>
 
 <script>
-import { defineComponent, ref, watch, toRefs } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  ref,
+  watch,
+  toRefs,
+  computed,
+} from '@nuxtjs/composition-api'
 import { warn } from '~/utils/warn'
 
 /**
@@ -54,9 +61,11 @@ const VButton = defineComponent({
      * @default 'button'
      */
     as: {
-      type: String,
+      type: /** @type {import('@nuxtjs/composition-api').PropType<'a' | 'button'>} */ (
+        String
+      ),
       default: 'button',
-      validate: (v) => ['a', 'button'].includes(v),
+      validate: (v) => ['a', 'button', 'NuxtLink'].includes(v),
     },
     /**
      * The variant of the button.
@@ -64,7 +73,9 @@ const VButton = defineComponent({
      * @default 'primary'
      */
     variant: {
-      type: String,
+      type: /** @type {import('@nuxtjs/composition-api').PropType<'primary' | 'secondary' | 'tertiary' | 'action-menu' | 'action-menu-muted' | 'grouped'>} */ (
+        String
+      ),
       default: 'primary',
       validate: (v) =>
         [
@@ -72,6 +83,7 @@ const VButton = defineComponent({
           'secondary',
           'tertiary',
           'action-menu',
+          'action-menu-secondary',
           'action-menu-muted',
           'grouped',
         ].includes(v),
@@ -93,7 +105,9 @@ const VButton = defineComponent({
      * @default 'medium'
      */
     size: {
-      type: String,
+      type: /** @type {import('@nuxtjs/composition-api').PropType<'large' | 'medium' | 'small' | 'disabled'>} */ (
+        String
+      ),
       default: 'medium',
       validate: (v) => ['large', 'medium', 'small', 'disabled'].includes(v),
     },
@@ -127,12 +141,17 @@ const VButton = defineComponent({
      * @default 'button'
      */
     type: {
-      type: String,
+      type: /** @type {import('@nuxtjs/composition-api').PropType<'buton' | 'submit' | 'reset'>} */ (
+        String
+      ),
       default: 'button',
       validate: (v) => ['button', 'submit', 'reset'].includes(v),
     },
   },
-  /* eslint-disable no-unused-vars */
+  /**
+   * @param {Props} props
+   * @param {import('@nuxtjs/composition-api').SetupContext}
+   */
   setup(props, { attrs }) {
     const propsRef = toRefs(props)
     const disabledAttributeRef = ref(propsRef.disabled.value)
@@ -141,6 +160,13 @@ const VButton = defineComponent({
     const typeRef = ref(propsRef.type.value)
     const supportsDisabledAttributeRef = ref(true)
 
+    const isActive = computed(() => {
+      return (
+        propsRef.pressed.value ||
+        attrs['aria-pressed'] ||
+        attrs['aria-expanded']
+      )
+    })
     watch(
       [propsRef.disabled, propsRef.focusableWhenDisabled],
       ([disabled, focusableWhenDisabled]) => {
@@ -160,18 +186,23 @@ const VButton = defineComponent({
     watch(
       propsRef.as,
       (as) => {
-        if (as === 'a') {
+        if (['a', 'NuxtLink'].includes(as)) {
           typeRef.value = undefined
           supportsDisabledAttributeRef.value = false
-
-          // No need to decalare `href` as an explicit prop as Vue preserves
-          // the `attrs` object reference between renders and updates the properties
-          // meaning we'll always have the latest values for the properties on the
-          // attrs object
-          if (!attrs.href || attrs.href === '#') {
-            warn(
-              'Do not use anchor elements without a valid `href` attribute. Use a `button` instead.'
-            )
+          if (as === 'a') {
+            // No need to declare `href` as an explicit prop as Vue preserves
+            // the `attrs` object reference between renders and updates the properties
+            // meaning we'll always have the latest values for the properties on the
+            // attrs object
+            if (!attrs.href || attrs.href === '#') {
+              warn(
+                'Do not use anchor elements without a valid `href` attribute. Use a `button` instead.'
+              )
+            }
+          } else {
+            if (!attrs.to) {
+              warn('NuxtLink needs a `to` attribute')
+            }
           }
         }
       },
@@ -191,6 +222,7 @@ const VButton = defineComponent({
       disabledAttributeRef,
       ariaDisabledRef,
       typeRef,
+      isActive,
     }
   },
 })
@@ -199,10 +231,6 @@ export default VButton
 </script>
 
 <style module>
-.button {
-  @apply flex items-center rounded-sm justify-center transition-shadow duration-100 ease-linear disabled:opacity-70 focus:outline-none focus-visible:ring no-underline appearance-none ring-offset-1;
-}
-
 .button[disabled='disabled'],
 .button[aria-disabled='true'] {
   @apply opacity-50;
@@ -225,7 +253,7 @@ a.button {
 }
 
 .primary {
-  @apply bg-pink text-white focus-visible:ring-pink hover:bg-dark-pink hover:text-white;
+  @apply bg-pink text-white focus-visible:ring focus-visible:ring-pink hover:bg-dark-pink hover:text-white;
 }
 
 .primary-pressed {
@@ -233,15 +261,15 @@ a.button {
 }
 
 .secondary {
-  @apply bg-dark-charcoal text-white font-bold focus-visible:ring-pink hover:bg-dark-charcoal-80 hover:text-white;
+  @apply bg-dark-charcoal text-white font-bold focus-visible:ring focus-visible:ring-pink hover:bg-dark-charcoal-80 hover:text-white;
 }
 
 .secondary-pressed {
-  @apply bg-dark-charcoal-80;
+  @apply bg-dark-charcoal-80 border border-tx hover:border-tx;
 }
 
 .tertiary {
-  @apply bg-white text-black hover:bg-dark-charcoal hover:text-white border border-dark-charcoal-20 hover:border-tx focus-visible:ring-pink ring-offset-0;
+  @apply bg-white text-black border border-dark-charcoal-20 focus-visible:border-tx focus-visible:ring focus-visible:ring-pink ring-offset-0;
 }
 
 .tertiary-pressed {
@@ -249,30 +277,46 @@ a.button {
 }
 
 .action-menu {
-  @apply bg-white text-black border border-tx hover:border-dark-charcoal-20 focus-visible:ring-pink;
+  @apply bg-white text-black border border-tx hover:border-dark-charcoal-20 focus-visible:ring focus-visible:ring-pink;
+}
+
+.action-menu-secondary {
+  @apply bg-white text-black border border-tx hover:border-dark-charcoal-20 focus-visible:ring focus-visible:ring-pink;
+}
+
+.action-menu-secondary-pressed {
+  @apply border-tx bg-dark-charcoal text-white;
 }
 
 .action-menu-pressed {
-  @apply border-tx bg-dark-charcoal text-white;
+  @apply border-tx hover:border-tx bg-dark-charcoal text-white;
 }
 
 .action-menu-muted {
-  @apply bg-dark-charcoal-10 text-black border border-tx hover:border-dark-charcoal-20 focus-visible:ring-pink;
+  @apply bg-dark-charcoal-10 text-black border border-tx hover:border-dark-charcoal-20 focus-visible:ring focus-visible:ring-pink;
 }
 
 .action-menu-muted-pressed {
-  @apply border-tx bg-dark-charcoal text-white;
+  @apply border border-tx bg-dark-charcoal text-white focus-visible:ring focus-visible:ring-pink;
 }
 
 .grouped {
-  @apply bg-white text-black focus-visible:ring-pink;
+  @apply bg-white text-black;
 }
 
 .grouped-pressed {
   @apply bg-dark-charcoal-10 ring-offset-dark-charcoal-10;
 }
 
+.full {
+  @apply w-full font-semibold bg-dark-charcoal-06 focus-visible:ring focus-visible:ring-pink hover:bg-dark-charcoal-40 hover:text-white;
+}
+
+.full-pressed {
+  @apply w-full font-semibold bg-dark-charcoal-06 text-dark-charcoal;
+}
+
 .plain {
-  @apply bg-tx focus-visible:ring-pink;
+  @apply bg-tx focus-visible:ring focus-visible:ring-pink;
 }
 </style>

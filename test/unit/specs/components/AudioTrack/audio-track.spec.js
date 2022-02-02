@@ -1,6 +1,11 @@
 import VAudioTrack from '~/components/VAudioTrack/VAudioTrack.vue'
 import { render } from '@testing-library/vue'
 import Vuei18n from 'vue-i18n'
+import Vuex from 'vuex'
+
+jest.mock('~/composables/use-browser-detection', () => ({
+  useBrowserIsBlink: jest.fn(() => false),
+}))
 
 const enMessages = require('~/locales/en.json')
 const useVueI18n = (vue) => {
@@ -16,9 +21,40 @@ const useVueI18n = (vue) => {
     i18n,
   }
 }
+const useVuexStore = (vue) => {
+  vue.use(Vuex)
+
+  const store = new Vuex.Store({
+    modules: {
+      active: {
+        namespaced: true,
+        state: {
+          type: 'audio',
+          id: 'e19345b8-6937-49f7-a0fd-03bf057efc28',
+          message: null,
+          state: 'paused',
+        },
+      },
+    },
+  })
+
+  return {
+    store,
+  }
+}
+
+const configureVue = (vue) => {
+  const { i18n } = useVueI18n(vue)
+  const { store } = useVuexStore(vue)
+
+  return {
+    i18n,
+    store,
+    /** @todo Create a better mock that can be configured to test this behavior.  */
+  }
+}
 
 const stubs = {
-  VAudioController: true,
   DownloadButton: true,
   VPlayPause: true,
   NuxtLink: true,
@@ -82,7 +118,7 @@ describe('AudioTrack', () => {
   })
 
   it('should render the full audio track component even without duration', () => {
-    const { getByText } = render(VAudioTrack, options, useVueI18n)
+    const { getByText } = render(VAudioTrack, options, configureVue)
     getByText(props.audio.creator)
   })
 
@@ -91,19 +127,19 @@ describe('AudioTrack', () => {
       ...options.propsData,
       layout: 'row',
     }
-    const { getByText } = render(VAudioTrack, options, useVueI18n)
+    const { getByText } = render(VAudioTrack, options, configureVue)
     getByText('by ' + props.audio.creator)
   })
 
   it('should show audio title as main page title', () => {
-    const { getByText } = render(VAudioTrack, options, useVueI18n)
-    const element = getByText(props.audio.title)
-    expect(element).toBeInstanceOf(HTMLHeadingElement)
-    expect(element.tagName).toEqual('H1')
+    const { getByText } = render(VAudioTrack, options, configureVue)
+    // Title text appears multiple times in the track, so need to specify selector
+    const element = getByText(props.audio.title, { selector: 'H1' })
+    expect(element).toBeInTheDocument()
   })
 
   it('should show audio creator with link', () => {
-    const { getByText } = render(VAudioTrack, options, useVueI18n)
+    const { getByText } = render(VAudioTrack, options, configureVue)
     const element = getByText(props.audio.creator)
     expect(element).toBeInstanceOf(HTMLAnchorElement)
     expect(element).toHaveAttribute('href', props.audio.creator_url)

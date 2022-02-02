@@ -75,7 +75,6 @@ import feature3 from '~/assets/screenshots/extension_feat_3.png'
 const AboutPage = {
   name: 'about-page',
   components: { ExtensionBrowsers },
-  layout: 'with-nav-search',
   data() {
     const features = [
       { key: 'search', image: feature1 },
@@ -85,6 +84,11 @@ const AboutPage = {
     return {
       features,
       isPlaying: true,
+    }
+  },
+  head() {
+    return {
+      title: `${this.$t('extension.title')} - ${this.$t('hero.brand')}`,
     }
   },
   methods: {

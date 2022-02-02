@@ -13,10 +13,15 @@
   >
     <VButton
       data-item-group-item
-      class="flex justify-between focus-visible:ring-pink rounded min-w-full"
-      :class="[$style.button, $style[`${contextProps.direction}-button`]]"
+      :as="as"
+      class="flex justify-between rounded min-w-full group relative hover:bg-dark-charcoal-10 px-2 py-2"
+      :class="[
+        $style.button,
+        $style[`${contextProps.direction}-button`],
+        $style[`${contextProps.size}-button`],
+      ]"
       variant="grouped"
-      size="small"
+      size="disabled"
       :pressed="selected"
       :role="contextProps.type === 'radiogroup' ? 'radio' : 'menuitemcheckbox'"
       :aria-checked="selected"
@@ -26,16 +31,22 @@
       @focus="isFocused = true"
       @blur="isFocused = false"
       @keydown="focusContext.onItemKeyPress"
+      @keydown.native="focusContext.onItemKeyPress"
+      @click.native="$emit('click')"
     >
       <div
-        class="flex-grow whitespace-nowrap"
-        :class="$style[`${contextProps.direction}-content`]"
+        class="flex-grow whitespace-nowrap my-0 rounded-sm px-2 group-focus-visible:ring group-focus-visible:ring-pink md:group-focus-visible:ring-tx"
+        :class="[
+          $style[`${contextProps.direction}-content`],
+          $style[`${contextProps.size}-content`],
+        ]"
       >
         <slot name="default" />
       </div>
       <VIcon
         v-if="!isInPopover && selected && contextProps.direction === 'vertical'"
-        :icon-path="check"
+        class="absolute end-5"
+        :icon-path="checkmark"
       />
     </VButton>
   </div>
@@ -49,7 +60,7 @@ import {
   computed,
   watch,
 } from '@nuxtjs/composition-api'
-import check from '~/assets/icons/check.svg'
+import checkmark from '~/assets/icons/checkmark.svg'
 import VButton from '~/components/VButton.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'
 import {
@@ -62,6 +73,7 @@ import { warn } from '~/utils/warn'
 export default defineComponent({
   name: 'VItem',
   components: { VButton, VIcon },
+  inheritAttrs: false,
   props: {
     /**
      * Whether the item is selected/checked.
@@ -77,7 +89,26 @@ export default defineComponent({
       type: Boolean,
       required: true,
     },
+    /**
+     * To change the underlying component for the VButton,
+     * pass `as` prop.
+     * @variants 'button', 'a', 'NuxtLink'
+     */
+    as: {
+      type: String,
+      default: 'button',
+      validator: (val) => ['button', 'a', 'NuxtLink'].includes(val),
+    },
   },
+  /**
+   * Setting `inheritAttrs` to false ensures that the $attrs are only passed to VButton component,
+   * and not the outer div. In Vue 3 this will also stops native events such as `click` from
+   * going up the tree. Adding `emits` should fix this:
+   * https://v3.vuejs.org/guide/migration/v-on-native-modifier-removed.html#_3-x-syntax
+   * However, with current Vue 2 setup, if VItem is a link (a or NuxtLink), it is
+   * necessary to add native modifier to handle click event: `@click.native='handler'`.
+   */
+  emits: ['click'],
   setup(props) {
     const focusContext = inject(VItemGroupFocusContextKey)
     const isFocused = ref(false)
@@ -109,12 +140,12 @@ export default defineComponent({
       // If the group is not focused but this is the selected item, then this should be the focusable item when focusing into the group
       if (!focusContext.isGroupFocused.value && props.selected) return 0
 
-      // Otherwise the item should not be tabbable. The logic above guarantees that at least one other item in the group will be tabbable.
+      // Otherwise, the item should not be tabbable. The logic above guarantees that at least one other item in the group will be tabbable.
       return -1
     })
 
     return {
-      check,
+      checkmark,
       contextProps,
       isInPopover,
       isFocused,
@@ -128,6 +159,14 @@ export default defineComponent({
 <style module>
 .button:focus {
   @apply z-10;
+}
+
+.medium-button {
+  @apply focus-visible:ring focus-visible:ring-pink;
+}
+
+.small-content {
+  @apply group-focus-visible:ring group-focus-visible:ring-pink;
 }
 
 .vertical {
@@ -151,7 +190,7 @@ export default defineComponent({
 }
 
 .vertical-content {
-  @apply flex flex-row;
+  @apply flex flex-row items-center;
 }
 
 .vertical-popover-item {

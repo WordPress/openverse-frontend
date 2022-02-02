@@ -1,5 +1,8 @@
-import { watch } from '@nuxtjs/composition-api'
-import { getFirstTabbableIn, hasFocusWithin, ensureFocus } from 'reakit-utils'
+import { ref, watch } from '@nuxtjs/composition-api'
+import { getFirstTabbableIn } from 'reakit-utils/tabbable'
+import { hasFocusWithin } from 'reakit-utils/hasFocusWithin'
+import { ensureFocus } from 'reakit-utils/ensureFocus'
+
 import { warn } from '~/utils/warn'
 
 export const noFocusableElementWarning =
@@ -10,6 +13,7 @@ export const noFocusableElementWarning =
  * @property {import('./types').Ref<HTMLElement>} dialogRef
  * @property {import('./types').Ref<boolean>} visibleRef
  * @property {import('./types').Ref<boolean>} autoFocusOnShowRef
+ * @property {import('./types').Ref<HTMLElement>} initialFocusElementRef
  */
 
 /**
@@ -20,17 +24,26 @@ export const useFocusOnShow = ({
   dialogRef,
   visibleRef,
   autoFocusOnShowRef,
+  initialFocusElementRef = ref(),
 }) => {
   watch(
-    [dialogRef, visibleRef, autoFocusOnShowRef],
+    [dialogRef, visibleRef, autoFocusOnShowRef, initialFocusElementRef],
     /**
-     * @param {[HTMLElement, boolean, boolean]} values
+     * @param {[HTMLElement, boolean, boolean, HTMLElement]} values
      */
-    ([dialog, visible, autoFocusOnShow]) => {
+    ([dialog, visible, autoFocusOnShow, initialFocusElement]) => {
       if (!dialog || !visible || !autoFocusOnShow) return
 
-      const tabbable = getFirstTabbableIn(dialog, true)
       const isActive = () => hasFocusWithin(dialog)
+
+      if (initialFocusElement) {
+        return ensureFocus(initialFocusElement, {
+          preventScroll: true,
+          isActive,
+        })
+      }
+
+      const tabbable = getFirstTabbableIn(dialog, true)
 
       if (tabbable) {
         ensureFocus(tabbable, { preventScroll: true, isActive })

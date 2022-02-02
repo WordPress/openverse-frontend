@@ -27,21 +27,25 @@ test.beforeEach(async ({ context }) => {
   // Serve mock data on all image search requests
   await context.route(
     'https://api.openverse.engineering/v1/images/**',
-    (route) => route.fulfill({ path: 'test/e2e/resources/mock_data.json' })
+    (route) =>
+      route.fulfill({
+        headers: { 'Access-Control-Allow-Origin': '*' },
+        path: 'test/e2e/resources/mock_data.json',
+      })
   )
 })
 
 const contentTypes = [
   {
     id: 'all',
-    name: 'All',
+    name: 'All content',
     url: '/search/?q=cat',
     supported: true,
     sources: 6,
   },
   {
     id: 'image',
-    name: 'Image',
+    name: 'Images',
     url: '/search/image/?q=cat',
     supported: true,
     sources: 6,
@@ -50,39 +54,16 @@ const contentTypes = [
     id: 'audio',
     name: 'Audio',
     url: '/search/audio/?q=cat',
-    supported: true,
-    sources: 5,
-  },
-  {
-    id: 'video',
-    name: 'Video',
-    url: '/search/video/?q=cat',
     supported: false,
-    sources: 4,
+    sources: 3,
   },
 ]
 
-for (const [i, contentType] of contentTypes.entries()) {
-  test(`Can open ${contentType.name} page on SSR`, async ({ page }) => {
+for (const contentType of contentTypes) {
+  test(`Can open ${contentType.name} search page on SSR`, async ({ page }) => {
     await page.goto(contentType.url)
 
-    // Selected content page
-    const currentTabLabel = await page
-      .locator('[aria-current="page"]')
-      .textContent()
-
-    expect(currentTabLabel.trim()).toEqual(contentType.name)
-
-    // Meta data
     if (contentType.supported) {
-      const searchMetaData = await page.locator('[data-testid="search-meta"]')
-
-      await expect(searchMetaData).toContainText(
-        contentType.id === 'all' ? 'image results' : `${contentType.id} results`
-      )
-      await expect(searchMetaData).toContainText('Are these results relevant')
-      await expect(searchMetaData).toContainText('Safer Browsing')
-
       const searchResult = await page.locator('[data-testid="search-results"]')
       await expect(searchResult).toBeVisible()
       await expect(searchResult).not.toBeEmpty()
@@ -90,13 +71,10 @@ for (const [i, contentType] of contentTypes.entries()) {
 
     // Load more
     if (contentType.supported) {
-      const loadMoreSection = await page.locator('[data-testid="load-more"]')
-      await expect(loadMoreSection).toHaveCount(1)
-      const expectedText =
-        contentType.id === 'audio' ? 'No more audio' : 'Load more'
-      await expect(loadMoreSection).toContainText(expectedText)
-    } else {
-      await expect(page.locator('[data-testid="load-more"]')).toHaveCount(0)
+      const loadMoreBtn = await page.locator(
+        'button:has-text("Load more results")'
+      )
+      await expect(loadMoreBtn).toHaveCount(1)
     }
 
     // MetaSearch form
@@ -108,34 +86,20 @@ for (const [i, contentType] of contentTypes.entries()) {
     const sourceButtons = await page.locator('.meta-search a')
     await expect(sourceButtons).toHaveCount(contentType.sources)
   })
-  test.skip(`Can open ${contentType.name} page client-side`, async ({
-    page,
-  }) => {
-    const pageToOpen = (i + 1) % contentTypes.length
-    await page.goto(contentTypes[pageToOpen].url)
+  test(`Can open ${contentType.name} page client-side`, async ({ page }) => {
+    // Audio is loading a lot of files, so we do not use it for the first SSR page
+    const pageToOpen =
+      contentType.id === 'all' ? contentTypes[1] : contentTypes[0]
+    await page.goto(pageToOpen.url)
+    await page.click(`[aria-label="${pageToOpen.name}"]`)
 
-    await page.click(`[role="tab"]:has-text("${contentType.name}")`)
+    await page.click(`button[role="radio"]:has-text("${contentType.name}")`)
     const urlParam = contentType.id === 'all' ? '' : contentType.id
     const expectedURL = `/search/${urlParam}?q=cat`
     await expect(page).toHaveURL(expectedURL)
 
-    // Selected content page
-    const currentTabLabel = await page
-      .locator('[aria-current="page"]')
-      .textContent()
-
-    expect(currentTabLabel.trim()).toEqual(contentType.name)
-
     // Meta data
     if (contentType.supported) {
-      const searchMetaData = await page.locator('[data-testid="search-meta"]')
-
-      await expect(searchMetaData).toContainText(
-        contentType.id === 'all' ? 'image results' : `${contentType.id} results`
-      )
-      await expect(searchMetaData).toContainText('Are these results relevant')
-      await expect(searchMetaData).toContainText('Safer Browsing')
-
       const searchResult = await page.locator('[data-testid="search-results"]')
       await expect(searchResult).toBeVisible()
       await expect(searchResult).not.toBeEmpty()

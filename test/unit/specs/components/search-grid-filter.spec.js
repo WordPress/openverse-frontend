@@ -4,8 +4,7 @@ import { createLocalVue } from '@vue/test-utils'
 import { IMAGE } from '~/constants/media'
 import store from '~/store/search'
 import clonedeep from 'lodash.clonedeep'
-import SearchGridFilter from '~/components/Filters/SearchGridFilter'
-import VCheckbox from '~/components/VCheckbox'
+import SearchGridFilter from '~/components/VFilters/VSearchGridFilter.vue'
 
 const initialFilters = {
   licenseTypes: [
@@ -36,11 +35,11 @@ describe('SearchGridFilter', () => {
   let storeMock
   let localVue
   let filters
+  const routerMock = { push: jest.fn() }
 
   beforeEach(() => {
     localVue = createLocalVue()
     localVue.use(Vuex)
-    localVue.component('VCheckbox', VCheckbox)
     filters = clonedeep(initialFilters)
     storeMock = new Vuex.Store({
       modules: {
@@ -71,7 +70,14 @@ describe('SearchGridFilter', () => {
     options = {
       localVue,
       mocks: {
+        $router: routerMock,
         $store: storeMock,
+        $nuxt: {
+          context: {
+            i18n: { t: () => {} },
+            store: storeMock,
+          },
+        },
       },
       stubs: { VIcon: true },
     }
@@ -81,15 +87,6 @@ describe('SearchGridFilter', () => {
     storeMock.state.search.isFilterVisible = true
     await render(SearchGridFilter, options)
     expect(screen.getByTestId('filters-list')).toBeVisible()
-    expect(screen.getByTestId('filters-list')).toHaveClass('block')
-  })
-
-  it('should not show search filters when isFilterVisible is false', async () => {
-    storeMock.state.search.isFilterVisible = false
-    await render(SearchGridFilter, options)
-
-    // not.toBeVisible does not work
-    expect(screen.getByTestId('filters-list')).toHaveClass('hidden')
   })
 
   it('toggles filter', async () => {
@@ -117,16 +114,5 @@ describe('SearchGridFilter', () => {
     expect(checkedFilters.length).toEqual(0)
     // Filters are reset with the initial `filterData`
     expect(uncheckedFilters.length).toEqual(25)
-  })
-
-  it('toggles search visibility', async () => {
-    render(SearchGridFilter, options)
-    const element = screen.getByTestId('filters-list')
-
-    expect(element).toBeVisible()
-    expect(element).toHaveClass('block')
-
-    await fireEvent.click(screen.getByText('filter-list.hide'))
-    expect(element).toHaveClass('hidden')
   })
 })

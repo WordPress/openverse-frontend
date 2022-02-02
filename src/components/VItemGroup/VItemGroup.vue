@@ -3,10 +3,17 @@
     ref="nodeRef"
     class="w-full flex"
     :role="type"
-    :class="direction === 'vertical' ? 'flex-col' : 'flex-row'"
+    :class="{
+      'flex-col': direction === 'vertical',
+      'flex-row': direction !== 'vertical',
+      'flex-wrap': direction === 'columns',
+    }"
     @focusin="isFocused = true"
     @focusout="isFocused = false"
   >
+    <h2 v-if="showHeading" class="text-sr p-6 pb-4 uppercase font-semibold">
+      {{ heading }}
+    </h2>
     <!--
       @slot The items in the item group. Should all be `VItem`s
     -->
@@ -20,15 +27,18 @@ import {
   provide,
   ref,
   readonly,
+  computed,
 } from '@nuxtjs/composition-api'
-import { ensureFocus } from 'reakit-utils'
+import { ensureFocus } from 'reakit-utils/ensureFocus'
 import { useI18n } from '~/composables/use-i18n'
+import * as keycodes from '~/utils/key-codes'
 
 /**
  * @typedef VItemGroupContext
  * @property {'vertical' | 'horizontal'} direction
  * @property {boolean} bordered
  * @property {'menu' | 'radiogroup'} type
+ * @property {'small' | 'medium'} size
  */
 
 /**
@@ -49,7 +59,12 @@ export const VItemGroupContextKey = Symbol('VItemGroupContext')
  */
 export const VItemGroupFocusContextKey = Symbol('VItemGroupFocusContext')
 
-const arrows = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight']
+const arrows = [
+  keycodes.ArrowUp,
+  keycodes.ArrowDown,
+  keycodes.ArrowLeft,
+  keycodes.ArrowRight,
+]
 
 export default defineComponent({
   name: 'VItemGroup',
@@ -60,15 +75,15 @@ export default defineComponent({
      * @default 'vertical'
      */
     direction: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<'vertical' | 'horizontal'>} */ (
+      type: /** @type {import('@nuxtjs/composition-api').PropType<'vertical' | 'horizontal' | 'columns' >} */ (
         String
       ),
       default: 'vertical',
-      validate: (v) => ['vertical', 'horizontal'].includes(v),
+      validate: (v) => ['vertical', 'horizontal', 'columns'].includes(v),
     },
     /**
      * Whether to render a bordered, separated list of items. When false each
-     * item will be have whitespace separating them instead of borders.
+     * item will have whitespace separating them instead of borders.
      *
      * @default true
      */
@@ -96,6 +111,24 @@ export default defineComponent({
       ),
       default: 'menu',
       validate: (v) => ['menu', 'radiogroup'].includes(v),
+    },
+    /**
+     * The heading text to show at the top of the Item Group.
+     * Optional.
+     */
+    heading: {
+      type: String,
+      required: false,
+    },
+    /**
+     * Size of the item group corresponds to the size of the component.
+     *
+     * @default 'small'
+     */
+    size: {
+      type: String,
+      default: 'small',
+      validate: (val) => ['small', 'medium'].includes(val),
     },
   },
   setup(props) {
@@ -139,14 +172,14 @@ export default defineComponent({
       const targetIndex = items.findIndex((item) => item === target)
 
       switch (event.key) {
-        case 'ArrowUp':
-        case resolveArrow('ArrowLeft', 'ArrowRight'):
+        case keycodes.ArrowUp:
+        case resolveArrow(keycodes.ArrowLeft, keycodes.ArrowRight):
           if (targetIndex === 0) {
             return ensureFocus(items[items.length - 1])
           }
           return ensureFocus(items[targetIndex - 1])
-        case 'ArrowDown':
-        case resolveArrow('ArrowRight', 'ArrowLeft'):
+        case keycodes.ArrowDown:
+        case resolveArrow(keycodes.ArrowRight, keycodes.ArrowLeft):
           if (targetIndex === items.length - 1) {
             return ensureFocus(items[0])
           }
@@ -165,6 +198,8 @@ export default defineComponent({
       if (!previousSelected && selected) selectedCount.value += 1
     }
 
+    const showHeading = computed(() => Boolean(props.heading))
+
     const focusContext = {
       isGroupFocused: readonly(isFocused),
       onItemKeyPress,
@@ -174,7 +209,7 @@ export default defineComponent({
 
     provide(VItemGroupFocusContextKey, focusContext)
 
-    return { isFocused, nodeRef }
+    return { isFocused, nodeRef, showHeading }
   },
 })
 </script>

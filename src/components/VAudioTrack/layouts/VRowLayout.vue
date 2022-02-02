@@ -1,11 +1,14 @@
 <template>
-  <article class="row-track flex flex-row" :class="`size-${size}`">
+  <article
+    class="row-track flex flex-row"
+    :class="[`size-${size}`, { 'items-start': isSmall }]"
+  >
     <div
       class="relative flex-shrink-0 rounded-sm overflow-hidden"
       :class="isLarge ? 'w-30 me-6' : 'w-20 me-4'"
     >
-      <AudioThumbnail :audio="audio" />
-      <div v-if="isSmall" class="absolute bottom-0 end-0">
+      <VAudioThumbnail :audio="audio" />
+      <div v-if="isSmall" class="absolute bottom-0 rtl:left-0 ltr:right-0">
         <slot name="play-pause" size="tiny" />
       </div>
     </div>
@@ -20,7 +23,7 @@
       <div class="flex-shrink-0" :class="{ 'w-70': isMedium }">
         <NuxtLink
           :to="localePath(`/audio/${audio.id}`)"
-          class="font-heading font-semibold text-dark-charcoal hover:text-dark-charcoal p-px rounded-sm focus:outline-none focus:ring focus:ring-pink"
+          class="block font-heading font-semibold line-clamp-2 md:line-clamp-1 text-dark-charcoal hover:text-dark-charcoal p-px rounded-sm focus:outline-none focus:ring focus:ring-pink"
           :class="{
             'text-2xl': isMedium || isLarge,
             'leading-snug': isSmall,
@@ -43,10 +46,10 @@
             ><span v-if="isLarge" class="mx-2">{{ $t('interpunct') }}</span>
           </div>
 
-          <div class="part-b inline-flex">
+          <div class="part-b inline-flex flex-row items-center">
             <span v-if="isSmall">
               <span
-                class="text-dark-charcoal font-semibold bg-dark-charcoal-06 p-1 rounded-sm"
+                class="inline-block text-dark-charcoal font-semibold bg-dark-charcoal-06 p-1 rounded-sm"
                 >{{ timeFmt(audio.duration) }}</span
               ><span class="mx-2">{{ $t('interpunct') }}</span>
             </span>
@@ -71,7 +74,8 @@
         <slot name="play-pause" :size="isLarge ? 'medium' : 'large'" />
         <slot
           name="controller"
-          :waveform-props="{ features: ['timestamps', 'duration', 'seek'] }"
+          :features="features"
+          :feature-notices="featureNotices"
         />
       </div>
     </div>
@@ -79,19 +83,30 @@
 </template>
 
 <script>
-import { computed, defineComponent } from '@nuxtjs/composition-api'
-import AudioThumbnail from '~/components/AudioThumbnail/AudioThumbnail.vue'
+import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
+import { useBrowserIsBlink } from '~/composables/use-browser-detection'
+
+import VAudioThumbnail from '~/components/VAudioThumbnail/VAudioThumbnail.vue'
 import VLicense from '~/components/License/VLicense.vue'
 
 export default defineComponent({
   name: 'VRowLayout',
   components: {
-    AudioThumbnail,
+    VAudioThumbnail,
     VLicense,
   },
   props: ['audio', 'size'],
   setup(props) {
     /* Utils */
+    const browserIsBlink = useBrowserIsBlink()
+    const { i18n } = useContext()
+
+    const featureNotices = {}
+    const features = ['timestamps', 'duration', 'seek']
+    if (browserIsBlink && props.audio.source === 'jamendo') {
+      features.pop()
+      featureNotices.seek = i18n.t('audio-track.messages.blink_seek_disabled')
+    }
 
     /**
      * Format the time as hh:mm:ss, dropping the hour part if it is zero.
@@ -114,6 +129,9 @@ export default defineComponent({
     return {
       timeFmt,
 
+      features,
+      featureNotices,
+
       isSmall,
       isMedium,
       isLarge,
@@ -127,7 +145,7 @@ export default defineComponent({
   @apply rounded-ts-sm rounded-bs-sm flex-shrink-0;
 }
 
-.row-track .audio-controller {
+.row-track .waveform {
   @apply flex-grow;
   --waveform-background-color: theme('colors.white');
 }
