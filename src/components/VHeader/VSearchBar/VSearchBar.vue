@@ -6,7 +6,7 @@
     <VInputField
       v-bind="$attrs"
       class="flex-grow search-field"
-      :class="{ 'border-0': isHomeRoute }"
+      :class="{ 'border-transparent': isHomeRoute }"
       :label-text="$t('hero.aria.search')"
       :connection-sides="['end']"
       :size="size"
@@ -87,5 +87,10 @@ export default VSearchBar
 .search-field input[type='search']::-webkit-search-results-button,
 .search-field input[type='search']::-webkit-search-results-decoration {
   -webkit-appearance: none;
+}
+
+/* Necessary to avoid flickering and just 'border-tx' inline class isn't working here */
+.search-field.border-transparent {
+  border-color: transparent;
 }
 </style>
