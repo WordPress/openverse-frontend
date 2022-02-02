@@ -14,8 +14,8 @@ import { useContext } from '@nuxtjs/composition-api'
 import MigrationNotice from '~/components/MigrationNotice.vue'
 import TranslationStatusBanner from '~/components/TranslationStatusBanner.vue'
 
-const embeddedPage = {
-  name: 'embedded',
+const BlankLayout = {
+  name: 'blank',
   components: {
     MigrationNotice,
     TranslationStatusBanner,
@@ -32,5 +32,5 @@ const embeddedPage = {
     return { isReferredFromCc }
   },
 }
-export default embeddedPage
+export default BlankLayout
 </script>
