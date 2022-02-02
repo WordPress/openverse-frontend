@@ -12,10 +12,6 @@ on:
         type: boolean
         description: Determine whether the current workflow is executed against production or not
 
-  release:
-    types:
-      - "released"
-
 # TODO: get the secrets via inputs, so we let the staging/production workflows retrieve their corresponding credentials
 env:
   AWS_REGION: ${{ secrets.AWS_REGION }}

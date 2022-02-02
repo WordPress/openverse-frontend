@@ -7,6 +7,7 @@ on:
   push:
     branches:
       - main
+      - ci/* # allow any ci/* branch the ability to deploy to staging without the need to merge the PR
 
 jobs:
   push:
