@@ -2,7 +2,7 @@
 # push_staging and push_production workflows
 # more info: https://docs.github.com/en/actions/learn-github-actions/reusing-workflows
 
-name: build
+name: openverse/build
 
 on:
   workflow_call:

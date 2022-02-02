@@ -24,6 +24,6 @@ jobs:
 
       # build a new docker image and push it into the repository
       - name: docker build
-        uses: ./.github/workflows/build.yaml@ci/actions
+        uses: ./.github/workflows/build.yml@v1
         with:
           is_production: false
