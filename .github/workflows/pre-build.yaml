@@ -7,10 +7,10 @@ name: openverse/validate
 
 on:
   pull_request:
-  push:
-    branches:
-      - 'main'
-      - 'ci/*' # branches that follows the pattern ci/* can access this workflow too
+#  push:
+#    branches:
+#      - 'main'
+#      - 'ci/*' # branches that follows the pattern ci/* can access this workflow too
 
 jobs:
   pre_build:

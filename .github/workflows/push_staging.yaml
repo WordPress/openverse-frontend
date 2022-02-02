@@ -22,8 +22,10 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
 
+      - run: ls -lah ./.github/workflows/
+
       # build a new docker image and push it into the repository
       - name: docker build
-        uses: ./.github/workflows/build.yml@v1
+        uses: ./.github/workflows/build.yml@ci/actions
         with:
           is_production: false
