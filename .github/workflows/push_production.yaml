@@ -1,7 +1,7 @@
 # this build is triggered when a new pre-release has been created
 # it creates a new docker build image based on the tag associated
 
-name: push_production
+name: openverse/deploy/production
 
 on:
   release:
@@ -23,6 +23,6 @@ jobs:
 
       # build a new docker image and push it into the repository
       - name: docker build
-        uses: ./.github/workflows/build.yaml@v1
+        uses: ./.github/workflows/build.yaml@ci/actions
         with:
           is_production: true
