@@ -6,7 +6,7 @@ name: push_production
 on:
   release:
     types:
-      - 'prereleased'
+      - 'released'
 
 jobs:
   push:
