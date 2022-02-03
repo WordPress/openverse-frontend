@@ -24,7 +24,7 @@ jobs:
 
       # build a new docker image and push it into the repository
       - name: docker build
-        uses: ./.github/actions/build.yml@v1
+        uses: ./.github/actions/build@v1
         with:
           is_production: false
           AWS_REGION: ${{ secrets.AWS_REGION }}
