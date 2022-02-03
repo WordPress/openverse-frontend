@@ -22,10 +22,12 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
 
-      - run: ls -lah ./.github/workflows/
-
       # build a new docker image and push it into the repository
       - name: docker build
-        uses: ./.github/workflows/build.yml@ci/actions
+        uses: ./.github/actions/build.yml@v1
         with:
           is_production: false
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
