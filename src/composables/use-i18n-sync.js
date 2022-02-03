@@ -60,7 +60,7 @@ export default function useI18nSync() {
   }
 
   const bannerDismissedForLocales = useStorage(
-    'openverse-dismissed-banner-locales',
+    'ov-dismissed-banner-locales',
     [],
     {
       serializer: StorageSerializers.object,
