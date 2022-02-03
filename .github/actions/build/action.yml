@@ -48,10 +48,8 @@ runs:
       if: ${{ github.event.inputs.is_production == false }}
       with:
         images: ${{ inputs.aws_account_id }}.dkr.ecr.${{ inputs.aws_region }}.amazonaws.com/openverse/frontend
-        flavor: |
-          latest=auto
         tags: |
-          type=ref,event=tag
+          type=raw,value=latest
           type=ref,event=branch
 
     # build a docker image
