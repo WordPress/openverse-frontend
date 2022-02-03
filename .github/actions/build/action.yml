@@ -48,8 +48,9 @@ runs:
       if: ${{ github.event.inputs.is_production == false }}
       with:
         images: ${{ inputs.aws_account_id }}.dkr.ecr.${{ inputs.aws_region }}.amazonaws.com/openverse/frontend
-        tags: |
+        flavor: |
           latest=auto
+        tags: |
           type=edge,branch=main
 
     # build a docker image
@@ -70,8 +71,9 @@ runs:
       if: ${{ github.event.inputs.is_production == true }}
       with:
         images: ${{ inputs.aws_account_id }}.dkr.ecr.${{ inputs.aws_region }}.amazonaws.com/openverse/frontend
-        tags: |
+        flavor: |
           latest=false
+        tags: |
           type=raw,value=stable
           type=semver,pattern={{version}}
 
