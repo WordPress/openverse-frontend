@@ -51,8 +51,7 @@ runs:
         flavor: |
           latest=auto
         tags: |
-          type=ref,event=pr
-          type=edge,enable=true,priority=700,prefix=,suffix=,branch=$repo.default_branch
+          type=sha,enable=true,priority=100,prefix=sha-,suffix=,format=short
 
     # build a docker image
     - name: build docker image
