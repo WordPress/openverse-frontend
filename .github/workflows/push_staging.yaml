@@ -21,6 +21,11 @@ jobs:
       # download the source code into the runner
       - name: checkout
         uses: actions/checkout@v2
+        
+      - run: ls -lah .github
+      - run: ls -lah .github/actions
+      - run: ls -lah .github/workflows
+      - run: ls -lah .github/actions/build
 
       # build a new docker image and push it into the repository
       - name: docker build
