@@ -51,7 +51,7 @@ runs:
         flavor: |
           latest=auto
         tags: |
-          type=sha,enable=true,priority=100,prefix=sha-,suffix=,format=short
+          type=ref,event=branch
 
     # build a docker image
     - name: build docker image
