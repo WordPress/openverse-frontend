@@ -35,10 +35,10 @@ runs:
     - name: docker login
       uses: aws-actions/amazon-ecr-login@v1
       env:
-        AWS_REGION: ${{ env.INPUT_AWS_REGION }}
-        AWS_ACCOUNT_ID: ${{ env.INPUT_AWS_ACCOUNT_ID }}
-        AWS_ACCESS_KEY_ID: ${{ env.INPUT_AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ env.INPUT_AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: ${{ inputs.aws_region }}
+        AWS_ACCOUNT_ID: ${{ inputs.aws_account_id }}
+        AWS_ACCESS_KEY_ID: ${{ inputs.aws_access_key_id }}
+        AWS_SECRET_ACCESS_KEY: ${{ inputs.aws_secret_access_key }}
 
     # for staging
     # gather metadata from git & github actions to reference in docker
@@ -47,7 +47,7 @@ runs:
       uses: docker/metadata-action@v3
       if: ${{ github.event.inputs.is_production == false }}
       with:
-        images: ${{ env.INPUT_AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.INPUT_AWS_REGION }}.amazonaws.com/openverse/frontend
+        images: ${{ inputs.aws_account_id }}.dkr.ecr.${{ inputs.aws_region }}.amazonaws.com/openverse/frontend
         tags: |
           latest=auto
           type=edge,branch=main
@@ -69,7 +69,7 @@ runs:
       uses: docker/metadata-action@v3
       if: ${{ github.event.inputs.is_production == true }}
       with:
-        images: ${{ env.INPUT_AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.INPUT_AWS_REGION }}.amazonaws.com/openverse/frontend
+        images: ${{ inputs.aws_account_id }}.dkr.ecr.${{ inputs.aws_region }}.amazonaws.com/openverse/frontend
         tags: |
           latest=false
           type=raw,value=stable
