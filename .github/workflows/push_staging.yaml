@@ -30,7 +30,7 @@ jobs:
 
       # build a new docker image and push it into the repository
       - name: docker build
-        uses: ./.github/actions/build@9424da8188ec0847720cc428c403bd909d51585c
+        uses: ./.github/actions/build
         with:
           is_production: false
           AWS_REGION: ${{ secrets.AWS_REGION }}
