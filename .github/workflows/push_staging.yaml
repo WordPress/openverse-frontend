@@ -22,6 +22,7 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
         
+      - run: pwd
       - run: ls -lah .github
       - run: ls -lah .github/actions
       - run: ls -lah .github/workflows
