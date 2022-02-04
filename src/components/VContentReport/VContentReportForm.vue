@@ -77,7 +77,7 @@
 
         <div class="flex flex-row items-center justify-end gap-4">
           <VButton variant="tertiary" @click="handleCancel">
-            {{ $t('media-details.content-report.cancel') }}
+            {{ $t('media-details.content-report.form.cancel') }}
           </VButton>
 
           <VButton
@@ -99,7 +99,7 @@
             variant="secondary"
             @click="handleSubmit"
           >
-            {{ $t('media-details.content-report.short') }}
+            {{ $t('media-details.content-report.form.submit') }}
           </VButton>
         </div>
       </form>

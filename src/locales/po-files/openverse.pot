@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-02-04T04:53:05+00:00\n"
+"POT-Creation-Date: 2022-02-04T05:39:17+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -454,11 +454,6 @@ msgctxt "media-details.content-report.long"
 msgid "Report this content"
 msgstr ""
 
-#: src/components/VContentReport/VContentReportForm.vue:80
-msgctxt "media-details.content-report.cancel"
-msgid "Cancel"
-msgstr ""
-
 #: src/components/VContentReport/VContentReportForm.vue:26
 msgctxt "media-details.content-report.failure.title"
 msgid "Report could not be submitted"
@@ -488,6 +483,16 @@ msgstr ""
 #: src/components/VContentReport/VContentReportForm.vue:46
 msgctxt "media-details.content-report.form.question"
 msgid "What is the reason?"
+msgstr ""
+
+#: src/components/VContentReport/VContentReportForm.vue:102
+msgctxt "media-details.content-report.form.submit"
+msgid "Report"
+msgstr ""
+
+#: src/components/VContentReport/VContentReportForm.vue:80
+msgctxt "media-details.content-report.form.cancel"
+msgid "Cancel"
 msgstr ""
 
 msgctxt "media-details.content-report.form.other.option"

@@ -495,7 +495,6 @@
     "content-report": {
       "short": "Report",
       "long": "Report this content",
-      "cancel": "Cancel",
       "form": {
         "disclaimer": "For security purposes, Openverse collects and retains anonymized IP addresses of those who complete and submit this form.",
         "question": "What is the reason?",
@@ -512,7 +511,9 @@
           "option": "Other",
           "note": "Describe the issue.",
           "minimum": "Please enter at least 20 characters."
-        }
+        },
+        "submit": "Report",
+        "cancel": "Cancel"
       },
       "success": {
         "title": "Report submitted successfully",
