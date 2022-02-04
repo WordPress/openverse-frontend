@@ -4,6 +4,7 @@ import { VIEWPORTS } from './src/constants/screens'
 import { dev } from './src/utils/dev'
 import { env } from './src/utils/env'
 import { sentry } from './src/utils/sentry-config'
+import renderRoute from './src/hooks/render:route'
 
 /**
  * The default metadata for the site. Can be extended and/or overwritten per page. And even in components!
@@ -134,6 +135,11 @@ export default {
     '~/styles/accent.scss',
   ],
   head,
+  hooks: {
+    render: {
+      route: renderRoute,
+    },
+  },
   env,
   dev,
   buildModules: [
