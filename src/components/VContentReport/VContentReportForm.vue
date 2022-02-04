@@ -111,6 +111,7 @@
 import { computed, defineComponent, ref } from '@nuxtjs/composition-api'
 
 import VButton from '~/components/VButton.vue'
+import VRadio from '~/components/VRadio/VRadio.vue'
 import VDmcaNotice from '~/components/VContentReport/VDmcaNotice.vue'
 import VOtherIssueForm from '~/components/VContentReport/VOtherIssueForm.vue'
 
@@ -124,6 +125,7 @@ export default defineComponent({
   name: 'VContentReportForm',
   components: {
     VButton,
+    VRadio,
     VDmcaNotice,
     VOtherIssueForm,
   },
