@@ -3,7 +3,6 @@
     ref="popoverEl"
     :hide-on-click-outside="false"
     placement="bottom-end"
-    :z-index="20"
   >
     <template #trigger="{ a11yProps }">
       <VContentReportButton v-bind="a11yProps" />
