@@ -19,7 +19,7 @@
         :href="mediaUrl"
         class="text-pink hover:underline"
         target="_blank"
-        rel="noopener"
+        rel="noopener noreferrer"
         >{{ provider }}</a
       >
     </template>

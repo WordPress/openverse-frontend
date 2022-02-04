@@ -87,7 +87,7 @@
             variant="secondary"
             :href="DMCA_FORM_URL"
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
           >
             {{ $t('media-details.content-report.form.dmca.open') }}
             <VIcon :size="4" class="ms-1" :icon-path="icons.externalLink" />
