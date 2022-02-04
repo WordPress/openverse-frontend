@@ -9,7 +9,11 @@
     </template>
     <template #default="{ close }">
       <div class="relative">
-        <VContentReportForm :media="media" :provider-name="providerName" />
+        <VContentReportForm
+          :close-fn="close"
+          :media="media"
+          :provider-name="providerName"
+        />
         <VIconButton
           class="absolute top-0 end-0 border-none"
           size="search-medium"

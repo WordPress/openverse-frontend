@@ -129,7 +129,7 @@ export default defineComponent({
     VDmcaNotice,
     VOtherIssueForm,
   },
-  props: ['media', 'image', 'providerName', 'reportService'],
+  props: ['media', 'providerName', 'reportService', 'closeFn'],
   setup(props) {
     const service = props.reportService || ReportService
 
@@ -142,6 +142,7 @@ export default defineComponent({
     const handleCancel = () => {
       selectedReason.value = null
       description.value = ''
+      props.closeFn()
     }
 
     const isSubmitDisabled = computed(
