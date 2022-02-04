@@ -1,21 +1,13 @@
 <template>
-  <div class="other-form">
-    <div class="flex flex-row items-center justify-between">
-      <label for="description">{{
-        $t('media-details.content-report.form.other.note')
-      }}</label>
-      <span class="text-dark-charcoal-70">{{ text.length }}</span>
-    </div>
-
-    <!-- eslint-disable vuejs-accessibility/form-control-has-label -->
+  <label class="other-form block" for="description">
+    {{ $t('media-details.content-report.form.other.note') }}
     <textarea
       id="description"
       v-model="text"
       class="h-20 w-full border border-dark-charcoal-20 placeholder-dark-charcoal-70 mt-2 p-2"
       :placeholder="$t('media-details.content-report.form.other.minimum')"
     />
-    <!-- eslint-enable -->
-  </div>
+  </label>
 </template>
 
 <script>
