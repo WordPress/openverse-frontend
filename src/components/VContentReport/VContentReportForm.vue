@@ -62,7 +62,7 @@
                   v-if="reason === reasons.DMCA"
                   v-show="reason === selectedReason"
                   :provider="providerName"
-                  :media-url="media.foreign_landing_url"
+                  :foreign-landing-url="media.foreign_landing_url"
                 />
                 <VOtherIssueForm
                   v-if="reason === reasons.OTHER"

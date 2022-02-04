@@ -16,7 +16,7 @@
     </template>
     <template #source>
       <a
-        :href="mediaUrl"
+        :href="foreignLandingUrl"
         class="text-pink hover:underline"
         target="_blank"
         rel="noopener noreferrer"
@@ -35,9 +35,9 @@ export default defineComponent({
   name: 'VDmcaNotice',
   props: {
     /**
-     * the URL for the media item
+     * the foreign landing URL for the media item
      */
-    mediaUrl: {
+    foreignLandingUrl: {
       type: String,
       required: true,
     },
