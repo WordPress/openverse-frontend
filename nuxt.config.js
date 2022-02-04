@@ -23,6 +23,25 @@ const meta = [
     name: 'theme-color',
     content: '#ffffff',
   },
+  {
+    name: 'description',
+    content:
+      'Search over 600 million free and openly licensed images, photos, audio, and other media types for reuse and remixing.',
+  },
+  { hid: 'og:title', name: 'og:title', content: 'Openverse' },
+  {
+    hid: 'og:image',
+    name: 'og:image',
+    content: '/openverse-default.jpg',
+  },
+  {
+    hid: 'og:description',
+    name: 'og:description',
+    content:
+      'Search over 600 million free and openly licensed images, photos, audio, and other media types for reuse and remixing.',
+  },
+  { name: 'twitter:card', content: 'summary_large_image' },
+  { name: 'twitter:site', content: '@WPOpenverse' },
 ]
 
 if (process.env.NODE_ENV === 'production') {
@@ -54,27 +73,7 @@ const favicons = [
 // Default html head
 const head = {
   title: 'Openly Licensed Images, Audio and More | Openverse',
-  meta: [
-    {
-      name: 'description',
-      content:
-        'Search over 600 million free and openly licensed images, photos, audio, and other media types for reuse and remixing.',
-    },
-    { hid: 'og:title', name: 'og:title', content: 'Openverse' },
-    {
-      hid: 'og:image',
-      name: 'og:image',
-      content: '/openverse-default.jpg',
-    },
-    {
-      hid: 'og:description',
-      name: 'og:description',
-      content:
-        'Search over 600 million free and openly licensed images, photos, audio, and other media types for reuse and remixing.',
-    },
-    { name: 'twitter:card', content: 'summary_large_image' },
-    { name: 'twitter:site', content: '@WPOpenverse' },
-  ],
+  meta,
   link: [
     ...favicons,
     {
