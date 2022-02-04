@@ -33,15 +33,17 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 const seoMeta = [
-  { name: 'og:title', content: 'Openverse' },
+  { hid: 'og:title', name: 'og:title', content: 'Openverse' },
   {
+    hid: 'og:image',
     name: 'og:image',
-    content: 'openverse-logo.svg',
+    content: '/openverse-logo.svg',
   },
   {
+    hid: 'og:description',
     name: 'og:description',
     content:
-      'Empowering the world to share through 6 simple licenses + a global community of advocates for open.',
+      'Search over 600 million free and openly licensed images, photos, audio, and other media types for reuse and remixing.',
   },
   { name: 'twitter:card', content: 'summary_large_image' },
   { name: 'twitter:site', content: '@WPOpenverse' },
@@ -51,18 +53,18 @@ const favicons = [
   // SVG favicon
   {
     rel: 'icon',
-    href: 'openverse-logo.svg',
+    href: '/openverse-logo.svg',
   },
   // SVG favicon for Safari
   {
     rel: 'mask-icon',
-    href: 'opvenverse-logo.svg',
+    href: '/opvenverse-logo.svg',
     color: '#30272E',
   },
   // Fallback iPhone Icon
   {
     rel: 'apple-touch-icon',
-    href: 'openverse-logo-180.png',
+    href: '/openverse-logo-180.png',
   },
 ]
 
