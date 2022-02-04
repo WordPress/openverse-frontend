@@ -117,7 +117,7 @@ import VOtherIssueForm from '~/components/VContentReport/VOtherIssueForm.vue'
 
 import ReportService from '~/data/report-service'
 
-import { reasons, statuses, DMCA_FORM_URL } from '@/constants/content-report'
+import { reasons, statuses, DMCA_FORM_URL } from '~/constants/content-report'
 
 import externalLinkIcon from '~/assets/icons/external-link.svg'
 
