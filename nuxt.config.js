@@ -32,23 +32,6 @@ if (process.env.NODE_ENV === 'production') {
   })
 }
 
-const seoMeta = [
-  { hid: 'og:title', name: 'og:title', content: 'Openverse' },
-  {
-    hid: 'og:image',
-    name: 'og:image',
-    content: '/openverse-logo.svg',
-  },
-  {
-    hid: 'og:description',
-    name: 'og:description',
-    content:
-      'Search over 600 million free and openly licensed images, photos, audio, and other media types for reuse and remixing.',
-  },
-  { name: 'twitter:card', content: 'summary_large_image' },
-  { name: 'twitter:site', content: '@WPOpenverse' },
-]
-
 const favicons = [
   // SVG favicon
   {
@@ -77,7 +60,20 @@ const head = {
       content:
         'Search over 600 million free and openly licensed images, photos, audio, and other media types for reuse and remixing.',
     },
-    ...seoMeta,
+    { hid: 'og:title', name: 'og:title', content: 'Openverse' },
+    {
+      hid: 'og:image',
+      name: 'og:image',
+      content: '/openverse-default.jpg',
+    },
+    {
+      hid: 'og:description',
+      name: 'og:description',
+      content:
+        'Search over 600 million free and openly licensed images, photos, audio, and other media types for reuse and remixing.',
+    },
+    { name: 'twitter:card', content: 'summary_large_image' },
+    { name: 'twitter:site', content: '@WPOpenverse' },
   ],
   link: [
     ...favicons,
