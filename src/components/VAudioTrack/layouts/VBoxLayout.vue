@@ -47,8 +47,9 @@ export default defineComponent({
         l: 13.25,
         m: 12.25,
         s: 9.75,
-      }[props.size ?? 'm']
-      return `${magnitude}rem`
+      }[props.size]
+
+      return props.size ? `${magnitude}rem` : null
     })
 
     return {
