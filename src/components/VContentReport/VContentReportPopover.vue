@@ -7,25 +7,22 @@
     <template #trigger="{ a11yProps }">
       <VContentReportButton v-bind="a11yProps" />
     </template>
-    <div class="relative">
-      <VContentReportForm :media="media" :provider-name="providerName" />
-      <VIconButton
-        class="absolute top-0 end-0 border-none"
-        size="search-medium"
-        :icon-props="{ iconPath: icons.closeSmall }"
-        @click="handleClose"
-      />
-    </div>
+    <template #default="{ close }">
+      <div class="relative">
+        <VContentReportForm :media="media" :provider-name="providerName" />
+        <VIconButton
+          class="absolute top-0 end-0 border-none"
+          size="search-medium"
+          :icon-props="{ iconPath: icons.closeSmall }"
+          @click="close"
+        />
+      </div>
+    </template>
   </VPopover>
 </template>
 
 <script>
-import {
-  ref,
-  computed,
-  useStore,
-  defineComponent,
-} from '@nuxtjs/composition-api'
+import { computed, useStore, defineComponent } from '@nuxtjs/composition-api'
 
 import VPopover from '~/components/VPopover/VPopover.vue'
 import VContentReportButton from '~/components/VContentReport/VContentReportButton.vue'
@@ -47,21 +44,12 @@ export default defineComponent({
   setup(props) {
     const store = useStore()
 
-    const popoverEl = ref(null)
-    const handleClose = () => {
-      // TODO: Hack till https://github.com/WordPress/openverse-frontend/issues/725
-      popoverEl.value.close()
-    }
-
     const getProviderName = (nameCode) =>
       store.getters['provider/getProviderName'](nameCode)
     const providerName = computed(() => getProviderName(props.media.provider))
 
     return {
       icons: { flag: flagIcon, closeSmall: closeSmallIcon },
-
-      popoverEl,
-      handleClose,
 
       providerName,
     }
