@@ -49,8 +49,11 @@ export default defineComponent({
       type: Number,
       required: true,
     },
+    /**
+     * The route target of the link.
+     */
     to: {
-      type: Object,
+      type: String,
     },
   },
   setup(props) {

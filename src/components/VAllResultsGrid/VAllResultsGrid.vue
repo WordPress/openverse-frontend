@@ -9,7 +9,7 @@
         :key="key"
         :media-type="key"
         :results-count="item.count"
-        :to="{ path: `/search/${key}`, query: $route.query }"
+        :to="localePath({ path: `/search/${key}`, query: $route.query })"
         class="lg:col-span-2"
       />
     </div>
