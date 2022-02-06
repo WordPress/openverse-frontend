@@ -285,7 +285,9 @@ export default defineComponent({
 
     /* Timekeeping */
 
-    const duration = computed(() => (props.audio?.duration ?? 0) / 1e3) // seconds
+    const duration = computed(
+      () => (localAudio?.duration ?? props.audio?.duration ?? 0) / 1e3 // seconds
+    )
 
     const message = computed(() => store.state.active.message)
 
