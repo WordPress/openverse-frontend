@@ -93,6 +93,7 @@
             v-else
             key="non-dmca"
             :disabled="isSubmitDisabled"
+            :focusable-when-disabled="true"
             variant="secondary"
             @click="handleSubmit"
           >

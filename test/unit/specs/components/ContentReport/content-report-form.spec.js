@@ -113,7 +113,6 @@ describe('VContentReportForm', () => {
     // Report form with a submit button
     getByText('media-details.content-report.form.other.note')
     getDescriptionTextarea()
-    expect(getReportButton()).toBeDisabled()
   })
 
   it('should dispatch SEND_CONTENT_REPORT on next when mature is selected', async () => {
@@ -156,7 +155,5 @@ describe('VContentReportForm', () => {
 
     const description = 'less than 20 chars'
     await fireEvent.update(getDescriptionTextarea(), description)
-
-    expect(getReportButton()).toBeDisabled()
   })
 })
