@@ -1,6 +1,6 @@
 <template>
   <div :style="{ width }">
-    <!-- The width is determined by the parent element is the 'size' property is not specified -->
+    <!-- The width is determined by the parent element if the 'size' property is not specified. -->
     <div
       class="box-track group relative bg-yellow h-0 w-full pt-full rounded-sm"
     >
