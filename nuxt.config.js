@@ -111,7 +111,9 @@ export default {
   },
   srcDir: 'src/',
   modern: 'client',
-  server: { port: process.env.PORT || 8443 },
+  server: {
+    port: process.env.PORT || 8443,
+  },
   router: {
     middleware: 'middleware',
   },
