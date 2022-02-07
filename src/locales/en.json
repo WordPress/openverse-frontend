@@ -512,6 +512,8 @@
           "note": "Describe the issue.",
           "minimum": "Please enter at least 20 characters."
         },
+        "required": "Required",
+        "optional": "Optional",
         "submit": "Report",
         "cancel": "Cancel"
       },

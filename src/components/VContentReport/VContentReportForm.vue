@@ -41,39 +41,36 @@
       </p>
 
       <form class="text-sm">
-        <fieldset class="mb-4 flex flex-col">
+        <fieldset class="flex flex-col">
           <legend class="font-semibold mb-4">
             {{ $t('media-details.content-report.form.question') }}
           </legend>
-          <template v-for="reason in reasons">
-            <VRadio
-              :id="reason"
-              :key="reason"
-              v-model="selectedReason"
-              class="mb-4"
-              name="reason"
-              :value="reason"
-            >
-              <div class="flex flex-col gap-2 w-full">
-                <div>
-                  {{ $t(`media-details.content-report.form.${reason}.option`) }}
-                </div>
-                <VDmcaNotice
-                  v-if="reason === reasons.DMCA"
-                  v-show="reason === selectedReason"
-                  :provider="providerName"
-                  :foreign-landing-url="media.foreign_landing_url"
-                />
-                <VOtherIssueForm
-                  v-if="reason === reasons.OTHER"
-                  v-show="reason === selectedReason"
-                  key="other"
-                  v-model="description"
-                />
-              </div>
-            </VRadio>
-          </template>
+          <VRadio
+            v-for="reason in reasons"
+            :id="reason"
+            :key="reason"
+            v-model="selectedReason"
+            class="mb-4"
+            name="reason"
+            :value="reason"
+          >
+            {{ $t(`media-details.content-report.form.${reason}.option`) }}
+          </VRadio>
         </fieldset>
+
+        <div class="mb-4 min-h-[7rem]">
+          <VDmcaNotice
+            v-if="selectedReason === reasons.DMCA"
+            :provider="providerName"
+            :foreign-landing-url="media.foreign_landing_url"
+          />
+          <VReportDescForm
+            v-else
+            key="other"
+            v-model="description"
+            :is-required="selectedReason === reasons.OTHER"
+          />
+        </div>
 
         <div class="flex flex-row items-center justify-end gap-4">
           <VButton variant="tertiary" @click="handleCancel">
@@ -113,7 +110,7 @@ import { computed, defineComponent, ref } from '@nuxtjs/composition-api'
 import VButton from '~/components/VButton.vue'
 import VRadio from '~/components/VRadio/VRadio.vue'
 import VDmcaNotice from '~/components/VContentReport/VDmcaNotice.vue'
-import VOtherIssueForm from '~/components/VContentReport/VOtherIssueForm.vue'
+import VReportDescForm from '@/components/VContentReport/VReportDescForm.vue'
 
 import ReportService from '~/data/report-service'
 
@@ -127,7 +124,7 @@ export default defineComponent({
     VButton,
     VRadio,
     VDmcaNotice,
-    VOtherIssueForm,
+    VReportDescForm,
   },
   props: ['media', 'providerName', 'reportService', 'closeFn'],
   setup(props) {
@@ -135,7 +132,7 @@ export default defineComponent({
 
     /** @type {import('@nuxtjs/composition-api').Ref<string|null>} */
     const status = ref(statuses.WIP)
-    const selectedReason = ref(null)
+    const selectedReason = ref(reasons.DMCA)
     const description = ref('')
 
     /* Buttons */
@@ -147,9 +144,7 @@ export default defineComponent({
 
     const isSubmitDisabled = computed(
       () =>
-        selectedReason.value === null ||
-        (selectedReason.value === reasons.OTHER &&
-          description.value.length < 20)
+        selectedReason.value === reasons.OTHER && description.value.length < 20
     )
     const handleSubmit = async () => {
       if (selectedReason.value === reasons.DMCA) return

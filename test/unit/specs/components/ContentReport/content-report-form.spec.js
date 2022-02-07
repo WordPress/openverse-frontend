@@ -74,7 +74,7 @@ describe('VContentReportForm', () => {
     getMatureInput()
     getOtherInput()
     getCancelButton()
-    getReportButton()
+    getReportLink()
   })
 
   it('should render thank you note when report is sent', async () => {
