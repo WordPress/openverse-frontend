@@ -12,23 +12,23 @@
         :is-search-route="false"
       />
 
-      <div class="flex flex-row ps-6 xl:ps-15">
-        <NuxtLink to="/" class="relative z-10 hidden lg:block">
+      <div class="px-6 lg:ps-30 lg:pe-0 xl:px-40 mx-auto w-full lg:w-auto">
+        <NuxtLink
+          to="/"
+          class="relative z-10 hidden lg:block -left-[6.25rem] rtl:-right-[6.25rem]"
+        >
           <h1>
             <span class="sr-only">{{ $t('hero.brand') }}</span>
             <!-- width and height chosen w.r.t. viewBox "0 0 280 42" -->
             <span
               aria-hidden="true"
-              class="flex flex-row items-center justify-center text-dark-charcoal"
+              class="flex flex-row items-center text-dark-charcoal"
             >
               <OpenverseLogo class="w-[70px] h-[70px] me-6 xl:me-7" />
               <OpenverseBrand class="w-[315px] h-[60px]" />
             </span>
           </h1>
         </NuxtLink>
-      </div>
-
-      <div class="px-6 lg:ps-30 lg:pe-0 xl:px-40 mx-auto w-full lg:w-auto">
         <h2 class="text-4xl lg:text-6xl mt-auto lg:mt-6">
           {{ $t('hero.subtitle') }}
         </h2>
