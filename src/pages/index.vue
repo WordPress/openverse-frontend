@@ -19,7 +19,7 @@
             <!-- width and height chosen w.r.t. viewBox "0 0 280 42" -->
             <span
               aria-hidden="true"
-              class="flex flex-row items-center justify-center"
+              class="flex flex-row items-center justify-center text-dark-charcoal"
             >
               <OpenverseLogo class="w-[70px] h-[70px] me-6 xl:me-7" />
               <OpenverseBrand class="w-[315px] h-[60px]" />

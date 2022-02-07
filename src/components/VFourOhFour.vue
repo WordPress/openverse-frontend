@@ -3,7 +3,7 @@
     <NuxtLink to="/" class="relative z-10 text-dark-charcoal">
       <span class="sr-only">{{ $t('404.link-title') }}</span>
       <span
-        class="flex flex-row pt-6 lg:pt-8 ms-6 lg:ms-10 h-auto w-30"
+        class="flex flex-row pt-6 lg:pt-8 ms-6 lg:ms-10 h-auto w-30 text-dark-charcoal"
         aria-hidden="true"
       >
         <OpenverseLogo />
