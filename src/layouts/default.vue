@@ -1,5 +1,5 @@
 <template>
-  <div class="app grid h-screen overflow-hidden">
+  <div class="app grid h-screen overflow-hidden relative">
     <MigrationNotice v-show="isReferredFromCc" />
     <TranslationStatusBanner />
     <VHeader />
