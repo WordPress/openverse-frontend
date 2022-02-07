@@ -9,16 +9,16 @@
     </template>
     <template #default="{ close }">
       <div class="relative">
-        <VContentReportForm
-          :close-fn="close"
-          :media="media"
-          :provider-name="providerName"
-        />
         <VIconButton
           class="absolute top-0 end-0 border-none"
           size="search-medium"
           :icon-props="{ iconPath: icons.closeSmall }"
           @click="close"
+        />
+        <VContentReportForm
+          :close-fn="close"
+          :media="media"
+          :provider-name="providerName"
         />
       </div>
     </template>
