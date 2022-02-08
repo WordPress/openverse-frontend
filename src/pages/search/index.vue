@@ -28,7 +28,15 @@ const SearchIndex = defineComponent({
     const { canLoadMore, onLoadMore } = useLoadMore(props)
     return { canLoadMore, onLoadMore }
   },
-  head: {},
+  head: {
+    meta: [
+      {
+        hid: 'robots',
+        name: 'robots',
+        content: 'noindex',
+      },
+    ],
+  },
 })
 export default SearchIndex
 </script>

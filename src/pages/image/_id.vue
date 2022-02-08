@@ -201,6 +201,11 @@ const VImageDetailsPage = {
       title,
       meta: [
         {
+          hid: 'robots',
+          name: 'robots',
+          content: 'noindex',
+        },
+        {
           hid: 'og:title',
           name: 'og:title',
           content: title,
