@@ -16,6 +16,8 @@
       class="h-20 w-full border border-dark-charcoal-20 placeholder-dark-charcoal-70 mt-2 p-2"
       :placeholder="$t('media-details.content-report.form.other.minimum')"
       :required="isRequired"
+      minlength="20"
+      maxlength="500"
     />
   </label>
 </template>
