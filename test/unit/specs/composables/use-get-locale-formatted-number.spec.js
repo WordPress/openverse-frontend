@@ -3,10 +3,7 @@ import { render } from '@testing-library/vue'
 import VueI18n from 'vue-i18n'
 import messages from '~/locales/en.json'
 
-import {
-  useGetLocaleFormattedNumber,
-  EASTERN_ARABIC_NUMERAL_LOCALES,
-} from '~/composables/use-get-locale-formatted-number'
+import { useGetLocaleFormattedNumber } from '~/composables/use-get-locale-formatted-number'
 
 const TestWrapper = Vue.component('TestWrapper', {
   props: ['n'],
@@ -31,8 +28,8 @@ describe('use-get-locale-formatted-number', () => {
     },
   })
 
-  it.each(EASTERN_ARABIC_NUMERAL_LOCALES)(
-    'should use en-gb formatting for locales matching %s',
+  it.each(['ar', 'fa', 'ckb', 'ps'])(
+    'should use en formatting for locales like %s that use Eastern Arabic Numerals',
     (locale) => {
       const { container } = render(TestWrapper, {
         mocks: getMockedI18n(locale),
@@ -40,7 +37,7 @@ describe('use-get-locale-formatted-number', () => {
       })
 
       expect(container.firstChild.textContent).toEqual(
-        (1000.01).toLocaleString('en-gb')
+        (1000.01).toLocaleString('en')
       )
       expect(container.firstChild.textContent).not.toEqual(
         (1000.01).toLocaleString(locale)

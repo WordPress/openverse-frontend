@@ -1,6 +1,17 @@
 import { useContext } from '@nuxtjs/composition-api'
 
-export const EASTERN_ARABIC_NUMERAL_LOCALES = ['ar', 'fa', 'ckb', 'ps']
+const WESTERN_ARABIC_NUMERALS = [
+  '0',
+  '1',
+  '2',
+  '3',
+  '4',
+  '5',
+  '6',
+  '7',
+  '8',
+  '9',
+]
 
 /**
  * Guards number formatting to prevent using Eastern Arabic Numerals,
@@ -16,10 +27,14 @@ export const useGetLocaleFormattedNumber = () => {
   return (n) => {
     let { locale } = i18n
 
-    if (EASTERN_ARABIC_NUMERAL_LOCALES.some((l) => locale.startsWith(l))) {
-      locale = 'en-gb'
+    const testFormat = n.toLocaleString(locale)
+
+    if (
+      WESTERN_ARABIC_NUMERALS.some((numeral) => testFormat.includes(numeral))
+    ) {
+      return testFormat
     }
 
-    return n.toLocaleString(locale)
+    return n.toLocaleString('en')
   }
 }
