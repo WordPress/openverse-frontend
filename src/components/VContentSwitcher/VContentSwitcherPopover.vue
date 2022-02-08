@@ -9,6 +9,11 @@
       <VContentSwitcherButton
         :a11y-props="a11yProps"
         :active-item="activeItem"
+        :class="{
+          '!border-tx group-hover:!border-dark-charcoal-06':
+            placement === 'searchbar',
+        }"
+        :type="placement"
       />
     </template>
     <VContentTypes
@@ -43,6 +48,10 @@ export default {
     activeItem: {
       type: String,
       required: true,
+    },
+    placement: {
+      type: String,
+      default: 'header',
     },
   },
   setup(props, { emit }) {
