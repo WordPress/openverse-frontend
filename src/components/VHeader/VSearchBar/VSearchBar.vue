@@ -37,10 +37,7 @@ import VSearchButton from '~/components/VHeader/VSearchBar/VSearchButton.vue'
  */
 const VSearchBar = defineComponent({
   name: 'VSearchBar',
-  components: {
-    VInputField,
-    VSearchButton,
-  },
+  components: { VInputField, VSearchButton },
   inheritAttrs: false,
   props: {
     /**
