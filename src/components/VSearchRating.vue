@@ -5,7 +5,7 @@
       <span>{{ $t('browse-page.search-rating.content') }}</span>
       <button
         :aria-label="$t('browse-page.aria.relevance.yes')"
-        class="button is-text tiny p-0 rating rating-yes"
+        class="button is-text tiny p-0 text-pink rating rating-yes"
         @click="sendSearchRatingEvent(true)"
         @keyup.enter="sendSearchRatingEvent(true)"
       >
@@ -14,7 +14,7 @@
       •
       <button
         :aria-label="$t('browse-page.aria.relevance.no')"
-        class="button is-text tiny p-0 rating rating-no"
+        class="button is-text tiny p-0 text-pink rating rating-no"
         @click="sendSearchRatingEvent(false)"
         @keyup.enter="sendSearchRatingEvent(false)"
       >
@@ -65,7 +65,6 @@ export default {
 <style lang="scss" scoped>
 .button.rating {
   vertical-align: middle;
-  color: $color-transition-blue;
   font-size: 0.8rem;
   text-decoration: none;
   text-transform: none;

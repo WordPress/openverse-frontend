@@ -111,8 +111,6 @@ export default AboutPage
 </script>
 
 <style lang="scss" scoped>
-@import '~/styles/text-only-page.scss';
-
 .table.is-bordered {
   td,
   th {

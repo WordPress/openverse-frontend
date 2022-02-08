@@ -74,7 +74,7 @@ export default {
     display: flex;
     flex-wrap: wrap;
 
-    @include tablet {
+    @screen md {
       &:after {
         content: '';
         flex-grow: 999999999;

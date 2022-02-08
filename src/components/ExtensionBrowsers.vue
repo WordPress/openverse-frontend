@@ -3,11 +3,15 @@
     <li v-for="(browser, key) in browsers" :key="key">
       <VLink
         :href="browser.extUrl"
-        class="browser-button button small me-2 is-opaque"
+        class="browser-button button small me-2 is-opaque bg-white"
       >
         {{ $t(`browsers.${key}`) }}
-        <img class="ms-2" :src="browser.logo" :alt="$t(`browsers.${key}`)" />
-      </VLink>
+        <img
+          class="ms-2 h-6 w-6"
+          :src="browser.logo"
+          :alt="$t(`browsers.${key}`)"
+        />
+      </a>
     </li>
   </ul>
 </template>
@@ -47,14 +51,3 @@ export default {
   },
 }
 </script>
-
-<style scoped lang="scss">
-.browser-button {
-  background-color: $color-white;
-
-  img {
-    height: 1.5em;
-    width: 1.5em;
-  }
-}
-</style>

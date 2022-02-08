@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    @apply text-dark-charcoal;
+  }
+
   a {
     @apply text-pink hover:underline;
   }

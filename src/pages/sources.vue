@@ -194,9 +194,7 @@ export default SourcePage
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-@import '~/styles/text-only-page.scss';
-
-$table-border: 1px solid $color-light-gray;
+$table-border: 1px solid;
 $table-border-radius: 2px;
 
 .button.is-primary {
@@ -249,6 +247,7 @@ $table-border-radius: 2px;
 
   th:not(:first-child),
   td:not(:first-child) {
+    @apply border-light-gray;
     border-left: $table-border;
   }
 }

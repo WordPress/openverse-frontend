@@ -119,7 +119,7 @@ export default {
     top: var(--desktop-tooltip-top);
     left: var(--desktop-tooltip-left);
   }
-  @include touch {
+  @screen md {
     top: var(--touch-tooltip-top);
     right: var(--touch-tooltip-right);
   }
@@ -130,7 +130,7 @@ export default {
     right: 100%;
     top: var(--tooltip-before-top);
   }
-  @include touch {
+  @screen md {
     bottom: 100%;
     left: 10%;
   }
@@ -150,7 +150,7 @@ export default {
     border-right-color: #ffffff;
     margin-top: 3px;
   }
-  @include touch {
+  @screen md {
     border-bottom-color: #ffffff;
     margin-left: 258px;
   }
@@ -163,7 +163,7 @@ export default {
     border-right-color: #d8d8d8;
     margin-top: 0px;
   }
-  @include touch {
+  @screen md {
     border-bottom-color: #d8d8d8;
     margin-left: 255px;
   }

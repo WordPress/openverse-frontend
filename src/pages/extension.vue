@@ -111,8 +111,8 @@ $video-max-width: 1200px;
 $video-actual-width: 1140px; // Video has internal padding
 
 .hero-section {
-  background-color: $color-wp-gray-0;
-  border-color: $color-transition-gray;
+  background-color: #f3f2f2;
+  border-color: #d6d4d5;
 
   .container {
     .intro {
@@ -133,7 +133,7 @@ $video-actual-width: 1140px; // Video has internal padding
     order: var(--cell-idx);
     @apply text-center;
 
-    @include from($tablet) {
+    @screen md {
       &:nth-of-type(odd) {
         @apply text-left items-start;
       }
@@ -160,7 +160,7 @@ $video-actual-width: 1140px; // Video has internal padding
     }
   }
 
-  @include from($tablet) {
+  @screen md {
     // Rearrange middle row on two column layouts for zig-zag appearance
     figure[data-index='1'] {
       order: 4;

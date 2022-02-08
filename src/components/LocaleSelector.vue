@@ -2,7 +2,7 @@
   <div class="locale-selector">
     {{ $t('hero.locale.label') }}
     <div class="lang">
-      <span class="icon globe is-small is-left">
+      <span class="icon globe text-gray is-small is-left">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 30 30"
@@ -30,7 +30,7 @@
           </option>
         </select>
       </div>
-      <span class="icon caret-down is-small is-right">
+      <span class="icon caret-down text-gray is-small is-right">
         <svg viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg">
           <path
             d="M7.45896 11.25H22.5351c1.043 0 1.5645 1.2598.8262 1.998l-7.5352 7.5411c-.457.457-1.2011.457-1.6582 0L6.63279 13.248c-.73828-.7382-.2168-1.998.82617-1.998z"
@@ -64,6 +64,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$space-big: 20px;
+$space-smaller: 10px;
+
 .locale-selector {
   margin-top: $space-big;
   display: flex;
@@ -116,7 +119,6 @@ export default {
       width: auto;
     }
     &.caret-down {
-      color: $color-gray;
       width: 0.938rem;
       & svg {
         height: 0.938rem;
@@ -125,16 +127,15 @@ export default {
     }
     &.globe {
       z-index: 1;
-      color: $color-gray;
     }
   }
-  @include tablet() {
-    background-color: $color-lighter-gray;
+  @screen md {
+    background-color: #f3f2f2;
     .select:not(.is-multiple):not(.is-loading) {
       select:not(.is-multiple):not(.is-loading) {
         width: 100%;
         font-size: 0.75rem;
-        background-color: $color-lighter-gray;
+        background-color: #f3f2f2;
         height: unset;
       }
       &:not(.is-multiple):not(.is-loading)::after {
