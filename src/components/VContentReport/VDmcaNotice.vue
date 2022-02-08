@@ -29,7 +29,7 @@
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
 
-import { DMCA_FORM_URL } from '@/constants/content-report'
+import { DMCA_FORM_URL } from '~/constants/content-report'
 
 export default defineComponent({
   name: 'VDmcaNotice',

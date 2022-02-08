@@ -111,7 +111,7 @@ import { computed, defineComponent, ref } from '@nuxtjs/composition-api'
 import VButton from '~/components/VButton.vue'
 import VRadio from '~/components/VRadio/VRadio.vue'
 import VDmcaNotice from '~/components/VContentReport/VDmcaNotice.vue'
-import VReportDescForm from '@/components/VContentReport/VReportDescForm.vue'
+import VReportDescForm from '~/components/VContentReport/VReportDescForm.vue'
 
 import ReportService from '~/data/report-service'
 
