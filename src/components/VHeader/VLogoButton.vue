@@ -4,7 +4,7 @@
     to="/"
     variant="plain"
     size="disabled"
-    class="max-w-min hover:bg-yellow"
+    class="max-w-min hover:bg-yellow text-dark-charcoal"
   >
     <VLogoLoader
       :status="isFetching ? 'loading' : 'idle'"
@@ -39,7 +39,7 @@ const VLogoButton = defineComponent({
     },
     isSearchRoute: {
       type: Boolean,
-      required: true,
+      default: false,
     },
     autoResizeLogo: {
       type: Boolean,
