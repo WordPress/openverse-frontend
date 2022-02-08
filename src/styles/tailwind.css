@@ -7,6 +7,15 @@
     @apply text-dark-charcoal;
   }
 
+  h1,
+  h2,
+  h2,
+  h4,
+  h5,
+  h6 {
+    @apply font-bold;
+  }
+
   a {
     @apply text-pink hover:underline;
   }
