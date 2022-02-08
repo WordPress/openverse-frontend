@@ -6,11 +6,7 @@
     <header
       class="flex-grow w-full lg:w-auto lg:min-w-[32rem] xl:min-w-[64rem] box-border flex flex-col justify-between lg:justify-center"
     >
-      <VLogoButton
-        class="lg:hidden ms-3"
-        :auto-resize-logo="false"
-        :is-search-route="false"
-      />
+      <VLogoButton class="lg:hidden ms-3" :auto-resize-logo="false" />
 
       <div class="px-6 lg:pl-30 lg:pr-0 xl:px-40 mx-auto w-full lg:w-auto">
         <NuxtLink to="/" class="relative z-10 hidden lg:block">
