@@ -14,7 +14,7 @@
       focusable="false"
       width="20"
       height="20"
-      role="img"
+      aria-hidden="true"
     />
     <!--  @slot Label content goes here  -->
     <slot />
