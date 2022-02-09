@@ -27,7 +27,6 @@ module.exports = {
       // Brand
       yellow: '#ffe033',
       pink: '#c52b9b',
-      primary: '#c52b9b', // TODO: Change usages to 'pink'
       // Active
       'dark-pink': '#7c2264',
 
