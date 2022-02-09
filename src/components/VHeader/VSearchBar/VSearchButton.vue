@@ -57,7 +57,7 @@ export default {
 
 <style scoped>
 .cta-search-button {
-  @apply py-6 px-10 rounded-s-none;
+  @apply py-6 px-10 rounded-s-none border-b border-b-pink;
 }
 
 /* @todo: Find a better way to override the VIconButton border styles */
