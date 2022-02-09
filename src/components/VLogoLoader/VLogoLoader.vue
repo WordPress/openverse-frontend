@@ -4,11 +4,13 @@
     xmlns="http://www.w3.org/2000/svg"
     :class="{
       [$style.loading]: status === 'loading' && !prefersReducedMotion,
+      'w-10 h-10': autoResize,
     }"
     aria-hidden="true"
     :data-prefers-reduced-motion="prefersReducedMotion"
     data-testid="logo-loader"
-    class="w-10 h-10 md:w-12 md:h-12 p-3 rounded inline-flex justify-center items-center"
+    class="w-12 h-12 md:w-12 md:h-12 p-3 rounded inline-flex justify-center items-center"
+    fill="currentColor"
   >
     <path
       data-logo-part-1

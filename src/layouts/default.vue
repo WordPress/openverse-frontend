@@ -1,7 +1,8 @@
 <template>
-  <div class="app grid h-screen overflow-hidden">
+  <div class="app grid h-screen overflow-hidden relative">
+    <VTeleportTarget name="skip-to-content" />
     <MigrationNotice v-show="isReferredFromCc" />
-    <TranslationStatusBanner />
+    <VTranslationStatusBanner />
     <VHeader />
     <main
       class="main embedded overflow-x-hidden"
@@ -31,19 +32,21 @@ import { useMatchSearchRoutes } from '~/composables/use-match-routes'
 import { useScroll } from '~/composables/use-scroll'
 
 import MigrationNotice from '~/components/MigrationNotice.vue'
-import TranslationStatusBanner from '~/components/TranslationStatusBanner.vue'
+import VTranslationStatusBanner from '~/components/VTranslationStatusBanner.vue'
 import VHeader from '~/components/VHeader/VHeader.vue'
 import VModalTarget from '~/components/VModal/VModalTarget.vue'
 import VSidebarTarget from '~/components/VModal/VSidebarTarget.vue'
 import VGlobalAudioSection from '~/components/VGlobalAudioSection/VGlobalAudioSection.vue'
+import VTeleportTarget from '~/components/VTeleport/VTeleportTarget.vue'
 
 const embeddedPage = {
   name: 'embedded',
   components: {
     MigrationNotice,
-    TranslationStatusBanner,
+    VTranslationStatusBanner,
     VHeader,
     VModalTarget,
+    VTeleportTarget,
     VSidebarTarget,
     VGlobalAudioSection,
   },
