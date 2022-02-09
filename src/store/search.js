@@ -60,8 +60,12 @@ export const mediaFilterKeys = {
   all: ['licenseTypes', 'licenses', 'searchBy', 'mature'],
 }
 
+/**
+ * A list of filters that are only used for the specific content type.
+ * This is used to clear filters from other content types when changing the content type.
+ */
 export const mediaSpecificFilters = {
-  all: ['licenses', 'licenseTypes', 'searchBy', 'mature'],
+  all: [],
   image: [
     'imageCategories',
     'imageExtensions',
@@ -453,7 +457,6 @@ function getMediaTypeFilters({ filters, mediaType, includeMature = false }) {
   return mediaTypeFilters
 }
 
-// Make sure when redirecting after applying a filter, we stick to the right tab (i.e, "/search/video", "/search/audio", etc.)
 const mutations = {
   /**
    * After a search type is changed, unchecks all the filters that are not
