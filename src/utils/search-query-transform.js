@@ -1,5 +1,5 @@
 import clonedeep from 'lodash.clonedeep'
-import { mediaSpecificFilters } from '~/store/search'
+import { mediaFilterKeys } from '~/store/search'
 import getParameterByName from './get-parameter-by-name'
 import { ALL_MEDIA } from '~/constants/media'
 
@@ -19,11 +19,7 @@ const filterPropertyMappings = {
   mature: 'mature',
 }
 
-const getMediaFilterTypes = (searchType) => {
-  return searchType === ALL_MEDIA
-    ? [...mediaSpecificFilters.all]
-    : [...mediaSpecificFilters.all, ...mediaSpecificFilters[searchType]]
-}
+const getMediaFilterTypes = (contentType) => [...mediaFilterKeys[contentType]]
 // {
 //   license: 'cc0,pdm,by,by-sa,by-nc,by-nd,by-nc-sa,by-nc-nd',
 //   imageCategories: 'photograph,illustration,digitized_artwork',
@@ -49,17 +45,17 @@ const filterToString = (filter) =>
  * converts the filter store object to the data format accepted by the API,
  * which has slightly different property names
  * @param {object} filters object containing the filter data that comes from the filter store
- * @param {string} searchType
+ * @param {import('../store/types').ContentType} contentType
  * @param hideEmpty
  * @todo Refactor all of these 'reduce' calls to just use lodash methods :)
  */
 export const filtersToQueryData = (
   filters,
-  searchType = ALL_MEDIA,
+  contentType = ALL_MEDIA,
   hideEmpty = true
 ) => {
   let queryDataObject = {}
-  let mediaFilterTypes = getMediaFilterTypes(searchType)
+  let mediaFilterTypes = getMediaFilterTypes(contentType)
   mediaFilterTypes = mediaFilterTypes.filter((f) => f !== 'mature')
   mediaFilterTypes.reduce((queryData, filterDataKey) => {
     const queryDataKey = filterPropertyMappings[filterDataKey]
@@ -85,16 +81,16 @@ export const filtersToQueryData = (
 }
 
 /**
- * Extract search type from the url. Returns the the last part
+ * Extract search type from the url. Returns the last part
  * of the path between `/search/` and query, or `all` by default.
  * `/search/?q=test`: all
  * `/search/image?q=test`: image
  * @param {string} queryString
- * @return {('all'|'audio'|'image'|'video')}
+ * @return {import('../store/types').ContentType}
  */
-export const queryStringToSearchType = (queryString) => {
-  const searchTypePattern = /\/search\/(image|audio|video)\?*/
-  let matchedType = queryString.match(searchTypePattern)
+export const queryStringToContentType = (queryString) => {
+  const contentTypePattern = /\/search\/(image|audio|video)\?*/
+  let matchedType = queryString.match(contentTypePattern)
   return matchedType === null ? ALL_MEDIA : matchedType[1]
 }
 
@@ -105,7 +101,7 @@ export const queryStringToSearchType = (queryString) => {
  * `extensions` - audioExtensions/imageExtensions
  * `categories` - audioCategories/imageCategories
  * This function sets only filters that are possible for current
- * media type. Eg., for queryString `search/audio?extensions=ogg`
+ * media type. E.g., for queryString `search/audio?extensions=ogg`
  * the `audioExtensions.ogg.checked` is set to true,
  * but for `search/images?extensions=ogg`, the extensions query parameter
  * is discarded, because `ogg` is not a valid extension for images.
@@ -133,19 +129,20 @@ const getMediaTypeApiFilters = (filterParameter, parameterFilters) => {
 
 /**
  * converts the browser filter query string into the internal filter store data format
- * @param {Object} query browser filter query
- * @param {'all'|'audio'|'image'|'video'} searchType
- * @param {Object} defaultFilters default filters for testing purposes
+ * @param {object} params
+ * @param {object} params.query - browser filter query
+ * @param {import('../store/types').ContentType} [params.contentType]
+ * @param {object} params.defaultFilters default filters for testing purposes
  */
 export const queryToFilterData = ({
   query,
-  searchType = 'image',
+  contentType = 'image',
   defaultFilters,
 }) => {
   // The default filterData object from search store doesn't contain provider filters,
   // so we can't use it.
   const filters = clonedeep(defaultFilters)
-  const filterTypes = getMediaFilterTypes(searchType)
+  const filterTypes = getMediaFilterTypes(contentType)
   const differentFiltersWithSameApiParams = [
     'audioProviders',
     'imageProviders',
@@ -196,8 +193,8 @@ export const queryToFilterData = ({
  */
 export const queryStringToQueryData = (queryString) => {
   const queryDataObject = {}
-  const searchType = queryStringToSearchType(queryString)
-  const filterTypes = getMediaFilterTypes(searchType).filter(
+  const contentType = queryStringToContentType(queryString)
+  const filterTypes = getMediaFilterTypes(contentType).filter(
     (f) => f !== 'mature'
   )
   filterTypes.forEach((filterDataKey) => {

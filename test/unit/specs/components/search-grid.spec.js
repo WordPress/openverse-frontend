@@ -92,7 +92,7 @@ describe('VSearchGrid', () => {
       propsData: {
         supported: true,
         query: { q: 'foo', mediaType: IMAGE },
-        searchType: 'image',
+        contentType: 'image',
         fetchState: {
           isFetching: false,
           isFinished: true,

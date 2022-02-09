@@ -13,7 +13,7 @@ import VMobileMenuModal from '~/components/VContentSwitcher/VMobileMenuModal.vue
 import VContentSwitcherPopover from '~/components/VContentSwitcher/VContentSwitcherPopover.vue'
 import VDesktopPageMenu from '~/components/VHeader/VPageMenu/VDesktopPageMenu.vue'
 import VMobilePageMenu from '~/components/VHeader/VPageMenu/VMobilePageMenu.vue'
-import { ALL_MEDIA, AUDIO, IMAGE } from '~/constants/media'
+import { ALL_MEDIA, supportedMediaTypes } from '~/constants/media'
 import { FETCH_MEDIA } from '~/constants/action-types'
 import { MEDIA } from '~/constants/store-modules'
 import isEmpty from 'lodash.isempty'
@@ -62,7 +62,7 @@ export default {
 
       const shouldFetchMedia =
         type === ALL_MEDIA
-          ? [AUDIO, IMAGE].every((type) => typeWithoutMedia(type))
+          ? supportedMediaTypes.every((type) => typeWithoutMedia(type))
           : typeWithoutMedia(type)
 
       if (shouldFetchMedia) {

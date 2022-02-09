@@ -19,7 +19,7 @@
   </VButton>
 </template>
 <script>
-import { ALL_MEDIA, AUDIO, IMAGE } from '~/constants/media'
+import { ALL_MEDIA, supportedContentTypes } from '~/constants/media'
 import { computed, inject, useContext } from '@nuxtjs/composition-api'
 import useContentType from '~/composables/use-content-type'
 import { isMinScreen } from '~/composables/use-media-query'
@@ -40,7 +40,7 @@ export default {
     activeItem: {
       type: String,
       default: ALL_MEDIA,
-      validator: (val) => [ALL_MEDIA, IMAGE, AUDIO].includes(val),
+      validator: (val) => supportedContentTypes.includes(val),
     },
   },
   setup(props) {

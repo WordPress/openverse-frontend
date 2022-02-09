@@ -195,7 +195,7 @@ const HomePage = {
       contentType.value = type
       contentSwitcher.value?.closeMenu()
       await store.dispatch(`${SEARCH}/${UPDATE_QUERY}`, {
-        searchType: type,
+        contentType: type,
       })
     }
 
@@ -204,7 +204,7 @@ const HomePage = {
       if (!searchTerm.value) return
       await store.dispatch(`${SEARCH}/${UPDATE_QUERY}`, {
         q: searchTerm.value,
-        searchType: contentType.value,
+        contentType: contentType.value,
       })
       const newPath = app.localePath({
         path: `/search/${

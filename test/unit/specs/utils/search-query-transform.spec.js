@@ -264,7 +264,7 @@ describe('searchQueryTransform', () => {
     ]
     const result = queryToFilterData({
       query,
-      searchType: 'audio',
+      contentType: 'audio',
       defaultFilters: testFilters,
     })
     expect(result).toEqual(filters) // toEqual checks for value equality

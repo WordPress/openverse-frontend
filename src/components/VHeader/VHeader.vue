@@ -68,7 +68,7 @@ import {
   FETCH_MEDIA,
   UPDATE_QUERY,
 } from '~/constants/action-types'
-import { AUDIO, IMAGE } from '~/constants/media'
+import { supportedMediaTypes } from '~/constants/media'
 import { isMinScreen } from '~/composables/use-media-query'
 import {
   useMatchHomeRoute,
@@ -197,20 +197,20 @@ const VHeader = defineComponent({
       const searchTermChanged =
         localSearchTerm.value !== store.state.search.query.q
       if (isSearchRoute.value && !searchTermChanged) return
-      const searchType = store.state.search.searchType
+      const contentType = store.state.search.contentType
       if (searchTermChanged) {
         await Promise.all(
-          [IMAGE, AUDIO].map((mediaType) =>
+          supportedMediaTypes.map((mediaType) =>
             store.dispatch(`${MEDIA}/${CLEAR_MEDIA}`, { mediaType })
           )
         )
         await store.dispatch(`${SEARCH}/${UPDATE_QUERY}`, {
           q: localSearchTerm.value,
-          searchType,
+          contentType,
         })
       }
       const newPath = app.localePath({
-        path: `/search/${searchType === 'all' ? '' : searchType}`,
+        path: `/search/${contentType === 'all' ? '' : contentType}`,
         query: store.getters['search/searchQueryParams'],
       })
       router.push(newPath)

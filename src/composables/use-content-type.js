@@ -16,12 +16,12 @@ const contentTypes = [...supportedContentTypes]
 export default function useContentType() {
   const { store } = useContext()
 
-  const activeType = computed(() => store.state.search.searchType)
+  const activeType = computed(() => store.state.search.contentType)
   const previousContentType = ref(activeType.value)
   const setActiveType = async (contentType) => {
     if (previousContentType.value === contentType) return
     await store.dispatch(`${SEARCH}/${UPDATE_QUERY}`, {
-      searchType: contentType,
+      contentType,
     })
     previousContentType.value = contentType
   }

@@ -6,7 +6,7 @@
       :fetch-state="fetchState"
       :query="query"
       :supported="supported"
-      :search-type="searchType"
+      :content-type="contentType"
       :results-count="resultsCount"
       data-testid="search-grid"
     >
@@ -32,11 +32,11 @@ import {
   FETCH_MEDIA,
   UPDATE_QUERY,
   SET_SEARCH_STATE_FROM_URL,
-  UPDATE_SEARCH_TYPE,
+  UPDATE_CONTENT_TYPE,
 } from '~/constants/action-types'
 import { ALL_MEDIA, supportedContentTypes } from '~/constants/media'
 import { MEDIA, SEARCH } from '~/constants/store-modules'
-import { queryStringToSearchType } from '~/utils/search-query-transform'
+import { queryStringToContentType } from '~/utils/search-query-transform'
 
 import { inject } from '@nuxtjs/composition-api'
 import { isMinScreen } from '~/composables/use-media-query.js'
@@ -72,6 +72,7 @@ const BrowsePage = {
     }
   },
   async asyncData({ route, store }) {
+    console.log('async data', process.server)
     if (process.server) {
       await store.dispatch(`${SEARCH}/${SET_SEARCH_STATE_FROM_URL}`, {
         path: route.path,
@@ -80,12 +81,11 @@ const BrowsePage = {
     }
   },
   computed: {
-    ...mapState(SEARCH, ['query', 'searchType']),
+    ...mapState(SEARCH, ['query', 'contentType']),
     ...mapGetters(SEARCH, ['searchQueryParams', 'isAnyFilterApplied']),
     ...mapGetters(MEDIA, ['results', 'resultCount', 'fetchState']),
     mediaType() {
-      // Default to IMAGE until media search/index is generalized
-      return this.searchType ?? ALL_MEDIA
+      return this.contentType ?? ALL_MEDIA
     },
     /**
      * Number of search results. Returns 0 for unsupported types.
@@ -95,14 +95,14 @@ const BrowsePage = {
       return this.supported ? this.resultCount : 0 ?? 0
     },
     supported() {
-      return supportedContentTypes.includes(this.searchType)
+      return supportedContentTypes.includes(this.contentType)
     },
   },
   methods: {
     ...mapActions(MEDIA, { fetchMedia: FETCH_MEDIA }),
     ...mapActions(SEARCH, {
       setSearchStateFromUrl: SET_SEARCH_STATE_FROM_URL,
-      updateSearchType: UPDATE_SEARCH_TYPE,
+      updateContentType: UPDATE_CONTENT_TYPE,
       updateQuery: UPDATE_QUERY,
     }),
     onSearchFormSubmit({ q }) {
@@ -117,8 +117,8 @@ const BrowsePage = {
      */
     $route(newRoute, oldRoute) {
       if (newRoute.path !== oldRoute.path) {
-        const searchType = queryStringToSearchType(newRoute.path)
-        this.updateSearchType({ searchType })
+        const contentType = queryStringToContentType(newRoute.path)
+        this.updateContentType({ contentType })
       }
     },
   },

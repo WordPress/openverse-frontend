@@ -3,6 +3,7 @@ import { fireEvent, render, screen } from '@testing-library/vue'
 import { createLocalVue } from '@vue/test-utils'
 import { IMAGE } from '~/constants/media'
 import store from '~/store/search'
+import mediaStore from '~/store/media'
 import clonedeep from 'lodash.clonedeep'
 import SearchGridFilter from '~/components/VFilters/VSearchGridFilter.vue'
 
@@ -46,12 +47,11 @@ describe('SearchGridFilter', () => {
         search: {
           namespaced: true,
           state: {
-            searchType: IMAGE,
+            contentType: IMAGE,
             isFilterVisible: true,
             filters,
             query: {
               q: '',
-              mediaType: IMAGE,
             },
           },
           mutations: store.mutations,
@@ -63,6 +63,7 @@ describe('SearchGridFilter', () => {
           state: {
             imagesCount: 2,
           },
+          actions: mediaStore.actions,
         },
       },
     })

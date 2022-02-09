@@ -55,7 +55,7 @@ test('q query parameter is set as the search term', async ({ page }) => {
   // await expect(searchInput).toBeFocused()
 })
 
-test.skip('url path /search/ is used to select `all` search tab', async ({
+test('url path /search/ is used to select `all` search tab', async ({
   page,
 }) => {
   await page.goto('/search/?q=cat')
@@ -66,7 +66,7 @@ test.skip('url path /search/ is used to select `all` search tab', async ({
   expect(activeTabLabel.trim()).toEqual('All')
 })
 
-test.skip('url path /search/audio is used to select `audio` search tab', async ({
+test('url path /search/audio is used to select `audio` search tab', async ({
   page,
 }) => {
   const audioSearchUrl = '/search/audio?q=cat'
