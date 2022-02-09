@@ -2,12 +2,15 @@ import { render, screen } from '@testing-library/vue'
 
 import SearchBar from '~/components/VHeader/VSearchBar/VSearchBar.vue'
 
+const props = { size: 'large' }
+
 describe('SearchBar', () => {
   it('renders an input field with placeholder and type="search"', () => {
     render(SearchBar, {
       attrs: {
         placeholder: 'Enter search query',
       },
+      propsData: props,
     })
 
     const inputElement = screen.getByPlaceholderText('Enter search query')
@@ -18,7 +21,7 @@ describe('SearchBar', () => {
   })
 
   it('renders a button with type="submit", ARIA label and SR text', () => {
-    render(SearchBar)
+    render(SearchBar, { propsData: props })
 
     const btnElement = screen.getByLabelText('search.search')
 

@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/vue'
 import VInputField from '~/components/VInputField/VInputField.vue'
 
 describe('VInputField', () => {
-  xit('should render an `input` element with type="text"', () => {
+  it('should render an `input` element with type="text"', () => {
     render(VInputField, {
       attrs: {
         placeholder: 'Enter some text',
@@ -11,9 +11,9 @@ describe('VInputField', () => {
       propsData: {
         fieldId: 'input-id',
         labelText: 'Label',
+        size: 'small',
       },
     })
-    screen.debug()
     const element = screen.getByPlaceholderText('Enter some text')
 
     expect(element.tagName).toBe('INPUT')
@@ -29,6 +29,7 @@ describe('VInputField', () => {
       propsData: {
         fieldId: 'input-id',
         labelText: 'Label',
+        size: 'small',
       },
     })
 
@@ -45,6 +46,7 @@ describe('VInputField', () => {
       propsData: {
         fieldId: 'input-id',
         labelText: 'Label',
+        size: 'small',
       },
     })
 
@@ -58,6 +60,7 @@ describe('VInputField', () => {
       propsData: {
         fieldId: 'input-id',
         labelText: 'Label',
+        size: 'small',
       },
     })
 
