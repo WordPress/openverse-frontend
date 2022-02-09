@@ -505,15 +505,16 @@
           "open": "Open form"
         },
         "mature": {
-          "option": "Contains mature content"
+          "option": "Contains mature content",
+          "sub-label": "Optional",
+          "placeholder": "Optionally, provide a description."
         },
         "other": {
           "option": "Other",
           "note": "Describe the issue.",
-          "minimum": "Please enter at least 20 characters."
+          "sub-label": "Required",
+          "placeholder": "Please enter at least 20 characters."
         },
-        "required": "Required",
-        "optional": "Optional",
         "submit": "Report",
         "cancel": "Cancel"
       },

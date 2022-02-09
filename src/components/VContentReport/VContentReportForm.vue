@@ -68,6 +68,7 @@
             v-else
             key="other"
             v-model="description"
+            :reason="selectedReason"
             :is-required="selectedReason === reasons.OTHER"
           />
         </div>
