@@ -13,6 +13,13 @@ describe('SearchBar', () => {
   beforeEach(() => {
     options = {
       attrs: { placeholder: 'Enter search query' },
+      mocks: {
+        $nuxt: {
+          context: {
+            app: { $ua: {} },
+          },
+        },
+      },
     }
   })
 
