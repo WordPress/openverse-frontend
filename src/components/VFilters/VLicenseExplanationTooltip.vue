@@ -4,7 +4,7 @@
     class="license-explanation-tooltip p-2"
     :style="inlineStyle"
   >
-    <h5 v-if="!isLicense" class="b-header mb-4">
+    <h5 v-if="!isLicense" class="mb-4">
       {{ isLicense ? $t('browse-page.license-description.title') : '' }}
       {{ license.toUpperCase() }}
     </h5>

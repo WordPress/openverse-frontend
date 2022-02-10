@@ -13,7 +13,7 @@
             : 'meta-search.form.unsupported-title'
         "
         tag="h4"
-        class="b-header mb-2"
+        class="mb-2"
       >
         <template #type>
           {{ type }}
@@ -23,7 +23,7 @@
         v-else
         path="meta-search.form.no-results-title"
         tag="h4"
-        class="b-header mb-2"
+        class="mb-2"
       >
         <template #type>{{ type }}</template>
         <template #query>{{ query.q }}</template>

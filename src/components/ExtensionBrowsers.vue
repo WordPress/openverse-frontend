@@ -1,9 +1,13 @@
 <template>
-  <ul class="buttons is-centered">
+  <ul class="flex mx-auto justify-center gap-2">
     <li v-for="(browser, key) in browsers" :key="key">
-      <VLink
+      <VButton
+        as="VLink"
+        target="_blank"
+        rel="nofollow noreferrer"
         :href="browser.extUrl"
-        class="browser-button button small me-2 is-opaque bg-white"
+        class="browser-button button small is-opaque bg-white"
+        variant="tertiary"
       >
         {{ $t(`browsers.${key}`) }}
         <img
@@ -11,7 +15,7 @@
           :src="browser.logo"
           :alt="$t(`browsers.${key}`)"
         />
-      </a>
+      </VButton>
     </li>
   </ul>
 </template>
