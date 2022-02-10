@@ -20,7 +20,7 @@
           </a>
         </template>
       </i18n>
-      <LicenseElements :license="license" class="md:py-4" />
+      <VLicenseElements :license="license" class="md:py-4" />
       <i18n
         v-if="!isLicense"
         path="media-details.reuse.license.content"
@@ -40,7 +40,7 @@
       </i18n>
     </template>
     <template v-else>
-      <LicenseElements :license="license" class="md:py-4" />
+      <VLicenseElements :license="license" class="md:py-4" />
       <i18n
         path="media-details.reuse.tool.content"
         tag="span"
@@ -62,12 +62,13 @@
 </template>
 
 <script>
+import VLicenseElements from '~/components/VLicenseElements.vue'
+
 import { isLicense } from '~/utils/license'
-import LicenseElements from '~/components/LicenseElements.vue'
 
 export default {
   name: 'MediaLicense',
-  components: { LicenseElements },
+  components: { VLicenseElements },
   props: {
     fullLicenseName: String,
     license: String,
