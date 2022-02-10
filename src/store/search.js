@@ -33,7 +33,10 @@ import {
   SET_SEARCH_TYPE,
 } from '~/constants/mutation-types'
 
-// The order of the keys here is the same as in the side filter display
+/**
+ * List of filters available for each content type. The order of the keys
+ * is the same as in the filter checklist display (sidebar or modal).
+ */
 export const mediaFilterKeys = {
   image: [
     'licenseTypes',
