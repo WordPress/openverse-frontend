@@ -2,7 +2,7 @@
   <Component
     :is="as"
     :type="typeRef"
-    class="transition-colors flex items-center rounded-sm justify-center transition-shadow duration-100 ease-linear disabled:opacity-70 no-underline appearance-none ring-offset-1 focus:outline-none focus-visible:ring focus-visible:ring-pink"
+    class="flex items-center rounded-sm justify-center duration-100 ease-linear disabled:opacity-70 no-underline appearance-none ring-offset-1 focus:outline-none focus-visible:ring focus-visible:ring-pink"
     :class="[
       $style.button,
       $style[variant],

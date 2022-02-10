@@ -1,7 +1,7 @@
 <template>
   <button
     type="button"
-    class="transition-colors"
+    class=""
     :class="[$style.button, selected && $style['button-pressed']]"
     :aria-pressed="selected"
     @click="handleClick"

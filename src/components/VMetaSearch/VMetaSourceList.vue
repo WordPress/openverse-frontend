@@ -1,13 +1,18 @@
 <template>
   <div class="mb-10">
-    <ul class="buttons is-centered mt-6">
+    <ul class="buttons is-centered mt-6 gap-y-2 flex flex-wrap justify-center">
       <li v-for="source in sources" :key="source">
-        <VLink :href="getSourceUrl(source)" class="button small me-2 is-opaque">
+        <VButton
+          target="_blank"
+          rel="nofollow noreferrer"
+          as="VLink"
+          :href="getSourceUrl(source)"
+          class="button small me-2 is-opaque"
+          variant="tertiary"
+        >
           {{ source }}
-          <sup class="top-0">
-            <i class="ms-2 icon external-link" />
-          </sup>
-        </VLink>
+          <VIcon :size="4" class="ms-1" :icon-path="externalLinkIcon" />
+        </VButton>
       </li>
     </ul>
   </div>
@@ -18,6 +23,7 @@ import getLegacySourceUrl, {
   legacySourceMap,
 } from '~/utils/get-legacy-source-url'
 import VLink from '~/components/VLink.vue'
+import externalLinkIcon from '~/assets/icons/external-link.svg'
 
 export default {
   name: 'MetaSourceList',
@@ -25,6 +31,11 @@ export default {
   props: {
     type: { type: String },
     query: { type: Object },
+  },
+  setup() {
+    return {
+      externalLinkIcon,
+    }
   },
   data() {
     return {
