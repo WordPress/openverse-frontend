@@ -144,8 +144,8 @@ const VHeader = defineComponent({
     const resultsCount = computed(() => store.getters['media/resultCount'])
     const { getI18nCount } = useI18nResultsCount()
     /**
-     * Status is hidden below the medium breakpoint.
-     * It shows Loading... or Number of results on bigger screens.
+     * Additional text in the right of the search bar.
+     * Shows the loading state or result count.
      */
     const searchStatus = computed(() => {
       if (!isSearchRoute.value || store.state.search.query.q === '') return ''
