@@ -57,7 +57,10 @@ export default {
       // problems with `computed`'s dependency detection
       const currentIsMinScreenMd = isMinScreenMd.value
 
-      return props.size === 'standalone' && !currentIsMinScreenMd
+      return (
+        props.size !== 'standalone' ||
+        (props.size === 'standalone' && !currentIsMinScreenMd)
+      )
     })
 
     const sizeClasses = computed(() => {
