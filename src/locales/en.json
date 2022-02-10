@@ -387,9 +387,13 @@
       "creator": "Creator"
     },
     "license-explanation": {
-      "tool": "Read more about the tool {link}.",
-      "license": "Read more about the license {link}.",
-      "link": "here"
+      "license-definition": "License definition",
+      "mark-definition": "{mark} definition",
+      "more": {
+        "license": "{read-more} about this license.",
+        "mark": "{read-more} about {mark}.",
+        "read-more": "Read more"
+      }
     },
     "aria": {
       "remove-filter": "Remove {label} filter"
