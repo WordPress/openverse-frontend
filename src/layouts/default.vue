@@ -129,16 +129,10 @@ export default embeddedPage
 }
 
 .main {
-  @screen md {
-    height: 100%;
-    overflow: hidden;
-    display: grid;
-    grid-template-columns: 1fr 316px;
-  }
+  overflow: hidden;
 }
-
 .main > *:not(:empty) {
   overflow-y: scroll;
-  height: 100%;
+  min-height: 100%;
 }
 </style>
