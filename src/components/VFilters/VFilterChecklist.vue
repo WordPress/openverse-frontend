@@ -20,32 +20,36 @@
         <VLicense v-if="filterType === 'licenses'" :license="item.code" />
         <template v-else>{{ itemLabel(item) }}</template>
       </VCheckbox>
-      <button
-        v-if="filterType === 'licenses'"
-        :ref="`${item.code}licenseIcon`"
-        :aria-label="$t('browse-page.aria.license-explanation')"
-        class="text-dark-charcoal-70 appearance-none"
-        type="button"
-        @click.stop="toggleLicenseExplanationVisibility(item.code)"
-      >
-        <VIcon :icon-path="helpIcon" />
-      </button>
+
+      <!-- License explanation -->
+      <VPopover v-if="filterType === 'licenses'">
+        <template #trigger="{ a11yProps }">
+          <button
+            v-bind="a11yProps"
+            :ref="`${item.code}licenseIcon`"
+            :aria-label="$t('browse-page.aria.license-explanation')"
+            class="text-dark-charcoal-70 appearance-none"
+            type="button"
+          >
+            <VIcon :icon-path="helpIcon" />
+          </button>
+        </template>
+        <template #default>
+          <VLicenseExplanation :license="item.code" />
+        </template>
+      </VPopover>
     </div>
-    <VLicenseExplanationTooltip
-      v-if="licenseExplanationVisible"
-      :license="licenseExplanationCode"
-      :icon-dom-node="$refs[`${licenseExplanationCode}licenseIcon`][0]"
-    />
   </fieldset>
 </template>
 
 <script>
 import helpIcon from '~/assets/icons/help.svg'
 
-import VLicenseExplanationTooltip from '~/components/VFilters/VLicenseExplanationTooltip.vue'
+import VLicenseExplanation from '@/components/VFilters/VLicenseExplanation.vue'
 import VCheckbox from '~/components/VCheckbox/VCheckbox.vue'
 import VLicense from '~/components/License/VLicense.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'
+import VPopover from '~/components/VPopover/VPopover.vue'
 
 export default {
   name: 'FilterCheckList',
@@ -53,7 +57,8 @@ export default {
     VCheckbox,
     VIcon,
     VLicense,
-    VLicenseExplanationTooltip,
+    VLicenseExplanation,
+    VPopover,
   },
   props: {
     options: { type: Array, required: false },
