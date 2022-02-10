@@ -1,4 +1,4 @@
-export type SupportedMediaType = 'audio'| 'image'
+export type SupportedMediaType = 'audio' | 'image'
 export type SupportedContentType = 'all' | SupportedMediaType
 export type MediaType = 'audio' | 'image' | 'video'
 export type ContentType = 'all' | MediaType
@@ -137,7 +137,7 @@ export interface MediaStoreResult {
   count: number
   page?: number
   pageCount: number
-  items: { [key: SupportedMediaType] : (AudioDetail | ImageDetail) }
+  items: { [key: SupportedMediaType]: AudioDetail | ImageDetail }
 }
 
 export interface MediaState {
