@@ -144,7 +144,7 @@ const VHeader = defineComponent({
     const resultsCount = computed(() => store.getters['media/resultCount'])
     const { getI18nCount } = useI18nResultsCount()
     /**
-     * Additional text in the right of the search bar.
+     * Additional text at the end of the search bar.
      * Shows the loading state or result count.
      */
     const searchStatus = computed(() => {
