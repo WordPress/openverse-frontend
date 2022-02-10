@@ -1,8 +1,8 @@
 <template>
   <div class="app grid h-screen overflow-hidden relative">
     <div>
-      <VTeleportTarget name="skip-to-content" :force-destroy="true" />
-      <VMigrationNotice v-show="isReferredFromCc" />
+      <VTeleportTarget name="skip-to-content" />
+      <MigrationNotice v-show="isReferredFromCc" />
       <VTranslationStatusBanner />
       <VHeader />
     </div>
@@ -129,8 +129,14 @@ export default embeddedPage
 }
 
 .main {
-  overflow: hidden;
+  @screen md {
+    height: 100%;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr 316px;
+  }
 }
+
 .main > *:not(:empty) {
   overflow-y: scroll;
   height: 100%;
