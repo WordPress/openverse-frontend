@@ -1,9 +1,11 @@
 <template>
   <div class="app grid h-screen overflow-hidden relative">
-    <VTeleportTarget name="skip-to-content" />
-    <MigrationNotice v-show="isReferredFromCc" />
-    <VTranslationStatusBanner />
-    <VHeader />
+    <div>
+      <VTeleportTarget name="skip-to-content" />
+      <MigrationNotice v-show="isReferredFromCc" />
+      <VTranslationStatusBanner />
+      <VHeader />
+    </div>
     <main
       class="main embedded overflow-x-hidden"
       :class="{ 'has-sidebar': isSidebarVisible }"
@@ -109,13 +111,15 @@ export default embeddedPage
 }
 
 .main {
-  display: grid;
-  grid-template-columns: 1fr 316px;
-  height: 100%;
-  overflow: hidden;
+  @screen md {
+    height: 100%;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr 316px;
+  }
 }
 
-.main > * {
+.main > *:not(:empty) {
   overflow-y: scroll;
   min-height: 100%;
 }
