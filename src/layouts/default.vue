@@ -133,6 +133,6 @@ export default embeddedPage
 }
 .main > *:not(:empty) {
   overflow-y: scroll;
-  min-height: 100%;
+  height: 100%;
 }
 </style>
