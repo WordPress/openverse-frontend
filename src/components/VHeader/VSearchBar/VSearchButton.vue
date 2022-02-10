@@ -3,12 +3,13 @@
     v-bind="$attrs"
     :aria-label="$t('search.search')"
     size="disabled"
-    class="inline-block rounded-s-none border-b border-b-pink font-semibold text-2xl"
+    :variant="isIcon ? 'plain' : 'primary'"
+    class="inline-block rounded-s-none font-semibold text-2xl"
     :class="[
       isIcon ? 'search-button p-[0.5px] ps-[1.5px]' : 'py-6 px-10 h-full',
       sizeClasses,
-      isIcon && isHomeRoute
-        ? 'bg-pink text-white border-tx'
+      isHomeRoute
+        ? 'bg-pink border-b border-b-pink text-white border-tx'
         : 'border-dark-charcoal-20',
     ]"
     v-on="$listeners"
