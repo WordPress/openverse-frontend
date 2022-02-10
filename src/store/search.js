@@ -11,7 +11,7 @@ import {
   ALL_MEDIA,
   AUDIO,
   IMAGE,
-  supportedMediaTypes,
+  supportedContentTypes,
   VIDEO,
 } from '~/constants/media'
 import {
@@ -468,7 +468,7 @@ const mutations = {
    * @param {'all'|'audio'|'image'|'video'} searchType
    */
   [CLEAR_OTHER_MEDIA_TYPE_FILTERS](state, { searchType }) {
-    const mediaTypesToClear = supportedMediaTypes.filter(
+    const mediaTypesToClear = supportedContentTypes.filter(
       (media) => media !== searchType
     )
 
