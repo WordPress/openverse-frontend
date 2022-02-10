@@ -110,25 +110,30 @@ export default embeddedPage
   grid-template-rows: auto 1fr;
 }
 
-.main {
-  @screen md {
+@screen md {
+  // Logic for displaying the filter sidebar and search results
+  // as independently-scrolling sections.
+  .main {
     height: 100%;
-    overflow: hidden;
     display: grid;
     grid-template-columns: 1fr 316px;
   }
+  // Make the main content area span both grid columns
+  // when the sidebar is closed...
+  .main > *:first-child {
+    grid-column: span 2;
+  }
+  // ...and only one column when it is visible.
+  .main.has-sidebar > *:first-child {
+    grid-column: 1;
+  }
 }
 
+.main {
+  overflow: hidden;
+}
 .main > *:not(:empty) {
   overflow-y: scroll;
   min-height: 100%;
-}
-
-.main > *:first-child {
-  grid-column: span 2;
-}
-
-.main.has-sidebar > *:first-child {
-  grid-column: 1;
 }
 </style>

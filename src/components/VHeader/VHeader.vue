@@ -1,9 +1,9 @@
 <template>
   <header
-    class="flex px-4 md:px-7 items-stretch z-40 w-screen bg-white gap-x-2 gap-y-4 flex-wrap md:flex-nowrap"
+    class="flex px-4 md:px-7 items-center z-40 w-screen bg-white gap-x-2 gap-y-4"
     :class="{
-      'py-3': isHeaderScrolled,
-      'py-4': !isHeaderScrolled,
+      'py-3 ': isHeaderScrolled,
+      'py-4 flex-wrap md:flex-nowrap': !isHeaderScrolled,
       'border-b border-white': !isHeaderScrolled && !isMenuOpen,
       'border-b border-dark-charcoal-20':
         isSearchRoute && (isHeaderScrolled || isMenuOpen),
@@ -237,12 +237,3 @@ const VHeader = defineComponent({
 
 export default VHeader
 </script>
-<style scoped>
-@media (max-width: 767px) {
-  .search-bar-mobile-scrolled {
-    /* outer padding, inner gaps, (logo, content switcher and filter button), additional content switcher padding */
-    /* width: calc(100vw - 2rem - 1.5rem - 3 * 2.5rem - 0.25rem); */
-    width: calc(100vw - 11.25rem);
-  }
-}
-</style>
