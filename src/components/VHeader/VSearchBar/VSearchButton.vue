@@ -4,7 +4,7 @@
     :aria-label="$t('search.search')"
     size="disabled"
     :variant="isIcon ? 'plain' : 'primary'"
-    class="inline-block rounded-s-none font-semibold text-2xl"
+    class="transition-none inline-block rounded-s-none font-semibold text-2xl hover:text-white group-hover:text-white hover:bg-pink group-hover:bg-pink"
     :class="[
       isIcon ? 'search-button p-[0.5px] ps-[1.5px]' : 'py-6 px-10 h-full',
       sizeClasses,
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { computed } from '@nuxtjs/composition-api'
+import { defineComponent, computed } from '@nuxtjs/composition-api'
 import { isMinScreen } from '~/composables/use-media-query'
 import { useBrowserIsMobile } from '~/composables/use-browser-detection'
 
@@ -33,7 +33,13 @@ import VIcon from '~/components/VIcon/VIcon.vue'
 
 import searchIcon from '~/assets/icons/search.svg'
 
-export default {
+/**
+ * @typedef Props
+ * @property {'small' | 'medium' | 'large' | 'standalone'} size
+ * @property {boolean} isHomeRoute
+ */
+
+export default defineComponent({
   name: 'VSearchButton',
   components: { VIcon, VButton },
   inheritAttrs: false,
@@ -41,6 +47,9 @@ export default {
     size: {
       type: String,
       required: true,
+      /**
+       * @param {string} v
+       */
       validator: (v) => ['small', 'medium', 'large', 'standalone'].includes(v),
     },
     isHomeRoute: {
@@ -48,6 +57,9 @@ export default {
       default: false,
     },
   },
+  /**
+   * @param {Props} props
+   */
   setup(props) {
     const isMobile = useBrowserIsMobile()
     const isMinScreenMd = isMinScreen('md', { shouldPassInSSR: !isMobile })
@@ -76,7 +88,7 @@ export default {
 
     return { isMinScreenMd, searchIcon, sizeClasses, isIcon }
   },
-}
+})
 </script>
 
 <style scoped>
