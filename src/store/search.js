@@ -32,6 +32,7 @@ import {
   SET_QUERY,
   SET_SEARCH_TYPE,
 } from '~/constants/mutation-types'
+import { ACTIVE_LICENSES } from '~/constants/license'
 
 // The order of the keys here is the same as in the side filter display
 export const mediaFilterKeys = {
@@ -75,16 +76,11 @@ export const mediaSpecificFilters = {
 
 /** @type {import('./types').Filters} */
 export const filterData = {
-  licenses: [
-    { code: 'cc0', name: 'filters.licenses.cc0', checked: false },
-    { code: 'pdm', name: 'filters.licenses.pdm', checked: false },
-    { code: 'by', name: 'filters.licenses.by', checked: false },
-    { code: 'by-sa', name: 'filters.licenses.by-sa', checked: false },
-    { code: 'by-nc', name: 'filters.licenses.by-nc', checked: false },
-    { code: 'by-nd', name: 'filters.licenses.by-nd', checked: false },
-    { code: 'by-nc-sa', name: 'filters.licenses.by-nc-sa', checked: false },
-    { code: 'by-nc-nd', name: 'filters.licenses.by-nc-nd', checked: false },
-  ],
+  licenses: ACTIVE_LICENSES.map((licenseCode) => ({
+    code: licenseCode,
+    name: `filters.licenses.${licenseCode}`,
+    checked: false,
+  })),
   licenseTypes: [
     {
       code: 'commercial',
