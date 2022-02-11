@@ -59,7 +59,6 @@ import {
   useContext,
   useRouter,
   watch,
-  watchEffect,
 } from '@nuxtjs/composition-api'
 
 import { MEDIA, SEARCH } from '~/constants/store-modules'
@@ -70,10 +69,7 @@ import {
 } from '~/constants/action-types'
 import { AUDIO, IMAGE } from '~/constants/media'
 import { isMinScreen } from '~/composables/use-media-query'
-import {
-  useMatchHomeRoute,
-  useMatchSearchRoutes,
-} from '~/composables/use-match-routes'
+import { useMatchSearchRoutes } from '~/composables/use-match-routes'
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
 import { useI18nResultsCount } from '~/composables/use-i18n-utilities'
 
@@ -102,7 +98,6 @@ const VHeader = defineComponent({
     const router = useRouter()
 
     const { matches: isSearchRoute } = useMatchSearchRoutes()
-    const { matches: isHomeRoute } = useMatchHomeRoute()
 
     const isHeaderScrolled = inject('isHeaderScrolled')
     const isMinScreenMd = isMinScreen('md', { shouldPassInSSR: true })
@@ -151,9 +146,8 @@ const VHeader = defineComponent({
     /**
      * Status is hidden below the medium breakpoint.
      * It shows Loading... or Number of results on bigger screens.
-     * @returns {string}
      */
-    const setStatus = () => {
+    const searchStatus = computed(() => {
       if (
         !isMinScreenMd.value ||
         !isSearchRoute.value ||
@@ -162,11 +156,7 @@ const VHeader = defineComponent({
         return ''
       if (isFetching.value) return i18n.t('header.loading')
       return getI18nCount(resultsCount.value)
-    }
-
-    const searchStatus = ref(setStatus())
-
-    watchEffect(() => setStatus())
+    })
 
     const localSearchTerm = ref(store.state.search.query.q)
     const searchTerm = computed({
@@ -226,10 +216,8 @@ const VHeader = defineComponent({
 
       isHeaderScrolled,
       isMinScreenMd,
-      headerHasTwoRows,
-
       isSearchRoute,
-      isHomeRoute,
+      headerHasTwoRows,
 
       menuModalRef,
 

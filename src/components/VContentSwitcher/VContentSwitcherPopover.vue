@@ -8,6 +8,7 @@
     <template #trigger="{ a11yProps }">
       <VContentSwitcherButton
         :a11y-props="a11yProps"
+        aria-controls="content-switcher-popover"
         :active-item="activeItem"
         :class="{
           '!border-tx': isInSearchBar,
@@ -18,6 +19,7 @@
       />
     </template>
     <VContentTypes
+      id="content-switcher-popover"
       size="medium"
       :active-item="activeItem"
       @select="selectItem"

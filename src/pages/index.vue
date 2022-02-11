@@ -69,6 +69,8 @@
           <template #license>
             <a
               href="https://creativecommons.org/licenses/"
+              target="blank"
+              rel="noopener noreferrer"
               class="text-dark-charcoal hover:text-dark-charcoal underline"
               >{{ $t('hero.disclaimer.license') }}</a
             >
@@ -119,6 +121,8 @@
       <template #license>
         <a
           href="https://creativecommons.org/licenses/"
+          target="blank"
+          rel="noopener noreferrer"
           class="text-dark-charcoal hover:text-dark-charcoal underline"
           >{{ $t('hero.disclaimer.license') }}</a
         >
@@ -202,8 +206,9 @@ const HomePage = {
 
     const searchTerm = ref('')
     const handleSearch = async () => {
+      if (!searchTerm.value) return
       await store.dispatch(`${SEARCH}/${UPDATE_QUERY}`, {
-        q: searchTerm.value || '',
+        q: searchTerm.value,
         searchType: contentType.value,
       })
       const newPath = app.localePath({
