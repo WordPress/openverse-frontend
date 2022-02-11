@@ -34,7 +34,7 @@
         />
       </figcaption>
       <figcaption class="overlay overlay__bottom py-2 px-4">
-        <span class="caption font-semibold">{{ image.title }}</span>
+        <span class="text-sr font-semibold">{{ image.title }}</span>
       </figcaption>
     </figure>
   </div>

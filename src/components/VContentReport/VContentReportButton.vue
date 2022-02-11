@@ -1,7 +1,8 @@
 <template>
   <VButton
     variant="plain"
-    class="report-button font-semibold text-dark-charcoal"
+    size="small"
+    class="report-button font-semibold text-dark-charcoal text-sm"
   >
     <span class="md:hidden">{{
       $t('media-details.content-report.short')

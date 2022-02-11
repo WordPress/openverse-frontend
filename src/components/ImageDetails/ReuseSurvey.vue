@@ -1,5 +1,5 @@
 <template>
-  <div class="reuse-survey caption mt-1">
+  <div class="reuse-surveytext-srmt-1">
     {{ $t('photo-details.survey.content') }}
     <VLink
       :href="formLink"

@@ -1,60 +1,59 @@
 <template>
-  <div class="section" dir="ltr">
-    <div class="container">
-      <div class="pb-6">
-        <h1 id="feedback" class="text-5xl mb-10">
-          {{ $t('feedback.title') }}
-        </h1>
-        <i18n path="feedback.description.content" tag="p" class="mb-6">
-          <template #openverse>
-            <VLink href="https://wordpress.slack.com/messages/openverse/">
-              {{ $t('feedback.description.openverse') }}</VLink
-            >
-          </template>
-          <template #making-wordpress>
-            <VLink href="https://make.wordpress.org/chat/">
-              {{ $t('feedback.description.making-wordpress') }}</VLink
-            >
-          </template>
-        </i18n>
-        <section class="tabs mt-6">
-          <div role="tablist" :aria-label="$t('feedback.title')">
-            <button
-              v-for="(name, index) in tabs"
-              :id="name"
-              :key="index"
-              :class="tabClass(index, 'tab')"
-              role="tab"
-              :aria-selected="activeTab === index"
-              :aria-controls="`tab-${name}`"
-              @click.prevent="setActiveTab(index)"
-              @keyup.enter.prevent="setActiveTab(index)"
-            >
-              {{ $t(`feedback.${name}`) }}
-            </button>
-          </div>
-          <div
-            v-for="(name, index) in tabs"
-            :id="`tab-${name}`"
-            :key="index"
-            :class="tabClass(index, 'tabs-panel')"
-            :aria-labelledby="name"
-            role="tabpanel"
-            tabindex="0"
-          >
-            <iframe
-              class="form-iframe"
-              :aria-label="$t(`feedback.aria.${name}`)"
-              :src="forms[name]"
-              :title="`${name} form`"
-            >
-              {{ $t('feedback.loading') }}
-            </iframe>
-          </div>
-        </section>
+  <VContentPage>
+    <h1 id="feedback">
+      {{ $t('feedback.title') }}
+    </h1>
+    <i18n path="feedback.description.content" tag="p">
+      <template #openverse>
+        <VLink
+          href="https://wordpress.slack.com/messages/openverse/"
+          target="_blank"
+        >
+          {{ $t('feedback.description.openverse') }}
+        </VLink>
+      </template>
+      <template #making-wordpress>
+        <VLink href="https://make.wordpress.org/chat/" target="_blank">
+          {{ $t('feedback.description.making-wordpress') }}
+        </VLink>
+      </template>
+    </i18n>
+    <section class="flex mt-6">
+      <div role="tablist" :aria-label="$t('feedback.title')">
+        <button
+          v-for="(name, index) in tabs"
+          :id="name"
+          :key="index"
+          :class="tabClass(index, 'tab')"
+          role="tab"
+          :aria-selected="activeTab === index"
+          :aria-controls="`tab-${name}`"
+          @click.prevent="setActiveTab(index)"
+          @keyup.enter.prevent="setActiveTab(index)"
+        >
+          {{ $t(`feedback.${name}`) }}
+        </button>
       </div>
-    </div>
-  </div>
+      <div
+        v-for="(name, index) in tabs"
+        :id="`tab-${name}`"
+        :key="index"
+        :class="tabClass(index, 'tabs-panel')"
+        :aria-labelledby="name"
+        role="tabpanel"
+        tabindex="0"
+      >
+        <iframe
+          class="form-iframe"
+          :aria-label="$t(`feedback.aria.${name}`)"
+          :src="forms[name]"
+          :title="`${name} form`"
+        >
+          {{ $t('feedback.loading') }}
+        </iframe>
+      </div>
+    </section>
+  </VContentPage>
 </template>
 
 <script>

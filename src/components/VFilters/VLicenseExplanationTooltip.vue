@@ -13,7 +13,7 @@
       v-if="!isLicense"
       path="filters.license-explanation.tool"
       tag="p"
-      class="caption float-right m-2"
+      class="text-sr float-right m-2"
     >
       <template #link>
         <VLink :href="`${getLicenseDeedLink(license)}`">{{
@@ -25,7 +25,7 @@
       v-else
       path="filters.license-explanation.license"
       tag="p"
-      class="caption float-right m-2"
+      class="text-sr float-right m-2"
     >
       <template #link>
         <VLink :href="`${getLicenseDeedLink(license)}`">{{

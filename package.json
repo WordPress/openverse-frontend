@@ -90,6 +90,7 @@
     "@nuxtjs/storybook": "^4.1.1",
     "@nuxtjs/style-resources": "^1.0.0",
     "@playwright/test": "^1.16.2",
+    "@tailwindcss/typography": "^0.5.1",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/user-event": "^13.2.1",
     "@testing-library/vue": "^5.8.2",

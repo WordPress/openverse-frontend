@@ -111,10 +111,12 @@ $video-max-width: 1200px;
 $video-actual-width: 1140px; // Video has internal padding
 
 .hero-section {
-  background-color: #f3f2f2;
+  background-color: #f7f7f7;
   border-color: #d6d4d5;
 
   .container {
+    margin: 0 auto;
+
     .intro {
       max-width: 880px;
     }

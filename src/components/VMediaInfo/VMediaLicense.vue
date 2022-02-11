@@ -20,7 +20,7 @@
         v-if="!isLicense"
         path="media-details.reuse.license.content"
         tag="span"
-        class="caption font-semibold"
+        class="text-sr font-semibold"
       >
         <template #link>
           <VLink
@@ -37,7 +37,7 @@
       <i18n
         path="media-details.reuse.tool.content"
         tag="span"
-        class="caption font-semibold"
+        class="text-sr font-semibold"
       >
         <template #link>
           <VLink
