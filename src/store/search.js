@@ -30,7 +30,10 @@ import {
   SET_CONTENT_TYPE,
 } from '~/constants/mutation-types'
 
-// The order of the keys here is the same as in the side filter display
+/**
+ * List of filters available for each content type. The order of the keys
+ * is the same as in the filter checklist display (sidebar or modal).
+ */
 export const mediaFilterKeys = {
   [IMAGE]: [
     'licenseTypes',
@@ -424,7 +427,6 @@ function getMediaTypeFilters({ filters, mediaType, includeMature = false }) {
   return mediaTypeFilters
 }
 
-// Make sure when redirecting after applying a filter, we stick to the right tab (i.e, "/search/video", "/search/audio", etc.)
 const mutations = {
   /**
    * After a search type is changed, unchecks all the filters that are not
@@ -432,10 +434,9 @@ const mutations = {
    * @param {import('./types').SearchState} state
    * @param {import('./types').ContentType} contentType
    */
-  [CLEAR_OTHER_MEDIA_TYPE_FILTERS](state, { contentType }) {
-    console.log('will clear filters except for ', contentType)
+  [CLEAR_OTHER_MEDIA_TYPE_FILTERS](state, { searchType }) {
     const mediaTypesToClear = supportedContentTypes.filter(
-      (media) => media !== contentType
+      (type) => type !== searchType
     )
     console.log('media types to clear:', mediaTypesToClear)
 
