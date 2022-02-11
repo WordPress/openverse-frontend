@@ -175,7 +175,7 @@ export default DropdownButton
 
 .dropdown-icon-button-medium,
 .dropdown-button-medium {
-  @apply p-4 leading-6;
+  @apply py-4 px-6 leading-6;
 }
 
 /*
