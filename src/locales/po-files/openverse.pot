@@ -368,10 +368,6 @@ msgctxt "audio-details.table.genre"
 msgid "Genre"
 msgstr ""
 
-msgctxt "image-details.back"
-msgid "Back to search results"
-msgstr ""
-
 #. Do not translate words between ### ###.
 #: src/pages/image/_id.vue:49
 msgctxt "image-details.creator"

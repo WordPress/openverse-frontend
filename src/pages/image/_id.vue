@@ -33,7 +33,7 @@
         @keyup.enter="onSourceLinkClicked"
         >{{ $t('image-details.weblink') }}</VButton
       >
-      <span class="flex-1">
+      <span class="flex-1 flex flex-col justify-center">
         <h1 class="text-base md:text-3xl font-semibold leading-[130%]">
           {{ image.title }}
         </h1>
