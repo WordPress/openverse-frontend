@@ -1,10 +1,9 @@
 <template>
-  <!--eslint-disable @intlify/vue-i18n/no-raw-text -->
   <section class="audio-info">
     <h4 class="text-base lg:text-3xl mb-6">
       {{ $t('audio-details.information') }}
     </h4>
-    <div class="mb-6 flex flex-col md:flex-row items-start gap-6">
+    <div class="flex flex-col md:flex-row items-start gap-6">
       <div class="w-[75px] h-[75px] lg:w-30 lg:h-30 rounded-sm overflow-hidden">
         <VAudioThumbnail :audio="audio" />
       </div>

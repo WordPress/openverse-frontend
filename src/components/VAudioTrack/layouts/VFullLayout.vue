@@ -3,15 +3,15 @@
     <div class="bg-dark-charcoal-06 relative">
       <span
         v-if="currentTime > 0"
-        class="pointer-events-none absolute h-full w-10 left-0 bg-yellow"
+        class="pointer-events-none absolute h-full hidden md:block w-4 lg:w-10 left-0 bg-yellow"
         aria-hidden
       />
       <span
         v-if="status === 'played'"
-        class="pointer-events-none absolute h-full w-10 right-0 bg-yellow"
+        class="pointer-events-none absolute h-full hidden md:block w-4 lg:w-10 right-0 bg-yellow"
         aria-hidden
       />
-      <div class="mx-10">
+      <div class="md:mx-4 lg:mx-10">
         <slot
           name="controller"
           :features="['timestamps', 'duration', 'seek']"
