@@ -1,7 +1,7 @@
 export type SupportedMediaType = 'audio' | 'image'
-export type SupportedContentType = 'all' | SupportedMediaType
+export type SupportedSearchType = 'all' | SupportedMediaType
 export type MediaType = 'audio' | 'image' | 'video'
-export type ContentType = 'all' | MediaType
+export type SearchType = 'all' | MediaType
 /**
  * The search result object
  */
@@ -122,7 +122,7 @@ export interface FetchState {
 
 export interface SearchState {
   isFilterVisible: boolean
-  contentType: SupportedContentType
+  contentType: SupportedSearchType
   query: Query
   filters: Filters
 }

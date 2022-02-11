@@ -47,7 +47,7 @@ describe('SearchGridFilter', () => {
         search: {
           namespaced: true,
           state: {
-            contentType: IMAGE,
+            searchType: IMAGE,
             isFilterVisible: true,
             filters,
             query: {

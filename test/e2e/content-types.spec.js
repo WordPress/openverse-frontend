@@ -35,7 +35,7 @@ test.beforeEach(async ({ context }) => {
   )
 })
 
-const contentTypes = [
+const searchTypes = [
   {
     id: 'all',
     name: 'All content',
@@ -59,18 +59,18 @@ const contentTypes = [
   },
 ]
 
-for (const contentType of contentTypes) {
-  test(`Can open ${contentType.name} search page on SSR`, async ({ page }) => {
-    await page.goto(contentType.url)
+for (const searchType of searchTypes) {
+  test(`Can open ${searchType.name} search page on SSR`, async ({ page }) => {
+    await page.goto(searchType.url)
 
-    if (contentType.supported) {
+    if (searchType.supported) {
       const searchResult = await page.locator('[data-testid="search-results"]')
       await expect(searchResult).toBeVisible()
       await expect(searchResult).not.toBeEmpty()
     }
 
     // Load more
-    if (contentType.supported) {
+    if (searchType.supported) {
       const loadMoreBtn = await page.locator(
         'button:has-text("Load more results")'
       )
@@ -84,33 +84,32 @@ for (const contentType of contentTypes) {
     await expect(metaSearchForm).toHaveCount(1)
 
     const sourceButtons = await page.locator('.meta-search a')
-    await expect(sourceButtons).toHaveCount(contentType.sources)
+    await expect(sourceButtons).toHaveCount(searchType.sources)
   })
-  test(`Can open ${contentType.name} page client-side`, async ({ page }) => {
+  test(`Can open ${searchType.name} page client-side`, async ({ page }) => {
     // Audio is loading a lot of files, so we do not use it for the first SSR page
-    const pageToOpen =
-      contentType.id === 'all' ? contentTypes[1] : contentTypes[0]
+    const pageToOpen = searchType.id === 'all' ? searchTypes[1] : searchTypes[0]
     await page.goto(pageToOpen.url)
     await page.click(`[aria-label="${pageToOpen.name}"]`)
 
-    await page.click(`button[role="radio"]:has-text("${contentType.name}")`)
-    const urlParam = contentType.id === 'all' ? '' : contentType.id
+    await page.click(`button[role="radio"]:has-text("${searchType.name}")`)
+    const urlParam = searchType.id === 'all' ? '' : searchType.id
     const expectedURL = `/search/${urlParam}?q=cat`
     await expect(page).toHaveURL(expectedURL)
 
     // Meta data
-    if (contentType.supported) {
+    if (searchType.supported) {
       const searchResult = await page.locator('[data-testid="search-results"]')
       await expect(searchResult).toBeVisible()
       await expect(searchResult).not.toBeEmpty()
     }
 
     // Load more
-    if (contentType.supported) {
+    if (searchType.supported) {
       const loadMoreSection = await page.locator('[data-testid="load-more"]')
       await expect(loadMoreSection).toHaveCount(1)
       const expectedText =
-        contentType.id === 'audio' ? 'No more audio' : 'Load more'
+        searchType.id === 'audio' ? 'No more audio' : 'Load more'
       await expect(loadMoreSection).toContainText(expectedText)
     } else {
       await expect(page.locator('[data-testid="load-more"]')).toHaveCount(0)
@@ -123,6 +122,6 @@ for (const contentType of contentTypes) {
     await expect(metaSearchForm).toHaveCount(1)
 
     const sourceButtons = await page.locator('.meta-search a')
-    await expect(sourceButtons).toHaveCount(contentType.sources)
+    await expect(sourceButtons).toHaveCount(searchType.sources)
   })
 }

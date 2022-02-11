@@ -6,7 +6,7 @@
       :fetch-state="fetchState"
       :query="query"
       :supported="supported"
-      :content-type="contentType"
+      :search-type="searchType"
       :results-count="resultsCount"
       data-testid="search-grid"
     >
@@ -32,11 +32,10 @@ import {
   FETCH_MEDIA,
   UPDATE_QUERY,
   SET_SEARCH_STATE_FROM_URL,
-  UPDATE_CONTENT_TYPE,
+  UPDATE_SEARCH_TYPE,
 } from '~/constants/action-types'
-import { ALL_MEDIA, supportedContentTypes } from '~/constants/media'
+import { ALL_MEDIA, supportedSearchTypes } from '~/constants/media'
 import { MEDIA, SEARCH } from '~/constants/store-modules'
-import { queryStringToContentType } from '~/utils/search-query-transform'
 
 import { inject } from '@nuxtjs/composition-api'
 import { isMinScreen } from '~/composables/use-media-query.js'
@@ -72,7 +71,6 @@ const BrowsePage = {
     }
   },
   async asyncData({ route, store }) {
-    console.log('async data', process.server)
     if (process.server) {
       await store.dispatch(`${SEARCH}/${SET_SEARCH_STATE_FROM_URL}`, {
         path: route.path,
@@ -81,11 +79,11 @@ const BrowsePage = {
     }
   },
   computed: {
-    ...mapState(SEARCH, ['query', 'contentType']),
+    ...mapState(SEARCH, ['query', 'searchType']),
     ...mapGetters(SEARCH, ['searchQueryParams', 'isAnyFilterApplied']),
     ...mapGetters(MEDIA, ['results', 'resultCount', 'fetchState']),
     mediaType() {
-      return this.contentType ?? ALL_MEDIA
+      return this.searchType ?? ALL_MEDIA
     },
     /**
      * Number of search results. Returns 0 for unsupported types.
@@ -95,31 +93,18 @@ const BrowsePage = {
       return this.supported ? this.resultCount : 0 ?? 0
     },
     supported() {
-      return supportedContentTypes.includes(this.contentType)
+      return supportedSearchTypes.includes(this.searchType)
     },
   },
   methods: {
     ...mapActions(MEDIA, { fetchMedia: FETCH_MEDIA }),
     ...mapActions(SEARCH, {
       setSearchStateFromUrl: SET_SEARCH_STATE_FROM_URL,
-      updateContentType: UPDATE_CONTENT_TYPE,
+      updateSearchType: UPDATE_SEARCH_TYPE,
       updateQuery: UPDATE_QUERY,
     }),
     onSearchFormSubmit({ q }) {
       this.updateQuery({ q })
-    },
-  },
-  watch: {
-    /**
-     * Updates the search type only if the route's path changes.
-     * @param newRoute
-     * @param oldRoute
-     */
-    $route(newRoute, oldRoute) {
-      if (newRoute.path !== oldRoute.path) {
-        const contentType = queryStringToContentType(newRoute.path)
-        this.updateContentType({ contentType })
-      }
     },
   },
 }

@@ -71,7 +71,7 @@ export const createActions = (services) => ({
    * @return {Promise<void>}
    */
   async [FETCH_MEDIA]({ dispatch, rootState }, payload = {}) {
-    const mediaType = rootState.search.contentType
+    const mediaType = rootState.search.searchType
     const mediaToFetch = mediaType !== ALL_MEDIA ? [mediaType] : [IMAGE, AUDIO]
 
     await Promise.all(
@@ -266,28 +266,28 @@ export const getters = {
    * @return {import('./types').MediaStoreResult[] | {'audio': import('./types').MediaStoreResult, 'image': import('./types').MediaStoreResult}}
    */
   results(state, getters) {
-    if (getters.contentType === ALL_MEDIA) {
+    if (getters.searchType === ALL_MEDIA) {
       return { [IMAGE]: state.results[IMAGE], [AUDIO]: state.results[AUDIO] }
     } else {
-      return getters.contentType
-        ? { [getters.contentType]: state.results[getters.contentType] }
+      return getters.searchType
+        ? { [getters.searchType]: state.results[getters.searchType] }
         : {}
     }
   },
   mediaResults(state, getters) {
-    if (getters.contentType === ALL_MEDIA) {
+    if (getters.searchType === ALL_MEDIA) {
       return {
         [IMAGE]: state.results[IMAGE].items,
         [AUDIO]: state.results[AUDIO].items,
       }
     } else {
       return {
-        [getters.contentType]: state.results[getters.contentType].items ?? {},
+        [getters.searchType]: state.results[getters.searchType].items ?? {},
       }
     }
   },
   resultCount(state, getters) {
-    if (getters.contentType === ALL_MEDIA) {
+    if (getters.searchType === ALL_MEDIA) {
       /**
        * API returns 10 000 if there are more than 10 000 results,
        * Count for all media also returns at most 10 000.
@@ -297,7 +297,7 @@ export const getters = {
         .reduce((a, b) => a + b, 0)
       return count > 10000 ? 10000 : count
     } else {
-      return state.results[getters.contentType]?.count || 0
+      return state.results[getters.searchType]?.count || 0
     }
   },
   /**
@@ -307,7 +307,7 @@ export const getters = {
    * @returns {import('./types').fetchState}
    */
   fetchState(state, getters) {
-    if (getters.contentType === ALL_MEDIA) {
+    if (getters.searchType === ALL_MEDIA) {
       return {
         isFetching:
           state.fetchState[AUDIO].isFetching ||
@@ -321,7 +321,7 @@ export const getters = {
       }
     } else {
       return (
-        state.fetchState[getters.contentType] || {
+        state.fetchState[getters.searchType] || {
           isFetching: false,
           fetchError: false,
           isFinished: true,
@@ -329,8 +329,8 @@ export const getters = {
       )
     }
   },
-  contentType(state, getters, rootState) {
-    return rootState.search.contentType
+  searchType(state, getters, rootState) {
+    return rootState.search.searchType
   },
 }
 

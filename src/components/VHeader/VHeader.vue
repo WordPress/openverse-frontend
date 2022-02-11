@@ -187,7 +187,7 @@ const VHeader = defineComponent({
       const searchTermChanged =
         localSearchTerm.value !== store.state.search.query.q
       if (isSearchRoute.value && !searchTermChanged) return
-      const contentType = store.state.search.contentType
+      const searchType = store.state.search.searchType
       if (searchTermChanged) {
         await Promise.all(
           supportedMediaTypes.map((mediaType) =>
@@ -196,11 +196,11 @@ const VHeader = defineComponent({
         )
         await store.dispatch(`${SEARCH}/${UPDATE_QUERY}`, {
           q: localSearchTerm.value,
-          contentType,
+          searchType,
         })
       }
       const newPath = app.localePath({
-        path: `/search/${contentType === 'all' ? '' : contentType}`,
+        path: `/search/${searchType === 'all' ? '' : searchType}`,
         query: store.getters['search/searchQueryParams'],
       })
       router.push(newPath)

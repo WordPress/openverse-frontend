@@ -14,9 +14,9 @@ export const supportedMediaTypes = [IMAGE, AUDIO]
 
 /**
  * The types of content that users can search. `All` is also an option here.
- * @type {import('../store/types').SupportedContentType[]}
+ * @type {import('../store/types').SupportedSearchType[]}
  */
-export const supportedContentTypes = [ALL_MEDIA, IMAGE, AUDIO]
+export const supportedSearchTypes = [ALL_MEDIA, IMAGE, AUDIO]
 
 /** @typedef {'supported'|'beta'|'additional'} SupportStatus */
 /** @type {{SUPPORTED: SupportStatus, ADDITIONAL: SupportStatus, BETA: SupportStatus}}*/
@@ -26,7 +26,7 @@ export const statuses = {
   ADDITIONAL: 'additional',
 }
 
-/** @type {Object.<import('../store/types').ContentType, SupportStatus>} */
+/** @type {Object.<import('../store/types').SearchType, SupportStatus>} */
 export const contentStatus = {
   [ALL_MEDIA]: statuses.SUPPORTED,
   [IMAGE]: statuses.SUPPORTED,

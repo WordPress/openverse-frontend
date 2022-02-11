@@ -135,7 +135,7 @@ import { ref, useContext, useRouter, useStore } from '@nuxtjs/composition-api'
 
 import { isMinScreen } from '~/composables/use-media-query'
 
-import { ALL_MEDIA, supportedContentTypes } from '~/constants/media'
+import { ALL_MEDIA, supportedSearchTypes } from '~/constants/media'
 import { MEDIA, SEARCH } from '~/constants/store-modules'
 import { FETCH_MEDIA, UPDATE_QUERY } from '~/constants/action-types'
 
@@ -231,7 +231,7 @@ const HomePage = {
       contentSwitcher,
       contentType,
       setContentType,
-      supportedContentTypes,
+      supportedContentTypes: supportedSearchTypes,
 
       searchTerm,
       handleSearch,

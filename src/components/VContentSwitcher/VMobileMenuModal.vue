@@ -35,7 +35,7 @@ import {
   computed,
 } from '@nuxtjs/composition-api'
 import { useBodyScrollLock } from '~/composables/use-body-scroll-lock'
-import useContentType from '~/composables/use-content-type'
+import useSearchType from '@/composables/use-search-type'
 import usePages from '~/composables/use-pages'
 
 import externalLinkIcon from 'assets/icons/external-link.svg'
@@ -62,7 +62,7 @@ export default {
     },
   },
   setup(_, { emit }) {
-    const content = useContentType()
+    const content = useSearchType()
     const pages = usePages()
 
     /** @type {import('@nuxtjs/composition-api').Ref<import('vue/types/vue').Vue | null>} */

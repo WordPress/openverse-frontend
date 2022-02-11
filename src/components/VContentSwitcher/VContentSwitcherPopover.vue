@@ -21,7 +21,7 @@
 
 <script>
 import { ref } from '@nuxtjs/composition-api'
-import useContentType from '~/composables/use-content-type'
+import useSearchType from '@/composables/use-search-type'
 import checkIcon from '~/assets/icons/checkmark.svg'
 
 import VPopover from '~/components/VPopover/VPopover.vue'
@@ -46,7 +46,7 @@ export default {
     },
   },
   setup(props, { emit }) {
-    const content = useContentType()
+    const content = useSearchType()
 
     const contentMenuPopover = ref(null)
 

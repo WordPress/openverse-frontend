@@ -17,7 +17,7 @@ describe('SearchIndex', () => {
           namespaced: true,
           state: {
             query: { q: 'foo', mediaType: 'image' },
-            contentType: 'image',
+            searchType: 'image',
           },
           getters: {
             isAnyFilterApplied: () => false,

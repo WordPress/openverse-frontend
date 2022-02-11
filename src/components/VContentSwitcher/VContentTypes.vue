@@ -20,8 +20,8 @@
   </VItemGroup>
 </template>
 <script>
-import { supportedContentTypes } from '~/constants/media'
-import useContentType from '~/composables/use-content-type'
+import { supportedSearchTypes } from '~/constants/media'
+import useSearchType from '@/composables/use-search-type'
 
 import VItemGroup from '~/components/VItemGroup/VItemGroup.vue'
 import VContentItem from '~/components/VContentSwitcher/VContentItem.vue'
@@ -43,11 +43,11 @@ export default defineComponent({
     activeItem: {
       type: String,
       required: true,
-      validator: (val) => supportedContentTypes.includes(val),
+      validator: (val) => supportedSearchTypes.includes(val),
     },
   },
   setup(props, { emit }) {
-    const content = useContentType()
+    const content = useSearchType()
     const bordered = computed(() => props.size === 'small')
     const handleClick = (item) => {
       emit('select', item)

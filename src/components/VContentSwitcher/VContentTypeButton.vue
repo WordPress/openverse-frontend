@@ -17,7 +17,7 @@ import {
   ALL_MEDIA,
   AUDIO,
   IMAGE,
-  supportedContentTypes,
+  supportedSearchTypes,
 } from '~/constants/media'
 import VIcon from '~/components/VIcon/VIcon.vue'
 
@@ -38,10 +38,10 @@ export default defineComponent({
     /**
      * One of the media types supported.
      */
-    contentType: {
+    searchType: {
       type: String,
       required: true,
-      validator: (v) => supportedContentTypes.includes(v),
+      validator: (v) => supportedSearchTypes.includes(v),
     },
     selected: {
       type: Boolean,

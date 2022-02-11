@@ -3,14 +3,14 @@ import clonedeep from 'lodash.clonedeep'
 
 import {
   filtersToQueryData,
-  queryStringToContentType,
+  queryStringToSearchType,
   queryToFilterData,
 } from '~/utils/search-query-transform'
 import {
   ALL_MEDIA,
   AUDIO,
   IMAGE,
-  supportedContentTypes,
+  supportedSearchTypes,
   VIDEO,
 } from '~/constants/media'
 import {
@@ -18,7 +18,7 @@ import {
   SET_SEARCH_STATE_FROM_URL,
   TOGGLE_FILTER,
   UPDATE_QUERY_FROM_FILTERS,
-  UPDATE_CONTENT_TYPE,
+  UPDATE_SEARCH_TYPE,
   CLEAR_FILTERS,
 } from '~/constants/action-types'
 import {
@@ -27,11 +27,11 @@ import {
   CLEAR_OTHER_MEDIA_TYPE_FILTERS,
   REPLACE_FILTERS,
   SET_QUERY,
-  SET_CONTENT_TYPE,
+  SET_SEARCH_TYPE,
 } from '~/constants/mutation-types'
 
 /**
- * List of filters available for each content type. The order of the keys
+ * List of filters available for each search type. The order of the keys
  * is the same as in the filter checklist display (sidebar or modal).
  */
 export const mediaFilterKeys = {
@@ -59,6 +59,12 @@ export const mediaFilterKeys = {
   [VIDEO]: [],
   [ALL_MEDIA]: ['licenseTypes', 'licenses', 'searchBy', 'mature'],
 }
+const createInitialFilters = (category, items) =>
+  items.map((item) => ({
+    code: item,
+    name: `filters.${category}.${item}`,
+    checked: false,
+  }))
 
 /**
  * A list of filters that are only used for the specific content type.
@@ -73,99 +79,57 @@ export const mediaSpecificFilters = {
     'sizes',
     'imageProviders',
   ],
-  audio: ['audioCategories', 'audioExtensions', 'durations', 'audioProviders'],
+  audio: ['audioCategories', 'audioExtensions', 'durations', 'audioPr0oviders'],
   video: [],
 }
 
 /** @type {import('./types').Filters} */
 export const filterData = {
-  licenses: [
-    { code: 'cc0', name: 'filters.licenses.cc0', checked: false },
-    { code: 'pdm', name: 'filters.licenses.pdm', checked: false },
-    { code: 'by', name: 'filters.licenses.by', checked: false },
-    { code: 'by-sa', name: 'filters.licenses.by-sa', checked: false },
-    { code: 'by-nc', name: 'filters.licenses.by-nc', checked: false },
-    { code: 'by-nd', name: 'filters.licenses.by-nd', checked: false },
-    { code: 'by-nc-sa', name: 'filters.licenses.by-nc-sa', checked: false },
-    { code: 'by-nc-nd', name: 'filters.licenses.by-nc-nd', checked: false },
-  ],
-  licenseTypes: [
-    {
-      code: 'commercial',
-      name: 'filters.license-types.commercial',
-      checked: false,
-    },
-    {
-      code: 'modification',
-      name: 'filters.license-types.modification',
-      checked: false,
-    },
-  ],
-  audioCategories: [
-    {
-      code: 'music',
-      name: 'filters.audio-categories.music',
-      checked: false,
-    },
-    {
-      code: 'soundEffects',
-      name: 'filters.audio-categories.sound',
-      checked: false,
-    },
-    {
-      code: 'podcast',
-      name: 'filters.audio-categories.podcast',
-      checked: false,
-    },
-  ],
-  imageCategories: [
-    {
-      code: 'photograph',
-      name: 'filters.image-categories.photograph',
-      checked: false,
-    },
-    {
-      code: 'illustration',
-      name: 'filters.image-categories.illustration',
-      checked: false,
-    },
-    {
-      code: 'digitized_artwork',
-      name: 'filters.image-categories.digitized-artwork',
-      checked: false,
-    },
-  ],
-  audioExtensions: [
-    { code: 'mp3', name: 'filters.audio-extensions.mp3', checked: false },
-    { code: 'ogg', name: 'filters.audio-extensions.ogg', checked: false },
-    { code: 'flac', name: 'filters.audio-extensions.flac', checked: false },
-  ],
-  imageExtensions: [
-    { code: 'jpg', name: 'filters.image-extensions.jpg', checked: false },
-    { code: 'png', name: 'filters.image-extensions.png', checked: false },
-    { code: 'gif', name: 'filters.image-extensions.gif', checked: false },
-    { code: 'svg', name: 'filters.image-extensions.svg', checked: false },
-  ],
-  aspectRatios: [
-    { code: 'tall', name: 'filters.aspect-ratios.tall', checked: false },
-    { code: 'wide', name: 'filters.aspect-ratios.wide', checked: false },
-    { code: 'square', name: 'filters.aspect-ratios.square', checked: false },
-  ],
-  durations: [
-    { code: 'short', name: 'filters.durations.short', checked: false },
-    { code: 'medium', name: 'filters.durations.medium', checked: false },
-    { code: 'long', name: 'filters.durations.long', checked: false },
-  ],
-  sizes: [
-    { code: 'small', name: 'filters.sizes.small', checked: false },
-    { code: 'medium', name: 'filters.sizes.medium', checked: false },
-    { code: 'large', name: 'filters.sizes.large', checked: false },
-  ],
+  licenses: createInitialFilters('licenses', [
+    'cc0',
+    'pdm',
+    'by',
+    'by-sa',
+    'by-nc',
+    'by-nd',
+    'by-nc-sa',
+    'by-nc-nd',
+  ]),
+  licenseTypes: createInitialFilters('license-types', [
+    'commercial',
+    'modification',
+  ]),
+  audioCategories: createInitialFilters('audio-categories', [
+    'music',
+    'sound',
+    'podcast',
+  ]),
+  imageCategories: createInitialFilters('image-categories', [
+    'photograph',
+    'illustration',
+    'digitized_artwork',
+  ]),
+  audioExtensions: createInitialFilters('audio-extensions', [
+    'mp3',
+    'ogg',
+    'flac',
+  ]),
+  imageExtensions: createInitialFilters('image-extensions', [
+    'jpg',
+    'png',
+    'gif',
+    'svg',
+  ]),
+  aspectRatios: createInitialFilters('aspect-ratios', [
+    'tall',
+    'wide',
+    'square',
+  ]),
+  durations: createInitialFilters('durations', ['short', 'medium', 'long']),
+  sizes: createInitialFilters('sizes', ['small', 'medium', 'large']),
   audioProviders: [],
   imageProviders: [],
-  searchBy: [
-    { code: 'creator', name: 'filters.searchBy.creator', checked: false },
-  ],
+  searchBy: createInitialFilters('search-by', ['creator']),
   mature: false,
 }
 
@@ -196,7 +160,7 @@ const anyFilterApplied = (filters = {}) =>
  */
 export const state = () => ({
   filters: clonedeep(filterData),
-  contentType: IMAGE,
+  searchType: IMAGE,
   query: {
     q: '',
     license: '',
@@ -246,7 +210,7 @@ export const getters = {
    */
   appliedFilterTags: (state) => {
     let appliedFilters = []
-    const filterKeys = mediaFilterKeys[state.contentType]
+    const filterKeys = mediaFilterKeys[state.searchType]
     filterKeys.forEach((filterType) => {
       if (filterType !== 'mature') {
         const newFilters = state.filters[filterType]
@@ -274,7 +238,7 @@ export const getters = {
     return anyFilterApplied(
       getMediaTypeFilters({
         filters: state.filters,
-        mediaType: state.contentType,
+        mediaType: state.searchType,
       })
     )
   },
@@ -287,7 +251,7 @@ export const getters = {
   mediaFiltersForDisplay: (state) => {
     return getMediaTypeFilters({
       filters: state.filters,
-      mediaType: state.contentType,
+      mediaType: state.searchType,
       includeMature: false,
     })
   },
@@ -295,23 +259,23 @@ export const getters = {
 
 const actions = {
   /**
-   * Called when `q` search term or `contentType` are changed.
+   * Called when `q` search term or `searchType` are changed.
    * @param {import('vuex').ActionContext} context
    * @param {import('vuex').ActionPayload} params
    * @param {string} [params.q]
-   * @param {import('./types').SupportedContentType} [params.contentType]
+   * @param {import('./types').SupportedSearchType} [params.searchType]
    * @return {Promise<void>}
    */
   async [UPDATE_QUERY]({ commit, dispatch, state }, params = {}) {
-    const { q, contentType } = params
+    const { q, searchType } = params
     /** @type {{ q: string?, mediaType: import('./types').SupportedMediaType }} */
     const queryParams = {}
     if (q) {
       queryParams.q = q.trim()
     }
-    if (contentType && contentType !== state.contentType) {
-      commit(SET_CONTENT_TYPE, { contentType })
-      commit(CLEAR_OTHER_MEDIA_TYPE_FILTERS, { contentType })
+    if (searchType && searchType !== state.searchType) {
+      commit(SET_SEARCH_TYPE, { searchType })
+      commit(CLEAR_OTHER_MEDIA_TYPE_FILTERS, { searchType })
     }
     if (Object.keys(queryParams).length !== 0) {
       await dispatch(UPDATE_QUERY_FROM_FILTERS, queryParams)
@@ -364,20 +328,18 @@ const actions = {
     { commit, dispatch, state },
     { path, query }
   ) {
-    console.log('set_search_state_from_url')
-    const contentType = queryStringToContentType(path)
+    const searchType = queryStringToSearchType(path)
     const queryParams = {}
     if (query.q) {
       queryParams.q = query.q
     }
     const newFilterData = queryToFilterData({
       query,
-      contentType,
+      searchType,
       defaultFilters: state.filters,
     })
-    console.log('filter data:', newFilterData)
     commit(REPLACE_FILTERS, { newFilterData })
-    commit(SET_CONTENT_TYPE, { contentType })
+    commit(SET_SEARCH_TYPE, { searchType })
     await dispatch(UPDATE_QUERY_FROM_FILTERS, queryParams)
   },
 
@@ -385,12 +347,12 @@ const actions = {
    * On selecting a search tab, updates the search type and
    * sets the filters that are applicable for this media type.
    * @param {import('vuex').ActionContext} context
-   * @param {import('./types').ContentType} contentType
+   * @param {import('./types').SearchType} searchType
    */
-  async [UPDATE_CONTENT_TYPE]({ commit, state }, { contentType }) {
-    if (state.contentType !== contentType) {
-      commit(SET_CONTENT_TYPE, { contentType })
-      commit(CLEAR_OTHER_MEDIA_TYPE_FILTERS, { contentType })
+  async [UPDATE_SEARCH_TYPE]({ commit, state }, { searchType }) {
+    if (state.searchType !== searchType) {
+      commit(SET_SEARCH_TYPE, { searchType })
+      commit(CLEAR_OTHER_MEDIA_TYPE_FILTERS, { searchType })
     }
   },
   /**
@@ -403,7 +365,7 @@ const actions = {
   async [UPDATE_QUERY_FROM_FILTERS]({ state, commit }, params = {}) {
     const queryFromFilters = filtersToQueryData(
       state.filters,
-      params.mediaType || state.contentType,
+      params.mediaType || state.searchType,
       false
     )
     const query = { ...queryFromFilters }
@@ -413,7 +375,7 @@ const actions = {
 }
 
 function getMediaTypeFilters({ filters, mediaType, includeMature = false }) {
-  if (!supportedContentTypes.includes(mediaType)) {
+  if (!supportedSearchTypes.includes(mediaType)) {
     mediaType = ALL_MEDIA
   }
   let filterKeys = mediaFilterKeys[mediaType]
@@ -432,10 +394,10 @@ const mutations = {
    * After a search type is changed, unchecks all the filters that are not
    * applicable for this Media type.
    * @param {import('./types').SearchState} state
-   * @param {import('./types').ContentType} contentType
+   * @param {import('./types').SearchType} searchType
    */
   [CLEAR_OTHER_MEDIA_TYPE_FILTERS](state, { searchType }) {
-    const mediaTypesToClear = supportedContentTypes.filter(
+    const mediaTypesToClear = supportedSearchTypes.filter(
       (type) => type !== searchType
     )
     console.log('media types to clear:', mediaTypesToClear)
@@ -527,10 +489,10 @@ const mutations = {
   /**
    * Sets the content type to search.
    * @param {import('./types').SearchState} state
-   * @param {import('./types').ContentType} contentType
+   * @param {import('./types').SearchType} searchType
    */
-  [SET_CONTENT_TYPE](state, { contentType }) {
-    state.contentType = contentType
+  [SET_SEARCH_TYPE](state, { searchType }) {
+    state.searchType = searchType
   },
   /**
    * Replaces the query object that is used for API calls.

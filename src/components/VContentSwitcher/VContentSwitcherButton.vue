@@ -19,9 +19,9 @@
   </VButton>
 </template>
 <script>
-import { ALL_MEDIA, supportedContentTypes } from '~/constants/media'
+import { ALL_MEDIA, supportedSearchTypes } from '~/constants/media'
 import { computed, inject, useContext } from '@nuxtjs/composition-api'
-import useContentType from '~/composables/use-content-type'
+import useSearchType from '@/composables/use-search-type'
 import { isMinScreen } from '~/composables/use-media-query'
 
 import caretDownIcon from '~/assets/icons/caret-down.svg'
@@ -40,7 +40,7 @@ export default {
     activeItem: {
       type: String,
       default: ALL_MEDIA,
-      validator: (val) => supportedContentTypes.includes(val),
+      validator: (val) => supportedSearchTypes.includes(val),
     },
   },
   setup(props) {
@@ -48,7 +48,7 @@ export default {
     const isHeaderScrolled = inject('isHeaderScrolled', null)
     const isMinScreenMd = isMinScreen('md', { shouldPassInSSR: true })
 
-    const { icons, activeType: activeItem } = useContentType()
+    const { icons, activeType: activeItem } = useSearchType()
     const isIconButton = computed(
       () => isHeaderScrolled?.value && !isMinScreenMd.value
     )

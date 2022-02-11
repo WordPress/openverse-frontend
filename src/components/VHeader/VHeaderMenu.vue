@@ -7,7 +7,7 @@ import {
   useRouter,
   useStore,
 } from '@nuxtjs/composition-api'
-import useContentType from '~/composables/use-content-type'
+import useSearchType from '@/composables/use-search-type'
 
 import VMobileMenuModal from '~/components/VContentSwitcher/VMobileMenuModal.vue'
 import VContentSwitcherPopover from '~/components/VContentSwitcher/VContentSwitcherPopover.vue'
@@ -37,7 +37,7 @@ export default {
     const isMinScreenMd = inject('isMinScreenMd')
     /** @type {import('@nuxtjs/composition-api').Ref<null|HTMLElement>} */
     const menuModalRef = ref(null)
-    const content = useContentType()
+    const content = useSearchType()
     const { app } = useContext()
     const store = useStore()
     const router = useRouter()

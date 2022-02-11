@@ -4,13 +4,13 @@ import {
   SET_SEARCH_STATE_FROM_URL,
   TOGGLE_FILTER,
   UPDATE_QUERY_FROM_FILTERS,
-  UPDATE_CONTENT_TYPE,
+  UPDATE_SEARCH_TYPE,
 } from '~/constants/action-types'
 import {
   SET_FILTER,
   SET_PROVIDERS_FILTERS,
   REPLACE_FILTERS,
-  SET_CONTENT_TYPE,
+  SET_SEARCH_TYPE,
   CLEAR_OTHER_MEDIA_TYPE_FILTERS,
   SET_QUERY,
 } from '~/constants/mutation-types'
@@ -33,7 +33,7 @@ describe('Filter Store', () => {
     beforeEach(() => {
       state = {
         search: {
-          contentType: 'image',
+          searchType: 'image',
           query: { q: 'foo' },
         },
         ...store.state(),
@@ -50,9 +50,9 @@ describe('Filter Store', () => {
     })
 
     it('SET_SEARCH_TYPE updates the state', () => {
-      state.contentType = IMAGE
-      mutations[SET_CONTENT_TYPE](state, { contentType: AUDIO })
-      expect(state.contentType).toEqual(AUDIO)
+      state.searchType = IMAGE
+      mutations[SET_SEARCH_TYPE](state, { searchType: AUDIO })
+      expect(state.searchType).toEqual(AUDIO)
     })
 
     it.each`
@@ -142,20 +142,20 @@ describe('Filter Store', () => {
     })
 
     it.each`
-      contentType | path
-      ${'all'}    | ${'/search/'}
-      ${'image'}  | ${'/search/image/'}
-      ${'audio'}  | ${'/search/audio/'}
-      ${'video'}  | ${'/search/video'}
+      searchType | path
+      ${'all'}   | ${'/search/'}
+      ${'image'} | ${'/search/image/'}
+      ${'audio'} | ${'/search/audio/'}
+      ${'video'} | ${'/search/video'}
     `(
-      "SET_SEARCH_STATE_FROM_URL should set contentType '$contentType' from path '$path'",
-      ({ contentType, path, mediaType }) => {
+      "SET_SEARCH_STATE_FROM_URL should set searchType '$searchType' from path '$path'",
+      ({ searchType, path, mediaType }) => {
         actions[SET_SEARCH_STATE_FROM_URL](
           { commit: commitMock, dispatch: dispatchMock, state },
           { path: path, query: {} }
         )
-        expect(commitMock).toHaveBeenLastCalledWith(SET_CONTENT_TYPE, {
-          contentType,
+        expect(commitMock).toHaveBeenLastCalledWith(SET_SEARCH_TYPE, {
+          searchType,
         })
         expect(dispatchMock).toHaveBeenCalledWith(UPDATE_QUERY_FROM_FILTERS, {
           mediaType: mediaType,
@@ -164,36 +164,36 @@ describe('Filter Store', () => {
     )
 
     it.each`
-      query                      | path                | contentType
+      query                      | path                | searchType
       ${{ license: 'cc0,by' }}   | ${'/search/'}       | ${ALL_MEDIA}
       ${{ searchBy: 'creator' }} | ${'/search/image/'} | ${IMAGE}
       ${{ mature: 'true' }}      | ${'/search/audio/'} | ${AUDIO}
       ${{ durations: 'medium' }} | ${'/search/image'}  | ${IMAGE}
     `(
-      "SET_SEARCH_STATE_FROM_URL should set query '$contentType' from query '$path'",
-      ({ query, path, contentType }) => {
+      "SET_SEARCH_STATE_FROM_URL should set query '$searchType' from query '$path'",
+      ({ query, path, searchType }) => {
         actions[SET_SEARCH_STATE_FROM_URL](
           { commit: commitMock, dispatch: dispatchMock, state },
           { path: path, query: query }
         )
         expect(dispatchMock).toHaveBeenCalledWith(UPDATE_QUERY_FROM_FILTERS, {})
-        expect(context.commit).toHaveBeenLastCalledWith(SET_CONTENT_TYPE, {
-          contentType,
+        expect(context.commit).toHaveBeenLastCalledWith(SET_SEARCH_TYPE, {
+          searchType,
         })
       }
     )
 
     it('UPDATE_SEARCH_TYPE sets search type to ALL_MEDIA if URL param is not set', () => {
-      const action = actions[UPDATE_CONTENT_TYPE]
+      const action = actions[UPDATE_SEARCH_TYPE]
 
-      action(context, { contentType: ALL_MEDIA })
-      expect(context.commit).toHaveBeenCalledWith(SET_CONTENT_TYPE, {
-        contentType: ALL_MEDIA,
+      action(context, { searchType: ALL_MEDIA })
+      expect(context.commit).toHaveBeenCalledWith(SET_SEARCH_TYPE, {
+        searchType: ALL_MEDIA,
       })
       expect(context.commit).toHaveBeenCalledWith(
         CLEAR_OTHER_MEDIA_TYPE_FILTERS,
         {
-          contentType: 'all',
+          searchType: 'all',
         }
       )
     })
