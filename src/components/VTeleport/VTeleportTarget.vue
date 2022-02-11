@@ -23,13 +23,16 @@ export default defineComponent({
   beforeDestroy() {
     if (this.children.length > 0) {
       if (this.forceDestroy) {
-        this.children.forEach((child) => child.$destroy())
+        this.children.forEach((child) => {
+          child.$destroy()
+          child.$el.remove()
+        })
         this.children = []
-        return
+      } else {
+        throw new Error(
+          `VTeleportTarget: ${this.name} beforeDestroy but still has children mounted`
+        )
       }
-      throw new Error(
-        `VTeleportTarget: ${this.name} beforeDestroy but still has children mounted`
-      )
     }
     delete targets[this.name]
   },
