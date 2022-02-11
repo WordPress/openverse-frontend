@@ -3,9 +3,9 @@ import { fireEvent, render, screen } from '@testing-library/vue'
 import { createLocalVue } from '@vue/test-utils'
 import { IMAGE } from '~/constants/media'
 import store from '~/store/search'
-import mediaStore from '~/store/media'
 import clonedeep from 'lodash.clonedeep'
 import SearchGridFilter from '~/components/VFilters/VSearchGridFilter.vue'
+import { FETCH_MEDIA } from '~/constants/action-types'
 
 const initialFilters = {
   licenseTypes: [
@@ -63,7 +63,9 @@ describe('SearchGridFilter', () => {
           state: {
             imagesCount: 2,
           },
-          actions: mediaStore.actions,
+          actions: {
+            [FETCH_MEDIA]: jest.fn(),
+          },
         },
       },
     })
