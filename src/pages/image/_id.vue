@@ -1,16 +1,7 @@
 <template>
   <div>
-    <a
-      v-if="shouldShowBreadcrumb"
-      class="px-6 pt-4 flex flex-row items-center bg-dark-charcoal-06 font-semibold text-dark-charcoal text-xs md:text-sr"
-      :href="breadcrumbUrl"
-      @click.prevent="$router.back()"
-    >
-      <Chevron class="-ms-2" />
-      {{ $t('single-result.back') }}
-    </a>
-
-    <figure class="w-full mb-4 pt-4 md:pt-8 px-6 bg-dark-charcoal-06">
+    <figure class="w-full mb-4 pt-8 md:pt-12 px-6 bg-dark-charcoal-06 relative">
+      <VBackToSearchResultsLink v-if="showBackToSearchLink" />
       <img
         v-if="!sketchFabUid"
         id="main-image"
@@ -101,12 +92,9 @@ import VMediaReuse from '~/components/VMediaInfo/VMediaReuse.vue'
 import VRelatedImages from '~/components/VImageDetails/VRelatedImages.vue'
 import SketchFabViewer from '~/components/SketchFabViewer.vue'
 
-import Chevron from '~/assets/icons/chevron-left.svg?inline'
-
 const VImageDetailsPage = {
   name: 'VImageDetailsPage',
   components: {
-    Chevron,
     VButton,
     VIcon,
     VImageDetails,
@@ -116,8 +104,7 @@ const VImageDetailsPage = {
   },
   data() {
     return {
-      breadcrumbUrl: '',
-      shouldShowBreadcrumb: false,
+      showBackToSearchLink: false,
       imageWidth: 0,
       imageHeight: 0,
       imageType: 'Unknown',
@@ -160,8 +147,7 @@ const VImageDetailsPage = {
         from.name === _this.localeRoute({ path: '/search/' }).name ||
         from.name === _this.localeRoute({ path: '/search/image' }).name
       ) {
-        _this.shouldShowBreadcrumb = true
-        _this.breadcrumbUrl = from.fullPath
+        _this.showBackToSearchLink = true
       }
     })
   },

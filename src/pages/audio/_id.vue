@@ -1,30 +1,6 @@
 <template>
   <main class="relative">
-    <div
-      v-if="shouldShowBreadcrumb"
-      class="absolute left-0 right-0 z-10 w-full px-2"
-    >
-      <a
-        class="text-dark-charcoal font-semibold px-6 py-4 inline-flex items-center gap-4"
-        @click="goBack"
-      >
-        <svg
-          width="8"
-          height="14"
-          viewBox="0 0 8 14"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M7 1.50002L2 7.00002L7 12.5"
-            stroke="#30272E"
-            stroke-width="1.5"
-          />
-        </svg>
-
-        {{ $t('single-result.back') }}
-      </a>
-    </div>
+    <VBackToSearchResultsLink />
     <VAudioTrack layout="full" :audio="audio" class="main-track" />
     <div class="mt-10 flex flex-col gap-10 px-4 lg:px-0 lg:max-w-5xl mx-auto">
       <MediaReuse
@@ -55,8 +31,7 @@ const AudioDetailPage = {
   data() {
     return {
       thumbnailURL: null,
-      breadCrumbURL: '',
-      shouldShowBreadcrumb: false,
+      showBackToSearchLink: false,
       id: null,
     }
   },
@@ -97,8 +72,7 @@ const AudioDetailPage = {
         from.name === _this.localeRoute({ path: '/search/' }).name ||
         from.name === _this.localeRoute({ path: '/search/audio' }).name
       ) {
-        _this.shouldShowBreadcrumb = true
-        _this.breadCrumbURL = from.fullPath
+        _this.showBackToSearchLink = true
       }
     })
   },
@@ -106,9 +80,6 @@ const AudioDetailPage = {
     attributionHtml() {
       const licenseUrl = `${this.licenseUrl}&atype=html`
       return getAttributionHtml(this.audio, licenseUrl, this.fullLicenseName)
-    },
-    goBack() {
-      this.$router.back()
     },
   },
   head() {
