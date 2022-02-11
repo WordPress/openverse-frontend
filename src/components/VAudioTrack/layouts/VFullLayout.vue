@@ -1,11 +1,6 @@
 <template>
   <div class="full-track w-full">
-    <slot
-      name="controller"
-      :usable-frac="0.75"
-      :features="['seek', 'duration']"
-    />
-
+    <slot name="controller" :features="['timestamps', 'duration', 'seek']" />
     <div
       class="flex flex-row flex-wrap lg:flex-nowrap items-top px-4 lg:px-0 lg:max-w-5xl mx-auto gap-6 mt-6"
     >
