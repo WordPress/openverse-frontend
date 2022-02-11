@@ -17,7 +17,7 @@ test('common filters are retained when media type changes from all media to sing
   page,
 }) => {
   await page.goto(
-    '/search/?q=cat&license=cc0&license_type=commercial&searchBy=creator'
+    '/search/?q=cat&license_type=commercial&license=cc0&searchBy=creator'
   )
   await openFilters(page)
 
@@ -39,7 +39,7 @@ test('common filters are retained when media type changes from single type to al
   page,
 }) => {
   await page.goto(
-    '/search/audio?q=cat&license=cc0&license_type=commercial&searchBy=creator'
+    '/search/audio?q=cat&license_type=commercial&license=cc0&searchBy=creator'
   )
   await openFilters(page)
 
