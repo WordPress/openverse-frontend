@@ -27,7 +27,7 @@ test('common filters are retained when media type changes from all media to sing
   await changeContentType(page, 'Images')
 
   await expect(page).toHaveURL(
-    '/search/image?q=cat&license=cc0&license_type=commercial&searchBy=creator'
+    '/search/image?q=cat&license_type=commercial&license=cc0&searchBy=creator'
   )
 
   for (let checkbox of ['cc0', 'commercial', 'creator']) {
@@ -50,7 +50,7 @@ test('common filters are retained when media type changes from single type to al
   await changeContentType(page, 'All content')
 
   await expect(page).toHaveURL(
-    '/search/?q=cat&license=cc0&license_type=commercial&searchBy=creator'
+    '/search/?q=cat&license_type=commercial&license=cc0&searchBy=creator'
   )
 
   for (let checkbox of ['cc0', 'commercial', 'creator']) {
