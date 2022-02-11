@@ -21,7 +21,7 @@
 <script>
 import { ALL_MEDIA, supportedSearchTypes } from '~/constants/media'
 import { computed, inject, useContext } from '@nuxtjs/composition-api'
-import useSearchType from '@/composables/use-search-type'
+import useSearchType from '~/composables/use-search-type'
 import { isMinScreen } from '~/composables/use-media-query'
 
 import caretDownIcon from '~/assets/icons/caret-down.svg'

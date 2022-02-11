@@ -170,7 +170,7 @@ describe('Filter Store', () => {
       ${{ mature: 'true' }}      | ${'/search/audio/'} | ${AUDIO}
       ${{ durations: 'medium' }} | ${'/search/image'}  | ${IMAGE}
     `(
-      "SET_SEARCH_STATE_FROM_URL should set query '$searchType' from query '$path'",
+      "SET_SEARCH_STATE_FROM_URL should set '$searchType' from query '$path'",
       ({ query, path, searchType }) => {
         actions[SET_SEARCH_STATE_FROM_URL](
           { commit: commitMock, dispatch: dispatchMock, state },

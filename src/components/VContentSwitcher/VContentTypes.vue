@@ -21,7 +21,7 @@
 </template>
 <script>
 import { supportedSearchTypes } from '~/constants/media'
-import useSearchType from '@/composables/use-search-type'
+import useSearchType from '~/composables/use-search-type'
 
 import VItemGroup from '~/components/VItemGroup/VItemGroup.vue'
 import VContentItem from '~/components/VContentSwitcher/VContentItem.vue'

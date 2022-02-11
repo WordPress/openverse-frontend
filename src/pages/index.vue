@@ -34,11 +34,11 @@
         </h2>
         <div class="flex justify-start gap-4 mt-4 md:hidden">
           <VContentTypeButton
-            v-for="type in supportedContentTypes"
+            v-for="type in supportedSearchTypes"
             :key="type"
             :content-type="type"
-            :selected="type === contentType"
-            @select="setContentType"
+            :selected="type === searchType"
+            @select="setSearchType"
           />
         </div>
         <VSearchBar
@@ -53,8 +53,8 @@
               v-if="isMinScreenMd"
               ref="contentSwitcher"
               class="mx-3"
-              :active-item="contentType"
-              @select="setContentType"
+              :active-item="searchType"
+              @select="setSearchType"
             />
           </ClientOnly>
         </VSearchBar>
@@ -193,13 +193,13 @@ const HomePage = {
     const isMinScreenMd = isMinScreen('md', { shouldPassInSSR: true })
 
     const contentSwitcher = ref(null)
-    const contentType = ref(ALL_MEDIA)
+    const searchType = ref(ALL_MEDIA)
 
-    const setContentType = async (type) => {
-      contentType.value = type
+    const setSearchType = async (type) => {
+      searchType.value = type
       contentSwitcher.value?.closeMenu()
       await store.dispatch(`${SEARCH}/${UPDATE_QUERY}`, {
-        contentType: type,
+        searchType: type,
       })
     }
 
@@ -208,11 +208,11 @@ const HomePage = {
       if (!searchTerm.value) return
       await store.dispatch(`${SEARCH}/${UPDATE_QUERY}`, {
         q: searchTerm.value,
-        contentType: contentType.value,
+        searchType: searchType.value,
       })
       const newPath = app.localePath({
         path: `/search/${
-          contentType.value === ALL_MEDIA ? '' : contentType.value
+          searchType.value === ALL_MEDIA ? '' : searchType.value
         }`,
         query: store.getters['search/searchQueryParams'],
       })
@@ -229,9 +229,9 @@ const HomePage = {
       isMinScreenMd,
 
       contentSwitcher,
-      contentType,
-      setContentType,
-      supportedContentTypes: supportedSearchTypes,
+      searchType,
+      setSearchType,
+      supportedSearchTypes,
 
       searchTerm,
       handleSearch,

@@ -35,7 +35,7 @@ import {
   computed,
 } from '@nuxtjs/composition-api'
 import { useBodyScrollLock } from '~/composables/use-body-scroll-lock'
-import useSearchType from '@/composables/use-search-type'
+import useSearchType from '~/composables/use-search-type'
 import usePages from '~/composables/use-pages'
 
 import externalLinkIcon from 'assets/icons/external-link.svg'

@@ -131,18 +131,18 @@ const getMediaTypeApiFilters = (filterParameter, parameterFilters) => {
  * converts the browser filter query string into the internal filter store data format
  * @param {object} params
  * @param {object} params.query - browser filter query
- * @param {import('../store/types').SearchType} [params.contentType]
+ * @param {import('../store/types').SearchType} [params.searchType]
  * @param {object} params.defaultFilters default filters for testing purposes
  */
 export const queryToFilterData = ({
   query,
-  contentType = 'image',
+  searchType = 'image',
   defaultFilters,
 }) => {
   // The default filterData object from search store doesn't contain provider filters,
   // so we can't use it.
   const filters = clonedeep(defaultFilters)
-  const filterTypes = getMediaFilterTypes(contentType)
+  const filterTypes = getMediaFilterTypes(searchType)
   const differentFiltersWithSameApiParams = [
     'audioProviders',
     'imageProviders',

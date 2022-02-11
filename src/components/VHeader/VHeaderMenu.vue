@@ -7,7 +7,7 @@ import {
   useRouter,
   useStore,
 } from '@nuxtjs/composition-api'
-import useSearchType from '@/composables/use-search-type'
+import useSearchType from '~/composables/use-search-type'
 
 import VMobileMenuModal from '~/components/VContentSwitcher/VMobileMenuModal.vue'
 import VContentSwitcherPopover from '~/components/VContentSwitcher/VContentSwitcherPopover.vue'
