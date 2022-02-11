@@ -62,12 +62,12 @@ export default {
         return 'h-12 px-2'
       } else if (isIconButton.value) {
         return 'w-10 h-10'
-      } else if (isMinScreenMd.value) {
-        // When there is a caret down icon, paddings are balanced
-        return 'px-2'
       } else {
-        // Without caret down icon, paddings need to be adjusted
-        return 'ps-2 pe-3'
+        /**
+          When there is a caret down icon (on 'md' screens), paddings are balanced, 
+          without it, paddings need to be adjusted.
+          */
+        return 'ps-2 pe-3 md:px-2'
       }
     })
 
