@@ -23,7 +23,9 @@
     >
       <slot name="play-pause" :size="isSmall ? 'small' : 'medium'" />
 
-      <div class="audio-info order-2 lg:order-1 w-full lg:w-auto">
+      <div
+        class="audio-info order-2 lg:order-1 w-full lg:w-auto flex flex-col justify-center"
+      >
         <h1
           class="text-lg lg:text-3xl font-heading font-semibold lg:line-clamp-2"
         >
