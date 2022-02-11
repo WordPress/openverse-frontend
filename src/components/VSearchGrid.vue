@@ -44,7 +44,9 @@ export default {
       required: true,
     },
     searchType: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<import('../store/types').SupportedSearchType>} */ (String),
+      type: /** @type {import('@nuxtjs/composition-api').PropType<import('../store/types').SupportedSearchType>} */ (
+        String
+      ),
       required: true,
     },
     fetchState: {
