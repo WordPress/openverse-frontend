@@ -6,7 +6,13 @@
     v-bind="layoutBasedProps"
     v-on="layoutBasedListeners"
   >
-    <Component :is="layoutComponent" :audio="audio" :size="_size">
+    <Component
+      :is="layoutComponent"
+      :audio="audio"
+      :size="_size"
+      :status="status"
+      :current-time="currentTime"
+    >
       <template #controller="waveformProps">
         <VWaveform
           v-bind="waveformProps"

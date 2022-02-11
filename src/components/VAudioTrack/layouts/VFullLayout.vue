@@ -1,6 +1,23 @@
 <template>
   <div class="full-track w-full">
-    <slot name="controller" :features="['timestamps', 'duration', 'seek']" />
+    <div class="bg-dark-charcoal-06 relative">
+      <span
+        v-if="currentTime > 0"
+        class="pointer-events-none absolute h-full w-10 left-0 bg-yellow"
+        aria-hidden
+      />
+      <span
+        v-if="status === 'played'"
+        class="pointer-events-none absolute h-full w-10 right-0 bg-yellow"
+        aria-hidden
+      />
+      <div class="mx-10">
+        <slot
+          name="controller"
+          :features="['timestamps', 'duration', 'seek']"
+        />
+      </div>
+    </div>
     <div
       class="flex flex-row flex-wrap lg:flex-nowrap items-top px-4 lg:px-0 lg:max-w-5xl mx-auto gap-6 mt-6"
     >
@@ -57,7 +74,7 @@ export default defineComponent({
   components: {
     DownloadButton,
   },
-  props: ['audio', 'size'],
+  props: ['audio', 'size', 'status', 'currentTime'],
   setup(props) {
     /**
      * Format the time as hh:mm:ss, dropping the hour part if it is zero.
