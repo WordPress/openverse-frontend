@@ -8,6 +8,7 @@ export default defineComponent({
   props: {
     name: { type: String, required: true },
     element: { type: String, default: 'div' },
+    forceDestroy: { type: Boolean, default: false },
   },
   data: () => ({ children: [] }),
   created() {
@@ -20,11 +21,17 @@ export default defineComponent({
     targets[this.name] = this
   },
   beforeDestroy() {
-    delete targets[this.name]
-    if (this.children.length > 0)
+    if (this.children.length > 0) {
+      if (this.forceDestroy) {
+        this.children.forEach((child) => child.$destroy())
+        this.children = []
+        return
+      }
       throw new Error(
         `VTeleportTarget: ${this.name} beforeDestroy but still has children mounted`
       )
+    }
+    delete targets[this.name]
   },
   render(h) {
     return h(

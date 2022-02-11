@@ -1,6 +1,6 @@
 <template>
   <div class="app grid h-screen overflow-hidden relative">
-    <VTeleportTarget name="skip-to-content" />
+    <VTeleportTarget name="skip-to-content" :force-destroy="true" />
     <MigrationNotice v-show="isReferredFromCc" />
     <VTranslationStatusBanner />
     <VHeader />
