@@ -15,6 +15,7 @@
         <slot
           name="controller"
           :features="['timestamps', 'duration', 'seek']"
+          :usable-frac="0.75"
         />
       </div>
     </div>
