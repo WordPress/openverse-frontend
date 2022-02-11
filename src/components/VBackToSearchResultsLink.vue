@@ -1,6 +1,6 @@
 <template>
   <!-- @todo: Seperate the absolute container from the link itself. -->
-  <div class="absolute left-0 top-0 right-0 z-40 w-full px-2">
+  <div v-if="show" class="absolute left-0 top-0 right-0 z-40 w-full px-2">
     <NuxtLink
       class="px-6 pt-4 pb-2 flex flex-row items-center font-semibold text-dark-charcoal text-xs md:text-sr"
       :to="path"
@@ -27,9 +27,11 @@ export default defineComponent({
     }
   },
   created() {
-    if (this.$nuxt?.context?.from?.path) {
-      this.path = this.$nuxt.context.from.path
+    if (!this.$nuxt?.context?.from?.path) {
+      return
     }
+
+    this.path = this.$nuxt.context.from.path
     if (this.path.startsWith('/search')) {
       this.show = true
     }
