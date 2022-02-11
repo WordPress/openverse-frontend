@@ -95,7 +95,7 @@ export default defineComponent({
     VAudioThumbnail,
     VLicense,
   },
-  props: ['audio', 'size', 'status'],
+  props: ['audio', 'size'],
   setup(props) {
     /* Utils */
     const browserIsBlink = useBrowserIsBlink()

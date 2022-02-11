@@ -357,7 +357,7 @@ export default defineComponent({
       if (isBoxed && !props.size) {
         return null
       }
-      return 'm'
+      return props.size ?? 'm'
     })
 
     /**

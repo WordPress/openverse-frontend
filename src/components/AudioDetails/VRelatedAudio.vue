@@ -41,22 +41,23 @@ export default {
    * @param {object} props
    * @param {string} props.audioId
    * @param {any} props.service
-   * @return {{ audios: Ref<AudioDetail[]> }}
+   * @return {{ audios: import('~/composables/types').Ref<import('~/store/types').AudioDetail[]>, audioTrackSize: import('@nuxtjs/composition-api').ComputedRef<"l" | "s"> }}
    */
   setup(props) {
     const mainAudioId = ref(props.audioId)
     const relatedOptions = {
       mediaType: AUDIO,
       mediaId: mainAudioId,
+      service: undefined,
     }
     // Using service prop to be able to mock when testing
     if (props.service) {
       relatedOptions.service = props.service
     }
 
-    const isMinScreenLg = isMinScreen('lg', { shouldPassInSSR: true })
+    const isMinScreenMd = isMinScreen('md', { shouldPassInSSR: true })
     const audioTrackSize = computed(() => {
-      return isMinScreenLg.value ? 'l' : 's'
+      return isMinScreenMd.value ? 'l' : 's'
     })
 
     const { media: audios } = useRelated(relatedOptions)
