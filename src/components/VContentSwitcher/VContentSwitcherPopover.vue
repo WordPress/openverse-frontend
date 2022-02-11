@@ -10,8 +10,9 @@
         :a11y-props="a11yProps"
         :active-item="activeItem"
         :class="{
-          '!border-tx group-hover:!border-dark-charcoal-20':
-            placement === 'searchbar',
+          '!border-tx': isInSearchBar,
+          'group-hover:!border-dark-charcoal-20':
+            isInSearchBar && !a11yProps['aria-expanded'],
         }"
         :type="placement"
       />
@@ -25,7 +26,7 @@
 </template>
 
 <script>
-import { ref } from '@nuxtjs/composition-api'
+import { computed, ref } from '@nuxtjs/composition-api'
 import useContentType from '~/composables/use-content-type'
 import checkIcon from '~/assets/icons/checkmark.svg'
 
@@ -60,6 +61,13 @@ export default {
     const contentMenuPopover = ref(null)
 
     /**
+     * When in the searchbar, content switcher button has a border when the
+     * search bar group is hovered on.
+     * @type {ComputedRef<boolean>}
+     */
+    const isInSearchBar = computed(() => props.placement === 'searchbar')
+
+    /**
      * Only the contentMenuPopover needs to be closed programmatically
      */
     const closeMenu = () => {
@@ -77,6 +85,7 @@ export default {
       checkIcon,
       selectItem,
       contentMenuPopover,
+      isInSearchBar,
       closeMenu,
     }
   },
