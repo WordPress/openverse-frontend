@@ -33,7 +33,7 @@
 <script>
 import { isLicense } from '~/utils/license'
 
-import VLicenseElements from '@/components/VLicenseElements.vue'
+import VLicenseElements from '~/components/VLicenseElements.vue'
 
 import { DEPRECATED_LICENSES } from '~/constants/license'
 

@@ -45,7 +45,7 @@
 <script>
 import helpIcon from '~/assets/icons/help.svg'
 
-import VLicenseExplanation from '@/components/VFilters/VLicenseExplanation.vue'
+import VLicenseExplanation from '~/components/VFilters/VLicenseExplanation.vue'
 import VCheckbox from '~/components/VCheckbox/VCheckbox.vue'
 import VLicense from '~/components/License/VLicense.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'
