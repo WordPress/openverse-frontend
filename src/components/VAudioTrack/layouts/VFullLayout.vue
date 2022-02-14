@@ -15,7 +15,7 @@
         <slot
           name="controller"
           :features="['timestamps', 'duration', 'seek']"
-          :usable-frac="0.75"
+          :usable-frac="0.8"
         />
       </div>
     </div>
@@ -149,7 +149,7 @@ export default defineComponent({
 
 <style>
 .full-track .waveform {
-  @apply h-[241px] rounded-sm;
+  @apply h-[185px] rounded-sm;
 }
 
 .full-track .play-pause {

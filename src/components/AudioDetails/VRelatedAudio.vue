@@ -3,7 +3,7 @@
     <h4 class="text-base lg:text-3xl mb-6">
       {{ $t('audio-details.related-audios') }}
     </h4>
-    <div v-if="!$fetchState.error" class="flex flex-col gap-8 lg:gap-12">
+    <div v-if="!$fetchState.error" class="flex flex-col gap-8 lg:gap-12 mb-12">
       <VAudioTrack
         v-for="audio in audios"
         :key="audio.id"
