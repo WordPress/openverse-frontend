@@ -27,11 +27,11 @@ export default defineComponent({
     }
   },
   created() {
-    if (!this.$nuxt?.context?.from?.path) {
+    if (!this.$nuxt?.context?.from?.fullPath) {
       return
     }
 
-    this.path = this.$nuxt.context.from.path
+    this.path = this.$nuxt.context.from.fullPath
     if (this.path.startsWith('/search')) {
       this.show = true
     }
