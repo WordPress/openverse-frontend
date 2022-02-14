@@ -8,10 +8,10 @@ import {
 
 import VMediaTag from '~/components/VMediaTag/VMediaTag'
 
-<Meta title="Components/VVMediaTag" component={VMediaTag} />
+<Meta title="Components/VMediaTag" component={VMediaTag} />
 
 export const Template = (args, { argTypes }) => ({
-  template: `<VMediaTag v-bind="$props" v-on="$props">Hello</VMediaTag>`,
+  template: `<VMediaTag v-bind="$props">Hello</VMediaTag>`,
   components: { VMediaTag },
   props: Object.keys(argTypes),
 })
@@ -38,7 +38,6 @@ focus states on interactive elements, can be applied to add to the base styles.
     args={{
       tag: 'a',
       href: 'https://wordpress.org/',
-      class: 'hover:bg-dark-charcoal-60 hover:text-white hover:no-underline',
     }}
   >
     {Template.bind({})}
