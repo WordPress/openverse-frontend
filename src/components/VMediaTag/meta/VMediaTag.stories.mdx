@@ -6,21 +6,21 @@ import {
   Story,
 } from '@storybook/addon-docs'
 
-import MediaTag from '~/components/MediaTag/MediaTag'
+import VMediaTag from '~/components/VMediaTag/VMediaTag'
 
-<Meta title="Components/Media tag" component={MediaTag} />
+<Meta title="Components/VVMediaTag" component={VMediaTag} />
 
 export const Template = (args, { argTypes }) => ({
-  template: `<MediaTag v-bind="$props" v-on="$props">Hello</MediaTag>`,
-  components: { MediaTag },
+  template: `<VMediaTag v-bind="$props" v-on="$props">Hello</VMediaTag>`,
+  components: { VMediaTag },
   props: Object.keys(argTypes),
 })
 
 # Media tag
 
-<Description of={MediaTag} />
+<Description of={VMediaTag} />
 
-<ArgsTable of={MediaTag} />
+<ArgsTable of={VMediaTag} />
 
 By default, the component is a transparent wrapper over `<span>`.
 
