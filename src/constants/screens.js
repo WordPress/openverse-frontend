@@ -1,4 +1,4 @@
-/** @typedef {'2xl' | 'xl' | 'lg' | 'md' | 'sm' | 'mob'} Breakpoints */
+/** @typedef {'2xl' | 'xl' | 'lg' | 'md' | 'sm' | 'xs' | 'mob'} Breakpoints */
 
 /**
  * Mapping of a breakpoint name to the lower-bound of its screen-width range
