@@ -398,14 +398,12 @@ const mutations = {
     const mediaTypesToClear = supportedSearchTypes.filter(
       (type) => type !== searchType
     )
-    console.log('media types to clear:', mediaTypesToClear)
 
     let filterKeysToClear = []
     mediaTypesToClear.forEach((mediaType) => {
       const filterKeys = mediaSpecificFilters[mediaType]
       filterKeysToClear = [...filterKeysToClear, ...filterKeys]
     })
-    console.log('filterKeys to clear:', filterKeysToClear)
 
     Object.keys(state.filters).forEach((filterType) => {
       if (filterKeysToClear.includes(filterType)) {
