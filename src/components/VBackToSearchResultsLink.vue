@@ -1,14 +1,13 @@
 <template>
   <!-- @todo: Seperate the absolute container from the link itself. -->
-  <div v-if="show" class="absolute left-0 top-0 right-0 z-40 w-full px-2">
-    <NuxtLink
-      class="px-2 pt-1 md:px-6 md:pt-4 md:pb-2 flex flex-row items-center font-semibold text-dark-charcoal text-xs md:text-sr"
-      :to="path"
-    >
-      <Chevron class="-ms-2" />
-      {{ $t('single-result.back') }}
-    </NuxtLink>
-  </div>
+  <NuxtLink
+    v-if="show"
+    class="px-2 pt-1 md:px-6 md:pt-4 md:pb-2 flex flex-row items-center font-semibold text-dark-charcoal text-xs md:text-sr"
+    :to="path"
+  >
+    <Chevron class="-ms-2" />
+    {{ $t('single-result.back') }}
+  </NuxtLink>
 </template>
 
 <script>

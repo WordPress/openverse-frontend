@@ -1,6 +1,8 @@
 <template>
   <main class="relative">
-    <VBackToSearchResultsLink />
+    <div class="w-full p-2">
+      <VBackToSearchResultsLink />
+    </div>
     <VAudioTrack layout="full" :audio="audio" class="main-track" />
     <div
       class="mt-10 lg:mt-16 flex flex-col gap-10 lg:gap-16 px-4 lg:px-0 lg:max-w-5xl mx-auto"

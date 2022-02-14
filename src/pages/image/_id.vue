@@ -1,7 +1,13 @@
 <template>
   <div>
     <figure class="w-full mb-4 pt-8 md:pt-12 px-6 bg-dark-charcoal-06 relative">
-      <VBackToSearchResultsLink v-if="showBackToSearchLink" />
+      <div
+        v-if="showBackToSearchLink"
+        class="absolute left-0 top-0 right-0 z-40 w-full px-2"
+      >
+        <VBackToSearchResultsLink />
+      </div>
+
       <img
         v-if="!sketchFabUid"
         id="main-image"

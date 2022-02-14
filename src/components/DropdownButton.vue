@@ -1,5 +1,5 @@
 <template>
-  <div class="relative block max-w-min">
+  <div class="relative block max-w-min text-sm md:text-base">
     <!-- rounded-X-none is required to fight Edge UA styles that apply a 2px border radius to all `button` elements -->
     <div class="flex">
       <slot
