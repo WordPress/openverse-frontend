@@ -10,7 +10,7 @@ import {
 import useSearchType from '~/composables/use-search-type'
 
 import VMobileMenuModal from '~/components/VContentSwitcher/VMobileMenuModal.vue'
-import VContentSwitcherPopover from '~/components/VContentSwitcher/VContentSwitcherPopover.vue'
+import VSearchTypePopover from '~/components/VContentSwitcher/VSearchTypePopover.vue'
 import VDesktopPageMenu from '~/components/VHeader/VPageMenu/VDesktopPageMenu.vue'
 import VMobilePageMenu from '~/components/VHeader/VPageMenu/VMobilePageMenu.vue'
 import { ALL_MEDIA, supportedMediaTypes } from '~/constants/media'
@@ -22,7 +22,7 @@ export default {
   name: 'VHeaderMenu',
   components: {
     VMobileMenuModal,
-    VContentSwitcherPopover,
+    VSearchTypePopover,
     VDesktopPageMenu,
     VMobilePageMenu,
   },
@@ -89,7 +89,7 @@ export default {
     } else if (this.isMinScreenMd && this.isMounted) {
       return h('div', { class: 'flex flex-grow justify-between gap-x-2' }, [
         h(VDesktopPageMenu),
-        h(VContentSwitcherPopover, {
+        h(VSearchTypePopover, {
           props: { activeItem: this.content.activeType.value },
           ref: 'menuModalRef',
           on: { select: this.selectContentType },

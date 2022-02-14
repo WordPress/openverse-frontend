@@ -18,7 +18,7 @@
         :type="placement"
       />
     </template>
-    <VContentTypes
+    <VSearchTypes
       id="content-switcher-popover"
       size="medium"
       :active-item="activeItem"
@@ -34,14 +34,14 @@ import checkIcon from '~/assets/icons/checkmark.svg'
 
 import VPopover from '~/components/VPopover/VPopover.vue'
 import VSearchTypeButton from '~/components/VContentSwitcher/VSearchTypeButton.vue'
-import VContentTypes from '~/components/VContentSwitcher/VContentTypes.vue'
+import VSearchTypes from '~/components/VContentSwitcher/VSearchTypes.vue'
 
 export default defineComponent({
-  name: 'VContentSwitcherPopover',
+  name: 'VSearchTypePopover',
   components: {
     VSearchTypeButton,
     VPopover,
-    VContentTypes,
+    VSearchTypes,
   },
   model: {
     prop: 'activeItem',

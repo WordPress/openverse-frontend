@@ -7,7 +7,7 @@
     type="radiogroup"
     class="z-10"
   >
-    <VContentItem
+    <VSearchTypeItem
       v-for="(item, idx) in content.types"
       :key="item"
       :class="{ 'mb-1 p-4': size === 'medium' }"
@@ -24,12 +24,12 @@ import { supportedSearchTypes } from '~/constants/media'
 import useSearchType from '~/composables/use-search-type'
 
 import VItemGroup from '~/components/VItemGroup/VItemGroup.vue'
-import VContentItem from '~/components/VContentSwitcher/VContentItem.vue'
+import VSearchTypeItem from '~/components/VContentSwitcher/VSearchTypeItem.vue'
 import { computed, defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
-  name: 'VContentTypes',
-  components: { VItemGroup, VContentItem },
+  name: 'VSearchTypes',
+  components: { VItemGroup, VSearchTypeItem },
   props: {
     /**
      * 'Small' size for mobile screens,

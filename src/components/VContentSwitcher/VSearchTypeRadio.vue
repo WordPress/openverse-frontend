@@ -32,7 +32,7 @@ const iconMapping = {
 }
 
 export default defineComponent({
-  name: 'VContentTypeButton',
+  name: 'VSearchTypeRadio',
   components: { VIcon },
   props: {
     /**

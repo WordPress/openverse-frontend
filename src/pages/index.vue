@@ -33,7 +33,7 @@
           {{ $t('hero.subtitle') }}
         </h2>
         <div class="flex justify-start gap-4 mt-4 md:hidden">
-          <VContentTypeButton
+          <VSearchTypeRadio
             v-for="type in supportedSearchTypes"
             :key="type"
             :search-type="type"
@@ -48,7 +48,7 @@
           @submit="handleSearch"
         >
           <ClientOnly>
-            <VContentSwitcherPopover
+            <VSearchTypePopover
               v-if="isMinScreenMd"
               ref="contentSwitcher"
               class="mx-3"
@@ -143,8 +143,8 @@ import imageInfo from '~/assets/homepage_images/image_info.json'
 
 import OpenverseLogo from '~/assets/logo.svg?inline'
 import OpenverseBrand from '~/assets/brand.svg?inline'
-import VContentSwitcherPopover from '~/components/VContentSwitcher/VContentSwitcherPopover.vue'
-import VContentTypeButton from '~/components/VContentSwitcher/VContentTypeButton.vue'
+import VSearchTypePopover from '~/components/VContentSwitcher/VSearchTypePopover.vue'
+import VSearchTypeRadio from '~/components/VContentSwitcher/VSearchTypeRadio.vue'
 import VSearchBar from '~/components/VHeader/VSearchBar/VSearchBar.vue'
 import VLogoButton from '~/components/VHeader/VLogoButton.vue'
 
@@ -154,8 +154,8 @@ const HomePage = {
   components: {
     OpenverseLogo,
     OpenverseBrand,
-    VContentSwitcherPopover,
-    VContentTypeButton,
+    VSearchTypePopover,
+    VSearchTypeRadio,
     VSearchBar,
     VLogoButton,
   },

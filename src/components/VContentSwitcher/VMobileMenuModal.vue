@@ -19,7 +19,7 @@
         class="p-6"
         aria-labelledby="content-switcher-heading"
       >
-        <VContentTypes
+        <VSearchTypes
           ref="contentTypesNode"
           size="small"
           :active-item="content.activeType.value"
@@ -47,7 +47,7 @@ import usePages from '~/composables/use-pages'
 import externalLinkIcon from 'assets/icons/external-link.svg'
 
 import VMobileModalContent from '~/components/VModal/VMobileModalContent.vue'
-import VContentTypes from '~/components/VContentSwitcher/VContentTypes.vue'
+import VSearchTypes from '~/components/VContentSwitcher/VSearchTypes.vue'
 import VPageList from '~/components/VHeader/VPageMenu/VPageList.vue'
 import VSearchTypeButton from '~/components/VContentSwitcher/VSearchTypeButton.vue'
 
@@ -57,7 +57,7 @@ export default defineComponent({
   name: 'VMobileContentSwitcher',
   components: {
     VMobileModalContent,
-    VContentTypes,
+    VSearchTypes,
     VPageList,
     VSearchTypeButton,
   },

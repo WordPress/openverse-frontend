@@ -28,7 +28,7 @@ const propTypes = {
   icon: { type: String, required: true },
 }
 export default defineComponent({
-  name: 'VContentItem',
+  name: 'VSearchTypeItem',
   props: propTypes,
   setup(props) {
     const status = computed(() => {
