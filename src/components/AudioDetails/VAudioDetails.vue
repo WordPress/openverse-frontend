@@ -7,7 +7,7 @@
       <div class="w-[75px] h-[75px] lg:w-30 lg:h-30 rounded-sm overflow-hidden">
         <VAudioThumbnail :audio="audio" />
       </div>
-      <div class="flex flex-col gap-6 flex-grow">
+      <div class="flex flex-col gap-4 lg:gap-6 flex-grow">
         <p v-if="audio.description" class="mb-6">{{ audio.description }}</p>
         <ul class="flex flex-wrap gap-2">
           <MediaTag
@@ -105,9 +105,12 @@ export default {
 
 <style lang="scss" scoped>
 dl {
-  display: grid;
+  @apply grid gap-4;
   grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  grid-gap: 1.5rem;
+
+  @screen lg {
+    @apply gap-5;
+  }
 }
 dl div {
   display: flex;
