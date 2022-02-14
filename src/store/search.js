@@ -79,7 +79,7 @@ export const mediaSpecificFilters = {
     'sizes',
     'imageProviders',
   ],
-  audio: ['audioCategories', 'audioExtensions', 'durations', 'audioPr0oviders'],
+  audio: ['audioCategories', 'audioExtensions', 'durations', 'audioProviders'],
   video: [],
 }
 
@@ -268,7 +268,7 @@ const actions = {
    */
   async [UPDATE_QUERY]({ commit, dispatch, state }, params = {}) {
     const { q, searchType } = params
-    /** @type {{ q: string?, mediaType: import('./types').SupportedMediaType }} */
+    /** @type {{ q: string? }} */
     const queryParams = {}
     if (q) {
       queryParams.q = q.trim()
@@ -277,9 +277,7 @@ const actions = {
       commit(SET_SEARCH_TYPE, { searchType })
       commit(CLEAR_OTHER_MEDIA_TYPE_FILTERS, { searchType })
     }
-    if (Object.keys(queryParams).length !== 0) {
-      await dispatch(UPDATE_QUERY_FROM_FILTERS, queryParams)
-    }
+    await dispatch(UPDATE_QUERY_FROM_FILTERS, queryParams)
   },
   /**
    * Toggles a filter's checked parameter
