@@ -6,7 +6,7 @@
       </h3>
       <VContentReportPopover :media="image" />
     </div>
-    <ul class="flex flex-wrap gap-2 mb-6">
+    <ul v-if="image && image.tags" class="flex flex-wrap gap-2 mb-6">
       <VMediaTag
         v-for="(tag, index) in image.tags.filter((i) => !!i)"
         :key="index"
