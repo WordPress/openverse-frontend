@@ -60,7 +60,7 @@ describe('searchQueryTransform', () => {
           checked: false,
         },
         {
-          code: 'digitized_artwork',
+          code: 'digitized-artwork',
           name: 'filters.image-categories.digitized-artwork',
           checked: false,
         },

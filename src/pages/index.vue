@@ -36,7 +36,7 @@
           <VContentTypeButton
             v-for="type in supportedSearchTypes"
             :key="type"
-            :content-type="type"
+            :search-type="type"
             :selected="type === searchType"
             @select="setSearchType"
           />

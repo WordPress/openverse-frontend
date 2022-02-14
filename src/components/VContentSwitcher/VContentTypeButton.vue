@@ -7,7 +7,7 @@
     @click="handleClick"
   >
     <VIcon :icon-path="iconPath" class="me-1 flex-shrink-0" />
-    <span>{{ $t(`search-type.${contentType}`) }}</span>
+    <span>{{ $t(`search-type.${searchType}`) }}</span>
   </button>
 </template>
 
@@ -49,8 +49,8 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
-    const iconPath = computed(() => iconMapping[props.contentType])
-    const handleClick = () => emit('select', props.contentType)
+    const iconPath = computed(() => iconMapping[props.searchType])
+    const handleClick = () => emit('select', props.searchType)
     return { iconPath, handleClick }
   },
 })

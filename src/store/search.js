@@ -410,7 +410,6 @@ const mutations = {
     console.log('filterKeys to clear:', filterKeysToClear)
 
     Object.keys(state.filters).forEach((filterType) => {
-      console.log('filter type: ', filterType, state.filters[filterType])
       if (filterKeysToClear.includes(filterType)) {
         state.filters[filterType] = state.filters[filterType].map((f) => ({
           ...f,
