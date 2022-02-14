@@ -76,7 +76,7 @@ export default {
       } else {
         fragment = `licenses/${licenseTerm}/4.0`
       }
-      return `https://creativecommons.org/${fragment}/?ref=openverse&atype=rich`
+      return `https://creativecommons.org/${fragment}/?ref=openverse`
     },
   },
 }
