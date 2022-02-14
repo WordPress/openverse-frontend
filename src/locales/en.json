@@ -342,7 +342,7 @@
       "title": "Image type",
       "photograph": "Photographs",
       "illustration": "Illustrations",
-      "digitized-artwork": "Digitized Artworks"
+      "digitized_artwork": "Digitized Artworks"
     },
     "audio-extensions": {
       "title": "File type",

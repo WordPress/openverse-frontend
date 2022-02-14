@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-02-14T13:53:19+00:00\n"
+"POT-Creation-Date: 2022-02-14T16:52:32+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -182,7 +182,7 @@ msgctxt "audio-categories.pronunciation"
 msgid "Pronunciation"
 msgstr ""
 
-#: src/components/VHeader/VSearchBar/VSearchButton.vue:6
+#: src/components/VHeader/VSearchBar/VSearchButton.vue:4
 msgctxt "search.search"
 msgid "Search"
 msgstr ""
@@ -879,6 +879,7 @@ msgctxt "filters.license-explanation.link"
 msgid "here"
 msgstr ""
 
+#: src/components/VFilters/VFilterChecklist.vue:74
 msgctxt "filters.search-by.title"
 msgid "Search By"
 msgstr ""
@@ -995,7 +996,7 @@ msgctxt "filters.image-categories.illustration"
 msgid "Illustrations"
 msgstr ""
 
-msgctxt "filters.image-categories.digitized-artwork"
+msgctxt "filters.image-categories.digitized_artwork"
 msgid "Digitized Artworks"
 msgstr ""
 
@@ -1933,7 +1934,7 @@ msgctxt "header.api-nav-item"
 msgid "API"
 msgstr ""
 
-#: src/components/VHeader/VHeader.vue:157
+#: src/components/VHeader/VHeader.vue:152
 msgctxt "header.loading"
 msgid "Loading..."
 msgstr ""
@@ -2001,7 +2002,7 @@ msgctxt "hero.subtitle"
 msgid "Browse through over 600 million items to reuse"
 msgstr ""
 
-#: src/components/VHeader/VSearchBar/VSearchBar.vue:10
+#: src/components/VHeader/VSearchBar/VSearchBar.vue:11
 msgctxt "hero.aria.search"
 msgid "search"
 msgstr ""
@@ -2024,17 +2025,17 @@ msgid "I want something I can"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/index.vue:64
+#: src/pages/index.vue:63
 msgctxt "hero.disclaimer.content"
 msgid "All Openverse content is under a ###license### or is in the public domain."
 msgstr ""
 
-#: src/pages/index.vue:75
+#: src/pages/index.vue:74
 msgctxt "hero.disclaimer.license"
 msgid "Creative Commons license"
 msgstr ""
 
-#: src/pages/index.vue:48
+#: src/components/VHeader/VSearchBar/VSearchBar.vue:7
 msgctxt "hero.search.placeholder"
 msgid "Search for content"
 msgstr ""
