@@ -28,7 +28,7 @@
         class="audio-info order-2 lg:order-1 w-full lg:w-auto flex flex-col justify-center"
       >
         <h1
-          class="text-lg lg:text-3xl font-heading font-semibold lg:line-clamp-2"
+          class="text-base lg:text-3xl font-heading font-semibold lg:line-clamp-2"
         >
           {{ audio.title }}
         </h1>
