@@ -1,7 +1,7 @@
 <template>
   <div class="license-explanation w-80 p-6">
     <h5 class="font-semibold">
-      <template v-if="isLicense">{{
+      <template v-if="isTechnicallyLicense">{{
         $t('filters.license-explanation.license-definition')
       }}</template>
       <template v-else>{{
@@ -15,7 +15,7 @@
 
     <i18n
       :path="`filters.license-explanation.more.${
-        isLicense ? 'license' : 'mark'
+        isTechnicallyLicense ? 'license' : 'mark'
       }`"
       tag="p"
       class="text-sm"
@@ -56,7 +56,11 @@ export default {
     },
   },
   computed: {
-    isLicense() {
+    /**
+     * Public domain marks such as CC0 and PDM are not technically licenses.
+     * @return {boolean} true if the license is not CC0 or PDM, false otherwise
+     */
+    isTechnicallyLicense() {
       return isLicense(this.$props.license)
     },
   },
