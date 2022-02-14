@@ -10,6 +10,7 @@ const SCREEN_SIZES = new Map([
   ['lg', 1024],
   ['md', 768],
   ['sm', 640],
+  ['xs', 340],
 ])
 
 const VIEWPORTS = Object.fromEntries(

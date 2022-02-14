@@ -43,9 +43,8 @@
         </div>
         <VSearchBar
           v-model.trim="searchTerm"
-          class="max-w-[40rem] mt-4 lg:mt-8"
+          class="max-w-[40rem] mt-4 lg:mt-8 group"
           size="standalone"
-          :placeholder="$t('hero.search.placeholder')"
           @submit="handleSearch"
         >
           <ClientOnly>
@@ -54,6 +53,7 @@
               ref="contentSwitcher"
               class="mx-3"
               :active-item="contentType"
+              placement="searchbar"
               @select="setContentType"
             />
           </ClientOnly>
