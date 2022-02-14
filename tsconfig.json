@@ -24,7 +24,7 @@
     /* Module Resolution Options */
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "typeRoots": ["./node_modules/@types"],
+    "typeRoots": ["./typings", "./node_modules/@types"],
     "paths": {
       "~/*": ["./src/*"],
       "~~/*": ["./*"]
@@ -35,6 +35,16 @@
     "src/composables/types.js",
     "src/composables/use-event-listener-outside.js",
     "src/composables/use-active-audio.js",
-    "src/utils/key-codes.js"
+    "src/composables/use-get-locale-formatted-number.js",
+    "src/composables/use-browser-detection.js",
+    "src/composables/use-media-query.js",
+    "src/composables/window.js",
+    "src/constants/screens.js",
+    "src/data/api-service.js",
+    "src/data/usage-data-service.js",
+    "src/store/user.js",
+    "src/utils/key-codes.js",
+    "src/utils/local.js",
+    "src/utils/warn.js"
   ]
 }

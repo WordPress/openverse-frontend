@@ -1,9 +1,11 @@
 <template>
-  <div class="app grid h-screen overflow-hidden">
-    <VTeleportTarget name="skip-to-content" />
-    <MigrationNotice v-show="isReferredFromCc" />
-    <TranslationStatusBanner />
-    <VHeader />
+  <div class="app grid h-screen overflow-hidden relative">
+    <div>
+      <VTeleportTarget name="skip-to-content" :force-destroy="true" />
+      <MigrationNotice v-show="isReferredFromCc" />
+      <VTranslationStatusBanner />
+      <VHeader />
+    </div>
     <main
       class="main embedded overflow-x-hidden"
       :class="{ 'has-sidebar': isSidebarVisible }"
@@ -32,7 +34,7 @@ import { useMatchSearchRoutes } from '~/composables/use-match-routes'
 import { useScroll } from '~/composables/use-scroll'
 
 import MigrationNotice from '~/components/MigrationNotice.vue'
-import TranslationStatusBanner from '~/components/TranslationStatusBanner.vue'
+import VTranslationStatusBanner from '~/components/VTranslationStatusBanner.vue'
 import VHeader from '~/components/VHeader/VHeader.vue'
 import VModalTarget from '~/components/VModal/VModalTarget.vue'
 import VSidebarTarget from '~/components/VModal/VSidebarTarget.vue'
@@ -43,7 +45,7 @@ const embeddedPage = {
   name: 'embedded',
   components: {
     MigrationNotice,
-    TranslationStatusBanner,
+    VTranslationStatusBanner,
     VHeader,
     VModalTarget,
     VTeleportTarget,
@@ -108,23 +110,30 @@ export default embeddedPage
   grid-template-rows: auto 1fr;
 }
 
+@screen md {
+  // Logic for displaying the filter sidebar and search results
+  // as independently-scrolling sections.
+  .main {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 316px;
+  }
+  // Make the main content area span both grid columns
+  // when the sidebar is closed...
+  .main > *:first-child {
+    grid-column: span 2;
+  }
+  // ...and only one column when it is visible.
+  .main.has-sidebar > *:first-child {
+    grid-column: 1;
+  }
+}
+
 .main {
-  display: grid;
-  grid-template-columns: 1fr 316px;
-  height: 100%;
   overflow: hidden;
 }
-
-.main > * {
+.main > *:not(:empty) {
   overflow-y: scroll;
-  min-height: 100%;
-}
-
-.main > *:first-child {
-  grid-column: span 2;
-}
-
-.main.has-sidebar > *:first-child {
-  grid-column: 1;
+  height: 100%;
 }
 </style>

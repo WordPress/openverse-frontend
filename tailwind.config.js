@@ -27,7 +27,6 @@ module.exports = {
       // Brand
       yellow: '#ffe033',
       pink: '#c52b9b',
-      primary: '#3e58e1', // will change to pink after redesign launch
       // Active
       'dark-pink': '#7c2264',
 
@@ -84,6 +83,7 @@ module.exports = {
       10: '2.50rem',
       12: '3.00rem',
       14: '3.50rem',
+      15: '3.75rem',
       16: '4.00rem',
       20: '5.00rem',
       24: '6.00rem',
