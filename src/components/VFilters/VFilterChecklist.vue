@@ -28,7 +28,7 @@
             v-bind="a11yProps"
             :ref="`${item.code}licenseIcon`"
             :aria-label="$t('browse-page.aria.license-explanation')"
-            class="text-dark-charcoal-70 appearance-none"
+            class="text-dark-charcoal-70"
             type="button"
           >
             <VIcon :icon-path="helpIcon" />
