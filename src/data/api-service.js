@@ -62,7 +62,7 @@ export const createApiService = (baseUrl = process.env.apiUrl) => {
      * @returns {Promise<import('axios').AxiosResponse<T>>} response  The API response object
      */
     query(resource, params) {
-      return client.get(resource, { params })
+      return client.get(`${resource}/`, { params })
     },
 
     /**

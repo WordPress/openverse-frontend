@@ -26,8 +26,7 @@ import {
 } from '~/constants/usage-data-analytics-types'
 import { AUDIO, IMAGE, VIDEO, ALL_MEDIA } from '~/constants/media'
 import { USAGE_DATA } from '~/constants/store-modules'
-import AudioService from '~/data/audio-service'
-import ImageService from '~/data/image-service'
+import MediaService from '~/data/media-service'
 
 // Note: images should always be first here,
 // and this only includes 'real' media. ALL is a
@@ -69,7 +68,12 @@ export const state = () => ({
   image: {},
 })
 
-export const createActions = (services) => ({
+export const mediaServices = {
+  [AUDIO]: MediaService(AUDIO),
+  [IMAGE]: MediaService(IMAGE),
+}
+
+export const createActions = (services = mediaServices) => ({
   /**
    *
    * @param {import('vuex').ActionContext} context
@@ -258,6 +262,7 @@ export const createActions = (services) => ({
     }
   },
 })
+const actions = createActions()
 
 export const getters = {
   /**
@@ -419,9 +424,6 @@ export const mutations = {
     _state.results[mediaType].pageCount = 0
   },
 }
-
-const mediaServices = { [AUDIO]: AudioService, [IMAGE]: ImageService }
-const actions = createActions(mediaServices)
 
 export default {
   state,
