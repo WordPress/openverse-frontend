@@ -32,10 +32,10 @@ import {
   FETCH_MEDIA,
   UPDATE_QUERY,
   SET_SEARCH_STATE_FROM_URL,
-  UPDATE_SEARCH_TYPE,
 } from '~/constants/action-types'
 import { ALL_MEDIA, supportedSearchTypes } from '~/constants/media'
 import { MEDIA, SEARCH } from '~/constants/store-modules'
+import { queryStringToSearchType } from '~/utils/search-query-transform'
 
 import { inject } from '@nuxtjs/composition-api'
 import { isMinScreen } from '~/composables/use-media-query.js'
@@ -100,11 +100,24 @@ const BrowsePage = {
     ...mapActions(MEDIA, { fetchMedia: FETCH_MEDIA }),
     ...mapActions(SEARCH, {
       setSearchStateFromUrl: SET_SEARCH_STATE_FROM_URL,
-      updateSearchType: UPDATE_SEARCH_TYPE,
       updateQuery: UPDATE_QUERY,
     }),
     onSearchFormSubmit({ q }) {
       this.updateQuery({ q })
+    },
+  },
+  watch: {
+    /**
+     * Updates the search type only if the route's path changes.
+     * This watcher is important when changing the search type via All grid's ContentLink.
+     * @param newRoute
+     * @param oldRoute
+     */
+    $route(newRoute, oldRoute) {
+      if (newRoute.path !== oldRoute.path) {
+        const searchType = queryStringToSearchType(newRoute.path)
+        this.updateQuery({ searchType })
+      }
     },
   },
 }

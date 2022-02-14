@@ -23,7 +23,12 @@
 </template>
 <script>
 import { ALL_MEDIA, supportedSearchTypes } from '~/constants/media'
-import { computed, inject, useContext } from '@nuxtjs/composition-api'
+import {
+  computed,
+  defineComponent,
+  inject,
+  useContext,
+} from '@nuxtjs/composition-api'
 import useSearchType from '~/composables/use-search-type'
 import { isMinScreen } from '~/composables/use-media-query'
 
@@ -32,8 +37,8 @@ import caretDownIcon from '~/assets/icons/caret-down.svg'
 import VButton from '~/components/VButton.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'
 
-export default {
-  name: 'VContentSwitcherButton',
+export default defineComponent({
+  name: 'VSearchTypeButton',
   components: { VButton, VIcon },
   props: {
     a11yProps: {
@@ -107,5 +112,5 @@ export default {
       icon: computed(() => icons[activeItem.value]),
     }
   },
-}
+})
 </script>

@@ -18,7 +18,6 @@ import {
   SET_SEARCH_STATE_FROM_URL,
   TOGGLE_FILTER,
   UPDATE_QUERY_FROM_FILTERS,
-  UPDATE_SEARCH_TYPE,
   CLEAR_FILTERS,
 } from '~/constants/action-types'
 import {
@@ -339,19 +338,6 @@ const actions = {
     commit(REPLACE_FILTERS, { newFilterData })
     commit(SET_SEARCH_TYPE, { searchType })
     await dispatch(UPDATE_QUERY_FROM_FILTERS, queryParams)
-  },
-
-  /**
-   * On selecting a search tab, updates the search type and
-   * sets the filters that are applicable for this media type.
-   * @param {import('vuex').ActionContext} context
-   * @param {import('./types').SearchType} searchType
-   */
-  async [UPDATE_SEARCH_TYPE]({ commit, state }, { searchType }) {
-    if (state.searchType !== searchType) {
-      commit(SET_SEARCH_TYPE, { searchType })
-      commit(CLEAR_OTHER_MEDIA_TYPE_FILTERS, { searchType })
-    }
   },
   /**
    * After a change in filters, updates the query.

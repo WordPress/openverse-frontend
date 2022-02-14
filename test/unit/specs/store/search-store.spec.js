@@ -4,14 +4,12 @@ import {
   SET_SEARCH_STATE_FROM_URL,
   TOGGLE_FILTER,
   UPDATE_QUERY_FROM_FILTERS,
-  UPDATE_SEARCH_TYPE,
 } from '~/constants/action-types'
 import {
   SET_FILTER,
   SET_PROVIDERS_FILTERS,
   REPLACE_FILTERS,
   SET_SEARCH_TYPE,
-  CLEAR_OTHER_MEDIA_TYPE_FILTERS,
   SET_QUERY,
 } from '~/constants/mutation-types'
 import { ALL_MEDIA, AUDIO, IMAGE } from '~/constants/media'
@@ -182,21 +180,6 @@ describe('Filter Store', () => {
         })
       }
     )
-
-    it('UPDATE_SEARCH_TYPE sets search type to ALL_MEDIA if URL param is not set', () => {
-      const action = actions[UPDATE_SEARCH_TYPE]
-
-      action(context, { searchType: ALL_MEDIA })
-      expect(context.commit).toHaveBeenCalledWith(SET_SEARCH_TYPE, {
-        searchType: ALL_MEDIA,
-      })
-      expect(context.commit).toHaveBeenCalledWith(
-        CLEAR_OTHER_MEDIA_TYPE_FILTERS,
-        {
-          searchType: 'all',
-        }
-      )
-    })
 
     it('CLEAR_FILTERS resets filters to initial state', async () => {
       state.filters.licenses = [

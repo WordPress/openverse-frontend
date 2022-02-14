@@ -1,7 +1,7 @@
 <template>
   <div ref="nodeRef" class="mobile-menu ms-auto md:ms-0">
     <div ref="triggerContainerRef" @click="onTriggerClick">
-      <VContentSwitcherButton
+      <VSearchTypeButton
         :a11y-props="triggerA11yProps"
         :active-item="activeItem"
         aria-controls="content-switcher-modal"
@@ -33,11 +33,12 @@
 
 <script>
 import {
+  computed,
+  defineComponent,
   onMounted,
   reactive,
   ref,
   watch,
-  computed,
 } from '@nuxtjs/composition-api'
 import { useBodyScrollLock } from '~/composables/use-body-scroll-lock'
 import useSearchType from '~/composables/use-search-type'
@@ -48,17 +49,17 @@ import externalLinkIcon from 'assets/icons/external-link.svg'
 import VMobileModalContent from '~/components/VModal/VMobileModalContent.vue'
 import VContentTypes from '~/components/VContentSwitcher/VContentTypes.vue'
 import VPageList from '~/components/VHeader/VPageMenu/VPageList.vue'
-import VContentSwitcherButton from '~/components/VContentSwitcher/VContentSwitcherButton'
+import VSearchTypeButton from '~/components/VContentSwitcher/VSearchTypeButton.vue'
 
 const externalLinkProps = { as: 'a', target: '_blank', rel: 'noopener' }
 
-export default {
+export default defineComponent({
   name: 'VMobileContentSwitcher',
   components: {
     VMobileModalContent,
     VContentTypes,
     VPageList,
-    VContentSwitcherButton,
+    VSearchTypeButton,
   },
   props: {
     activeItem: {
@@ -149,5 +150,5 @@ export default {
       contentTypesNode,
     }
   },
-}
+})
 </script>

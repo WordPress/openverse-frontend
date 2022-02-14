@@ -6,7 +6,7 @@
     placement="bottom-start"
   >
     <template #trigger="{ a11yProps }">
-      <VContentSwitcherButton
+      <VSearchTypeButton
         :a11y-props="a11yProps"
         aria-controls="content-switcher-popover"
         :active-item="activeItem"
@@ -28,18 +28,18 @@
 </template>
 
 <script>
-import { computed, ref } from '@nuxtjs/composition-api'
+import { computed, defineComponent, ref } from '@nuxtjs/composition-api'
 import useSearchType from '~/composables/use-search-type'
 import checkIcon from '~/assets/icons/checkmark.svg'
 
 import VPopover from '~/components/VPopover/VPopover.vue'
-import VContentSwitcherButton from '~/components/VContentSwitcher/VContentSwitcherButton.vue'
+import VSearchTypeButton from '~/components/VContentSwitcher/VSearchTypeButton.vue'
 import VContentTypes from '~/components/VContentSwitcher/VContentTypes.vue'
 
-export default {
+export default defineComponent({
   name: 'VContentSwitcherPopover',
   components: {
-    VContentSwitcherButton,
+    VSearchTypeButton,
     VPopover,
     VContentTypes,
   },
@@ -91,5 +91,5 @@ export default {
       closeMenu,
     }
   },
-}
+})
 </script>

@@ -27,7 +27,7 @@ const propTypes = {
   selected: { type: Boolean, default: false },
   icon: { type: String, required: true },
 }
-const VContentItem = defineComponent({
+export default defineComponent({
   name: 'VContentItem',
   props: propTypes,
   setup(props) {
@@ -39,5 +39,4 @@ const VContentItem = defineComponent({
     }
   },
 })
-export default VContentItem
 </script>
