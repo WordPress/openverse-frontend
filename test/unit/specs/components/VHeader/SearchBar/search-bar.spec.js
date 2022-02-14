@@ -13,7 +13,7 @@ describe('SearchBar', () => {
   let options
   beforeEach(() => {
     options = {
-      attrs: { placeholder: defaultPlaceholder, size: 'standalone' },
+      props: { placeholder: defaultPlaceholder, size: 'standalone' },
       mocks: {
         $nuxt: {
           context: {
