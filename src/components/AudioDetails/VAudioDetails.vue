@@ -69,7 +69,7 @@
               {{ sourceName }}
             </dd>
           </div>
-          <div v-if="audio.genres?.length > 0">
+          <div v-if="audio.genres && audio.genres.length > 0">
             <dt>
               {{ $t('audio-details.table.genre') }}
             </dt>
