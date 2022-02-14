@@ -1,8 +1,8 @@
 <template>
   <ul>
     <li
-      v-for="(element, index) in elements"
-      :key="index"
+      v-for="element in elements"
+      :key="element"
       class="flex items-center gap-3 mt-2"
     >
       <VIcon
