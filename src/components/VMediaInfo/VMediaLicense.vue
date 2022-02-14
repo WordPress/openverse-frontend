@@ -76,7 +76,7 @@ export default {
   },
   computed: {
     isLicense() {
-      return isLicense(this.$props.license)
+      return isLicense(this.license)
     },
     headerText() {
       const licenseOrTool = this.isLicense ? 'license' : 'tool'

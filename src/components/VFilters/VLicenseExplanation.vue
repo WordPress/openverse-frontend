@@ -61,7 +61,7 @@ export default {
      * @return {boolean} true if the license is not CC0 or PDM, false otherwise
      */
     isTechnicallyLicense() {
-      return isLicense(this.$props.license)
+      return isLicense(this.license)
     },
   },
   methods: {
