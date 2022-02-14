@@ -3,17 +3,16 @@
     <h4 class="text-base lg:text-3xl mb-6">
       {{ $t('audio-details.related-audios') }}
     </h4>
-    <template v-if="!$fetchState.error">
+    <div v-if="!$fetchState.error" class="flex flex-col gap-8 lg:gap-12">
       <VAudioTrack
         v-for="audio in audios"
         :key="audio.id"
         :audio="audio"
         layout="row"
         :size="audioTrackSize"
-        class="mb-12"
       />
       <LoadingIcon v-show="$fetchState.pending" />
-    </template>
+    </div>
     <p v-show="!!$fetchState.error">
       {{ $t('media-details.related-error') }}
     </p>
