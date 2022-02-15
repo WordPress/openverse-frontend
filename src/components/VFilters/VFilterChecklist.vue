@@ -1,5 +1,5 @@
 <template>
-  <fieldset class="mb-8" @click.stop="hideLicenseExplanationVisibility">
+  <fieldset class="mb-8">
     <legend v-if="title" class="text-sm font-semibold">
       {{ title }}
     </legend>
@@ -77,9 +77,6 @@ export default {
   },
   data() {
     return {
-      licenseExplanationVisible: false,
-      licenseExplanationCode: null,
-
       icons: { help: helpIcon, closeSmall: closeSmallIcon },
     }
   },
@@ -101,13 +98,6 @@ export default {
         code: value,
         filterType: this.filterType,
       })
-    },
-    toggleLicenseExplanationVisibility(licenseCode) {
-      this.licenseExplanationVisible = !this.licenseExplanationVisible
-      this.licenseExplanationCode = licenseCode
-    },
-    hideLicenseExplanationVisibility() {
-      this.licenseExplanationVisible = false
     },
     getFilterTypeValue(filterKey, val) {
       return this.$store.state.search.filters[filterKey].filter((item) =>
@@ -134,13 +124,6 @@ export default {
         )
       }
       return this.disabled
-    },
-    shouldRenderLicenseExplanationTooltip(licenseCode) {
-      return (
-        !this.isDisabled({ code: licenseCode }) &&
-        this.licenseExplanationVisible &&
-        this.licenseExplanationCode === licenseCode
-      )
     },
   },
 }
