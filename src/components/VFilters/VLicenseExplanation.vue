@@ -11,7 +11,12 @@
       }}</template>
     </h5>
 
-    <VLicenseElements size="small" class="my-4" :license="license" />
+    <VLicenseElements
+      v-if="license"
+      size="small"
+      class="my-4"
+      :license="license"
+    />
 
     <i18n
       :path="`filters.license-explanation.more.${

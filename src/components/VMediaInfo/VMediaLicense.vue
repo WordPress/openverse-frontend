@@ -20,7 +20,7 @@
           </a>
         </template>
       </i18n>
-      <VLicenseElements :license="license" class="md:py-4" />
+      <VLicenseElements v-if="license" :license="license" class="md:py-4" />
       <i18n
         v-if="!isLicense"
         path="media-details.reuse.license.content"
@@ -40,7 +40,7 @@
       </i18n>
     </template>
     <template v-else>
-      <VLicenseElements :license="license" class="md:py-4" />
+      <VLicenseElements v-if="license" :license="license" class="md:py-4" />
       <i18n
         path="media-details.reuse.tool.content"
         tag="span"
