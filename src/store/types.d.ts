@@ -4,7 +4,7 @@
 
 type FrontendMediaType = MediaDetail['frontendMediaType']
 export interface MediaResult<
-  T extends FrontendMediaType[] | Record<string, FrontendMediaType>
+  T extends FrontendMediaType | FrontendMediaType[] | Record<string, FrontendMediaType>
 > {
   result_count: number
   page_count: number
@@ -137,8 +137,8 @@ export interface MediaStoreResult<T extends FrontendMediaType>
 
 export interface MediaState {
   results: {
-    audio: MediaStoreResult<AudioDetail>
-    image: MediaStoreResult<ImageDetail>
+    audio: MediaStoreResult<'audio'>
+    image: MediaStoreResult<'image'>
   }
   fetchState: {
     audio: FetchState

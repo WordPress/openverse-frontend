@@ -8,8 +8,8 @@ const DEFAULT_REQUEST_TIMEOUT = 30000
  * Returns a slug with trailing slash for a given resource name.
  * For media types, converts the name into resource slug when necessary (i.e. pluralizes 'image'),
  * for other resources uses the resource name as the slug.
- * @param {import('../constants/media').MediaType|string} resource
- * @returns {*}
+ * @param {import('../constants/media').MediaType} resource
+ * @returns {string}
  */
 const getResourceSlug = (resource) => {
   const slug = { [AUDIO]: 'audio', [IMAGE]: 'images' }[resource] ?? resource
