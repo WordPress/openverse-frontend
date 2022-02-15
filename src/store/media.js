@@ -69,8 +69,8 @@ export const state = () => ({
 })
 
 export const mediaServices = {
-  [AUDIO]: MediaService(AUDIO),
-  [IMAGE]: MediaService(IMAGE),
+  [AUDIO]: new MediaService(AUDIO),
+  [IMAGE]: new MediaService(IMAGE),
 }
 
 export const createActions = (services = mediaServices) => ({

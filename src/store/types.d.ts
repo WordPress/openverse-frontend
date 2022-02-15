@@ -88,6 +88,8 @@ export type ImageDetail = {
   frontendMediaType?: 'image'
 }
 
+export const MediaDetail = AudioDetail | ImageDetail
+
 export interface FilterItem {
   code: string
   name: string
@@ -133,7 +135,7 @@ export interface MediaStoreResult {
   count: number
   page?: number
   pageCount: number
-  items: AudioDetail[] | ImageDetail[]
+  items: { [key: SupportedMediaType]: MediaDetail }
 }
 
 export interface MediaState {
