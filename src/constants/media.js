@@ -26,7 +26,7 @@ export const statuses = {
   ADDITIONAL: 'additional',
 }
 
-/** @type {Object.<MediaType, SupportStatus>} */
+/** @type {Record.<MediaType, SupportStatus>} */
 export const contentStatus = {
   [ALL_MEDIA]: statuses.SUPPORTED,
   [IMAGE]: statuses.SUPPORTED,
