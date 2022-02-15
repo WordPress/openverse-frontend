@@ -97,7 +97,7 @@ import VImageDetails from '~/components/VImageDetails/VImageDetails.vue'
 import VMediaReuse from '~/components/VMediaInfo/VMediaReuse.vue'
 import VRelatedImages from '~/components/VImageDetails/VRelatedImages.vue'
 import SketchFabViewer from '~/components/SketchFabViewer.vue'
-import { IMAGE } from '@/constants/media'
+import { IMAGE } from '~/constants/media'
 
 const VImageDetailsPage = {
   name: 'VImageDetailsPage',
