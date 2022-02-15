@@ -121,8 +121,7 @@ export interface FetchState {
 }
 
 export interface SearchState {
-  isFilterVisible: boolean
-  contentType: SupportedSearchType
+  searchType: SupportedSearchType
   query: Query
   filters: Filters
 }

@@ -46,7 +46,7 @@ export default {
     onMounted(() => {
       isMounted.value = true
     })
-    const selectContentType = async (type) => {
+    const selectSearchType = async (type) => {
       menuModalRef.value?.closeMenu()
       await content.setActiveType(type)
 
@@ -78,7 +78,7 @@ export default {
       isMounted,
 
       content,
-      selectContentType,
+      selectSearchType,
     }
   },
   render(h) {
@@ -92,7 +92,7 @@ export default {
         h(VSearchTypePopover, {
           props: { activeItem: this.content.activeType.value },
           ref: 'menuModalRef',
-          on: { select: this.selectContentType },
+          on: { select: this.selectSearchType },
         }),
       ])
     } else {
@@ -100,7 +100,7 @@ export default {
         ref: 'menuModalRef',
         props: { activeItem: this.content.activeType.value },
         on: {
-          select: this.selectContentType,
+          select: this.selectSearchType,
         },
       })
     }

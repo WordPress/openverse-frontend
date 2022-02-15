@@ -20,7 +20,7 @@
         aria-labelledby="content-switcher-heading"
       >
         <VSearchTypes
-          ref="contentTypesNode"
+          ref="searchTypesNode"
           size="small"
           :active-item="content.activeType.value"
           @select="selectItem"
@@ -72,7 +72,7 @@ export default defineComponent({
     const pages = usePages()
 
     /** @type {import('@nuxtjs/composition-api').Ref<import('vue/types/vue').Vue | null>} */
-    const contentTypesNode = ref(null)
+    const searchTypesNode = ref(null)
     const modalRef = ref(null)
     const triggerContainerRef = ref(null)
 
@@ -90,7 +90,7 @@ export default defineComponent({
     onMounted(() => (triggerRef.value = triggerContainerRef.value?.firstChild))
 
     const initialFocusElement = computed(() =>
-      contentTypesNode.value?.$el?.querySelector('[aria-checked="true"]')
+      searchTypesNode.value?.$el?.querySelector('[aria-checked="true"]')
     )
 
     watch([visibleRef], ([visible]) => {
@@ -147,7 +147,7 @@ export default defineComponent({
       visibleRef,
       selectItem,
       initialFocusElement,
-      contentTypesNode,
+      searchTypesNode,
     }
   },
 })
