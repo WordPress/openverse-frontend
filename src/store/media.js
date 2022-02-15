@@ -68,10 +68,10 @@ export const state = () => ({
   image: {},
 })
 
-export const mediaServices = {
+export const mediaServices = /** @type {const} */ ({
   [AUDIO]: new MediaService(AUDIO),
   [IMAGE]: new MediaService(IMAGE),
-}
+})
 
 export const createActions = (services = mediaServices) => ({
   /**

@@ -8,25 +8,27 @@ export const ALL_MEDIA = 'all'
 /**
  * Media types that the API supports.
  * These types also support custom filters.
- * @type {MediaType[]}
  */
-export const supportedMediaTypes = [IMAGE, AUDIO]
+export const supportedMediaTypes = /** @type {const} */ ([IMAGE, AUDIO])
 
 /**
  * The types of content that users can search. `All` is also an option here.
- * @type {MediaType[]}
  */
-export const supportedContentTypes = [ALL_MEDIA, IMAGE, AUDIO]
+export const supportedContentTypes = /** @type {const} */ ([
+  ALL_MEDIA,
+  IMAGE,
+  AUDIO,
+])
 
-/** @typedef {'supported'|'beta'|'additional'} SupportStatus */
-/** @type {{SUPPORTED: SupportStatus, ADDITIONAL: SupportStatus, BETA: SupportStatus}}*/
-export const statuses = {
+export const statuses = /** @type {const} */ ({
   SUPPORTED: 'supported',
   BETA: 'beta',
   ADDITIONAL: 'additional',
-}
+})
 
-/** @type {Object.<MediaType, SupportStatus>} */
+/** @typedef {typeof statuses[keyof typeof statuses]} SupportStatus */
+
+/** @type {Record<MediaType, SupportStatus>} */
 export const contentStatus = {
   [ALL_MEDIA]: statuses.SUPPORTED,
   [IMAGE]: statuses.SUPPORTED,
