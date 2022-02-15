@@ -9,9 +9,11 @@
 
       <i18n path="meta-search-page.intro" tag="p" class="mb-4">
         <template #link>
-          <NuxtLink aria-label="sources" :to="localePath('/sources')">{{
-            $t('meta-search-page.link')
-          }}</NuxtLink>
+          <NuxtLink
+            :aria-label="$t('meta-search-page.sources')"
+            :to="localePath('/sources')"
+            >{{ $t('meta-search-page.link') }}</NuxtLink
+          >
         </template>
       </i18n>
       <p>{{ $t('meta-search-page.license') }}</p>
@@ -85,7 +87,7 @@
         <template #issue>
           <VLink
             aria-label="issue"
-            href="https://github.com/creativecommons/cccatalog/issues/new?assignees=&labels=awaiting+triage%2C+ticket+work+required%2C+providers&template=new-source-suggestion.md&title=%5BSource+Suggestion%5D+Insert+source+name+here"
+            href="https://github.com/WordPress/openverse-catalog/issues/new?assignees=&labels=%F0%9F%9A%A6+status%3A+awaiting+triage%2C%F0%9F%A7%B9+status%3A+ticket+work+required%2C%E2%98%81%EF%B8%8F+provider%3A+any&template=new_source_suggestion.yml&title=%3CSource+name+here%3E"
             >{{ $t('meta-search-page.new.issue') }}</VLink
           >
         </template>

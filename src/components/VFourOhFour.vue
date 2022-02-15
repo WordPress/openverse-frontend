@@ -1,6 +1,6 @@
 <template>
   <main class="bg-yellow h-screen relative page-404 overflow-x-hidden">
-    <NuxtLink to="/" class="relative z-10 text-dark-charcoal">
+    <NuxtLink :to="localePath('/')" class="relative z-10 text-dark-charcoal">
       <span class="sr-only">{{ $t('404.link-title') }}</span>
       <span
         class="flex flex-row pt-6 lg:pt-8 ms-6 lg:ms-10 h-auto w-30 text-dark-charcoal"
@@ -25,7 +25,7 @@
           <template #link>
             <NuxtLink
               class="underline text-current hover:text-current active:text-current"
-              to="/"
+              :to="localePath('/')"
             >
               {{ $t('404.link-title') }}
             </NuxtLink>
