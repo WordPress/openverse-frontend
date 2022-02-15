@@ -1,5 +1,5 @@
 <template>
-  <a target="_blank" rel="noopener noreferrer"><slot /></a>
+  <a target="_blank" rel="noopener noreferrer" v-on="$listeners"><slot /></a>
 </template>
 
 <script>
