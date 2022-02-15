@@ -6,7 +6,7 @@
     :size="size"
   >
     <template #default="{ buttonProps }">
-      <VLink
+      <a
         v-bind="buttonProps"
         class="whitespace-nowrap"
         :href="selectedFormat.download_url"
@@ -19,7 +19,7 @@
         <span class="ms-1 font-normal">{{
           getFormatSize(selectedFormat.extension_name)
         }}</span>
-      </VLink>
+      </a>
     </template>
 
     <template
