@@ -35,7 +35,7 @@
       @click.native="$emit('click')"
     >
       <div
-        class="flex-grow whitespace-nowrap my-0 rounded-sm px-2 group-focus-visible:ring group-focus-visible:ring-pink md:group-focus-visible:ring-tx"
+        class="flex-grow whitespace-nowrap my-0 rounded-sm px-2 group-focus-visible:ring group-focus-visible:ring-pink"
         :class="[
           $style[`${contextProps.direction}-content`],
           $style[`${contextProps.size}-content`],
