@@ -3,18 +3,19 @@
  */
 
 type FrontendMediaType = MediaDetail['frontendMediaType']
-export interface MediaResult<T extends FrontendMediaType[] | Record<string, FrontendMediaType>> {
+export interface MediaResult<
+  T extends FrontendMediaType[] | Record<string, FrontendMediaType>
+> {
   result_count: number
   page_count: number
   page_size: number
-  results:
-    T extends FrontendMediaType
-      ? DetailFromMediaType<T>
-      : T extends Array<infer P>
-          ? DetailFromMediaType<P>[]
-          : T extends Record<infer K, infer P>
-            ? Record<K, DetailFromMediaType<P>>
-            : never
+  results: T extends FrontendMediaType
+    ? DetailFromMediaType<T>
+    : T extends Array<infer P>
+    ? DetailFromMediaType<P>[]
+    : T extends Record<infer K, infer P>
+    ? Record<K, DetailFromMediaType<P>>
+    : never
 }
 
 export type Query = {
@@ -87,7 +88,8 @@ export interface ImageDetail extends BaseMediaDetail<'image'> {
 
 export type MediaDetail = ImageDetail | AudioDetail
 
-export type DetailFromMediaType<T extends MediaDetail['frontendMediaType']> = T extends 'image' ? ImageDetail : T extends 'audio' ? AudioDetail : never
+export type DetailFromMediaType<T extends MediaDetail['frontendMediaType']> =
+  T extends 'image' ? ImageDetail : T extends 'audio' ? AudioDetail : never
 
 export interface FilterItem {
   code: string
@@ -130,7 +132,8 @@ export interface ActiveMediaState {
   status: 'ejected' | 'playing' | 'paused' // 'ejected' means player is closed
 }
 
-export interface MediaStoreResult<T extends FrontendMediaType> extends MediaResult<Record<MediaDetail['id'], T>> {}
+export interface MediaStoreResult<T extends FrontendMediaType>
+  extends MediaResult<Record<MediaDetail['id'], T>> {}
 
 export interface MediaState {
   results: {
