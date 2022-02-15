@@ -4,7 +4,10 @@
 
 type FrontendMediaType = MediaDetail['frontendMediaType']
 export interface MediaResult<
-  T extends FrontendMediaType | FrontendMediaType[] | Record<string, FrontendMediaType>
+  T extends
+    | FrontendMediaType
+    | FrontendMediaType[]
+    | Record<string, FrontendMediaType>
 > {
   result_count: number
   page_count: number
