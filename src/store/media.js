@@ -1,4 +1,3 @@
-import findIndex from 'lodash.findindex'
 import prepareSearchQueryParams from '~/utils/prepare-search-query-params'
 import decodeMediaData from '~/utils/decode-media-data'
 import {
@@ -163,15 +162,15 @@ export const createActions = (services) => ({
    */
   async [FETCH_MEDIA_ITEM]({ commit, dispatch, state, rootState }, params) {
     const { mediaType, id } = params
+    const resultRank = Object.keys(state.results[mediaType].items).findIndex(
+      (item) => item === id
+    )
     await dispatch(
       `${USAGE_DATA}/${SEND_RESULT_CLICKED_EVENT}`,
       {
         query: rootState.search.query.q,
         resultUuid: id,
-        resultRank: findIndex(
-          state.results[mediaType].items,
-          (item) => item.id === id
-        ),
+        resultRank,
         sessionId: rootState.user.usageSessionId,
       },
       { root: true }

@@ -212,10 +212,18 @@ describe('Search Store', () => {
       state = {
         results: {
           image: {
-            items: [{ id: 'foo' }, { id: 'bar' }, { id: 'zeta' }],
+            items: {
+              foo: { id: 'foo' },
+              bar: { id: 'bar' },
+              zeta: { id: 'zeta' },
+            },
           },
           audio: {
-            items: [{ id: 'foo' }, { id: 'bar' }, { id: 'zeta' }],
+            items: {
+              foo: { id: 'foo' },
+              bar: { id: 'bar' },
+              zeta: { id: 'zeta' },
+            },
           },
         },
       }
