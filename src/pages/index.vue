@@ -66,12 +66,10 @@
           class="hidden lg:block text-sr mt-4"
         >
           <template #license>
-            <a
+            <VLink
               href="https://creativecommons.org/licenses/"
-              target="blank"
-              rel="noopener noreferrer"
               class="text-dark-charcoal hover:text-dark-charcoal underline"
-              >{{ $t('hero.disclaimer.license') }}</a
+              >{{ $t('hero.disclaimer.license') }}</VLink
             >
           </template>
         </i18n>
@@ -118,12 +116,10 @@
       class="lg:hidden text-sr p-6 mt-auto"
     >
       <template #license>
-        <a
+        <VLink
           href="https://creativecommons.org/licenses/"
-          target="blank"
-          rel="noopener noreferrer"
           class="text-dark-charcoal hover:text-dark-charcoal underline"
-          >{{ $t('hero.disclaimer.license') }}</a
+          >{{ $t('hero.disclaimer.license') }}</VLink
         >
       </template>
     </i18n>
@@ -147,6 +143,7 @@ import VContentSwitcherPopover from '~/components/VContentSwitcher/VContentSwitc
 import VContentTypeButton from '~/components/VContentSwitcher/VContentTypeButton.vue'
 import VSearchBar from '~/components/VHeader/VSearchBar/VSearchBar.vue'
 import VLogoButton from '~/components/VHeader/VLogoButton.vue'
+import VLink from '~/components/VLink.vue'
 
 const HomePage = {
   name: 'home-page',
@@ -157,6 +154,7 @@ const HomePage = {
     VContentSwitcherPopover,
     VContentTypeButton,
     VSearchBar,
+    VLink,
     VLogoButton,
   },
   head: {

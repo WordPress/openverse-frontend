@@ -42,13 +42,11 @@
           tag="p"
         >
           <template #title>
-            <a
+            <VLink
               :href="media.foreign_landing_url"
-              target="_blank"
-              rel="noopener"
               @click="onSourceLinkClicked"
               @keyup.enter="onSourceLinkClicked"
-              >{{ media.title }}</a
+              >{{ media.title }}</VLink
             ></template
           >
           <template #creator>
@@ -58,14 +56,12 @@
               tag="span"
             >
               <template #creator-name>
-                <a
+                <VLink
                   v-if="media.creator_url"
                   :href="media.creator_url"
-                  target="_blank"
-                  rel="noopener"
                   @click="onCreatorLinkClicked"
                   @keyup.enter="onCreatorLinkClicked"
-                  >{{ media.creator }}</a
+                  >{{ media.creator }}</VLink
                 >
                 <span v-else>{{ media.creator }}</span>
               </template>
@@ -79,12 +75,9 @@
             }}
           </template>
           <template #license>
-            <a
-              class="uppercase"
-              :href="licenseUrl"
-              target="_blank"
-              rel="noopener"
-              >{{ fullLicenseName }}</a
+            <VLink class="uppercase" :href="licenseUrl">{{
+              fullLicenseName
+            }}</VLink
             >{{ period }}
           </template>
         </i18n>
@@ -156,7 +149,6 @@ import {
   ref,
   useContext,
 } from '@nuxtjs/composition-api'
-import CopyButton from '~/components/CopyButton.vue'
 import { COPY_ATTRIBUTION } from '~/constants/action-types'
 import { ATTRIBUTION, USAGE_DATA } from '~/constants/store-modules'
 import {
@@ -166,9 +158,12 @@ import {
 import getAttributionHtml from '~/utils/attribution-html'
 import { isPublicDomain } from '~/utils/license'
 
+import VLink from '~/components/VLink.vue'
+import CopyButton from '~/components/CopyButton.vue'
+
 const VCopyLicense = defineComponent({
   name: 'VCopyLicense',
-  components: { CopyButton },
+  components: { CopyButton, VLink },
   props: {
     media: {
       type: Object,

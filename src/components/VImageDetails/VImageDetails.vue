@@ -18,13 +18,9 @@
       <div>
         <dt>{{ $t('image-details.information.source') }}</dt>
         <dd>
-          <a
-            :href="image.foreign_landing_url"
-            target="blank"
-            rel="noopener noreferrer"
-            class="text-pink"
-            >{{ sourceName }}</a
-          >
+          <VLink :href="image.foreign_landing_url" class="text-pink">{{
+            sourceName
+          }}</VLink>
         </dd>
       </div>
       <div>

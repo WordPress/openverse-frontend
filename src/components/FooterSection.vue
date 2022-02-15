@@ -16,12 +16,9 @@
           <div class="attribution mt-8">
             <i18n path="footer.caption.label" tag="p" class="caption">
               <template #noted>
-                <a
-                  href="https://creativecommons.org/policies#license"
-                  target="_blank"
-                  rel="noopener"
-                  >{{ $t('footer.caption.noted') }}</a
-                >
+                <VLink href="https://creativecommons.org/policies#license">{{
+                  $t('footer.caption.noted')
+                }}</VLink>
               </template>
               <template #attribution>
                 <a
