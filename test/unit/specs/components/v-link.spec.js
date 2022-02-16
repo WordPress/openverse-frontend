@@ -9,14 +9,14 @@ const nuxtLinkStub = {
   props: ['to'],
 }
 const nuxtContextMock = {
-  $nuxt: { context: { app: { localePath: (v) => v } } },
+  $nuxt: { context: { app: { localePath: jest.fn() } } },
 }
 describe('VLink', () => {
   afterEach(() => {
     warn.mockReset()
   })
 
-  test.each`
+  it.each`
     href                        | target      | rel
     ${'/about'}                 | ${null}     | ${null}
     ${'http://localhost:8443/'} | ${'_blank'} | ${'noopener noreferrer'}

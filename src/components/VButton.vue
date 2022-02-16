@@ -52,10 +52,10 @@ const VButton = defineComponent({
      * Passed to `component :is` to allow the button to *appear* as a button but
      * work like another element (like an `anchor`). May only be either `button` or `a`.
      *
-     * We do not support other elements because their use cases are marginal and they
+     * We do not support other elements because their use cases are marginal, and they
      * add complexity that we can avoid otherwise.
      *
-     * We also don't allow any old Vue component because Vue does not have ref-forwarding
+     * We also don't allow any old Vue component because Vue does not have ref-forwarding,
      * so we wouldn't be able to detect the type of the DOM node that is ultimately rendered
      * by any Vue component passed.
      *
