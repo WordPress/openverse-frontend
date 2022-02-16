@@ -1,5 +1,7 @@
 <template>
-  <button
+  <VButton
+    variant="plain"
+    size="disabled"
     class="icon-button flex flex-shrink-0 items-center justify-center border-1.5 focus:border-pink focus:outline-none focus:shadow-ring active:shadow-ring"
     :class="[...buttonSizeClasses]"
     :type="type"
@@ -10,7 +12,7 @@
       :class="[...iconSizeClasses]"
       v-bind="iconProps"
     />
-  </button>
+  </VButton>
 </template>
 
 <script>

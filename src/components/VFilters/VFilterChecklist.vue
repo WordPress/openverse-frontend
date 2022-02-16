@@ -38,8 +38,8 @@
         <template #default="{ close }">
           <div class="relative">
             <VIconButton
-              class="absolute top-0 end-0 border-none"
-              size="search-medium"
+              class="absolute top-2 end-2 border-none"
+              size="small"
               :icon-props="{ iconPath: icons.closeSmall }"
               @click="close"
             />
