@@ -42,6 +42,8 @@ In addition to testing on multiple devices, we also strive to test on almost all
 
 Please review the [WordPress Accessibility Handbook](https://make.wordpress.org/accessibility/handbook/).
 
+The [WAI-ARIA](https://www.w3.org/TR/wai-aria/) spec. This document describes, in detail, all of the documented types of interactions that happen on most websites and the accessibility properties of them. Many of them also include examples.
+
 Gutenberg also has an excellent [Accessibility Testing Guide](https://github.com/WordPress/gutenberg/blob/086b77ed409a70a6c6a6e74dee704851eff812f2/docs/contributors/accessibility-testing.md) with specific instructions for setting up screen readers for testing with.
 
 ### General recommendations
@@ -80,4 +82,4 @@ The Openverse frontend is a Nuxt SSR application. This means the initial Vue pag
 
 ## Conclusion
 
-Please note that these are non-expert and non-exhaustive recommendations. Spend time reading the WAI-ARIA spec and other web accessibility materials. Even just knowing about specific roles and interactions that exist and are meant to be developed in consistent ways is a good first step to learning what to look out for when testing.
+Please note that these are non-expert and non-exhaustive recommendations. Spend time reading the [WAI-ARIA spec](https://www.w3.org/TR/wai-aria/) and other web accessibility materials. Even just knowing about specific roles and interactions that exist and are meant to be developed in consistent ways is a good first step to learning what to look out for when testing.
