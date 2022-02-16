@@ -30,7 +30,7 @@ import {
   toRefs,
   computed,
 } from '@nuxtjs/composition-api'
-import { warn } from '~/utils/warn'
+import VLink from '~/components/VLink.vue'
 
 /**
  * A button component that behaves just like a regular HTML `button` element
@@ -46,6 +46,7 @@ import { warn } from '~/utils/warn'
  */
 const VButton = defineComponent({
   name: 'VButton',
+  components: { VLink },
   props: {
     /**
      * Passed to `component :is` to allow the button to *appear* as a button but
@@ -189,17 +190,6 @@ const VButton = defineComponent({
         if (['VLink'].includes(as)) {
           typeRef.value = undefined
           supportsDisabledAttributeRef.value = false
-          if (as === 'a') {
-            // No need to declare `href` as an explicit prop as Vue preserves
-            // the `attrs` object reference between renders and updates the properties
-            // meaning we'll always have the latest values for the properties on the
-            // attrs object
-            if (!attrs.href || attrs.href === '#') {
-              warn(
-                'Do not use VLink elements without a valid `href` attribute. Use a `button` instead.'
-              )
-            }
-          }
         }
       },
       { immediate: true }
