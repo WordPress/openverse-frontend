@@ -16,17 +16,17 @@ You can also access it from other devices in your same network (like a mobile ph
 
 To do this, follow these instructions for getting your computer's local network IP address:
 
-* Windows: https://support.microsoft.com/en-us/windows/find-your-ip-address-in-windows-f21a9bbc-c582-55cd-35e0-73431160a1b9
-* macOS:
-    1. Open the Network Preferences app
-    2. Select WiFi from the list of network devices
-    3. Your local IP address will be listed below the "Deactivate Wi-Fi" button
-* Linux:
-    1. Follow the instructions for your distro. Most likely the `ip` command will work. Run `ip address show` in your terminal and find your wireless card in the list (probably the second entry). Look for the `inet` line and copy the first 4 groups of numbers for your IP before the `/24`. The line will probably look like this:
-    ```
-    inet 192.168.86.234/24 brd 192.168.86.255 scope global dynamic noprefixroute <wireless card name>
-    ```
-    In this case my local IP was 192.168.86.234
+- Windows: https://support.microsoft.com/en-us/windows/find-your-ip-address-in-windows-f21a9bbc-c582-55cd-35e0-73431160a1b9
+- macOS:
+  1. Open the Network Preferences app
+  2. Select WiFi from the list of network devices
+  3. Your local IP address will be listed below the "Deactivate Wi-Fi" button
+- Linux:
+  1. Follow the instructions for your distro. Most likely the `ip` command will work. Run `ip address show` in your terminal and find your wireless card in the list (probably the second entry). Look for the `inet` line and copy the first 4 groups of numbers for your IP before the `/24`. The line will probably look like this:
+  ```
+  inet 192.168.86.234/24 brd 192.168.86.255 scope global dynamic noprefixroute <wireless card name>
+  ```
+  In this case my local IP was 192.168.86.234
 
 Once you have identified your local IP address, you can access the website running on your computer by visiting `http://<local IP>:8443` replacing `<local IP>` (including the brackets) with the value you found using the instructions above in your mobile devices browser.
 
@@ -43,7 +43,6 @@ In addition to testing on multiple devices, we also strive to test on almost all
 Please review the [WordPress Accessibility Handbook](https://make.wordpress.org/accessibility/handbook/).
 
 Gutenberg also has an excellent [Accessibility Testing Guide](https://github.com/WordPress/gutenberg/blob/086b77ed409a70a6c6a6e74dee704851eff812f2/docs/contributors/accessibility-testing.md) with specific instructions for setting up screen readers for testing with.
-
 
 ### General recommendations
 
