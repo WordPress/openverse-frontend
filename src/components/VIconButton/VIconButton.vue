@@ -19,10 +19,11 @@
 import { computed } from '@nuxtjs/composition-api'
 
 import VIcon from '~/components/VIcon/VIcon.vue'
+import VButton from '~/components/VButton.vue'
 
 export default {
   name: 'VIconButton',
-  components: { VIcon },
+  components: { VIcon, VButton },
   props: {
     /**
      * the size of the button; The size affects both the size of the button
