@@ -1,6 +1,7 @@
 import findIndex from 'lodash.findindex'
 import clonedeep from 'lodash.clonedeep'
 
+import { deepFreeze } from '~/utils/deep-freeze'
 import {
   filtersToQueryData,
   queryStringToSearchType,
@@ -83,7 +84,7 @@ export const mediaSpecificFilters = {
 }
 
 /** @type {import('./types').Filters} */
-export const filterData = {
+export const filterData = deepFreeze({
   licenses: createInitialFilters('licenses', [
     'cc0',
     'pdm',
@@ -130,7 +131,7 @@ export const filterData = {
   imageProviders: [],
   searchBy: createInitialFilters('search-by', ['creator']),
   mature: false,
-}
+})
 
 /**
  * Returns true if any of the filters' checked property is true
@@ -321,10 +322,7 @@ const actions = {
    * @param {string} path
    * @param {Object} query
    */
-  async [SET_SEARCH_STATE_FROM_URL](
-    { commit, dispatch, state },
-    { path, query }
-  ) {
+  async [SET_SEARCH_STATE_FROM_URL]({ commit, dispatch }, { path, query }) {
     const searchType = queryStringToSearchType(path)
     const queryParams = {}
     if (query.q) {
@@ -333,7 +331,7 @@ const actions = {
     const newFilterData = queryToFilterData({
       query,
       searchType,
-      defaultFilters: state.filters,
+      defaultFilters: clonedeep(filterData),
     })
     commit(REPLACE_FILTERS, { newFilterData })
     commit(SET_SEARCH_TYPE, { searchType })
