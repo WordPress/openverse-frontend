@@ -331,7 +331,7 @@ const actions = {
     const newFilterData = queryToFilterData({
       query,
       searchType,
-      defaultFilters: clonedeep(filterData),
+      defaultFilters: filterData,
     })
     commit(REPLACE_FILTERS, { newFilterData })
     commit(SET_SEARCH_TYPE, { searchType })
