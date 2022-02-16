@@ -13,8 +13,8 @@
       />
 
       <div class="px-6 lg:ps-30 lg:pe-0 xl:px-40 mx-auto w-full lg:w-auto">
-        <NuxtLink
-          :to="localePath('/')"
+        <VLink
+          href="/"
           class="relative z-10 hidden lg:block -left-[6.25rem] rtl:-right-[6.25rem]"
         >
           <h1>
@@ -28,7 +28,7 @@
               <OpenverseBrand class="w-[315px] h-[60px]" />
             </span>
           </h1>
-        </NuxtLink>
+        </VLink>
         <h2 class="text-4xl lg:text-6xl mt-auto lg:mt-6">
           {{ $t('hero.subtitle') }}
         </h2>
@@ -92,8 +92,8 @@
             mode="out-in"
             appear
           >
-            <NuxtLink
-              :to="image.url"
+            <VLink
+              href="image.url"
               class="homepage-image block aspect-square h-30 w-30 lg:h-auto lg:w-auto lg:m-[2vh] rounded-full"
               :style="{ '--transition-index': `${index * 0.05}s` }"
             >
@@ -103,7 +103,7 @@
                 :alt="image.title"
                 :title="image.title"
               />
-            </NuxtLink>
+            </VLink>
           </Transition>
         </ClientOnly>
       </div>

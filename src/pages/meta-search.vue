@@ -9,11 +9,9 @@
 
       <i18n path="meta-search-page.intro" tag="p" class="mb-4">
         <template #link>
-          <NuxtLink
-            :aria-label="$t('meta-search-page.sources')"
-            :to="localePath('/sources')"
-            >{{ $t('meta-search-page.link') }}</NuxtLink
-          >
+          <VLink :aria-label="$t('meta-search-page.sources')" href="/sources">{{
+            $t('meta-search-page.link')
+          }}</VLink>
         </template>
       </i18n>
       <p>{{ $t('meta-search-page.license') }}</p>
@@ -106,10 +104,10 @@
       </p>
       <i18n path="meta-search-page.why.feedback-suggestions" tag="p">
         <template #feedback>
-          <NuxtLink
+          <VLink
             :aria-label="$t('meta-search-page.why.aria-label')"
-            :to="localePath('/feedback')"
-            >{{ $t('meta-search-page.why.feedback-link') }}</NuxtLink
+            href="/feedback"
+            >{{ $t('meta-search-page.why.feedback-link') }}</VLink
           >
         </template>
       </i18n>

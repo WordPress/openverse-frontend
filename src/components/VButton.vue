@@ -61,11 +61,11 @@ const VButton = defineComponent({
      * @default 'button'
      */
     as: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<'a' | 'button'>} */ (
+      type: /** @type {import('@nuxtjs/composition-api').PropType<'VLink' | 'button'>} */ (
         String
       ),
       default: 'button',
-      validate: (v) => ['a', 'button', 'NuxtLink'].includes(v),
+      validate: (v) => ['VLink', 'button'].includes(v),
     },
     /**
      * The variant of the button.
@@ -186,7 +186,7 @@ const VButton = defineComponent({
     watch(
       propsRef.as,
       (as) => {
-        if (['a', 'NuxtLink'].includes(as)) {
+        if (['VLink'].includes(as)) {
           typeRef.value = undefined
           supportsDisabledAttributeRef.value = false
           if (as === 'a') {
@@ -196,12 +196,8 @@ const VButton = defineComponent({
             // attrs object
             if (!attrs.href || attrs.href === '#') {
               warn(
-                'Do not use anchor elements without a valid `href` attribute. Use a `button` instead.'
+                'Do not use VLink elements without a valid `href` attribute. Use a `button` instead.'
               )
-            }
-          } else {
-            if (!attrs.to) {
-              warn('NuxtLink needs a `to` attribute')
             }
           }
         }

@@ -8,7 +8,7 @@
           class="column"
         >
           <!-- eslint-disable @intlify/vue-i18n/no-raw-text -->
-          <NuxtLink class="logo" to="/">Openverse</NuxtLink>
+          <VLink class="logo" href="/">Openverse</VLink>
           <!-- eslint-enable @intlify/vue-i18n/no-raw-text -->
           <LocaleSelector />
         </section>
