@@ -82,7 +82,7 @@
 <script>
 import axios from 'axios'
 import { mapActions, mapState } from 'vuex'
-import { FETCH_IMAGE } from '~/constants/action-types'
+import { FETCH_MEDIA_ITEM } from '~/constants/action-types'
 import { MEDIA, USAGE_DATA } from '~/constants/store-modules'
 import {
   DETAIL_PAGE_EVENTS,
@@ -96,6 +96,8 @@ import VImageDetails from '~/components/VImageDetails/VImageDetails.vue'
 import VMediaReuse from '~/components/VMediaInfo/VMediaReuse.vue'
 import VRelatedImages from '~/components/VImageDetails/VRelatedImages.vue'
 import SketchFabViewer from '~/components/SketchFabViewer.vue'
+import { IMAGE } from '~/constants/media'
+
 const VImageDetailsPage = {
   name: 'VImageDetailsPage',
   components: {
@@ -135,7 +137,7 @@ const VImageDetailsPage = {
   },
   async fetch() {
     try {
-      await this.fetchImage({ id: this.imageId })
+      await this.fetchItem({ id: this.imageId, mediaType: IMAGE })
     } catch (err) {
       const errorMessage = this.$t('error.image-not-found', {
         id: this.imageId,
@@ -157,7 +159,7 @@ const VImageDetailsPage = {
     })
   },
   methods: {
-    ...mapActions(MEDIA, { fetchImage: FETCH_IMAGE }),
+    ...mapActions(MEDIA, { fetchItem: FETCH_MEDIA_ITEM }),
     ...mapActions(USAGE_DATA, { sendEvent: SEND_DETAIL_PAGE_EVENT }),
     onImageLoaded(event) {
       this.imageWidth = this.image.width || event.target.naturalWidth
