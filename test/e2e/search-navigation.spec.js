@@ -32,4 +32,17 @@ test.describe('search history navigation', () => {
     expect(page.url()).not.toContain('license_type=modification')
     expect(await page.isChecked('#modification')).toBe(false)
   })
+
+  test('should update search results when back button updates search type', async ({
+    page,
+  }) => {
+    await page.goto('/search?q=galah')
+    await page.click('text=See all images')
+    await page.waitForSelector('text=See all images', { state: 'hidden' })
+    expect(page.url()).toContain('/search/image')
+    await page.goBack()
+    await page.waitForSelector('text=See all images')
+    expect(await page.locator('text=See all images').isVisible()).toBe(true)
+    expect(await page.locator('text=See all audio').isVisible()).toBe(true)
+  })
 })
