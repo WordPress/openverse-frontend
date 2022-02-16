@@ -24,15 +24,16 @@
       <!-- License explanation -->
       <VPopover v-if="filterType === 'licenses'">
         <template #trigger="{ a11yProps }">
-          <button
+          <VButton
             v-bind="a11yProps"
-            :ref="`${item.code}licenseIcon`"
+            variant="plain"
+            size="disabled"
             :aria-label="$t('browse-page.aria.license-explanation')"
             class="text-dark-charcoal-70"
             type="button"
           >
             <VIcon :icon-path="icons.help" />
-          </button>
+          </VButton>
         </template>
         <template #default="{ close }">
           <div class="relative">
