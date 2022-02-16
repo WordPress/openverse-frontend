@@ -76,7 +76,7 @@ Buttons, for example, should have appropriate labels. If the visible text of the
 
 ### Server vs client side render
 
-The Openverse frontend is a Nuxt SSR application. This means the initial Vue page rendering when you make a request is processed by a server and then delivered to you to be "hydrated" with the current state of the page. The implcation of this is that there are two ways for _every single page_ to be rendered and we should test with that in mind. Please make sure that you are testing client side navigation as well as SSR. To test SSR for a page, simply reload the page: it will be rendered in SSR and then delivered to your browser. To test client side rendering for a page, navigate to that page from another page without reloading the page in between. For example, to test the search route client side, you can execute a search from the homepage and it will redirect you client-side to the search page.
+The Openverse frontend is a Nuxt SSR application. This means the initial Vue page rendering when you make a request is processed by a server and then delivered to you to be "hydrated" with the current state of the page. The implication of this is that there are two ways for _every single page_ to be rendered and we should test with that in mind. Please make sure that you are testing client side navigation as well as SSR. To test SSR for a page, simply reload the page: it will be rendered in SSR and then delivered to your browser. To test client side rendering for a page, navigate to that page from another page without reloading the page in between. For example, to test the search route client side, you can execute a search from the homepage and it will redirect you client-side to the search page.
 
 ## Conclusion
 
