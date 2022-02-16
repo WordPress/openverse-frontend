@@ -1,11 +1,9 @@
 const { test, expect } = require('@playwright/test')
+const { mockProviderApis } = require('./utils')
 
 test.beforeEach(async ({ context, page }) => {
-  // Block any image request for each test in this file.
-  await context.route(/\.(png|jpeg|jpg|svg)$/, (route) => route.abort())
-
+  await mockProviderApis(context)
   // Test in a custom image detail page, it should apply the same for any image.
-  // TODO: Make these tests independent of the live API.
   await page.goto('image/e9d97a98-621b-4ec2-bf70-f47a74380452')
 })
 
