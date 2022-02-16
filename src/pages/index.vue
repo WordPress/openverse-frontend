@@ -93,7 +93,7 @@
             appear
           >
             <VLink
-              href="image.url"
+              :href="image.url"
               class="homepage-image block aspect-square h-30 w-30 lg:h-auto lg:w-auto lg:m-[2vh] rounded-full"
               :style="{ '--transition-index': `${index * 0.05}s` }"
             >
