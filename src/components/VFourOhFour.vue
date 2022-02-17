@@ -30,6 +30,7 @@
               to="/"
               >Openverse</NuxtLink
             >
+            <!-- eslint-enable @intlify/vue-i18n/no-raw-text -->
           </template>
         </i18n>
       </p>

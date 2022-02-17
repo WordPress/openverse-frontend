@@ -26,6 +26,7 @@
               <a href="https://github.com/wordpress/openverse-frontend/"
                 >Openverse</a
               >
+              <!-- eslint-enable @intlify/vue-i18n/no-raw-text -->
             </template>
             <template #api>
               <a href="https://github.com/wordpress/openverse-api/">{{
@@ -49,6 +50,7 @@
             </template>
           </i18n>
 
+          <!-- eslint-disable @intlify/vue-i18n/no-raw-text -->
           <i18n path="about.transfer.content" tag="p">
             <template #creative-commons>
               <a
@@ -62,6 +64,7 @@
               >
             </template>
           </i18n>
+          <!-- eslint-enable @intlify/vue-i18n/no-raw-text -->
 
           <i18n path="about.declaration.content" tag="p">
             <template #terms>
