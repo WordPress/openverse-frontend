@@ -9,9 +9,12 @@
     @click="$emit('click')"
   >
     <VIcon :icon-path="icon" />
-    <span v-show="showLabel" :class="{ 'ms-2 md:w-20 text-left': showLabel }">{{
-      buttonLabel
-    }}</span>
+    <span
+      v-show="showLabel"
+      class="hidden xs:block"
+      :class="{ 'ms-2 md:w-20 text-left': showLabel }"
+      >{{ buttonLabel }}</span
+    >
     <VIcon
       class="hidden md:block text-dark-charcoal-40 md:ms-2"
       :icon-path="caretDownIcon"
@@ -40,7 +43,12 @@ export default {
     activeItem: {
       type: String,
       default: ALL_MEDIA,
-      validator: (val) => [ALL_MEDIA, IMAGE, AUDIO].includes(val),
+      validator: (v) => [ALL_MEDIA, IMAGE, AUDIO].includes(v),
+    },
+    type: {
+      type: String,
+      default: 'header',
+      validator: (v) => ['header', 'searchbar'].includes(v),
     },
   },
   setup(props) {
@@ -52,13 +60,28 @@ export default {
     const isIconButton = computed(
       () => isHeaderScrolled?.value && !isMinScreenMd.value
     )
-    const sizeClasses = computed(() =>
-      isIconButton.value ? 'w-10 h-10' : 'ps-2 pe-3'
-    )
+    const sizeClasses = computed(() => {
+      if (props.type === 'searchbar') {
+        return 'h-12 px-2'
+      } else if (isIconButton.value) {
+        return 'w-10 h-10'
+      } else {
+        /**
+          When there is a caret down icon (on 'md' screens), paddings are balanced, 
+          without it, paddings need to be adjusted.
+          */
+        return 'ps-2 pe-3 md:px-2'
+      }
+    })
+
     const buttonVariant = computed(() => {
-      return isMinScreenMd.value && !isHeaderScrolled?.value
-        ? 'tertiary'
-        : 'action-menu'
+      if (props.type === 'searchbar') {
+        return 'action-menu'
+      } else {
+        return isMinScreenMd.value && !isHeaderScrolled?.value
+          ? 'tertiary'
+          : 'action-menu'
+      }
     })
     const buttonLabel = computed(() => {
       const labelKey = {

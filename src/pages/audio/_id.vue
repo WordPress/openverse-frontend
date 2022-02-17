@@ -1,27 +1,28 @@
 <template>
-  <div :aria-label="$t('photo-details.aria.main')" class="audio-page">
-    <VAudioTrack :audio="audio" class="main-track" />
-    <VMediaReuse
-      data-testid="audio-attribution"
-      :media="audio"
-      class="my-16 px-4 md:px-0"
-    />
-    <VAudioDetails
-      data-testid="audio-info"
-      :audio="audio"
-      class="my-16 px-4 lg:px-0"
-    />
-    <VRelatedAudio
-      v-if="audio.id"
-      class="my-16 px-4 lg:px-0"
-      :audio-id="audio.id"
-    />
-  </div>
+  <main class="relative">
+    <div class="w-full p-2">
+      <VBackToSearchResultsLink />
+    </div>
+    <VAudioTrack layout="full" :audio="audio" class="main-track" />
+    <div
+      class="mt-10 lg:mt-16 flex flex-col gap-10 lg:gap-16 px-4 lg:px-0 lg:max-w-5xl mx-auto"
+    >
+      <VMediaReuse
+        data-testid="audio-attribution"
+        :media="audio"
+        :license-url="licenseUrl"
+        :full-license-name="fullLicenseName"
+        :attribution-html="attributionHtml()"
+      />
+      <VAudioDetails data-testid="audio-info" :audio="audio" />
+      <VRelatedAudio v-if="audio.id" :audio-id="audio.id" />
+    </div>
+  </main>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-import { FETCH_AUDIO } from '~/constants/action-types'
+import { FETCH_MEDIA_ITEM } from '~/constants/action-types'
 import iframeHeight from '~/mixins/iframe-height'
 import { AUDIO } from '~/constants/media'
 import getAttributionHtml from '~/utils/attribution-html'
@@ -34,8 +35,7 @@ const AudioDetailPage = {
   data() {
     return {
       thumbnailURL: null,
-      breadCrumbURL: '',
-      shouldShowBreadcrumb: false,
+      showBackToSearchLink: false,
       id: null,
     }
   },
@@ -55,7 +55,10 @@ const AudioDetailPage = {
   },
   async asyncData({ env, store, route, error, app }) {
     try {
-      await store.dispatch(`${MEDIA}/${FETCH_AUDIO}`, { id: route.params.id })
+      await store.dispatch(`${MEDIA}/${FETCH_MEDIA_ITEM}`, {
+        id: route.params.id,
+        mediaType: AUDIO,
+      })
       return {
         thumbnailURL: `${env.apiUrl}audio/${route.params.id}/thumb/`,
         id: route.params.id,
@@ -76,8 +79,7 @@ const AudioDetailPage = {
         from.name === _this.localeRoute({ path: '/search/' }).name ||
         from.name === _this.localeRoute({ path: '/search/audio' }).name
       ) {
-        _this.shouldShowBreadcrumb = true
-        _this.breadCrumbURL = from.fullPath
+        _this.showBackToSearchLink = true
       }
     })
   },
@@ -90,7 +92,14 @@ const AudioDetailPage = {
   head() {
     const title = this.audio.title
     return {
-      title: `${title} - ${this.$t('hero.brand')}`,
+      title: `${title} | ${this.$t('hero.brand')}`,
+      meta: [
+        {
+          hid: 'robots',
+          name: 'robots',
+          content: 'noindex',
+        },
+      ],
     }
   },
 }
