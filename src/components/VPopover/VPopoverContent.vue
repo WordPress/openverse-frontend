@@ -1,7 +1,7 @@
 <template>
   <div
-    v-if="visible"
-    class="w-0"
+    v-show="visible"
+    class="w-0 h-0"
     :aria-hidden="!visible"
     v-on="$listeners"
     @keydown="onKeyDown"
