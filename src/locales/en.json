@@ -87,18 +87,6 @@
     "declaration": {
       "content": "Please note that Openverse does not verify whether the images are properly CC licensed, or whether the attribution and other licensing information we have aggregated is accurate or complete. Please independently verify the licensing status and attribution information before reusing the content. For more details, read the {terms}.",
       "terms": "Openverse Terms of Use"
-    },
-    "aria": {
-      "common-crawl": "Common Crawl",
-      "meta": "meta search",
-      "projects": "Openverse projects",
-      "community": "Make WordPress community",
-      "terms": "Openverse terms of use",
-      "sources-table": "sources table",
-      "creative-commons": "Creative Commons",
-      "wordpress": "WordPress",
-      "api": "Openverse API",
-      "catalog": "Openverse Catalog"
     }
   },
   "sources": {
