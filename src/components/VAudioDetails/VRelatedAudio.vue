@@ -20,13 +20,13 @@
 </template>
 
 <script>
-import { computed, defineComponent, ref } from '@nuxtjs/composition-api'
+import { computed, ref } from '@nuxtjs/composition-api'
 import { AUDIO } from '~/constants/media'
 
 import useRelated from '~/composables/use-related'
 import { isMinScreen } from '@/composables/use-media-query'
 
-export default defineComponent({
+export default {
   name: 'VRelatedAudio',
   props: {
     audioId: {
@@ -62,5 +62,5 @@ export default defineComponent({
     const { media: audios } = useRelated(relatedOptions)
     return { audioTrackSize, audios }
   },
-})
+}
 </script>
