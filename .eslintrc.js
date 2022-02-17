@@ -5,7 +5,7 @@ module.exports = {
     node: true,
   },
   parserOptions: {
-    parser: '@babel/eslint-parser',
+    parser: '@typescript-eslint/parser',
   },
   extends: [
     'eslint:recommended',
@@ -17,7 +17,7 @@ module.exports = {
     'plugin:@intlify/vue-i18n/recommended',
   ],
   // required to lint *.vue files
-  plugins: ['vue', 'vuejs-accessibility', 'unicorn'],
+  plugins: ['vue', 'vuejs-accessibility', 'unicorn', '@typescript-eslint'],
   // add your custom rules here
   rules: {
     semi: [2, 'never'],

@@ -1,4 +1,4 @@
-dist/
+node_modules
 # eslint by default ignores hidden folders so we need to "un-ignore" it
 # https://github.com/eslint/eslint/issues/8429#issuecomment-292789858
 !.storybook
