@@ -38,6 +38,7 @@
         <template #default="{ close }">
           <div class="relative">
             <VIconButton
+              :aria-label="$t('modal.close')"
               class="absolute top-2 end-2 border-none"
               size="small"
               :icon-props="{ iconPath: icons.closeSmall }"
