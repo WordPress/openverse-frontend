@@ -97,7 +97,8 @@ export default {
   props: ['audio'],
   setup(props) {
     const store = useStore()
-    const audioProviders = computed(() => store[PROVIDER].audioProviders)
+
+    const audioProviders = computed(() => store.state[PROVIDER].audioProviders)
     const providerName = computed(() =>
       getProviderName(audioProviders.value, props.audio.provider)
     )
