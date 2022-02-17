@@ -3,7 +3,7 @@
     <div class="container">
       <div>
         <h1 class="text-5xl mb-10">
-          {{ $t('about.title') }}
+          {{ $t('about.title', { brand: 'Openverse' }) }}
         </h1>
         <div class="content">
           <p>{{ $t('about.description.content') }}</p>
@@ -27,10 +27,9 @@
               >
             </template>
             <template #search>
-              <a
-                :aria-label="$t('about.aria.search')"
-                href="https://github.com/wordpress/openverse-frontend/"
-                >{{ $t('about.planning.search') }}</a
+              <!-- eslint-disable @intlify/vue-i18n/no-raw-text -->
+              <a href="https://github.com/wordpress/openverse-frontend/"
+                >Openverse</a
               >
             </template>
             <template #api>
@@ -100,7 +99,7 @@ const AboutPage = {
   name: 'about-page',
   head() {
     return {
-      title: `${this.$t('about.title')} | ${this.$t('hero.brand')}`,
+      title: `${this.$t('about.title')} | Openverse`,
     }
   },
 }

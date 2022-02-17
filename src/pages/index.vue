@@ -18,7 +18,8 @@
           class="relative z-10 hidden lg:block -left-[6.25rem] rtl:-right-[6.25rem]"
         >
           <h1>
-            <span class="sr-only">{{ $t('hero.brand') }}</span>
+            <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
+            <span class="sr-only">Openverse</span>
             <!-- width and height chosen w.r.t. viewBox "0 0 280 42" -->
             <span
               aria-hidden="true"

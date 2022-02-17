@@ -2,11 +2,9 @@
   "404": {
     "title": "The content you’re looking for seems to have disappeared.",
     "main": "Go to {link} or search for something similar from the field below.",
-    "link-title": "Openverse",
     "search-placeholder": "Search for content to reuse"
   },
   "hero": {
-    "brand": "Openverse",
     "subtitle": "Browse through over 600 million items to reuse",
     "search": {
       "placeholder": "Search for content"
@@ -65,7 +63,7 @@
     }
   },
   "about": {
-    "title": "About Openverse",
+    "title": "About {brand}",
     "description": {
       "content": "Openverse is a tool that allows openly licensed and public domain works to be discovered and used by everyone."
     },
@@ -76,7 +74,6 @@
     "planning": {
       "content": "Currently Openverse only searches images, with search for audio and video provided through {meta}. But we plan to add additional media types such as open texts and audio, with the ultimate goal of providing access to all 1.4 billion CC licensed and public domain works on the web. All of our code is open source ({search}, {api}, {catalog}) and we {community}. You can see what {working}.",
       "meta": "Meta Search",
-      "search": "Openverse",
       "api": "Openverse API",
       "catalog": "Openverse Catalog",
       "community": "welcome community contribution",
@@ -100,7 +97,6 @@
       "sources-table": "sources table",
       "creative-commons": "Creative Commons",
       "wordpress": "WordPress",
-      "search": "Openverse",
       "api": "Openverse API",
       "catalog": "Openverse Catalog"
     }
