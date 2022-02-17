@@ -86,30 +86,23 @@
 <script>
 import getProviderName from '~/utils/get-provider-name'
 import { PROVIDER } from '~/constants/store-modules'
+import { mapState } from 'vuex'
 
 import VAudioThumbnail from '~/components/VAudioThumbnail/VAudioThumbnail.vue'
 import VMediaTag from '~/components/VMediaTag/VMediaTag.vue'
-import { computed, useStore } from '@nuxtjs/composition-api'
 
 export default {
   name: 'VAudioDetails',
   components: { VAudioThumbnail, VMediaTag },
   props: ['audio'],
-  setup(props) {
-    const store = useStore()
-
-    const audioProviders = computed(() => store.state[PROVIDER].audioProviders)
-    const providerName = computed(() =>
-      getProviderName(audioProviders.value, props.audio.provider)
-    )
-
-    const sourceName = computed(() =>
-      getProviderName(audioProviders.value, props.audio.source)
-    )
-    return {
-      providerName,
-      sourceName,
-    }
+  computed: {
+    ...mapState(PROVIDER, ['audioProviders']),
+    providerName() {
+      return getProviderName(this.audioProviders, this.$props.audio.provider)
+    },
+    sourceName() {
+      return getProviderName(this.audioProviders, this.$props.audio.source)
+    },
   },
 }
 </script>
