@@ -14,9 +14,8 @@
           </p>
           <i18n path="sources.cc-content.provider" tag="p" class="my-4">
             <template #flickr>
-              <a aria-label="flickr" href="https://www.flickr.com/">{{
-                $t('sources.cc-content.flickr')
-              }}</a>
+              <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
+              <a aria-label="flickr" href="https://www.flickr.com/">Flickr</a>
             </template>
             <template #smithsonian>
               <a aria-label="smithsonian" href="https://www.si.edu/">{{
@@ -26,9 +25,10 @@
           </i18n>
           <i18n path="sources.cc-content.europeana" tag="p" class="my-4">
             <template #link>
-              <a aria-label="europeana" href="https://www.europeana.eu/en">{{
-                $t('sources.cc-content.europeana-link')
-              }}</a>
+              <!-- eslint-disable @intlify/vue-i18n/no-raw-text -->
+              <a aria-label="europeana" href="https://www.europeana.eu/en"
+                >Europeana</a
+              ><!-- eslint-enable @intlify/vue-i18n/no-raw-text -->
             </template>
             <template #link-api>
               <a

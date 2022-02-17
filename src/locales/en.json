@@ -100,10 +100,8 @@
       "content": "There is openly licensed content hosted on millions of domains across the breadth of the internet. Our team systematically identifies providers hosting CC-licensed content. If it’s a good fit, we index that content and make it discoverable through Openverse.",
       "provider": "Some providers have multiple different groupings of content within them. {flickr} has sources ranging from NASA to personal photography. The {smithsonian} comprises a dozen, diverse collections. Wikimedia Commons runs the gamut in terms of content, and is used by several Galleries, Libraries, Archives, and Museums highlighting some or all of their digitized collections.",
       "europeana": "Openverse is especially grateful for the work of {link}, an organization that works to digitize and make discoverable cultural heritage works across Europe. Openverse is able to index hundreds of valuable sources, through a single integration with the {link-api}.",
-      "europeana-link": "Europeana",
       "europeana-api": "Europeana API",
-      "smithsonian": "Smithsonian Institute",
-      "flickr": "Flickr"
+      "smithsonian": "Smithsonian Institute"
     },
     "new-content": {
       "next": "How do we decide what sources to add next?",
