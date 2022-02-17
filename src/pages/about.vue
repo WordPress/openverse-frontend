@@ -10,9 +10,8 @@
 
           <i18n path="about.collection.content" tag="p">
             <template #common-crawl>
-              <a href="http://commoncrawl.org/">{{
-                $t('about.collection.common-crawl')
-              }}</a>
+              <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
+              <a href="http://commoncrawl.org/">Common Crawl</a>
             </template>
           </i18n>
 
@@ -54,13 +53,12 @@
             <template #creative-commons>
               <a
                 href="https://creativecommons.org/2021/05/03/cc-search-to-join-wordpress/"
-                >{{ $t('about.transfer.creative-commons') }}</a
+                >Creative Commons</a
               >
             </template>
             <template #wordpress>
-              <a
-                href="https://ma.tt/2021/04/cc-search-to-join-wordpress-org/"
-                >{{ $t('about.transfer.wordpress') }}</a
+              <a href="https://ma.tt/2021/04/cc-search-to-join-wordpress-org/"
+                >WordPress</a
               >
             </template>
           </i18n>
