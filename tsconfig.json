@@ -46,6 +46,6 @@
     "src/store/user.js",
     "src/utils/key-codes.js",
     "src/utils/local.js",
-    "src/utils/warn.js",
+    "src/utils/warn.js"
   ]
 }
