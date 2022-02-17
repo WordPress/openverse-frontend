@@ -27,7 +27,7 @@ export default defineComponent({
   },
   setup(props) {
     const { app } = useContext()
-    const isInternal = computed(() => props.href?.startsWith('/'))
+    const isInternal = computed(() => props.href.startsWith('/'))
     const linkComponent = computed(() => (isInternal.value ? 'NuxtLink' : 'a'))
 
     let linkProperties = computed(() =>
