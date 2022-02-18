@@ -8,7 +8,7 @@
  */
 const talkback = require('talkback')
 const path = require('path')
-const host = 'https://api.openverse.engineering/v1'
+const host = 'https://api.openverse.engineering'
 
 function nameGenerator(tapeNumber, tape) {
   return path.join(`${tape.req.method}`, `response-${tapeNumber}`)
