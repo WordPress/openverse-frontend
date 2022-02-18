@@ -66,6 +66,7 @@
           tag="p"
           class="hidden lg:block text-sr mt-4"
         >
+          <template #openverse>Openverse</template>
           <template #license>
             <a
               href="https://creativecommons.org/licenses/"

@@ -10,7 +10,7 @@
       "placeholder": "Search for content"
     },
     "disclaimer": {
-      "content": "All Openverse content is under a {license} or is in the public domain.",
+      "content": "All {openverse} content is under a {license} or is in the public domain.",
       "license": "Creative Commons license"
     },
     "license-filter": {
