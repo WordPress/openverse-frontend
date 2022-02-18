@@ -450,7 +450,7 @@
       "short": "Report",
       "long": "Report this content",
       "form": {
-        "disclaimer": "For security purposes, Openverse collects and retains anonymized IP addresses of those who complete and submit this form.",
+        "disclaimer": "For security purposes, {openverse} collects and retains anonymized IP addresses of those who complete and submit this form.",
         "question": "What is the reason?",
         "dmca": {
           "option": "Infringes copyright",
@@ -517,7 +517,7 @@
     "information": "Audio information"
   },
   "meta-search": {
-    "caption": "Openverse does not currently index the sources listed above, but through this interface is offering convenient access to search services provided by other independent organizations. Openverse has no control over the results that are returned. Do not assume that the results displayed in this search portal are under a CC license. Always verify that the work is actually under a CC license by following the link. If you are in doubt, you should contact the copyright holder directly, or try to contact the site where you found the content.",
+    "caption": "{openverse} does not currently index the sources listed above, but through this interface is offering convenient access to search services provided by other independent organizations. {openverse} has no control over the results that are returned. Do not assume that the results displayed in this search portal are under a CC license. Always verify that the work is actually under a CC license by following the link. If you are in doubt, you should contact the copyright holder directly, or try to contact the site where you found the content.",
     "card": {
       "search": "Not finding what you're looking for? Try additional sources",
       "caption": "Click on a source below to directly search other collections of CC-licensed images.{break}Please note that Use filters are not supported for Open Clip Art Library or Nappy.",
@@ -528,7 +528,7 @@
       }
     },
     "form": {
-      "unsupported-title": "Openverse does not yet support built-in {type} search.",
+      "unsupported-title": "{openverse} does not yet support built-in {type} search.",
       "supported-title": "Not finding what you're looking for? Try additional {type} sources.",
       "no-results-title": "No {type} results for \"{query}\".",
       "caption": "Click on a source below to directly search other collections of CC-licensed {type}.{break}Please note that Use filters are not supported for {filter}."
