@@ -23,6 +23,8 @@ export default defineComponent({
   props: {
     href: {
       type: String,
+      validator: (v) =>
+        (typeof v === 'string' && v.length > 0) || typeof v === 'undefined',
     },
   },
   setup(props) {
