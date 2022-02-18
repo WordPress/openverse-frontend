@@ -603,7 +603,7 @@
     }
   },
   "migration-notice": {
-    "intro": "CC Search is now called Openverse and joins WordPress as an open source project.",
+    "intro": "CC Search is now called {openverse} and joins {wordpress} as an open source project.",
     "more": "{read-more} about this announcement.",
     "read": "Read more"
   },

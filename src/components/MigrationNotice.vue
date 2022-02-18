@@ -1,6 +1,11 @@
 <template>
   <NoticeBar>
-    {{ $t('migration-notice.intro') }}
+    {{
+      $t('migration-notice.intro', {
+        openverse: 'Openverse',
+        wordpress: 'WordPress',
+      })
+    }}
     <i18n tag="span" path="migration-notice.more">
       <template #read-more>
         <a
