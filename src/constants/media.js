@@ -2,6 +2,7 @@ export const AUDIO = 'audio'
 export const IMAGE = 'image'
 export const VIDEO = 'video'
 export const ALL_MEDIA = 'all'
+export const THREE_D_MODEL = '3d model'
 
 /** @typedef {typeof AUDIO | typeof IMAGE | typeof VIDEO | typeof ALL_MEDIA} MediaType */
 
