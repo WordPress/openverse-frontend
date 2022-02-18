@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-02-18T20:39:42+00:00\n"
+"POT-Creation-Date: 2022-02-18T20:49:35+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -283,7 +283,7 @@ msgid "###openverse### does not yet support built-in ###type### search."
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/meta-search.vue:40
+#: src/pages/meta-search.vue:46
 msgctxt "meta-search.form.supported-title"
 msgid "Not finding what you're looking for? Try additional ###type### sources."
 msgstr ""
@@ -1450,138 +1450,138 @@ msgctxt "meta-search-page.intro"
 msgid "###openverse### is built on top of a catalog that indexes CC-licensed and public domain content from selected sources. Learn more about our ###link###."
 msgstr ""
 
-#: src/pages/meta-search.vue:13
+#: src/pages/meta-search.vue:15
 msgctxt "meta-search-page.link"
 msgid "sources"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/meta-search.vue:17
+#: src/pages/meta-search.vue:19
 msgctxt "meta-search-page.license"
 msgid "The internet is a big place! There are plenty of search portals and collections, hosting CC-licensed and public domain content, which we aren’t able to index or surface results from within the ###openverse### interface. These are important sources of CC-licensed and public domain content, and we want to make sure that you are able to find the best openly licensed materials possible, regardless of where they are located."
 msgstr ""
 
-#: src/pages/meta-search.vue:19
+#: src/pages/meta-search.vue:21
 msgctxt "meta-search-page.content"
 msgid "What content types can I search for using the Meta Search feature?"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/meta-search.vue:21
+#: src/pages/meta-search.vue:24
 msgctxt "meta-search-page.content-types"
 msgid "Meta Search on ###openverse### currently supports image, audio, and video search on external sites."
 msgstr ""
 
-#: src/pages/meta-search.vue:49
+#: src/pages/meta-search.vue:55
 msgctxt "meta-search-page.use"
 msgid " Use "
 msgstr ""
 
-#: src/pages/meta-search.vue:99
+#: src/pages/meta-search.vue:109
 msgctxt "meta-search-page.why.title"
 msgid "Why did you build this?"
 msgstr ""
 
-#: src/pages/meta-search.vue:101
+#: src/pages/meta-search.vue:111
 msgctxt "meta-search-page.why.content"
 msgid "For many years, CC has offered its users a dedicated search portal for searching platforms that have CC licensing filters built in. These platforms included Europeana, Google Images, Flickr, Jamendo, Open Clip Art Library, SpinXpress, Wikimedia Commons, YouTube, ccMixter, and SoundCloud. The search experience looked like this:"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/meta-search.vue:103
+#: src/pages/meta-search.vue:113
 msgctxt "meta-search-page.why.new"
 msgid "For users of the legacy CC Meta Search site, the Meta Search feature on ###openverse### will look familiar. The goal was to ensure that the functionality is not lost, but is updated and embedded within our new search engine for openly licensed content. In addition, the Meta Search feature builds on this functionality, allowing us to quickly add new sources to Meta Search as we discover them, and support new content types in the future, as we expand."
 msgstr ""
 
-#: src/pages/meta-search.vue:108
+#: src/pages/meta-search.vue:118
 msgctxt "meta-search-page.why.aria-label"
 msgid "feedback"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/meta-search.vue:105
+#: src/pages/meta-search.vue:115
 msgctxt "meta-search-page.why.feedback-suggestions"
 msgid "We hope you enjoy, and if you have suggestions for improvement, leave us ###feedback###."
 msgstr ""
 
-#: src/pages/meta-search.vue:110
+#: src/pages/meta-search.vue:120
 msgctxt "meta-search-page.why.feedback-link"
 msgid "feedback"
 msgstr ""
 
-#: src/pages/meta-search.vue:82
+#: src/pages/meta-search.vue:92
 msgctxt "meta-search-page.new.title"
 msgid "Can I suggest new sources for Meta Search?"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/meta-search.vue:84
+#: src/pages/meta-search.vue:94
 msgctxt "meta-search-page.new.content"
 msgid "Yes, please! Create an ###issue### in our GitHub repository or send us an ###email### and tell us about the new sources you’d like to see included."
 msgstr ""
 
-#: src/pages/meta-search.vue:89
+#: src/pages/meta-search.vue:99
 msgctxt "meta-search-page.new.issue"
 msgid "issue"
 msgstr ""
 
-#: src/pages/meta-search.vue:94
+#: src/pages/meta-search.vue:104
 msgctxt "meta-search-page.new.email"
 msgid "email"
 msgstr ""
 
-#: src/pages/meta-search.vue:66
+#: src/pages/meta-search.vue:72
 msgctxt "meta-search-page.audio-video.title"
 msgid "How does the Meta Search feature work for non-indexed media types?"
 msgstr ""
 
-#: src/pages/meta-search.vue:76
+#: src/pages/meta-search.vue:86
 msgctxt "meta-search-page.audio-video.demo-label"
 msgid "Layout of Meta Search for non-indexed media type, like video"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/meta-search.vue:68
+#: src/pages/meta-search.vue:76
 msgctxt "meta-search-page.audio-video.content"
 msgid "###openverse### does not yet support built-in search for some media types, such as videos. For these media types, click on the appropriate tab and you’ll see sources where you can find CC-licensed content."
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/meta-search.vue:69
+#: src/pages/meta-search.vue:79
 msgctxt "meta-search-page.audio-video.filter"
 msgid "The Filters bar on the left includes the ###use### filter, which may be supported by some meta search sources. Apply these before clicking on the button for the external source you’d like to search."
 msgstr ""
 
-#: src/pages/meta-search.vue:24
+#: src/pages/meta-search.vue:28
 msgctxt "meta-search-page.images.title"
 msgid "How does the Meta Search feature work for indexed media types?"
 msgstr ""
 
-#: src/pages/meta-search.vue:59
+#: src/pages/meta-search.vue:65
 msgctxt "meta-search-page.images.demo-label"
 msgid "Layout of Meta Search for indexed media type, like images"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/meta-search.vue:26
+#: src/pages/meta-search.vue:31
 msgctxt "meta-search-page.images.content"
 msgid "###openverse### supports built-in search for some media types, such as images. When you enter a query on the ###openverse### homepage, a page of results will be displayed. Scrolling to the bottom of the page, you have two choices:"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/meta-search.vue:30
+#: src/pages/meta-search.vue:36
 msgctxt "meta-search-page.images.continue"
 msgid "###load-more###, and continue browsing in ###openverse###."
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/meta-search.vue:37
+#: src/pages/meta-search.vue:43
 msgctxt "meta-search-page.images.not-finding"
 msgid "See the section “###not-finding###” below the results."
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/meta-search.vue:47
+#: src/pages/meta-search.vue:53
 msgctxt "meta-search-page.images.info"
 msgid "The “###not-finding###” section lists other sources of CC-licensed and public domain content. Your search query will be preloaded, and if supported, you can select a ###use### filter to proactively filter your results. Click on the button for the external source you’d like to search, and your results will open in a new tab."
 msgstr ""
