@@ -133,6 +133,20 @@ export const filterData = deepFreeze({
   mature: false,
 })
 
+const getBaseFiltersWithProviders = (state) => {
+  const resetProviders = (mediaType) => {
+    return state.filters[`${mediaType}Providers`].map((provider) => ({
+      ...provider,
+      checked: false,
+    }))
+  }
+  return {
+    ...clonedeep(filterData),
+    audioProviders: resetProviders(AUDIO),
+    imageProviders: resetProviders(IMAGE),
+  }
+}
+
 /**
  * Returns true if any of the filters' checked property is true
  * except for `mature` filter, as it is not displayed as a tag
@@ -300,19 +314,9 @@ const actions = {
    * @param {import('vuex').ActionContext} context
    */
   async [CLEAR_FILTERS]({ commit, dispatch, state }) {
-    const initialFilters = clonedeep(filterData)
-    const resetProviders = (mediaType) => {
-      return state.filters[`${mediaType}Providers`].map((provider) => ({
-        ...provider,
-        checked: false,
-      }))
-    }
-    const newFilterData = {
-      ...initialFilters,
-      audioProviders: resetProviders(AUDIO),
-      imageProviders: resetProviders(IMAGE),
-    }
-    commit(REPLACE_FILTERS, { newFilterData })
+    commit(REPLACE_FILTERS, {
+      newFilterData: getBaseFiltersWithProviders(state),
+    })
     await dispatch(UPDATE_QUERY_FROM_FILTERS, { q: '' })
   },
 
@@ -322,7 +326,10 @@ const actions = {
    * @param {string} path
    * @param {Object} query
    */
-  async [SET_SEARCH_STATE_FROM_URL]({ commit, dispatch }, { path, query }) {
+  async [SET_SEARCH_STATE_FROM_URL](
+    { commit, dispatch, state },
+    { path, query }
+  ) {
     const searchType = queryStringToSearchType(path)
     const queryParams = {}
     if (query.q) {
@@ -331,7 +338,7 @@ const actions = {
     const newFilterData = queryToFilterData({
       query,
       searchType,
-      defaultFilters: filterData,
+      defaultFilters: getBaseFiltersWithProviders(state),
     })
     commit(REPLACE_FILTERS, { newFilterData })
     commit(SET_SEARCH_TYPE, { searchType })
