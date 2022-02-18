@@ -12,7 +12,7 @@
   "author": "sebworks",
   "private": true,
   "scripts": {
-    "dev": "pnpm install && pnpm i18n:create-locales-list && pnpm i18n:update-locales && cross-env nuxt --hostname 0",
+    "dev": "pnpm install && pnpm i18n:create-locales-list && pnpm i18n:update-locales && cross-env nuxt --hostname 0.0.0.0",
     "build": "pnpm i18n:get-translations && nuxt build",
     "generate": "nuxt generate",
     "start": "nuxt start",
@@ -23,7 +23,7 @@
     "test:unit": "jest --collectCoverage=false",
     "test:e2e": "playwright test",
     "test:e2e-ci": "start-server-and-test run-server http://localhost:8443 test:e2e",
-    "test:e2e-dev": "concurrently \"cross-env API_URL=http://localhost:3000 node proxy.js\" \" pnpm run test:e2e\" -k",
+    "test:e2e-dev": "pnpx playwright install && concurrently \"cross-env API_URL=http://localhost:3000 node proxy.js\" \" pnpm run test:e2e\" -k",
     "run-server": "cross-env nuxt build && pnpm start",
     "e2e:ci": "API_URL=http://localhost:3000 node proxy.js & TALKBACK_PID=$! && sleep 1 && pnpm run test:e2e-ci ; kill -15 $TALKBACK_PID",
     "generate-e2e-tests": "playwright codegen localhost:8443/",
