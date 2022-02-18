@@ -13,7 +13,7 @@
         class="lg:col-span-2"
       />
     </div>
-    <GridSkeleton
+    <VGridSkeleton
       v-if="resultsLoading && allMedia.length === 0"
       is-for-tab="all"
     />
@@ -56,12 +56,20 @@ import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
 import VImageCell from '~/components/VAllResultsGrid/VImageCell.vue'
 import VAudioCell from '~/components/VAllResultsGrid/VAudioCell.vue'
 import VLoadMore from '~/components/VLoadMore.vue'
+import VContentLink from '~/components/VContentLink/VContentLink.vue'
+import VGridSkeleton from '~/components/VSkeleton/VGridSkeleton.vue'
 
 import srand from '~/utils/srand'
 
 export default defineComponent({
   name: 'VAllResultsGrid',
-  components: { VImageCell, VAudioCell, VLoadMore },
+  components: {
+    VImageCell,
+    VAudioCell,
+    VLoadMore,
+    VGridSkeleton,
+    VContentLink,
+  },
   props: ['canLoadMore'],
   setup(_, { emit }) {
     const { i18n, store } = useContext()

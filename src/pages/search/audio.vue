@@ -1,6 +1,6 @@
 <template>
   <section>
-    <GridSkeleton
+    <VGridSkeleton
       v-if="results.length === 0 && !fetchState.isFinished"
       is-for-tab="audio"
     />
@@ -33,6 +33,7 @@ import { useLoadMore } from '~/composables/use-load-more'
 
 import VAudioTrack from '~/components/VAudioTrack/VAudioTrack.vue'
 import VLoadMore from '~/components/VLoadMore.vue'
+import VGridSkeleton from '~/components/VSkeleton/VGridSkeleton.vue'
 
 import { propTypes } from './search-page.types'
 import { isMinScreen } from '~/composables/use-media-query'
@@ -41,6 +42,7 @@ const AudioSearch = defineComponent({
   name: 'AudioSearch',
   components: {
     VAudioTrack,
+    VGridSkeleton,
     VLoadMore,
   },
   props: propTypes,
