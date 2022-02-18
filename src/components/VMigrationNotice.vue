@@ -18,7 +18,7 @@
 import NoticeBar from '~/components/NoticeBar/NoticeBar.vue'
 
 export default {
-  name: 'MigrationNotice',
+  name: 'VMigrationNotice',
   components: { NoticeBar },
 }
 </script>
