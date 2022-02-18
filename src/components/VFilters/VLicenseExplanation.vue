@@ -13,7 +13,6 @@
 
     <VLicenseElements
       v-if="license"
-      aria-hidden="true"
       size="small"
       class="my-4"
       :license="license"

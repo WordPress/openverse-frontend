@@ -10,7 +10,9 @@
         :size="isSmall ? 5 : 6"
         :icon-path="icons[element]"
       />
-      <span class="sr-only">{{ element.toUpperCase() }}</span>
+      <span v-if="elements.length > 1" class="sr-only">{{
+        element.toUpperCase()
+      }}</span>
       <p :class="{ 'text-sm': isSmall }">
         {{ $t(`browse-page.license-description.${element}`) }}
       </p>
