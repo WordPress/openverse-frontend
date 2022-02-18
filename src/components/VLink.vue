@@ -6,7 +6,9 @@
 
 <script>
 /**
- * This is a wrapper component for all links. All VLinks have to have a valid `href` prop.
+ * This is a wrapper component for all links. If a link is dynamically generated and doesn't have
+ * an `href` prop (as the links for detail pages when the image detail hasn't loaded yet),
+ * it is rendered as a `span`.
  * Links with `href` starting with `/` are treated as internal links.
  *
  * Internal links use `NuxtLink` component with `to` attribute set to `localePath(href)`
@@ -21,19 +23,26 @@ export default defineComponent({
   props: {
     href: {
       type: String,
-      required: true,
-      validator: (v) => !['', '#'].includes(v),
     },
   },
   setup(props) {
     const { app } = useContext()
-    const isInternal = computed(() => props.href.startsWith('/'))
-    const linkComponent = computed(() => (isInternal.value ? 'NuxtLink' : 'a'))
+    const hasHref = computed(
+      () => typeof props.href === 'string' && !['', '#'].includes(props.href)
+    )
+    const isInternal = computed(
+      () => hasHref.value && props.href.startsWith('/')
+    )
+    const linkComponent = computed(() =>
+      hasHref.value ? (isInternal.value ? 'NuxtLink' : 'a') : 'span'
+    )
 
     let linkProperties = computed(() =>
-      isInternal.value
-        ? { to: app.localePath(props.href) ?? props.href }
-        : { ...defaultProps, href: props.href }
+      hasHref.value
+        ? isInternal.value
+          ? { to: app.localePath(props.href) ?? props.href }
+          : { ...defaultProps, href: props.href }
+        : null
     )
 
     return { linkProperties, linkComponent }

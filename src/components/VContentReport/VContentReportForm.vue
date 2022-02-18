@@ -77,7 +77,7 @@
           <VButton
             v-if="selectedReason === reasons.DMCA"
             key="dmca"
-            as="a"
+            as="VLink"
             variant="secondary"
             :href="DMCA_FORM_URL"
             target="_blank"

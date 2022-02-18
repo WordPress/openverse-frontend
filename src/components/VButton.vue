@@ -31,6 +31,7 @@ import {
   computed,
 } from '@nuxtjs/composition-api'
 import VLink from '~/components/VLink.vue'
+import { warn } from '@/utils/warn'
 
 /**
  * A button component that behaves just like a regular HTML `button` element
@@ -190,6 +191,10 @@ const VButton = defineComponent({
         if (['VLink'].includes(as)) {
           typeRef.value = undefined
           supportsDisabledAttributeRef.value = false
+        } else if (['a', 'NuxtLink'].includes(as)) {
+          warn(
+            `Please use \`VLink\` with an \`href\` prop instead of ${as} for the button component`
+          )
         }
       },
       { immediate: true }
