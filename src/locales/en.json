@@ -152,7 +152,7 @@
     }
   },
   "search-guide": {
-    "title": "Openverse Syntax Guide",
+    "title": "{openverse} Syntax Guide",
     "intro": "When you search, you can enter special symbols or words to your search term to make your search results more precise.",
     "exact": {
       "title": "Search for an exact match",
@@ -223,11 +223,7 @@
   },
   "feedback": {
     "title": "Feedback",
-    "description": {
-      "content": "Thank you for using Openverse! We welcome your ideas for improving the tool below. To provide regular feedback, join the {openverse} channel in the {making-wordpress} Slack workspace.",
-      "openverse": "#openverse",
-      "making-wordpress": "Making WordPress"
-    },
+    "intro": "Thank you for using {openverse}! We welcome your ideas for improving the tool below. To provide regular feedback, join the {slack} channel in the {making-wordpress} Slack workspace.",
     "improve": "Help us Improve",
     "report": "Report a Bug",
     "loading": "Loading...",

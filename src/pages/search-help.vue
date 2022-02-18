@@ -3,7 +3,7 @@
     <div class="container">
       <div class="mb-10">
         <h1 class="text-5xl mb-10">
-          {{ $t('search-guide.title') }}
+          {{ $t('search-guide.title', { openverse: 'Openverse' }) }}
         </h1>
         <p>
           {{ $t('search-guide.intro') }}

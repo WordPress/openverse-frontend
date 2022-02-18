@@ -5,20 +5,22 @@
         <h1 id="feedback" class="text-5xl mb-10">
           {{ $t('feedback.title') }}
         </h1>
-        <i18n path="feedback.description.content" tag="p" class="mb-6">
-          <template #openverse>
+        <i18n path="feedback.intro" tag="p" class="mb-6">
+          <!-- eslint-disable @intlify/vue-i18n/no-raw-text -->
+          <template #openverse>Openverse</template>
+          <template #slack>
             <a
               href="https://wordpress.slack.com/messages/openverse/"
               target="_blank"
-            >
-              {{ $t('feedback.description.openverse') }}</a
+              >#openverse</a
             >
           </template>
           <template #making-wordpress>
-            <a href="https://make.wordpress.org/chat/" target="_blank">
-              {{ $t('feedback.description.making-wordpress') }}</a
+            <a href="https://make.wordpress.org/chat/" target="_blank"
+              >Making WordPress</a
             >
           </template>
+          <!-- eslint-enable @intlify/vue-i18n/no-raw-text -->
         </i18n>
         <section class="tabs mt-6">
           <div role="tablist" :aria-label="$t('feedback.title')">

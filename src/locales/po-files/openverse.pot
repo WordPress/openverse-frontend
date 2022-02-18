@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-02-18T20:49:35+00:00\n"
+"POT-Creation-Date: 2022-02-18T21:09:00+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1142,6 +1142,12 @@ msgctxt "feedback.title"
 msgid "Feedback"
 msgstr ""
 
+#. Do not translate words between ### ###.
+#: src/pages/feedback.vue:8
+msgctxt "feedback.intro"
+msgid "Thank you for using ###openverse###! We welcome your ideas for improving the tool below. To provide regular feedback, join the ###slack### channel in the ###making-wordpress### Slack workspace."
+msgstr ""
+
 msgctxt "feedback.improve"
 msgid "Help us Improve"
 msgstr ""
@@ -1150,7 +1156,7 @@ msgctxt "feedback.report"
 msgid "Report a Bug"
 msgstr ""
 
-#: src/pages/feedback.vue:54
+#: src/pages/feedback.vue:56
 msgctxt "feedback.loading"
 msgid "Loading..."
 msgstr ""
@@ -1165,22 +1171,6 @@ msgstr ""
 
 msgctxt "feedback.aria.report"
 msgid "report a bug form"
-msgstr ""
-
-#. Do not translate words between ### ###.
-#: src/pages/feedback.vue:8
-msgctxt "feedback.description.content"
-msgid "Thank you for using ###openverse###! We welcome your ideas for improving the tool below. To provide regular feedback, join the ###openverse### channel in the ###making-wordpress### Slack workspace."
-msgstr ""
-
-#: src/pages/feedback.vue:14
-msgctxt "feedback.description.openverse"
-msgid "#openverse"
-msgstr ""
-
-#: src/pages/feedback.vue:19
-msgctxt "feedback.description.making-wordpress"
-msgid "Making WordPress"
 msgstr ""
 
 #. Do not translate words between ### ###.
