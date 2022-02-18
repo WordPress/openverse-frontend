@@ -3,10 +3,12 @@
     <div class="container">
       <div>
         <h1 class="text-5xl mb-10">
-          {{ $t('about.title', { brand: 'Openverse' }) }}
+          {{ $t('about.title', { openverse: 'Openverse' }) }}
         </h1>
         <div class="content">
-          <p>{{ $t('about.description.content') }}</p>
+          <p>
+            {{ $t('about.description.content', { openverse: 'Openverse' }) }}
+          </p>
 
           <i18n path="about.collection.content" tag="p">
             <template #common-crawl>
@@ -16,6 +18,8 @@
           </i18n>
 
           <i18n path="about.planning.content" tag="p">
+            <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
+            <template #openverse>Openverse</template>
             <template #meta>
               <NuxtLink :to="localePath('/meta-search')">{{
                 $t('about.planning.meta')
@@ -30,12 +34,12 @@
             </template>
             <template #api>
               <a href="https://github.com/wordpress/openverse-api/">{{
-                $t('about.planning.api')
+                $t('about.planning.api', { openverse: 'Openverse' })
               }}</a>
             </template>
             <template #catalog>
               <a href="https://github.com/wordpress/openverse-catalog/">{{
-                $t('about.planning.catalog')
+                $t('about.planning.catalog', { openverse: 'Openverse' })
               }}</a>
             </template>
             <template #community>
@@ -52,6 +56,7 @@
 
           <!-- eslint-disable @intlify/vue-i18n/no-raw-text -->
           <i18n path="about.transfer.content" tag="p">
+            <template #openverse>Openverse</template>
             <template #creative-commons>
               <a
                 href="https://creativecommons.org/2021/05/03/cc-search-to-join-wordpress/"
@@ -67,9 +72,11 @@
           <!-- eslint-enable @intlify/vue-i18n/no-raw-text -->
 
           <i18n path="about.declaration.content" tag="p">
+            <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
+            <template #openverse>Openverse</template>
             <template #terms>
               <a href="https://creativecommons.org/terms/">{{
-                $t('about.declaration.terms')
+                $t('about.declaration.terms', { openverse: 'Openverse' })
               }}</a>
             </template>
           </i18n>
@@ -84,7 +91,9 @@ const AboutPage = {
   name: 'about-page',
   head() {
     return {
-      title: `${this.$t('about.title')} | Openverse`,
+      title: `${this.$t('about.title', {
+        openverse: 'Openverse',
+      })} | Openverse`,
     }
   },
 }
