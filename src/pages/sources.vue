@@ -7,10 +7,10 @@
         </h1>
         <div class="mb-10">
           <h3 class="text-2xl">
-            {{ $t('sources.cc-content.where') }}
+            {{ $t('sources.cc-content.where', { openverse: 'Openverse' }) }}
           </h3>
           <p class="my-4">
-            {{ $t('sources.cc-content.content') }}
+            {{ $t('sources.cc-content.content', { openverse: 'Openverse' }) }}
           </p>
           <i18n path="sources.cc-content.provider" tag="p" class="my-4">
             <template #flickr>
@@ -24,12 +24,14 @@
             </template>
           </i18n>
           <i18n path="sources.cc-content.europeana" tag="p" class="my-4">
+            <!-- eslint-disable @intlify/vue-i18n/no-raw-text -->
+            <template #openverse>Openverse</template>
             <template #link>
-              <!-- eslint-disable @intlify/vue-i18n/no-raw-text -->
               <a aria-label="europeana" href="https://www.europeana.eu/en"
                 >Europeana</a
-              ><!-- eslint-enable @intlify/vue-i18n/no-raw-text -->
+              >
             </template>
+            <!-- eslint-enable @intlify/vue-i18n/no-raw-text -->
             <template #link-api>
               <a
                 aria-label="europeana-api"
@@ -82,7 +84,7 @@
         </template>
       </i18n>
       <table
-        :aria-label="$t('about.aria.sources-table')"
+        :aria-label="$t('sources.aria.table')"
         role="region"
         class="table is-striped mt-4 mb-10 border border-admin-gray"
       >
