@@ -38,4 +38,5 @@ vercel.json
 *.md
 LICENSE
 
-
+Dockerfile
+docker-compose.yml

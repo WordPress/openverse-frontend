@@ -16,7 +16,7 @@ COPY pnpm-lock.yaml .
 COPY .npmrc .
 
 # install dependencies including local development tools
-RUN pnpm install
+RUN pnpm install --frozen-lockfile --store-dir=./pnpm-store
 
 # copy the rest of the content
 COPY . /usr/app
@@ -27,48 +27,30 @@ ENV NUXT_TELEMETRY_DISABLED=1
 # build the application and generate a distribution package
 RUN pnpm run build
 
+
 # ==
-# development
+# pre-production
 # ==
-# application for development purposes
-FROM node:16 AS dev
+# trash existing deps and install only necessary deps to reduce final image size
+FROM builder AS postbuild
 
-WORKDIR /usr/app
+RUN rm -rf node_modules
 
-# Install pnpm
-RUN npm install -g pnpm
+ENV NODE_ENV=production
 
-ENV NODE_ENV=development
-ENV CYPRESS_INSTALL_BINARY=0
+RUN pnpm install --frozen-lockfile --store-dir=./pnpm-store
 
-# copy files from local machine
-COPY . /usr/app
+# Delete everything that isn't nuxt related
+RUN ls node_modules | grep -v nuxt | xargs rm -rf
 
-# disable telemetry when building the app
-ENV NUXT_TELEMETRY_DISABLED=1
-
-# install dependencies (development dependencies included)
-RUN pnpm install
-
-# expose port 8443
-EXPOSE 8443
-
-# run the application in development mode
-ENTRYPOINT [ "pnpm", "run", "dev" ]
 
 # ==
 # production
 # ==
 # application package (for production)
-FROM node:alpine AS app
+FROM gcr.io/distroless/nodejs-debian11:16-debug AS app
 
 WORKDIR /usr/app
-
-# Install pnpm
-RUN npm install -g pnpm
-
-ENV NODE_ENV=production
-ENV PLAYWRIGHT_SKIP_BROWSER_GC=1
 
 # copy package.json and package-lock.json files
 COPY package.json .
@@ -76,21 +58,22 @@ COPY pnpm-lock.yaml .
 COPY .npmrc .
 
 # copy the nuxt configuration file
-COPY --from=builder /usr/app/nuxt.config.js .
+COPY --from=postbuild /usr/app/nuxt.config.js .
 
 # copy distribution directory with the static content
-COPY --from=builder /usr/app/.nuxt /usr/app/.nuxt
+COPY --from=postbuild /usr/app/.nuxt /usr/app/.nuxt
 
 # copy publically-accessible static assets
-COPY --from=builder /usr/app/src/static /usr/app/src/static
+COPY --from=postbuild /usr/app/src/static /usr/app/src/static
 
 # Copy over files needed by Nuxt's runtime process
-COPY --from=builder /usr/app/src/locales /usr/app/src/locales
-COPY --from=builder /usr/app/src/utils  /usr/app/src/utils
-COPY --from=builder /usr/app/src/constants  /usr/app/src/constants
-COPY --from=builder /usr/app/src/server-middleware  /usr/app/src/server-middleware
+COPY --from=postbuild /usr/app/src/locales /usr/app/src/locales
+COPY --from=postbuild /usr/app/src/utils  /usr/app/src/utils
+COPY --from=postbuild /usr/app/src/constants  /usr/app/src/constants
+COPY --from=postbuild /usr/app/src/server-middleware  /usr/app/src/server-middleware
 
-RUN pnpm install --frozen-lockfile
+# Copy over dependencies
+COPY --from=postbuild /usr/app/node_modules /usr/app/node_modules
 
 # set app serving to permissive / assigned
 ENV NUXT_HOST=0.0.0.0
@@ -105,5 +88,4 @@ ENV PORT=8443
 EXPOSE 8443
 
 # run the application in static mode
-ENTRYPOINT ["pnpm", "run", "start"]
-
+ENTRYPOINT ["/nodejs/bin/node", "/usr/app/node_modules/nuxt/bin/nuxt.js", "start"]
