@@ -7,12 +7,10 @@
  * tests less flaky due to changes in the API or API data.
  */
 const talkback = require('talkback')
-const path = require('path')
-const host = 'https://api.openverse.engineering'
+const host = 'https://api.openverse.engineering/v1'
 
-function nameGenerator(tapeNumber, tape) {
-  return path.join(`${tape.req.method}`, `response-${tapeNumber}`)
-}
+const tapeNameGenerator = (tapeNumber) => `response-${tapeNumber}`
+
 const opts = {
   host,
   port: 3000,
@@ -20,7 +18,7 @@ const opts = {
   record: talkback.Options.RecordMode.NEW,
   debug: false,
   name: 'Openverse e2e proxy',
-  tapeNameGenerator: nameGenerator,
+  tapeNameGenerator,
 }
 
 const server = talkback(opts)
