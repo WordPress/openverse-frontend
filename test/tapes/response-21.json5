@@ -1,0 +1,93 @@
+{
+    meta: {
+        createdAt: '2022-02-19T05:06:30.762Z',
+        host: 'https://api.openverse.engineering/v1',
+    },
+    req: {
+        headers: {
+            connection: 'keep-alive',
+            pragma: 'no-cache',
+            'cache-control': 'no-cache',
+            'sec-ch-ua': '',
+            accept: 'application/json, text/plain, */*',
+            'sec-ch-ua-mobile': '?0',
+            'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/98.0.4695.0 Safari/537.36',
+            'sec-ch-ua-platform': '',
+            origin: 'http://localhost:8443',
+            'sec-fetch-site': 'same-site',
+            'sec-fetch-mode': 'cors',
+            'sec-fetch-dest': 'empty',
+            referer: 'http://localhost:8443/',
+            'accept-encoding': 'gzip, deflate, br',
+        },
+        url: '/images/ea7e24ee-1374-4c49-9f6f-5c4529b701d8/',
+        method: 'GET',
+        body: '',
+    },
+    res: {
+        status: 200,
+        headers: {
+            date: [
+                'Sat, 19 Feb 2022 05:06:31 GMT',
+            ],
+            'content-type': [
+                'application/json',
+            ],
+            'transfer-encoding': [
+                'chunked',
+            ],
+            connection: [
+                'keep-alive',
+            ],
+            vary: [
+                'Accept-Encoding, Accept, Authorization, Origin',
+            ],
+            allow: [
+                'GET, HEAD, OPTIONS',
+            ],
+            'x-frame-options': [
+                'DENY',
+            ],
+            'access-control-allow-origin': [
+                '*',
+            ],
+            'x-content-type-options': [
+                'nosniff',
+            ],
+            'referrer-policy': [
+                'same-origin',
+            ],
+            'cache-control': [
+                'max-age=14400',
+            ],
+            'cf-cache-status': [
+                'HIT',
+            ],
+            age: [
+                '62575',
+            ],
+            'last-modified': [
+                'Fri, 18 Feb 2022 11:43:36 GMT',
+            ],
+            'expect-ct': [
+                'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"',
+            ],
+            'strict-transport-security': [
+                'max-age=15552000; includeSubDomains; preload',
+            ],
+            server: [
+                'cloudflare',
+            ],
+            'cf-ray': [
+                '6dfcf75fcb4e5bed-FRA',
+            ],
+            'content-encoding': [
+                'br',
+            ],
+            'alt-svc': [
+                'h3=":443"; ma=86400, h3-29=":443"; ma=86400',
+            ],
+        },
+        body: 'E+IDAMT/1JVVq3m1yECqDpNUVwXYY8vfu1qQbD4cuUkYmJz3qADL3qHmURim36JSCAPMMMAUsnN92mp/RnQ8S/7wDa6DATUFxSmRiJIiFalNK1H1eS8ym2Zx1RY66kpwLG65EAy+BE8v4OjDRO7g60vjO+cP9TpdYHBclmE2Su37LvuLs+dJ2nBVwzEsYVZJVWWxrqKbJ61VlqdpVMa5jsFhJ2qWMMFgXN3sw7bO4LCcRmv9LeAQ613cRrIR+7q1rJfFeapMuV63VGmdVEnZ1G2LhKccvbvQ7F4Jxq+XCw1YXgb4Fk0UBu2L8BaTqWvqDcIglpqX4g+M864N12vwswzTQekVZjVCKpZagSMzTBgc7hg45rBOlqgwwLDNx0tzmGH+vME3V4LBEcHOxz+O+nigneRfbAN/wdoXBoPL3My8VDr22dWH2f29uPslnu5ZLLVkXwPbHO2sYTYML6z5y5jcJjnb3OwW5rAnwVHJ0A+TpSXHS/wRmEjHKUf4QxDfN0o1g5NhIL/RNJNMFFttUbYVjnRC6fcUOEr4xWPvNTs54Pgw7Bep2wRausIH',
+    },
+}
