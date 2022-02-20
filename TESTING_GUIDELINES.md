@@ -93,16 +93,28 @@ Openverse uses [Vue Testing Library](https://testing-library.com/docs/vue-testin
 ### E2e tests
 
 Before running the e2e tests, install the browsers that Playwright needs:
-`pnpx install playwright`
+```
+pnpx install playwright
+```
 
 If you don't have the app running, start by running it in the dev mode:
-`pnpm run dev`
+```
+pnpm run dev
+```
 After the dev server has finished building, run the e2e tests:
-`pnpm run dev`
+```
+pnpm run test:e2e
+```
 
 When writing e2e tests, it can be helpful to use Playwright [codegen](https://playwright.dev/docs/cli#generate-code) to generate the tests by performing actions in the browser:
-`pnpm run generate-e2e-tests`
+
+```
+pnpm run generate-e2e-tests
+```
+
 This will open the app in a new browser window, and record any actions you take in a format that can be used in e2e tests.
 
 The CI uses [talkback](https://github.com/ijpiantanida/talkback) to ensure that the e2e tests are independent of the network status by recording the network responses in the `/test/tapes` folder. If you add new e2e tests, you may need to update the tapes by running
-`pnpm run update-tapes`
+```
+pnpm run update-tapes
+```
