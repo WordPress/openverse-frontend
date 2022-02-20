@@ -1,13 +1,12 @@
 {
     meta: {
-        createdAt: '2022-02-19T05:06:28.635Z',
+        createdAt: '2022-02-20T03:26:20.002Z',
         host: 'https://api.openverse.engineering/v1',
         resHumanReadable: true,
     },
     req: {
         headers: {
             accept: 'application/json, text/plain, */*',
-            'user-agent': 'axios/0.21.4',
             connection: 'close',
         },
         url: '/images/?q=cat&categories=photograph',
@@ -18,7 +17,7 @@
         status: 200,
         headers: {
             date: [
-                'Sat, 19 Feb 2022 05:06:28 GMT',
+                'Sun, 20 Feb 2022 03:26:20 GMT',
             ],
             'content-type': [
                 'application/json',
@@ -51,10 +50,10 @@
                 'HIT',
             ],
             age: [
-                '62521',
+                '1553',
             ],
             'last-modified': [
-                'Fri, 18 Feb 2022 11:44:27 GMT',
+                'Sun, 20 Feb 2022 03:00:27 GMT',
             ],
             'expect-ct': [
                 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"',
@@ -66,7 +65,7 @@
                 'cloudflare',
             ],
             'cf-ray': [
-                '6dfcf7526ef96946-FRA',
+                '6e04a1fff8566973-FRA',
             ],
             'alt-svc': [
                 'h3=":443"; ma=86400, h3-29=":443"; ma=86400',
