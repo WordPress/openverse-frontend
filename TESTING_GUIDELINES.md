@@ -88,7 +88,9 @@ Please note that these are non-expert and non-exhaustive recommendations. Spend 
 
 ## Running the tests
 
-Openverse uses [Vue Testing Library](https://testing-library.com/docs/vue-testing-library/intro/) and [Vue Test Utils](https://vue-test-utils.vuejs.org/) for unit testing, and [Playwright](https://playwright.dev) for End-to-End (e2e) testing.
+Openverse uses [Vue Testing Library](https://testing-library.com/docs/vue-testing-library/intro/) for unit testing, and [Playwright](https://playwright.dev) for End-to-End (e2e) testing.
+
+There are also legacy unit tests written in [Vue Test Utils](https://vue-test-utils.vuejs.org/) but those are slated to be re-written using testing library.
 
 ### E2e tests
 
