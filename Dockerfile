@@ -48,9 +48,11 @@ RUN ls node_modules | grep -v nuxt | xargs rm -rf
 # production
 # ==
 # application package (for production)
-FROM gcr.io/distroless/nodejs-debian11:16-debug AS app
+FROM gcr.io/distroless/nodejs-debian11:16 AS app
 
 WORKDIR /usr/app
+
+USER nonroot
 
 # copy package.json and package-lock.json files
 COPY package.json .
