@@ -149,8 +149,7 @@ import {
   ref,
   useContext,
 } from '@nuxtjs/composition-api'
-import { COPY_ATTRIBUTION } from '~/constants/action-types'
-import { ATTRIBUTION, USAGE_DATA } from '~/constants/store-modules'
+import { USAGE_DATA } from '~/constants/store-modules'
 import {
   SEND_DETAIL_PAGE_EVENT,
   DETAIL_PAGE_EVENTS,
@@ -158,9 +157,8 @@ import {
 import getAttributionHtml from '~/utils/attribution-html'
 import { isPublicDomain } from '~/utils/license'
 
-import VLink from '~/components/VLink.vue'
 import CopyButton from '~/components/CopyButton.vue'
-
+import VLink from '~/components/VLink.vue'
 const VCopyLicense = defineComponent({
   name: 'VCopyLicense',
   components: { CopyButton, VLink },
@@ -206,11 +204,7 @@ const VCopyLicense = defineComponent({
     const onSourceLinkClicked = () =>
       sendDetailPageEvent(DETAIL_PAGE_EVENTS.SOURCE_CLICKED)
 
-    const onCopyAttribution = (type, event) => {
-      store.dispatch(`${ATTRIBUTION}/${COPY_ATTRIBUTION}`, {
-        type,
-        content: event.content,
-      })
+    const onCopyAttribution = () => {
       sendDetailPageEvent(DETAIL_PAGE_EVENTS.ATTRIBUTION_CLICKED)
     }
 
