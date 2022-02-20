@@ -10,13 +10,18 @@ const talkback = require('talkback')
 const host = 'https://api.openverse.engineering/v1'
 
 const tapeNameGenerator = (tapeNumber) => `response-${tapeNumber}`
+const updatingTapes = process.argv.includes('--update-tapes')
+const recordMode = updatingTapes
+  ? talkback.Options.RecordMode.NEW
+  : talkback.Options.RecordMode.DISABLED
 
 const opts = {
   host,
   port: 3000,
   path: './test/tapes',
-  record: talkback.Options.RecordMode.NEW,
-  debug: false,
+  record: recordMode,
+  fallbackMode: talkback.Options.FallbackMode.NOT_FOUND,
+  ignoreHeaders: ['user-agent', 'origin', 'referrer', 'content-length', 'host'],
   name: 'Openverse e2e proxy',
   tapeNameGenerator,
 }
