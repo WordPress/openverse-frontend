@@ -44,7 +44,7 @@ jobs:
         run: pnpm format:test
 
       - name: Run tests
-        run: pnpm i18n:get-translations && pnpm test:unit
+        run: pnpm i18n:get-translations && pnpm ci:unit-test
 
       - name: Run Storybook smoke-test
         run: pnpm storybook -- --ci --smoke-test
@@ -53,4 +53,4 @@ jobs:
         run: pnpx playwright install
 
       - name: Run E2E
-        run: pnpm e2e:ci
+        run: pnpm ci:e2e-test

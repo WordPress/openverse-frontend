@@ -1,7 +1,9 @@
 /**
  * The talkback proxy for e2e tests. When making a request to the API during testing,
  * it tries to use the responses it previously saved in `/test/tapes` folder. If no
- * response is found there, it makes an actual request, and saves the response for
+ * response is found there, it:
+ * - by default, returns 'Not found'.
+ * - if you pass `--update-tapes` as a parameter, makes an actual request, and saves the response for
  * future use.
  * This makes it possible for the e2e tests to run without internet, and makes the
  * tests less flaky due to changes in the API or API data.
