@@ -88,12 +88,14 @@ import { useBrowserIsBlink } from '~/composables/use-browser-detection'
 
 import VAudioThumbnail from '~/components/VAudioThumbnail/VAudioThumbnail.vue'
 import VLicense from '~/components/License/VLicense.vue'
+import VLink from '~/components/VLink.vue'
 
 export default defineComponent({
   name: 'VRowLayout',
   components: {
     VAudioThumbnail,
     VLicense,
+    VLink,
   },
   props: ['audio', 'size'],
   setup(props) {

@@ -42,7 +42,7 @@ export default defineComponent({
     let linkProperties = computed(() =>
       hasHref.value
         ? isInternal.value
-          ? { to: app.localePath(props.href) ?? props.href }
+          ? { to: app?.localePath(props.href) ?? props.href }
           : { ...defaultProps, href: props.href }
         : null
     )

@@ -42,6 +42,7 @@
 
 <script>
 import VLicense from '~/components/License/VLicense.vue'
+import VLink from '~/components/VLink.vue'
 
 const errorImage = require('~/assets/image_not_available_placeholder.png')
 
@@ -59,7 +60,7 @@ const toAbsolutePath = (url, prefix = 'https://') => {
 
 export default {
   name: 'ImageCell',
-  components: { VLicense },
+  components: { VLicense, VLink },
   props: ['image', 'shouldContainImage'],
   data() {
     return {
