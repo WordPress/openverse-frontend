@@ -4,9 +4,11 @@ function readPackage(pkg, context) {
   if (pkg.dependencies.typescript) {
     pkg.dependencies = {
       ...pkg.dependencies,
-      typescript: packageJson.devDependencies.typescript
+      typescript: packageJson.devDependencies.typescript,
     }
-    context.log(`typescript@${pkg.dependencies.typescript} => typescript@${packageJson.devDependencies.typescript} in dependencies of ${pkg.name}`)
+    context.log(
+      `typescript@${pkg.dependencies.typescript} => typescript@${packageJson.devDependencies.typescript} in dependencies of ${pkg.name}`
+    )
   }
 
   return pkg
@@ -14,6 +16,6 @@ function readPackage(pkg, context) {
 
 module.exports = {
   hooks: {
-    readPackage
-  }
+    readPackage,
+  },
 }
