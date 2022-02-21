@@ -16,7 +16,7 @@ import { useStore, useRoute, watch, computed } from '@nuxtjs/composition-api'
 import closeIcon from '~/assets/icons/close-small.svg'
 import { useActiveAudio } from '~/composables/use-active-audio'
 
-import { useActive } from '@/store/active'
+import { useActive } from '~/store/active'
 
 export default {
   name: 'VGlobalAudioSection',

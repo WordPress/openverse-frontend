@@ -60,7 +60,7 @@ import VGlobalLayout from '~/components/VAudioTrack/layouts/VGlobalLayout.vue'
 
 import { MEDIA } from '~/constants/store-modules'
 
-import { useActive } from '@/store/active'
+import { useActive } from '~/store/active'
 
 const propTypes = {
   /**
