@@ -1,0 +1,32 @@
+name: build
+
+on:
+  push:
+    branches:
+      -main
+  pull_request:
+
+jobs:
+  storybook:
+    name: Check Storybook build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: ./.github/actions/setup-node-env
+
+      - name: Run Storybook smoke-test
+        run: pnpm storybook -- --ci --smoke-test
+
+  build:
+    name: Check Nuxt build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: ./.github/actions/setup-node-env
+
+      - name: Run build
+        run: pnpm build

@@ -1,0 +1,35 @@
+name: test
+
+on:
+  push:
+    branches:
+      -main
+  pull_request:
+
+jobs:
+  unit:
+    name: Unit tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: ./.github/actions/setup-node-env
+
+      - name: Run unit tests
+        run: pnpm test
+
+  e2e:
+    name: E2E tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: ./.github/actions/setup-node-env
+
+      - name: Install E2E browsers
+        run: pnpx playwright install
+
+      - name: Run E2E tests
+        run: pnpm e2e:ci
