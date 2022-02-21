@@ -23,7 +23,7 @@
     "test:e2e": "playwright test",
     "build-and-e2e": "start-server-and-test 'cross-env API_URL=http://localhost:3000 nuxt build && pnpm start' http://localhost:8443 test:e2e",
     "ci:unit-test": "jest --collectCoverage=false",
-    "ci:e2e-test": "concurrently \"node test/proxy.js\" \"pnpm run build-and-e2e\" -k",
+    "ci:e2e-test": "sh ./e2e.sh",
     "update-tapes": "rimraf test/tapes && concurrently \"node test/proxy.js --update-tapes\" \"pnpm run build-and-e2e\" -k",
     "generate-e2e-tests": "playwright codegen localhost:8443/",
     "types": "tsc --noEmit",
