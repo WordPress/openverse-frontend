@@ -20,7 +20,7 @@ export default function useI18nSync() {
    * of strings are translated for current locale.
    * Hard-coded to false for default locales: `en` and `en_US`.
    *
-   * @param {string} localeCode - the wpLocale code for the current locale
+   * @param {string} localeCode - the slug for the current locale
    * @returns {boolean}
    */
   const needsTranslationBanner = (localeCode) => {
