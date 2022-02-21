@@ -3,14 +3,11 @@ import { defineStore } from 'pinia'
 export const ACTIVE = 'active'
 
 export const useActive = defineStore(ACTIVE, {
+  /** @return {import('./types').ActiveMediaState} */
   state: () => ({
-    /** type 'image' | 'audio' | null */
     type: null,
-    /** type string | null */
     id: null,
-    /** type 'ejected' | 'playing' | 'paused' */
     status: 'ejected', // 'ejected' means player is closed
-    /** type string | null */
     message: null,
   }),
 
