@@ -115,7 +115,6 @@ const VImageDetailsPage = {
       imageWidth: 0,
       imageHeight: 0,
       imageType: 'Unknown',
-      imageId: null,
       sketchFabfailure: false,
     }
   },
@@ -130,19 +129,21 @@ const VImageDetailsPage = {
         .split('/')[0]
     },
   },
-  async asyncData({ route }) {
-    return {
-      imageId: route.params.id,
-    }
-  },
-  async fetch() {
+  async asyncData({ app, error, route, store }) {
+    const imageId = route.params.id
     try {
-      await this.fetchItem({ id: this.imageId, mediaType: IMAGE })
-    } catch (err) {
-      const errorMessage = this.$t('error.image-not-found', {
-        id: this.imageId,
+      await store.dispatch(`${MEDIA}/${FETCH_MEDIA_ITEM}`, {
+        id: imageId,
+        mediaType: IMAGE,
       })
-      this.$nuxt.error({
+      return {
+        imageId: imageId,
+      }
+    } catch (err) {
+      const errorMessage = app.i18n.t('error.image-not-found', {
+        id: imageId,
+      })
+      error({
         statusCode: 404,
         message: errorMessage,
       })
@@ -159,7 +160,6 @@ const VImageDetailsPage = {
     })
   },
   methods: {
-    ...mapActions(MEDIA, { fetchItem: FETCH_MEDIA_ITEM }),
     ...mapActions(USAGE_DATA, { sendEvent: SEND_DETAIL_PAGE_EVENT }),
     onImageLoaded(event) {
       this.imageWidth = this.image.width || event.target.naturalWidth
