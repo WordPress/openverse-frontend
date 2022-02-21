@@ -1,5 +1,4 @@
 export const RELATED = 'related'
-export const ACTIVE = 'active'
 export const PROVIDER = 'provider'
 export const NAV = 'nav'
 export const NOTIFICATION = 'notification'
