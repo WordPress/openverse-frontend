@@ -13,19 +13,16 @@
 <script>
 import { useStore, useRoute, watch, computed } from '@nuxtjs/composition-api'
 
-import { ACTIVE } from '~/constants/store-modules'
-import {
-  SET_MESSAGE,
-  EJECT_ACTIVE_MEDIA_ITEM,
-} from '~/constants/mutation-types'
-
 import closeIcon from '~/assets/icons/close-small.svg'
 import { useActiveAudio } from '~/composables/use-active-audio'
+
+import { useActive } from '@/store/active'
 
 export default {
   name: 'VGlobalAudioSection',
   setup() {
     const store = useStore()
+    const activeStore = useActive()
     const route = useRoute()
 
     const activeAudio = useActiveAudio()
@@ -33,7 +30,7 @@ export default {
     /* Active audio track */
 
     const audio = computed(() => {
-      const trackId = store.state.active.id
+      const trackId = activeStore.id
       if (trackId) {
         return store.state.media.results.audio.items[trackId]
       }
@@ -59,9 +56,7 @@ export default {
           errorMsg = 'err_unsupported'
           break
       }
-      store.commit(`${ACTIVE}/${SET_MESSAGE}`, {
-        message: errorMsg,
-      })
+      activeStore.setMessage({ message: errorMsg })
     }
 
     watch(
@@ -77,9 +72,7 @@ export default {
       { immediate: true }
     )
 
-    const handleClose = () => {
-      store.commit(`${ACTIVE}/${EJECT_ACTIVE_MEDIA_ITEM}`)
-    }
+    const handleClose = activeStore.ejectActiveMediaItem
 
     /* Router observation */
 
@@ -90,7 +83,7 @@ export default {
         !routeNameVal.includes('audio')
       ) {
         activeAudio.obj.value?.pause()
-        store.commit(`${ACTIVE}/${EJECT_ACTIVE_MEDIA_ITEM}`)
+        activeStore.ejectActiveMediaItem()
       }
     })
 

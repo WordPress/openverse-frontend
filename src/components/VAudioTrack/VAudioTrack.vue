@@ -58,11 +58,9 @@ import VRowLayout from '~/components/VAudioTrack/layouts/VRowLayout.vue'
 import VBoxLayout from '~/components/VAudioTrack/layouts/VBoxLayout.vue'
 import VGlobalLayout from '~/components/VAudioTrack/layouts/VGlobalLayout.vue'
 
-import { ACTIVE, MEDIA } from '~/constants/store-modules'
-import {
-  PAUSE_ACTIVE_MEDIA_ITEM,
-  SET_ACTIVE_MEDIA_ITEM,
-} from '~/constants/mutation-types'
+import { MEDIA } from '~/constants/store-modules'
+
+import { useActive } from '@/store/active'
 
 const propTypes = {
   /**
@@ -122,6 +120,7 @@ export default defineComponent({
   },
   props: propTypes,
   setup(props, { emit }) {
+    const activeStore = useActive()
     const store = useStore()
     const route = useRoute()
 
@@ -203,7 +202,7 @@ export default defineComponent({
     const setPlaying = () => {
       status.value = 'playing'
       activeAudio.obj.value = localAudio
-      store.commit(`${ACTIVE}/${SET_ACTIVE_MEDIA_ITEM}`, {
+      activeStore.setActiveMediaItem({
         type: 'audio',
         id: props.audio.id,
       })
@@ -211,7 +210,7 @@ export default defineComponent({
     }
     const setPaused = () => {
       status.value = 'paused'
-      store.commit(`${ACTIVE}/${PAUSE_ACTIVE_MEDIA_ITEM}`)
+      activeStore.pauseActiveMediaItem()
     }
     const setPlayed = () => (status.value = 'played')
     const setTimeWhenPaused = () => {

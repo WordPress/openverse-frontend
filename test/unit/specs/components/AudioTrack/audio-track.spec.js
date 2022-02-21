@@ -2,6 +2,7 @@ import VAudioTrack from '~/components/VAudioTrack/VAudioTrack.vue'
 import { render } from '@testing-library/vue'
 import Vuei18n from 'vue-i18n'
 import Vuex from 'vuex'
+import { setActivePinia, createPinia } from 'pinia'
 
 jest.mock('~/composables/use-browser-detection', () => ({
   useBrowserIsBlink: jest.fn(() => false),
@@ -115,6 +116,8 @@ describe('AudioTrack', () => {
       propsData: props,
       stubs,
     }
+
+    setActivePinia(createPinia())
   })
 
   it('should render the full audio track component even without duration', () => {
