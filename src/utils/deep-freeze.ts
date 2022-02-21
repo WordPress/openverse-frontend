@@ -3,7 +3,7 @@ import type { DeepReadonly } from '@nuxtjs/composition-api'
 /**
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze#examples
  */
-export function deepFreeze<T extends unknown>(object: T): DeepReadonly<T> {
+export function deepFreeze<T>(object: T): DeepReadonly<T> {
   // Retrieve the property names defined on object
   const propNames = Object.getOwnPropertyNames(object)
 

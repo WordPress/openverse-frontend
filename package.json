@@ -97,6 +97,7 @@
     "@types/express-useragent": "^1.0.2",
     "@types/jest": "^26.0.22",
     "@types/uuid": "^8.3.4",
+    "@typescript-eslint/eslint-plugin": "^5.12.0",
     "@typescript-eslint/parser": "^5.12.0",
     "@vue/test-utils": "^1.1.3",
     "autoprefixer": "^10.4.0",
