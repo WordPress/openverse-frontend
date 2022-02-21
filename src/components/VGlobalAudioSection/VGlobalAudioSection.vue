@@ -16,13 +16,13 @@ import { useStore, useRoute, watch, computed } from '@nuxtjs/composition-api'
 import closeIcon from '~/assets/icons/close-small.svg'
 import { useActiveAudio } from '~/composables/use-active-audio'
 
-import { useActive } from '~/store/active'
+import { useActiveMedia } from '~/store/active-media'
 
 export default {
   name: 'VGlobalAudioSection',
   setup() {
     const store = useStore()
-    const activeStore = useActive()
+    const activeMediaStore = useActiveMedia()
     const route = useRoute()
 
     const activeAudio = useActiveAudio()
@@ -30,7 +30,7 @@ export default {
     /* Active audio track */
 
     const audio = computed(() => {
-      const trackId = activeStore.id
+      const trackId = activeMediaStore.id
       if (trackId) {
         return store.state.media.results.audio.items[trackId]
       }
@@ -56,7 +56,7 @@ export default {
           errorMsg = 'err_unsupported'
           break
       }
-      activeStore.setMessage({ message: errorMsg })
+      activeMediaStore.setMessage({ message: errorMsg })
     }
 
     watch(
@@ -72,7 +72,7 @@ export default {
       { immediate: true }
     )
 
-    const handleClose = activeStore.ejectActiveMediaItem
+    const handleClose = activeMediaStore.ejectActiveMediaItem
 
     /* Router observation */
 
@@ -83,7 +83,7 @@ export default {
         !routeNameVal.includes('audio')
       ) {
         activeAudio.obj.value?.pause()
-        activeStore.ejectActiveMediaItem()
+        activeMediaStore.ejectActiveMediaItem()
       }
     })
 

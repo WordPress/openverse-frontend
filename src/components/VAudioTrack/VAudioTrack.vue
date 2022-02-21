@@ -60,7 +60,7 @@ import VGlobalLayout from '~/components/VAudioTrack/layouts/VGlobalLayout.vue'
 
 import { MEDIA } from '~/constants/store-modules'
 
-import { useActive } from '~/store/active'
+import { useActiveMedia } from '~/store/active-media'
 
 const propTypes = {
   /**
@@ -120,7 +120,7 @@ export default defineComponent({
   },
   props: propTypes,
   setup(props, { emit }) {
-    const activeStore = useActive()
+    const activeMediaStore = useActiveMedia()
     const store = useStore()
     const route = useRoute()
 
@@ -202,7 +202,7 @@ export default defineComponent({
     const setPlaying = () => {
       status.value = 'playing'
       activeAudio.obj.value = localAudio
-      activeStore.setActiveMediaItem({
+      activeMediaStore.setActiveMediaItem({
         type: 'audio',
         id: props.audio.id,
       })
@@ -210,7 +210,7 @@ export default defineComponent({
     }
     const setPaused = () => {
       status.value = 'paused'
-      activeStore.pauseActiveMediaItem()
+      activeMediaStore.pauseActiveMediaItem()
     }
     const setPlayed = () => (status.value = 'played')
     const setTimeWhenPaused = () => {

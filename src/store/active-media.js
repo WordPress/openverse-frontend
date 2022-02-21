@@ -1,11 +1,11 @@
 import { defineStore } from 'pinia'
 
-export const ACTIVE = 'active'
+const ACTIVE_MEDIA = 'active-media'
 
 /**
  * Store information about the active media item.
  */
-export const useActive = defineStore(ACTIVE, {
+export const useActiveMedia = defineStore(ACTIVE_MEDIA, {
   /** @return {import('./types').ActiveMediaState} */
   state: () => ({
     type: null,
