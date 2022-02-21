@@ -127,7 +127,7 @@ export interface ActiveMediaState {
   type: 'image' | 'audio' | null
   id: string | null
   status: 'ejected' | 'playing' | 'paused' // 'ejected' means player is closed
-  message: string | null,
+  message: string | null
 }
 
 export interface MediaStoreResult {
