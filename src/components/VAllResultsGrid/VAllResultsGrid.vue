@@ -101,11 +101,15 @@ export default defineComponent({
       const rand = srand(Object.keys(media[mediaKeys[0]])[0])
       const randomIntegerInRange = (min, max) =>
         Math.floor(rand() * (max - min + 1)) + min
-
+      /**
+       * When navigating from All page to Audio page, VAllResultsGrid is displayed
+       * for a short period of time. Then media['image'] is undefined, and it throws an error
+       * `TypeError: can't convert undefined to object`. To fix it, we add `|| {}` to the media['image'].
+       */
       /** @type {import('../../store/types').AudioDetail[] | import('../../store/types').ImageDetail[]} */
       const newResults = []
       // first push all images to the results list
-      for (const id of Object.keys(media['image'])) {
+      for (const id of Object.keys(media['image'] || {})) {
         const item = media['image'][id]
         item.frontendMediaType = 'image'
         newResults.push(item)

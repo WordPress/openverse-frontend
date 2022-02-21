@@ -42,13 +42,11 @@
           tag="p"
         >
           <template #title>
-            <a
+            <VLink
               :href="media.foreign_landing_url"
-              target="_blank"
-              rel="noopener"
               @click="onSourceLinkClicked"
               @keyup.enter="onSourceLinkClicked"
-              >{{ media.title }}</a
+              >{{ media.title }}</VLink
             ></template
           >
           <template #creator>
@@ -58,14 +56,12 @@
               tag="span"
             >
               <template #creator-name>
-                <a
+                <VLink
                   v-if="media.creator_url"
                   :href="media.creator_url"
-                  target="_blank"
-                  rel="noopener"
                   @click="onCreatorLinkClicked"
                   @keyup.enter="onCreatorLinkClicked"
-                  >{{ media.creator }}</a
+                  >{{ media.creator }}</VLink
                 >
                 <span v-else>{{ media.creator }}</span>
               </template>
@@ -79,12 +75,9 @@
             }}
           </template>
           <template #license>
-            <a
-              class="uppercase"
-              :href="licenseUrl"
-              target="_blank"
-              rel="noopener"
-              >{{ fullLicenseName }}</a
+            <VLink class="uppercase" :href="licenseUrl">{{
+              fullLicenseName
+            }}</VLink
             >{{ period }}
           </template>
         </i18n>
@@ -156,9 +149,7 @@ import {
   ref,
   useContext,
 } from '@nuxtjs/composition-api'
-import CopyButton from '~/components/CopyButton.vue'
-import { COPY_ATTRIBUTION } from '~/constants/action-types'
-import { ATTRIBUTION, USAGE_DATA } from '~/constants/store-modules'
+import { USAGE_DATA } from '~/constants/store-modules'
 import {
   SEND_DETAIL_PAGE_EVENT,
   DETAIL_PAGE_EVENTS,
@@ -166,9 +157,11 @@ import {
 import getAttributionHtml from '~/utils/attribution-html'
 import { isPublicDomain } from '~/utils/license'
 
+import CopyButton from '~/components/CopyButton.vue'
+import VLink from '~/components/VLink.vue'
 const VCopyLicense = defineComponent({
   name: 'VCopyLicense',
-  components: { CopyButton },
+  components: { CopyButton, VLink },
   props: {
     media: {
       type: Object,
@@ -211,11 +204,7 @@ const VCopyLicense = defineComponent({
     const onSourceLinkClicked = () =>
       sendDetailPageEvent(DETAIL_PAGE_EVENTS.SOURCE_CLICKED)
 
-    const onCopyAttribution = (type, event) => {
-      store.dispatch(`${ATTRIBUTION}/${COPY_ATTRIBUTION}`, {
-        type,
-        content: event.content,
-      })
+    const onCopyAttribution = () => {
       sendDetailPageEvent(DETAIL_PAGE_EVENTS.ATTRIBUTION_CLICKED)
     }
 

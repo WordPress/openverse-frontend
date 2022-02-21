@@ -7,10 +7,10 @@
     type="radiogroup"
     class="z-10"
   >
-    <VContentItem
+    <VSearchTypeItem
       v-for="(item, idx) in content.types"
       :key="item"
-      :class="{ 'mb-1 p-4': size === 'medium' }"
+      class="md:mb-1"
       :item="item"
       :item-id="idx"
       :icon="content.icons[item]"
@@ -20,16 +20,16 @@
   </VItemGroup>
 </template>
 <script>
-import { supportedContentTypes } from '~/constants/media'
-import useContentType from '~/composables/use-content-type'
+import { supportedSearchTypes } from '~/constants/media'
+import useSearchType from '~/composables/use-search-type'
 
 import VItemGroup from '~/components/VItemGroup/VItemGroup.vue'
-import VContentItem from '~/components/VContentSwitcher/VContentItem.vue'
+import VSearchTypeItem from '~/components/VContentSwitcher/VSearchTypeItem.vue'
 import { computed, defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
-  name: 'VContentTypes',
-  components: { VItemGroup, VContentItem },
+  name: 'VSearchTypes',
+  components: { VItemGroup, VSearchTypeItem },
   props: {
     /**
      * 'Small' size for mobile screens,
@@ -43,11 +43,11 @@ export default defineComponent({
     activeItem: {
       type: String,
       required: true,
-      validator: (val) => supportedContentTypes.includes(val),
+      validator: (val) => supportedSearchTypes.includes(val),
     },
   },
   setup(props, { emit }) {
-    const content = useContentType()
+    const content = useSearchType()
     const bordered = computed(() => props.size === 'small')
     const handleClick = (item) => {
       emit('select', item)
