@@ -17,8 +17,8 @@ export const useActiveMedia = defineStore(ACTIVE_MEDIA, {
   actions: {
     /**
      * @param {object} payload
-     * @param {'image' | 'audio' | null} payload.type
-     * @param {string | null} payload.id
+     * @param {'image' | 'audio'} payload.type
+     * @param {string} payload.id
      * @param {'ejected' | 'playing' | 'paused'} payload.status
      */
     setActiveMediaItem({ type, id, status }) {
