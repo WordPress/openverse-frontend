@@ -4,7 +4,7 @@ import { IMAGE } from '~/constants/media'
 /**
  * @template {import('../store/types').MediaDetail} T
  * @param {T} media
- * @param {import('../constants/media').MediaType} mediaType
+ * @param {import('../store/types').SupportedMediaType} mediaType
  * @return {T}
  */
 export default function decodeMediaData(media, mediaType = IMAGE) {
