@@ -28,7 +28,7 @@ export default function ({ store, query, route }) {
     })
   }
 
-  if (!process.server && store.state.nav.isReferredFromCc) {
+  if (process.client && store.state.nav.isReferredFromCc) {
     store.commit(`${NAV}/${SET_REFERRED}`, { isReferredFromCc: false })
   }
 }
