@@ -1,20 +1,13 @@
-import { SET_EMBEDDED, SET_REFERRED } from '~/constants/mutation-types'
+import { defineStore } from 'pinia'
 
-export const state = () => ({
-  isEmbedded: true,
-  isReferredFromCc: false,
+export const NAV = 'nav'
+
+/**
+ * Store information about navigation.
+ */
+export const useNav = defineStore(NAV, {
+  state: () => ({
+    isEmbedded: true,
+    isReferredFromCc: false,
+  }),
 })
-
-export const mutations = {
-  [SET_EMBEDDED](_state, params) {
-    _state.isEmbedded = params.isEmbedded
-  },
-  [SET_REFERRED](_state, params) {
-    _state.isReferredFromCc = params.isReferredFromCc
-  },
-}
-
-export default {
-  state,
-  mutations,
-}
