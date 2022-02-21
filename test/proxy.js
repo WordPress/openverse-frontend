@@ -8,6 +8,7 @@
  * This makes it possible for the e2e tests to run without internet, and makes the
  * tests less flaky due to changes in the API or API data.
  */
+const process = require('process')
 const talkback = require('talkback')
 const host = 'https://api.openverse.engineering/v1'
 
@@ -31,3 +32,6 @@ const opts = {
 const server = talkback(opts)
 
 server.start(() => console.log('Talkback started!'))
+process.on('SIGTERM', () => {
+  server.close()
+})
