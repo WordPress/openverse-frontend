@@ -299,7 +299,7 @@ export default defineComponent({
       () => audioDuration.value ?? props.audio?.duration / 1e3 ?? 0 // seconds
     )
 
-    const message = computed(() => store.state.active.message)
+    const message = computed(() => activeMediaStore.message)
 
     /* Interface with VPlayPause */
 
