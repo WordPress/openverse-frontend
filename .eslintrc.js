@@ -73,6 +73,7 @@ module.exports = {
     ],
     'unicorn/filename-case': ['error', { case: 'kebabCase' }],
     '@typescript-eslint/ban-ts-comment': ['warn'],
+    '@typescript-eslint/no-var-requires': ['warn'],
   },
   settings: {
     'vue-i18n': {
