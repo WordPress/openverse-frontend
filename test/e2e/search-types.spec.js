@@ -45,13 +45,13 @@ const searchTypes = [
     url: '/search/audio?q=birds',
     canLoadMore: true,
     metaSourceCount: 3,
-    results: /13 results/,
+    results: /93 results/,
   },
 ]
 
 async function checkLoadMore(page, searchType) {
   const loadMoreSection = await page.locator('[data-testid="load-more"]')
-  if (!searchType.canLoadMore || searchType.id === 'audio') {
+  if (!searchType.canLoadMore) {
     await expect(loadMoreSection).toHaveCount(0)
   } else {
     await expect(loadMoreSection).toHaveCount(1)
