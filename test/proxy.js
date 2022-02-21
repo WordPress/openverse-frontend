@@ -26,12 +26,19 @@ const opts = {
   fallbackMode: talkback.Options.FallbackMode.NOT_FOUND,
   ignoreHeaders: ['user-agent', 'origin', 'referrer', 'content-length', 'host'],
   name: 'Openverse e2e proxy',
+  summary: false,
   tapeNameGenerator,
 }
 
 const server = talkback(opts)
 
 server.start(() => console.log('Talkback started!'))
-process.on('SIGTERM', () => {
+function closeServer() {
   server.close()
+  console.log('Server closed, exiting process')
+  process.exit(0)
+}
+process.on('SIGTERM', () => {
+  console.log('Received SIGTERM')
+  closeServer()
 })
