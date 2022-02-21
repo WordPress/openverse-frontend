@@ -10,19 +10,21 @@
       <div class="flex flex-col gap-4 lg:gap-6 flex-grow">
         <p v-if="audio.description" class="mb-6">{{ audio.description }}</p>
         <ul class="flex flex-wrap gap-2">
-          <MediaTag
+          <VMediaTag
             v-for="(tag, index) in audio.tags.filter((i) => !!i)"
             :key="index"
             tag="li"
           >
             {{ tag.name }}
-          </MediaTag>
+          </VMediaTag>
         </ul>
         <dl v-if="audio">
           <div v-if="audio.audio_set">
             <dt>{{ $t('audio-details.table.album') }}</dt>
             <dd>
-              <a :href="audio.audio_set.url">{{ audio.audio_set.name }}</a>
+              <VLink :href="audio.audio_set.url">{{
+                audio.audio_set.name
+              }}</VLink>
             </dd>
           </div>
           <div v-if="audio.category">
@@ -52,13 +54,9 @@
               {{ $t('audio-details.table.provider') }}
             </dt>
             <dd>
-              <a
-                :href="audio.foreign_landing_url"
-                target="blank"
-                rel="noopener noreferrer"
-              >
+              <VLink :href="audio.foreign_landing_url">
                 {{ providerName }}
-              </a>
+              </VLink>
             </dd>
           </div>
           <div v-if="audio.source && sourceName !== providerName">
@@ -87,9 +85,13 @@
 import getProviderName from '~/utils/get-provider-name'
 import { PROVIDER } from '~/constants/store-modules'
 import { mapState } from 'vuex'
+import VLink from '~/components/VLink.vue'
+import VAudioThumbnail from '~/components/VAudioThumbnail/VAudioThumbnail.vue'
+import VMediaTag from '~/components/VMediaTag/VMediaTag.vue'
 
 export default {
   name: 'VAudioDetails',
+  components: { VAudioThumbnail, VLink, VMediaTag },
   props: ['audio'],
   computed: {
     ...mapState(PROVIDER, ['audioProviders']),

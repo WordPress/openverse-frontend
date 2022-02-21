@@ -1,3 +1,7 @@
+export type SupportedMediaType = 'audio' | 'image'
+export type SupportedSearchType = 'all' | SupportedMediaType
+export type MediaType = 'audio' | 'image' | 'video'
+export type SearchType = 'all' | MediaType
 /**
  * The search result object
  */
@@ -22,7 +26,7 @@ export interface MediaResult<
 }
 
 export type Query = {
-  mediaType: 'audio' | 'image'
+  mediaType: SupportedMediaType
   q: string
   license: string
   license_type: string
@@ -123,14 +127,13 @@ export interface FetchState {
 }
 
 export interface SearchState {
-  isFilterVisible: boolean
-  searchType: 'all' | 'audio' | 'image' | 'video'
+  searchType: SupportedSearchType
   query: Query
   filters: Filters
 }
 
 export interface ActiveMediaState {
-  type: 'image' | 'audio' | null
+  type: SupportedMediaType | null
   id: string | null
   status: 'ejected' | 'playing' | 'paused' // 'ejected' means player is closed
 }

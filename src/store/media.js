@@ -21,20 +21,14 @@ import {
   SEND_RESULT_CLICKED_EVENT,
   SEND_SEARCH_QUERY_EVENT,
 } from '~/constants/usage-data-analytics-types'
-import { AUDIO, IMAGE, VIDEO, ALL_MEDIA } from '~/constants/media'
+import { AUDIO, IMAGE, ALL_MEDIA, supportedMediaTypes } from '~/constants/media'
 import { USAGE_DATA } from '~/constants/store-modules'
 import MediaService from '~/data/media-service'
-
-// Note: images should always be first here,
-// and this only includes 'real' media. ALL is a
-// special case not used in this list.
-const supportedTypes = [IMAGE, AUDIO]
 
 /**
  * @return {import('./types').MediaState}
  */
 export const state = () => ({
-  supportedTypes,
   results: {
     [IMAGE]: {
       count: 0,
@@ -78,7 +72,7 @@ export const createActions = (services = mediaServices) => ({
    * @return {Promise<void>}
    */
   async [FETCH_MEDIA]({ dispatch, rootState }, payload = {}) {
-    const mediaType = rootState.search.query.mediaType
+    const mediaType = rootState.search.searchType
     const mediaToFetch = mediaType !== ALL_MEDIA ? [mediaType] : [IMAGE, AUDIO]
 
     await Promise.all(
@@ -87,7 +81,13 @@ export const createActions = (services = mediaServices) => ({
       )
     )
   },
-  // Do not use with ALL_MEDIA
+  /**
+   * Do not use with ALL_MEDIA
+   * @param {import('vuex').ActionContext} context
+   * @param {object} payload
+   * @param {import('./types').SupportedMediaType} payload.mediaType
+   * @returns {Promise<void>}
+   */
   async [CLEAR_MEDIA]({ commit }, payload = {}) {
     const { mediaType } = payload
     commit(RESET_MEDIA, { mediaType })
@@ -96,10 +96,9 @@ export const createActions = (services = mediaServices) => ({
    *
    * @param {import('vuex').ActionContext} context
    * @param {Object} payload
-   * @param {mediaType} payload.mediaType - the mediaType to fetch (do not use 'All_media' here)
+   * @param {import('./types').SupportedMediaType} payload.mediaType - the mediaType to fetch (do not use 'All_media' here)
    * @param {number} [payload.page] - API page to load.
-   * @param {boolean} [payload.shouldPersistMedia] - whether the existing media
-   * should be added to or replaced.
+   * @param {boolean} [payload.shouldPersistMedia] - whether the existing media should be added to or replaced.
    * @return {Promise<void>}
    */
   async [FETCH_SINGLE_MEDIA_TYPE](
@@ -196,8 +195,8 @@ export const createActions = (services = mediaServices) => ({
    *
    * @param {import('vuex').ActionContext} context
    * @param {object} payload
-   * @param {mediaType} payload.mediaType
-   * @param payload.error
+   * @param {import('./types').SupportedMediaType} payload.mediaType
+   * @param {unknown} payload.error
    * @return {Promise<void>}
    */
   async [HANDLE_MEDIA_ERROR]({ commit }, { mediaType, error }) {
@@ -217,7 +216,7 @@ export const createActions = (services = mediaServices) => ({
    *
    * @param {import('vuex').ActionContext} context
    * @param {number} mediaCount
-   * @param {'audio'|'image'} mediaType
+   * @param {import('./types').SupportedMediaType} mediaType
    */
   [HANDLE_NO_MEDIA]({ commit }, { mediaCount, mediaType }) {
     if (!mediaCount) {
@@ -241,8 +240,8 @@ export const getters = {
     if (getters.searchType === ALL_MEDIA) {
       return { [IMAGE]: state.results[IMAGE], [AUDIO]: state.results[AUDIO] }
     } else {
-      return getters.mediaType
-        ? { [getters.mediaType]: state.results[getters.mediaType] }
+      return getters.searchType
+        ? { [getters.searchType]: state.results[getters.searchType] }
         : {}
     }
   },
@@ -254,7 +253,7 @@ export const getters = {
       }
     } else {
       return {
-        [getters.mediaType]: state.results[getters.mediaType].items ?? {},
+        [getters.searchType]: state.results[getters.searchType].items ?? {},
       }
     }
   },
@@ -264,7 +263,7 @@ export const getters = {
        * API returns 10 000 if there are more than 10 000 results,
        * Count for all media also returns at most 10 000.
        */
-      const count = supportedTypes
+      const count = supportedMediaTypes
         .map((type) => state.results[type].count)
         .reduce((a, b) => a + b, 0)
       return count > 10000 ? 10000 : count
@@ -293,7 +292,7 @@ export const getters = {
       }
     } else {
       return (
-        state.fetchState[getters.mediaType] || {
+        state.fetchState[getters.searchType] || {
           isFetching: false,
           fetchError: false,
           isFinished: true,
@@ -304,28 +303,13 @@ export const getters = {
   searchType(state, getters, rootState) {
     return rootState.search.searchType
   },
-  mediaType(state, getters, rootState) {
-    return rootState.search.query.mediaType
-  },
-  /**
-   * Returns true for media types that are not supported in the API: video and currently audio.
-   *
-   * @param state
-   * @param getters
-   * @param rootState
-   * @returns {boolean}
-   */
-  unsupportedMediaType(state, getters, rootState) {
-    const mediaType = rootState.search.searchType
-    return mediaType === VIDEO
-  },
 }
 
 export const mutations = {
   /**
    * Sets the fetchState for all passed mediaTypes at the beginning of fetching.
    * @param _state
-   * @param {MediaType} mediaTypes
+   * @param {import('./types').MediaType} mediaType
    */
   [FETCH_START_MEDIA](_state, { mediaType }) {
     _state.fetchState[mediaType].isFetching = true
@@ -336,7 +320,7 @@ export const mutations = {
    * Sets the fetchState.isFetching to false for all passed mediaTypes at the end of fetching.
    * @param _state
    * @param {object} params
-   * @param {MediaType} params.mediaType
+   * @param {import('./types').MediaType} params.mediaType
    */
   [FETCH_END_MEDIA](_state, { mediaType }) {
     _state.fetchState[mediaType].isFetching = false
@@ -379,7 +363,7 @@ export const mutations = {
   /**
    * Clears the items for all passed media types, and resets fetch state.
    * @param _state
-   * @param {MediaType} mediaTypes
+   * @param {import('./types').MediaType} mediaType
    */
   [RESET_MEDIA](_state, { mediaType }) {
     _state.results[mediaType].items = {}
