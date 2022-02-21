@@ -29,7 +29,7 @@ export default function ({ query, route }) {
     })
   }
 
-  if (navStore.isReferredFromCc) {
+  if (process.client && navStore.isReferredFromCc) {
     navStore.isReferredFromCc = false
   }
 }

@@ -21,7 +21,6 @@
 import iframeHeight from '~/mixins/iframe-height'
 
 import { computed, provide, ref, watch } from '@nuxtjs/composition-api'
-
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
 import { isMinScreen } from '~/composables/use-media-query'
 import { useMatchSearchRoutes } from '~/composables/use-match-routes'
