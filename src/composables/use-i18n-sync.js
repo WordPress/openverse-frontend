@@ -20,11 +20,11 @@ export default function useI18nSync() {
    * of strings are translated for current locale.
    * Hard-coded to false for default locales: `en` and `en_US`.
    *
-   * @param {string} localeCode - the slug for the current locale
+   * @param {string} localeCode - the slug for the current locale. This is the same as the locale `code`.
    * @returns {boolean}
    */
   const needsTranslationBanner = (localeCode) => {
-    if (['en', 'en_US'].includes(localeCode)) return false
+    if (['en'].includes(localeCode)) return false
 
     let locale = app.i18n.locales.find((item) => item.code === localeCode)
 
