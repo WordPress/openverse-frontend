@@ -1,5 +1,4 @@
 import prepareSearchQueryParams from '~/utils/prepare-search-query-params'
-import decodeMediaData from '~/utils/decode-media-data'
 import {
   FETCH_MEDIA,
   FETCH_SINGLE_MEDIA_TYPE,
@@ -131,13 +130,12 @@ export const createActions = (services = mediaServices) => ({
     try {
       const mediaPage = typeof page === 'undefined' ? page : page[mediaType]
 
-      const res = await services[mediaType].search({
+      const data = await services[mediaType].search({
         ...queryParams,
         page: mediaPage,
       })
 
       commit(FETCH_END_MEDIA, { mediaType })
-      const data = services[mediaType].transformResults(res.data)
       const mediaCount = data.result_count
       commit(SET_MEDIA, {
         mediaType,
@@ -180,8 +178,7 @@ export const createActions = (services = mediaServices) => ({
     )
     commit(SET_MEDIA_ITEM, { item: {}, mediaType })
     try {
-      const res = await services[mediaType].getMediaDetail(params)
-      const { data } = res
+      const data = await services[mediaType].getMediaDetail(params)
       commit(SET_MEDIA_ITEM, { item: data, mediaType })
     } catch (error) {
       if (error.response && error.response.status === 404) {
@@ -333,7 +330,7 @@ export const mutations = {
   },
   [SET_MEDIA_ITEM](_state, params) {
     const { item, mediaType } = params
-    _state[mediaType] = decodeMediaData(item, mediaType)
+    _state[mediaType] = item
   },
   [SET_MEDIA](_state, params) {
     const {

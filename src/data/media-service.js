@@ -18,7 +18,7 @@ class MediaService {
    * Decodes the text data to avoid encoding problems.
    * Also, converts the results from an array of media objects into an object with
    * media id as keys.
-   * @param {import('../store/types').MediaResult<T[]>} data
+   * @param {import('axios').AxiosResponse<T>} data
    * @returns {import('../store/types').MediaStoreResult<T>}
    */
   transformResults(data) {
@@ -36,8 +36,9 @@ class MediaService {
    * @param {import('../store/types').ApiQueryParams} params
    * @return {Promise<import('axios').AxiosResponse<import('../store/types').MediaResult<T[]>>>}
    */
-  search(params) {
-    return ApiService.query(this.mediaType, params)
+  async search(params) {
+    const res = await ApiService.query(this.mediaType, params)
+    return this.transformResults(res.data)
   }
 
   /**
@@ -46,14 +47,15 @@ class MediaService {
    * @param {{ id: string }} params
    * @return {Promise<import('axios').AxiosResponse<import('../store/types').MediaResult<T>>>}
    */
-  getMediaDetail(params) {
+  async getMediaDetail(params) {
     if (!params.id) {
       throw new Error(
         `MediaService.getMediaDetail() id parameter required to retrieve ${this.mediaType} details.`
       )
     }
 
-    return ApiService.get(this.mediaType, params.id)
+    const res = await ApiService.get(this.mediaType, params.id)
+    return decodeMediaData(res.data, this.mediaType)
   }
 
   /**
@@ -61,14 +63,20 @@ class MediaService {
    * @param {{ id: string }} params
    * @return {Promise<import('axios').AxiosResponse<import('../store/types').MediaResult<T[]>>>}
    */
-  getRelatedMedia(params) {
+  async getRelatedMedia(params) {
     if (!params.id) {
       throw new Error(
         `MediaService.getRelatedMedia() id parameter required to retrieve related media.`
       )
     }
 
-    return ApiService.get(this.mediaType, `${params.id}/related`)
+    const res = await ApiService.get(this.mediaType, `${params.id}/related`)
+    return {
+      ...res.data,
+      results: res.data.results.map((item) =>
+        decodeMediaData(item, this.mediaType)
+      ),
+    }
   }
 }
 

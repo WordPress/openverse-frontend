@@ -10,6 +10,7 @@ import { IMAGE } from '~/constants/media'
 export default function decodeMediaData(media, mediaType = IMAGE) {
   return {
     ...media,
+    frontendMediaType: mediaType,
     creator: decodeData(media.creator),
     title: decodeData(media.title)
       ? decodeData(media.title)

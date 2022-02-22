@@ -12,10 +12,10 @@ export default function useRelated({
   // see https://composition-api.nuxtjs.org/lifecycle/usefetch/
   // eslint-disable-next-line no-unused-vars
   const { fetch } = useFetch(async () => {
-    const response = await service.getRelatedMedia({
+    const data = await service.getRelatedMedia({
       id: mediaId.value,
     })
-    media.value = response.data.results
+    media.value = data.results
   })
   fetch()
   return { media }
