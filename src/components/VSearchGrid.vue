@@ -1,5 +1,5 @@
 <template>
-  <section class="">
+  <section>
     <header
       v-if="query.q && isSupported"
       class="mt-4"
