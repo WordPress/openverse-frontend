@@ -2,7 +2,7 @@
   <div class="app grid h-screen overflow-hidden relative">
     <div>
       <VTeleportTarget name="skip-to-content" />
-      <MigrationNotice v-show="isReferredFromCc" />
+      <VMigrationNotice v-show="isReferredFromCc" />
       <VTranslationStatusBanner />
       <VHeader />
     </div>

@@ -54,7 +54,7 @@
     <figure class="image my-10">
       <img
         :alt="$t('meta-search-page.images.demo-label', { type: ' ' })"
-        src="~/VLinkssets/screenshots/supported.png"
+        src="~/assets/screenshots/supported.png"
         aria-hidden="true"
       />
     </figure>
@@ -71,7 +71,7 @@
     <figure class="image my-10">
       <img
         :alt="$t('meta-search-page.audio-video.demo-label', { type: ' ' })"
-        src="~/VLinkssets/screenshots/unsupported.png"
+        src="~/assets/screenshots/unsupported.png"
         aria-hidden="true"
       />
     </figure>
@@ -101,10 +101,10 @@
     </p>
     <i18n path="meta-search-page.why.feedback-suggestions" tag="p">
       <template #feedback>
-        <NuxtLink
+        <VLink
           :aria-label="$t('meta-search-page.why.aria-label')"
           :to="localePath('/feedback')"
-          >{{ $t('meta-search-page.why.feedback-link') }}</NuxtLink
+          >{{ $t('meta-search-page.why.feedback-link') }}</VLink
         >
       </template>
     </i18n>

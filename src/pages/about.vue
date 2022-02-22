@@ -18,10 +18,10 @@
 
     <i18n path="about.planning.content" tag="p">
       <template #meta>
-        <NuxtLink
+        <VLink
           :aria-label="$t('about.aria.meta')"
           :to="localePath('/meta-search')"
-          >{{ $t('about.planning.meta') }}</NuxtLink
+          >{{ $t('about.planning.meta') }}</VLink
         >
       </template>
       <template #search>

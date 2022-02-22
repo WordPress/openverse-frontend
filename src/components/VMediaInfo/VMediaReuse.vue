@@ -3,7 +3,7 @@
     <h3 class="text-2xl md:text-3xl mb-6">
       {{ $t('media-details.reuse.title') }}
     </h3>
-    <div class="columns">
+    <div class="grid lg:grid-cols-2 gap-4">
       <VMediaLicense
         :license="media.license"
         :license-url="media.license_url"
