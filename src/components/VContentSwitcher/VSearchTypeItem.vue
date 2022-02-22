@@ -4,11 +4,9 @@
     :is-first="itemId === 0"
     @click.native="$emit('click', item)"
   >
-    <div class="flex flex-row items-center py-2">
-      <VIcon :icon-path="icon" class="me-2" />
-      <span class="pe-20 font-semibold leading-[2.25rem]">{{
-        $t(`search-type.${item}`)
-      }}</span>
+    <div class="flex flex-row items-center">
+      <VIcon :icon-path="icon" class="me-2 my-2" />
+      <span class="pe-20 font-semibold">{{ $t(`search-type.${item}`) }}</span>
       <VPill v-if="status === 'beta'">{{
         $t('search-type.status-beta')
       }}</VPill>
@@ -27,8 +25,8 @@ const propTypes = {
   selected: { type: Boolean, default: false },
   icon: { type: String, required: true },
 }
-const VContentItem = defineComponent({
-  name: 'VContentItem',
+export default defineComponent({
+  name: 'VSearchTypeItem',
   props: propTypes,
   setup(props) {
     const status = computed(() => {
@@ -39,5 +37,4 @@ const VContentItem = defineComponent({
     }
   },
 })
-export default VContentItem
 </script>

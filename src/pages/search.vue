@@ -28,15 +28,14 @@
 
 <script>
 import { mapActions, mapGetters, mapState } from 'vuex'
+import { isShallowEqualObjects } from '@wordpress/is-shallow-equal'
 import {
   FETCH_MEDIA,
   UPDATE_QUERY,
   SET_SEARCH_STATE_FROM_URL,
-  UPDATE_SEARCH_TYPE,
 } from '~/constants/action-types'
-import { ALL_MEDIA, supportedContentTypes } from '~/constants/media'
+import { ALL_MEDIA, supportedSearchTypes } from '~/constants/media'
 import { MEDIA, SEARCH } from '~/constants/store-modules'
-import { queryStringToSearchType } from '~/utils/search-query-transform'
 
 import { inject } from '@nuxtjs/composition-api'
 import { isMinScreen } from '~/composables/use-media-query.js'
@@ -84,7 +83,6 @@ const BrowsePage = {
     ...mapGetters(SEARCH, ['searchQueryParams', 'isAnyFilterApplied']),
     ...mapGetters(MEDIA, ['results', 'resultCount', 'fetchState']),
     mediaType() {
-      // Default to IMAGE until media search/index is generalized
       return this.searchType ?? ALL_MEDIA
     },
     /**
@@ -95,14 +93,13 @@ const BrowsePage = {
       return this.supported ? this.resultCount : 0 ?? 0
     },
     supported() {
-      return supportedContentTypes.includes(this.searchType)
+      return supportedSearchTypes.includes(this.searchType)
     },
   },
   methods: {
     ...mapActions(MEDIA, { fetchMedia: FETCH_MEDIA }),
     ...mapActions(SEARCH, {
       setSearchStateFromUrl: SET_SEARCH_STATE_FROM_URL,
-      updateSearchType: UPDATE_SEARCH_TYPE,
       updateQuery: UPDATE_QUERY,
     }),
     onSearchFormSubmit({ q }) {
@@ -112,13 +109,16 @@ const BrowsePage = {
   watch: {
     /**
      * Updates the search type only if the route's path changes.
-     * @param newRoute
-     * @param oldRoute
+     * @param {import('@nuxt/types').Context['route']} newRoute
+     * @param {import('@nuxt/types').Context['route']} oldRoute
      */
-    $route(newRoute, oldRoute) {
-      if (newRoute.path !== oldRoute.path) {
-        const searchType = queryStringToSearchType(newRoute.path)
-        this.updateSearchType({ searchType })
+    async $route(newRoute, oldRoute) {
+      if (
+        newRoute.path !== oldRoute.path ||
+        !isShallowEqualObjects(newRoute.query, oldRoute.query)
+      ) {
+        await this.setSearchStateFromUrl(newRoute)
+        this.fetchMedia(this.searchQueryParams)
       }
     },
   },

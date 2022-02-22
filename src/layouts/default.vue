@@ -2,7 +2,7 @@
   <div class="app grid h-screen overflow-hidden relative">
     <div>
       <VTeleportTarget name="skip-to-content" :force-destroy="true" />
-      <MigrationNotice v-show="isReferredFromCc" />
+      <VMigrationNotice v-show="isReferredFromCc" />
       <VTranslationStatusBanner />
       <VHeader />
     </div>
@@ -20,7 +20,6 @@
 <script>
 import iframeHeight from '~/mixins/iframe-height'
 
-import { NAV } from '~/constants/store-modules'
 import {
   computed,
   provide,
@@ -33,7 +32,7 @@ import { isMinScreen } from '~/composables/use-media-query'
 import { useMatchSearchRoutes } from '~/composables/use-match-routes'
 import { useScroll } from '~/composables/use-scroll'
 
-import MigrationNotice from '~/components/MigrationNotice.vue'
+import VMigrationNotice from '~/components/VMigrationNotice.vue'
 import VTranslationStatusBanner from '~/components/VTranslationStatusBanner.vue'
 import VHeader from '~/components/VHeader/VHeader.vue'
 import VModalTarget from '~/components/VModal/VModalTarget.vue'
@@ -44,7 +43,7 @@ import VTeleportTarget from '~/components/VTeleport/VTeleportTarget.vue'
 const embeddedPage = {
   name: 'embedded',
   components: {
-    MigrationNotice,
+    VMigrationNotice,
     VTranslationStatusBanner,
     VHeader,
     VModalTarget,
@@ -61,7 +60,7 @@ const embeddedPage = {
     const mainContentRef = ref(null)
     const mainRef = ref(null)
     const { store } = useContext()
-    const isReferredFromCc = store.state[NAV].isReferredFromCc
+    const isReferredFromCc = computed(() => store.state.nav.isReferredFromCc)
 
     const { isVisible: isFilterVisible } = useFilterSidebarVisibility()
     const isMinScreenMd = isMinScreen('md')
