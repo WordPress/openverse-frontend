@@ -30,9 +30,10 @@
       <template #link-api>
         <VLink
           aria-label="europeana-api"
-          href="https://pro.europeana.eu/page/VLinkpis"
-          >{{ $t('sources.cc-content.europeana-api') }}</VLink
+          href="https://github.com/WordPress/openverse-catalog/issues/new?assignees=&labels=%F0%9F%9A%A6+status%3A+awaiting+triage%2C+%F0%9F%A7%B9+status%3A+ticket+work+required%2C+%E2%98%81%EF%B8%8F+provider%3A+any&template=new-source-suggestion.md&title=%5BSource+Suggestion%5D+Insert+source+name+here"
         >
+          {{ $t('sources.cc-content.europeana-api') }}
+        </VLink>
       </template>
     </i18n>
     <h3>
