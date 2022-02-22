@@ -1,6 +1,6 @@
 {
     meta: {
-        createdAt: '2022-02-20T03:26:13.120Z',
+        createdAt: '2022-02-22T03:03:04.877Z',
         host: 'https://api.openverse.engineering/v1',
         resHumanReadable: true,
     },
@@ -9,7 +9,7 @@
             accept: 'application/json, text/plain, */*',
             connection: 'close',
         },
-        url: '/images/e9d97a98-621b-4ec2-bf70-f47a74380452/',
+        url: '/audio/?license_type=commercial&license=cc0&searchBy=creator&creator=cat',
         method: 'GET',
         body: '',
     },
@@ -17,19 +17,19 @@
         status: 200,
         headers: {
             date: [
-                'Sun, 20 Feb 2022 03:26:13 GMT',
+                'Tue, 22 Feb 2022 03:03:05 GMT',
             ],
             'content-type': [
                 'application/json',
             ],
-            'transfer-encoding': [
-                'chunked',
+            'content-length': [
+                '70',
             ],
             connection: [
                 'close',
             ],
             vary: [
-                'Accept-Encoding, Accept, Authorization, Origin',
+                'Accept, Authorization, Origin',
             ],
             allow: [
                 'GET, HEAD, OPTIONS',
@@ -50,7 +50,10 @@
                 'MISS',
             ],
             'last-modified': [
-                'Sun, 20 Feb 2022 03:26:13 GMT',
+                'Tue, 22 Feb 2022 03:03:05 GMT',
+            ],
+            'accept-ranges': [
+                'bytes',
             ],
             'expect-ct': [
                 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"',
@@ -62,41 +65,18 @@
                 'cloudflare',
             ],
             'cf-ray': [
-                '6e04a1d4fd468fd7-FRA',
+                '6e14fab0e9d95bf1-FRA',
             ],
             'alt-svc': [
                 'h3=":443"; ma=86400, h3-29=":443"; ma=86400',
             ],
         },
         body: {
-            id: 'e9d97a98-621b-4ec2-bf70-f47a74380452',
-            title: 'bubbles in honey',
-            foreign_landing_url: 'https://www.flickr.com/photos/85398171@N00/272777927',
-            creator: 'mutednarayan',
-            creator_url: 'https://www.flickr.com/photos/85398171@N00',
-            url: 'https://live.staticflickr.com/79/272777927_6f5df1b3cb.jpg',
-            filesize: null,
-            filetype: null,
-            license: 'by-sa',
-            license_version: '2.0',
-            license_url: 'https://creativecommons.org/licenses/by-sa/2.0/',
-            provider: 'flickr',
-            source: 'flickr',
-            category: null,
-            tags: [
-                {
-                    name: 'bubbles',
-                },
-                {
-                    name: 'honey',
-                },
-            ],
-            attribution: '"bubbles in honey" by mutednarayan is licensed under CC-BY-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/2.0/.',
-            height: 375,
-            width: 500,
-            thumbnail: 'http://api.openverse.engineering/v1/images/e9d97a98-621b-4ec2-bf70-f47a74380452/thumb/',
-            detail_url: 'http://api.openverse.engineering/v1/images/e9d97a98-621b-4ec2-bf70-f47a74380452/',
-            related_url: 'http://api.openverse.engineering/v1/images/e9d97a98-621b-4ec2-bf70-f47a74380452/related/',
+            result_count: 0,
+            page_count: 0,
+            page_size: 20,
+            page: 1,
+            results: [],
         },
     },
 }

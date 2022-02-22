@@ -1,6 +1,6 @@
 {
     meta: {
-        createdAt: '2022-02-22T03:03:08.397Z',
+        createdAt: '2022-02-22T03:03:09.987Z',
         host: 'https://api.openverse.engineering/v1',
     },
     req: {
@@ -18,7 +18,7 @@
             referer: 'http://localhost:8443/',
             'accept-encoding': 'gzip, deflate, br',
         },
-        url: '/audio/?license_type=commercial&license=cc0&searchBy=creator&creator=cat',
+        url: '/audio/?q=cat&license=cc0',
         method: 'GET',
         body: '',
     },
@@ -26,7 +26,7 @@
         status: 200,
         headers: {
             date: [
-                'Tue, 22 Feb 2022 03:03:08 GMT',
+                'Tue, 22 Feb 2022 03:03:10 GMT',
             ],
             'content-type': [
                 'application/json',
@@ -38,7 +38,7 @@
                 'keep-alive',
             ],
             vary: [
-                'Accept, Authorization, Origin, Accept-Encoding',
+                'Accept-Encoding, Accept, Authorization, Origin',
             ],
             allow: [
                 'GET, HEAD, OPTIONS',
@@ -62,10 +62,10 @@
                 'HIT',
             ],
             age: [
-                '135',
+                '267',
             ],
             'last-modified': [
-                'Tue, 22 Feb 2022 03:00:53 GMT',
+                'Tue, 22 Feb 2022 02:58:43 GMT',
             ],
             'expect-ct': [
                 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"',
@@ -77,7 +77,7 @@
                 'cloudflare',
             ],
             'cf-ray': [
-                '6e14fac6fb299104-FRA',
+                '6e14fad0be3d6907-FRA',
             ],
             'content-encoding': [
                 'br',
@@ -86,6 +86,6 @@
                 'h3=":443"; ma=86400, h3-29=":443"; ma=86400',
             ],
         },
-        body: 'oSgCACBQbkv98sI0fqoiYhhiE9YUYQNOKRBOaJCJNj7VS5gHk9XBAX2RG2euiLlvoBpU7K1ErX8=',
+        body: 'E/kPAOSaalXtzdaELEH3qbzqU9BgWGQchBVsX/q/PxUohlWo8B62KLUxNfv9Z7nqmDYmVyfWUrCSTbFUrBjuBiwWOE41WzOCevVL2zBkbaXsFW6T1TfcDigTgiFwiSN6Shiu9QUhKBqCJHmvyQrh9yvUDAHkbudNsYIK4RM1upM0OmFpzqr31qnoiwUCW91OCAE+xO3hEdudxVqAQGkL1nEaTnHKdRqH63KCAPttu6yB87IgPoB/N2vLyB/hfh7/vuAU13NdePSqlRtrjddA4MzpmbZAgHScGNmG4usGAlnSOW6Rn+Y9hHcdLHooGKTUfWc6up/Z+aKBwKE2UyBASiLMN1x2rwcCSBYngGxSf0G9YWrnc5tWdRVfd6eacjvHOvEXXBqXTHAgwJ8EBKjgbEBgbdclYYTVGOIQIG10i2PLbpjiGSHAI7Y7/CdhFR/i1u/kW6sJ6bu01WmE/38JlIqnvA7nuKU9Zgi/IV+AIXXZapswXKw8q0EU/iWQr0tMs31wnRUEdnUblrghBKl6IQQBk7c0yOmB83iprF1wuuGyIiPHHvOb5PGaa+OG6eLF/2UcCNzjDUtbzjDWX5IDgWsDck1RK1gJIHAjsh+IGcPycXGjMFH/EqIupZdKUKWxo0a5TH2MlubklccOpXOOHuPWaCFzof3az63UOHxaXupUvx4JwxFeUk4kURCC/I9IqY3OHzqtbNc76bm1mnDom+LpBCMEceJzqM6n+I8YIaUawBaIKXAYa+lYHo6FJfC6WAC4XpU5JZuNMtQql6mRSVHfJUWzsUruhDGmGDehS1nXdbrO2i3XKe3rsTcW0vrOmowTQaxwghP1iJBa6PxBW+mc8MTuuKzryuNzUjsj3eOC9Fi37Zniphblp5fGeUkTev4Y4Eu6XusebJ6YAoexlo7l4VhYAq+LBYDrVdl56xL2mUahPDWxd9SbzlAvCvrSOVuycyVj3NqDnusl/Zc2ib8Nzt2xzrk8pTVBcrAJYgocBlvgWFgCrwtHgn//Aw==',
     },
 }

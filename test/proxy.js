@@ -13,11 +13,12 @@ const talkback = require('talkback')
 const host = 'https://api.openverse.engineering/v1'
 
 const tapeNameGenerator = (tapeNumber) => `response-${tapeNumber}`
+
 const updatingTapes = process.argv.includes('--update-tapes')
 const recordMode = updatingTapes
   ? talkback.Options.RecordMode.NEW
   : talkback.Options.RecordMode.DISABLED
-
+console.log('Record mode: ', recordMode)
 const opts = {
   host,
   port: 3000,
