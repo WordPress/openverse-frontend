@@ -6,7 +6,6 @@
         target="_blank"
         rel="nofollow noreferrer"
         :href="browser.extUrl"
-        class="browser-button button small is-opaque bg-white"
         variant="tertiary"
       >
         {{ $t(`browsers.${key}`) }}
