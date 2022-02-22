@@ -10,14 +10,9 @@
         class="block text-sm md:text-base"
       >
         <template #link>
-          <a
-            class="uppercase text-pink"
-            :href="licenseUrl"
-            target="_blank"
-            rel="noopener"
-          >
+          <VLink class="uppercase text-pink" :href="licenseUrl">
             {{ fullLicenseName }}
-          </a>
+          </VLink>
         </template>
       </i18n>
       <VLicenseElements v-if="license" :license="license" class="md:py-4" />
@@ -28,13 +23,11 @@
         class="caption font-semibold"
       >
         <template #link>
-          <a
+          <VLink
             :aria-label="$t('media-details.aria.attribution.license')"
             :href="licenseUrl"
-            target="_blank"
-            rel="noopener"
             class="text-pink"
-            >{{ $t('media-details.reuse.license.link') }}</a
+            >{{ $t('media-details.reuse.license.link') }}</VLink
           >
         </template>
       </i18n>
@@ -47,13 +40,11 @@
         class="caption font-semibold"
       >
         <template #link>
-          <a
+          <VLink
             :aria-label="$t('media-details.aria.attribution.tool')"
             :href="licenseUrl"
-            target="_blank"
-            rel="noopener"
             class="text-pink"
-            >{{ $t('media-details.reuse.tool.link') }}</a
+            >{{ $t('media-details.reuse.tool.link') }}</VLink
           >
         </template>
       </i18n>
@@ -63,12 +54,13 @@
 
 <script>
 import VLicenseElements from '~/components/VLicenseElements.vue'
+import VLink from '~/components/VLink.vue'
 
 import { isLicense } from '~/utils/license'
 
 export default {
   name: 'MediaLicense',
-  components: { VLicenseElements },
+  components: { VLicenseElements, VLink },
   props: {
     fullLicenseName: String,
     license: String,

@@ -26,9 +26,9 @@
       class="text-sm"
     >
       <template #read-more>
-        <a target="_blank" :href="`${getLicenseDeedLink(license)}`">{{
+        <VLink :href="`${getLicenseDeedLink(license)}`">{{
           $t('filters.license-explanation.more.read-more')
-        }}</a>
+        }}</VLink>
       </template>
       <template #mark>{{ license.toUpperCase() }}</template>
     </i18n>

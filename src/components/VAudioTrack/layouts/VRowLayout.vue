@@ -8,7 +8,7 @@
       :class="isLarge ? 'w-30 me-6' : 'w-20 me-4'"
     >
       <VAudioThumbnail :audio="audio" />
-      <div v-if="isSmall" class="absolute bottom-0 rtl:left-0 ltr:right-0">
+      <div v-show="isSmall" class="absolute bottom-0 rtl:left-0 ltr:right-0">
         <slot name="play-pause" size="tiny" />
       </div>
     </div>
@@ -21,14 +21,14 @@
       }"
     >
       <div class="flex-shrink-0" :class="{ 'w-70': isMedium }">
-        <NuxtLink
-          :to="localePath(`/audio/${audio.id}`)"
+        <VLink
+          :href="`/audio/${audio.id}`"
           class="block font-heading font-semibold line-clamp-2 md:line-clamp-1 text-dark-charcoal hover:text-dark-charcoal p-px rounded-sm focus:outline-none focus:ring focus:ring-pink"
           :class="{
             'text-2xl': isMedium || isLarge,
             'leading-snug': isSmall,
           }"
-          >{{ audio.title }}</NuxtLink
+          >{{ audio.title }}</VLink
         >
 
         <div
@@ -43,11 +43,11 @@
           <div class="part-a">
             <i18n tag="span" path="audio-track.creator">
               <template #creator>{{ audio.creator }}</template> </i18n
-            ><span v-if="isLarge" class="mx-2">{{ $t('interpunct') }}</span>
+            ><span v-show="isLarge" class="mx-2">{{ $t('interpunct') }}</span>
           </div>
 
           <div class="part-b inline-flex flex-row items-center">
-            <span v-if="isSmall">
+            <span v-show="isSmall">
               <span
                 class="inline-block text-dark-charcoal font-semibold bg-dark-charcoal-06 p-1 rounded-sm"
                 >{{ timeFmt(audio.duration) }}</span
@@ -88,12 +88,14 @@ import { useBrowserIsBlink } from '~/composables/use-browser-detection'
 
 import VAudioThumbnail from '~/components/VAudioThumbnail/VAudioThumbnail.vue'
 import VLicense from '~/components/License/VLicense.vue'
+import VLink from '~/components/VLink.vue'
 
 export default defineComponent({
   name: 'VRowLayout',
   components: {
     VAudioThumbnail,
     VLicense,
+    VLink,
   },
   props: ['audio', 'size'],
   setup(props) {
