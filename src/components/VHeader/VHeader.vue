@@ -141,7 +141,9 @@ const VHeader = defineComponent({
     })
 
     /** @type {import('@nuxtjs/composition-api').ComputedRef<number>} */
-    const resultsCount = computed(() => store.getters['media/resultCount'])
+    const resultsCount = computed(
+      () => store.getters['media/totalResultsCount']
+    )
     const { getI18nCount } = useI18nResultsCount()
     /**
      * Additional text at the end of the search bar.

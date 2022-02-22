@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/vue'
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import { ref } from '@nuxtjs/composition-api'
+import { IMAGE } from '@/constants/media'
 
 describe('SearchIndex', () => {
   let options
@@ -28,8 +29,8 @@ describe('SearchIndex', () => {
           namespaced: true,
           getters: {
             fetchState: () => ({ isFetching: false }),
-            resultCount: () => 0,
-            results: () => ({ count: 0 }),
+            totalResultsCount: () => 0,
+            mediaTypeResultCounts: () => ({ [IMAGE]: { count: 0 } }),
           },
         },
       },

@@ -13,7 +13,7 @@
       <template #media>
         <NuxtChild
           :key="$route.path"
-          :media-results="results"
+          :search-result-items="searchResultItems"
           :fetch-state="fetchState"
           :is-filter-visible="isVisible"
           :search-term="query.q"
@@ -66,7 +66,12 @@ const BrowsePage = {
   },
   scrollToTop: false,
   async fetch() {
-    if (this.supported && !this.resultCount && this.query.q.trim() !== '') {
+    // TODO: This probably doesn't fetch when the result count is not 0 for at least one media type
+    if (
+      this.supported &&
+      !this.totalResultsCount &&
+      this.query.q.trim() !== ''
+    ) {
       await this.fetchMedia({})
     }
   },
@@ -81,7 +86,11 @@ const BrowsePage = {
   computed: {
     ...mapState(SEARCH, ['query', 'searchType']),
     ...mapGetters(SEARCH, ['searchQueryParams', 'isAnyFilterApplied']),
-    ...mapGetters(MEDIA, ['results', 'resultCount', 'fetchState']),
+    ...mapGetters(MEDIA, [
+      'searchResultItems',
+      'totalResultsCount',
+      'fetchState',
+    ]),
     mediaType() {
       return this.searchType ?? ALL_MEDIA
     },
@@ -90,7 +99,7 @@ const BrowsePage = {
      * @returns {number}
      */
     resultsCount() {
-      return this.supported ? this.resultCount : 0 ?? 0
+      return this.supported ? this.totalResultsCount : 0 ?? 0
     },
     supported() {
       return supportedSearchTypes.includes(this.searchType)

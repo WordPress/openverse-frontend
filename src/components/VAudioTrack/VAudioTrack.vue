@@ -63,6 +63,7 @@ import {
   PAUSE_ACTIVE_MEDIA_ITEM,
   SET_ACTIVE_MEDIA_ITEM,
 } from '~/constants/mutation-types'
+import { AUDIO } from '~/constants/media'
 
 const propTypes = {
   /**
@@ -241,6 +242,11 @@ export default defineComponent({
      */
     if (localAudio) initLocalAudio()
 
+    const audioIsInSearchResults = (id) => {
+      const currentAudioItems =
+        store.getters[`${MEDIA}/searchResultItems`][AUDIO] ?? []
+      return currentAudioItems.findIndex((item) => item.id === id)
+    }
     onUnmounted(() => {
       if (!localAudio) return
 
@@ -251,13 +257,13 @@ export default defineComponent({
       localAudio.removeEventListener('durationchange', setDuration)
 
       if (
-        route.value.params.id == props.audio.id ||
-        store.getters[`${MEDIA}/results`]?.items?.[props.audio.id]
+        route.value.params.id === props.audio.id ||
+        audioIsInSearchResults(props.audio.id)
       ) {
         /**
          * If switching to any route other than the single result
          * route for this track, pause it. Otherwise, let it keep
-         * playing to introduce a "seamless" feeling beween the
+         * playing to introduce a "seamless" feeling between the
          * search results page and the single result page.
          *
          * This handles going from the search page to the single

@@ -8,14 +8,14 @@ import { MEDIA } from '~/constants/store-modules'
  * @param {import('../pages/search/search-page.types').Props} props
  * @returns {{ onLoadMore: ((function(): Promise<void>)|void), canLoadMore: import('@nuxtjs/composition-api').ComputedRef<boolean>}}
  */
-export const useLoadMore = (props) => {
+export const useLoadMore = ({ searchResultItems, searchTerm }) => {
   const { store } = useContext()
 
   const searchParams = computed(() => {
     const pages = {}
-    Object.keys(props.mediaResults).forEach((key) => {
-      const mediaPage = props.mediaResults[key]?.page || 0
-      pages[key] = mediaPage ? mediaPage + 1 : undefined
+    Object.keys(searchResultItems).forEach((mediaType) => {
+      const mediaPage = store.state.media.results[mediaType].page || 0
+      pages[mediaType] = mediaPage ? mediaPage + 1 : undefined
     })
     return {
       page: pages,
@@ -24,7 +24,7 @@ export const useLoadMore = (props) => {
   })
 
   const canLoadMore = computed(() => {
-    return props.searchTerm.trim() !== ''
+    return searchTerm.trim() !== ''
   })
 
   const onLoadMore = async () => {

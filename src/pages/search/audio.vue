@@ -27,7 +27,6 @@ import {
   defineComponent,
   useContext,
   useMeta,
-  useStore,
 } from '@nuxtjs/composition-api'
 import { useLoadMore } from '~/composables/use-load-more'
 import { isMinScreen } from '~/composables/use-media-query'
@@ -46,15 +45,11 @@ const AudioSearch = defineComponent({
   },
   props: propTypes,
   setup(props) {
-    const store = useStore()
     const { i18n } = useContext()
 
-    const query = computed(() => store.state.search.query.q)
-    useMeta({ title: `${query.value} - ${i18n.t('hero.brand')}` })
+    useMeta({ title: `${props.searchTerm} - ${i18n.t('hero.brand')}` })
 
-    const results = computed(() =>
-      Object.values(props.mediaResults?.audio?.items ?? [])
-    )
+    const results = computed(() => props.searchResultItems?.audio ?? [])
     const isMinScreenMd = isMinScreen('md', { shouldPassInSSR: false })
     const audioTrackSize = computed(() => {
       return !isMinScreenMd.value ? 's' : props.isFilterVisible ? 'l' : 'm'

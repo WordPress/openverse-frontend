@@ -10,7 +10,6 @@
 <script>
 import { propTypes } from '~/pages/search/search-page.types'
 import {
-  useStore,
   computed,
   defineComponent,
   useMeta,
@@ -22,15 +21,12 @@ const ImageSearch = defineComponent({
   name: 'ImageSearch',
   props: propTypes,
   setup(props) {
-    const store = useStore()
     const { i18n } = useContext()
 
-    const query = computed(() => store.state.search.query.q)
-    useMeta({ title: `${query.value} - ${i18n.t('hero.brand')}` })
+    useMeta({ title: `${props.searchTerm} - ${i18n.t('hero.brand')}` })
 
-    const results = computed(() =>
-      Object.values(props.mediaResults?.image?.items ?? [])
-    )
+    const results = computed(() => props.searchResultItems?.image ?? [])
+
     const { canLoadMore, onLoadMore } = useLoadMore(props)
     return { canLoadMore, onLoadMore, results }
   },

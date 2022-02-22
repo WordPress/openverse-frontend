@@ -57,7 +57,7 @@ export default {
       router.push(newPath)
 
       function typeWithoutMedia(mediaType) {
-        return isEmpty(store.getters['media/mediaResults'][mediaType])
+        return isEmpty(store.getters['media/searchResultItems'][mediaType])
       }
 
       const shouldFetchMedia =

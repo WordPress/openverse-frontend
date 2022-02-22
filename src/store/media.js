@@ -42,7 +42,7 @@ export const state = () => ({
       items: {},
     },
   },
-  fetchState: {
+  mediaFetchState: {
     audio: {
       isFetching: false,
       fetchingError: null,
@@ -228,33 +228,44 @@ const actions = createActions()
 
 export const getters = {
   /**
-   * Returns the search result data related for selected media.
-   * @param {import('./types').MediaState} state
+   * Returns an array of media types that correspond to the selected search type. For 'All content',
+   * returns all supported media, for other media type - an array with a single item.
+   * @param state
    * @param getters
-   * @return {import('./types').MediaStoreResult[] | {'audio': import('./types').MediaStoreResult, 'image': import('./types').MediaStoreResult}}
+   * @returns {('image'|'audio'|'video')[]}
    */
-  results(state, getters) {
-    if (getters.searchType === ALL_MEDIA) {
-      return { [IMAGE]: state.results[IMAGE], [AUDIO]: state.results[AUDIO] }
-    } else {
-      return getters.searchType
-        ? { [getters.searchType]: state.results[getters.searchType] }
-        : {}
-    }
+  currentMediaTypes(state, getters) {
+    return getters.searchType === ALL_MEDIA
+      ? [IMAGE, AUDIO]
+      : [getters.searchType]
   },
-  mediaResults(state, getters) {
-    if (getters.searchType === ALL_MEDIA) {
-      return {
-        [IMAGE]: state.results[IMAGE].items,
-        [AUDIO]: state.results[AUDIO].items,
-      }
-    } else {
-      return {
-        [getters.searchType]: state.results[getters.searchType].items ?? {},
-      }
-    }
+  /**
+   * For use in the VContentLink: returns the object with media type and corresponding result count.
+   * @param state
+   * @param getters
+   * @returns {{[ key: 'audio'|'image'|'video']: number}}
+   */
+  mediaTypeResultCounts(state, getters) {
+    // TODO: remove Object.values after converting items to an array
+    return getters.currentMediaTypes.reduce(
+      (acc, mediaType) => ({
+        ...acc,
+        [mediaType]: state.results[mediaType].count,
+      }),
+      {}
+    )
   },
-  resultCount(state, getters) {
+  searchResultItems(state, getters) {
+    // TODO: remove Object.values after converting items to an array
+    return getters.currentMediaTypes.reduce(
+      (acc, mediaType) => ({
+        ...acc,
+        [mediaType]: Object.values(state.results[mediaType].items),
+      }),
+      {}
+    )
+  },
+  totalResultsCount(state, getters) {
     if (getters.searchType === ALL_MEDIA) {
       /**
        * API returns 10 000 if there are more than 10 000 results,
@@ -278,18 +289,18 @@ export const getters = {
     if (getters.searchType === ALL_MEDIA) {
       return {
         isFetching:
-          state.fetchState[AUDIO].isFetching ||
-          state.fetchState[IMAGE].isFetching,
+          state.mediaFetchState[AUDIO].isFetching ||
+          state.mediaFetchState[IMAGE].isFetching,
         fetchError:
-          state.fetchState[AUDIO].fetchError ||
-          state.fetchState[IMAGE].fetchError,
+          state.mediaFetchState[AUDIO].fetchError ||
+          state.mediaFetchState[IMAGE].fetchError,
         isFinished:
-          state.fetchState[AUDIO].isFinished &&
-          state.fetchState[IMAGE].isFinished,
+          state.mediaFetchState[AUDIO].isFinished &&
+          state.mediaFetchState[IMAGE].isFinished,
       }
     } else {
       return (
-        state.fetchState[getters.searchType] || {
+        state.mediaFetchState[getters.searchType] || {
           isFetching: false,
           fetchError: false,
           isFinished: true,
@@ -297,8 +308,20 @@ export const getters = {
       )
     }
   },
+  /**
+   * Returns the currently selected search type. This can include 'All Content', as well as the media types.
+   * @param state
+   * @param getters
+   * @param rootState
+   * @returns {'audio'|'image'|'all'|'video'}
+   */
   searchType(state, getters, rootState) {
     return rootState.search.searchType
+  },
+  getAudioById: (state) => (id) => {
+    // TODO: use find after converting items to an array
+    return state.results.audio.items[id]
+    // return state.results.audio.items.find((item) => item.id === id)
   },
 }
 
@@ -309,9 +332,9 @@ export const mutations = {
    * @param {import('./types').MediaType} mediaType
    */
   [FETCH_START_MEDIA](_state, { mediaType }) {
-    _state.fetchState[mediaType].isFetching = true
-    _state.fetchState[mediaType].fetchingError = null
-    _state.fetchState[mediaType].isFinished = false
+    _state.mediaFetchState[mediaType].isFetching = true
+    _state.mediaFetchState[mediaType].fetchingError = null
+    _state.mediaFetchState[mediaType].isFinished = false
   },
   /**
    * Sets the fetchState.isFetching to false for all passed mediaTypes at the end of fetching.
@@ -320,13 +343,13 @@ export const mutations = {
    * @param {import('./types').MediaType} params.mediaType
    */
   [FETCH_END_MEDIA](_state, { mediaType }) {
-    _state.fetchState[mediaType].isFetching = false
+    _state.mediaFetchState[mediaType].isFetching = false
   },
   [FETCH_MEDIA_ERROR](_state, params) {
     const { mediaType, errorMessage } = params
-    _state.fetchState[mediaType].isFetching = false
-    _state.fetchState[mediaType].fetchingError = errorMessage
-    _state.fetchState[mediaType].isFinished = true
+    _state.mediaFetchState[mediaType].isFetching = false
+    _state.mediaFetchState[mediaType].fetchingError = errorMessage
+    _state.mediaFetchState[mediaType].isFinished = true
   },
   [SET_MEDIA_ITEM](_state, params) {
     const { item, mediaType } = params
@@ -352,7 +375,7 @@ export const mutations = {
     _state.results[mediaType].count = mediaCount || 0
     _state.results[mediaType].page = mediaPage
     _state.results[mediaType].pageCount = pageCount
-    _state.fetchState[mediaType].isFinished = mediaPage >= pageCount
+    _state.mediaFetchState[mediaType].isFinished = mediaPage >= pageCount
   },
   [MEDIA_NOT_FOUND](_state, params) {
     throw new Error(`Media of type ${params.mediaType} not found`)

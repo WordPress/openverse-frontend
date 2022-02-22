@@ -13,7 +13,7 @@
 <script>
 import { useStore, useRoute, watch, computed } from '@nuxtjs/composition-api'
 
-import { ACTIVE } from '~/constants/store-modules'
+import { ACTIVE, MEDIA } from '~/constants/store-modules'
 import {
   SET_MESSAGE,
   EJECT_ACTIVE_MEDIA_ITEM,
@@ -35,7 +35,7 @@ export default {
     const audio = computed(() => {
       const trackId = store.state.active.id
       if (trackId) {
-        return store.state.media.results.audio.items[trackId]
+        return store.getters[`${MEDIA}/getAudioById`](trackId)
       }
       return null
     })

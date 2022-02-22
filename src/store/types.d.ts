@@ -146,7 +146,7 @@ export interface MediaState {
     audio: MediaStoreResult<'audio'>
     image: MediaStoreResult<'image'>
   }
-  fetchState: {
+  mediaFetchState: {
     audio: FetchState
     image: FetchState
   }
