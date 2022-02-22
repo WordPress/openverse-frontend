@@ -296,7 +296,7 @@
       "title": "Image type",
       "photograph": "Photographs",
       "illustration": "Illustrations",
-      "digitized-artwork": "Digitized Artworks"
+      "digitized_artwork": "Digitized Artworks"
     },
     "audio-extensions": {
       "title": "File type",
@@ -336,7 +336,7 @@
     "creator": {
       "title": "Search by Creator"
     },
-    "searchBy": {
+    "search-by": {
       "title": "Search By",
       "creator": "Creator"
     },
@@ -600,7 +600,7 @@
     }
   },
   "migration-notice": {
-    "intro": "CC Search is now called {openverse} and joins {wordpress} as an open source project.",
+    "intro": "{cc-search} is now called {openverse} and joins {wordpress} as an open source project.",
     "more": "{read-more} about this announcement.",
     "read": "Read more"
   },

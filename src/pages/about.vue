@@ -11,9 +11,11 @@
           </p>
 
           <i18n path="about.collection.content" tag="p">
+            <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
+            <template #openverse>Openverse</template>
             <template #common-crawl>
               <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
-              <a href="http://commoncrawl.org/">Common Crawl</a>
+              <VLink href="http://commoncrawl.org/">Common Crawl</VLink>
             </template>
           </i18n>
 
@@ -21,36 +23,34 @@
             <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
             <template #openverse>Openverse</template>
             <template #meta>
-              <NuxtLink :to="localePath('/meta-search')">{{
-                $t('about.planning.meta')
-              }}</NuxtLink>
+              <VLink href="/meta-search">{{ $t('about.planning.meta') }}</VLink>
             </template>
             <template #search>
               <!-- eslint-disable @intlify/vue-i18n/no-raw-text -->
-              <a href="https://github.com/wordpress/openverse-frontend/"
-                >Openverse</a
-              >
+              <VLink href="https://github.com/wordpress/openverse-frontend/">{{
+                $t('about.planning.meta')
+              }}</VLink>
               <!-- eslint-enable @intlify/vue-i18n/no-raw-text -->
             </template>
             <template #api>
-              <a href="https://github.com/wordpress/openverse-api/">{{
+              <VLink href="https://github.com/wordpress/openverse-api/">{{
                 $t('about.planning.api', { openverse: 'Openverse' })
-              }}</a>
+              }}</VLink>
             </template>
             <template #catalog>
-              <a href="https://github.com/wordpress/openverse-catalog/">{{
+              <VLink href="https://github.com/wordpress/openverse-catalog/">{{
                 $t('about.planning.catalog', { openverse: 'Openverse' })
-              }}</a>
+              }}</VLink>
             </template>
             <template #community>
-              <a href="https://make.wordpress.org/openverse/">{{
+              <VLink href="https://make.wordpress.org/openverse/">{{
                 $t('about.planning.community')
-              }}</a>
+              }}</VLink>
             </template>
             <template #working>
-              <a href="https://github.com/orgs/WordPress/projects/3">{{
+              <VLink href="https://github.com/orgs/WordPress/projects/3">{{
                 $t('about.planning.working')
-              }}</a>
+              }}</VLink>
             </template>
           </i18n>
 
@@ -58,14 +58,15 @@
           <i18n path="about.transfer.content" tag="p">
             <template #openverse>Openverse</template>
             <template #creative-commons>
-              <a
+              <VLink
                 href="https://creativecommons.org/2021/05/03/cc-search-to-join-wordpress/"
-                >Creative Commons</a
+                >Creative Commons</VLink
               >
             </template>
             <template #wordpress>
-              <a href="https://ma.tt/2021/04/cc-search-to-join-wordpress-org/"
-                >WordPress</a
+              <VLink
+                href="https://ma.tt/2021/04/cc-search-to-join-wordpress-org/"
+                >WordPress</VLink
               >
             </template>
           </i18n>
@@ -75,9 +76,9 @@
             <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
             <template #openverse>Openverse</template>
             <template #terms>
-              <a href="https://creativecommons.org/terms/">{{
+              <VLink href="https://creativecommons.org/terms/">{{
                 $t('about.declaration.terms', { openverse: 'Openverse' })
-              }}</a>
+              }}</VLink>
             </template>
           </i18n>
         </div>
@@ -87,8 +88,12 @@
 </template>
 
 <script>
-const AboutPage = {
-  name: 'about-page',
+import VLink from '~/components/VLink.vue'
+import { defineComponent } from '@nuxtjs/composition-api'
+
+const AboutPage = defineComponent({
+  name: 'AboutPage',
+  components: { VLink },
   head() {
     return {
       title: `${this.$t('about.title', {
@@ -96,7 +101,7 @@ const AboutPage = {
       })} | Openverse`,
     }
   },
-}
+})
 
 export default AboutPage
 </script>

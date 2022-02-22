@@ -1,18 +1,18 @@
 <template>
-  <VNoticeBar>
+  <VNoticeBar class="cc-ov-migration">
     {{
       $t('migration-notice.intro', {
+        'cc-search': 'CC Search',
         openverse: 'Openverse',
         wordpress: 'WordPress',
       })
     }}
     <i18n tag="span" path="migration-notice.more">
       <template #read-more>
-        <a
+        <VLink
           class="text-dark-blue hover:text-dark-blue underline"
           href="https://wordpress.org/news/2021/05/welcome-to-openverse/"
-          target="_blank"
-          >{{ $t('migration-notice.read') }}</a
+          >{{ $t('migration-notice.read') }}</VLink
         >
       </template>
     </i18n>
@@ -21,9 +21,10 @@
 
 <script>
 import VNoticeBar from '~/components/VNoticeBar/VNoticeBar.vue'
+import VLink from '~/components/VLink.vue'
 
 export default {
   name: 'VMigrationNotice',
-  components: { VNoticeBar },
+  components: { VLink, VNoticeBar },
 }
 </script>

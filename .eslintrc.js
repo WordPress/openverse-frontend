@@ -5,7 +5,7 @@ module.exports = {
     node: true,
   },
   parserOptions: {
-    parser: '@babel/eslint-parser',
+    parser: '@typescript-eslint/parser',
   },
   extends: [
     'eslint:recommended',
@@ -49,6 +49,26 @@ module.exports = {
     'vuejs-accessibility/label-has-for': [
       'warn',
       { required: { some: ['nesting', 'id'] } },
+    ],
+    /**
+     * Custom rule to disallow raw `<a></a>` tag usage.
+     * Learn more about vue-eslint-parser's AST syntax:
+     * https://github.com/vuejs/vue-eslint-parser/blob/master/docs/ast.md
+     */
+    'vue/no-restricted-syntax': [
+      'error',
+      {
+        selector: 'VElement[name="a"]',
+        message: 'Use the <VLink> component instead of a raw <a> tag.',
+      },
+      {
+        selector: 'VElement[name="nuxtlink"]',
+        message: 'Use the <VLink> component instead of <NuxtLink>.',
+      },
+      {
+        selector: 'VElement[name="routerlink"]',
+        message: 'Use the <VLink> component instead of <RouterLink>.',
+      },
     ],
     'unicorn/filename-case': ['error', { case: 'kebabCase' }],
   },

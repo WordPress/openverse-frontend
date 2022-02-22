@@ -1,6 +1,6 @@
 <template>
   <main class="bg-yellow h-screen relative page-404 overflow-x-hidden">
-    <NuxtLink to="/" class="relative z-10 text-dark-charcoal">
+    <VLink href="/" class="relative z-10 text-dark-charcoal">
       <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
       <span class="sr-only">Openverse</span>
       <span
@@ -10,7 +10,7 @@
         <OpenverseLogo />
         <OpenverseBrand class="ms-1" />
       </span>
-    </NuxtLink>
+    </VLink>
     <Oops
       aria-hidden="true"
       class="absolute opacity-5 fill-dark-charcoal -mt-[10%] -ml-[20%] lg:mx-auto w-[140%] lg:w-full px-6 lg:px-16 z-0 pointer-events-none"
@@ -25,10 +25,10 @@
         <i18n path="404.main">
           <template #link>
             <!-- eslint-disable @intlify/vue-i18n/no-raw-text -->
-            <NuxtLink
+            <VLink
               class="underline text-current hover:text-current active:text-current"
-              to="/"
-              >Openverse</NuxtLink
+              href="/"
+              >Openverse</VLink
             >
             <!-- eslint-enable @intlify/vue-i18n/no-raw-text -->
           </template>

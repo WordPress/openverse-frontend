@@ -15,29 +15,25 @@
           <i18n path="sources.cc-content.provider" tag="p" class="my-4">
             <template #flickr>
               <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
-              <a aria-label="flickr" href="https://www.flickr.com/">Flickr</a>
+              <VLink href="https://www.flickr.com/">Flickr</VLink>
             </template>
             <template #smithsonian>
-              <a aria-label="smithsonian" href="https://www.si.edu/">{{
+              <VLink href="https://www.si.edu/">{{
                 $t('sources.cc-content.smithsonian')
-              }}</a>
+              }}</VLink>
             </template>
           </i18n>
           <i18n path="sources.cc-content.europeana" tag="p" class="my-4">
-            <!-- eslint-disable @intlify/vue-i18n/no-raw-text -->
+            <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
             <template #openverse>Openverse</template>
             <template #link>
-              <a aria-label="europeana" href="https://www.europeana.eu/en"
-                >Europeana</a
-              >
+              <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
+              <VLink href="https://www.europeana.eu/en">Europeana</VLink>
             </template>
-            <!-- eslint-enable @intlify/vue-i18n/no-raw-text -->
             <template #link-api>
-              <a
-                aria-label="europeana-api"
-                href="https://pro.europeana.eu/page/apis"
-                >{{ $t('sources.cc-content.europeana-api') }}</a
-              >
+              <VLink href="https://pro.europeana.eu/page/apis">{{
+                $t('sources.cc-content.europeana-api')
+              }}</VLink>
             </template>
           </i18n>
         </div>
@@ -66,15 +62,13 @@
         <h3 class="text-2xl my-4">
           {{ $t('sources.suggestions') }}
         </h3>
-        <a
+        <VLink
           href="https://github.com/WordPress/openverse-catalog/issues/new?assignees=&labels=%F0%9F%9A%A6+status%3A+awaiting+triage%2C+%F0%9F%A7%B9+status%3A+ticket+work+required%2C+%E2%98%81%EF%B8%8F+provider%3A+any&template=new-source-suggestion.md&title=%5BSource+Suggestion%5D+Insert+source+name+here"
           class="button is-primary py-8"
-          target="_blank"
-          rel="noopener noreferrer"
         >
           {{ $t('sources.issue-button') }}
           <i class="icon external-link mx-2 mt-2" />
-        </a>
+        </VLink>
       </div>
       <i18n path="sources.detail" tag="p">
         <template #single-name>
@@ -125,14 +119,14 @@
         <tbody>
           <tr v-for="(imageProvider, index) in sortedProviders" :key="index">
             <td class="font-semibold">
-              <a :href="`/search?source=${imageProvider.source_name}`">
+              <VLink :href="`/search?source=${imageProvider.source_name}`">
                 {{ imageProvider.display_name }}
-              </a>
+              </VLink>
             </td>
             <td class="font-semibold">
-              <a :href="imageProvider.source_url">
+              <VLink :href="imageProvider.source_url">
                 {{ imageProvider.source_url }}
-              </a>
+              </VLink>
             </td>
             <td class="number-cell font-semibold">
               {{ getLocaleFormattedNumber(imageProvider.media_count || 0) }}
@@ -149,9 +143,11 @@ import sortBy from 'lodash.sortby'
 import { mapState } from 'vuex'
 import { PROVIDER } from '~/constants/store-modules'
 import { useGetLocaleFormattedNumber } from '~/composables/use-get-locale-formatted-number'
+import VLink from '~/components/VLink.vue'
 
 const SourcePage = {
   name: 'source-page',
+  components: { VLink },
   data() {
     return {
       sort: {

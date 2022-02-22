@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-02-18T21:17:36+00:00\n"
+"POT-Creation-Date: 2022-02-22T21:03:20+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -39,17 +39,17 @@ msgctxt "search-type.video"
 msgid "Videos"
 msgstr ""
 
-#: src/components/VContentSwitcher/VContentSwitcherPopover.vue:5
+#: src/components/VContentSwitcher/VSearchTypePopover.vue:5
 msgctxt "search-type.label"
 msgid "Type of content to search"
 msgstr ""
 
-#: src/components/VContentSwitcher/VContentTypes.vue:6
+#: src/components/VContentSwitcher/VSearchTypes.vue:6
 msgctxt "search-type.heading"
 msgid "Content types"
 msgstr ""
 
-#: src/components/VContentSwitcher/VContentItem.vue:13
+#: src/components/VContentSwitcher/VSearchTypeItem.vue:11
 msgctxt "search-type.status-beta"
 msgid "Beta"
 msgstr ""
@@ -78,18 +78,18 @@ msgid "Select the download file format"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/MigrationNotice.vue:4
+#: src/components/VMigrationNotice.vue:4
 msgctxt "migration-notice.intro"
-msgid "CC Search is now called ###openverse### and joins ###wordpress### as an open source project."
+msgid "###cc-search### is now called ###openverse### and joins ###wordpress### as an open source project."
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/MigrationNotice.vue:9
+#: src/components/VMigrationNotice.vue:10
 msgctxt "migration-notice.more"
 msgid "###read-more### about this announcement."
 msgstr ""
 
-#: src/components/MigrationNotice.vue:15
+#: src/components/VMigrationNotice.vue:15
 msgctxt "migration-notice.read"
 msgid "Read more"
 msgstr ""
@@ -211,7 +211,7 @@ msgctxt "audio-track.creator"
 msgid "by ###creator###"
 msgstr ""
 
-#: src/components/VAudioTrack/layouts/VRowLayout.vue:108
+#: src/components/VAudioTrack/layouts/VRowLayout.vue:110
 msgctxt "audio-track.messages.blink_seek_disabled"
 msgid "Seeking for Jamendo tracks is limited to Firefox and Safari."
 msgstr ""
@@ -237,7 +237,7 @@ msgid "Loading..."
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VAudioThumbnail/VAudioThumbnail.vue:102
+#: src/components/VAudioThumbnail/VAudioThumbnail.vue:54
 msgctxt "audio-thumbnail.alt"
 msgid "Cover art for \"###title###\" by ###creator###"
 msgstr ""
@@ -283,7 +283,7 @@ msgid "###openverse### does not yet support built-in ###type### search."
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/meta-search.vue:46
+#: src/pages/meta-search.vue:44
 msgctxt "meta-search.form.supported-title"
 msgid "Not finding what you're looking for? Try additional ###type### sources."
 msgstr ""
@@ -325,47 +325,47 @@ msgctxt "audio-details.genre-label"
 msgid "Genre"
 msgstr ""
 
-#: src/components/AudioDetails/VRelatedAudio.vue:2
+#: src/components/VAudioDetails/VRelatedAudio.vue:2
 msgctxt "audio-details.related-audios"
 msgid "Related audio"
 msgstr ""
 
-#: src/components/AudioDetails/VAudioDetails.vue:4
+#: src/components/VAudioDetails/VAudioDetails.vue:4
 msgctxt "audio-details.information"
 msgid "Audio information"
 msgstr ""
 
-#: src/components/AudioDetails/VAudioDetails.vue:23
+#: src/components/VAudioDetails/VAudioDetails.vue:23
 msgctxt "audio-details.table.album"
 msgid "Album"
 msgstr ""
 
-#: src/components/AudioDetails/VAudioDetails.vue:29
+#: src/components/VAudioDetails/VAudioDetails.vue:31
 msgctxt "audio-details.table.category"
 msgid "Type"
 msgstr ""
 
-#: src/components/AudioDetails/VAudioDetails.vue:36
+#: src/components/VAudioDetails/VAudioDetails.vue:38
 msgctxt "audio-details.table.sample-rate"
 msgid "Sample Rate"
 msgstr ""
 
-#: src/components/AudioDetails/VAudioDetails.vue:44
+#: src/components/VAudioDetails/VAudioDetails.vue:46
 msgctxt "audio-details.table.filetype"
 msgid "Format"
 msgstr ""
 
-#: src/components/AudioDetails/VAudioDetails.vue:52
+#: src/components/VAudioDetails/VAudioDetails.vue:54
 msgctxt "audio-details.table.provider"
 msgid "Provider"
 msgstr ""
 
-#: src/components/AudioDetails/VAudioDetails.vue:66
+#: src/components/VAudioDetails/VAudioDetails.vue:64
 msgctxt "audio-details.table.source"
 msgid "Source"
 msgstr ""
 
-#: src/components/AudioDetails/VAudioDetails.vue:74
+#: src/components/VAudioDetails/VAudioDetails.vue:72
 msgctxt "audio-details.table.genre"
 msgid "Genre"
 msgstr ""
@@ -406,7 +406,7 @@ msgctxt "image-details.information.provider"
 msgid "Provider"
 msgstr ""
 
-#: src/components/VImageDetails/VImageDetails.vue:39
+#: src/components/VImageDetails/VImageDetails.vue:35
 msgctxt "image-details.information.dimensions"
 msgid "Dimensions"
 msgstr ""
@@ -416,12 +416,12 @@ msgctxt "image-details.information.source"
 msgid "Source"
 msgstr ""
 
-#: src/components/VImageDetails/VImageDetails.vue:43
+#: src/components/VImageDetails/VImageDetails.vue:39
 msgctxt "image-details.information.pixels"
 msgid "pixels"
 msgstr ""
 
-#: src/components/VImageDetails/VImageDetails.vue:84
+#: src/components/VImageDetails/VImageDetails.vue:80
 msgctxt "image-details.information.unknown"
 msgid "Unknown"
 msgstr ""
@@ -443,7 +443,7 @@ msgctxt "media-details.loading"
 msgid "Loading..."
 msgstr ""
 
-#: src/components/AudioDetails/VRelatedAudio.vue:17
+#: src/components/VAudioDetails/VRelatedAudio.vue:17
 msgctxt "media-details.related-error"
 msgid "Error fetching related media"
 msgstr ""
@@ -466,12 +466,12 @@ msgctxt "media-details.content-report.long"
 msgid "Report this content"
 msgstr ""
 
-#: src/components/VContentReport/VContentReportForm.vue:26
+#: src/components/VContentReport/VContentReportForm.vue:22
 msgctxt "media-details.content-report.failure.title"
 msgid "Report could not be submitted"
 msgstr ""
 
-#: src/components/VContentReport/VContentReportForm.vue:29
+#: src/components/VContentReport/VContentReportForm.vue:25
 msgctxt "media-details.content-report.failure.note"
 msgid "Something went wrong, please try again after some time."
 msgstr ""
@@ -488,7 +488,7 @@ msgid "Thank you for reporting this content. We recommend doing the same at the 
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VContentReport/VContentReportForm.vue:40
+#: src/components/VContentReport/VContentReportForm.vue:37
 msgctxt "media-details.content-report.form.disclaimer"
 msgid "For security purposes, ###openverse### collects and retains anonymized IP addresses of those who complete and submit this form."
 msgstr ""
@@ -563,12 +563,12 @@ msgctxt "media-details.aria.creator-url"
 msgid "author ###name###"
 msgstr ""
 
-#: src/components/VMediaInfo/VMediaLicense.vue:32
+#: src/components/VMediaInfo/VMediaLicense.vue:27
 msgctxt "media-details.aria.attribution.license"
 msgid "read more about the license"
 msgstr ""
 
-#: src/components/VMediaInfo/VMediaLicense.vue:51
+#: src/components/VMediaInfo/VMediaLicense.vue:44
 msgctxt "media-details.aria.attribution.tool"
 msgid "read more about the tool"
 msgstr ""
@@ -634,55 +634,55 @@ msgid "\"###title###\"###creator######marked-licensed######license######view-leg
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VMediaInfo/VCopyLicense.vue:55
+#: src/components/VMediaInfo/VCopyLicense.vue:53
 msgctxt "media-details.reuse.credit.creator-text"
 msgid " by ###creator-name###"
 msgstr ""
 
-#: src/components/VMediaInfo/VCopyLicense.vue:77
+#: src/components/VMediaInfo/VCopyLicense.vue:73
 msgctxt "media-details.reuse.credit.marked"
 msgid "is marked with"
 msgstr ""
 
-#: src/components/VMediaInfo/VCopyLicense.vue:78
+#: src/components/VMediaInfo/VCopyLicense.vue:74
 msgctxt "media-details.reuse.credit.licensed"
 msgid "is licensed under"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VMediaInfo/VCopyLicense.vue:126
+#: src/components/VMediaInfo/VCopyLicense.vue:119
 msgctxt "media-details.reuse.credit.view-legal-text"
 msgid ". To view ###terms-copy###visit ###URL###"
 msgstr ""
 
-#: src/components/VMediaInfo/VCopyLicense.vue:130
+#: src/components/VMediaInfo/VCopyLicense.vue:123
 msgctxt "media-details.reuse.credit.terms-text"
 msgid "the terms,"
 msgstr ""
 
-#: src/components/VMediaInfo/VCopyLicense.vue:131
+#: src/components/VMediaInfo/VCopyLicense.vue:124
 msgctxt "media-details.reuse.credit.copy-text"
 msgid "a copy of this license,"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VMediaInfo/VMediaLicense.vue:44
+#: src/components/VMediaInfo/VMediaLicense.vue:37
 msgctxt "media-details.reuse.tool.content"
 msgid "Read more about the tool ###link###."
 msgstr ""
 
-#: src/components/VMediaInfo/VMediaLicense.vue:56
+#: src/components/VMediaInfo/VMediaLicense.vue:47
 msgctxt "media-details.reuse.tool.link"
 msgid "here"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VMediaInfo/VMediaLicense.vue:24
+#: src/components/VMediaInfo/VMediaLicense.vue:19
 msgctxt "media-details.reuse.license.content"
 msgid "Read more about the license ###link###"
 msgstr ""
 
-#: src/components/VMediaInfo/VMediaLicense.vue:37
+#: src/components/VMediaInfo/VMediaLicense.vue:30
 msgctxt "media-details.reuse.license.link"
 msgid "here"
 msgstr ""
@@ -789,7 +789,7 @@ msgctxt "browse-page.search-form.image"
 msgid "images"
 msgstr ""
 
-#: src/components/VAllResultsGrid/VAllResultsGrid.vue:134
+#: src/components/VAllResultsGrid/VAllResultsGrid.vue:146
 msgctxt "browse-page.search-form.audio"
 msgid "audio"
 msgstr ""
@@ -882,11 +882,11 @@ msgid "here"
 msgstr ""
 
 #: src/components/VFilters/VFilterChecklist.vue:74
-msgctxt "filters.searchBy.title"
+msgctxt "filters.search-by.title"
 msgid "Search By"
 msgstr ""
 
-msgctxt "filters.searchBy.creator"
+msgctxt "filters.search-by.creator"
 msgid "Creator"
 msgstr ""
 
@@ -998,7 +998,7 @@ msgctxt "filters.image-categories.illustration"
 msgid "Illustrations"
 msgstr ""
 
-msgctxt "filters.image-categories.digitized-artwork"
+msgctxt "filters.image-categories.digitized_artwork"
 msgid "Digitized Artworks"
 msgstr ""
 
@@ -1156,7 +1156,7 @@ msgctxt "feedback.report"
 msgid "Report a Bug"
 msgstr ""
 
-#: src/pages/feedback.vue:56
+#: src/pages/feedback.vue:54
 msgctxt "feedback.loading"
 msgid "Loading..."
 msgstr ""
@@ -1440,138 +1440,138 @@ msgctxt "meta-search-page.intro"
 msgid "###openverse### is built on top of a catalog that indexes CC-licensed and public domain content from selected sources. Learn more about our ###link###."
 msgstr ""
 
-#: src/pages/meta-search.vue:15
+#: src/pages/meta-search.vue:14
 msgctxt "meta-search-page.link"
 msgid "sources"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/meta-search.vue:19
+#: src/pages/meta-search.vue:17
 msgctxt "meta-search-page.license"
 msgid "The internet is a big place! There are plenty of search portals and collections, hosting CC-licensed and public domain content, which we aren’t able to index or surface results from within the ###openverse### interface. These are important sources of CC-licensed and public domain content, and we want to make sure that you are able to find the best openly licensed materials possible, regardless of where they are located."
 msgstr ""
 
-#: src/pages/meta-search.vue:21
+#: src/pages/meta-search.vue:19
 msgctxt "meta-search-page.content"
 msgid "What content types can I search for using the Meta Search feature?"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/meta-search.vue:24
+#: src/pages/meta-search.vue:22
 msgctxt "meta-search-page.content-types"
 msgid "Meta Search on ###openverse### currently supports image, audio, and video search on external sites."
 msgstr ""
 
-#: src/pages/meta-search.vue:55
+#: src/pages/meta-search.vue:53
 msgctxt "meta-search-page.use"
 msgid " Use "
 msgstr ""
 
-#: src/pages/meta-search.vue:109
+#: src/pages/meta-search.vue:107
 msgctxt "meta-search-page.why.title"
 msgid "Why did you build this?"
 msgstr ""
 
-#: src/pages/meta-search.vue:111
+#: src/pages/meta-search.vue:109
 msgctxt "meta-search-page.why.content"
 msgid "For many years, CC has offered its users a dedicated search portal for searching platforms that have CC licensing filters built in. These platforms included Europeana, Google Images, Flickr, Jamendo, Open Clip Art Library, SpinXpress, Wikimedia Commons, YouTube, ccMixter, and SoundCloud. The search experience looked like this:"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/meta-search.vue:113
+#: src/pages/meta-search.vue:111
 msgctxt "meta-search-page.why.new"
 msgid "For users of the legacy CC Meta Search site, the Meta Search feature on ###openverse### will look familiar. The goal was to ensure that the functionality is not lost, but is updated and embedded within our new search engine for openly licensed content. In addition, the Meta Search feature builds on this functionality, allowing us to quickly add new sources to Meta Search as we discover them, and support new content types in the future, as we expand."
 msgstr ""
 
-#: src/pages/meta-search.vue:118
+#: src/pages/meta-search.vue:116
 msgctxt "meta-search-page.why.aria-label"
 msgid "feedback"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/meta-search.vue:115
+#: src/pages/meta-search.vue:113
 msgctxt "meta-search-page.why.feedback-suggestions"
 msgid "We hope you enjoy, and if you have suggestions for improvement, leave us ###feedback###."
 msgstr ""
 
-#: src/pages/meta-search.vue:120
+#: src/pages/meta-search.vue:118
 msgctxt "meta-search-page.why.feedback-link"
 msgid "feedback"
 msgstr ""
 
-#: src/pages/meta-search.vue:92
+#: src/pages/meta-search.vue:90
 msgctxt "meta-search-page.new.title"
 msgid "Can I suggest new sources for Meta Search?"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/meta-search.vue:94
+#: src/pages/meta-search.vue:92
 msgctxt "meta-search-page.new.content"
 msgid "Yes, please! Create an ###issue### in our GitHub repository or send us an ###email### and tell us about the new sources you’d like to see included."
 msgstr ""
 
-#: src/pages/meta-search.vue:99
+#: src/pages/meta-search.vue:97
 msgctxt "meta-search-page.new.issue"
 msgid "issue"
 msgstr ""
 
-#: src/pages/meta-search.vue:104
+#: src/pages/meta-search.vue:102
 msgctxt "meta-search-page.new.email"
 msgid "email"
 msgstr ""
 
-#: src/pages/meta-search.vue:72
+#: src/pages/meta-search.vue:70
 msgctxt "meta-search-page.audio-video.title"
 msgid "How does the Meta Search feature work for non-indexed media types?"
 msgstr ""
 
-#: src/pages/meta-search.vue:86
+#: src/pages/meta-search.vue:84
 msgctxt "meta-search-page.audio-video.demo-label"
 msgid "Layout of Meta Search for non-indexed media type, like video"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/meta-search.vue:76
+#: src/pages/meta-search.vue:74
 msgctxt "meta-search-page.audio-video.content"
 msgid "###openverse### does not yet support built-in search for some media types, such as videos. For these media types, click on the appropriate tab and you’ll see sources where you can find CC-licensed content."
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/meta-search.vue:79
+#: src/pages/meta-search.vue:77
 msgctxt "meta-search-page.audio-video.filter"
 msgid "The Filters bar on the left includes the ###use### filter, which may be supported by some meta search sources. Apply these before clicking on the button for the external source you’d like to search."
 msgstr ""
 
-#: src/pages/meta-search.vue:28
+#: src/pages/meta-search.vue:26
 msgctxt "meta-search-page.images.title"
 msgid "How does the Meta Search feature work for indexed media types?"
 msgstr ""
 
-#: src/pages/meta-search.vue:65
+#: src/pages/meta-search.vue:63
 msgctxt "meta-search-page.images.demo-label"
 msgid "Layout of Meta Search for indexed media type, like images"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/meta-search.vue:31
+#: src/pages/meta-search.vue:29
 msgctxt "meta-search-page.images.content"
 msgid "###openverse### supports built-in search for some media types, such as images. When you enter a query on the ###openverse### homepage, a page of results will be displayed. Scrolling to the bottom of the page, you have two choices:"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/meta-search.vue:36
+#: src/pages/meta-search.vue:34
 msgctxt "meta-search-page.images.continue"
 msgid "###load-more###, and continue browsing in ###openverse###."
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/meta-search.vue:43
+#: src/pages/meta-search.vue:41
 msgctxt "meta-search-page.images.not-finding"
 msgid "See the section “###not-finding###” below the results."
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/meta-search.vue:53
+#: src/pages/meta-search.vue:51
 msgctxt "meta-search-page.images.info"
 msgid "The “###not-finding###” section lists other sources of CC-licensed and public domain content. Your search query will be preloaded, and if supported, you can select a ###use### filter to proactively filter your results. Click on the button for the external source you’d like to search, and your results will open in a new tab."
 msgstr ""
@@ -1582,52 +1582,52 @@ msgid "Sources"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/sources.vue:79
+#: src/pages/sources.vue:73
 msgctxt "sources.detail"
 msgid "Clicking on a ###single-name### allows you to browse and filter items within that source."
 msgstr ""
 
-#: src/pages/sources.vue:82
+#: src/pages/sources.vue:76
 msgctxt "sources.single-name"
 msgid "Source"
 msgstr ""
 
-#: src/pages/sources.vue:67
+#: src/pages/sources.vue:63
 msgctxt "sources.suggestions"
 msgid "We appreciate suggestions for new sources from our community of users."
 msgstr ""
 
-#: src/pages/sources.vue:75
+#: src/pages/sources.vue:69
 msgctxt "sources.issue-button"
 msgid "Suggest a new source"
 msgstr ""
 
-#: src/pages/sources.vue:87
+#: src/pages/sources.vue:81
 msgctxt "sources.aria.table"
 msgid "sources table"
 msgstr ""
 
-#: src/pages/sources.vue:46
+#: src/pages/sources.vue:42
 msgctxt "sources.new-content.next"
 msgid "How do we decide what sources to add next?"
 msgstr ""
 
-#: src/pages/sources.vue:49
+#: src/pages/sources.vue:45
 msgctxt "sources.new-content.integrate"
 msgid "We have a never ending list of possible sources to research prior to integration. We ask ourselves questions like:"
 msgstr ""
 
-#: src/pages/sources.vue:54
+#: src/pages/sources.vue:50
 msgctxt "sources.new-content.impact"
 msgid " What is the impact or importance of this source to our users? If it exists within a provider like Wikimedia Commons, is it valuable for our users to be able to filter by this source directly?"
 msgstr ""
 
-#: src/pages/sources.vue:57
+#: src/pages/sources.vue:53
 msgctxt "sources.new-content.reuse"
 msgid "Is licensing and attribution information clearly displayed to enable confident reuse?"
 msgstr ""
 
-#: src/pages/sources.vue:60
+#: src/pages/sources.vue:56
 msgctxt "sources.new-content.total-items"
 msgid "How many new total items or new types of items can we bring to our users through this integration? Some sources are direct integrations, while others may be a source within a source."
 msgstr ""
@@ -1656,7 +1656,7 @@ msgctxt "sources.cc-content.europeana"
 msgid "###openverse### is especially grateful for the work of ###link###, an organization that works to digitize and make discoverable cultural heritage works across Europe. ###openverse### is able to index hundreds of valuable sources, through a single integration with the ###link-api###."
 msgstr ""
 
-#: src/pages/sources.vue:39
+#: src/pages/sources.vue:35
 msgctxt "sources.cc-content.europeana-api"
 msgid "Europeana API"
 msgstr ""
@@ -1666,17 +1666,17 @@ msgctxt "sources.cc-content.smithsonian"
 msgid "Smithsonian Institute"
 msgstr ""
 
-#: src/pages/sources.vue:99
+#: src/pages/sources.vue:93
 msgctxt "sources.providers.source"
 msgid "Source"
 msgstr ""
 
-#: src/pages/sources.vue:109
+#: src/pages/sources.vue:103
 msgctxt "sources.providers.domain"
 msgid "Domain"
 msgstr ""
 
-#: src/pages/sources.vue:119
+#: src/pages/sources.vue:113
 msgctxt "sources.providers.item"
 msgid "Total items"
 msgstr ""
@@ -1688,13 +1688,13 @@ msgid "About ###openverse###"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/about.vue:74
+#: src/pages/about.vue:75
 msgctxt "about.declaration.content"
 msgid "Please note that ###openverse### does not verify whether the images are properly CC licensed, or whether the attribution and other licensing information we have aggregated is accurate or complete. Please independently verify the licensing status and attribution information before reusing the content. For more details, read the ###terms###."
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/about.vue:79
+#: src/pages/about.vue:80
 msgctxt "about.declaration.terms"
 msgid "###openverse### Terms of Use"
 msgstr ""
@@ -1706,12 +1706,12 @@ msgid "###openverse### is the successor to CC Search which was launched by Creat
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/about.vue:20
+#: src/pages/about.vue:22
 msgctxt "about.planning.content"
 msgid "Currently ###openverse### only searches images, with search for audio and video provided through ###meta###. But we plan to add additional media types such as open texts and audio, with the ultimate goal of providing access to all 1.4 billion CC licensed and public domain works on the web. All of our code is open source (###search###, ###api###, ###catalog###) and we ###community###. You can see what ###working###."
 msgstr ""
 
-#: src/pages/about.vue:25
+#: src/pages/about.vue:26
 msgctxt "about.planning.meta"
 msgid "Meta Search"
 msgstr ""
@@ -1892,7 +1892,7 @@ msgctxt "hero.disclaimer.content"
 msgid "All ###openverse### content is under a ###license### or is in the public domain."
 msgstr ""
 
-#: src/pages/index.vue:76
+#: src/pages/index.vue:75
 msgctxt "hero.disclaimer.license"
 msgid "Creative Commons license"
 msgstr ""
