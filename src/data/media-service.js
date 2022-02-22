@@ -24,10 +24,9 @@ class MediaService {
   transformResults(data) {
     return {
       ...data,
-      results: data.results.reduce((acc, item) => {
-        acc[item.id] = decodeMediaData(item, this.mediaType)
-        return acc
-      }, /** @type {Record<string, import('../store/types').DetailFromMediaType<T>>} */ ({})),
+      results: data.results.map((item) =>
+        decodeMediaData(item, this.mediaType)
+      ),
     }
   }
 
@@ -61,7 +60,7 @@ class MediaService {
   /**
    * Retrieve related media
    * @param {{ id: string }} params
-   * @return {Promise<import('axios').AxiosResponse<import('../store/types').MediaResult<T[]>>>}
+   * @return {Promise<import('../store/types').MediaResult<T[]>>}
    */
   async getRelatedMedia(params) {
     if (!params.id) {

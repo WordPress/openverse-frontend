@@ -66,7 +66,6 @@ const BrowsePage = {
   },
   scrollToTop: false,
   async fetch() {
-    // TODO: This probably doesn't fetch when the result count is not 0 for at least one media type
     if (
       this.supported &&
       !this.totalResultsCount &&

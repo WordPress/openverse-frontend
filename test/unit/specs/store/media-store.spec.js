@@ -27,13 +27,13 @@ describe('Search Store', () => {
       const state = store.state()
       expect(state.results.audio).toEqual({
         count: 0,
-        items: {},
+        items: [],
         page: undefined,
         pageCount: 0,
       })
       expect(state.results.image).toEqual({
         count: 0,
-        items: {},
+        items: [],
         page: undefined,
         pageCount: 0,
       })
@@ -110,9 +110,9 @@ describe('Search Store', () => {
         creator: 'bar',
         tags: [],
       }
-      state.results.image.items = { [img1.id]: img1 }
+      state.results.image.items = [img1]
       const params = {
-        media: { [img2.id]: img2 },
+        media: [img2],
         mediaCount: 2,
         page: 2,
         shouldPersistMedia: true,
@@ -120,10 +120,7 @@ describe('Search Store', () => {
       }
       mutations[SET_MEDIA](state, params)
 
-      expect(state.results.image.items).toEqual({
-        [img1.id]: img1,
-        [img2.id]: img2,
-      })
+      expect(state.results.image.items).toEqual([img1, img2])
       expect(state.results.image.count).toBe(params.mediaCount)
       expect(state.results.image.page).toBe(params.page)
     })
@@ -205,18 +202,10 @@ describe('Search Store', () => {
       state = {
         results: {
           image: {
-            items: {
-              foo: { id: 'foo' },
-              bar: { id: 'bar' },
-              zeta: { id: 'zeta' },
-            },
+            items: [{ id: 'foo' }, { id: 'bar' }, { id: 'zeta' }],
           },
           audio: {
-            items: {
-              foo: { id: 'foo' },
-              bar: { id: 'bar' },
-              zeta: { id: 'zeta' },
-            },
+            items: [{ id: 'foo' }, { id: 'bar' }, { id: 'zeta' }],
           },
         },
       }

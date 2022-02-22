@@ -23,9 +23,7 @@ export const useLoadMore = ({ searchResultItems, searchTerm }) => {
     }
   })
 
-  const canLoadMore = computed(() => {
-    return searchTerm.trim() !== ''
-  })
+  const canLoadMore = computed(() => searchTerm.trim() !== '')
 
   const onLoadMore = async () => {
     if (canLoadMore.value) {

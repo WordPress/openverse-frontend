@@ -103,10 +103,9 @@ export default defineComponent({
       const randomIntegerInRange = (min, max) =>
         Math.floor(rand() * (max - min + 1)) + min
       /**
-       * TODO: remove this comment?
        * When navigating from All page to Audio page, VAllResultsGrid is displayed
        * for a short period of time. Then media['image'] is undefined, and it throws an error
-       * `TypeError: can't convert undefined to object`. To fix it, we add `|| {}` to the media['image'].
+       * To fix it, we add `?? {}` to the media['image'].
        */
       // first push all images to the results list
 

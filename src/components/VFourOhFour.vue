@@ -58,6 +58,7 @@ import Oops from '~/assets/oops.svg?inline'
 import OpenverseLogo from '~/assets/logo.svg?inline'
 import OpenverseBrand from '~/assets/brand.svg?inline'
 import VSearchBar from '~/components/VHeader/VSearchBar/VSearchBar'
+import { ALL_MEDIA } from '@/constants/media'
 
 const VFourOhFour = defineComponent({
   name: 'VFourOhFour',
@@ -82,6 +83,7 @@ const VFourOhFour = defineComponent({
 
       await store.dispatch(`${SEARCH}/${UPDATE_QUERY}`, {
         q: searchTerm.value,
+        searchType: ALL_MEDIA,
       })
       await store.dispatch(`${MEDIA}/${FETCH_MEDIA}`, {
         query: { q: searchTerm.value },

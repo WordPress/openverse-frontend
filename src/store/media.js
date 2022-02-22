@@ -33,13 +33,13 @@ export const state = () => ({
       count: 0,
       page: undefined,
       pageCount: 0,
-      items: {},
+      items: [],
     },
     [AUDIO]: {
       count: 0,
       page: undefined,
       pageCount: 0,
-      items: {},
+      items: [],
     },
   },
   mediaFetchState: {
@@ -163,8 +163,8 @@ export const createActions = (services = mediaServices) => ({
    */
   async [FETCH_MEDIA_ITEM]({ commit, dispatch, state, rootState }, params) {
     const { mediaType, id } = params
-    const resultRank = Object.keys(state.results[mediaType].items).findIndex(
-      (item) => item === id
+    const resultRank = state.results[mediaType].items.findIndex(
+      (item) => item.id === id
     )
     await dispatch(
       `${USAGE_DATA}/${SEND_RESULT_CLICKED_EVENT}`,
@@ -246,7 +246,6 @@ export const getters = {
    * @returns {{[ key: 'audio'|'image'|'video']: number}}
    */
   mediaTypeResultCounts(state, getters) {
-    // TODO: remove Object.values after converting items to an array
     return getters.currentMediaTypes.reduce(
       (acc, mediaType) => ({
         ...acc,
@@ -256,11 +255,10 @@ export const getters = {
     )
   },
   searchResultItems(state, getters) {
-    // TODO: remove Object.values after converting items to an array
     return getters.currentMediaTypes.reduce(
       (acc, mediaType) => ({
         ...acc,
-        [mediaType]: Object.values(state.results[mediaType].items),
+        [mediaType]: state.results[mediaType].items ?? [],
       }),
       {}
     )
@@ -274,7 +272,7 @@ export const getters = {
       const count = supportedMediaTypes
         .map((type) => state.results[type].count)
         .reduce((a, b) => a + b, 0)
-      return count > 10000 ? 10000 : count
+      return Math.min(10000, count)
     } else {
       return state.results[getters.searchType]?.count || 0
     }
@@ -319,9 +317,7 @@ export const getters = {
     return rootState.search.searchType
   },
   getAudioById: (state) => (id) => {
-    // TODO: use find after converting items to an array
-    return state.results.audio.items[id]
-    // return state.results.audio.items.find((item) => item.id === id)
+    return state.results.audio.items.find((item) => item.id === id)
   },
 }
 
@@ -366,7 +362,7 @@ export const mutations = {
     } = params
     let mediaToSet
     if (shouldPersistMedia) {
-      mediaToSet = { ..._state.results[mediaType].items, ...media }
+      mediaToSet = [..._state.results[mediaType].items, ...media]
     } else {
       mediaToSet = media
     }
