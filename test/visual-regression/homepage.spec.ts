@@ -1,4 +1,5 @@
 import { test, expect, Page } from '@playwright/test'
+import { testEachBreakpoint } from './utils'
 
 const deleteImageCarousel = async (page: Page) => {
   const element = await page.$('[data-testid="image-carousel"]')
@@ -12,28 +13,29 @@ test.describe('homepage snapshots', () => {
       await page.goto('/')
     })
 
-    test('full page', async ({ page }) => {
+    testEachBreakpoint('full page', async (breakpoint, { page }) => {
       await deleteImageCarousel(page)
 
       expect(await page.screenshot()).toMatchSnapshot({
-        name: 'index-ltr',
+        name: `index-ltr-${breakpoint}`,
       })
     })
 
     test.describe('search input', () => {
-      test('unfocused', async ({ page }) => {
+      testEachBreakpoint('unfocused', async (breakpoint, { page }) => {
         expect(
           await page.locator('form:has(input)').screenshot()
         ).toMatchSnapshot({
-          name: 'unfocused-search-ltr',
+          name: `unfocused-search-ltr-${breakpoint}`,
         })
       })
-      test('focused', async ({ page }) => {
+
+      testEachBreakpoint('focused', async (breakpoint, { page }) => {
         await page.focus('input')
         expect(
           await page.locator('form:has(input)').screenshot()
         ).toMatchSnapshot({
-          name: 'focused-search-ltr',
+          name: `focused-search-ltr-${breakpoint}`,
         })
       })
     })
@@ -56,28 +58,28 @@ test.describe('homepage snapshots', () => {
       await page.goto('/ar')
     })
 
-    test('full page', async ({ page }) => {
+    testEachBreakpoint('full page', async (breakpoint, { page }) => {
       await deleteImageCarousel(page)
 
       expect(await page.screenshot()).toMatchSnapshot({
-        name: 'index-rtl',
+        name: `index-rtl-${breakpoint}`,
       })
     })
 
     test.describe('search input', () => {
-      test('unfocused', async ({ page }) => {
+      testEachBreakpoint('unfocused', async (breakpoint, { page }) => {
         expect(
           await page.locator('form:has(input)').screenshot()
         ).toMatchSnapshot({
-          name: 'unfocused-search-rtl',
+          name: `unfocused-search-rtl-${breakpoint}`,
         })
       })
-      test('focused', async ({ page }) => {
+      testEachBreakpoint('focused', async (breakpoint, { page }) => {
         await page.focus('input')
         expect(
           await page.locator('form:has(input)').screenshot()
         ).toMatchSnapshot({
-          name: 'focused-search-rtl',
+          name: `focused-search-rtl-${breakpoint}`,
         })
       })
     })
