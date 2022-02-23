@@ -21,6 +21,7 @@
           'focus-visible:ring focus-visible:ring-pink',
         $style[`${contextProps.direction}-button`],
         selected && 'bg-dark-charcoal-10 ring-offset-dark-charcoal-10',
+        as === 'VLink' && 'text-dark-charcoal',
       ]"
       variant="plain"
       size="disabled"
