@@ -15,7 +15,7 @@
             <template #openverse>Openverse</template>
             <template #common-crawl>
               <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
-              <VLink href="http://commoncrawl.org/">Common Crawl</VLink>
+              <VLink href="https://commoncrawl.org/">Common Crawl</VLink>
             </template>
           </i18n>
 
@@ -26,11 +26,9 @@
               <VLink href="/meta-search">{{ $t('about.planning.meta') }}</VLink>
             </template>
             <template #search>
-              <!-- eslint-disable @intlify/vue-i18n/no-raw-text -->
               <VLink href="https://github.com/wordpress/openverse-frontend/">{{
                 $t('about.planning.meta')
               }}</VLink>
-              <!-- eslint-enable @intlify/vue-i18n/no-raw-text -->
             </template>
             <template #api>
               <VLink href="https://github.com/wordpress/openverse-api/">{{
