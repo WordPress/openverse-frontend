@@ -47,7 +47,6 @@ import VSkipToContentContainer from '~/components/VSkipToContentContainer.vue'
 
 const BrowsePage = {
   name: 'browse-page',
-  layout: 'default',
   components: {
     VScrollButton,
     VSearchGrid,

@@ -23,6 +23,7 @@ export default {
   setup() {
     const activeMediaStore = useActiveMediaStore()
     const store = useStore()
+    const activeMediaStore = useActiveMedia()
     const route = useRoute()
 
     const activeAudio = useActiveAudio()
