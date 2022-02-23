@@ -1,20 +1,28 @@
-import { SET_EMBEDDED, SET_REFERRED } from '~/constants/mutation-types'
+import { defineStore } from 'pinia'
+import { reactive, toRefs } from '@nuxtjs/composition-api'
 
-export const state = () => ({
-  isEmbedded: true,
-  isReferredFromCc: false,
+export const NAV = 'nav'
+
+/**
+ * Store information about navigation.
+ */
+export const useNav = defineStore(NAV, () => {
+  const state = reactive({
+    isEmbedded: true,
+    isReferredFromCc: false,
+  })
+  const { isEmbedded, isReferredFromCc } = toRefs(state)
+
+  function setIsEmbedded(isEmbedded = true) {
+    state.isEmbedded = isEmbedded
+  }
+  function setIsReferredFromCc(isReferredFromCc = true) {
+    state.isReferredFromCc = isReferredFromCc
+  }
+  return {
+    isEmbedded,
+    isReferredFromCc,
+    setIsEmbedded,
+    setIsReferredFromCc,
+  }
 })
-
-export const mutations = {
-  [SET_EMBEDDED](_state, params) {
-    _state.isEmbedded = params.isEmbedded
-  },
-  [SET_REFERRED](_state, params) {
-    _state.isReferredFromCc = params.isReferredFromCc
-  },
-}
-
-export default {
-  state,
-  mutations,
-}
