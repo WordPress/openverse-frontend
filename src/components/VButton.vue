@@ -72,10 +72,13 @@ const VButton = defineComponent({
     /**
      * The variant of the button.
      *
+     * Plain removes all styles except the focus ring.
+     * Plain-dangerous removes _all_ styles including the focus ring.
+     *
      * @default 'primary'
      */
     variant: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<'primary' | 'secondary' | 'tertiary' | 'action-menu' | 'action-menu-muted'>} */ (
+      type: /** @type {import('@nuxtjs/composition-api').PropType<'primary' | 'secondary' | 'tertiary' | 'action-menu' | 'action-menu-muted' | 'plain' | 'plain-dangerous'>} */ (
         String
       ),
       default: 'primary',
@@ -87,7 +90,8 @@ const VButton = defineComponent({
           'action-menu',
           'action-menu-secondary',
           'action-menu-muted',
-          'grouped',
+          'plain',
+          'plain-dangerous',
         ].includes(v),
     },
     /**
