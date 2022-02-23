@@ -75,7 +75,7 @@ const VButton = defineComponent({
      * @default 'primary'
      */
     variant: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<'primary' | 'secondary' | 'tertiary' | 'action-menu' | 'action-menu-muted' | 'grouped'>} */ (
+      type: /** @type {import('@nuxtjs/composition-api').PropType<'primary' | 'secondary' | 'tertiary' | 'action-menu' | 'action-menu-muted'>} */ (
         String
       ),
       default: 'primary',
@@ -295,14 +295,6 @@ a.button {
 
 .action-menu-muted-pressed {
   @apply border border-tx bg-dark-charcoal text-white focus-visible:ring focus-visible:ring-pink;
-}
-
-.grouped {
-  @apply bg-white text-dark-charcoal focus-visible:ring-[0];
-}
-
-.grouped-pressed {
-  @apply bg-dark-charcoal-10 ring-offset-dark-charcoal-10;
 }
 
 .full {

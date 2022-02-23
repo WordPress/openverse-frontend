@@ -14,13 +14,13 @@
     <VButton
       data-item-group-item
       :as="as"
-      class="flex justify-between min-w-full group relative hover:bg-dark-charcoal-10 px-2 py-2"
+      class="flex justify-between min-w-full group relative hover:bg-dark-charcoal-10 px-2 py-2 focus:z-10"
       :class="[
-        $style.button,
         $style[`${contextProps.direction}-button`],
         $style[`${contextProps.size}-button`],
+        selected && 'bg-dark-charcoal-10 ring-offset-dark-charcoal-10',
       ]"
-      variant="grouped"
+      variant="plain"
       size="disabled"
       :pressed="selected"
       :role="contextProps.type === 'radiogroup' ? 'radio' : 'menuitemcheckbox'"
