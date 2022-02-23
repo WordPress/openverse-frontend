@@ -26,8 +26,6 @@
 <script>
 import { computed, useContext } from '@nuxtjs/composition-api'
 
-import VIcon from '~/components/VIcon/VIcon.vue'
-
 import {
   ALL_LICENSES,
   CC_LICENSES,
@@ -42,6 +40,8 @@ import nc from '~/assets/licenses/nc.svg'
 import nd from '~/assets/licenses/nd.svg'
 import pdm from '~/assets/licenses/pdm.svg'
 import sa from '~/assets/licenses/sa.svg'
+
+import VIcon from '~/components/VIcon/VIcon.vue'
 
 /**
  * Displays the icons for the license along with a readable display name for the

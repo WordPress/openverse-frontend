@@ -75,10 +75,11 @@ import { useI18nResultsCount } from '~/composables/use-i18n-utilities'
 
 import closeIcon from '~/assets/icons/close.svg'
 
-import VHeaderMenu from '~/components/VHeader/VHeaderMenu.vue'
+import VLogoButton from '~/components/VHeader/VLogoButton.vue'
+
 import VHeaderFilter from '~/components/VHeader/VHeaderFilter.vue'
 import VSearchBar from '~/components/VHeader/VSearchBar/VSearchBar.vue'
-import VLogoButton from '~/components/VHeader/VLogoButton.vue'
+import VHeaderMenu from '~/components/VHeader/VHeaderMenu.vue'
 
 const menus = {
   FILTERS: 'filters',

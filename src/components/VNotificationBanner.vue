@@ -23,7 +23,9 @@
 
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
+
 import closeIcon from '~/assets/icons/close.svg'
+
 import VIcon from '~/components/VIcon/VIcon.vue'
 
 const VNotificationBanner = defineComponent({

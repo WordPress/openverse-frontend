@@ -54,12 +54,14 @@ import {
   useContext,
   useRouter,
 } from '@nuxtjs/composition-api'
+
 import { MEDIA, SEARCH } from '~/constants/store-modules'
 import { FETCH_MEDIA, UPDATE_QUERY } from '~/constants/action-types'
 
 import Oops from '~/assets/oops.svg?inline'
 import OpenverseLogo from '~/assets/logo.svg?inline'
 import OpenverseBrand from '~/assets/brand.svg?inline'
+
 import VSearchBar from '~/components/VHeader/VSearchBar/VSearchBar'
 
 const VFourOhFour = defineComponent({

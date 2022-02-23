@@ -13,12 +13,14 @@
 
 <script>
 import { computed, defineComponent } from '@nuxtjs/composition-api'
+
 import {
   ALL_MEDIA,
   AUDIO,
   IMAGE,
   supportedSearchTypes,
 } from '~/constants/media'
+
 import VIcon from '~/components/VIcon/VIcon.vue'
 
 import audioIcon from 'assets/icons/audio-wave.svg'

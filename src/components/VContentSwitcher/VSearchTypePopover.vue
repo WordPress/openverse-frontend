@@ -29,7 +29,9 @@
 
 <script>
 import { computed, defineComponent, ref } from '@nuxtjs/composition-api'
+
 import useSearchType from '~/composables/use-search-type'
+
 import checkIcon from '~/assets/icons/checkmark.svg'
 
 import VPopover from '~/components/VPopover/VPopover.vue'

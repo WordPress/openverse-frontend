@@ -1,5 +1,3 @@
-import type { NuxtConfig } from '@nuxt/types'
-
 import pkg from './package.json'
 import locales from './src/locales/scripts/valid-locales.json'
 
@@ -8,6 +6,8 @@ import { VIEWPORTS } from './src/constants/screens'
 import { isProd } from './src/utils/node-env'
 import { sentryConfig } from './src/utils/sentry-config'
 import { env } from './src/utils/env'
+
+import type { NuxtConfig } from '@nuxt/types'
 
 /**
  * The default metadata for the site. Can be extended and/or overwritten per page. And even in components!

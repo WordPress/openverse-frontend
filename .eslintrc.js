@@ -89,6 +89,62 @@ module.exports = {
         ignore: ['.svg'],
       },
     ],
+    'import/newline-after-import': ['error'],
+    'import/order': [
+      'error',
+      {
+        'newlines-between': 'always-and-inside-groups',
+        groups: [
+          'builtin',
+          'external',
+          'internal',
+          'parent',
+          'sibling',
+          'index',
+          'object',
+          'type',
+        ],
+        pathGroups: [
+          {
+            // Treate vue and composition-api as "builtin"
+            pattern: '(vue|@nuxtjs/composition-api)',
+            group: 'builtin',
+            position: 'before',
+          },
+          {
+            // Move assets to the very end of the imports list
+            pattern: 'assets/**',
+            patternOptions: { partial: true },
+            group: 'type',
+            position: 'after',
+          },
+          {
+            // Treat components as their own group and move to the end of the internal imports list
+            pattern: '~/components/**',
+            group: 'parent',
+            position: 'before',
+          },
+          /**
+           * These next two must come after any more specific matchers
+           * as the plugin uses the patterns in order and does not sort
+           * multiple-matches by specificity, it just takes the _first_
+           * pattern that matches and applies that group to the import.
+           */
+          {
+            // Document webpack alias
+            pattern: '~/**',
+            group: 'internal',
+            position: 'before',
+          },
+          {
+            // Document webpack alias
+            pattern: '~~/**',
+            group: 'external',
+            position: 'after',
+          },
+        ],
+      },
+    ],
   },
   overrides: [
     {

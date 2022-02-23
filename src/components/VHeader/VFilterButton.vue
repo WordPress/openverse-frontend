@@ -25,6 +25,7 @@ import {
   toRefs,
   useContext,
 } from '@nuxtjs/composition-api'
+
 import filterIcon from '~/assets/icons/filter.svg'
 
 import VButton from '~/components/VButton.vue'

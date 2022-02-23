@@ -16,9 +16,9 @@
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
 
-import VIcon from '~/components/VIcon/VIcon.vue'
-
 import flagIcon from '~/assets/icons/flag.svg'
+
+import VIcon from '~/components/VIcon/VIcon.vue'
 
 export default defineComponent({
   name: 'VContentReportButton',
