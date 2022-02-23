@@ -16,6 +16,8 @@ module.exports = {
     'plugin:prettier/recommended',
     'plugin:vuejs-accessibility/recommended',
     'plugin:@intlify/vue-i18n/recommended',
+    'plugin:import/recommended',
+    'plugin:eslint-comments/recommended',
   ],
   // required to lint *.vue files
   plugins: [
@@ -79,7 +81,14 @@ module.exports = {
     ],
     'unicorn/filename-case': ['error', { case: 'kebabCase' }],
     '@typescript-eslint/ban-ts-comment': ['warn'],
-    '@typescript-eslint/no-var-requires': ['warn'],
+    '@typescript-eslint/no-var-requires': ['off'],
+    'import/no-unresolved': [
+      'error',
+      {
+        // https://github.com/nuxt-community/svg-module/issues/4
+        ignore: ['.svg'],
+      },
+    ],
   },
   overrides: [
     {
@@ -93,6 +102,16 @@ module.exports = {
     'vue-i18n': {
       localeDir: './src/locales/*.{json}',
       messageSyntaxVersion: '^8.24.3',
+    },
+    'import/resolver': {
+      'eslint-import-resolver-custom-alias': {
+        alias: {
+          '~': './src',
+          '~~': '.',
+          assets: './src/assets',
+        },
+        extensions: ['.js', '.ts', '.vue', '.png'],
+      },
     },
   },
 }

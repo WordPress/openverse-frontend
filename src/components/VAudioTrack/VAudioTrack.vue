@@ -344,7 +344,6 @@ export default defineComponent({
        * hoops (using `assert`) or adding unnecessary
        * runtime checks.
        */
-      // @ts-ignore
       localAudio.currentTime = frac * duration.value
     }
 

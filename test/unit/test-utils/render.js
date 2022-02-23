@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import Vuex from 'vuex'
 import VueI18n from 'vue-i18n'
 import { shallowMount, createLocalVue } from '@vue/test-utils'

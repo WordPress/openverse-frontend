@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/export
 export * from '~~/.nuxt-storybook/storybook/preview.js'
 import {
   globalTypes as nuxtGlobalTypes,
@@ -6,6 +7,7 @@ import {
 
 import { WithRTL } from './decorators/with-rtl'
 
+// eslint-disable-next-line import/export
 export const globalTypes = {
   ...nuxtGlobalTypes,
   languageDirection: {
@@ -22,4 +24,5 @@ export const globalTypes = {
   },
 }
 
+// eslint-disable-next-line import/export
 export const decorators = [...nuxtDecorators, WithRTL]
