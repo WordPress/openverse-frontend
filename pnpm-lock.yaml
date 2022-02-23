@@ -97,6 +97,7 @@ dependencies:
   '@nuxtjs/sentry': 5.1.6
   '@nuxtjs/sitemap': 2.4.0
   '@nuxtjs/svg': 0.3.0
+  '@pinia/nuxt': 0.1.8_pinia@2.0.11
   '@popperjs/core': 2.11.2
   '@tailwindcss/line-clamp': 0.3.1_tailwindcss@3.0.9
   '@wordpress/is-shallow-equal': 4.3.1
@@ -125,6 +126,7 @@ dependencies:
   lodash.throttle: 4.1.1
   node-html-parser: 5.1.0
   nuxt: 2.15.8_typescript@4.5.4
+  pinia: 2.0.11_typescript@4.5.4
   postcss-focus-visible: 6.0.3_postcss@8.4.5
   reakit-utils: 0.15.2
   seeded-rand: 2.0.1
@@ -138,7 +140,6 @@ devDependencies:
   '@nuxtjs/eslint-module': 3.0.2_eslint@7.32.0
   '@nuxtjs/storybook': 4.2.0_eslint@7.32.0+typescript@4.5.4
   '@nuxtjs/style-resources': 1.2.1
-  '@pinia/nuxt': 0.1.8_pinia@2.0.11
   '@pinia/testing': 0.0.9_pinia@2.0.11
   '@playwright/test': 1.17.1
   '@testing-library/jest-dom': 5.16.1
@@ -163,7 +164,6 @@ devDependencies:
   jest: 26.6.3_ts-node@10.4.0
   jest-transform-stub: 2.0.0
   lint-staged: 11.2.6
-  pinia: 2.0.11_typescript@4.5.4
   postcss: 8.4.5
   prettier: 2.5.1
   sass: 1.45.0
@@ -3515,7 +3515,7 @@ packages:
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
-    dev: true
+    dev: false
 
   /@pinia/testing/0.0.9_pinia@2.0.11:
     resolution: {integrity: sha512-JG+th+BENR89/7vpRxafDApU56AECZ9m+THd8IKsgomyRXaiRRdwt0BLbjStTkksnoNZfZBCz5NszykyNxz/sQ==}
@@ -6168,7 +6168,7 @@ packages:
 
   /@vue/devtools-api/6.0.12:
     resolution: {integrity: sha512-iO/4FIezHKXhiDBdKySCvJVh8/mZPxHpiQrTy+PXVqJZgpTPTdHy4q8GXulaY+UKEagdkBb0onxNQZ0LNiqVhw==}
-    dev: true
+    dev: false
 
   /@vue/reactivity-transform/3.2.26:
     resolution: {integrity: sha512-XKMyuCmzNA7nvFlYhdKwD78rcnmPb7q46uoR00zkX6yZrUmcCQ5OikiwUEVbvNhL5hBJuvbSO95jB5zkUon+eQ==}
@@ -13839,7 +13839,7 @@ packages:
       '@vue/devtools-api': 6.0.12
       typescript: 4.5.4
       vue-demi: 0.12.1
-    dev: true
+    dev: false
 
   /pirates/4.0.4:
     resolution: {integrity: sha512-ZIrVPH+A52Dw84R0L3/VS9Op04PuQ2SEoJL6bkshmiTic/HldyW9Tf7oH5mhJZBK7NmDx27vSMrYEXPXclpDKw==}
@@ -17886,7 +17886,6 @@ packages:
     peerDependenciesMeta:
       '@vue/composition-api':
         optional: true
-    dev: true
 
   /vue-docgen-api/4.43.0:
     resolution: {integrity: sha512-AF84gxj9W2Ret3TKeX2KEvr481lseqZIJIVvm5eUOrXT2fAywP94RLQF7BpZQmZxEONfsVgZZ1wTACUN6Csiaw==}

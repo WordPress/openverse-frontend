@@ -115,6 +115,9 @@ describe('AudioTrack', () => {
     options = {
       propsData: props,
       stubs,
+      mocks: {
+        $nuxt: { context: { i18n: { t: jest.fn() } } },
+      },
     }
 
     setActivePinia(createPinia())

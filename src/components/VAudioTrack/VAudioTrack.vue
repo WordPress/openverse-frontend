@@ -60,7 +60,7 @@ import VGlobalLayout from '~/components/VAudioTrack/layouts/VGlobalLayout.vue'
 
 import { MEDIA } from '~/constants/store-modules'
 
-import { useActiveMedia } from '~/store/active-media'
+import { useActiveMediaStore } from '~/store/active-media'
 
 const propTypes = {
   /**
@@ -120,7 +120,7 @@ export default defineComponent({
   },
   props: propTypes,
   setup(props, { emit }) {
-    const activeMediaStore = useActiveMedia()
+    const activeMediaStore = useActiveMediaStore()
     const store = useStore()
     const route = useRoute()
 
@@ -250,7 +250,7 @@ export default defineComponent({
       localAudio.removeEventListener('durationchange', setDuration)
 
       if (
-        route.value.params.id == props.audio.id ||
+        route.value.params.id === props.audio.id ||
         store.getters[`${MEDIA}/results`]?.items?.[props.audio.id]
       ) {
         /**

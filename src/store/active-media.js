@@ -1,44 +1,68 @@
 import { defineStore } from 'pinia'
+import { reactive, readonly, toRefs } from '@nuxtjs/composition-api'
 
 const ACTIVE_MEDIA = 'active-media'
 
 /**
  * Store information about the active media item.
  */
-export const useActiveMedia = defineStore(ACTIVE_MEDIA, {
-  /** @return {import('./types').ActiveMediaState} */
-  state: () => ({
+export const useActiveMediaStore = defineStore(ACTIVE_MEDIA, () => {
+  /**
+   * `reactive` returns UnwrapRef<T> type, but the Vue docs recommend to use the
+   * type of <T> for typing it instead:
+   * https://vuejs.org/guide/typescript/composition-api.html#typing-reactive
+   * @type {import('./types').ActiveMediaState}
+   */
+  const state = reactive({
     type: null,
     id: null,
-    status: 'ejected', // 'ejected' means player is closed
+    status: 'ejected',
     message: null,
-  }),
+  })
+  /**
+   * Only the properties used by components are exported as refs.
+   * `status` is not used anywhere in the components.
+   */
+  const { type, id, message } = toRefs(state)
 
-  actions: {
-    /**
-     * @param {object} payload
-     * @param {'image' | 'audio'} payload.type
-     * @param {string} payload.id
-     * @param {'ejected' | 'playing' | 'paused'} payload.status
-     */
-    setActiveMediaItem({ type, id, status }) {
-      this.type = type
-      this.id = id
-      this.status = status
-    },
-    pauseActiveMediaItem() {
-      this.status = 'paused'
-    },
-    ejectActiveMediaItem() {
-      this.status = 'ejected'
-      this.id = null
-      this.type = null
-    },
-    /**
-     * @param message {string}
-     */
-    setMessage({ message }) {
-      this.message = message
-    },
-  },
+  // Actions
+  /**
+   * @param {object} payload
+   * @param {'audio'} payload.type
+   * @param {string} payload.id
+   * @param {'ejected' | 'playing' | 'paused'} payload.status
+   */
+  function setActiveMediaItem({ type, id, status = 'playing' }) {
+    state.type = type
+    state.id = id
+    state.status = status
+  }
+  function pauseActiveMediaItem() {
+    state.status = 'paused'
+  }
+  function ejectActiveMediaItem() {
+    state.status = 'ejected'
+    state.id = null
+    state.type = null
+  }
+
+  /**
+   * @param {object} params
+   * @param {string} params.message
+   */
+  function setMessage(params) {
+    state.message = params.message
+  }
+
+  return {
+    type,
+    id,
+    message,
+    state: readonly(state),
+
+    setActiveMediaItem,
+    pauseActiveMediaItem,
+    ejectActiveMediaItem,
+    setMessage,
+  }
 })

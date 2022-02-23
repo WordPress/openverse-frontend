@@ -20,7 +20,7 @@ export default function ({ query, route }) {
   const navStore = useNav()
 
   if ('embedded' in query) {
-    navStore.isEmbedded = query.embedded === 'true'
+    navStore.setIsEmbedded(query.embedded === 'true')
   }
   if (process.client) {
     sendWindowMessage({
@@ -30,6 +30,6 @@ export default function ({ query, route }) {
   }
 
   if (process.client && navStore.isReferredFromCc) {
-    navStore.isReferredFromCc = false
+    navStore.setIsReferredFromCc(false)
   }
 }

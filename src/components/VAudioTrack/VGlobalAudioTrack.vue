@@ -31,7 +31,7 @@
 <script>
 import { computed, defineComponent, ref, watch } from '@nuxtjs/composition-api'
 
-import { useActiveMedia } from '~/store/active-media'
+import { useActiveMediaStore } from '~/store/active-media'
 
 import { useActiveAudio } from '~/composables/use-active-audio'
 
@@ -103,7 +103,7 @@ export default defineComponent({
    * @param {import('@nuxtjs/composition-api').ExtractPropTypes<typeof propTypes>} props
    */
   setup(props) {
-    const activeMediaStore = useActiveMedia()
+    const activeMediaStore = useActiveMediaStore()
     const activeAudio = useActiveAudio()
 
     const status = ref('paused')
