@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-02-22T21:44:24+00:00\n"
+"POT-Creation-Date: 2022-02-23T20:16:53+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1700,19 +1700,19 @@ msgid "About ###openverse###"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/about.vue:75
+#: src/pages/about.vue:73
 msgctxt "about.declaration.content"
 msgid "Please note that ###openverse### does not verify whether the images are properly CC licensed, or whether the attribution and other licensing information we have aggregated is accurate or complete. Please independently verify the licensing status and attribution information before reusing the content. For more details, read the ###terms###."
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/about.vue:80
+#: src/pages/about.vue:78
 msgctxt "about.declaration.terms"
 msgid "###openverse### Terms of Use"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/about.vue:58
+#: src/pages/about.vue:56
 msgctxt "about.transfer.content"
 msgid "###openverse### is the successor to CC Search which was launched by Creative Commons in 2019, after its migration to WordPress in 2021. You can read more about this transition in the official announcements from ###creative-commons### and ###wordpress###. We remain committed to our goal of tackling discoverability and accessibility of open access media."
 msgstr ""
@@ -1729,23 +1729,23 @@ msgid "Meta Search"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/about.vue:37
+#: src/pages/about.vue:35
 msgctxt "about.planning.api"
 msgid "###openverse### API"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/about.vue:42
+#: src/pages/about.vue:40
 msgctxt "about.planning.catalog"
 msgid "###openverse### Catalog"
 msgstr ""
 
-#: src/pages/about.vue:47
+#: src/pages/about.vue:45
 msgctxt "about.planning.community"
 msgid "welcome community contribution"
 msgstr ""
 
-#: src/pages/about.vue:52
+#: src/pages/about.vue:50
 msgctxt "about.planning.working"
 msgid "we’re currently working on"
 msgstr ""
