@@ -16,8 +16,10 @@
       :as="as"
       class="flex justify-between min-w-full group relative hover:bg-dark-charcoal-10 px-2 py-2 focus:z-10"
       :class="[
+        contextProps.size === 'medium' &&
+          contextProps.bordered &&
+          'focus-visible:ring focus-visible:ring-pink',
         $style[`${contextProps.direction}-button`],
-        $style[`${contextProps.size}-button`],
         selected && 'bg-dark-charcoal-10 ring-offset-dark-charcoal-10',
       ]"
       variant="plain"
@@ -35,10 +37,12 @@
       @click.native="$emit('click')"
     >
       <div
-        class="flex-grow whitespace-nowrap my-0 rounded-sm px-2 group-focus-visible:ring group-focus-visible:ring-pink"
+        class="flex-grow whitespace-nowrap my-0 rounded-sm px-2"
         :class="[
+          contextProps.size === 'small' &&
+            !contextProps.bordered &&
+            'group-focus-visible:ring group-focus-visible:ring-pink',
           $style[`${contextProps.direction}-content`],
-          $style[`${contextProps.size}-content`],
         ]"
       >
         <slot name="default" />
@@ -115,6 +119,12 @@ export default defineComponent({
     const isInPopover = inject(VPopoverContentContextKey, false)
     const contextProps = inject(VItemGroupContextKey)
 
+    if (!contextProps) {
+      throw new Error(
+        'Do not use `VItem` outside of a `VItemGroup`. Use `VButton` instead.'
+      )
+    }
+
     if (isInPopover && contextProps.bordered) {
       warn('Bordered popover items are not supported')
     }
@@ -159,14 +169,6 @@ export default defineComponent({
 <style module>
 .button:focus {
   @apply z-10;
-}
-
-.medium-button {
-  @apply focus-visible:ring focus-visible:ring-pink;
-}
-
-.small-content {
-  @apply group-focus-visible:ring group-focus-visible:ring-pink;
 }
 
 .vertical {
