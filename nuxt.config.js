@@ -136,6 +136,7 @@ export default {
   env,
   dev,
   buildModules: [
+    '@nuxt/typescript-build',
     '@nuxtjs/composition-api/module',
     '@nuxt/postcss8',
     '@nuxtjs/style-resources',
@@ -196,6 +197,16 @@ export default {
   redirect: [{ from: '^/photos/(.*)$', to: '/image/$1', statusCode: 301 }],
   sentry,
   build: {
+    templates: [
+      {
+        src: './nuxt-template-overrides/App.js',
+        dst: 'App.js',
+      },
+      {
+        src: './nuxt-template-overrides/index.js',
+        dst: 'index.js',
+      },
+    ],
     friendlyErrors: false,
     postcss: {
       plugins: {
