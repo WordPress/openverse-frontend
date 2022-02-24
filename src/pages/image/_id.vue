@@ -11,7 +11,7 @@
       <img
         v-if="!sketchFabUid"
         id="main-image"
-        :src="image.url"
+        :src="isLoadingFullImage ? image.thumbnail : image.url"
         :alt="image.title"
         class="h-full max-h-[500px] mx-auto rounded-t-sm"
         @load="onImageLoaded"
@@ -111,10 +111,11 @@ const VImageDetailsPage = {
   },
   data() {
     return {
-      showBackToSearchLink: false,
       imageWidth: 0,
       imageHeight: 0,
       imageType: 'Unknown',
+      isLoadingFullImage: true,
+      showBackToSearchLink: false,
       sketchFabfailure: false,
     }
   },
@@ -171,6 +172,7 @@ const VImageDetailsPage = {
           this.imageType = res.headers['content-type']
         })
       }
+      this.isLoadingFullImage = false
     },
     onSourceLinkClicked() {
       this.sendEvent({
