@@ -10,3 +10,5 @@ services:
       # HOST is necessary for Nuxt + Docker
       HOST: 0.0.0.0
       PORT: 8443
+    volumes:
+      - .:/usr/app

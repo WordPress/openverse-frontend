@@ -1,9 +1,8 @@
 # ==
-# builder
+# installer
 # ==
-
-# application builder
-FROM node:16 AS builder
+# dependency installer
+FROM node:16 AS installer
 
 WORKDIR /usr/app
 
@@ -18,6 +17,15 @@ COPY .npmrc .
 # install dependencies including local development tools
 RUN pnpm install --frozen-lockfile --store-dir=./pnpm-store
 
+
+# ==
+# builder
+# ==
+# build the application
+FROM installer AS builder
+
+WORKDIR /usr/app
+
 # copy the rest of the content
 COPY . /usr/app
 
@@ -26,6 +34,17 @@ ENV NUXT_TELEMETRY_DISABLED=1
 
 # build the application and generate a distribution package
 RUN pnpm run build
+
+
+# ==
+# local development
+# ==
+# local development image; depends on mounting local files to the container at /usr/app
+FROM installer AS dev
+
+WORKDIR /usr/app
+
+RUN pnpm run dev
 
 
 # ==
