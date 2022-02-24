@@ -6,3 +6,4 @@ test/tapes
 .nuxt-storybook
 storybook-static
 pnpm-lock.yaml
+nuxt-template-overrides
