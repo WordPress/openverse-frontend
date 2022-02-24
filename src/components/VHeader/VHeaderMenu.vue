@@ -8,6 +8,7 @@ import {
   useStore,
 } from '@nuxtjs/composition-api'
 import useSearchType from '~/composables/use-search-type'
+import { useSearchStore } from '~/stores/search'
 
 import VMobileMenuModal from '~/components/VContentSwitcher/VMobileMenuModal.vue'
 import VSearchTypePopover from '~/components/VContentSwitcher/VSearchTypePopover.vue'
@@ -39,6 +40,7 @@ export default {
     const menuModalRef = ref(null)
     const content = useSearchType()
     const { app } = useContext()
+    const searchStore = useSearchStore()
     const store = useStore()
     const router = useRouter()
 
@@ -48,11 +50,11 @@ export default {
     })
     const selectSearchType = async (type) => {
       menuModalRef.value?.closeMenu()
-      await content.setActiveType(type)
+      content.setActiveType(type)
 
       const newPath = app.localePath({
         path: `/search/${type === ALL_MEDIA ? '' : type}`,
-        query: store.getters['search/searchQueryParams'],
+        query: searchStore.searchQueryParams,
       })
       router.push(newPath)
 
@@ -67,7 +69,7 @@ export default {
 
       if (shouldFetchMedia) {
         await store.dispatch(`${MEDIA}/${FETCH_MEDIA}`, {
-          ...store.getters['search/searchQueryParams'],
+          ...searchStore.searchQueryParams,
         })
       }
     }

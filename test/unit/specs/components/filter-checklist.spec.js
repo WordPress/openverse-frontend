@@ -1,6 +1,7 @@
 import FilterChecklist from '~/components/VFilters/VFilterChecklist'
 import { createLocalVue } from '@vue/test-utils'
 import { fireEvent, render, screen } from '@testing-library/vue'
+import { createTestingPinia } from '@pinia/testing'
 
 describe('FilterChecklist', () => {
   let options = {}
@@ -18,6 +19,9 @@ describe('FilterChecklist', () => {
     options = {
       localVue,
       propsData: props,
+      global: {
+        plugins: [createTestingPinia()],
+      },
     }
   })
 

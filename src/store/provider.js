@@ -10,10 +10,9 @@ import {
   FETCH_MEDIA_PROVIDERS_END,
   FETCH_MEDIA_PROVIDERS_START,
   SET_MEDIA_PROVIDERS,
-  SET_PROVIDERS_FILTERS,
 } from '~/constants/mutation-types'
 import { capital } from 'case'
-import { SEARCH } from '~/constants/store-modules'
+import { useSearchStore } from '~/stores/search'
 
 const AudioProviderService = MediaProviderService(AUDIO)
 const ImageProviderService = MediaProviderService(IMAGE)
@@ -36,8 +35,9 @@ export const state = () => ({
 })
 
 export const getters = {
-  getProviderName: (state, getters, rootState) => (providerCode) => {
-    const mediaType = rootState.search.mediaType
+  getProviderName: (state) => (providerCode) => {
+    const searchStore = useSearchStore()
+    const mediaType = searchStore.mediaType
     const providersList = state[`${mediaType}Providers`]
     if (!providersList) {
       return capital(providerCode) || ''
@@ -60,6 +60,7 @@ export const createActions = (services) => ({
   },
   [FETCH_MEDIA_TYPE_PROVIDERS]({ commit }, params) {
     const { mediaType } = params
+    const searchStore = useSearchStore()
     commit(SET_PROVIDER_FETCH_ERROR, { mediaType, error: false })
     commit(FETCH_MEDIA_PROVIDERS_START, { mediaType })
     const providerService = services[mediaType]
@@ -81,14 +82,10 @@ export const createActions = (services) => ({
           mediaType,
           providers: sortedProviders,
         })
-        commit(
-          `${SEARCH}/${SET_PROVIDERS_FILTERS}`,
-          {
-            mediaType,
-            providers: sortedProviders,
-          },
-          { root: true }
-        )
+        searchStore.setProviderFilters({
+          mediaType,
+          providers: sortedProviders,
+        })
       })
   },
 })

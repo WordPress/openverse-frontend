@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/vue'
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import { ref } from '@nuxtjs/composition-api'
+import { createTestingPinia } from '@pinia/testing'
 
 describe('SearchIndex', () => {
   let options
@@ -45,6 +46,9 @@ describe('SearchIndex', () => {
         NuxtChild: true,
         VSearchGrid: true,
         VSkipToContentContainer: true,
+      },
+      global: {
+        plugins: [createTestingPinia()],
       },
     }
   })

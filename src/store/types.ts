@@ -128,7 +128,7 @@ export interface Filters {
   audioProviders: FilterItem[]
   imageProviders: FilterItem[]
   searchBy: FilterItem[]
-  mature: boolean
+  mature: FilterItem[]
 }
 
 export interface FetchState {
@@ -140,7 +140,6 @@ export interface FetchState {
 export interface SearchState {
   searchType: SupportedSearchType
   query: Query
-  filters: Filters
 }
 
 export interface ActiveMediaState {

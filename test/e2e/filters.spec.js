@@ -1,6 +1,6 @@
 const { test, expect } = require('@playwright/test')
 const {
-  assertCheckboxCheckedStatus,
+  assertCheckboxStatus,
   openFilters,
   mockAllSearch,
   changeContentType,
@@ -22,7 +22,7 @@ test('common filters are retained when media type changes from all media to sing
   await openFilters(page)
 
   for (let checkbox of ['cc0', 'commercial', 'creator']) {
-    await assertCheckboxCheckedStatus(page, checkbox)
+    await assertCheckboxStatus(page, checkbox)
   }
   await changeContentType(page, 'Images')
 
@@ -31,7 +31,7 @@ test('common filters are retained when media type changes from all media to sing
   )
 
   for (let checkbox of ['cc0', 'commercial', 'creator']) {
-    await assertCheckboxCheckedStatus(page, checkbox)
+    await assertCheckboxStatus(page, checkbox)
   }
 })
 
@@ -44,7 +44,7 @@ test('common filters are retained when media type changes from single type to al
   await openFilters(page)
 
   for (let checkbox of ['cc0', 'commercial', 'creator']) {
-    await assertCheckboxCheckedStatus(page, checkbox)
+    await assertCheckboxStatus(page, checkbox)
   }
 
   await changeContentType(page, 'All content')
@@ -54,22 +54,48 @@ test('common filters are retained when media type changes from single type to al
   )
 
   for (let checkbox of ['cc0', 'commercial', 'creator']) {
-    await assertCheckboxCheckedStatus(page, checkbox)
+    await assertCheckboxStatus(page, checkbox)
   }
 })
+
+test('selecting some filters can disable dependent filters', async ({
+  page,
+}) => {
+  await page.goto('/search/audio?q=cat&license_type=commercial')
+  await openFilters(page)
+
+  // by-nc is special because we normally test for fuzzy match, and by-nc matches 3 labels.
+  const byNc = page.locator('input[value="by-nc"]')
+  await expect(byNc).toBeDisabled()
+  for (let checkbox of ['by-nc-sa', 'by-nc-nd']) {
+    await assertCheckboxStatus(page, checkbox, 'disabled')
+  }
+  await assertCheckboxStatus(page, 'commercial')
+
+  await page.click('label:has-text("commercial")')
+
+  await assertCheckboxStatus(page, 'commercial', 'unchecked')
+  await expect(byNc).not.toBeDisabled()
+  for (let checkbox of ['commercial', 'by-nc-sa', 'by-nc-nd']) {
+    await assertCheckboxStatus(page, checkbox, 'unchecked')
+  }
+})
+
 test('filters are updated when media type changes', async ({ page }) => {
   await page.goto('/search/image?q=cat&aspect_ratio=tall&license=cc0')
   await openFilters(page)
 
-  await assertCheckboxCheckedStatus(page, 'Tall')
-  await assertCheckboxCheckedStatus(page, 'cc0')
+  await assertCheckboxStatus(page, 'tall')
+  await assertCheckboxStatus(page, 'cc0')
 
   await changeContentType(page, 'Audio')
 
   await expect(page).toHaveURL('/search/audio?q=cat&license=cc0')
 
-  await expect(page.locator('label:has-text("Tall")')).toHaveCount(0)
-  await assertCheckboxCheckedStatus(page, 'cc0')
+  await expect(page.locator('label:has-text("Tall")')).toHaveCount(0, {
+    timeout: 300,
+  })
+  await assertCheckboxStatus(page, 'cc0')
 })
 
 test('new media request is sent when a filter is selected', async ({
@@ -91,10 +117,10 @@ test('new media request is sent when a filter is selected', async ({
   await page.goto('/search/image?q=cat')
   await openFilters(page)
 
-  await assertCheckboxCheckedStatus(page, 'cc0', false)
+  await assertCheckboxStatus(page, 'cc0', 'unchecked')
   await page.click('label:has-text("CC0")')
 
-  await assertCheckboxCheckedStatus(page, 'cc0', true)
+  await assertCheckboxStatus(page, 'cc0')
   await expect(apiRequest).toEqual(
     'https://api.openverse.engineering/v1/images/?q=cat&license=cc0'
   )

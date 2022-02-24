@@ -20,6 +20,8 @@ import {
   SEND_SEARCH_QUERY_EVENT,
 } from '~/constants/usage-data-analytics-types'
 import { USAGE_DATA } from '~/constants/store-modules'
+import { createPinia, setActivePinia } from 'pinia'
+import { useSearchStore } from '~/stores/search'
 
 describe('Search Store', () => {
   describe('state', () => {
@@ -58,6 +60,7 @@ describe('Search Store', () => {
 
     beforeEach(() => {
       state = store.state()
+      setActivePinia(createPinia())
     })
 
     it('FETCH_START_MEDIA updates state', () => {
@@ -191,7 +194,10 @@ describe('Search Store', () => {
     let services = null
     let state
     let context
+    let searchStore
+
     beforeEach(() => {
+      setActivePinia(createPinia())
       services = {
         [AUDIO]: {
           search: jest.fn(() => Promise.resolve(searchResults)),
@@ -226,10 +232,6 @@ describe('Search Store', () => {
         dispatch: jest.fn(),
         rootState: {
           user: { usageSessionId: 'foo' },
-          search: { query: { q: 'cat' } },
-        },
-        rootGetters: {
-          search: { searchQueryParams: () => ({ q: 'cat' }) },
         },
         state: state,
       }
@@ -238,6 +240,8 @@ describe('Search Store', () => {
     it.each(supportedMediaTypes)(
       'FETCH_SINGLE_MEDIA_TYPE (%s) on success',
       async (mediaType) => {
+        searchStore = useSearchStore()
+        await searchStore.updateQuery({ q: 'cat' })
         const params = {
           q: 'foo',
           page: { [mediaType]: 1 },
@@ -381,15 +385,17 @@ describe('Search Store', () => {
 
     it.each(supportedMediaTypes)(
       'FETCH_MEDIA_ITEM dispatches SEND_RESULT_CLICKED_EVENT',
-      (mediaType) => {
+      async (mediaType) => {
         const params = { id: 'foo', mediaType }
+        searchStore = useSearchStore()
+        await searchStore.updateQuery({ q: 'cat' })
         const action = createActions(services)[FETCH_MEDIA_ITEM]
         action(context, params)
 
         expect(context.dispatch).toHaveBeenLastCalledWith(
           `${USAGE_DATA}/${SEND_RESULT_CLICKED_EVENT}`,
           {
-            query: context.rootState.search.query.q,
+            query: 'cat',
             resultUuid: 'foo',
             resultRank: 0,
             sessionId: context.rootState.user.usageSessionId,

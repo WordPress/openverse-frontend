@@ -1,7 +1,7 @@
 import clonedeep from 'lodash.clonedeep'
-import { mediaFilterKeys } from '~/store/search'
 import getParameterByName from './get-parameter-by-name'
 import { ALL_MEDIA } from '~/constants/media'
+import { mediaFilterKeys } from '~/constants/filters'
 
 const filterPropertyMappings = {
   licenses: 'license',
@@ -30,16 +30,18 @@ const getMediaFilterTypes = (searchType) => [...mediaFilterKeys[searchType]]
 // }
 
 /**
- * joins all the filters which have the checked property `true`
- * to a string separated by commas.
- * eg: "by,nd-nc,nc-sa"
- * @param {array} filter
+ * Joins all the filters which have the checked property `true`
+ * to a string separated by commas for the API request URL, e.g.: "by,nd-nc,nc-sa".
+ * Mature is a special case, and is converted to `true`.
+ * @param {import('../store/types').FilterItem[]} filterItem
  */
-const filterToString = (filter) =>
-  filter
+const filterToString = (filterItem) => {
+  const filterString = filterItem
     .filter((f) => f.checked)
     .map((filterItem) => filterItem.code)
     .join(',')
+  return filterString === 'mature' ? 'true' : filterString
+}
 
 /**
  * converts the filter store object to the data format accepted by the API,
@@ -55,15 +57,13 @@ export const filtersToQueryData = (
   hideEmpty = true
 ) => {
   let queryDataObject = {}
+
   let mediaFilterTypes = getMediaFilterTypes(searchType)
-  mediaFilterTypes = mediaFilterTypes.filter((f) => f !== 'mature')
   mediaFilterTypes.reduce((queryData, filterDataKey) => {
     const queryDataKey = filterPropertyMappings[filterDataKey]
     queryData[queryDataKey] = filterToString(filters[filterDataKey])
     return queryData
   }, queryDataObject)
-
-  queryDataObject.mature = filters.mature
 
   if (hideEmpty) {
     queryDataObject = Object.entries(queryDataObject).reduce(
@@ -105,9 +105,9 @@ export const queryStringToSearchType = (queryString) => {
  * the `audioExtensions.ogg.checked` is set to true,
  * but for `search/images?extensions=ogg`, the extensions query parameter
  * is discarded, because `ogg` is not a valid extension for images.
- * @param filterParameter
- * @param parameterFilters
- * @return {*}
+ * @param {string} filterParameter
+ * @param {import('../store/types').FilterItem[]} parameterFilters
+ * @return {import('../store/types').FilterItem[]}
  */
 const getMediaTypeApiFilters = (filterParameter, parameterFilters) => {
   if (filterParameter !== '') {
@@ -130,7 +130,7 @@ const getMediaTypeApiFilters = (filterParameter, parameterFilters) => {
 /**
  * converts the browser filter query string into the internal filter store data format
  * @param {object} params
- * @param {object} params.query - browser filter query
+ * @param {Record<string, string>} params.query - browser filter query
  * @param {import('../store/types').SearchType} [params.searchType]
  * @param {object} params.defaultFilters default filters for testing purposes
  */
@@ -160,7 +160,7 @@ export const queryToFilterData = ({
           filters[filterDataKey]
         )
       }
-    } else if (filterDataKey !== 'mature') {
+    } else {
       const queryDataKey = filterPropertyMappings[filterDataKey]
       if (query[queryDataKey]) {
         const filterValues = query[queryDataKey].split(',')
@@ -173,10 +173,6 @@ export const queryToFilterData = ({
       }
     }
   })
-
-  if (query.mature) {
-    filters.mature = query.mature.toLowerCase() === 'true'
-  }
 
   return filters
 }
@@ -194,9 +190,7 @@ export const queryToFilterData = ({
 export const queryStringToQueryData = (queryString) => {
   const queryDataObject = {}
   const searchType = queryStringToSearchType(queryString)
-  const filterTypes = getMediaFilterTypes(searchType).filter(
-    (f) => f !== 'mature'
-  )
+  const filterTypes = getMediaFilterTypes(searchType)
   filterTypes.forEach((filterDataKey) => {
     const queryDataKey = filterPropertyMappings[filterDataKey]
     queryDataObject[queryDataKey] = getParameterByName(
@@ -205,7 +199,6 @@ export const queryStringToQueryData = (queryString) => {
     )
   })
   queryDataObject.q = getParameterByName('q', queryString)
-  queryDataObject.mature = getParameterByName('mature', queryString)
 
   return queryDataObject
 }

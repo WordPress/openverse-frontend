@@ -2,21 +2,41 @@ import { render, screen } from '@testing-library/vue'
 
 import VFilterButton from '~/components/VHeader/VFilterButton.vue'
 import { createLocalVue } from '@vue/test-utils'
-import Vuex from 'vuex'
 import VueI18n from 'vue-i18n'
-import messages from '../../../../../src/locales/en.json'
+import messages from '~/locales/en.json'
 import { ref } from '@nuxtjs/composition-api'
+import { createPinia, PiniaVuePlugin } from 'pinia'
+import { useFilterStore } from '~/stores/filter'
+import { IMAGE } from '~/constants/media'
+import { filterData, mediaFilterKeys } from '~/constants/filters'
+
+function applyNFilters(filterCount, filterStore) {
+  const filterTypes = mediaFilterKeys[IMAGE]
+  let filterIdx = 0
+  let filterTypeIdx = 0
+  for (let i = 0; i < filterCount; i++) {
+    filterStore.toggleFilter({
+      filterType: filterTypes[filterTypeIdx],
+      codeIdx: filterIdx,
+    })
+    filterIdx += 1
+    if (filterData[filterTypes[filterTypeIdx]].length === filterIdx) {
+      filterTypeIdx += 1
+      filterIdx = 0
+    }
+  }
+}
 
 describe('VFilterButton', () => {
   let options = {}
-  let storeMock
   let localVue
-  let appliedFilters = []
   let props = {}
   let provided = {
     isMinScreenMd: ref(true),
     isHeaderScrolled: ref(false),
   }
+  let pinia
+  let filterStore
 
   const i18n = new VueI18n({
     locale: 'en',
@@ -26,25 +46,17 @@ describe('VFilterButton', () => {
   })
   beforeEach(() => {
     localVue = createLocalVue()
-    localVue.use(Vuex)
     localVue.use(VueI18n)
+    localVue.use(PiniaVuePlugin)
+    pinia = createPinia()
+    filterStore = useFilterStore(pinia)
 
-    storeMock = new Vuex.Store({
-      modules: {
-        search: {
-          namespaced: true,
-          getters: {
-            isAnyFilterApplied: () => appliedFilters.length > 0,
-            appliedFilterTags: () => appliedFilters,
-          },
-        },
-      },
-    })
     options = {
       localVue,
       propsData: props,
-      mocks: { $nuxt: { context: { store: storeMock, i18n } } },
+      mocks: { $nuxt: { context: { i18n } } },
       provide: provided,
+      pinia,
     }
   })
 
@@ -59,20 +71,19 @@ describe('VFilterButton', () => {
       expect(button).toBeVisible()
       expect(icon).toBeVisible()
     })
-    it('shows the count and text when filters are applied', () => {
+    it('shows the count and text when filters are applied', async () => {
       provided.isMinScreenMd.value = true
       // +2 to guarantee it's plural
-      const filterCount = Math.floor(Math.random() * 10) + 2
-      appliedFilters = Array(filterCount).fill('')
-      render(VFilterButton, options)
-
-      const button = screen.getByText(`${filterCount} Filters`)
+      const filterCount = Math.floor(Math.random() * 9) + 2
+      applyNFilters(filterCount, filterStore)
+      const wrapper = render(VFilterButton, options)
+      const button = wrapper.getByText(`${filterCount} Filters`)
 
       expect(button).toBeVisible()
     })
     it('does not show the icon when filters are applied', () => {
       provided.isMinScreenMd.value = true
-      appliedFilters = ['mockfilter1', 'mockfilter2']
+      filterStore.toggleFilter({ filterType: 'licenses', codeIdx: 0 })
 
       const { container } = render(VFilterButton, options)
       const icon = container.querySelector('svg')
@@ -84,7 +95,6 @@ describe('VFilterButton', () => {
   describe('below the medium breakpoint', () => {
     it('only shows the filter icon by default', () => {
       provided.isMinScreenMd.value = false
-      appliedFilters = []
       const { container } = render(VFilterButton, options)
 
       const icon = container.querySelector('svg')
@@ -96,8 +106,8 @@ describe('VFilterButton', () => {
     it('only shows the count and label when filters are applied', () => {
       provided.isMinScreenMd.value = false
       // +2 to guarantee it's plural
-      const filterCount = Math.floor(Math.random() * 10) + 2
-      appliedFilters = Array(filterCount).fill('')
+      const filterCount = Math.floor(Math.random() * 9) + 2
+      applyNFilters(filterCount, filterStore)
       const { container } = render(VFilterButton, options)
 
       const icon = container.querySelector('svg')
@@ -111,7 +121,7 @@ describe('VFilterButton', () => {
       provided.isHeaderScrolled.value = true
       // +2 to guarantee it's plural
       const filterCount = Math.floor(Math.random() * 10) + 2
-      appliedFilters = Array(filterCount).fill('')
+      applyNFilters(filterCount, filterStore)
       const { container } = render(VFilterButton, options)
 
       const icon = container.querySelector('svg')

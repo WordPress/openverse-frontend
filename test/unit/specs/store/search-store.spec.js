@@ -1,142 +1,180 @@
-import store, { filterData } from '~/store/search'
 import {
-  CLEAR_FILTERS,
-  SET_SEARCH_STATE_FROM_URL,
-  TOGGLE_FILTER,
-  UPDATE_QUERY_FROM_FILTERS,
-} from '~/constants/action-types'
-import {
-  SET_FILTER,
-  SET_PROVIDERS_FILTERS,
-  REPLACE_FILTERS,
-  SET_SEARCH_TYPE,
-  SET_QUERY,
-} from '~/constants/mutation-types'
-import { ALL_MEDIA, AUDIO, IMAGE } from '~/constants/media'
+  ALL_MEDIA,
+  AUDIO,
+  IMAGE,
+  supportedSearchTypes,
+  VIDEO,
+} from '~/constants/media'
+import { createPinia, setActivePinia } from 'pinia'
+import { useSearchStore } from '~/stores/search'
+import { mediaFilterKeys } from '~/constants/filters'
 
-describe('Filter Store', () => {
+describe('Search Store', () => {
+  beforeEach(() => {
+    setActivePinia(createPinia())
+  })
   describe('state', () => {
-    it('state contains all filters', () => {
-      const defaultState = store.state()
+    it('initializes correctly', () => {
+      const searchStore = useSearchStore()
 
-      expect(defaultState.filters).toEqual(filterData)
+      expect(searchStore.state).toEqual({
+        query: {
+          aspect_ratio: '',
+          categories: '',
+          duration: '',
+          extension: '',
+          license: '',
+          license_type: '',
+          mature: '',
+          q: '',
+          searchBy: '',
+          size: '',
+          source: '',
+        },
+        searchType: ALL_MEDIA,
+      })
     })
   })
-
-  describe('mutations', () => {
-    let state = null
-    let mutations = null
-    let getters = null
-
-    beforeEach(() => {
-      state = {
-        search: {
-          searchType: 'image',
-          query: { q: 'foo' },
-        },
-        ...store.state(),
-      }
-      mutations = store.mutations
-      getters = store.getters
-    })
-
-    it('SET_QUERY updates state', () => {
-      const params = { query: { q: 'foo' } }
-      mutations[SET_QUERY](state, params)
-
-      expect(state.query.q).toBe(params.query.q)
-    })
-
-    it('SET_SEARCH_TYPE updates the state', () => {
-      state.searchType = IMAGE
-      mutations[SET_SEARCH_TYPE](state, { searchType: AUDIO })
-      expect(state.searchType).toEqual(AUDIO)
-    })
-
+  describe('getters', () => {
+    /**
+     * For non-supported search types, the filters fall back to 'All content' filters.
+     * Number of displayed filters is one less than the number of mediaFilterKeys
+     * because `mature` filter is not displayed.
+     */
     it.each`
-      filterType           | codeIdx
-      ${'licenses'}        | ${0}
-      ${'licenseTypes'}    | ${0}
-      ${'imageExtensions'} | ${0}
-      ${'imageCategories'} | ${0}
-      ${'searchBy'}        | ${0}
-      ${'aspectRatios'}    | ${0}
-      ${'sizes'}           | ${0}
+      searchType   | filterTypeCount
+      ${IMAGE}     | ${mediaFilterKeys[IMAGE].length}
+      ${AUDIO}     | ${mediaFilterKeys[AUDIO].length}
+      ${ALL_MEDIA} | ${mediaFilterKeys[ALL_MEDIA].length}
+      ${VIDEO}     | ${mediaFilterKeys[VIDEO].length}
     `(
-      'SET_FILTER updates $filterType filter state',
-      ({ filterType, codeIdx }) => {
-        mutations[SET_FILTER](state, { filterType, codeIdx })
+      'mediaFiltersForDisplay returns $filterTypeCount filters for $searchType',
+      ({ searchType, filterTypeCount }) => {
+        const searchStore = useSearchStore()
+        searchStore.updateQuery({ searchType })
+        const filtersForDisplay = searchStore.mediaFiltersForDisplay
+        const expectedFilterCount = Math.max(0, filterTypeCount - 1)
+        expect(Object.keys(filtersForDisplay).length).toEqual(
+          expectedFilterCount
+        )
+      }
+    )
+    /**
+     * Check for some special cases:
+     * - `mature` and `searchBy`.
+     * - several options for single filter.
+     * - media specific filters that are unique (durations).
+     * - media specific filters that have the same API param (extensions)
+     */
+    it.each`
+      query                                               | searchType
+      ${{ q: 'cat', license: 'by', mature: true }}        | ${IMAGE}
+      ${{ q: 'cat', license: 'by', searchBy: 'creator' }} | ${ALL_MEDIA}
+      ${{ q: 'cat', license: 'cc0,pdm,by,by-nc' }}        | ${ALL_MEDIA}
+      ${{ q: 'cat', duration: 'medium' }}                 | ${AUDIO}
+      ${{ q: 'cat', extension: 'svg' }}                   | ${IMAGE}
+      ${{ q: 'cat', extension: 'svg' }}                   | ${AUDIO}
+      ${{ q: 'cat', extension: 'mp3' }}                   | ${AUDIO}
+    `(
+      'returns correct searchQueryParams and filter status for $query and searchType $searchType',
+      ({ query, searchType }) => {
+        const searchStore = useSearchStore()
+        const expectedQueryParams = query
+        // It should discard the values that are not applicable for the search type:
+        if (searchType === AUDIO && query.extension === 'svg') {
+          delete expectedQueryParams.extension
+        }
+        searchStore.setSearchStateFromUrl({
+          path: `/search/${searchType === ALL_MEDIA ? '' : searchType}`,
+          query: expectedQueryParams,
+        })
+        expect(searchStore.searchQueryParams).toEqual(expectedQueryParams)
+      }
+    )
+    /**
+     * Check for some special cases:
+     * - `mature` and `searchBy`.
+     * - several options for single filter.
+     * - media specific filters that are unique (durations).
+     * - media specific filters that have the same API param (extensions)
+     */
+    it.each`
+      query                                               | searchType   | filterCount
+      ${{ q: 'cat', license: 'by', mature: true }}        | ${IMAGE}     | ${1}
+      ${{ q: 'cat', license: 'by', searchBy: 'creator' }} | ${ALL_MEDIA} | ${2}
+      ${{ q: 'cat', license: 'cc0,pdm,by,by-nc' }}        | ${ALL_MEDIA} | ${4}
+      ${{ q: 'cat', duration: 'medium' }}                 | ${AUDIO}     | ${1}
+      ${{ q: 'cat', extension: 'svg' }}                   | ${IMAGE}     | ${1}
+      ${{ q: 'cat', extension: 'svg' }}                   | ${AUDIO}     | ${0}
+      ${{ q: 'cat', extension: 'mp3' }}                   | ${AUDIO}     | ${1}
+    `(
+      'returns correct filter status for $query and searchType $searchType',
+      ({ query, searchType, filterCount }) => {
+        const searchStore = useSearchStore()
+        searchStore.setSearchStateFromUrl({
+          path: `/search/${searchType === ALL_MEDIA ? '' : searchType}`,
+          query: query,
+        })
 
-        expect(state.filters[filterType][codeIdx].checked).toBeTruthy()
+        expect(searchStore.appliedFilterCount).toEqual(filterCount)
+        expect(searchStore.isAnyFilterApplied).toBe(filterCount > 0)
+      }
+    )
+    /**
+     * For non-supported search types, the filters fall back to 'All content' filters.
+     * Number of displayed filters is one less than the number of mediaFilterKeys
+     * because `mature` filter is not displayed.
+     */
+    it.each`
+      searchType   | filterTypeCount
+      ${IMAGE}     | ${mediaFilterKeys[IMAGE].length}
+      ${AUDIO}     | ${mediaFilterKeys[AUDIO].length}
+      ${ALL_MEDIA} | ${mediaFilterKeys[ALL_MEDIA].length}
+      ${VIDEO}     | ${mediaFilterKeys[VIDEO].length}
+    `(
+      'mediaFiltersForDisplay returns $filterTypeCount filters for $mediaType',
+      ({ searchType, filterTypeCount }) => {
+        const searchStore = useSearchStore()
+        const expectedFilterCount = Math.max(0, filterTypeCount - 1)
+
+        searchStore.updateQuery({ searchType })
+        const filtersForDisplay = searchStore.mediaFiltersForDisplay
+
+        expect(Object.keys(filtersForDisplay).length).toEqual(
+          expectedFilterCount
+        )
+      }
+    )
+  })
+  describe('actions', () => {
+    it.each`
+      query           | searchType
+      ${{ q: 'foo' }} | ${undefined}
+      ${undefined}    | ${AUDIO}
+      ${{ q: 'cat' }} | ${AUDIO}
+    `(
+      '`updateQuery` updates query.q and searchType parameters with $query and $searchType',
+      ({ query, searchType }) => {
+        const searchStore = useSearchStore()
+        const expectedSearchTerm = query?.q ?? ''
+        const expectedSearchType = searchType ?? ALL_MEDIA
+
+        searchStore.updateQuery({ ...query, searchType })
+
+        expect(searchStore.query.q).toEqual(expectedSearchTerm)
+        expect(searchStore.searchType).toEqual(expectedSearchType)
       }
     )
 
-    it('SET_FILTER updates mature', () => {
-      mutations[SET_FILTER](state, { filterType: 'mature' })
+    it('`updateQuery` does not change anything without params', () => {
+      const searchStore = useSearchStore()
+      const expectedSearchTerm = ''
+      const expectedSearchType = ALL_MEDIA
 
-      expect(state.filters.mature).toBeTruthy()
-    })
+      searchStore.updateQuery()
 
-    it('SET_FILTER toggles mature', () => {
-      state.filters.mature = true
-      mutations[SET_FILTER](state, { filterType: 'mature' })
-
-      expect(state.filters.mature).toBeFalsy()
-    })
-
-    it('SET_FILTER updates isFilterApplied with provider', () => {
-      state.filters.imageProviders = [{ code: 'met', checked: false }]
-      mutations[SET_FILTER](state, { filterType: 'imageProviders', codeIdx: 0 })
-
-      expect(getters.isAnyFilterApplied).toBeTruthy()
-    })
-
-    it('SET_FILTER updates isFilterApplied with license type', () => {
-      mutations[SET_FILTER](state, { filterType: 'licenseTypes', codeIdx: 0 })
-
-      expect(getters.isAnyFilterApplied).toBeTruthy()
-    })
-
-    it('SET_PROVIDERS_FILTERS merges with existing provider filters', () => {
-      const existingProviderFilters = [{ code: 'met', checked: true }]
-
-      const providers = [
-        { source_name: 'met', display_name: 'Metropolitan' },
-        { source_name: 'flickr', display_name: 'Flickr' },
-      ]
-
-      state.filters.imageProviders = existingProviderFilters
-
-      mutations[SET_PROVIDERS_FILTERS](state, {
-        mediaType: 'image',
-        providers: providers,
-      })
-
-      expect(state.filters.imageProviders).toEqual([
-        { code: 'met', name: 'Metropolitan', checked: true },
-        { code: 'flickr', name: 'Flickr', checked: false },
-      ])
-    })
-  })
-
-  describe('actions', () => {
-    let state = null
-    let commitMock = null
-    let dispatchMock = null
-    let actions = null
-    let context = null
-
-    beforeEach(() => {
-      commitMock = jest.fn()
-      dispatchMock = jest.fn()
-      state = store.state()
-      actions = store.actions
-      context = {
-        commit: commitMock,
-        dispatch: dispatchMock,
-        rootState: {},
-        state: state,
-      }
+      expect(searchStore.query.q).toEqual(expectedSearchTerm)
+      expect(searchStore.searchType).toEqual(expectedSearchType)
     })
 
     it.each`
@@ -146,140 +184,82 @@ describe('Filter Store', () => {
       ${'audio'} | ${'/search/audio/'}
       ${'video'} | ${'/search/video'}
     `(
-      "SET_SEARCH_STATE_FROM_URL should set searchType '$searchType' from path '$path'",
-      ({ searchType, path, mediaType }) => {
-        actions[SET_SEARCH_STATE_FROM_URL](
-          { commit: commitMock, dispatch: dispatchMock, state },
-          { path: path, query: {} }
-        )
-        expect(commitMock).toHaveBeenLastCalledWith(SET_SEARCH_TYPE, {
-          searchType,
-        })
-        expect(dispatchMock).toHaveBeenCalledWith(UPDATE_QUERY_FROM_FILTERS, {
-          mediaType: mediaType,
-        })
+      "`setSearchStateFromUrl` should set searchType '$searchType' from path '$path'",
+      ({ searchType, path }) => {
+        const searchStore = useSearchStore()
+        const expectedQuery = searchStore.query
+
+        searchStore.setSearchStateFromUrl({ path: path, query: {} })
+
+        expect(searchStore.searchType).toEqual(searchType)
+        expect(searchStore.query).toEqual(expectedQuery)
       }
     )
 
     it.each`
-      query                      | path                | searchType
-      ${{ license: 'cc0,by' }}   | ${'/search/'}       | ${ALL_MEDIA}
-      ${{ searchBy: 'creator' }} | ${'/search/image/'} | ${IMAGE}
-      ${{ mature: 'true' }}      | ${'/search/audio/'} | ${AUDIO}
-      ${{ durations: 'medium' }} | ${'/search/image'}  | ${IMAGE}
+      query                                | path                | searchType
+      ${{ license: 'cc0,by', q: 'cat' }}   | ${'/search/'}       | ${ALL_MEDIA}
+      ${{ searchBy: 'creator', q: 'dog' }} | ${'/search/image/'} | ${IMAGE}
+      ${{ mature: 'true', q: 'galah' }}    | ${'/search/audio/'} | ${AUDIO}
+      ${{ duration: 'medium' }}            | ${'/search/image'}  | ${IMAGE}
     `(
-      "SET_SEARCH_STATE_FROM_URL should set '$searchType' from query '$path'",
+      "`setSearchStateFromUrl` should set '$searchType' from query  $query and path '$path'",
       ({ query, path, searchType }) => {
-        actions[SET_SEARCH_STATE_FROM_URL](
-          { commit: commitMock, dispatch: dispatchMock, state },
-          { path: path, query: query }
-        )
-        expect(dispatchMock).toHaveBeenCalledWith(UPDATE_QUERY_FROM_FILTERS, {})
-        expect(context.commit).toHaveBeenLastCalledWith(SET_SEARCH_TYPE, {
-          searchType,
-        })
+        const searchStore = useSearchStore()
+        const expectedQuery = { ...searchStore.query, ...query }
+        // The values that are not applicable for the search type should be discarded
+        if (searchType === IMAGE) {
+          expectedQuery.duration = ''
+        }
+
+        searchStore.setSearchStateFromUrl({ path: path, query: query })
+
+        expect(searchStore.searchType).toEqual(searchType)
+        expect(searchStore.query).toEqual(expectedQuery)
       }
     )
-
-    it('CLEAR_FILTERS resets filters to initial state', async () => {
-      state.filters.licenses = [
-        { code: 'by', checked: true },
-        { code: 'by-nc', checked: true },
-        { code: 'by-nd', checked: true },
-      ]
-      actions[CLEAR_FILTERS]({
-        commit: commitMock,
-        dispatch: dispatchMock,
-        state,
-      })
-      expect(commitMock).toHaveBeenCalledWith(REPLACE_FILTERS, {
-        newFilterData: filterData,
-      })
-      expect(dispatchMock).toHaveBeenCalledWith(UPDATE_QUERY_FROM_FILTERS, {
-        q: '',
-      })
-    })
-
-    it('CLEAR_FILTERS sets providers filters checked to false', async () => {
-      state.filters.imageProviders = [
-        { code: 'met', name: 'Metropolitan', checked: true },
-        { code: 'flickr', name: 'Flickr', checked: false },
-      ]
-
-      actions[CLEAR_FILTERS]({
-        commit: commitMock,
-        dispatch: dispatchMock,
-        state,
-      })
-      const expectedFilters = {
-        ...state.filters,
-        imageProviders: [
-          { code: 'met', name: 'Metropolitan', checked: false },
-          { code: 'flickr', name: 'Flickr', checked: false },
-        ],
-      }
-      expect(commitMock).toHaveBeenCalledWith(REPLACE_FILTERS, {
-        newFilterData: expectedFilters,
-      })
-      expect(dispatchMock).toHaveBeenCalledWith(UPDATE_QUERY_FROM_FILTERS, {
-        q: '',
-      })
-    })
 
     it.each`
-      filterType           | code              | idx
-      ${'licenses'}        | ${'cc0'}          | ${0}
-      ${'licenseTypes'}    | ${'modification'} | ${1}
-      ${'imageExtensions'} | ${'svg'}          | ${3}
-      ${'imageCategories'} | ${'photograph'}   | ${0}
-      ${'searchBy'}        | ${'creator'}      | ${0}
-      ${'mature'}          | ${undefined}      | ${-1}
-      ${'aspectRatios'}    | ${'tall'}         | ${0}
-      ${'sizes'}           | ${'medium'}       | ${1}
+      filters                                                               | query
+      ${[['licenses', 'by'], ['licenses', 'by-nc-sa']]}                     | ${['license', 'by,by-nc-sa']}
+      ${[['licenseTypes', 'commercial'], ['licenseTypes', 'modification']]} | ${['license_type', 'commercial,modification']}
+      ${[['searchBy', 'creator']]}                                          | ${['searchBy', 'creator']}
+      ${[['mature', 'mature']]}                                             | ${['mature', 'true']}
+      ${[['sizes', 'large']]}                                               | ${['size', '']}
     `(
-      "TOGGLE_FILTER should set filter '$code' of type '$filterType",
-      ({ filterType, code, idx }) => {
-        actions[TOGGLE_FILTER](
-          { commit: commitMock, dispatch: dispatchMock, state },
-          { filterType: filterType, code: code }
-        )
-        expect(commitMock).toHaveBeenCalledWith(SET_FILTER, {
-          filterType: filterType,
-          code: code,
-          codeIdx: idx,
-        })
-
-        expect(dispatchMock).toHaveBeenCalledWith(UPDATE_QUERY_FROM_FILTERS)
+      'toggleFilter updates the query values to $query',
+      ({ filters, query }) => {
+        const searchStore = useSearchStore()
+        for (const filterItem of filters) {
+          const [filterType, code] = filterItem
+          searchStore.toggleFilter({ filterType, code })
+        }
+        expect(searchStore.query[query[0]]).toEqual(query[1])
       }
     )
+    // toggleFilter, clearFilters,
 
-    it('TOGGLE_FILTER updates mature', () => {
-      actions[TOGGLE_FILTER](
-        { commit: commitMock, dispatch: dispatchMock, state },
-        { filterType: 'mature' }
-      )
+    it.each([ALL_MEDIA, IMAGE, AUDIO, VIDEO])(
+      'Clears filters when search type is %s',
+      (searchType) => {
+        const searchStore = useSearchStore()
+        const expectedQuery = { ...searchStore.query, q: 'cat' }
+        searchStore.setSearchStateFromUrl({
+          path: `/search/${searchType === ALL_MEDIA ? '' : searchType}`,
+          query: {
+            q: 'cat',
+            license: 'cc0',
+            sizes: 'large',
+            extension: 'jpg,mp3',
+          },
+        })
+        if (supportedSearchTypes.includes(searchType)) {
+          expect(searchStore.query).not.toEqual(expectedQuery)
+        }
 
-      expect(commitMock).toHaveBeenCalledWith(SET_FILTER, {
-        filterType: 'mature',
-        codeIdx: -1,
-      })
-
-      expect(dispatchMock).toHaveBeenCalledWith(UPDATE_QUERY_FROM_FILTERS)
-    })
-
-    it('TOGGLE_FILTER toggles mature', () => {
-      state.filters.mature = true
-      actions[TOGGLE_FILTER](
-        { commit: commitMock, dispatch: dispatchMock, state },
-        { filterType: 'mature' }
-      )
-
-      expect(commitMock).toHaveBeenCalledWith(SET_FILTER, {
-        filterType: 'mature',
-        codeIdx: -1,
-      })
-
-      expect(dispatchMock).toHaveBeenCalledWith(UPDATE_QUERY_FROM_FILTERS)
-    })
+        searchStore.clearFilters()
+        expect(searchStore.query).toEqual(expectedQuery)
+      }
+    )
   })
 })

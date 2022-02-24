@@ -54,8 +54,9 @@ import {
   useContext,
   useRouter,
 } from '@nuxtjs/composition-api'
-import { MEDIA, SEARCH } from '~/constants/store-modules'
-import { FETCH_MEDIA, UPDATE_QUERY } from '~/constants/action-types'
+import { useSearchStore } from '~/stores/search'
+import { MEDIA } from '~/constants/store-modules'
+import { FETCH_MEDIA } from '~/constants/action-types'
 
 import Oops from '~/assets/oops.svg?inline'
 import OpenverseLogo from '~/assets/logo.svg?inline'
@@ -72,6 +73,7 @@ const VFourOhFour = defineComponent({
   },
   props: ['error'],
   setup() {
+    const searchStore = useSearchStore()
     const { app, store } = useContext()
     const router = useRouter()
 
@@ -83,7 +85,7 @@ const VFourOhFour = defineComponent({
     const handleSearch = async () => {
       if (searchTerm.value === '') return
 
-      await store.dispatch(`${SEARCH}/${UPDATE_QUERY}`, {
+      searchStore.updateQuery({
         q: searchTerm.value,
       })
       await store.dispatch(`${MEDIA}/${FETCH_MEDIA}`, {

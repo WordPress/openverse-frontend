@@ -1,61 +1,26 @@
 import Vuex from 'vuex'
 import { fireEvent, render, screen } from '@testing-library/vue'
 import { createLocalVue } from '@vue/test-utils'
-import { IMAGE } from '~/constants/media'
-import store from '~/store/search'
-import clonedeep from 'lodash.clonedeep'
 import SearchGridFilter from '~/components/VFilters/VSearchGridFilter.vue'
 import { FETCH_MEDIA } from '~/constants/action-types'
-
-const initialFilters = {
-  licenseTypes: [
-    {
-      code: 'commercial',
-      name: 'Commercial usage',
-      checked: false,
-    },
-    {
-      code: 'modification',
-      name: 'Modify or adapt',
-      checked: false,
-    },
-  ],
-  licenses: [{ code: 'by', name: 'CC-BY', checked: false }],
-  imageCategories: [{ code: 'photo', name: 'Photographs', checked: false }],
-  imageExtensions: [{ code: 'jpg', name: 'JPG', checked: false }],
-  imageProviders: [{ code: 'met', name: 'Metropolitan', checked: false }],
-  audioProviders: [{ code: 'jamendo', name: 'Jamendo', checked: false }],
-  sizes: [{ code: 'small', name: 'small', checked: false }],
-  aspectRatios: [],
-  searchBy: [{ code: 'creator', checked: false }],
-  mature: false,
-}
+import { createPinia, PiniaVuePlugin } from 'pinia'
+import { useFilterStore } from '~/stores/filter'
 
 describe('SearchGridFilter', () => {
   let options = {}
   let storeMock
   let localVue
-  let filters
+  let pinia
+  let filterStore
   const routerMock = { push: jest.fn() }
 
   beforeEach(() => {
     localVue = createLocalVue()
     localVue.use(Vuex)
-    filters = clonedeep(initialFilters)
+    localVue.use(PiniaVuePlugin)
+    pinia = createPinia()
     storeMock = new Vuex.Store({
       modules: {
-        search: {
-          namespaced: true,
-          state: {
-            searchType: IMAGE,
-            isFilterVisible: true,
-            filters,
-            query: { q: '' },
-          },
-          mutations: store.mutations,
-          actions: store.actions,
-          getters: store.getters,
-        },
         media: {
           namespaced: true,
           state: {
@@ -81,13 +46,8 @@ describe('SearchGridFilter', () => {
         },
       },
       stubs: { VIcon: true },
+      pinia,
     }
-  })
-
-  it('should show search filters when isFilterVisible is true', async () => {
-    storeMock.state.search.isFilterVisible = true
-    await render(SearchGridFilter, options)
-    expect(screen.getByTestId('filters-list')).toBeVisible()
   })
 
   it('toggles filter', async () => {
@@ -98,11 +58,12 @@ describe('SearchGridFilter', () => {
     await fireEvent.click(screen.queryByLabelText(/commercial/i))
     // `getBy` serves as expect because it throws an error if no element is found
     screen.getByRole('checkbox', { checked: true })
-    screen.getByLabelText('Commercial usage', { checked: true })
+    screen.getByLabelText(/commercial/, { checked: true })
   })
 
   it('clears filters', async () => {
-    storeMock.state.search.filters.licenses[0].checked = true
+    filterStore = useFilterStore(pinia)
+    filterStore.toggleFilter({ filterType: 'licenses', code: 'by' })
     await render(SearchGridFilter, options)
     // if no checked checkboxes were found, this would raise an error
     screen.getByRole('checkbox', { checked: true })
@@ -112,8 +73,9 @@ describe('SearchGridFilter', () => {
     const uncheckedFilters = screen.queryAllByRole('checkbox', {
       checked: false,
     })
+
     expect(checkedFilters.length).toEqual(0)
     // Filters are reset with the initial `filterData`
-    expect(uncheckedFilters.length).toEqual(25)
+    expect(uncheckedFilters.length).toEqual(11)
   })
 })

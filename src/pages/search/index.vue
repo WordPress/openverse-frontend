@@ -4,23 +4,19 @@
 
 <script>
 import { propTypes } from '~/pages/search/search-page.types'
-import {
-  useMeta,
-  useStore,
-  defineComponent,
-  computed,
-} from '@nuxtjs/composition-api'
+import { useMeta, defineComponent, computed } from '@nuxtjs/composition-api'
 import { useLoadMore } from '~/composables/use-load-more'
 import VAllResultsGrid from '~/components/VAllResultsGrid/VAllResultsGrid.vue'
+import { useSearchStore } from '~/stores/search'
 
 const SearchIndex = defineComponent({
   name: 'SearchIndex',
   components: { VAllResultsGrid },
   props: propTypes,
   setup(props) {
-    const store = useStore()
+    const searchStore = useSearchStore()
 
-    const query = computed(() => store.state.search.query.q)
+    const query = computed(() => searchStore.query.q)
     useMeta({ title: `${query.value} | Openverse` })
 
     const { canLoadMore, onLoadMore } = useLoadMore(props)

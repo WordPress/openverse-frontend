@@ -9,21 +9,17 @@
 
 <script>
 import { propTypes } from '~/pages/search/search-page.types'
-import {
-  useStore,
-  computed,
-  defineComponent,
-  useMeta,
-} from '@nuxtjs/composition-api'
+import { computed, defineComponent, useMeta } from '@nuxtjs/composition-api'
 import { useLoadMore } from '~/composables/use-load-more'
+import { useSearchStore } from '~/stores/search'
 
 const ImageSearch = defineComponent({
   name: 'ImageSearch',
   props: propTypes,
   setup(props) {
-    const store = useStore()
+    const searchStore = useSearchStore()
 
-    const query = computed(() => store.state.search.query.q)
+    const query = computed(() => searchStore.query.q)
     useMeta({ title: `${query.value} - Openverse` })
 
     const results = computed(() =>
