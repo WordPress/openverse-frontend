@@ -23,7 +23,7 @@
         @error="onImageLoadError($event, image)"
       />
       <figcaption
-        class="absolute left-0 bottom-0 invisible group-hover:visible group-focus:visible bg-white p-1"
+        class="absolute left-0 bottom-0 invisible group-hover:visible group-focus:visible bg-white p-1 text-dark-charcoal"
       >
         <span class="sr-only">{{ image.title }}</span>
         <VLicense
