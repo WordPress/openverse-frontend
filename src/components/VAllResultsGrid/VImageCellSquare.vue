@@ -3,7 +3,7 @@
     itemprop="contentUrl"
     :title="image.title"
     :href="'/image/' + image.id"
-    class="group block focus:ring focus:ring-pink focus:ring-offset-2 focus:outline-none focus:shadow-ring rounded-sm"
+    class="group block focus:ring-[3px] focus:ring-pink focus:ring-offset-[3px] focus:outline-none rounded-sm"
   >
     <figure
       itemprop="image"

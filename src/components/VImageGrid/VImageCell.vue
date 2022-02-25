@@ -1,7 +1,7 @@
 <template>
   <VLink
     :href="'/image/' + image.id"
-    class="w-full block group relative overflow-hidden rounded-sm focus:ring focus:ring-pink focus:ring-offset-2 focus:outline-none focus:shadow-ring"
+    class="w-full block group relative overflow-hidden rounded-sm focus:ring-[3px] focus:ring-pink focus:ring-offset-[3px] focus:outline-none"
     :aria-label="image.title"
     :style="`width: ${containerAspect * widthBasis}px;flex-grow: ${
       containerAspect * widthBasis
