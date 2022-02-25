@@ -387,7 +387,7 @@ export default defineComponent({
       return {
         tabindex: isBoxed.value ? 0 : -1,
         class:
-          'block focus:bg-white focus:border-tx focus:ring focus:ring-pink focus:outline-none focus:shadow-ring rounded-sm overflow-hidden cursor-pointer',
+          'block focus:bg-white focus:border-tx focus:ring focus:ring-pink focus:outline-none focus:shadow-ring focus:ring-offset-2 rounded-sm overflow-hidden cursor-pointer',
       }
     })
     const layoutBasedListeners = computed(() => {
