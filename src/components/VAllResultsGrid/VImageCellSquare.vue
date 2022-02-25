@@ -26,11 +26,7 @@
         class="absolute left-0 bottom-0 invisible group-hover:visible group-focus:visible bg-white p-1 text-dark-charcoal"
       >
         <span class="sr-only">{{ image.title }}</span>
-        <VLicense
-          :license="image.license"
-          :bg-filled="true"
-          :hide-name="true"
-        />
+        <VLicense :license="image.license" :hide-name="true" />
       </figcaption>
     </figure>
   </VLink>
@@ -38,6 +34,7 @@
 
 <script>
 import VLicense from '~/components/License/VLicense.vue'
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const errorImage = require('~/assets/image_not_available_placeholder.png')
 
 const toAbsolutePath = (url, prefix = 'https://') => {
