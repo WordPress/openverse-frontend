@@ -1,7 +1,11 @@
 <template>
   <section>
     <div class="image-grid flex flex-wrap gap-4">
-      <ImageCell v-for="(image, index) in images" :key="index" :image="image" />
+      <VImageCell
+        v-for="(image, index) in images"
+        :key="index"
+        :image="image"
+      />
     </div>
     <h5 v-if="isError && !fetchState.isFinished" class="py-4">
       {{ fetchState.fetchingError }}
@@ -26,11 +30,11 @@
  * Used to display both image search results, and related images.
  */
 import VLoadMore from '~/components/VLoadMore'
-import ImageCell from '~/components/ImageGrid/ImageCell'
+import VImageCell from '~/components/VImageGrid/VImageCell'
 
 export default {
   name: 'ImageGrid',
-  components: { VLoadMore, ImageCell },
+  components: { VLoadMore, VImageCell },
   props: {
     images: {
       default: () => [],

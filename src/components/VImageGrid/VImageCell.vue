@@ -55,7 +55,7 @@ const toAbsolutePath = (url, prefix = 'https://') => {
 }
 
 export default {
-  name: 'ImageCell',
+  name: 'VImageCell',
   components: { VLicense, VLink },
   props: ['image'],
   data() {
