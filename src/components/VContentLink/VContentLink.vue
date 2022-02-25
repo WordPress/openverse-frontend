@@ -22,10 +22,10 @@ import { computed, defineComponent } from '@nuxtjs/composition-api'
 import { useI18nResultsCount } from '~/composables/use-i18n-utilities'
 import { AUDIO, IMAGE, supportedMediaTypes } from '~/constants/media'
 
+import VIcon from '~/components/VIcon/VIcon.vue'
+
 import audioIcon from '~/assets/icons/audio-wave.svg'
 import imageIcon from '~/assets/icons/image.svg'
-
-import VIcon from '~/components/VIcon/VIcon.vue'
 
 const iconMapping = {
   [AUDIO]: audioIcon,

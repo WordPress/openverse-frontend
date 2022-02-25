@@ -26,10 +26,10 @@ import {
   useContext,
 } from '@nuxtjs/composition-api'
 
-import filterIcon from '~/assets/icons/filter.svg'
-
 import VButton from '~/components/VButton.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'
+
+import filterIcon from '~/assets/icons/filter.svg'
 
 const VFilterButton = defineComponent({
   name: 'VFilterButton',

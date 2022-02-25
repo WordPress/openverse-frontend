@@ -139,15 +139,15 @@ import { MEDIA, SEARCH } from '~/constants/store-modules'
 import { ALL_MEDIA, supportedSearchTypes } from '~/constants/media'
 import { isMinScreen } from '~/composables/use-media-query'
 
-import OpenverseBrand from '~/assets/brand.svg?inline'
-import OpenverseLogo from '~/assets/logo.svg?inline'
-import imageInfo from '~/assets/homepage_images/image_info.json'
-
 import VLink from '~/components/VLink.vue'
 import VLogoButton from '~/components/VHeader/VLogoButton.vue'
 import VSearchBar from '~/components/VHeader/VSearchBar/VSearchBar.vue'
 import VSearchTypeRadio from '~/components/VContentSwitcher/VSearchTypeRadio.vue'
 import VSearchTypePopover from '~/components/VContentSwitcher/VSearchTypePopover.vue'
+
+import imageInfo from '~/assets/homepage_images/image_info.json'
+import OpenverseLogo from '~/assets/logo.svg?inline'
+import OpenverseBrand from '~/assets/brand.svg?inline'
 
 const HomePage = {
   name: 'home-page',

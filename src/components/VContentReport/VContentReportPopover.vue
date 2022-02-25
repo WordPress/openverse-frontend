@@ -28,12 +28,13 @@
 <script>
 import { computed, useStore, defineComponent } from '@nuxtjs/composition-api'
 
+import VPopover from '~/components/VPopover/VPopover.vue'
+
+import VContentReportButton from '~/components/VContentReport/VContentReportButton.vue'
+
 import flagIcon from '~/assets/icons/flag.svg'
 
 import closeSmallIcon from '~/assets/icons/close-small.svg'
-
-import VPopover from '~/components/VPopover/VPopover.vue'
-import VContentReportButton from '~/components/VContentReport/VContentReportButton.vue'
 
 export default defineComponent({
   name: 'VContentReportPopover',

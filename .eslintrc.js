@@ -113,16 +113,15 @@ module.exports = {
           },
           {
             // Move assets to the very end of the imports list
-            pattern: 'assets/**',
-            patternOptions: { partial: true },
+            pattern: '~/assets/**',
             group: 'type',
             position: 'after',
           },
           {
             // Treat components as their own group and move to the end of the internal imports list
             pattern: '~/components/**',
-            group: 'parent',
-            position: 'before',
+            group: 'internal',
+            position: 'after',
           },
           /**
            * These next two must come after any more specific matchers
@@ -164,8 +163,13 @@ module.exports = {
         alias: {
           '~': './src',
           '~~': '.',
-          assets: './src/assets',
         },
+        /**
+         * SVG imports are excluded for the import/no-unresolved
+         * rule above due to due to lack of support for `?inline` suffix
+         *
+         * Therefore, there's no need to configure them here
+         */
         extensions: ['.js', '.ts', '.vue', '.png'],
       },
     },

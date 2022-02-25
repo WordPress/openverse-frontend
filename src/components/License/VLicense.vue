@@ -33,6 +33,8 @@ import {
   LICENSE_ICON_MAPPING,
 } from '~/constants/license.js'
 
+import VIcon from '~/components/VIcon/VIcon.vue'
+
 import by from '~/assets/licenses/by.svg'
 import cc0 from '~/assets/licenses/cc0.svg'
 import ccLogo from '~/assets/licenses/cc-logo.svg'
@@ -40,8 +42,6 @@ import nc from '~/assets/licenses/nc.svg'
 import nd from '~/assets/licenses/nd.svg'
 import pdm from '~/assets/licenses/pdm.svg'
 import sa from '~/assets/licenses/sa.svg'
-
-import VIcon from '~/components/VIcon/VIcon.vue'
 
 /**
  * Displays the icons for the license along with a readable display name for the

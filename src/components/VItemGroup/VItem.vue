@@ -67,8 +67,6 @@ import {
   watch,
 } from '@nuxtjs/composition-api'
 
-import checkmark from '~/assets/icons/checkmark.svg'
-
 import { warn } from '~/utils/console'
 
 import VButton from '~/components/VButton.vue'
@@ -79,6 +77,8 @@ import {
   VItemGroupContextKey,
   VItemGroupFocusContextKey,
 } from './VItemGroup.vue'
+
+import checkmark from '~/assets/icons/checkmark.svg'
 
 export default defineComponent({
   name: 'VItem',

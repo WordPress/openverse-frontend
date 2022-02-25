@@ -36,11 +36,11 @@ import { ALL_MEDIA, supportedSearchTypes } from '~/constants/media'
 import useSearchType from '~/composables/use-search-type'
 import { isMinScreen } from '~/composables/use-media-query'
 
-import caretDownIcon from '~/assets/icons/caret-down.svg'
-
 import VIcon from '~/components/VIcon/VIcon.vue'
 
 import VButton from '~/components/VButton.vue'
+
+import caretDownIcon from '~/assets/icons/caret-down.svg'
 
 export default defineComponent({
   name: 'VSearchTypeButton',

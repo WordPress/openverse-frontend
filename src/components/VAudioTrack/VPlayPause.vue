@@ -12,11 +12,11 @@
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
 
+import VIconButton from '~/components/VIconButton/VIconButton.vue'
+
 import playIcon from '~/assets/icons/play.svg'
 import pauseIcon from '~/assets/icons/pause.svg'
 import replayIcon from '~/assets/icons/replay.svg'
-
-import VIconButton from '~/components/VIconButton/VIconButton.vue'
 
 /**
  * Displays the control for switching between the playing and paused states of
