@@ -1,15 +1,12 @@
 <template>
-  <section class="image-grid -mx-2">
-    <div class="image-grid__cells">
+  <section>
+    <div class="image-grid flex flex-wrap gap-4">
       <ImageCell v-for="(image, index) in images" :key="index" :image="image" />
     </div>
-    <h5
-      v-if="isError && !fetchState.isFinished"
-      class="image-grid__notification py-4"
-    >
+    <h5 v-if="isError && !fetchState.isFinished" class="py-4">
       {{ fetchState.fetchingError }}
     </h5>
-    <footer class="px-2">
+    <footer class="pt-4">
       <VLoadMore
         v-if="canLoadMore && !fetchState.isFinished"
         :is-fetching="fetchState.isFetching"
@@ -22,7 +19,7 @@
 
 <script>
 /**
- * This component receives an array of images as prop, and
+ * This component receives an array of images as a prop, and
  * is responsible for displaying them as a grid.
  * It can also fetch more images when 'Load More' clicked,
  * or display 'No More Media'.
@@ -65,21 +62,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.image-grid {
-  &__notification {
-    display: flex;
-    justify-content: center;
-  }
-  &__cells {
-    display: flex;
-    flex-wrap: wrap;
-
-    @include tablet {
-      &:after {
-        content: '';
-        flex-grow: 999999999;
-      }
-    }
+.image-grid:after {
+  /**
+   * This keeps the last item in the results from expanding to fill
+   * all avaliable space, which can result in a final row with a
+   * single, 100% wide image.
+   */
+  @screen md {
+    content: '';
+    flex-grow: 999999999;
   }
 }
 </style>
