@@ -34,9 +34,7 @@ const AudioDetailPage = {
   mixins: [iframeHeight],
   data() {
     return {
-      thumbnailURL: null,
       showBackToSearchLink: false,
-      id: null,
     }
   },
   computed: {
@@ -53,14 +51,13 @@ const AudioDetailPage = {
       this.id = newAudio.id
     },
   },
-  async asyncData({ env, store, route, error, app }) {
+  async asyncData({ store, route, error, app }) {
     try {
       await store.dispatch(`${MEDIA}/${FETCH_MEDIA_ITEM}`, {
         id: route.params.id,
         mediaType: AUDIO,
       })
       return {
-        thumbnailURL: `${env.apiUrl}audio/${route.params.id}/thumb/`,
         id: route.params.id,
       }
     } catch (err) {
@@ -92,7 +89,7 @@ const AudioDetailPage = {
   head() {
     const title = this.audio.title
     return {
-      title: `${title} | ${this.$t('hero.brand')}`,
+      title: `${title} | Openverse`,
       meta: [
         {
           hid: 'robots',

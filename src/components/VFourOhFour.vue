@@ -1,7 +1,8 @@
 <template>
   <main class="bg-yellow h-screen relative page-404 overflow-x-hidden">
-    <NuxtLink to="/" class="relative z-10 text-dark-charcoal">
-      <span class="sr-only">{{ $t('404.link-title') }}</span>
+    <VLink href="/" class="relative z-10 text-dark-charcoal">
+      <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
+      <span class="sr-only">Openverse</span>
       <span
         class="flex flex-row pt-6 lg:pt-8 ms-6 lg:ms-10 h-auto w-30 text-dark-charcoal"
         aria-hidden="true"
@@ -9,7 +10,7 @@
         <OpenverseLogo />
         <OpenverseBrand class="ms-1" />
       </span>
-    </NuxtLink>
+    </VLink>
     <Oops
       aria-hidden="true"
       class="absolute opacity-5 fill-dark-charcoal -mt-[10%] -ml-[20%] lg:mx-auto w-[140%] lg:w-full px-6 lg:px-16 z-0 pointer-events-none"
@@ -23,12 +24,13 @@
       <p class="font-semibold">
         <i18n path="404.main">
           <template #link>
-            <NuxtLink
+            <!-- eslint-disable @intlify/vue-i18n/no-raw-text -->
+            <VLink
               class="underline text-current hover:text-current active:text-current"
-              to="/"
+              href="/"
+              >Openverse</VLink
             >
-              {{ $t('404.link-title') }}
-            </NuxtLink>
+            <!-- eslint-enable @intlify/vue-i18n/no-raw-text -->
           </template>
         </i18n>
       </p>

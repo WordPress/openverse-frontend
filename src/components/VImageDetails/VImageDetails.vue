@@ -26,19 +26,15 @@
       <div>
         <dt>{{ $t('image-details.information.source') }}</dt>
         <dd>
-          <a
-            :href="image.foreign_landing_url"
-            target="blank"
-            rel="noopener noreferrer"
-            class="text-pink"
-            >{{ sourceName }}</a
-          >
+          <VLink :href="image.foreign_landing_url" class="text-pink">{{
+            sourceName
+          }}</VLink>
         </dd>
       </div>
       <div>
         <dt>{{ $t('image-details.information.dimensions') }}</dt>
         <dd>
-          <!-- eslint-disable @intlify/vue-i18n/no-raw-text -->
+          <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
           {{ imageWidth }} &times; {{ imageHeight }}
           {{ $t('image-details.information.pixels') }}
         </dd>

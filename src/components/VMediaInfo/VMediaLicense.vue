@@ -10,17 +10,12 @@
         class="block text-sm md:text-base"
       >
         <template #link>
-          <a
-            class="uppercase text-pink"
-            :href="licenseUrl"
-            target="_blank"
-            rel="noopener"
-          >
+          <VLink class="uppercase text-pink" :href="licenseUrl">
             {{ fullLicenseName }}
-          </a>
+          </VLink>
         </template>
       </i18n>
-      <LicenseElements :license="license" class="md:py-4" />
+      <VLicenseElements v-if="license" :license="license" class="md:py-4" />
       <i18n
         v-if="!isLicense"
         path="media-details.reuse.license.content"
@@ -28,32 +23,28 @@
         class="caption font-semibold"
       >
         <template #link>
-          <a
+          <VLink
             :aria-label="$t('media-details.aria.attribution.license')"
             :href="licenseUrl"
-            target="_blank"
-            rel="noopener"
             class="text-pink"
-            >{{ $t('media-details.reuse.license.link') }}</a
+            >{{ $t('media-details.reuse.license.link') }}</VLink
           >
         </template>
       </i18n>
     </template>
     <template v-else>
-      <LicenseElements :license="license" class="md:py-4" />
+      <VLicenseElements v-if="license" :license="license" class="md:py-4" />
       <i18n
         path="media-details.reuse.tool.content"
         tag="span"
         class="caption font-semibold"
       >
         <template #link>
-          <a
+          <VLink
             :aria-label="$t('media-details.aria.attribution.tool')"
             :href="licenseUrl"
-            target="_blank"
-            rel="noopener"
             class="text-pink"
-            >{{ $t('media-details.reuse.tool.link') }}</a
+            >{{ $t('media-details.reuse.tool.link') }}</VLink
           >
         </template>
       </i18n>
@@ -62,12 +53,14 @@
 </template>
 
 <script>
+import VLicenseElements from '~/components/VLicenseElements.vue'
+import VLink from '~/components/VLink.vue'
+
 import { isLicense } from '~/utils/license'
-import LicenseElements from '~/components/LicenseElements.vue'
 
 export default {
-  name: 'MediaLicense',
-  components: { LicenseElements },
+  name: 'VMediaLicense',
+  components: { VLicenseElements, VLink },
   props: {
     fullLicenseName: String,
     license: String,
@@ -75,7 +68,7 @@ export default {
   },
   computed: {
     isLicense() {
-      return isLicense(this.$props.license)
+      return isLicense(this.license)
     },
     headerText() {
       const licenseOrTool = this.isLicense ? 'license' : 'tool'

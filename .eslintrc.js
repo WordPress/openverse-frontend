@@ -5,9 +5,10 @@ module.exports = {
     node: true,
   },
   parserOptions: {
-    parser: '@babel/eslint-parser',
+    parser: '@typescript-eslint/parser',
   },
   extends: [
+    'plugin:@typescript-eslint/recommended',
     'eslint:recommended',
     // https://github.com/vuejs/eslint-plugin-vue#priority-a-essential-error-prevention
     // consider switching to `plugin:vue/strongly-recommended` or `plugin:vue/recommended` for stricter rules.
@@ -17,7 +18,7 @@ module.exports = {
     'plugin:@intlify/vue-i18n/recommended',
   ],
   // required to lint *.vue files
-  plugins: ['vue', 'vuejs-accessibility', 'unicorn'],
+  plugins: ['@typescript-eslint', 'vue', 'vuejs-accessibility', 'unicorn'],
   // add your custom rules here
   rules: {
     semi: [2, 'never'],
@@ -50,7 +51,29 @@ module.exports = {
       'warn',
       { required: { some: ['nesting', 'id'] } },
     ],
+    /**
+     * Custom rule to disallow raw `<a></a>` tag usage.
+     * Learn more about vue-eslint-parser's AST syntax:
+     * https://github.com/vuejs/vue-eslint-parser/blob/master/docs/ast.md
+     */
+    'vue/no-restricted-syntax': [
+      'error',
+      {
+        selector: 'VElement[name="a"]',
+        message: 'Use the <VLink> component instead of a raw <a> tag.',
+      },
+      {
+        selector: 'VElement[name="nuxtlink"]',
+        message: 'Use the <VLink> component instead of <NuxtLink>.',
+      },
+      {
+        selector: 'VElement[name="routerlink"]',
+        message: 'Use the <VLink> component instead of <RouterLink>.',
+      },
+    ],
     'unicorn/filename-case': ['error', { case: 'kebabCase' }],
+    '@typescript-eslint/ban-ts-comment': ['warn'],
+    '@typescript-eslint/no-var-requires': ['warn'],
   },
   settings: {
     'vue-i18n': {

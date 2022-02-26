@@ -50,10 +50,7 @@ describe('SearchGridFilter', () => {
             searchType: IMAGE,
             isFilterVisible: true,
             filters,
-            query: {
-              q: '',
-              mediaType: IMAGE,
-            },
+            query: { q: '' },
           },
           mutations: store.mutations,
           actions: store.actions,
@@ -78,7 +75,7 @@ describe('SearchGridFilter', () => {
         $store: storeMock,
         $nuxt: {
           context: {
-            i18n: { t: () => {} },
+            i18n: { t: (s) => s },
             store: storeMock,
           },
         },

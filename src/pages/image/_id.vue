@@ -11,7 +11,7 @@
       <img
         v-if="!sketchFabUid"
         id="main-image"
-        :src="image.url"
+        :src="isLoadingFullImage ? image.thumbnail : image.url"
         :alt="image.title"
         class="h-full max-h-[500px] mx-auto rounded-t-sm"
         @load="onImageLoaded"
@@ -29,7 +29,7 @@
       class="flex flex-row md:flex-row-reverse flex-wrap justify-between md:mt-6"
     >
       <VButton
-        as="a"
+        as="VLink"
         :href="image.foreign_landing_url"
         target="blank"
         rel="noopener noreferrer"
@@ -50,7 +50,7 @@
           class="font-semibold leading-[130%]"
         >
           <template #name>
-            <a
+            <VLink
               v-if="image.creator_url"
               :aria-label="
                 $t('media-details.aria.creator-url', {
@@ -58,11 +58,9 @@
                 })
               "
               :href="image.creator_url"
-              target="blank"
-              rel="noopener noreferrer"
               @click="onCreatorLinkClicked"
               @keyup.enter="onCreatorLinkClicked"
-              >{{ image.creator }}</a
+              >{{ image.creator }}</VLink
             >
             <span v-else>{{ image.creator }}</span>
           </template>
@@ -93,6 +91,7 @@ import {
 
 import VButton from '~/components/VButton.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'
+import VLink from '~/components/VLink.vue'
 import VImageDetails from '~/components/VImageDetails/VImageDetails.vue'
 import VMediaReuse from '~/components/VMediaInfo/VMediaReuse.vue'
 import VRelatedImages from '~/components/VImageDetails/VRelatedImages.vue'
@@ -104,6 +103,7 @@ const VImageDetailsPage = {
   components: {
     VButton,
     VIcon,
+    VLink,
     VImageDetails,
     VMediaReuse,
     VRelatedImages,
@@ -111,11 +111,11 @@ const VImageDetailsPage = {
   },
   data() {
     return {
-      showBackToSearchLink: false,
       imageWidth: 0,
       imageHeight: 0,
       imageType: 'Unknown',
-      imageId: null,
+      isLoadingFullImage: true,
+      showBackToSearchLink: false,
       sketchFabfailure: false,
     }
   },
@@ -130,19 +130,21 @@ const VImageDetailsPage = {
         .split('/')[0]
     },
   },
-  async asyncData({ route }) {
-    return {
-      imageId: route.params.id,
-    }
-  },
-  async fetch() {
+  async asyncData({ app, error, route, store }) {
+    const imageId = route.params.id
     try {
-      await this.fetchItem({ id: this.imageId, mediaType: IMAGE })
-    } catch (err) {
-      const errorMessage = this.$t('error.image-not-found', {
-        id: this.imageId,
+      await store.dispatch(`${MEDIA}/${FETCH_MEDIA_ITEM}`, {
+        id: imageId,
+        mediaType: IMAGE,
       })
-      this.$nuxt.error({
+      return {
+        imageId: imageId,
+      }
+    } catch (err) {
+      const errorMessage = app.i18n.t('error.image-not-found', {
+        id: imageId,
+      })
+      error({
         statusCode: 404,
         message: errorMessage,
       })
@@ -159,7 +161,6 @@ const VImageDetailsPage = {
     })
   },
   methods: {
-    ...mapActions(MEDIA, { fetchItem: FETCH_MEDIA_ITEM }),
     ...mapActions(USAGE_DATA, { sendEvent: SEND_DETAIL_PAGE_EVENT }),
     onImageLoaded(event) {
       this.imageWidth = this.image.width || event.target.naturalWidth
@@ -171,6 +172,7 @@ const VImageDetailsPage = {
           this.imageType = res.headers['content-type']
         })
       }
+      this.isLoadingFullImage = false
     },
     onSourceLinkClicked() {
       this.sendEvent({
@@ -186,9 +188,7 @@ const VImageDetailsPage = {
     },
   },
   head() {
-    const title = `${this.image.title} | Reusable Image on ${this.$t(
-      'hero.brand'
-    )}`
+    const title = `${this.image.title} | Openverse`
 
     return {
       title,
@@ -206,7 +206,7 @@ const VImageDetailsPage = {
         {
           hid: 'og:image',
           name: 'og:image',
-          content: this.image.foreign_landing_url,
+          content: this.image.url,
         },
       ],
     }

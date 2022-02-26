@@ -15,7 +15,7 @@ const TestWrapper = Vue.component('TestWrapper', {
   props: {
     popoverProps: {
       type: Object,
-      default: () => {},
+      default: () => ({}),
     },
     popoverContentTabIndex: {
       type: Number,
@@ -58,7 +58,9 @@ const expectOpen = () => {
 }
 
 const expectClosed = () => {
-  expect(queryPopover()).toBe(null)
+  expect(queryPopover().parentElement.parentElement.style.display).toEqual(
+    'none'
+  )
 }
 
 describe('VPopover', () => {

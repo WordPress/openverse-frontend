@@ -13,12 +13,13 @@
       />
 
       <div class="px-6 lg:ps-30 lg:pe-0 xl:px-40 mx-auto w-full lg:w-auto">
-        <NuxtLink
-          to="/"
-          class="relative z-10 hidden lg:block -left-[6.25rem] rtl:-right-[6.25rem]"
+        <VLink
+          href="/"
+          class="relative hidden lg:block -left-[6.25rem] rtl:-right-[6.25rem]"
         >
           <h1>
-            <span class="sr-only">{{ $t('hero.brand') }}</span>
+            <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
+            <span class="sr-only">Openverse</span>
             <!-- width and height chosen w.r.t. viewBox "0 0 280 42" -->
             <span
               aria-hidden="true"
@@ -28,17 +29,17 @@
               <OpenverseBrand class="w-[315px] h-[60px]" />
             </span>
           </h1>
-        </NuxtLink>
+        </VLink>
         <h2 class="text-4xl lg:text-6xl mt-auto lg:mt-6">
           {{ $t('hero.subtitle') }}
         </h2>
         <div class="flex justify-start gap-4 mt-4 md:hidden">
-          <VContentTypeButton
-            v-for="type in supportedContentTypes"
+          <VSearchTypeRadio
+            v-for="type in supportedSearchTypes"
             :key="type"
-            :content-type="type"
-            :selected="type === contentType"
-            @select="setContentType"
+            :search-type="type"
+            :selected="type === searchType"
+            @select="setSearchType"
           />
         </div>
         <VSearchBar
@@ -48,13 +49,13 @@
           @submit="handleSearch"
         >
           <ClientOnly>
-            <VContentSwitcherPopover
+            <VSearchTypePopover
               v-if="isMinScreenMd"
               ref="contentSwitcher"
               class="mx-3"
-              :active-item="contentType"
+              :active-item="searchType"
               placement="searchbar"
-              @select="setContentType"
+              @select="setSearchType"
             />
           </ClientOnly>
         </VSearchBar>
@@ -65,13 +66,13 @@
           tag="p"
           class="hidden lg:block text-sr mt-4"
         >
+          <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
+          <template #openverse>Openverse</template>
           <template #license>
-            <a
+            <VLink
               href="https://creativecommons.org/licenses/"
-              target="blank"
-              rel="noopener noreferrer"
               class="text-dark-charcoal hover:text-dark-charcoal underline"
-              >{{ $t('hero.disclaimer.license') }}</a
+              >{{ $t('hero.disclaimer.license') }}</VLink
             >
           </template>
         </i18n>
@@ -94,8 +95,8 @@
             mode="out-in"
             appear
           >
-            <NuxtLink
-              :to="image.url"
+            <VLink
+              :href="image.url"
               class="homepage-image block aspect-square h-30 w-30 lg:h-auto lg:w-auto lg:m-[2vh] rounded-full"
               :style="{ '--transition-index': `${index * 0.05}s` }"
             >
@@ -105,7 +106,7 @@
                 :alt="image.title"
                 :title="image.title"
               />
-            </NuxtLink>
+            </VLink>
           </Transition>
         </ClientOnly>
       </div>
@@ -117,13 +118,13 @@
       tag="p"
       class="lg:hidden text-sr p-6 mt-auto"
     >
+      <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
+      <template #openverse>Openverse</template>
       <template #license>
-        <a
+        <VLink
           href="https://creativecommons.org/licenses/"
-          target="blank"
-          rel="noopener noreferrer"
           class="text-dark-charcoal hover:text-dark-charcoal underline"
-          >{{ $t('hero.disclaimer.license') }}</a
+          >{{ $t('hero.disclaimer.license') }}</VLink
         >
       </template>
     </i18n>
@@ -135,7 +136,7 @@ import { ref, useContext, useRouter, useStore } from '@nuxtjs/composition-api'
 
 import { isMinScreen } from '~/composables/use-media-query'
 
-import { ALL_MEDIA, supportedContentTypes } from '~/constants/media'
+import { ALL_MEDIA, supportedSearchTypes } from '~/constants/media'
 import { MEDIA, SEARCH } from '~/constants/store-modules'
 import { FETCH_MEDIA, UPDATE_QUERY } from '~/constants/action-types'
 
@@ -143,10 +144,11 @@ import imageInfo from '~/assets/homepage_images/image_info.json'
 
 import OpenverseLogo from '~/assets/logo.svg?inline'
 import OpenverseBrand from '~/assets/brand.svg?inline'
-import VContentSwitcherPopover from '~/components/VContentSwitcher/VContentSwitcherPopover.vue'
-import VContentTypeButton from '~/components/VContentSwitcher/VContentTypeButton.vue'
+import VSearchTypePopover from '~/components/VContentSwitcher/VSearchTypePopover.vue'
+import VSearchTypeRadio from '~/components/VContentSwitcher/VSearchTypeRadio.vue'
 import VSearchBar from '~/components/VHeader/VSearchBar/VSearchBar.vue'
 import VLogoButton from '~/components/VHeader/VLogoButton.vue'
+import VLink from '~/components/VLink.vue'
 
 const HomePage = {
   name: 'home-page',
@@ -154,9 +156,10 @@ const HomePage = {
   components: {
     OpenverseLogo,
     OpenverseBrand,
-    VContentSwitcherPopover,
-    VContentTypeButton,
+    VSearchTypePopover,
+    VSearchTypeRadio,
     VSearchBar,
+    VLink,
     VLogoButton,
   },
   head: {
@@ -193,10 +196,10 @@ const HomePage = {
     const isMinScreenMd = isMinScreen('md', { shouldPassInSSR: true })
 
     const contentSwitcher = ref(null)
-    const contentType = ref(ALL_MEDIA)
+    const searchType = ref(ALL_MEDIA)
 
-    const setContentType = async (type) => {
-      contentType.value = type
+    const setSearchType = async (type) => {
+      searchType.value = type
       contentSwitcher.value?.closeMenu()
       await store.dispatch(`${SEARCH}/${UPDATE_QUERY}`, {
         searchType: type,
@@ -208,11 +211,11 @@ const HomePage = {
       if (!searchTerm.value) return
       await store.dispatch(`${SEARCH}/${UPDATE_QUERY}`, {
         q: searchTerm.value,
-        searchType: contentType.value,
+        searchType: searchType.value,
       })
       const newPath = app.localePath({
         path: `/search/${
-          contentType.value === ALL_MEDIA ? '' : contentType.value
+          searchType.value === ALL_MEDIA ? '' : searchType.value
         }`,
         query: store.getters['search/searchQueryParams'],
       })
@@ -229,9 +232,9 @@ const HomePage = {
       isMinScreenMd,
 
       contentSwitcher,
-      contentType,
-      setContentType,
-      supportedContentTypes,
+      searchType,
+      setSearchType,
+      supportedSearchTypes,
 
       searchTerm,
       handleSearch,
