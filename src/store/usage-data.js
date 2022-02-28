@@ -6,7 +6,7 @@ import {
 } from '~/constants/usage-data-analytics-types'
 import stringToBoolean from '~/utils/string-to-boolean'
 import UsageDataService from '~/data/usage-data-service'
-import { sentry as sentryConfig } from '~/utils/sentry-config'
+import { sentryConfig } from '~/utils/sentry-config'
 
 const disabled = !stringToBoolean(process.env.enableInternalAnalytics)
 
