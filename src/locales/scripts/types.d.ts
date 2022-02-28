@@ -1,4 +1,4 @@
-interface i18nLocaleProps {
+export interface I18nLocaleProps {
   code: string
   name: string
   wpLocale?: string
