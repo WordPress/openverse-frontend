@@ -1,6 +1,6 @@
 import type { ModuleConfiguration } from '@nuxtjs/sentry'
 
-import { isNotProd } from './dev'
+import { isProd } from './node-env'
 
 /**
  * Get the Sentry configuration based on the current environment.
@@ -11,6 +11,6 @@ export const sentryConfig: ModuleConfiguration = {
   dsn:
     process.env.SENTRY_DSN ||
     'https://53da8fbcebeb48a6bf614a212629df6b@o787041.ingest.sentry.io/5799642',
-  disabled: isNotProd,
+  disabled: !isProd,
   lazy: true,
 }

@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { isTest } from '~/utils/dev'
+import { isTest } from '~/utils/node-env'
 
 /**
  * Displays the given icon in a 24px × 24px square.

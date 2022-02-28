@@ -5,7 +5,7 @@ import locales from './src/locales/scripts/valid-locales.json'
 
 import { VIEWPORTS } from './src/constants/screens'
 
-import { isNotProd } from './src/utils/dev'
+import { isProd } from './src/utils/node-env'
 import { sentryConfig } from './src/utils/sentry-config'
 import { env } from './src/utils/env'
 
@@ -139,7 +139,7 @@ const config: NuxtConfig = {
   ],
   head,
   env,
-  dev: isNotProd,
+  dev: !isProd,
   buildModules: [
     '@nuxt/typescript-build',
     '@nuxtjs/composition-api/module',

@@ -1,11 +1,11 @@
-import { isNotProd } from '~/utils/dev'
+import { isProd } from '~/utils/node-env'
 
 export const getLogger = (level: 'log' | 'warn' | 'error') =>
-  isNotProd
-    ? console[level]
-    : () => {
+  isProd
+    ? () => {
         // do nothing
       }
+    : console[level]
 
 export const warn = getLogger('warn')
 export const log = getLogger('log')
