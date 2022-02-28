@@ -4,8 +4,10 @@ import {
   SEND_DETAIL_PAGE_EVENT,
   SEND_SEARCH_RATING_EVENT,
 } from '~/constants/usage-data-analytics-types'
-import stringToBoolean from '~/utils/string-to-boolean'
+
 import UsageDataService from '~/data/usage-data-service'
+
+import { stringToBoolean } from '~/utils/string-to-boolean'
 import { sentryConfig } from '~/utils/sentry-config'
 
 const disabled = !stringToBoolean(process.env.enableInternalAnalytics)
