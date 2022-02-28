@@ -1,5 +1,7 @@
+import { isNotProd } from '~/utils/dev'
+
 export const getLogger = (level: 'log' | 'warn' | 'error') =>
-  process.env.NODE_ENV !== 'production'
+  isNotProd
     ? console[level]
     : () => {
         // do nothing

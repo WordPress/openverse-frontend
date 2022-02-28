@@ -1,7 +1,7 @@
 import pkg from './package.json'
 import locales from './src/locales/scripts/valid-locales.json'
 import { VIEWPORTS } from './src/constants/screens'
-import { dev } from './src/utils/dev'
+import { isNotProd } from './src/utils/dev'
 import { env } from './src/utils/env'
 import { sentry } from './src/utils/sentry-config'
 
@@ -134,7 +134,7 @@ export default {
   ],
   head,
   env,
-  dev,
+  dev: isNotProd,
   buildModules: [
     '@nuxt/typescript-build',
     '@nuxtjs/composition-api/module',

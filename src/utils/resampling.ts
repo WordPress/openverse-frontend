@@ -2,8 +2,8 @@
  * Resizes a given array to consist of more elements than provided. This uses
  * linear interpolation to fill in the gaps.
  *
- * @param data the list of data points to interpolate
- * @param threshold the number of expected data points from the array
+ * @param data - the list of data points to interpolate
+ * @param threshold - the number of expected data points from the array
  * @returns the array with the required number of points
  */
 export const upsampleArray = (data: number[], threshold: number): number[] => {

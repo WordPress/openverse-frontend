@@ -1,4 +1,4 @@
-import { dev } from '~/utils/dev'
+import { isNotProd } from '~/utils/dev'
 
 // TODO: set correct targetOrigin of the parent window
 const TARGET_ORIGIN = '*'
@@ -11,7 +11,7 @@ const TARGET_ORIGIN = '*'
  * @param {'resize'|'changeUrl'} message.type - event that triggers the message
  * @param {any} message.value - the value of event
  */
-export const sendWindowMessage = ({ debug = dev, ...message }) => {
+export const sendWindowMessage = ({ debug = isNotProd, ...message }) => {
   if (window.parent !== window) {
     window.parent.postMessage({ debug, ...message }, TARGET_ORIGIN)
   }
