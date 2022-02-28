@@ -2,7 +2,7 @@ import VPopover from '~/components/VPopover/VPopover.vue'
 import VButton from '~/components/VButton'
 import { placements as popoverPlacements } from '@popperjs/core'
 
-import { log } from '~/utils/warn'
+import { log } from '~/utils/console'
 
 export default {
   component: VPopover,

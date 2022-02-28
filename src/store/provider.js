@@ -14,7 +14,7 @@ import {
 } from '~/constants/mutation-types'
 import { capital } from 'case'
 import { SEARCH } from '~/constants/store-modules'
-import { warn } from '~/utils/warn'
+import { warn } from '~/utils/console'
 
 const AudioProviderService = MediaProviderService(AUDIO)
 const ImageProviderService = MediaProviderService(IMAGE)

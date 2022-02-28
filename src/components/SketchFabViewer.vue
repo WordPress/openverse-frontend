@@ -16,7 +16,7 @@
 
 <script>
 import loadScript from '~/utils/load-script'
-import { log } from '~/utils/warn'
+import { log } from '~/utils/console'
 
 const sketchfabUrl =
   'https://static.sketchfab.com/api/sketchfab-viewer-1.10.1.js'

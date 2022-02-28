@@ -1,5 +1,5 @@
 // Small wrapper for localstorage to protect against SSR and permissions
-import { warn } from '~/utils/warn'
+import { warn } from '~/utils/console'
 
 const localStorageExists = () => process.client && window.localStorage !== null
 
