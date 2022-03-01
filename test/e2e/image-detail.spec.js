@@ -1,5 +1,4 @@
 const { test, expect } = require('@playwright/test')
-const { mockImages } = require('./utils')
 const { mockProviderApis } = require('./utils')
 
 const goToCustomImagePage = async (page) => {
@@ -14,7 +13,6 @@ const showsErrorPage = async (page) => {
 }
 
 test.beforeEach(async ({ context }) => {
-  await mockImages(context)
   await mockProviderApis(context)
 })
 
