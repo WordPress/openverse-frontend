@@ -75,6 +75,16 @@ module.exports = {
     '@typescript-eslint/ban-ts-comment': ['warn'],
     '@typescript-eslint/no-var-requires': ['warn'],
   },
+  overrides: [
+    {
+      files: ['*.js', '*.vue'],
+      extends: ['plugin:jsdoc/recommended'],
+      rules: {
+        'jsdoc/check-tag-names': ['warn', { definedTags: ['values'] }],
+        'jsdoc/require-hyphen-before-param-description': ['warn'],
+      },
+    },
+  ],
   settings: {
     'vue-i18n': {
       localeDir: './src/locales/*.{json}',
