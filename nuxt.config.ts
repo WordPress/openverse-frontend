@@ -12,7 +12,7 @@ import type { NuxtConfig } from '@nuxt/types'
 /**
  * The default metadata for the site. Can be extended and/or overwritten per page. And even in components!
  * See the Nuxt.js docs for more info.
- * {@link https://nuxtjs.org/guides/features/meta-tags-seo Nuxt.js Docs}
+ * {@link https://nuxtjs.org/guides/features/meta-tags-seo} Nuxt.js Docs
  */
 const meta = [
   { charset: 'utf-8' },
