@@ -18,7 +18,13 @@ module.exports = {
     'plugin:@intlify/vue-i18n/recommended',
   ],
   // required to lint *.vue files
-  plugins: ['@typescript-eslint', 'vue', 'vuejs-accessibility', 'unicorn'],
+  plugins: [
+    '@typescript-eslint',
+    'eslint-plugin-tsdoc',
+    'vue',
+    'vuejs-accessibility',
+    'unicorn',
+  ],
   // add your custom rules here
   rules: {
     semi: [2, 'never'],
@@ -82,6 +88,12 @@ module.exports = {
       rules: {
         'jsdoc/check-tag-names': ['warn', { definedTags: ['values'] }],
         'jsdoc/require-hyphen-before-param-description': ['warn'],
+      },
+    },
+    {
+      files: ['*.ts'],
+      rules: {
+        'tsdoc/syntax': 'warn',
       },
     },
   ],

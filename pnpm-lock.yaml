@@ -47,6 +47,7 @@ specifiers:
   eslint-loader: ^4.0.2
   eslint-plugin-jsdoc: ^37.9.5
   eslint-plugin-prettier: ^3.3.1
+  eslint-plugin-tsdoc: ^0.2.14
   eslint-plugin-unicorn: ^35.0.0
   eslint-plugin-vue: ^7.8.0
   eslint-plugin-vuejs-accessibility: ^0.6.1
@@ -75,12 +76,14 @@ specifiers:
   postcss-focus-visible: ^6.0.3
   prettier: ^2.2.1
   reakit-utils: ^0.15.2
+  rimraf: ^3.0.2
   sass: ^1.34.0
   sass-loader: ^10.1.1
   seeded-rand: ^2.0.1
   start-server-and-test: ^1.14.0
   tailwindcss: ^3.0.7
   tailwindcss-rtl: ^0.8.0
+  talkback: ^2.5.0
   ts-node: ^10.5.0
   typescript: ^4.5.5
   uuid: ^8.3.2
@@ -159,6 +162,7 @@ devDependencies:
   eslint-loader: 4.0.2_eslint@7.32.0
   eslint-plugin-jsdoc: 37.9.5_eslint@7.32.0
   eslint-plugin-prettier: 3.4.1_6e6a25a49a944db0fa38418c3ba4bc86
+  eslint-plugin-tsdoc: 0.2.14
   eslint-plugin-unicorn: 35.0.0_eslint@7.32.0
   eslint-plugin-vue: 7.20.0_eslint@7.32.0
   eslint-plugin-vuejs-accessibility: 0.6.2_eslint@7.32.0
@@ -168,11 +172,13 @@ devDependencies:
   lint-staged: 11.2.6
   postcss: 8.4.5
   prettier: 2.5.1
+  rimraf: 3.0.2
   sass: 1.45.0
   sass-loader: 10.2.0_sass@1.45.0
   start-server-and-test: 1.14.0
   tailwindcss: 3.0.9_83bd3ad464991683de41d4aadec5fede
   tailwindcss-rtl: 0.8.0
+  talkback: 2.5.0
   ts-node: 10.5.0_typescript@4.5.5
   typescript: 4.5.5
   vue-i18n-extract: 2.0.4
@@ -3104,6 +3110,19 @@ packages:
 
   /@mdx-js/util/1.6.22:
     resolution: {integrity: sha512-H1rQc1ZOHANWBvPcW+JpGwr+juXSxM8Q8YCkm3GhZd8REu1fHR3z99CErO1p9pkcfcxZnMdIZdIsXkOHY0NilA==}
+    dev: true
+
+  /@microsoft/tsdoc-config/0.15.2:
+    resolution: {integrity: sha512-mK19b2wJHSdNf8znXSMYVShAHktVr/ib0Ck2FA3lsVBSEhSI/TfXT7DJQkAYgcztTuwazGcg58ZjYdk0hTCVrA==}
+    dependencies:
+      '@microsoft/tsdoc': 0.13.2
+      ajv: 6.12.6
+      jju: 1.4.0
+      resolve: 1.19.0
+    dev: true
+
+  /@microsoft/tsdoc/0.13.2:
+    resolution: {integrity: sha512-WrHvO8PDL8wd8T2+zBGKrMwVL5IyzR3ryWUsl0PXgEV0QHup4mTLi0QcATefGI6Gx9Anu7vthPyyyLpY0EpiQg==}
     dev: true
 
   /@mrmlnc/readdir-enhanced/2.2.1:
@@ -7615,6 +7634,10 @@ packages:
     resolution: {integrity: sha512-+jjPFVqyfF1esi9fvfUs3NqM0pH1ziZ36VP4hmA/y/Ssfo/5w5xHKfTw9BwQjoJ1w/oVtpLomqwUHKdefGyuHw==}
     dev: false
 
+  /buffer-shims/1.0.0:
+    resolution: {integrity: sha1-mXjOMXOIxkmth5MCjDR37wRKi1E=}
+    dev: true
+
   /buffer-xor/1.0.3:
     resolution: {integrity: sha1-JuYe0UIvtw3ULm42cp7VHYVf6Nk=}
 
@@ -9541,6 +9564,13 @@ packages:
       eslint-config-prettier: 8.3.0_eslint@7.32.0
       prettier: 2.5.1
       prettier-linter-helpers: 1.0.0
+    dev: true
+
+  /eslint-plugin-tsdoc/0.2.14:
+    resolution: {integrity: sha512-fJ3fnZRsdIoBZgzkQjv8vAj6NeeOoFkTfgosj6mKsFjX70QV256sA/wq+y/R2+OL4L8E79VVaVWrPeZnKNe8Ng==}
+    dependencies:
+      '@microsoft/tsdoc': 0.13.2
+      '@microsoft/tsdoc-config': 0.15.2
     dev: true
 
   /eslint-plugin-unicorn/35.0.0_eslint@7.32.0:
@@ -12343,6 +12373,10 @@ packages:
   /jiti/1.12.9:
     resolution: {integrity: sha512-TdcJywkQtcwLxogc4rSMAi479G2eDPzfW0fLySks7TPhgZZ4s/tM6stnzayIh3gS/db3zExWJyUx4cNWrwAmoQ==}
     hasBin: true
+
+  /jju/1.4.0:
+    resolution: {integrity: sha1-o6vicYryQaKykE+EpiWXDzia4yo=}
+    dev: true
 
   /joi/17.5.0:
     resolution: {integrity: sha512-R7hR50COp7StzLnDi4ywOXHrBrgNXuUUfJWIR5lPY5Bm/pOD3jZaTwpluUXVLRWcoWZxkrHBBJ5hLxgnlehbdw==}
@@ -16111,6 +16145,13 @@ packages:
     resolution: {integrity: sha1-LGN/53yJOv0qZj/iGqkIAGjiBSo=}
     deprecated: https://github.com/lydell/resolve-url#deprecated
 
+  /resolve/1.19.0:
+    resolution: {integrity: sha512-rArEXAgsBG4UgRGcynxWIWKFvh/XZCcS8UJdHhwy91zwAvCZIbcs+vAbflgBnNjYMs/i/i+/Ux6IZhML1yPvxg==}
+    dependencies:
+      is-core-module: 2.8.0
+      path-parse: 1.0.7
+    dev: true
+
   /resolve/1.20.0:
     resolution: {integrity: sha512-wENBPt4ySzg4ybFQW2TT1zMQucPK95HSh/nq2CFTZVOGut2+pQvSsgtda4d26YrYcr067wjbmzOG8byDPBX63A==}
     dependencies:
@@ -17272,6 +17313,18 @@ packages:
       resolve: 1.20.0
     transitivePeerDependencies:
       - ts-node
+    dev: true
+
+  /talkback/2.5.0:
+    resolution: {integrity: sha512-ey5twyDOZsM0at0zw1qBfzuC2C5a+KDRscmUc0DNmrDtynXZ1S2Rly6YwWL57wPObwOKzyDRpCjrfojFA8G4AQ==}
+    dependencies:
+      buffer-shims: 1.0.0
+      content-type: 1.0.4
+      json5: 2.2.0
+      lodash: 4.17.21
+      mkdirp: 1.0.4
+      node-fetch: 2.6.6
+      uuid: 8.3.2
     dev: true
 
   /tapable/1.1.3:

@@ -7,12 +7,10 @@
  * On error: shows error message
  */
 const { expect, test } = require('@playwright/test')
-const { mockAllSearch } = require('./utils')
+const { mockProviderApis } = require('./utils')
 
 test.beforeEach(async ({ context }) => {
-  // Block any audio (jamendo.com) requests for each test in this file.
-  await context.route('**.jamendo.com**', (route) => route.abort())
-  await mockAllSearch(context)
+  await mockProviderApis(context)
 })
 
 test.skip('shows search result metadata', async ({ page }) => {
@@ -45,7 +43,7 @@ test('navigates to the image detail page correctly', async ({ page }) => {
   const figure = page.locator('figure').first()
   const imgTitle = await figure.locator('img').getAttribute('alt')
 
-  await page.locator('figure a').first().click()
+  await page.locator('a[href^="/image"]').first().click()
   // Until the image is loaded, the heading is 'Image' instead of the actual title
   await page.locator('#main-image').waitFor()
 
@@ -60,7 +58,8 @@ test('the Back to search results link returns to the search page', async ({
 }) => {
   const url = '/search/image?q=honey'
   await page.goto(url)
-  await page.locator('figure a').first().click()
+
+  await page.locator('a[href^="/image"]').first().click()
   await page.locator('text="Back to search results"').click()
   await expect(page).toHaveURL(url)
 })
