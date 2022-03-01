@@ -33,7 +33,10 @@
         <h2 class="text-4xl lg:text-6xl mt-auto lg:mt-6">
           {{ $t('hero.subtitle') }}
         </h2>
-        <div class="flex justify-start gap-4 mt-4 md:hidden">
+        <div
+          data-testid="mobile-search-type-switcher"
+          class="flex justify-start gap-4 mt-4 md:hidden"
+        >
           <VSearchTypeRadio
             v-for="type in supportedSearchTypes"
             :key="type"
@@ -80,7 +83,10 @@
     </header>
 
     <!-- Image carousel -->
-    <div class="flex-grow overflow-hidden w-full lg:w-auto lg:h-full px-6">
+    <div
+      data-testid="image-carousel"
+      class="flex-grow overflow-hidden w-full lg:w-auto lg:h-full px-6"
+    >
       <!-- Height is 114.286vh i.e. 100vh * 8/7 (so that 0.75, 1, 1, 0.75 circles are visible) -->
       <!-- Width is 57.143vh i.e. half of height (because grid dimensions are 4 ⨯ 2) -->
       <div

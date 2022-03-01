@@ -10,7 +10,7 @@ while getopts ":u" arg; do
   esac
 done
 echo "Start e2e test";
-node test/proxy.js $UPDATE & TALKBACK_PID=$!
+node ./bin/api-proxy-cli.js $UPDATE & TALKBACK_PID=$!
 if pnpm run build-and-e2e; then
   kill -17 $TALKBACK_PID;
   echo "E2e tests passed successfully; talkback proxy stopped";

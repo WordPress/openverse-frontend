@@ -17,9 +17,7 @@ test('migration banner goes away on navigation', async ({ page }) => {
   await expect(migrationNotice).toBeVisible()
 
   // Navigate away from the page
-  await Promise.all([
-    page.locator('a.homepage-image').first().click(),
-    page.waitForLoadState('domcontentloaded'),
-  ])
+  await page.locator('a.homepage-image').first().click()
+  await page.waitForLoadState('domcontentloaded')
   await expect(migrationNotice).toBeHidden()
 })

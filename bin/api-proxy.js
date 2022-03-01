@@ -29,17 +29,8 @@ const opts = {
   name: 'Openverse e2e proxy',
   summary: false,
   tapeNameGenerator,
+  silent: true,
 }
 
 const server = talkback(opts)
-
-server.start(() => console.log('Talkback started!'))
-function closeServer() {
-  server.close()
-  console.log('Server closed, exiting process')
-  process.exit(0)
-}
-process.on('SIGTERM', () => {
-  console.log('Received SIGTERM')
-  closeServer()
-})
+module.exports = server

@@ -22,10 +22,15 @@
     "test:watch": "jest --collectCoverage=false --watch",
     "test:e2e": "playwright test",
     "test:e2e-debug": "PWDEBUG=1 playwright test",
+    "test:visual-regression": "node ./bin/visual-regression.js",
+    "test:visual-regression:docker": "playwright test -c test/visual-regression/playwright.config.ts",
+    "test:visual-regression:local": "playwright test -c test/visual-regression/playwright.config.local.ts",
     "build-and-e2e": "start-server-and-test 'cross-env API_URL=http://localhost:3000 nuxt build && pnpm start' http://localhost:8443 test:e2e",
     "ci:unit-test": "jest --collectCoverage=false",
-    "ci:e2e-test": "sh ./e2e.sh",
-    "update-tapes": "rimraf test/tapes && sh ./e2e.sh -u",
+    "ci:e2e-test": "sh ./bin/e2e.sh",
+    "ci:visual-regression-test": "start-server-and-test run-server http://localhost:8443 test:visual-regression",
+    "update-tapes": "rimraf test/tapes && sh ./bin/e2e.sh -u",
+    "run-server": "cross-env nuxt build && pnpm start -- --hostname 0.0.0.0",
     "generate-e2e-tests": "playwright codegen localhost:8443/",
     "types": "tsc --noEmit",
     "lint": "eslint --ext .js,.ts,.vue --ignore-path .gitignore --ignore-path .eslintignore .",
@@ -129,7 +134,8 @@
     "ts-node": "^10.5.0",
     "typescript": "^4.5.5",
     "vue-i18n-extract": "^2.0.0",
-    "vue-jest": "^3.0.7"
+    "vue-jest": "^3.0.7",
+    "yaml": "^1.10.2"
   },
   "engines": {
     "node": ">= 16.0.0",
