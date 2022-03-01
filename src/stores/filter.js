@@ -15,19 +15,6 @@ import {
 } from '~/constants/filters'
 import { warn } from '~/utils/warn'
 
-/**
- * Returns true if any of the filters' checked property is true
- * except for `mature` filter, as it is not displayed as a tag.
- * @param {object} filters
- * @returns {boolean}
- */
-const anyFilterApplied = (filters = {}) => {
-  // filtering out `mature` because we do not show mature in `FilterDisplay.vue` like the other filters
-  return Object.keys(filters)
-    .filter((f) => f !== 'mature')
-    .some((filterKey) => filters[filterKey]?.some((filter) => filter.checked))
-}
-
 export const useFilterStore = defineStore('filter', () => {
   /** @type {{ filters: import('../store/types').Filters}} */
   const state = reactive({ filters: clonedeep(filterData) })
@@ -94,6 +81,19 @@ export const useFilterStore = defineStore('filter', () => {
 
     return filterCount
   })
+
+  /**
+   * Returns true if any of the filters' checked property is true
+   * except for `mature` filter, as it is not displayed as a tag.
+   * @param {object} filters
+   * @returns {boolean}
+   */
+  const anyFilterApplied = (filters = {}) => {
+    // filtering out `mature` because we do not show mature in `FilterDisplay.vue` like the other filters
+    return Object.keys(filters)
+      .filter((f) => f !== 'mature')
+      .some((filterKey) => filters[filterKey]?.some((filter) => filter.checked))
+  }
 
   /**
    * Returns true if any filter except `mature` is applied.
