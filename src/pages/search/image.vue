@@ -1,5 +1,5 @@
 <template>
-  <ImageGrid
+  <VImageGrid
     :images="results"
     :can-load-more="canLoadMore"
     :fetch-state="fetchState"
@@ -8,23 +8,16 @@
 </template>
 
 <script>
+import { computed, defineComponent, useMeta } from '@nuxtjs/composition-api'
+
 import { propTypes } from '~/pages/search/search-page.types'
-import {
-  useStore,
-  computed,
-  defineComponent,
-  useMeta,
-} from '@nuxtjs/composition-api'
 import { useLoadMore } from '~/composables/use-load-more'
 
 const ImageSearch = defineComponent({
   name: 'ImageSearch',
   props: propTypes,
   setup(props) {
-    const store = useStore()
-
-    const query = computed(() => store.state.search.query.q)
-    useMeta({ title: `${query.value} - Openverse` })
+    useMeta({ title: `${props.searchTerm} | Openverse` })
 
     const results = computed(() =>
       Object.values(props.mediaResults?.image?.items ?? [])

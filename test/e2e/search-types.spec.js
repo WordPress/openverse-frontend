@@ -1,5 +1,6 @@
 const { test, expect } = require('@playwright/test')
-const { mockAllSearch, changeContentType } = require('./utils')
+
+const { changeContentType } = require('./utils')
 
 /**
  * Using SSR:
@@ -20,14 +21,13 @@ const { mockAllSearch, changeContentType } = require('./utils')
 test.beforeEach(async ({ context }) => {
   // Block any audio (jamendo.com) requests for each test in this file.
   await context.route('**.jamendo.com**', (route) => route.abort())
-  await mockAllSearch(context)
 })
 
 const searchTypes = [
   {
     id: 'all',
     name: 'All content',
-    url: '/search?q=birds',
+    url: '/search/?q=birds',
     canLoadMore: true,
     metaSourceCount: 6,
   },
@@ -52,7 +52,7 @@ const searchTypes = [
 async function checkLoadMore(page, searchType) {
   const loadMoreSection = await page.locator('[data-testid="load-more"]')
   if (!searchType.canLoadMore) {
-    await expect(loadMoreSection).toHaveCount(0)
+    await expect(loadMoreSection).toHaveCount(0, { timeout: 300 })
   } else {
     await expect(loadMoreSection).toHaveCount(1)
     await expect(loadMoreSection).toContainText('Load more')
@@ -74,10 +74,20 @@ async function checkSearchMetadata(page, searchType) {
   }
 }
 
+async function checkPageMeta(page, searchType) {
+  const urlParam = searchType.id === 'all' ? '' : searchType.id
+
+  const expectedTitle = `birds | Openverse`
+  const expectedURL = `/search/${urlParam}?q=birds`
+
+  await expect(page).toHaveTitle(expectedTitle)
+  await expect(page).toHaveURL(expectedURL)
+}
 async function checkSearchResult(page, searchType) {
   await checkSearchMetadata(page, searchType)
   await checkLoadMore(page, searchType)
   await checkMetasearchForm(page, searchType)
+  await checkPageMeta(page, searchType)
 }
 
 for (const searchType of searchTypes) {
@@ -92,11 +102,6 @@ for (const searchType of searchTypes) {
     const pageToOpen = searchType.id === 'all' ? searchTypes[1] : searchTypes[0]
     await page.goto(pageToOpen.url)
     await changeContentType(page, searchType.name)
-
-    const urlParam = searchType.id === 'all' ? '' : searchType.id
-    const expectedURL = `/search/${urlParam}?q=birds`
-    await expect(page).toHaveURL(expectedURL)
-
     await checkSearchResult(page, searchType)
   })
 }

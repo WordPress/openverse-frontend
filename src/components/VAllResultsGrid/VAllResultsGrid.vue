@@ -22,7 +22,7 @@
       class="results-grid grid grid-cols-2 lg:grid-cols-5 2xl:grid-cols-6 gap-4"
     >
       <div v-for="item in allMedia" :key="item.id">
-        <VImageCell
+        <VImageCellSquare
           v-if="item.frontendMediaType === 'image'"
           :key="item.id"
           :image="item"
@@ -53,18 +53,18 @@
 <script>
 import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
 
-import VImageCell from '~/components/VAllResultsGrid/VImageCell.vue'
+import srand from '~/utils/srand'
+
+import VImageCellSquare from '~/components/VAllResultsGrid/VImageCellSquare.vue'
 import VAudioCell from '~/components/VAllResultsGrid/VAudioCell.vue'
 import VLoadMore from '~/components/VLoadMore.vue'
 import VContentLink from '~/components/VContentLink/VContentLink.vue'
 import VGridSkeleton from '~/components/VSkeleton/VGridSkeleton.vue'
 
-import srand from '~/utils/srand'
-
 export default defineComponent({
   name: 'VAllResultsGrid',
   components: {
-    VImageCell,
+    VImageCellSquare,
     VAudioCell,
     VLoadMore,
     VGridSkeleton,

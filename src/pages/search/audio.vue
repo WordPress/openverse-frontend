@@ -27,16 +27,21 @@ import {
   defineComponent,
   useContext,
   useMeta,
-  useStore,
 } from '@nuxtjs/composition-api'
+
 import { useLoadMore } from '~/composables/use-load-more'
+
 import { isMinScreen } from '~/composables/use-media-query'
+
 import { useBrowserIsMobile } from '~/composables/use-browser-detection'
-import { propTypes } from './search-page.types'
 
 import VAudioTrack from '~/components/VAudioTrack/VAudioTrack.vue'
+
 import VLoadMore from '~/components/VLoadMore.vue'
+
 import VGridSkeleton from '~/components/VSkeleton/VGridSkeleton.vue'
+
+import { propTypes } from './search-page.types'
 
 const AudioSearch = defineComponent({
   name: 'AudioSearch',
@@ -47,11 +52,9 @@ const AudioSearch = defineComponent({
   },
   props: propTypes,
   setup(props) {
-    const store = useStore()
     const { i18n } = useContext()
 
-    const query = computed(() => store.state.search.query.q)
-    useMeta({ title: `${query.value} - Openverse` })
+    useMeta({ title: `${props.searchTerm} | Openverse` })
 
     const results = computed(() =>
       Object.values(props.mediaResults?.audio?.items ?? [])

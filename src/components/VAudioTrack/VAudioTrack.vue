@@ -50,6 +50,13 @@ import {
 
 import { useActiveAudio } from '~/composables/use-active-audio'
 
+import { ACTIVE, MEDIA } from '~/constants/store-modules'
+
+import {
+  PAUSE_ACTIVE_MEDIA_ITEM,
+  SET_ACTIVE_MEDIA_ITEM,
+} from '~/constants/mutation-types'
+
 import VPlayPause from '~/components/VAudioTrack/VPlayPause.vue'
 import VWaveform from '~/components/VAudioTrack/VWaveform.vue'
 
@@ -57,12 +64,6 @@ import VFullLayout from '~/components/VAudioTrack/layouts/VFullLayout.vue'
 import VRowLayout from '~/components/VAudioTrack/layouts/VRowLayout.vue'
 import VBoxLayout from '~/components/VAudioTrack/layouts/VBoxLayout.vue'
 import VGlobalLayout from '~/components/VAudioTrack/layouts/VGlobalLayout.vue'
-
-import { ACTIVE, MEDIA } from '~/constants/store-modules'
-import {
-  PAUSE_ACTIVE_MEDIA_ITEM,
-  SET_ACTIVE_MEDIA_ITEM,
-} from '~/constants/mutation-types'
 
 const propTypes = {
   /**
@@ -344,7 +345,6 @@ export default defineComponent({
        * hoops (using `assert`) or adding unnecessary
        * runtime checks.
        */
-      // @ts-ignore
       localAudio.currentTime = frac * duration.value
     }
 
@@ -387,7 +387,7 @@ export default defineComponent({
       return {
         tabindex: isBoxed.value ? 0 : -1,
         class:
-          'block focus:bg-white focus:border-tx focus:ring focus:ring-pink focus:outline-none focus:shadow-ring rounded-sm overflow-hidden cursor-pointer',
+          'block focus:bg-white focus:border-tx focus:ring-[3px] focus:ring-pink focus:ring-offset-[3px] focus:outline-none rounded-sm overflow-hidden cursor-pointer',
       }
     })
     const layoutBasedListeners = computed(() => {

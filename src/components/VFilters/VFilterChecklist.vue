@@ -71,8 +71,8 @@ export default {
   name: 'FilterCheckList',
   components: {
     VCheckbox,
-    VIcon,
     VButton,
+    VIcon,
     VIconButton,
     VLicense,
     VLicenseExplanation,
