@@ -75,10 +75,9 @@ async function checkSearchMetadata(page, searchType) {
 }
 
 async function checkPageMeta(page, searchType) {
-  const sep = searchType.id === 'all' ? '|' : '-'
   const urlParam = searchType.id === 'all' ? '' : searchType.id
 
-  const expectedTitle = `birds ${sep} Openverse`
+  const expectedTitle = `birds | Openverse`
   const expectedURL = `/search/${urlParam}?q=birds`
 
   await expect(page).toHaveTitle(expectedTitle)
