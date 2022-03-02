@@ -26,7 +26,7 @@ import {
   useContext,
 } from '@nuxtjs/composition-api'
 
-import { useSearchStore } from '~/stores/search'
+import { useFilterStore } from '~/stores/filter'
 
 import VButton from '~/components/VButton.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'
@@ -47,11 +47,11 @@ const VFilterButton = defineComponent({
   },
   setup(props, { emit }) {
     const { i18n } = useContext()
-    const searchStore = useSearchStore()
+    const filterStore = useFilterStore()
     const { pressed } = toRefs(props)
     const isMinScreenMd = inject('isMinScreenMd', false)
     const isHeaderScrolled = inject('isHeaderScrolled', false)
-    const filterCount = computed(() => searchStore.appliedFilterCount)
+    const filterCount = computed(() => filterStore.appliedFilterCount)
     const filtersAreApplied = computed(() => filterCount.value > 0)
 
     /**

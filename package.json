@@ -18,7 +18,7 @@
     "start": "nuxt start",
     "storybook": "nuxt storybook",
     "test": "jest",
-    "test:all": "pnpm e2e:ci & jest",
+    "test:all": "pnpm ci-e2e-test & jest",
     "test:watch": "jest --collectCoverage=false --watch",
     "test:e2e": "playwright test",
     "test:e2e-debug": "PWDEBUG=1 playwright test",

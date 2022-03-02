@@ -1,6 +1,6 @@
 import { sendWindowMessage } from '~/utils/send-message'
 
-import { useNav } from '~/store/nav'
+import { useNavStore } from '~/stores/nav'
 
 /**
  * In embedded mode, the app sends its size and url
@@ -16,8 +16,8 @@ import { useNav } from '~/store/nav'
  * - `resize` sends the height of the window (see `src/mixins/iframe-height.js`)
  * - `urlChange` sends the relative path of the URL on every URL change.
  */
-export default function ({ query, route }) {
-  const navStore = useNav()
+export default function ({ query, route, $pinia }) {
+  const navStore = useNavStore($pinia)
 
   if ('embedded' in query) {
     navStore.setIsEmbedded(query.embedded === 'true')

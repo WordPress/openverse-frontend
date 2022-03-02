@@ -27,9 +27,10 @@ import { useMatchSearchRoutes } from '~/composables/use-match-routes'
 import { isMinScreen } from '~/composables/use-media-query'
 
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
-import { useNav } from '~/store/nav'
 
 import iframeHeight from '~/mixins/iframe-height'
+
+import { useNavStore } from '~/stores/nav'
 
 import VMigrationNotice from '~/components/VMigrationNotice.vue'
 import VTranslationStatusBanner from '~/components/VTranslationStatusBanner.vue'
@@ -59,7 +60,7 @@ const embeddedPage = {
     const mainContentRef = ref(null)
     const mainRef = ref(null)
 
-    const navStore = useNav()
+    const navStore = useNavStore()
     const isReferredFromCc = computed(() => navStore.isReferredFromCc)
 
     const { isVisible: isFilterVisible } = useFilterSidebarVisibility()

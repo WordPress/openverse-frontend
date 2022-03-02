@@ -7,22 +7,25 @@ import { createPinia, PiniaVuePlugin } from 'pinia'
 
 import messages from '~/locales/en.json'
 import { useFilterStore } from '~/stores/filter'
-import { IMAGE } from '~/constants/media'
 import { filterData, mediaFilterKeys } from '~/constants/filters'
+
+import { IMAGE } from '~/constants/media'
 
 import VFilterButton from '~/components/VHeader/VFilterButton.vue'
 
 function applyNFilters(filterCount, filterStore) {
-  const filterTypes = mediaFilterKeys[IMAGE]
+  const filterTypes = [...mediaFilterKeys[IMAGE]]
   let filterIdx = 0
-  let filterTypeIdx = 0
+  // Skip license type filters as they can disable license filters
+  let filterTypeIdx = 1
   for (let i = 0; i < filterCount; i++) {
+    let filterType = filterTypes[filterTypeIdx]
     filterStore.toggleFilter({
-      filterType: filterTypes[filterTypeIdx],
+      filterType,
       codeIdx: filterIdx,
     })
     filterIdx += 1
-    if (filterData[filterTypes[filterTypeIdx]].length === filterIdx) {
+    if (filterData[filterType].length === filterIdx) {
       filterTypeIdx += 1
       filterIdx = 0
     }
@@ -52,6 +55,9 @@ describe('VFilterButton', () => {
     localVue.use(PiniaVuePlugin)
     pinia = createPinia()
     filterStore = useFilterStore(pinia)
+    // the default ALL_MEDIA has fewer filters that can be applied,
+    // ensure that we can test for more than 10 filters
+    filterStore.setSearchType(IMAGE)
 
     options = {
       localVue,
@@ -108,7 +114,7 @@ describe('VFilterButton', () => {
     it('only shows the count and label when filters are applied', () => {
       provided.isMinScreenMd.value = false
       // +2 to guarantee it's plural
-      const filterCount = Math.floor(Math.random() * 9) + 2
+      const filterCount = Math.floor(Math.random() * 10) + 2
       applyNFilters(filterCount, filterStore)
       const { container } = render(VFilterButton, options)
 

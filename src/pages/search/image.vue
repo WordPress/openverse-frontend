@@ -10,19 +10,17 @@
 <script>
 import { computed, defineComponent, useMeta } from '@nuxtjs/composition-api'
 
-import { useSearchStore } from '~/stores/search'
-
 import { propTypes } from '~/pages/search/search-page.types'
 import { useLoadMore } from '~/composables/use-load-more'
 
+import VImageGrid from '~/components/VImageGrid/VImageGrid'
+
 const ImageSearch = defineComponent({
   name: 'ImageSearch',
+  components: { VImageGrid },
   props: propTypes,
   setup(props) {
-    const searchStore = useSearchStore()
-
-    const query = computed(() => searchStore.query.q)
-    useMeta({ title: `${query.value} - Openverse` })
+    useMeta({ title: `${props.searchTerm} | Openverse` })
 
     const results = computed(() =>
       Object.values(props.mediaResults?.image?.items ?? [])

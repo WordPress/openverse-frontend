@@ -8,6 +8,7 @@ import {
   VIDEO,
 } from '~/constants/media'
 import { useSearchStore } from '~/stores/search'
+
 import { mediaFilterKeys } from '~/constants/filters'
 
 describe('Search Store', () => {
@@ -53,7 +54,7 @@ describe('Search Store', () => {
       ({ searchType, filterTypeCount }) => {
         const searchStore = useSearchStore()
         searchStore.updateQuery({ searchType })
-        const filtersForDisplay = searchStore.mediaFiltersForDisplay
+        const filtersForDisplay = searchStore.searchFilters
         const expectedFilterCount = Math.max(0, filterTypeCount - 1)
         expect(Object.keys(filtersForDisplay).length).toEqual(
           expectedFilterCount
@@ -69,7 +70,7 @@ describe('Search Store', () => {
      */
     it.each`
       query                                               | searchType
-      ${{ q: 'cat', license: 'by', mature: true }}        | ${IMAGE}
+      ${{ q: 'cat', license: 'by', mature: 'true' }}      | ${IMAGE}
       ${{ q: 'cat', license: 'by', searchBy: 'creator' }} | ${ALL_MEDIA}
       ${{ q: 'cat', license: 'cc0,pdm,by,by-nc' }}        | ${ALL_MEDIA}
       ${{ q: 'cat', duration: 'medium' }}                 | ${AUDIO}
@@ -87,63 +88,9 @@ describe('Search Store', () => {
         }
         searchStore.setSearchStateFromUrl({
           path: `/search/${searchType === ALL_MEDIA ? '' : searchType}`,
-          query: expectedQueryParams,
+          query: { ...expectedQueryParams },
         })
         expect(searchStore.searchQueryParams).toEqual(expectedQueryParams)
-      }
-    )
-    /**
-     * Check for some special cases:
-     * - `mature` and `searchBy`.
-     * - several options for single filter.
-     * - media specific filters that are unique (durations).
-     * - media specific filters that have the same API param (extensions)
-     */
-    it.each`
-      query                                               | searchType   | filterCount
-      ${{ q: 'cat', license: 'by', mature: true }}        | ${IMAGE}     | ${1}
-      ${{ q: 'cat', license: 'by', searchBy: 'creator' }} | ${ALL_MEDIA} | ${2}
-      ${{ q: 'cat', license: 'cc0,pdm,by,by-nc' }}        | ${ALL_MEDIA} | ${4}
-      ${{ q: 'cat', duration: 'medium' }}                 | ${AUDIO}     | ${1}
-      ${{ q: 'cat', extension: 'svg' }}                   | ${IMAGE}     | ${1}
-      ${{ q: 'cat', extension: 'svg' }}                   | ${AUDIO}     | ${0}
-      ${{ q: 'cat', extension: 'mp3' }}                   | ${AUDIO}     | ${1}
-    `(
-      'returns correct filter status for $query and searchType $searchType',
-      ({ query, searchType, filterCount }) => {
-        const searchStore = useSearchStore()
-        searchStore.setSearchStateFromUrl({
-          path: `/search/${searchType === ALL_MEDIA ? '' : searchType}`,
-          query: query,
-        })
-
-        expect(searchStore.appliedFilterCount).toEqual(filterCount)
-        expect(searchStore.isAnyFilterApplied).toBe(filterCount > 0)
-      }
-    )
-    /**
-     * For non-supported search types, the filters fall back to 'All content' filters.
-     * Number of displayed filters is one less than the number of mediaFilterKeys
-     * because `mature` filter is not displayed.
-     */
-    it.each`
-      searchType   | filterTypeCount
-      ${IMAGE}     | ${mediaFilterKeys[IMAGE].length}
-      ${AUDIO}     | ${mediaFilterKeys[AUDIO].length}
-      ${ALL_MEDIA} | ${mediaFilterKeys[ALL_MEDIA].length}
-      ${VIDEO}     | ${mediaFilterKeys[VIDEO].length}
-    `(
-      'mediaFiltersForDisplay returns $filterTypeCount filters for $mediaType',
-      ({ searchType, filterTypeCount }) => {
-        const searchStore = useSearchStore()
-        const expectedFilterCount = Math.max(0, filterTypeCount - 1)
-
-        searchStore.updateQuery({ searchType })
-        const filtersForDisplay = searchStore.mediaFiltersForDisplay
-
-        expect(Object.keys(filtersForDisplay).length).toEqual(
-          expectedFilterCount
-        )
       }
     )
   })

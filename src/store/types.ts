@@ -47,7 +47,7 @@ export type Query = {
   categories: string
   source: string
   duration: string
-  mature: boolean
+  mature: string
 }
 
 export type ApiQueryParams = {

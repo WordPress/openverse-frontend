@@ -22,7 +22,10 @@
       </VCheckbox>
 
       <!-- License explanation -->
-      <VPopover v-if="filterType === 'licenses'">
+      <VPopover
+        v-if="filterType === 'licenses'"
+        :label="$t('browse-page.aria.license-explanation')"
+      >
         <template #trigger="{ a11yProps }">
           <VButton
             v-bind="a11yProps"
@@ -53,23 +56,26 @@
 </template>
 
 <script>
-import { useSearchStore } from '~/stores/search'
+import { useFilterStore } from '~/stores/filter'
 
 import VLicenseExplanation from '~/components/VFilters/VLicenseExplanation.vue'
 import VCheckbox from '~/components/VCheckbox/VCheckbox.vue'
 import VLicense from '~/components/License/VLicense.vue'
+import VButton from '~/components/VButton.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'
+import VIconButton from '~/components/VIconButton/VIconButton.vue'
 import VPopover from '~/components/VPopover/VPopover.vue'
 
-import closeSmallIcon from '~/assets/icons/close-small.svg'
-
 import helpIcon from '~/assets/icons/help.svg'
+import closeSmallIcon from '~/assets/icons/close-small.svg'
 
 export default {
   name: 'FilterCheckList',
   components: {
     VCheckbox,
+    VButton,
     VIcon,
+    VIconButton,
     VLicense,
     VLicenseExplanation,
     VPopover,
@@ -105,8 +111,8 @@ export default {
       })
     },
     isDisabled(item) {
-      const searchStore = useSearchStore()
-      return searchStore.isFilterDisabled(item) ?? this.disabled
+      const filterStore = useFilterStore()
+      return filterStore.isFilterDisabled(item) ?? this.disabled
     },
   },
 }

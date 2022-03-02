@@ -46,6 +46,7 @@
 import { computed, useContext, useRouter } from '@nuxtjs/composition-api'
 
 import { kebabize } from '~/utils/format-strings'
+import { useFilterStore } from '~/stores/filter'
 import { useSearchStore } from '~/stores/search'
 
 import { FETCH_MEDIA } from '~/constants/action-types'
@@ -59,12 +60,13 @@ export default {
     VFilterChecklist,
   },
   setup() {
+    const filterStore = useFilterStore()
     const searchStore = useSearchStore()
     const { i18n, store } = useContext()
     const router = useRouter()
 
-    const isAnyFilterApplied = computed(() => searchStore.isAnyFilterApplied)
-    const filters = computed(() => searchStore.mediaFiltersForDisplay)
+    const isAnyFilterApplied = computed(() => filterStore.isAnyFilterApplied)
+    const filters = computed(() => searchStore.searchFilters)
     const filterTypes = computed(() => Object.keys(filters.value))
     const filterTypeTitle = (filterType) => {
       if (filterType === 'searchBy') {

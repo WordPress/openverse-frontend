@@ -11,7 +11,7 @@ import { computed, defineComponent } from '@nuxtjs/composition-api'
 
 import iframeHeight from '~/mixins/iframe-height'
 
-import { useNav } from '~/store/nav'
+import { useNavStore } from '~/stores/nav'
 
 import VTranslationStatusBanner from '~/components/VTranslationStatusBanner.vue'
 
@@ -22,7 +22,7 @@ export default defineComponent({
   components: { VMigrationNotice, VTranslationStatusBanner },
   mixins: [iframeHeight],
   setup() {
-    const navStore = useNav()
+    const navStore = useNavStore()
     const isReferredFromCc = computed(() => navStore.isReferredFromCc)
     return { isReferredFromCc }
   },

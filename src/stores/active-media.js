@@ -8,10 +8,10 @@ const ACTIVE_MEDIA = 'active-media'
  */
 export const useActiveMediaStore = defineStore(ACTIVE_MEDIA, () => {
   /**
-   * `reactive` returns UnwrapRef<T> type, but the Vue docs recommend to use the
+   * `reactive` returns UnwrapRef<T> type, but the Vue docs recommend using the
    * type of <T> for typing it instead:
    * https://vuejs.org/guide/typescript/composition-api.html#typing-reactive
-   * @type {import('./types').ActiveMediaState}
+   * @type {import('../store/types').ActiveMediaState}
    */
   const state = reactive({
     type: null,
@@ -55,9 +55,9 @@ export const useActiveMediaStore = defineStore(ACTIVE_MEDIA, () => {
   }
 
   return {
-    type,
-    id,
-    message,
+    type: readonly(type),
+    id: readonly(id),
+    message: readonly(message),
     state: readonly(state),
 
     setActiveMediaItem,

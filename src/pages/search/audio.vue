@@ -35,8 +35,6 @@ import { isMinScreen } from '~/composables/use-media-query'
 
 import { useBrowserIsMobile } from '~/composables/use-browser-detection'
 
-import { useSearchStore } from '~/stores/search'
-
 import VAudioTrack from '~/components/VAudioTrack/VAudioTrack.vue'
 
 import VLoadMore from '~/components/VLoadMore.vue'
@@ -54,11 +52,9 @@ const AudioSearch = defineComponent({
   },
   props: propTypes,
   setup(props) {
-    const searchStore = useSearchStore()
     const { i18n } = useContext()
 
-    const query = computed(() => searchStore.query.q)
-    useMeta({ title: `${query.value} - Openverse` })
+    useMeta({ title: `${props.searchTerm} | Openverse` })
 
     const results = computed(() =>
       Object.values(props.mediaResults?.audio?.items ?? [])

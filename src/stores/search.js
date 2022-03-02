@@ -55,22 +55,19 @@ export const useSearchStore = defineStore('search', () => {
    */
   const searchQueryParams = computed(() => {
     // Ensure that q filter always comes first
-    const params = { q: state.query.q.trim() }
-    // Handle mature filter separately
-    const filterKeys = Object.keys(state.query).filter(
-      (key) => !['q', 'mature'].includes(key)
+    return Object.keys(state.query).reduce(
+      (obj, key) => {
+        return !['q'].includes(key) && state.query[key].length
+          ? { ...obj, [key]: state.query[key] }
+          : obj
+      },
+      { q: state.query.q.trim() }
     )
-    filterKeys.forEach((key) => {
-      if (state.query[key].length) {
-        params[key] = state.query[key]
-      }
-    })
-    return params
   })
 
   /**
    * Called when `q` search term or `searchType` are changed.
-   * @param {{[q]: string, [searchType]: import('../store/types').SupportedSearchType}} params
+   * @param {{ q?: string, searchType?: import('../store/types').SupportedSearchType }} params
    *
    */
   function updateQuery(params = {}) {
@@ -109,23 +106,25 @@ export const useSearchStore = defineStore('search', () => {
       params.mediaType || state.searchType,
       true
     )
-    const newQuery = {}
+
     // If the filter was unchecked, its value in `queryFromFilters` would be falsy, ''.
     // So we check if the key exists, not if the value is not falsy.
     const changedKeys = Object.keys(queryFromFilters)
-    Object.keys(state.query).forEach((key) => {
-      if (key === 'q') {
-        newQuery[key] = params?.q || state.query.q
-      } else {
-        newQuery[key] = changedKeys.includes(key) ? queryFromFilters[key] : ''
-      }
-    })
-    state.query = newQuery
+    state.query = /** @type {import('../store/types').Query} */ (
+      Object.keys(state.query).reduce((obj, key) => {
+        if (key === 'q') {
+          obj[key] = params?.q || state.query.q
+        } else {
+          obj[key] = changedKeys.includes(key) ? queryFromFilters[key] : ''
+        }
+        return obj
+      }, {})
+    )
   }
 
   /**
    * Toggles a filter's checked parameter
-   * @param {{ filterType: import('../store/types').FilterType, [codeIdx]: number, [code]: string}} params
+   * @param {{ filterType: string, [codeIdx]: number, [code]: string}} params
    */
   function toggleFilter(params) {
     filterStore.toggleFilter(params)
@@ -141,27 +140,19 @@ export const useSearchStore = defineStore('search', () => {
     filterStore.clearFilters()
     updateQueryFromFilters()
   }
+  const searchFilters = computed(() => {
+    return filterStore.getMediaTypeFilters({ mediaType: searchType.value })
+  })
 
-  /**
-   * Returns the array of the filter items applicable for current search type
-   * for display on the Filter sidebar.
-   */
-  const mediaFiltersForDisplay = computed(() =>
-    filterStore.getMediaTypeFilters({ mediaType: searchType.value })
-  )
   return {
     state: readonly(state),
     searchType,
     query,
     searchQueryParams,
-    mediaFiltersForDisplay,
+    searchFilters,
     setSearchStateFromUrl,
     updateQuery,
     toggleFilter,
     clearFilters,
-    appliedFilterCount: computed(() => filterStore.appliedFilterCount),
-    isAnyFilterApplied: computed(() => filterStore.isAnyFilterApplied),
-    isFilterDisabled: filterStore.isFilterDisabled,
-    setProviderFilters: filterStore.setProviderFilters,
   }
 })
