@@ -147,6 +147,7 @@ const config: NuxtConfig = {
     '@nuxtjs/style-resources',
     '@nuxtjs/svg',
     '@nuxtjs/eslint-module',
+	  // @todo: Remove `disableVuex` once all stores are migrated to pinia
     ['@pinia/nuxt', { disableVuex: false }],
   ],
   // Load the scss variables into every component:
