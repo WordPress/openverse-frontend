@@ -225,7 +225,7 @@ const config: NuxtConfig = {
     extend(config, ctx) {
       config.devtool = ctx.isClient ? 'source-map' : 'inline-source-map'
       // Mitigates import errors for Pinia
-      config.module.rules.push({
+      config.module?.rules.push({
         test: /\.mjs$/,
         include: /node_modules/,
         type: 'javascript/auto',
