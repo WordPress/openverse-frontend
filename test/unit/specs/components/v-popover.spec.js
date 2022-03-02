@@ -1,12 +1,15 @@
 import Vue from 'vue'
 import { render, screen } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
+
+import { noFocusableElementWarning } from '~/composables/use-focus-on-show'
+
+import { warn } from '~/utils/console'
+
 import VButton from '~/components/VButton.vue'
 import VPopover from '~/components/VPopover/VPopover.vue'
-import { noFocusableElementWarning } from '~/composables/use-focus-on-show'
-import { warn } from '~/utils/warn'
 
-jest.mock('~/utils/warn', () => ({
+jest.mock('~/utils/console', () => ({
   warn: jest.fn(),
 }))
 
@@ -15,7 +18,7 @@ const TestWrapper = Vue.component('TestWrapper', {
   props: {
     popoverProps: {
       type: Object,
-      default: () => {},
+      default: () => ({}),
     },
     popoverContentTabIndex: {
       type: Number,
@@ -58,7 +61,9 @@ const expectOpen = () => {
 }
 
 const expectClosed = () => {
-  expect(queryPopover()).toBe(null)
+  expect(queryPopover().parentElement.parentElement.style.display).toEqual(
+    'none'
+  )
 }
 
 describe('VPopover', () => {

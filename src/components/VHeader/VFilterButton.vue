@@ -2,8 +2,11 @@
   <VButton
     :variant="variant"
     size="disabled"
-    class="self-center gap-2 align-center font-semibold px-3 py-2 md:flex-shrink-0"
-    :class="{ 'w-12': isHeaderScrolled && !isMinScreenMd }"
+    class="self-center gap-2 align-center font-semibold py-2 flex-shrink-0"
+    :class="{
+      'px-3': !isIconButton,
+      'w-10 h-10 px-0': isIconButton,
+    }"
     :pressed="pressed"
     aria-controls="filter-sidebar"
     :aria-label="label"
@@ -22,10 +25,11 @@ import {
   toRefs,
   useContext,
 } from '@nuxtjs/composition-api'
-import filterIcon from '~/assets/icons/filter.svg'
 
 import VButton from '~/components/VButton.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'
+
+import filterIcon from '~/assets/icons/filter.svg'
 
 const VFilterButton = defineComponent({
   name: 'VFilterButton',
@@ -42,8 +46,8 @@ const VFilterButton = defineComponent({
   setup(props, { emit }) {
     const { i18n, store } = useContext()
     const { pressed } = toRefs(props)
-    const isMinScreenMd = inject('isMinScreenMd')
-    const isHeaderScrolled = inject('isHeaderScrolled')
+    const isMinScreenMd = inject('isMinScreenMd', false)
+    const isHeaderScrolled = inject('isHeaderScrolled', false)
     const filterCount = computed(
       () => store.getters['search/appliedFilterTags'].length
     )
@@ -103,7 +107,12 @@ const VFilterButton = defineComponent({
     const showLabel = computed(() => {
       return !(!isMinScreenMd.value && !filtersAreApplied.value)
     })
-
+    const isIconButton = computed(
+      () =>
+        !isMinScreenMd.value &&
+        (!filtersAreApplied.value ||
+          (filtersAreApplied.value && isHeaderScrolled.value))
+    )
     return {
       filterCount,
       filterIcon,
@@ -116,6 +125,7 @@ const VFilterButton = defineComponent({
       variant,
       isMinScreenMd,
       isHeaderScrolled,
+      isIconButton,
     }
   },
 })

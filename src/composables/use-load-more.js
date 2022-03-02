@@ -1,4 +1,5 @@
 import { computed, useContext } from '@nuxtjs/composition-api'
+
 import { FETCH_MEDIA } from '~/constants/action-types'
 import { MEDIA } from '~/constants/store-modules'
 
@@ -28,7 +29,7 @@ export const useLoadMore = (props) => {
   })
 
   const onLoadMore = async () => {
-    if (canLoadMore) {
+    if (canLoadMore.value) {
       await store.dispatch(`${MEDIA}/${FETCH_MEDIA}`, searchParams.value)
     }
   }

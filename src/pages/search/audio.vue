@@ -1,13 +1,13 @@
 <template>
   <section>
-    <GridSkeleton
+    <VGridSkeleton
       v-if="results.length === 0 && !fetchState.isFinished"
       is-for-tab="audio"
     />
     <VAudioTrack
       v-for="audio in results"
       :key="audio.id"
-      class="mb-6"
+      class="mb-8 md:mb-10"
       :audio="audio"
       :size="audioTrackSize"
       layout="row"
@@ -22,11 +22,25 @@
 </template>
 
 <script>
-import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
+import {
+  computed,
+  defineComponent,
+  useContext,
+  useMeta,
+  useStore,
+} from '@nuxtjs/composition-api'
+
 import { useLoadMore } from '~/composables/use-load-more'
 
+import { isMinScreen } from '~/composables/use-media-query'
+
+import { useBrowserIsMobile } from '~/composables/use-browser-detection'
+
 import VAudioTrack from '~/components/VAudioTrack/VAudioTrack.vue'
+
 import VLoadMore from '~/components/VLoadMore.vue'
+
+import VGridSkeleton from '~/components/VSkeleton/VGridSkeleton.vue'
 
 import { propTypes } from './search-page.types'
 
@@ -34,16 +48,31 @@ const AudioSearch = defineComponent({
   name: 'AudioSearch',
   components: {
     VAudioTrack,
+    VGridSkeleton,
     VLoadMore,
   },
   props: propTypes,
   setup(props) {
+    const store = useStore()
+    const { i18n } = useContext()
+
+    const query = computed(() => store.state.search.query.q)
+    useMeta({ title: `${query.value} - Openverse` })
+
     const results = computed(() =>
       Object.values(props.mediaResults?.audio?.items ?? [])
     )
-    const { i18n } = useContext()
+    const isMinScreenMd = isMinScreen('md', { shouldPassInSSR: false })
 
-    const audioTrackSize = computed(() => (props.isFilterVisible ? 'l' : 'm'))
+    // On SSR, we set the size to small if the User Agent is mobile, otherwise we set the size to medium.
+    const isMobile = useBrowserIsMobile()
+    const audioTrackSize = computed(() => {
+      return !isMinScreenMd.value && isMobile
+        ? 's'
+        : props.isFilterVisible
+        ? 'l'
+        : 'm'
+    })
 
     const isError = computed(() => !!props.fetchState.fetchingError)
     const errorHeader = computed(() => {
@@ -63,6 +92,7 @@ const AudioSearch = defineComponent({
       onLoadMore,
     }
   },
+  head: {},
 })
 export default AudioSearch
 </script>

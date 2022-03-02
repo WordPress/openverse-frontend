@@ -1,10 +1,12 @@
 <template>
-  <div class="relative block max-w-min">
+  <div class="relative block max-w-min text-sm md:text-base">
     <!-- rounded-X-none is required to fight Edge UA styles that apply a 2px border radius to all `button` elements -->
     <div class="flex">
       <slot
         :button-props="{
-          class: `dropdown-button rounded-s-sm rounded-e-none dropdown-button-${size}`,
+          class: `dropdown-button rounded-s-sm ${
+            isSingleItem ? 'rounded-e-sm' : 'rounded-e-none'
+          } dropdown-button-${size}`,
           type: 'button',
         }"
       />
@@ -51,6 +53,9 @@
 
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
+
+import * as keycodes from '~/utils/key-codes'
+
 import caretDown from '~/assets/icons/caret-down.svg'
 
 const DropdownButton = defineComponent({
@@ -127,7 +132,7 @@ const DropdownButton = defineComponent({
       const items = this.getItems()
       const itemIndex = items.findIndex((item) => item === event.target)
       switch (event.key) {
-        case 'ArrowUp': {
+        case keycodes.ArrowUp: {
           if (itemIndex === 0) {
             // don't do anything if pressing up on the first item
             return
@@ -135,7 +140,7 @@ const DropdownButton = defineComponent({
           this.focusElement(items[itemIndex - 1])
           break
         }
-        case 'ArrowDown': {
+        case keycodes.ArrowDown: {
           if (itemIndex === items.length - 1) {
             // don't do anything if pressing down on the last item
             return
@@ -143,17 +148,17 @@ const DropdownButton = defineComponent({
           this.focusElement(items[itemIndex + 1])
           break
         }
-        case 'Escape': {
+        case keycodes.Escape: {
           this.toggleOpen()
           break
         }
-        case 'Home':
-        case 'PageUp': {
+        case keycodes.Home:
+        case keycodes.PageUp: {
           this.focusElement(items[0])
           break
         }
-        case 'End':
-        case 'PageDown': {
+        case keycodes.End:
+        case keycodes.PageDown: {
           this.focusElement(items[items.length - 1])
           break
         }
@@ -172,7 +177,7 @@ export default DropdownButton
 
 .dropdown-icon-button-medium,
 .dropdown-button-medium {
-  @apply p-4 leading-6;
+  @apply py-4 px-6 leading-6;
 }
 
 /*

@@ -7,35 +7,33 @@
         </h1>
         <div class="mb-10">
           <h3 class="text-2xl">
-            {{ $t('sources.cc-content.where') }}
+            {{ $t('sources.cc-content.where', { openverse: 'Openverse' }) }}
           </h3>
           <p class="my-4">
-            {{ $t('sources.cc-content.content') }}
+            {{ $t('sources.cc-content.content', { openverse: 'Openverse' }) }}
           </p>
           <i18n path="sources.cc-content.provider" tag="p" class="my-4">
             <template #flickr>
-              <a aria-label="flickr" href="https://www.flickr.com/">{{
-                $t('sources.cc-content.flickr')
-              }}</a>
+              <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
+              <VLink href="https://www.flickr.com/">Flickr</VLink>
             </template>
             <template #smithsonian>
-              <a aria-label="smithsonian" href="https://www.si.edu/">{{
+              <VLink href="https://www.si.edu/">{{
                 $t('sources.cc-content.smithsonian')
-              }}</a>
+              }}</VLink>
             </template>
           </i18n>
           <i18n path="sources.cc-content.europeana" tag="p" class="my-4">
+            <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
+            <template #openverse>Openverse</template>
             <template #link>
-              <a aria-label="europeana" href="https://www.europeana.eu/en">{{
-                $t('sources.cc-content.europeana-link')
-              }}</a>
+              <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
+              <VLink href="https://www.europeana.eu/en">Europeana</VLink>
             </template>
             <template #link-api>
-              <a
-                aria-label="europeana-api"
-                href="https://pro.europeana.eu/page/apis"
-                >{{ $t('sources.cc-content.europeana-api') }}</a
-              >
+              <VLink href="https://pro.europeana.eu/page/apis">{{
+                $t('sources.cc-content.europeana-api')
+              }}</VLink>
             </template>
           </i18n>
         </div>
@@ -64,15 +62,13 @@
         <h3 class="text-2xl my-4">
           {{ $t('sources.suggestions') }}
         </h3>
-        <a
+        <VLink
           href="https://github.com/WordPress/openverse-catalog/issues/new?assignees=&labels=%F0%9F%9A%A6+status%3A+awaiting+triage%2C+%F0%9F%A7%B9+status%3A+ticket+work+required%2C+%E2%98%81%EF%B8%8F+provider%3A+any&template=new-source-suggestion.md&title=%5BSource+Suggestion%5D+Insert+source+name+here"
           class="button is-primary py-8"
-          target="_blank"
-          rel="noopener noreferrer"
         >
           {{ $t('sources.issue-button') }}
           <i class="icon external-link mx-2 mt-2" />
-        </a>
+        </VLink>
       </div>
       <i18n path="sources.detail" tag="p">
         <template #single-name>
@@ -82,7 +78,7 @@
         </template>
       </i18n>
       <table
-        :aria-label="$t('about.aria.sources-table')"
+        :aria-label="$t('sources.aria.table')"
         role="region"
         class="table is-striped mt-4 mb-10 border border-admin-gray"
       >
@@ -123,17 +119,17 @@
         <tbody>
           <tr v-for="(imageProvider, index) in sortedProviders" :key="index">
             <td class="font-semibold">
-              <a :href="`/search?source=${imageProvider.source_name}`">
+              <VLink :href="`/search?source=${imageProvider.source_name}`">
                 {{ imageProvider.display_name }}
-              </a>
+              </VLink>
             </td>
             <td class="font-semibold">
-              <a :href="imageProvider.source_url">
+              <VLink :href="imageProvider.source_url">
                 {{ imageProvider.source_url }}
-              </a>
+              </VLink>
             </td>
             <td class="number-cell font-semibold">
-              {{ getProviderMediaCount(imageProvider.media_count || 0) }}
+              {{ getLocaleFormattedNumber(imageProvider.media_count || 0) }}
             </td>
           </tr>
         </tbody>
@@ -145,12 +141,15 @@
 <script>
 import sortBy from 'lodash.sortby'
 import { mapState } from 'vuex'
-import { PROVIDER } from '~/constants/store-modules'
 
-const ARABIC_NUMERAL_LOCALES = ['ar', 'fa', 'ur', 'ckb', 'ps']
+import { PROVIDER } from '~/constants/store-modules'
+import { useGetLocaleFormattedNumber } from '~/composables/use-get-locale-formatted-number'
+
+import VLink from '~/components/VLink.vue'
 
 const SourcePage = {
   name: 'source-page',
+  components: { VLink },
   data() {
     return {
       sort: {
@@ -158,6 +157,11 @@ const SourcePage = {
         field: 'display_name',
       },
     }
+  },
+  setup() {
+    const getLocaleFormattedNumber = useGetLocaleFormattedNumber()
+
+    return { getLocaleFormattedNumber }
   },
   computed: {
     ...mapState(PROVIDER, ['imageProviders']),
@@ -167,20 +171,6 @@ const SourcePage = {
     },
   },
   methods: {
-    /**
-     * @param {number} mediaCount
-     * @return {string} Localized media count
-     */
-    getProviderMediaCount(mediaCount = 0) {
-      let locale = this.$i18n.locale
-      if (ARABIC_NUMERAL_LOCALES.some((l) => locale.startsWith(l))) {
-        // most sites with RTL language with numbers continue to use Western Arabic Numerals whereas `toLocaleString` will use Eastern Arabic Numerals for Arabic and Hebrew by default
-        // Prevent formatting using Eastern Arabic Numerals and use `en-GB` to match the most common decimal and thousands delimiters for those regions
-        // https://en.wikipedia.org/wiki/Decimal_separator#Countries_using_decimal_point
-        locale = 'en-GB'
-      }
-      return mediaCount.toLocaleString(locale)
-    },
     sortTable(field) {
       let direction = 'asc'
       if (field === this.sort.field) {
@@ -189,6 +179,11 @@ const SourcePage = {
 
       this.sort = { direction, field }
     },
+  },
+  head() {
+    return {
+      title: `${this.$t('sources.title')} | Openverse`,
+    }
   },
 }
 

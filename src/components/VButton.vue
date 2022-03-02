@@ -2,7 +2,7 @@
   <Component
     :is="as"
     :type="typeRef"
-    class="transition-colors"
+    class="transition-colors flex items-center rounded-sm justify-center transition-shadow duration-100 ease-linear disabled:opacity-70 no-underline appearance-none ring-offset-1 focus:outline-none"
     :class="[
       $style.button,
       $style[variant],
@@ -30,7 +30,10 @@ import {
   toRefs,
   computed,
 } from '@nuxtjs/composition-api'
-import { warn } from '~/utils/warn'
+
+import { warn } from '~/utils/console'
+
+import VLink from '~/components/VLink.vue'
 
 /**
  * A button component that behaves just like a regular HTML `button` element
@@ -46,34 +49,38 @@ import { warn } from '~/utils/warn'
  */
 const VButton = defineComponent({
   name: 'VButton',
+  components: { VLink },
   props: {
     /**
      * Passed to `component :is` to allow the button to *appear* as a button but
      * work like another element (like an `anchor`). May only be either `button` or `a`.
      *
-     * We do not support other elements because their use cases are marginal and they
+     * We do not support other elements because their use cases are marginal, and they
      * add complexity that we can avoid otherwise.
      *
-     * We also don't allow any old Vue component because Vue does not have ref-forwarding
+     * We also don't allow any old Vue component because Vue does not have ref-forwarding,
      * so we wouldn't be able to detect the type of the DOM node that is ultimately rendered
      * by any Vue component passed.
      *
      * @default 'button'
      */
     as: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<'a' | 'button'>} */ (
+      type: /** @type {import('@nuxtjs/composition-api').PropType<'VLink' | 'button'>} */ (
         String
       ),
       default: 'button',
-      validate: (v) => ['a', 'button', 'NuxtLink'].includes(v),
+      validate: (v) => ['VLink', 'button'].includes(v),
     },
     /**
      * The variant of the button.
      *
+     * Plain removes all styles except the focus ring.
+     * Plain-dangerous removes _all_ styles including the focus ring.
+     *
      * @default 'primary'
      */
     variant: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<'primary' | 'secondary' | 'tertiary' | 'action-menu' | 'action-menu-muted' | 'grouped'>} */ (
+      type: /** @type {import('@nuxtjs/composition-api').PropType<'primary' | 'secondary' | 'tertiary' | 'action-menu' | 'action-menu-muted' | 'plain' | 'plain-dangerous'>} */ (
         String
       ),
       default: 'primary',
@@ -85,7 +92,8 @@ const VButton = defineComponent({
           'action-menu',
           'action-menu-secondary',
           'action-menu-muted',
-          'grouped',
+          'plain',
+          'plain-dangerous',
         ].includes(v),
     },
     /**
@@ -186,24 +194,13 @@ const VButton = defineComponent({
     watch(
       propsRef.as,
       (as) => {
-        if (['a', 'NuxtLink'].includes(as)) {
+        if (['VLink'].includes(as)) {
           typeRef.value = undefined
           supportsDisabledAttributeRef.value = false
-          if (as === 'a') {
-            // No need to declare `href` as an explicit prop as Vue preserves
-            // the `attrs` object reference between renders and updates the properties
-            // meaning we'll always have the latest values for the properties on the
-            // attrs object
-            if (!attrs.href || attrs.href === '#') {
-              warn(
-                'Do not use anchor elements without a valid `href` attribute. Use a `button` instead.'
-              )
-            }
-          } else {
-            if (!attrs.to) {
-              warn('NuxtLink needs a `to` attribute')
-            }
-          }
+        } else if (['a', 'NuxtLink'].includes(as)) {
+          warn(
+            `Please use \`VLink\` with an \`href\` prop instead of ${as} for the button component`
+          )
         }
       },
       { immediate: true }
@@ -231,9 +228,11 @@ export default VButton
 </script>
 
 <style module>
-.button {
-  @apply flex items-center rounded-sm justify-center transition-shadow duration-100 ease-linear disabled:opacity-70 focus:outline-none focus-visible:ring no-underline appearance-none ring-offset-1;
-}
+/**
+ * Classnames in this file are duplicated to increase specificity.
+ * This is currently necessary due to a bug with the order of CSS files
+ * that only appears in development.
+ */
 
 .button[disabled='disabled'],
 .button[aria-disabled='true'] {
@@ -257,7 +256,7 @@ a.button {
 }
 
 .primary {
-  @apply bg-pink text-white focus-visible:ring-pink hover:bg-dark-pink hover:text-white;
+  @apply bg-pink text-white focus-visible:ring focus-visible:ring-pink hover:bg-dark-pink hover:text-white;
 }
 
 .primary-pressed {
@@ -265,15 +264,15 @@ a.button {
 }
 
 .secondary {
-  @apply bg-dark-charcoal text-white font-bold focus-visible:ring-pink hover:bg-dark-charcoal-80 hover:text-white;
+  @apply bg-dark-charcoal text-white font-bold focus-visible:ring focus-visible:ring-pink hover:bg-dark-charcoal-80 hover:text-white;
 }
 
 .secondary-pressed {
-  @apply bg-dark-charcoal-80 hover:border-tx;
+  @apply bg-dark-charcoal-80 border border-tx hover:border-tx;
 }
 
 .tertiary {
-  @apply bg-white text-black border border-dark-charcoal-20 focus-visible:border-tx focus-visible:ring-pink ring-offset-0;
+  @apply bg-white text-dark-charcoal border border-dark-charcoal-20 focus-visible:border-tx focus-visible:ring focus-visible:ring-pink ring-offset-0;
 }
 
 .tertiary-pressed {
@@ -281,11 +280,11 @@ a.button {
 }
 
 .action-menu {
-  @apply bg-white text-black border border-tx hover:border-dark-charcoal-20 focus-visible:ring-pink;
+  @apply bg-white text-dark-charcoal border border-tx hover:border-dark-charcoal-20 focus-visible:ring focus-visible:ring-pink;
 }
 
 .action-menu-secondary {
-  @apply bg-white text-black border border-tx hover:border-dark-charcoal-20 focus-visible:ring-pink;
+  @apply bg-white text-dark-charcoal border border-tx hover:border-dark-charcoal-20 focus-visible:ring focus-visible:ring-pink;
 }
 
 .action-menu-secondary-pressed {
@@ -297,23 +296,15 @@ a.button {
 }
 
 .action-menu-muted {
-  @apply bg-dark-charcoal-10 text-black border border-tx hover:border-dark-charcoal-20 focus-visible:ring-pink;
+  @apply bg-dark-charcoal-10 text-dark-charcoal border border-tx hover:border-dark-charcoal-20 focus-visible:ring focus-visible:ring-pink;
 }
 
 .action-menu-muted-pressed {
-  @apply border-tx bg-dark-charcoal text-white focus-visible:ring-pink;
-}
-
-.grouped {
-  @apply bg-white text-black focus-visible:ring-pink;
-}
-
-.grouped-pressed {
-  @apply bg-dark-charcoal-10 ring-offset-dark-charcoal-10;
+  @apply border border-tx bg-dark-charcoal text-white focus-visible:ring focus-visible:ring-pink;
 }
 
 .full {
-  @apply w-full font-semibold bg-dark-charcoal-06 focus-visible:ring-pink hover:bg-dark-charcoal-40 hover:text-white;
+  @apply w-full font-semibold bg-dark-charcoal-06 focus-visible:ring focus-visible:ring-pink hover:bg-dark-charcoal-40 hover:text-white;
 }
 
 .full-pressed {
@@ -321,6 +312,6 @@ a.button {
 }
 
 .plain {
-  @apply bg-tx focus-visible:ring-pink;
+  @apply focus-visible:ring focus-visible:ring-pink;
 }
 </style>

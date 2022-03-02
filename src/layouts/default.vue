@@ -1,8 +1,11 @@
 <template>
-  <div class="app grid h-screen overflow-hidden">
-    <MigrationNotice v-show="isReferredFromCc" />
-    <TranslationStatusBanner />
-    <VHeader />
+  <div class="app grid h-screen overflow-hidden relative">
+    <div>
+      <VTeleportTarget name="skip-to-content" :force-destroy="true" />
+      <VMigrationNotice v-show="isReferredFromCc" />
+      <VTranslationStatusBanner />
+      <VHeader />
+    </div>
     <main
       class="main embedded overflow-x-hidden"
       :class="{ 'has-sidebar': isSidebarVisible }"
@@ -15,9 +18,6 @@
   </div>
 </template>
 <script>
-import iframeHeight from '~/mixins/iframe-height'
-
-import { NAV } from '~/constants/store-modules'
 import {
   computed,
   provide,
@@ -25,25 +25,33 @@ import {
   useContext,
   watch,
 } from '@nuxtjs/composition-api'
-import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
-import { isMinScreen } from '~/composables/use-media-query'
-import { useMatchSearchRoutes } from '~/composables/use-match-routes'
+
 import { useScroll } from '~/composables/use-scroll'
 
-import MigrationNotice from '~/components/MigrationNotice.vue'
-import TranslationStatusBanner from '~/components/TranslationStatusBanner.vue'
+import { useMatchSearchRoutes } from '~/composables/use-match-routes'
+
+import { isMinScreen } from '~/composables/use-media-query'
+
+import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
+
+import iframeHeight from '~/mixins/iframe-height'
+
+import VMigrationNotice from '~/components/VMigrationNotice.vue'
+import VTranslationStatusBanner from '~/components/VTranslationStatusBanner.vue'
 import VHeader from '~/components/VHeader/VHeader.vue'
 import VModalTarget from '~/components/VModal/VModalTarget.vue'
 import VSidebarTarget from '~/components/VModal/VSidebarTarget.vue'
 import VGlobalAudioSection from '~/components/VGlobalAudioSection/VGlobalAudioSection.vue'
+import VTeleportTarget from '~/components/VTeleport/VTeleportTarget.vue'
 
 const embeddedPage = {
   name: 'embedded',
   components: {
-    MigrationNotice,
-    TranslationStatusBanner,
+    VMigrationNotice,
+    VTranslationStatusBanner,
     VHeader,
     VModalTarget,
+    VTeleportTarget,
     VSidebarTarget,
     VGlobalAudioSection,
   },
@@ -56,7 +64,7 @@ const embeddedPage = {
     const mainContentRef = ref(null)
     const mainRef = ref(null)
     const { store } = useContext()
-    const isReferredFromCc = store.state[NAV].isReferredFromCc
+    const isReferredFromCc = computed(() => store.state.nav.isReferredFromCc)
 
     const { isVisible: isFilterVisible } = useFilterSidebarVisibility()
     const isMinScreenMd = isMinScreen('md')
@@ -105,23 +113,30 @@ export default embeddedPage
   grid-template-rows: auto 1fr;
 }
 
+@screen md {
+  // Logic for displaying the filter sidebar and search results
+  // as independently-scrolling sections.
+  .main {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 316px;
+  }
+  // Make the main content area span both grid columns
+  // when the sidebar is closed...
+  .main > *:first-child {
+    grid-column: span 2;
+  }
+  // ...and only one column when it is visible.
+  .main.has-sidebar > *:first-child {
+    grid-column: 1;
+  }
+}
+
 .main {
-  display: grid;
-  grid-template-columns: 1fr 316px;
-  height: 100%;
   overflow: hidden;
 }
-
-.main > * {
+.main > *:not(:empty) {
   overflow-y: scroll;
-  min-height: 100%;
-}
-
-.main > *:first-child {
-  grid-column: span 2;
-}
-
-.main.has-sidebar > *:first-child {
-  grid-column: 1;
+  height: 100%;
 }
 </style>

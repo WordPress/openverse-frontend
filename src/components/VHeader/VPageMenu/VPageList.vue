@@ -28,13 +28,11 @@
 <script>
 import usePages from '~/composables/use-pages'
 
-import externalLinkIcon from '~/assets/icons/external-link.svg'
-
 import VIcon from '~/components/VIcon/VIcon.vue'
 import VItem from '~/components/VItemGroup/VItem.vue'
 import VItemGroup from '~/components/VItemGroup/VItemGroup.vue'
 
-const externalLinkProps = { as: 'a', target: '_blank', rel: 'noopener' }
+import externalLinkIcon from '~/assets/icons/external-link.svg'
 
 export default {
   name: 'VPageMenuPopover',
@@ -48,12 +46,10 @@ export default {
   },
   setup() {
     const pages = usePages()
+
     const isLinkExternal = (item) => !item.link.startsWith('/')
-    const getLinkProps = (item) => {
-      return isLinkExternal(item)
-        ? { ...externalLinkProps, href: item.link }
-        : { as: 'NuxtLink', to: item.link }
-    }
+    const getLinkProps = (item) => ({ as: 'VLink', href: item.link })
+
     return {
       getLinkProps,
       isLinkExternal,

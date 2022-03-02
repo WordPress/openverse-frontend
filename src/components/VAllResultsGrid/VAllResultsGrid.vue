@@ -4,16 +4,16 @@
       v-if="!noResults"
       class="results-grid grid grid-cols-2 lg:grid-cols-5 2xl:grid-cols-6 gap-4 mb-4"
     >
-      <NuxtLink
+      <VContentLink
         v-for="[key, item] in results"
         :key="key"
-        :to="{ path: `/search/${key}`, query: $route.query }"
-        class="lg:col-span-2 focus:bg-white focus:border-tx focus:ring focus:ring-pink focus:outline-none focus:shadow-ring focus:text-black rounded-sm"
-      >
-        <VContentLink :results-count="item.count" :media-type="key" />
-      </NuxtLink>
+        :media-type="key"
+        :results-count="item.count"
+        :to="localePath({ path: `/search/${key}`, query: $route.query })"
+        class="lg:col-span-2"
+      />
     </div>
-    <GridSkeleton
+    <VGridSkeleton
       v-if="resultsLoading && allMedia.length === 0"
       is-for-tab="all"
     />
@@ -22,7 +22,7 @@
       class="results-grid grid grid-cols-2 lg:grid-cols-5 2xl:grid-cols-6 gap-4"
     >
       <div v-for="item in allMedia" :key="item.id">
-        <VImageCell
+        <VImageCellSquare
           v-if="item.frontendMediaType === 'image'"
           :key="item.id"
           :image="item"
@@ -53,15 +53,23 @@
 <script>
 import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
 
-import VImageCell from '~/components/VAllResultsGrid/VImageCell.vue'
+import srand from '~/utils/srand'
+
+import VImageCellSquare from '~/components/VAllResultsGrid/VImageCellSquare.vue'
 import VAudioCell from '~/components/VAllResultsGrid/VAudioCell.vue'
 import VLoadMore from '~/components/VLoadMore.vue'
-
-import srand from '~/utils/srand'
+import VContentLink from '~/components/VContentLink/VContentLink.vue'
+import VGridSkeleton from '~/components/VSkeleton/VGridSkeleton.vue'
 
 export default defineComponent({
   name: 'VAllResultsGrid',
-  components: { VImageCell, VAudioCell, VLoadMore },
+  components: {
+    VImageCellSquare,
+    VAudioCell,
+    VLoadMore,
+    VGridSkeleton,
+    VContentLink,
+  },
   props: ['canLoadMore'],
   setup(_, { emit }) {
     const { i18n, store } = useContext()
@@ -93,11 +101,15 @@ export default defineComponent({
       const rand = srand(Object.keys(media[mediaKeys[0]])[0])
       const randomIntegerInRange = (min, max) =>
         Math.floor(rand() * (max - min + 1)) + min
-
+      /**
+       * When navigating from All page to Audio page, VAllResultsGrid is displayed
+       * for a short period of time. Then media['image'] is undefined, and it throws an error
+       * `TypeError: can't convert undefined to object`. To fix it, we add `|| {}` to the media['image'].
+       */
       /** @type {import('../../store/types').AudioDetail[] | import('../../store/types').ImageDetail[]} */
       const newResults = []
       // first push all images to the results list
-      for (const id of Object.keys(media['image'])) {
+      for (const id of Object.keys(media['image'] || {})) {
         const item = media['image'][id]
         item.frontendMediaType = 'image'
         newResults.push(item)

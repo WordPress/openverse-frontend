@@ -3,8 +3,16 @@
     class="audio-track"
     :aria-label="$t('audio-track.aria-label')"
     role="region"
+    v-bind="layoutBasedProps"
+    v-on="layoutBasedListeners"
   >
-    <Component :is="layoutComponent" :audio="audio" :size="size">
+    <Component
+      :is="layoutComponent"
+      :audio="audio"
+      :size="_size"
+      :status="status"
+      :current-time="currentTime"
+    >
       <template #controller="waveformProps">
         <VWaveform
           v-bind="waveformProps"
@@ -13,11 +21,13 @@
           :duration="duration"
           :message="message ? $t(`audio-track.messages.${message}`) : null"
           @seeked="handleSeeked"
+          @toggle-playback="handleToggle"
         />
       </template>
 
       <template #play-pause="playPauseProps">
         <VPlayPause
+          ref="playPauseRef"
           :status="status"
           v-bind="playPauseProps"
           @toggle="handleToggle"
@@ -40,6 +50,13 @@ import {
 
 import { useActiveAudio } from '~/composables/use-active-audio'
 
+import { ACTIVE, MEDIA } from '~/constants/store-modules'
+
+import {
+  PAUSE_ACTIVE_MEDIA_ITEM,
+  SET_ACTIVE_MEDIA_ITEM,
+} from '~/constants/mutation-types'
+
 import VPlayPause from '~/components/VAudioTrack/VPlayPause.vue'
 import VWaveform from '~/components/VAudioTrack/VWaveform.vue'
 
@@ -47,12 +64,6 @@ import VFullLayout from '~/components/VAudioTrack/layouts/VFullLayout.vue'
 import VRowLayout from '~/components/VAudioTrack/layouts/VRowLayout.vue'
 import VBoxLayout from '~/components/VAudioTrack/layouts/VBoxLayout.vue'
 import VGlobalLayout from '~/components/VAudioTrack/layouts/VGlobalLayout.vue'
-
-import { ACTIVE, MEDIA } from '~/constants/store-modules'
-import {
-  PAUSE_ACTIVE_MEDIA_ITEM,
-  SET_ACTIVE_MEDIA_ITEM,
-} from '~/constants/mutation-types'
 
 const propTypes = {
   /**
@@ -67,6 +78,7 @@ const propTypes = {
   /**
    * the arrangement of the contents on the canvas; This determines the
    * overall L&F of the audio component.
+   * @todo This type def should be extracted for reuse across components
    */
   layout: {
     type: /** @type {import('@nuxtjs/composition-api').PropType<'full' | 'box' | 'row' | 'global'>} */ (
@@ -86,7 +98,6 @@ const propTypes = {
     type: /** @type {import('@nuxtjs/composition-api').PropType<'s' | 'm' | 'l'>} */ (
       String
     ),
-    default: 'm',
     /**
      * @param {string} val
      */
@@ -111,7 +122,7 @@ export default defineComponent({
     VGlobalLayout,
   },
   props: propTypes,
-  setup(props) {
+  setup(props, { emit }) {
     const store = useStore()
     const route = useRoute()
 
@@ -119,6 +130,7 @@ export default defineComponent({
 
     const status = ref('paused')
     const currentTime = ref(0)
+    const audioDuration = ref(null)
 
     const initLocalAudio = () => {
       // Preserve existing local audio if we plucked it from the global active audio
@@ -128,6 +140,7 @@ export default defineComponent({
       localAudio.addEventListener('pause', setPaused)
       localAudio.addEventListener('ended', setPlayed)
       localAudio.addEventListener('timeupdate', setTimeWhenPaused)
+      localAudio.addEventListener('durationchange', setDuration)
 
       /**
        * Similar to the behavior in the global audio track,
@@ -211,6 +224,9 @@ export default defineComponent({
         }
       }
     }
+    const setDuration = () => {
+      audioDuration.value = localAudio?.duration
+    }
 
     /**
      * If we're transforming the globally active audio
@@ -233,6 +249,7 @@ export default defineComponent({
       localAudio.removeEventListener('pause', setPaused)
       localAudio.removeEventListener('ended', setPlayed)
       localAudio.removeEventListener('timeupdate', setTimeWhenPaused)
+      localAudio.removeEventListener('durationchange', setDuration)
 
       if (
         route.value.params.id == props.audio.id ||
@@ -280,16 +297,30 @@ export default defineComponent({
 
     /* Timekeeping */
 
-    const duration = computed(() => (props.audio?.duration ?? 0) / 1e3) // seconds
+    const duration = computed(
+      () => audioDuration.value ?? props.audio?.duration / 1e3 ?? 0 // seconds
+    )
 
     const message = computed(() => store.state.active.message)
 
     /* Interface with VPlayPause */
 
     /**
-     * @param {'playing' | 'paused'} state
+     * @param {'playing' | 'paused'} [state]
      */
     const handleToggle = (state) => {
+      if (!state) {
+        switch (status.value) {
+          case 'playing':
+            state = 'paused'
+            break
+          case 'paused':
+          case 'played':
+            state = 'playing'
+            break
+        }
+      }
+
       switch (state) {
         case 'playing':
           play()
@@ -314,7 +345,6 @@ export default defineComponent({
        * hoops (using `assert`) or adding unnecessary
        * runtime checks.
        */
-      // @ts-ignore
       localAudio.currentTime = frac * duration.value
     }
 
@@ -328,6 +358,57 @@ export default defineComponent({
     }
     const layoutComponent = computed(() => layoutMappings[props.layout])
 
+    /**
+     * Sets default size if not provided.
+     */
+    const _size = computed(() => {
+      if (isBoxed && !props.size) {
+        return null
+      }
+      return props.size ?? 'm'
+    })
+
+    /**
+     * A ref used on the play/pause button,
+     * so we can capture clicks and skip
+     * sending an event to the boxed layout.
+     */
+    const playPauseRef = ref(null)
+
+    /**
+     * These layout-conditional props and listeners allow us
+     * to set properties on the parent element depending on
+     * the layout in use. This is currently relevant for the
+     * boxed layout exclusively.
+     */
+    const isBoxed = computed(() => props.layout === 'box')
+    const layoutBasedProps = computed(() => {
+      if (!isBoxed.value) return {}
+      return {
+        tabindex: isBoxed.value ? 0 : -1,
+        class:
+          'block focus:bg-white focus:border-tx focus:ring-[3px] focus:ring-pink focus:ring-offset-[3px] focus:outline-none rounded-sm overflow-hidden cursor-pointer',
+      }
+    })
+    const layoutBasedListeners = computed(() => {
+      if (!isBoxed.value) return {}
+      return {
+        click: (event) => {
+          // Emit an event when the boxed layout is clicked
+          // unless the click is on the play/pause button
+          if (event.target === playPauseRef?.value?.$el) return
+          emit('boxedAudioClick', props.audio)
+        },
+        keydown: (event) => {
+          // 32 is Spacebar
+          if (event.keyCode !== 32) return
+          event.preventDefault()
+          status.value = status.value === 'playing' ? 'paused' : 'playing'
+          handleToggle(status.value)
+        },
+      }
+    })
+
     return {
       status,
       message,
@@ -338,6 +419,12 @@ export default defineComponent({
       duration,
 
       layoutComponent,
+      _size,
+
+      layoutBasedProps,
+      layoutBasedListeners,
+
+      playPauseRef,
     }
   },
 })

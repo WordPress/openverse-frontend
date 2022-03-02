@@ -2,16 +2,15 @@ import Vuex from 'vuex'
 import VueI18n from 'vue-i18n'
 import { createLocalVue } from '@vue/test-utils'
 import { render, screen } from '@testing-library/vue'
-import RelatedImages from '~/components/ImageDetails/RelatedImages'
+
+import VRelatedImages from '~/components/VImageDetails/VRelatedImages'
 
 const serviceMock = jest.fn(() =>
   Promise.resolve({
-    data: {
-      results: [
-        { id: 'img1', url: 'https://wp.org/img1.jpg' },
-        { id: 'img2', url: 'https://wp.org/img2.jpg' },
-      ],
-    },
+    results: [
+      { id: 'img1', url: 'https://wp.org/img1.jpg' },
+      { id: 'img2', url: 'https://wp.org/img2.jpg' },
+    ],
   })
 )
 const failedMock = jest.fn(() => Promise.reject('No result'))
@@ -42,9 +41,10 @@ describe('RelatedImage', () => {
   })
   it('should render an image grid', async () => {
     // await `render` to get the component after Nuxt's `fetch` call
-    await render(RelatedImages, options)
+    await render(VRelatedImages, options)
+
     expect(screen.getByRole('heading').textContent).toContain(
-      'photo-details.related-images'
+      'image-details.related-images'
     )
     expect(screen.queryAllByRole('img').length).toEqual(2)
     expect(screen.queryAllByRole('figure').length).toEqual(2)
@@ -53,9 +53,9 @@ describe('RelatedImage', () => {
   it('should not render data service rejects with an error', async () => {
     options.propsData.service.getRelatedMedia = failedMock
     // await `render` to get the component after Nuxt's `fetch` call
-    await render(RelatedImages, options)
+    await render(VRelatedImages, options)
     expect(screen.getByRole('heading').textContent).toContain(
-      'photo-details.related-images'
+      'image-details.related-images'
     )
     expect(screen.queryAllByRole('img').length).toEqual(0)
   })

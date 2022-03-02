@@ -1,8 +1,9 @@
-import SearchIndex from '~/pages/search.vue'
 import { render, screen } from '@testing-library/vue'
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import { ref } from '@nuxtjs/composition-api'
+
+import SearchIndex from '~/pages/search.vue'
 
 describe('SearchIndex', () => {
   let options
@@ -16,7 +17,7 @@ describe('SearchIndex', () => {
         search: {
           namespaced: true,
           state: {
-            query: { q: 'foo', mediaType: 'image' },
+            query: { q: 'foo' },
             searchType: 'image',
           },
           getters: {
@@ -28,6 +29,7 @@ describe('SearchIndex', () => {
           namespaced: true,
           getters: {
             fetchState: () => ({ isFetching: false }),
+            resultCount: () => 0,
             results: () => ({ count: 0 }),
           },
         },
@@ -40,7 +42,11 @@ describe('SearchIndex', () => {
         $router: { path: { name: 'search-image' } },
         $route: { path: '/search/image' },
       },
-      stubs: { NuxtChild: true, VSearchGrid: true },
+      stubs: {
+        NuxtChild: true,
+        VSearchGrid: true,
+        VSkipToContentContainer: true,
+      },
     }
   })
 

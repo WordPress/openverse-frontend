@@ -1,13 +1,10 @@
 <template>
-  <div ref="nodeRef" class="flex justify-center">
-    <div
-      ref="triggerContainerRef"
-      class="flex items-stretch"
-      @click="onTriggerClick"
-    >
-      <VContentSwitcherButton
+  <div ref="nodeRef" class="mobile-menu ms-auto md:ms-0">
+    <div ref="triggerContainerRef" @click="onTriggerClick">
+      <VSearchTypeButton
         :a11y-props="triggerA11yProps"
         :active-item="activeItem"
+        aria-controls="content-switcher-modal"
       />
     </div>
     <VMobileModalContent
@@ -15,16 +12,16 @@
       :trigger-element="triggerRef"
       :hide="close"
       :aria-label="$t('header.filter-button.simple')"
+      :initial-focus-element="initialFocusElement"
     >
-      <nav class="p-6" aria-labelledby="content-switcher-heading">
-        <h2
-          id="content-switcher-heading"
-          class="md:sr-only text-sr pb-4 uppercase font-semibold"
-        >
-          {{ $t('search-type.heading') }}
-        </h2>
-        <VContentTypes
-          :bordered="false"
+      <nav
+        id="content-switcher-modal"
+        class="p-6"
+        aria-labelledby="content-switcher-heading"
+      >
+        <VSearchTypes
+          ref="searchTypesNode"
+          size="small"
           :active-item="content.activeType.value"
           @select="selectItem"
         />
@@ -35,27 +32,33 @@
 </template>
 
 <script>
-import { onMounted, reactive, ref, watch } from '@nuxtjs/composition-api'
-import { useBodyScrollLock } from '~/composables/use-body-scroll-lock'
-import useContentType from '~/composables/use-content-type'
+import {
+  computed,
+  defineComponent,
+  onMounted,
+  reactive,
+  ref,
+  watch,
+} from '@nuxtjs/composition-api'
+
 import usePages from '~/composables/use-pages'
 
-import externalLinkIcon from 'assets/icons/external-link.svg'
+import useSearchType from '~/composables/use-search-type'
+
+import { useBodyScrollLock } from '~/composables/use-body-scroll-lock'
 
 import VMobileModalContent from '~/components/VModal/VMobileModalContent.vue'
-import VContentTypes from '~/components/VContentSwitcher/VContentTypes.vue'
+import VSearchTypes from '~/components/VContentSwitcher/VSearchTypes.vue'
 import VPageList from '~/components/VHeader/VPageMenu/VPageList.vue'
-import VContentSwitcherButton from '~/components/VContentSwitcher/VContentSwitcherButton'
+import VSearchTypeButton from '~/components/VContentSwitcher/VSearchTypeButton.vue'
 
-const externalLinkProps = { as: 'a', target: '_blank', rel: 'noopener' }
-
-export default {
+export default defineComponent({
   name: 'VMobileContentSwitcher',
   components: {
     VMobileModalContent,
-    VContentTypes,
+    VSearchTypes,
     VPageList,
-    VContentSwitcherButton,
+    VSearchTypeButton,
   },
   props: {
     activeItem: {
@@ -64,9 +67,11 @@ export default {
     },
   },
   setup(_, { emit }) {
-    const content = useContentType()
+    const content = useSearchType()
     const pages = usePages()
 
+    /** @type {import('@nuxtjs/composition-api').Ref<import('vue/types/vue').Vue | null>} */
+    const searchTypesNode = ref(null)
     const modalRef = ref(null)
     const triggerContainerRef = ref(null)
 
@@ -82,6 +87,10 @@ export default {
 
     const triggerRef = ref()
     onMounted(() => (triggerRef.value = triggerContainerRef.value?.firstChild))
+
+    const initialFocusElement = computed(() =>
+      searchTypesNode.value?.$el?.querySelector('[aria-checked="true"]')
+    )
 
     watch([visibleRef], ([visible]) => {
       triggerA11yProps['aria-expanded'] = visible
@@ -112,16 +121,7 @@ export default {
       emit('select', item)
     }
 
-    const isLinkExternal = (item) => !item.link.startsWith('/')
-    const getLinkProps = (item) => {
-      return isLinkExternal(item)
-        ? { ...externalLinkProps, href: item.link }
-        : { as: 'NuxtLink', to: item.link }
-    }
     return {
-      getLinkProps,
-      isLinkExternal,
-      externalLinkIcon,
       pages,
       content,
       close,
@@ -136,7 +136,9 @@ export default {
       triggerA11yProps,
       visibleRef,
       selectItem,
+      initialFocusElement,
+      searchTypesNode,
     }
   },
-}
+})
 </script>

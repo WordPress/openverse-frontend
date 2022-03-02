@@ -1,12 +1,12 @@
 import { render, screen } from '@testing-library/vue'
 
-import VButton from '~/components/VButton.vue'
-import { warn } from '~/utils/warn'
+import { warn } from '~/utils/console'
 
-jest.mock('~/utils/warn', () => ({ warn: jest.fn() }))
+import VButton from '~/components/VButton.vue'
+
+jest.mock('~/utils/console', () => ({ warn: jest.fn(), log: jest.fn() }))
 
 const nextTick = () => new Promise((r) => setTimeout(r, 0))
-
 /**
  * Throughout this suite we use the `screen.findBy*` functions to asynchronously
  * wait for the component to re-render. There might be some kind of performance
@@ -43,7 +43,8 @@ describe('VButton', () => {
 
   it('should render an anchor with no type attribute', async () => {
     render(VButton, {
-      props: { as: 'a' },
+      attrs: { href: 'http://localhost' },
+      props: { as: 'VLink' },
       slots: { default: 'Code is Poetry' },
     })
     await nextTick()
@@ -81,7 +82,7 @@ describe('VButton', () => {
   it('should not render the disabled attribute on elements that do not support it', async () => {
     render(VButton, {
       props: {
-        as: 'a',
+        as: 'VLink',
         disabled: true,
         focusableWhenDisabled: true,
         href: 'https://wordpress.org',
@@ -94,21 +95,4 @@ describe('VButton', () => {
     expect(element).not.toHaveAttribute('disabled')
     expect(element).toHaveAttribute('aria-disabled', 'true')
   })
-
-  it.each([undefined, '', null, '#'])(
-    'should warn if an anchor is used without a valid href: %s',
-    async (href) => {
-      render(VButton, {
-        props: { as: 'a', href },
-        slots: { default: 'Code is Poetry' },
-      })
-
-      await screen.findByText(/code is poetry/i)
-
-      expect(warn).toHaveBeenCalledTimes(1)
-      expect(warn).toHaveBeenCalledWith(
-        'Do not use anchor elements without a valid `href` attribute. Use a `button` instead.'
-      )
-    }
-  )
 })

@@ -22,6 +22,7 @@
       :hide="close"
       :aria-label="label"
       :aria-labelledby="labelledBy"
+      :initial-focus-element="initialFocusElement"
     >
       <slot name="default" />
     </VModalContent>
@@ -36,7 +37,9 @@ import {
   reactive,
   computed,
 } from '@nuxtjs/composition-api'
+
 import { useBodyScrollLock } from '~/composables/use-body-scroll-lock'
+
 import VModalContent from '~/components/VModal/VModalContent.vue'
 
 export default defineComponent({
@@ -86,6 +89,20 @@ export default defineComponent({
      * @default undefined
      */
     labelledBy: { type: String },
+    /**
+     * The element to focus when the modal is opened. If nothing is
+     * passed, then the first tabbable element in the modal content
+     * will be focused. If no tabbable element is found in the modal
+     * content, then the entire modal content itself will be focused.
+     *
+     * @default undefined
+     */
+    initialFocusElement: {
+      type: /** @type {import('@nuxtjs/composition-api').PropType<HTMLElement>} */ (
+        process.server ? Object : HTMLElement
+      ),
+      default: undefined,
+    },
   },
   emits: [
     /**

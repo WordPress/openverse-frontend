@@ -1,9 +1,12 @@
 import Vuex from 'vuex'
 import { fireEvent, render, screen } from '@testing-library/vue'
 import { createLocalVue } from '@vue/test-utils'
+import clonedeep from 'lodash.clonedeep'
+
 import { IMAGE } from '~/constants/media'
 import store from '~/store/search'
-import clonedeep from 'lodash.clonedeep'
+import { FETCH_MEDIA } from '~/constants/action-types'
+
 import SearchGridFilter from '~/components/VFilters/VSearchGridFilter.vue'
 
 const initialFilters = {
@@ -49,10 +52,7 @@ describe('SearchGridFilter', () => {
             searchType: IMAGE,
             isFilterVisible: true,
             filters,
-            query: {
-              q: '',
-              mediaType: IMAGE,
-            },
+            query: { q: '' },
           },
           mutations: store.mutations,
           actions: store.actions,
@@ -62,6 +62,9 @@ describe('SearchGridFilter', () => {
           namespaced: true,
           state: {
             imagesCount: 2,
+          },
+          actions: {
+            [FETCH_MEDIA]: jest.fn(),
           },
         },
       },
@@ -74,7 +77,7 @@ describe('SearchGridFilter', () => {
         $store: storeMock,
         $nuxt: {
           context: {
-            i18n: { t: () => {} },
+            i18n: { t: (s) => s },
             store: storeMock,
           },
         },

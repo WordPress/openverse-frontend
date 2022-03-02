@@ -1,6 +1,9 @@
+import { placements as popoverPlacements } from '@popperjs/core'
+
+import { log } from '~/utils/console'
+
 import VPopover from '~/components/VPopover/VPopover.vue'
 import VButton from '~/components/VButton'
-import { placements as popoverPlacements } from '@popperjs/core'
 
 export default {
   component: VPopover,
@@ -37,8 +40,8 @@ const SinglePopoverStory = (args, { argTypes }) => ({
   `,
   components: { VPopover, VButton },
   setup() {
-    const onOpen = () => console.log('opened!')
-    const onClose = () => console.log('closed!')
+    const onOpen = () => log('opened!')
+    const onClose = () => log('closed!')
 
     return { onOpen, onClose }
   },
@@ -46,6 +49,25 @@ const SinglePopoverStory = (args, { argTypes }) => ({
 
 export const Default = SinglePopoverStory.bind({})
 Default.args = {}
+
+const ControlStory = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  template: `
+    <VPopover>
+      <template #trigger="{ visible, a11yProps }">
+        <VButton :pressed="visible" v-bind="a11yProps">{{ visible ? 'Close' : 'Open' }}</VButton>
+      </template>
+      <template #default="{ close }">
+        <div class="p-4">
+        <VButton @click="close">Close popover</VButton>
+        </div>
+      </template>
+    </VPopover>
+  `,
+})
+
+export const Control = ControlStory.bind({})
+Control.args = {}
 
 const TwoPopoverStory = (args, { argTypes }) => ({
   props: Object.keys(argTypes),

@@ -8,22 +8,26 @@
       </div>
 
       <i18n path="meta-search-page.intro" tag="p" class="mb-4">
+        <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
+        <template #openverse>Openverse</template>
         <template #link>
-          <a aria-label="sources" href="/sources">{{
-            $t('meta-search-page.link')
-          }}</a>
+          <VLink href="/sources">{{ $t('meta-search-page.link') }}</VLink>
         </template>
       </i18n>
-      <p>{{ $t('meta-search-page.license') }}</p>
+      <p>{{ $t('meta-search-page.license', { openverse: 'Openverse' }) }}</p>
       <h2 class="mt-10 mb-4 text-2xl">
         {{ $t('meta-search-page.content') }}
       </h2>
-      <p>{{ $t('meta-search-page.content-types') }}</p>
+      <p>
+        {{ $t('meta-search-page.content-types', { openverse: 'Openverse' }) }}
+      </p>
 
       <h2 class="mt-10 mb-4 text-2xl">
         {{ $t('meta-search-page.images.title') }}
       </h2>
-      <p>{{ $t('meta-search-page.images.content') }}</p>
+      <p>
+        {{ $t('meta-search-page.images.content', { openverse: 'Openverse' }) }}
+      </p>
       <div class="content">
         <ol>
           <li>
@@ -65,7 +69,11 @@
       <h2 class="mt-10 mb-4 text-2xl">
         {{ $t('meta-search-page.audio-video.title') }}
       </h2>
-      <p>{{ $t('meta-search-page.audio-video.content') }}</p>
+      <p>
+        {{
+          $t('meta-search-page.audio-video.content', { openverse: 'Openverse' })
+        }}
+      </p>
       <i18n path="meta-search-page.audio-video.filter" tag="p" class="my-2">
         <template #use>
           <strong>{{ $t('meta-search-page.use') }}</strong>
@@ -83,16 +91,16 @@
       </h2>
       <i18n path="meta-search-page.new.content" tag="p" class="mb-2">
         <template #issue>
-          <a
+          <VLink
             aria-label="issue"
-            href="https://github.com/creativecommons/cccatalog/issues/new?assignees=&labels=awaiting+triage%2C+ticket+work+required%2C+providers&template=new-source-suggestion.md&title=%5BSource+Suggestion%5D+Insert+source+name+here"
-            >{{ $t('meta-search-page.new.issue') }}</a
+            href="https://github.com/WordPress/openverse-catalog/issues/new?assignees=&labels=%F0%9F%9A%A6+status%3A+awaiting+triage%2C%F0%9F%A7%B9+status%3A+ticket+work+required%2C%E2%98%81%EF%B8%8F+provider%3A+any&template=new_source_suggestion.yml&title=%3CSource+name+here%3E"
+            >{{ $t('meta-search-page.new.issue') }}</VLink
           >
         </template>
         <template #email>
-          <a aria-label="email" href="mailto:openverse@wordpress.org">{{
+          <VLink aria-label="email" href="mailto:openverse@wordpress.org">{{
             $t('meta-search-page.new.email')
-          }}</a>
+          }}</VLink>
         </template>
       </i18n>
       <h2 class="mt-10 mb-4 text-2xl">
@@ -100,14 +108,14 @@
       </h2>
       <p>{{ $t('meta-search-page.why.content') }}</p>
       <p class="my-2">
-        {{ $t('meta-search-page.why.new') }}
+        {{ $t('meta-search-page.why.new', { openverse: 'Openverse' }) }}
       </p>
       <i18n path="meta-search-page.why.feedback-suggestions" tag="p">
         <template #feedback>
-          <NuxtLink
+          <VLink
             :aria-label="$t('meta-search-page.why.aria-label')"
-            :to="localePath('/feedback')"
-            >{{ $t('meta-search-page.why.feedback-link') }}</NuxtLink
+            href="/feedback"
+            >{{ $t('meta-search-page.why.feedback-link') }}</VLink
           >
         </template>
       </i18n>
@@ -116,9 +124,19 @@
 </template>
 
 <script>
-export default {
+import { defineComponent } from '@nuxtjs/composition-api'
+
+import VLink from '~/components/VLink.vue'
+
+export default defineComponent({
   name: 'MetaSearchPage',
-}
+  components: { VLink },
+  head() {
+    return {
+      title: `${this.$t('meta-search-page.title')} | Openverse`,
+    }
+  },
+})
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

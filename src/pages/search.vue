@@ -1,5 +1,7 @@
 <template>
-  <div class="browse-page flex flex-col w-full px-4 md:px-10">
+  <VSkipToContentContainer
+    class="browse-page flex flex-col w-full px-4 md:px-10"
+  >
     <VSearchGrid
       :fetch-state="fetchState"
       :query="query"
@@ -21,27 +23,27 @@
       </template>
     </VSearchGrid>
     <VScrollButton v-show="showScrollButton" data-testid="scroll-button" />
-  </div>
+  </VSkipToContentContainer>
 </template>
 
 <script>
+import { mapActions, mapGetters, mapState } from 'vuex'
+import { isShallowEqualObjects } from '@wordpress/is-shallow-equal'
+import { inject } from '@nuxtjs/composition-api'
+
 import {
   FETCH_MEDIA,
   UPDATE_QUERY,
   SET_SEARCH_STATE_FROM_URL,
-  UPDATE_SEARCH_TYPE,
 } from '~/constants/action-types'
-import { ALL_MEDIA, AUDIO, IMAGE } from '~/constants/media'
-import { mapActions, mapGetters, mapState } from 'vuex'
+import { ALL_MEDIA, supportedSearchTypes } from '~/constants/media'
 import { MEDIA, SEARCH } from '~/constants/store-modules'
-import { queryStringToSearchType } from '~/utils/search-query-transform'
-
-import { inject } from '@nuxtjs/composition-api'
 import { isMinScreen } from '~/composables/use-media-query.js'
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
 
-import VScrollButton from '~/components/VScrollButton.vue'
 import VSearchGrid from '~/components/VSearchGrid.vue'
+import VSkipToContentContainer from '~/components/VSkipToContentContainer.vue'
+import VScrollButton from '~/components/VScrollButton.vue'
 
 const BrowsePage = {
   name: 'browse-page',
@@ -49,6 +51,7 @@ const BrowsePage = {
   components: {
     VScrollButton,
     VSearchGrid,
+    VSkipToContentContainer,
   },
   setup() {
     const isMinScreenMd = isMinScreen('md')
@@ -80,7 +83,6 @@ const BrowsePage = {
     ...mapGetters(SEARCH, ['searchQueryParams', 'isAnyFilterApplied']),
     ...mapGetters(MEDIA, ['results', 'resultCount', 'fetchState']),
     mediaType() {
-      // Default to IMAGE until media search/index is generalized
       return this.searchType ?? ALL_MEDIA
     },
     /**
@@ -91,14 +93,13 @@ const BrowsePage = {
       return this.supported ? this.resultCount : 0 ?? 0
     },
     supported() {
-      return [IMAGE, AUDIO, ALL_MEDIA].includes(this.searchType)
+      return supportedSearchTypes.includes(this.searchType)
     },
   },
   methods: {
     ...mapActions(MEDIA, { fetchMedia: FETCH_MEDIA }),
     ...mapActions(SEARCH, {
       setSearchStateFromUrl: SET_SEARCH_STATE_FROM_URL,
-      updateSearchType: UPDATE_SEARCH_TYPE,
       updateQuery: UPDATE_QUERY,
     }),
     onSearchFormSubmit({ q }) {
@@ -108,13 +109,16 @@ const BrowsePage = {
   watch: {
     /**
      * Updates the search type only if the route's path changes.
-     * @param newRoute
-     * @param oldRoute
+     * @param {import('@nuxt/types').Context['route']} newRoute
+     * @param {import('@nuxt/types').Context['route']} oldRoute
      */
-    $route(newRoute, oldRoute) {
-      if (newRoute.path !== oldRoute.path) {
-        const searchType = queryStringToSearchType(newRoute.path)
-        this.updateSearchType({ searchType })
+    async $route(newRoute, oldRoute) {
+      if (
+        newRoute.path !== oldRoute.path ||
+        !isShallowEqualObjects(newRoute.query, oldRoute.query)
+      ) {
+        await this.setSearchStateFromUrl(newRoute)
+        this.fetchMedia(this.searchQueryParams)
       }
     },
   },

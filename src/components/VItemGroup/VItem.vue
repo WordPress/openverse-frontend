@@ -7,17 +7,25 @@
         $style[`${contextProps.direction}-bordered`]
       }`]: contextProps.bordered,
       'bg-dark-charcoal-10': selected && contextProps.bordered,
-      'p-2': isInPopover,
+      'px-2': isInPopover,
       [$style[`${contextProps.direction}-popover-item`]]: isInPopover,
     }"
   >
     <VButton
       data-item-group-item
       :as="as"
-      class="flex justify-between focus-visible:ring-pink rounded min-w-full"
-      :class="[$style.button, $style[`${contextProps.direction}-button`]]"
-      variant="grouped"
-      size="small"
+      class="flex justify-between min-w-full group relative hover:bg-dark-charcoal-10 px-2 py-2 focus:z-10"
+      :class="[
+        $style[`${contextProps.direction}-button`],
+        selected && 'bg-dark-charcoal-10 ring-offset-dark-charcoal-10',
+        as === 'VLink' && 'text-dark-charcoal',
+      ]"
+      :variant="
+        contextProps.size === 'small' && !contextProps.bordered
+          ? 'plain-dangerous'
+          : 'plain'
+      "
+      size="disabled"
       :pressed="selected"
       :role="contextProps.type === 'radiogroup' ? 'radio' : 'menuitemcheckbox'"
       :aria-checked="selected"
@@ -31,13 +39,19 @@
       @click.native="$emit('click')"
     >
       <div
-        class="flex-grow whitespace-nowrap"
-        :class="$style[`${contextProps.direction}-content`]"
+        class="flex-grow whitespace-nowrap my-0 rounded-sm px-2"
+        :class="[
+          contextProps.size === 'small' &&
+            !contextProps.bordered &&
+            'group-focus-visible:ring group-focus-visible:ring-pink',
+          $style[`${contextProps.direction}-content`],
+        ]"
       >
         <slot name="default" />
       </div>
       <VIcon
         v-if="!isInPopover && selected && contextProps.direction === 'vertical'"
+        class="absolute end-5"
         :icon-path="checkmark"
       />
     </VButton>
@@ -52,15 +66,19 @@ import {
   computed,
   watch,
 } from '@nuxtjs/composition-api'
-import checkmark from '~/assets/icons/checkmark.svg'
+
+import { warn } from '~/utils/console'
+
 import VButton from '~/components/VButton.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'
+import { VPopoverContentContextKey } from '~/components/VPopover/VPopoverContent.vue'
+
 import {
   VItemGroupContextKey,
   VItemGroupFocusContextKey,
 } from './VItemGroup.vue'
-import { VPopoverContentContextKey } from '~/components/VPopover/VPopoverContent.vue'
-import { warn } from '~/utils/warn'
+
+import checkmark from '~/assets/icons/checkmark.svg'
 
 export default defineComponent({
   name: 'VItem',
@@ -84,12 +102,12 @@ export default defineComponent({
     /**
      * To change the underlying component for the VButton,
      * pass `as` prop.
-     * @variants 'button', 'a', 'NuxtLink'
+     * @variants 'button', 'VLink'
      */
     as: {
       type: String,
       default: 'button',
-      validator: (val) => ['button', 'a', 'NuxtLink'].includes(val),
+      validator: (val) => ['button', 'VLink'].includes(val),
     },
   },
   /**
@@ -106,6 +124,12 @@ export default defineComponent({
     const isFocused = ref(false)
     const isInPopover = inject(VPopoverContentContextKey, false)
     const contextProps = inject(VItemGroupContextKey)
+
+    if (!contextProps) {
+      throw new Error(
+        'Do not use `VItem` outside of a `VItemGroup`. Use `VButton` instead.'
+      )
+    }
 
     if (isInPopover && contextProps.bordered) {
       warn('Bordered popover items are not supported')
@@ -174,7 +198,7 @@ export default defineComponent({
 }
 
 .vertical-content {
-  @apply flex flex-row;
+  @apply flex flex-row items-center;
 }
 
 .vertical-popover-item {

@@ -1,8 +1,9 @@
 import Vuex from 'vuex'
 import { render, screen } from '@testing-library/vue'
-import { IMAGE } from '~/constants/media'
 import { createLocalVue } from '@vue/test-utils'
 import VueI18n from 'vue-i18n'
+
+import { IMAGE } from '~/constants/media'
 import messages from '~/locales/en.json'
 
 import VSearchGrid from '~/components/VSearchGrid'
@@ -25,7 +26,7 @@ describe('VSearchGrid', () => {
         search: {
           namespaced: true,
           state: {
-            query: { q: 'foo', mediaType: IMAGE },
+            query: { q: 'foo' },
             filters: {
               licenseTypes: [
                 { code: 'commercial', name: 'Commercial usage' },
@@ -91,8 +92,8 @@ describe('VSearchGrid', () => {
       },
       propsData: {
         supported: true,
-        query: { q: 'foo', mediaType: IMAGE },
-        searchType: 'image',
+        query: { q: 'foo' },
+        searchType: IMAGE,
         fetchState: {
           isFetching: false,
           isFinished: true,

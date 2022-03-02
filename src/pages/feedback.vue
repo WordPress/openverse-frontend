@@ -5,20 +5,20 @@
         <h1 id="feedback" class="text-5xl mb-10">
           {{ $t('feedback.title') }}
         </h1>
-        <i18n path="feedback.description.content" tag="p" class="mb-6">
-          <template #openverse>
-            <a
-              href="https://wordpress.slack.com/messages/openverse/"
-              target="_blank"
-            >
-              {{ $t('feedback.description.openverse') }}</a
+        <i18n path="feedback.intro" tag="p" class="mb-6">
+          <!-- eslint-disable @intlify/vue-i18n/no-raw-text -->
+          <template #openverse>Openverse</template>
+          <template #slack>
+            <VLink href="https://wordpress.slack.com/messages/openverse/"
+              >#openverse</VLink
             >
           </template>
           <template #making-wordpress>
-            <a href="https://make.wordpress.org/chat/" target="_blank">
-              {{ $t('feedback.description.making-wordpress') }}</a
+            <VLink href="https://make.wordpress.org/chat/"
+              >Making WordPress</VLink
             >
           </template>
+          <!-- eslint-enable @intlify/vue-i18n/no-raw-text -->
         </i18n>
         <section class="tabs mt-6">
           <div role="tablist" :aria-label="$t('feedback.title')">
@@ -61,8 +61,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import { BUG_REPORT } from '~/constants/store-modules'
+import VLink from '~/components/VLink.vue'
 
 const bugForm =
   'https://docs.google.com/forms/d/e/1FAIpQLSenCn-3HoZlCz4vlL2621wjezfu1sPZDaWGe_FtQ1R5-5qR4Q/viewform'
@@ -71,6 +70,7 @@ const suggestionForm =
 
 export const FeedbackPage = {
   name: 'feedback-page',
+  components: { VLink },
   data() {
     return {
       activeTab: 0,
@@ -79,6 +79,11 @@ export const FeedbackPage = {
         report: `${bugForm}?embedded=true`,
         improve: `${suggestionForm}?embedded=true`,
       },
+    }
+  },
+  head() {
+    return {
+      title: `${this.$t('feedback.title')} | Openverse`,
     }
   },
   methods: {
@@ -92,19 +97,10 @@ export const FeedbackPage = {
       this.activeTab = tabIdx
     },
   },
-  computed: {
-    ...mapState(BUG_REPORT, [
-      'isReportingBug',
-      'bugReported',
-      'bugReportFailed',
-    ]),
-  },
 }
 
 export default FeedbackPage
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 .form-iframe {
   width: 100%;

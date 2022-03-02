@@ -9,7 +9,7 @@
 import { computed } from '@nuxtjs/composition-api'
 
 import { errorCodes } from '~/constants/errors'
-import { getAttributionHtml } from '~/utils/attribution-html'
+import { getAttributionMarkup } from '~/utils/attribution-html'
 
 import imageInfo from '~/assets/error_images/image_info.json'
 
@@ -33,7 +33,7 @@ export default {
           ...image,
           src: require(`~/assets/error_images/${image.file}.jpg`),
           alt: `error-images.${image.id}`,
-          attribution: getAttributionHtml(image),
+          attribution: getAttributionMarkup(image),
         }
         return [errorItem.error, image]
       })

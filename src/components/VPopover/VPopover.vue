@@ -17,6 +17,7 @@
       />
     </div>
     <VPopoverContent
+      :z-index="zIndex"
       :visible="visibleRef"
       :trigger-element="triggerRef"
       :placement="placement"
@@ -28,14 +29,16 @@
       :aria-label="label"
       :aria-labelledby="labelledBy"
     >
-      <!-- @slot The content of the popover -->
-      <slot name="default" />
+      <!--
+        @slot The content of the popover
+          @binding {function} close
+      -->
+      <slot name="default" :close="close" />
     </VPopoverContent>
   </div>
 </template>
 
 <script>
-import VPopoverContent from '~/components/VPopover/VPopoverContent.vue'
 import {
   defineComponent,
   ref,
@@ -43,6 +46,8 @@ import {
   reactive,
   computed,
 } from '@nuxtjs/composition-api'
+
+import VPopoverContent from '~/components/VPopover/VPopoverContent.vue'
 
 export default defineComponent({
   name: 'VPopover',
@@ -104,6 +109,10 @@ export default defineComponent({
      * @default undefined
      */
     labelledBy: { type: String },
+    /**
+     * the z-index to apply to the popover content
+     */
+    zIndex: { type: Number, default: 999 },
   },
   emits: [
     /**
@@ -128,11 +137,7 @@ export default defineComponent({
     const triggerRef = computed(() => triggerContainerRef.value?.firstChild)
 
     watch([visibleRef], ([visible]) => {
-      if (visible) {
-        triggerA11yProps['aria-expanded'] = true
-      } else {
-        triggerA11yProps['aria-expanded'] = false
-      }
+      triggerA11yProps['aria-expanded'] = visible
     })
 
     const open = () => {

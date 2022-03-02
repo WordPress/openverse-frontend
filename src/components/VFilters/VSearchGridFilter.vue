@@ -1,16 +1,13 @@
 <template>
   <div
-    class="py-8 px-10 min-h-full"
-    :class="{
-      'bg-dark-charcoal-06': isMinScreenMd,
-    }"
+    class="filters py-8 px-10 min-h-full md:bg-dark-charcoal-06"
     data-testid="filters-list"
     @onUpdateFilter="onUpdateFilter"
     @onToggleSearchGridFilter="$emit('close')"
     @onClearFilters="clearFilters"
   >
-    <div class="flex items-center justify-between mt-4 mb-8">
-      <h4 class="text-2xl">
+    <div class="flex items-center justify-between mt-2 mb-6">
+      <h4 class="text-sr font-semibold py-2 uppercase">
         {{ $t('filter-list.filter-by') }}
       </h4>
       <button
@@ -47,6 +44,7 @@
 
 <script>
 import { computed, useContext, useRouter } from '@nuxtjs/composition-api'
+
 import { kebabize } from '~/utils/format-strings'
 
 import {
@@ -55,7 +53,6 @@ import {
   TOGGLE_FILTER,
 } from '~/constants/action-types'
 import { MEDIA, SEARCH } from '~/constants/store-modules'
-import { isMinScreen } from '~/composables/use-media-query'
 
 import VFilterChecklist from '~/components/VFilters/VFilterChecklist.vue'
 
@@ -67,7 +64,6 @@ export default {
   setup() {
     const { i18n, store } = useContext()
     const router = useRouter()
-    const isMinScreenMd = isMinScreen('md')
 
     const isAnyFilterApplied = computed(
       () => store.getters[`${SEARCH}/isAnyFilterApplied`]
@@ -107,8 +103,18 @@ export default {
       filterTypeTitle,
       clearFilters,
       onUpdateFilter,
-      isMinScreenMd,
     }
   },
 }
 </script>
+<style scoped>
+.filters {
+  border-inline-start: 1px solid transparent;
+}
+@screen md {
+  .filters {
+    /* dark-charcoal-20*/
+    border-inline-start: 1px solid #d6d4d5;
+  }
+}
+</style>

@@ -94,7 +94,7 @@
     <div
       v-if="isInteractive"
       class="focus-indicator hidden absolute z-30 top-0 flex flex-col items-center justify-between bg-black h-full"
-      :style="{ width: `${barWidth}px`, left: `${seekSpaceBefore}px` }"
+      :style="{ width: `${barWidth}px`, left: `${progressBarWidth}px` }"
     >
       <div
         v-for="(classes, name) in {
@@ -149,6 +149,14 @@
     >
       {{ message }}
     </div>
+
+    <!-- Seek disabled message overlay -->
+    <div
+      v-if="seekDisabledNotice"
+      class="invisible group-hover:visible group-focus:visible absolute w-full inset-0 flex items-center justify-center font-bold text-xsm bg-yellow/75 z-40"
+    >
+      {{ seekDisabledNotice }}
+    </div>
   </div>
 </template>
 
@@ -160,7 +168,9 @@ import {
   onMounted,
   ref,
 } from '@nuxtjs/composition-api'
+
 import { downsampleArray, upsampleArray } from '~/utils/resampling'
+import * as keycodes from '~/utils/key-codes'
 
 /**
  * Renders an SVG representation of the waveform given a list of heights for the
@@ -215,6 +225,14 @@ export default defineComponent({
     features: {
       type: Array,
       default: () => ['timestamps', 'seek'],
+    },
+    /**
+     * An object of notices to display when a feature is disabled.
+     * `'timestamp'`, `'duration'`, `'seek'`.
+     */
+    featureNotices: {
+      type: Object,
+      default: () => ({}),
     },
   },
   emits: [
@@ -281,8 +299,10 @@ export default defineComponent({
     }
     let observer
     onMounted(() => {
-      observer = new ResizeObserver(updateWaveformDimens)
-      observer.observe(el.value)
+      if (window.ResizeObserver) {
+        observer = new ResizeObserver(updateWaveformDimens)
+        observer.observe(el.value)
+      }
       updateWaveformDimens()
     })
     onBeforeUnmount(() => {
@@ -296,6 +316,9 @@ export default defineComponent({
     const showDuration = computed(() => props.features.includes('duration'))
     const showTimestamps = computed(() => props.features.includes('timestamps'))
     const isSeekable = computed(() => props.features.includes('seek'))
+
+    /* Feature notices */
+    const seekDisabledNotice = computed(() => props.featureNotices?.seek)
 
     /* State */
 
@@ -363,7 +386,6 @@ export default defineComponent({
       return waveformDimens.value.width * frac
     })
     const seekIndex = computed(() => getPeaksInWidth(seekBarWidth.value))
-    const seekSpaceBefore = computed(() => spaceBefore(seekIndex.value))
 
     /* Seek timestamp */
 
@@ -449,17 +471,34 @@ export default defineComponent({
       }
     }
 
-    const willBeHandled = (event) =>
-      ['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)
+    const handleSpacebar = () => {
+      emit('toggle-playback')
+    }
 
+    /**
+     * @param {KeyboardEvent} event
+     */
+    const willBeHandled = (event) =>
+      [
+        keycodes.ArrowLeft,
+        keycodes.ArrowRight,
+        keycodes.Home,
+        keycodes.End,
+        keycodes.Spacebar,
+      ].includes(event.key)
+
+    /**
+     * @param {KeyboardEvent} event
+     */
     const handleKeys = (event) => {
       if (!willBeHandled(event)) return
 
       event.preventDefault()
-      if (['ArrowLeft', 'ArrowRight'].includes(event.key))
+      if ([keycodes.ArrowLeft, keycodes.ArrowRight].includes(event.key))
         return handleArrowKeys(event)
-      if (event.key === 'Home') return handlePosKeys(0)
-      if (event.key === 'End') return handlePosKeys(1)
+      if (event.key === keycodes.Home) return handlePosKeys(0)
+      if (event.key === keycodes.End) return handlePosKeys(1)
+      if (event.key === keycodes.Spacebar) return handleSpacebar()
     }
 
     /* v-on */
@@ -487,6 +526,8 @@ export default defineComponent({
       showTimestamps,
       isSeekable,
 
+      seekDisabledNotice,
+
       isReady,
       isInteractive,
 
@@ -506,7 +547,6 @@ export default defineComponent({
       seekFrac,
       seekBarWidth,
       seekIndex,
-      seekSpaceBefore,
 
       seekTimestamp,
       seekTimestampEl,

@@ -1,13 +1,16 @@
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
+
+import { warn } from '~/utils/console'
+
 import { targets } from './meta/targets'
-import { warn } from '~/utils/warn'
 
 export default defineComponent({
   name: 'VTeleportTarget',
   props: {
     name: { type: String, required: true },
     element: { type: String, default: 'div' },
+    forceDestroy: { type: Boolean, default: false },
   },
   data: () => ({ children: [] }),
   created() {
@@ -20,11 +23,20 @@ export default defineComponent({
     targets[this.name] = this
   },
   beforeDestroy() {
+    if (this.children.length > 0) {
+      if (this.forceDestroy) {
+        this.children.forEach((child) => {
+          child.$destroy()
+          child.$el.remove()
+        })
+        this.children = []
+      } else {
+        throw new Error(
+          `VTeleportTarget: ${this.name} beforeDestroy but still has children mounted`
+        )
+      }
+    }
     delete targets[this.name]
-    if (this.children.length > 0)
-      throw new Error(
-        `VTeleportTarget: ${this.name} beforeDestroy but still has children mounted`
-      )
   },
   render(h) {
     return h(
