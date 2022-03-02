@@ -16,7 +16,7 @@ const ImageSearch = defineComponent({
   name: 'ImageSearch',
   props: propTypes,
   setup(props) {
-    useMeta({ title: `${props.searchTerm} - Openverse` })
+    useMeta({ title: `${props.searchTerm} | Openverse` })
 
     const results = computed(() =>
       Object.values(props.mediaResults?.image?.items ?? [])

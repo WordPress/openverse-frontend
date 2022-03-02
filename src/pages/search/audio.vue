@@ -48,7 +48,7 @@ const AudioSearch = defineComponent({
   setup(props) {
     const { i18n } = useContext()
 
-    useMeta({ title: `${props.searchTerm} - Openverse` })
+    useMeta({ title: `${props.searchTerm} | Openverse` })
 
     const results = computed(() =>
       Object.values(props.mediaResults?.audio?.items ?? [])
