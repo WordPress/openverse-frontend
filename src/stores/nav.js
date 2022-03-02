@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { reactive, toRefs } from '@nuxtjs/composition-api'
 
-export const NAV = 'nav'
+const NAV = 'nav'
 
 /**
  * Store information about navigation.

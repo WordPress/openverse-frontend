@@ -7,7 +7,8 @@ import { useNavStore } from '~/stores/nav'
  */
 export default function ({ query }) {
   if (query.referrer) {
-    const navStore = useNavStore()
-    navStore.isReferredFromCc = query.referrer.includes('creativecommons.org')
+    useNavStore().setIsReferredFromCc(
+      query.referrer.includes('creativecommons.org')
+    )
   }
 }

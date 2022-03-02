@@ -55,9 +55,9 @@ export const useActiveMediaStore = defineStore(ACTIVE_MEDIA, () => {
   }
 
   return {
-    type,
-    id,
-    message,
+    type: readonly(type),
+    id: readonly(id),
+    message: readonly(message),
     state: readonly(state),
 
     setActiveMediaItem,
