@@ -28,15 +28,22 @@ import {
   useContext,
   useMeta,
 } from '@nuxtjs/composition-api'
+
 import { useLoadMore } from '~/composables/use-load-more'
+
 import { isMinScreen } from '~/composables/use-media-query'
+
 import { useBrowserIsMobile } from '~/composables/use-browser-detection'
-import { propTypes } from './search-page.types'
+
+import { useSearchStore } from '~/stores/search'
 
 import VAudioTrack from '~/components/VAudioTrack/VAudioTrack.vue'
+
 import VLoadMore from '~/components/VLoadMore.vue'
+
 import VGridSkeleton from '~/components/VSkeleton/VGridSkeleton.vue'
-import { useSearchStore } from '~/stores/search'
+
+import { propTypes } from './search-page.types'
 
 const AudioSearch = defineComponent({
   name: 'AudioSearch',

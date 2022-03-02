@@ -1,8 +1,9 @@
 import { setActivePinia, createPinia } from 'pinia'
+
 import { useFilterStore } from '~/stores/filter'
 import { filterData } from '~/constants/filters'
 import { ALL_MEDIA, AUDIO, IMAGE, VIDEO } from '~/constants/media'
-import { warn } from '~/utils/warn'
+import { warn } from '~/utils/console'
 
 jest.mock('~/utils/warn', () => ({
   warn: jest.fn(),

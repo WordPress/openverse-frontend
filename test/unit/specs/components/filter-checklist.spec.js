@@ -1,7 +1,8 @@
-import FilterChecklist from '~/components/VFilters/VFilterChecklist'
 import { createLocalVue } from '@vue/test-utils'
 import { fireEvent, render, screen } from '@testing-library/vue'
 import { createTestingPinia } from '@pinia/testing'
+
+import FilterChecklist from '~/components/VFilters/VFilterChecklist'
 
 describe('FilterChecklist', () => {
   let options = {}

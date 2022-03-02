@@ -1,3 +1,5 @@
+import { createPinia, setActivePinia } from 'pinia'
+
 import {
   ALL_MEDIA,
   AUDIO,
@@ -5,7 +7,6 @@ import {
   supportedSearchTypes,
   VIDEO,
 } from '~/constants/media'
-import { createPinia, setActivePinia } from 'pinia'
 import { useSearchStore } from '~/stores/search'
 import { mediaFilterKeys } from '~/constants/filters'
 

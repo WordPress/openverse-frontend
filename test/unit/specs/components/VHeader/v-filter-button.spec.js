@@ -1,14 +1,16 @@
 import { render, screen } from '@testing-library/vue'
-
-import VFilterButton from '~/components/VHeader/VFilterButton.vue'
 import { createLocalVue } from '@vue/test-utils'
 import VueI18n from 'vue-i18n'
-import messages from '~/locales/en.json'
 import { ref } from '@nuxtjs/composition-api'
+
 import { createPinia, PiniaVuePlugin } from 'pinia'
+
+import messages from '~/locales/en.json'
 import { useFilterStore } from '~/stores/filter'
 import { IMAGE } from '~/constants/media'
 import { filterData, mediaFilterKeys } from '~/constants/filters'
+
+import VFilterButton from '~/components/VHeader/VFilterButton.vue'
 
 function applyNFilters(filterCount, filterStore) {
   const filterTypes = mediaFilterKeys[IMAGE]
@@ -71,7 +73,7 @@ describe('VFilterButton', () => {
       expect(button).toBeVisible()
       expect(icon).toBeVisible()
     })
-    it('shows the count and text when filters are applied', async () => {
+    it('shows the count and text when filters are applied', () => {
       provided.isMinScreenMd.value = true
       // +2 to guarantee it's plural
       const filterCount = Math.floor(Math.random() * 9) + 2

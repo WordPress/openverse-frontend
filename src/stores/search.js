@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { computed, reactive, readonly, toRefs } from '@nuxtjs/composition-api'
+
 import { ALL_MEDIA } from '~/constants/media'
 import { useFilterStore } from '~/stores/filter'
 

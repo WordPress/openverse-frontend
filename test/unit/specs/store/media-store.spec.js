@@ -1,3 +1,5 @@
+import { createPinia, setActivePinia } from 'pinia'
+
 import store, { createActions } from '~/store/media'
 import {
   FETCH_END_MEDIA,
@@ -20,7 +22,6 @@ import {
   SEND_SEARCH_QUERY_EVENT,
 } from '~/constants/usage-data-analytics-types'
 import { USAGE_DATA } from '~/constants/store-modules'
-import { createPinia, setActivePinia } from 'pinia'
 import { useSearchStore } from '~/stores/search'
 
 describe('Search Store', () => {

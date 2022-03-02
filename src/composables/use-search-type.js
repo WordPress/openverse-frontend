@@ -1,6 +1,9 @@
 import { computed, ref } from '@nuxtjs/composition-api'
+
 import { useSearchStore } from '~/stores/search'
+
 import { supportedSearchTypes } from '~/constants/media'
+
 import allIcon from '~/assets/icons/all-content.svg'
 import audioIcon from '~/assets/icons/audio-content.svg'
 import imageIcon from '~/assets/icons/image-content.svg'

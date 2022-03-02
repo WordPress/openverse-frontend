@@ -1,7 +1,10 @@
 import clonedeep from 'lodash.clonedeep'
-import getParameterByName from './get-parameter-by-name'
+
 import { ALL_MEDIA } from '~/constants/media'
+
 import { mediaFilterKeys } from '~/constants/filters'
+
+import getParameterByName from './get-parameter-by-name'
 
 const filterPropertyMappings = {
   licenses: 'license',

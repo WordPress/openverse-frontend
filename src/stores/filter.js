@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { computed, reactive, readonly, ref } from '@nuxtjs/composition-api'
 import clonedeep from 'lodash.clonedeep'
+
 import {
   ALL_MEDIA,
   AUDIO,
@@ -13,7 +14,7 @@ import {
   mediaFilterKeys,
   mediaSpecificFilters,
 } from '~/constants/filters'
-import { warn } from '~/utils/warn'
+import { warn } from '~/utils/console'
 
 export const useFilterStore = defineStore('filter', () => {
   /** @type {{ filters: import('../store/types').Filters}} */

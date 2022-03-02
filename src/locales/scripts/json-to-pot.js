@@ -1,6 +1,8 @@
+const fs = require('fs')
+
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const json = require('../en.json')
-const fs = require('fs')
+
 const { createPotFile } = require('./json-pot-helpers')
 
 const matchPotCreationDate = /^"POT-Creation-Date: .*\\n"$/gm

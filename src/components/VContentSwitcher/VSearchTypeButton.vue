@@ -1,7 +1,10 @@
 <template>
   <VButton
     class="flex flex-row font-semibold py-2 text-sr md:text-base"
-    :class="sizeClasses"
+    :class="[
+      sizeClasses,
+      showLabel ? 'max-w-[10rem] sm:max-w-[20rem] md:max-w-[16rem]' : '',
+    ]"
     :variant="buttonVariant"
     size="disabled"
     :aria-label="buttonLabel"
@@ -12,7 +15,7 @@
     <span
       v-show="showLabel"
       class="hidden xs:block"
-      :class="{ 'ms-2 md:w-20 text-left': showLabel }"
+      :class="{ 'ms-2 truncate text-left': showLabel }"
       >{{ buttonLabel }}</span
     >
     <VIcon
@@ -22,20 +25,22 @@
   </VButton>
 </template>
 <script>
-import { ALL_MEDIA, supportedSearchTypes } from '~/constants/media'
 import {
   computed,
   defineComponent,
   inject,
   useContext,
 } from '@nuxtjs/composition-api'
+
+import { ALL_MEDIA, supportedSearchTypes } from '~/constants/media'
 import useSearchType from '~/composables/use-search-type'
 import { isMinScreen } from '~/composables/use-media-query'
 
-import caretDownIcon from '~/assets/icons/caret-down.svg'
+import VIcon from '~/components/VIcon/VIcon.vue'
 
 import VButton from '~/components/VButton.vue'
-import VIcon from '~/components/VIcon/VIcon.vue'
+
+import caretDownIcon from '~/assets/icons/caret-down.svg'
 
 export default defineComponent({
   name: 'VSearchTypeButton',

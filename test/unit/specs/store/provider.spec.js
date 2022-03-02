@@ -1,3 +1,5 @@
+import { createPinia, setActivePinia } from 'pinia'
+
 import { state, mutations, createActions } from '~/store/provider'
 import {
   FETCH_MEDIA_PROVIDERS_END,
@@ -7,7 +9,6 @@ import {
 } from '~/constants/mutation-types'
 import { FETCH_MEDIA_TYPE_PROVIDERS } from '~/constants/action-types'
 import { IMAGE } from '~/constants/media'
-import { createPinia, setActivePinia } from 'pinia'
 
 describe('Image Provider Store', () => {
   describe('state', () => {

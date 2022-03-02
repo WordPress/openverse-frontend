@@ -1,18 +1,20 @@
+import { capital } from 'case'
+
+import { useSearchStore } from '~/stores/search'
+
 import MediaProviderService from '~/data/media-provider-service'
 import { AUDIO, IMAGE } from '~/constants/media'
 import {
   FETCH_MEDIA_TYPE_PROVIDERS,
   FETCH_MEDIA_PROVIDERS,
 } from '~/constants/action-types'
-
 import {
   SET_PROVIDER_FETCH_ERROR,
   FETCH_MEDIA_PROVIDERS_END,
   FETCH_MEDIA_PROVIDERS_START,
   SET_MEDIA_PROVIDERS,
 } from '~/constants/mutation-types'
-import { capital } from 'case'
-import { useSearchStore } from '~/stores/search'
+import { warn } from '~/utils/console'
 
 const AudioProviderService = MediaProviderService(AUDIO)
 const ImageProviderService = MediaProviderService(IMAGE)
@@ -71,7 +73,7 @@ export const createActions = (services) => ({
         sortedProviders = sortProviders(data)
       })
       .catch((error) => {
-        console.warn(
+        warn(
           `Error getting ${mediaType} providers: ${error}. Will use saved provider data instead.`
         )
         commit(SET_PROVIDER_FETCH_ERROR, { mediaType, error: true })

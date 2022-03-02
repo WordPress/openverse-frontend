@@ -1,10 +1,13 @@
 import Vuex from 'vuex'
 import { fireEvent, render, screen } from '@testing-library/vue'
 import { createLocalVue } from '@vue/test-utils'
-import SearchGridFilter from '~/components/VFilters/VSearchGridFilter.vue'
-import { FETCH_MEDIA } from '~/constants/action-types'
+
 import { createPinia, PiniaVuePlugin } from 'pinia'
+
+import { FETCH_MEDIA } from '~/constants/action-types'
 import { useFilterStore } from '~/stores/filter'
+
+import SearchGridFilter from '~/components/VFilters/VSearchGridFilter.vue'
 
 describe('SearchGridFilter', () => {
   let options = {}

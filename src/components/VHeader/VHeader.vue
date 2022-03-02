@@ -70,12 +70,13 @@ import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-vis
 import { useI18nResultsCount } from '~/composables/use-i18n-utilities'
 import { useSearchStore } from '~/stores/search'
 
-import closeIcon from '~/assets/icons/close.svg'
+import VLogoButton from '~/components/VHeader/VLogoButton.vue'
 
-import VHeaderMenu from '~/components/VHeader/VHeaderMenu.vue'
 import VHeaderFilter from '~/components/VHeader/VHeaderFilter.vue'
 import VSearchBar from '~/components/VHeader/VSearchBar/VSearchBar.vue'
-import VLogoButton from '~/components/VHeader/VLogoButton.vue'
+import VHeaderMenu from '~/components/VHeader/VHeaderMenu.vue'
+
+import closeIcon from '~/assets/icons/close.svg'
 
 const menus = {
   FILTERS: 'filters',
