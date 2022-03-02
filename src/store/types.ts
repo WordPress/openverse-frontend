@@ -90,12 +90,12 @@ export interface BaseMediaDetail<FrontendMediaType extends string> {
 }
 
 export interface AudioDetail extends BaseMediaDetail<'audio'> {
-  audio_set?: any
-  genres?: any
+  audio_set?: string
+  genres?: string[]
   duration?: number
   bit_rate?: number
   sample_rate?: number
-  alt_files?: any
+  alt_files?: { provider: string; filetype: string }[]
   filetype?: string
   peaks?: number[]
 }
@@ -149,8 +149,9 @@ export interface ActiveMediaState {
   status: 'ejected' | 'playing' | 'paused' // 'ejected' means player is closed
 }
 
-export interface MediaStoreResult<T extends FrontendMediaType>
-  extends MediaResult<Record<MediaDetail['id'], T>> {}
+export type MediaStoreResult<T extends FrontendMediaType> = MediaResult<
+  Record<MediaDetail['id'], T>
+>
 
 export interface MediaState {
   results: {

@@ -1,7 +1,9 @@
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
+
+import { warn } from '~/utils/console'
+
 import { targets } from './meta/targets'
-import { warn } from '~/utils/warn'
 
 export default defineComponent({
   name: 'VTeleportTarget',
