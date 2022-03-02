@@ -5,8 +5,8 @@ import {
   queryToFilterData,
   queryStringToQueryData,
 } from '~/utils/search-query-transform'
-import { filterData } from '~/store/search'
 import { AUDIO, IMAGE } from '~/constants/media'
+import { filterData } from '~/constants/filters'
 
 describe('searchQueryTransform', () => {
   it('converts initial filters to query data', () => {
@@ -20,10 +20,9 @@ describe('searchQueryTransform', () => {
   it('converts filter to query data', () => {
     const filters = {
       ...filterData,
-      mature: true,
     }
     const result = filtersToQueryData(filters)
-    expect(result).toEqual({ mature: true }) // toEqual checks for value equality
+    expect(result).toEqual({}) // toEqual checks for value equality
   })
   it('converts all filters to query data', () => {
     const filters = {
@@ -91,7 +90,7 @@ describe('searchQueryTransform', () => {
         { code: 'brooklynmuseum', checked: true },
       ],
       searchBy: [{ code: 'creator', checked: true }],
-      mature: true,
+      mature: [{ code: 'mature', checked: true }],
     }
     const expectedQueryData = {
       aspect_ratio: 'tall',
@@ -99,7 +98,7 @@ describe('searchQueryTransform', () => {
       extension: 'jpg',
       license: 'cc0',
       license_type: 'commercial',
-      mature: true,
+      mature: 'true',
       searchBy: 'creator',
       size: 'medium',
       source: 'animaldiversity,brooklynmuseum',
@@ -245,7 +244,7 @@ describe('searchQueryTransform', () => {
       searchBy: [
         { code: 'creator', checked: true, name: 'filters.searchBy.creator' },
       ],
-      mature: true,
+      mature: [{ code: 'mature', checked: true }],
     }
     const query = {
       q: 'cat',

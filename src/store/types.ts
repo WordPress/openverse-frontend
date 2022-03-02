@@ -47,7 +47,7 @@ export type Query = {
   categories: string
   source: string
   duration: string
-  mature: boolean
+  mature: string
 }
 
 export type ApiQueryParams = {
@@ -140,7 +140,6 @@ export interface FetchState {
 export interface SearchState {
   searchType: SupportedSearchType
   query: Query
-  filters: Filters
 }
 
 export interface ActiveMediaState {
