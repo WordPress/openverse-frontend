@@ -58,8 +58,8 @@ describe('VContentReportForm', () => {
         provider: 'provider',
       },
       providerName: 'Provider',
-      reportService: reportServiceProp,
       closeFn: jest.fn(),
+      reportService: reportServiceProp,
     }
 
     const localVue = createLocalVue()

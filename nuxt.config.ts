@@ -222,9 +222,10 @@ const config: NuxtConfig = {
         'postcss-focus-visible': {},
       },
     },
-    // Enables use of IDE debuggers
     extend(config, ctx) {
+      // Enables use of IDE debuggers
       config.devtool = ctx.isClient ? 'source-map' : 'inline-source-map'
+
       // Mitigates import errors for Pinia
       config.module?.rules.push({
         test: /\.mjs$/,

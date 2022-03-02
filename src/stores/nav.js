@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
-import { reactive, toRefs } from '@nuxtjs/composition-api'
+import { reactive, readonly, toRefs } from '@nuxtjs/composition-api'
 
-export const NAV = 'nav'
+const NAV = 'nav'
 
 /**
  * Store information about navigation.
@@ -20,8 +20,8 @@ export const useNavStore = defineStore(NAV, () => {
     state.isReferredFromCc = isReferredFromCc
   }
   return {
-    isEmbedded,
-    isReferredFromCc,
+    isEmbedded: readonly(isEmbedded),
+    isReferredFromCc: readonly(isReferredFromCc),
     setIsEmbedded,
     setIsReferredFromCc,
   }
