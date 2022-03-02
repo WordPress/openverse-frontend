@@ -1,14 +1,18 @@
 import pkg from './package.json'
 import locales from './src/locales/scripts/valid-locales.json'
+
 import { VIEWPORTS } from './src/constants/screens'
-import { dev } from './src/utils/dev'
+
+import { isProd } from './src/utils/node-env'
+import { sentryConfig } from './src/utils/sentry-config'
 import { env } from './src/utils/env'
-import { sentry } from './src/utils/sentry-config'
+
+import type { NuxtConfig } from '@nuxt/types'
 
 /**
  * The default metadata for the site. Can be extended and/or overwritten per page. And even in components!
  * See the Nuxt.js docs for more info.
- * {@link https://nuxtjs.org/guides/features/meta-tags-seo Nuxt.js Docs}
+ * {@link https://nuxtjs.org/guides/features/meta-tags-seo} Nuxt.js Docs
  */
 const meta = [
   { charset: 'utf-8' },
@@ -51,6 +55,7 @@ const meta = [
 
 if (process.env.NODE_ENV === 'production') {
   meta.push({
+    // @ts-expect-error: 'http-equiv' isn't allowed here by Nuxt
     'http-equiv': 'Content-Security-Policy',
     content: 'upgrade-insecure-requests',
   })
@@ -99,7 +104,7 @@ const head = {
   ],
 }
 
-export default {
+const config: NuxtConfig = {
   // eslint-disable-next-line no-undef
   version: pkg.version, // used to purge cache :)
   cache: {
@@ -116,9 +121,9 @@ export default {
   router: {
     middleware: 'middleware',
   },
-  components: {
-    dirs: [{ path: '~/components', extensions: ['vue'], pathPrefix: false }],
-  },
+  components: [
+    { path: '~/components', extensions: ['vue'], pathPrefix: false },
+  ],
   plugins: [
     { src: '~/plugins/url-change.js' },
     { src: '~/plugins/migration-notice.js' },
@@ -134,7 +139,7 @@ export default {
   ],
   head,
   env,
-  dev,
+  dev: !isProd,
   buildModules: [
     '@nuxt/typescript-build',
     '@nuxtjs/composition-api/module',
@@ -196,7 +201,7 @@ export default {
    * {@link https://github.com/nuxt-community/redirect-module#usage}
    */
   redirect: [{ from: '^/photos/(.*)$', to: '/image/$1', statusCode: 301 }],
-  sentry,
+  sentry: sentryConfig,
   build: {
     templates: [
       {
@@ -252,3 +257,5 @@ export default {
     },
   },
 }
+
+export default config

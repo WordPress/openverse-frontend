@@ -1,7 +1,9 @@
-import ImageGrid from '~/components/ImageGrid/ImageGrid'
 import { render, screen } from '@testing-library/vue'
 import VueI18n from 'vue-i18n'
+
 import messages from '~/locales/en.json'
+
+import VImageGrid from '~/components/VImageGrid/VImageGrid'
 
 const i18n = new VueI18n({
   locale: 'en',
@@ -32,10 +34,10 @@ const options = {
     },
   },
 }
-describe('ImageGrid', () => {
+describe('VImageGrid', () => {
   it('renders images without load more button if canLoadMore is false', () => {
     options.props.canLoadMore = false
-    render(ImageGrid, options)
+    render(VImageGrid, options)
     expect(screen.queryAllByRole('img').length).toEqual(propsData.images.length)
     expect(screen.queryAllByRole('figure').length).toEqual(
       propsData.images.length
@@ -45,7 +47,7 @@ describe('ImageGrid', () => {
 
   it('renders images and load more button if canLoadMore is true', async () => {
     options.props.canLoadMore = true
-    render(ImageGrid, options)
+    render(VImageGrid, options)
     expect(screen.queryAllByRole('img').length).toEqual(propsData.images.length)
     expect(screen.queryAllByRole('figure').length).toEqual(
       propsData.images.length

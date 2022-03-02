@@ -18,15 +18,18 @@
   </div>
 </template>
 <script>
-import iframeHeight from '~/mixins/iframe-height'
-
 import { computed, provide, ref, watch } from '@nuxtjs/composition-api'
-import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
-import { isMinScreen } from '~/composables/use-media-query'
-import { useMatchSearchRoutes } from '~/composables/use-match-routes'
+
 import { useScroll } from '~/composables/use-scroll'
 
+import { useMatchSearchRoutes } from '~/composables/use-match-routes'
+
+import { isMinScreen } from '~/composables/use-media-query'
+
+import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
 import { useNav } from '~/store/nav'
+
+import iframeHeight from '~/mixins/iframe-height'
 
 import VMigrationNotice from '~/components/VMigrationNotice.vue'
 import VTranslationStatusBanner from '~/components/VTranslationStatusBanner.vue'
