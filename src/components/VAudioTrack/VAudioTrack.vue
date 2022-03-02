@@ -52,7 +52,7 @@ import { useActiveAudio } from '~/composables/use-active-audio'
 
 import { MEDIA } from '~/constants/store-modules'
 
-import { useActiveMediaStore } from '~/store/active-media'
+import { useActiveMediaStore } from '~/stores/active-media'
 
 import VPlayPause from '~/components/VAudioTrack/VPlayPause.vue'
 import VWaveform from '~/components/VAudioTrack/VWaveform.vue'

@@ -6,7 +6,7 @@ export const NAV = 'nav'
 /**
  * Store information about navigation.
  */
-export const useNav = defineStore(NAV, () => {
+export const useNavStore = defineStore(NAV, () => {
   const state = reactive({
     isEmbedded: true,
     isReferredFromCc: false,

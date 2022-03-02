@@ -11,7 +11,7 @@ export const useActiveMediaStore = defineStore(ACTIVE_MEDIA, () => {
    * `reactive` returns UnwrapRef<T> type, but the Vue docs recommend using the
    * type of <T> for typing it instead:
    * https://vuejs.org/guide/typescript/composition-api.html#typing-reactive
-   * @type {import('./types').ActiveMediaState}
+   * @type {import('../store/types').ActiveMediaState}
    */
   const state = reactive({
     type: null,

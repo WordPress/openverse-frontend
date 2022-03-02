@@ -1,8 +1,8 @@
 import { setActivePinia, createPinia } from 'pinia'
 
-import { useActiveMediaStore } from '~/store/active-media'
-
 import { AUDIO } from '~/constants/media'
+
+import { useActiveMediaStore } from '~/stores/active-media'
 
 const initialState = { type: null, id: null, status: 'ejected', message: null }
 const statuses = ['ejected', 'paused', 'playing']

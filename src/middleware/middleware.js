@@ -1,6 +1,6 @@
 import { sendWindowMessage } from '~/utils/send-message'
 
-import { useNav } from '~/store/nav'
+import { useNavStore } from '~/stores/nav'
 
 /**
  * In embedded mode, the app sends its size and url
@@ -17,7 +17,7 @@ import { useNav } from '~/store/nav'
  * - `urlChange` sends the relative path of the URL on every URL change.
  */
 export default function ({ query, route }) {
-  const navStore = useNav()
+  const navStore = useNavStore()
 
   if ('embedded' in query) {
     navStore.setIsEmbedded(query.embedded === 'true')

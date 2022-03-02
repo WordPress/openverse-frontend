@@ -31,9 +31,9 @@
 <script>
 import { computed, defineComponent, ref, watch } from '@nuxtjs/composition-api'
 
-import { useActiveMediaStore } from '~/store/active-media'
-
 import { useActiveAudio } from '~/composables/use-active-audio'
+
+import { useActiveMediaStore } from '~/stores/active-media'
 
 import VPlayPause from '~/components/VAudioTrack/VPlayPause.vue'
 import VWaveform from '~/components/VAudioTrack/VWaveform.vue'

@@ -3,7 +3,7 @@ import Vuei18n from 'vue-i18n'
 import Vuex from 'vuex'
 import { setActivePinia, createPinia, PiniaVuePlugin } from 'pinia'
 
-import { useActiveMediaStore } from '~/store/active-media'
+import { useActiveMediaStore } from '~/stores/active-media'
 
 import VAudioTrack from '~/components/VAudioTrack/VAudioTrack.vue'
 

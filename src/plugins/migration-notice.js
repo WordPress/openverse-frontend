@@ -1,4 +1,4 @@
-import { useNav } from '~/store/nav'
+import { useNavStore } from '~/stores/nav'
 
 /**
  * If the URL contains a referral parameter pointing containing
@@ -7,7 +7,7 @@ import { useNav } from '~/store/nav'
  */
 export default function ({ query }) {
   if (query.referrer) {
-    const navStore = useNav()
+    const navStore = useNavStore()
     navStore.isReferredFromCc = query.referrer.includes('creativecommons.org')
   }
 }

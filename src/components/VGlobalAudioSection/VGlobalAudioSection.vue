@@ -14,12 +14,20 @@
 import { useStore, useRoute, watch, computed } from '@nuxtjs/composition-api'
 
 import { useActiveAudio } from '~/composables/use-active-audio'
-import { useActiveMediaStore } from '~/store/active-media'
+
+import { useActiveMediaStore } from '~/stores/active-media'
+
+import VIconButton from '~/components/VIconButton/VIconButton.vue'
+import VGlobalAudioTrack from '~/components/VAudioTrack/VGlobalAudioTrack.vue'
 
 import closeIcon from '~/assets/icons/close-small.svg'
 
 export default {
   name: 'VGlobalAudioSection',
+  components: {
+    VGlobalAudioTrack,
+    VIconButton,
+  },
   setup() {
     const activeMediaStore = useActiveMediaStore()
     const store = useStore()
