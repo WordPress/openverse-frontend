@@ -1,3 +1,6 @@
+// WebStorm fix for `~` alias not working:
+// https://intellij-support.jetbrains.com/hc/en-us/community/posts/115000771544-ESLint-does-not-work-with-webpack-import-resolver-in-2017-3
+process.chdir(__dirname)
 module.exports = {
   root: true,
   env: {
@@ -162,7 +165,7 @@ module.exports = {
         },
         /**
          * SVG imports are excluded for the import/no-unresolved
-         * rule above due to due to lack of support for `?inline` suffix
+         * rule above due to lack of support for `?inline` suffix
          *
          * Therefore, there's no need to configure them here
          */

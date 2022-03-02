@@ -5,7 +5,7 @@ import { filterData } from '~/constants/filters'
 import { ALL_MEDIA, AUDIO, IMAGE, VIDEO } from '~/constants/media'
 import { warn } from '~/utils/console'
 
-jest.mock('~/utils/warn', () => ({
+jest.mock('~/utils/console', () => ({
   warn: jest.fn(),
 }))
 

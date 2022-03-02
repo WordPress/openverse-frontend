@@ -45,7 +45,6 @@ export const useSearchStore = defineStore('search', () => {
   const setSearchType = (type) => {
     state.searchType = type
     filterStore.setSearchType(type)
-    console.log('should have set filter search type to ', type)
   }
 
   /**
