@@ -1,5 +1,6 @@
 const fs = require('fs')
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const json = require('../en.json')
 
 const { createPotFile } = require('./json-pot-helpers')
