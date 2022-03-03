@@ -6,9 +6,9 @@
   >
     <header class="mb-10">
       <i18n
-        v-if="!noresult"
+        v-if="!hasNoResults"
         :path="
-          supported
+          isSupported
             ? 'meta-search.form.supported-title'
             : 'meta-search.form.unsupported-title'
         "
@@ -60,8 +60,8 @@ export default {
   props: {
     query: { type: Object, required: true },
     type: { type: String, required: true },
-    supported: { type: Boolean, default: false },
-    noresult: { type: Boolean, required: true },
+    isSupported: { type: Boolean, default: false },
+    hasNoResults: { type: Boolean, required: true },
   },
   computed: {
     unsupportedByUsefilter() {

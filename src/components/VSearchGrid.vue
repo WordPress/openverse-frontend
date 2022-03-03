@@ -18,9 +18,9 @@
     <VMetaSearchForm
       v-if="!fetchState.isFetching"
       :type="metaSearchFormType"
-      :noresult="noresult"
+      :has-no-result="hasNoResult"
       :query="query"
-      :supported="isSupported"
+      :is-supported="isSupported"
     />
   </section>
 </template>
@@ -59,8 +59,8 @@ export default {
     },
   },
   setup(props) {
-    const noresult = computed(() => {
-      // noresult is hard-coded for search types that are not currently
+    const hasNoResult = computed(() => {
+      // noResult is hard-coded for search types that are not currently
       // supported by Openverse built-in search
       return props.supported
         ? props.query.q !== '' && props.resultsCount === 0
@@ -77,7 +77,7 @@ export default {
     })
 
     return {
-      noresult,
+      hasNoResult,
       isSupported,
       metaSearchFormType,
       isAllView,
