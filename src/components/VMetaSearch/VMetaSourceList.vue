@@ -1,12 +1,20 @@
 <template>
-  <ul class="buttons">
+  <ul
+    class="meta-sources flex flex-col md:flex-row flex-wrap items-stretch gap-4 w-full"
+  >
     <li v-for="source in sources" :key="source.name">
-      <VLink :href="source.url" class="button small me-4 is-opaque">
+      <VButton
+        as="VLink"
+        variant="tertiary"
+        size="disabled"
+        :href="source.url"
+        class="w-full md:w-auto text-sr font-bold p-4 md:py-2 md:px-3"
+      >
         {{ source.name }}
         <sup class="top-0">
           <i class="ms-2 icon external-link" />
         </sup>
-      </VLink>
+      </VButton>
     </li>
   </ul>
 </template>
@@ -18,11 +26,11 @@ import getLegacySourceUrl, {
   legacySourceMap,
 } from '~/utils/get-legacy-source-url'
 
-import VLink from '~/components/VLink.vue'
+import VButton from '~/components/VButton.vue'
 
 export default {
   name: 'MetaSourceList',
-  components: { VLink },
+  components: { VButton },
   props: {
     type: { type: String },
     query: { type: Object },
