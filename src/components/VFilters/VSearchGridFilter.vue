@@ -45,14 +45,14 @@
 <script>
 import { computed, useContext, useRouter } from '@nuxtjs/composition-api'
 
-import { kebabize } from '~/utils/format-strings'
-
 import {
   CLEAR_FILTERS,
   FETCH_MEDIA,
   TOGGLE_FILTER,
 } from '~/constants/action-types'
 import { MEDIA, SEARCH } from '~/constants/store-modules'
+
+import { kebabize } from '~/utils/format-strings.ts'
 
 import VFilterChecklist from '~/components/VFilters/VFilterChecklist.vue'
 

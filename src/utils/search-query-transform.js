@@ -1,7 +1,8 @@
 import clonedeep from 'lodash.clonedeep'
 
-import { mediaFilterKeys } from '~/constants/filters'
 import { ALL_MEDIA } from '~/constants/media'
+
+import { mediaFilterKeys } from '~/constants/filters.ts'
 
 import getParameterByName from './get-parameter-by-name'
 

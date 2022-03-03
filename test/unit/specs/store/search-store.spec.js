@@ -1,5 +1,4 @@
 import store from '~/store/search'
-import { filterData } from '~/constants/filters'
 
 import {
   CLEAR_FILTERS,
@@ -15,6 +14,8 @@ import {
   SET_QUERY,
 } from '~/constants/mutation-types'
 import { ALL_MEDIA, AUDIO, IMAGE } from '~/constants/media'
+
+import { filterData } from '~/constants/filters.ts'
 
 describe('Filter Store', () => {
   describe('state', () => {

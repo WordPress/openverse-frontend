@@ -1,5 +1,5 @@
-export const capitalize = (str) => str[0].toUpperCase() + str.slice(1)
-export const kebabize = (str) => {
+export const capitalize = (str: string) => str[0].toUpperCase() + str.slice(1)
+export const kebabize = (str: string) => {
   return str
     .split('')
     .map((letter, idx) => {

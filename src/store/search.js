@@ -28,11 +28,12 @@ import {
   SET_QUERY,
   SET_SEARCH_TYPE,
 } from '~/constants/mutation-types'
+
 import {
   filterData,
   mediaFilterKeys,
   mediaSpecificFilters,
-} from '~/constants/filters'
+} from '~/constants/filters.ts'
 
 /**
  * Returns true if any of the filters' checked property is true

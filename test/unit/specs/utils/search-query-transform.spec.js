@@ -6,7 +6,8 @@ import {
   queryStringToQueryData,
 } from '~/utils/search-query-transform'
 import { AUDIO, IMAGE } from '~/constants/media'
-import { filterData } from '~/constants/filters'
+
+import { filterData } from '~/constants/filters.ts'
 
 describe('searchQueryTransform', () => {
   it('converts initial filters to query data', () => {
