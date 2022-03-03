@@ -1,12 +1,12 @@
 import useragent from 'express-useragent'
 
 export default function (context, inject) {
-  let userAgent
+  let userAgent=""
 
   if (typeof context.req !== 'undefined') {
-    userAgent = context.req.headers['user-agent']
+    userAgent = String(context.req.headers['user-agent'])
   } else if (typeof navigator !== 'undefined') {
-    userAgent = navigator.userAgent
+    userAgent = String (navigator.userAgent)
   }
   const ua = useragent.parse(userAgent)
 
