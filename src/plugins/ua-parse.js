@@ -1,7 +1,7 @@
 import useragent from 'express-useragent'
 
 export default function (context, inject) {
-  let userAgent=""
+  let userAgent=''
 
   if (typeof context.req !== 'undefined') {
     userAgent = String(context.req.headers['user-agent'])
