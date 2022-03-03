@@ -12,7 +12,7 @@ const DEFAULT_REQUEST_TIMEOUT = 30000
  * @param {string} resource
  * @returns {string}
  */
-const getResourceSlug = (resource) => {
+export const getResourceSlug = (resource) => {
   const slug = { [AUDIO]: 'audio', [IMAGE]: 'images' }[resource] ?? resource
   return `${slug}/`
 }
@@ -35,6 +35,7 @@ Please check the url: ${config.baseURL}${config.url}`
  * @param {string} [baseUrl]
  */
 export const createApiService = (baseUrl = process.env.apiUrl) => {
+  console.log('will create api service with ', baseUrl)
   const client = axios.create({
     baseURL: baseUrl,
     timeout: DEFAULT_REQUEST_TIMEOUT,
@@ -133,5 +134,5 @@ export const createApiService = (baseUrl = process.env.apiUrl) => {
   }
 }
 
-const ApiService = createApiService()
-export default ApiService
+export const VersionedApiService = createApiService(`${process.env.apiUrl}v1/`)
+export const NonversionedApiService = createApiService(`${process.env.apiUrl}`)

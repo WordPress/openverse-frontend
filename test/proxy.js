@@ -12,18 +12,18 @@ const process = require('process')
 
 const talkback = require('talkback')
 
-const host = 'https://api.openverse.engineering/v1'
+const host = 'https://api.openverse.engineering'
 
 const tapeNameGenerator = (tapeNumber) => `response-${tapeNumber}`
 
 const updatingTapes = process.argv.includes('--update-tapes')
 const recordMode = updatingTapes
   ? talkback.Options.RecordMode.NEW
-  : talkback.Options.RecordMode.DISABLED
+  : talkback.Options.RecordMode.NEW
 console.log('Record mode: ', recordMode)
 const opts = {
   host,
-  port: 3000,
+  port: 3322,
   path: './test/tapes',
   record: recordMode,
   fallbackMode: talkback.Options.FallbackMode.NOT_FOUND,
