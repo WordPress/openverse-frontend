@@ -128,7 +128,7 @@ export interface Filters {
   audioProviders: FilterItem[]
   imageProviders: FilterItem[]
   searchBy: FilterItem[]
-  mature: boolean
+  mature: FilterItem[]
 }
 export type FilterType = keyof Filters
 

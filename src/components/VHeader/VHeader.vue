@@ -61,17 +61,14 @@ import {
   watch,
 } from '@nuxtjs/composition-api'
 
-import { MEDIA, SEARCH } from '~/constants/store-modules'
-import {
-  CLEAR_MEDIA,
-  FETCH_MEDIA,
-  UPDATE_QUERY,
-} from '~/constants/action-types'
+import { MEDIA } from '~/constants/store-modules'
+import { CLEAR_MEDIA, FETCH_MEDIA } from '~/constants/action-types'
 import { supportedMediaTypes } from '~/constants/media'
 import { isMinScreen } from '~/composables/use-media-query'
 import { useMatchSearchRoutes } from '~/composables/use-match-routes'
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
 import { useI18nResultsCount } from '~/composables/use-i18n-utilities'
+import { useSearchStore } from '~/stores/search'
 
 import VLogoButton from '~/components/VHeader/VLogoButton.vue'
 
@@ -95,6 +92,7 @@ const VHeader = defineComponent({
     VSearchBar,
   },
   setup() {
+    const searchStore = useSearchStore()
     const { app, i18n, store } = useContext()
     const router = useRouter()
 
@@ -149,12 +147,12 @@ const VHeader = defineComponent({
      * Shows the loading state or result count.
      */
     const searchStatus = computed(() => {
-      if (!isSearchRoute.value || store.state.search.query.q === '') return ''
+      if (!isSearchRoute.value || searchStore.query.q === '') return ''
       if (isFetching.value) return i18n.t('header.loading')
       return getI18nCount(resultsCount.value)
     })
 
-    const localSearchTerm = ref(store.state.search.query.q)
+    const localSearchTerm = ref(searchStore.query.q)
     const searchTerm = computed({
       get: () => localSearchTerm.value,
       set: async (value) => {
@@ -163,7 +161,7 @@ const VHeader = defineComponent({
     })
 
     watch(
-      () => store.state.search.query.q,
+      () => searchStore.query.q,
       (newSearchTerm) => {
         if (newSearchTerm !== localSearchTerm.value) {
           localSearchTerm.value = newSearchTerm
@@ -180,29 +178,28 @@ const VHeader = defineComponent({
        * If is search route and search term changed: set the query, set path
        * If is not search route, and search term changed: set search type to all, set query, set path
        */
-      const searchTermChanged =
-        localSearchTerm.value !== store.state.search.query.q
+      const searchTermChanged = localSearchTerm.value !== searchStore.query.q
       if (isSearchRoute.value && !searchTermChanged) return
-      const searchType = store.state.search.searchType
+      const searchType = searchStore.searchType
       if (searchTermChanged) {
         await Promise.all(
           supportedMediaTypes.map((mediaType) =>
             store.dispatch(`${MEDIA}/${CLEAR_MEDIA}`, { mediaType })
           )
         )
-        await store.dispatch(`${SEARCH}/${UPDATE_QUERY}`, {
+        searchStore.updateQuery({
           q: localSearchTerm.value,
           searchType,
         })
       }
       const newPath = app.localePath({
         path: `/search/${searchType === 'all' ? '' : searchType}`,
-        query: store.getters['search/searchQueryParams'],
+        query: searchStore.searchQueryParams,
       })
       router.push(newPath)
 
       await store.dispatch(`${MEDIA}/${FETCH_MEDIA}`, {
-        ...store.getters['search/searchQueryParams'],
+        ...searchStore.searchQueryParams,
       })
     }
 

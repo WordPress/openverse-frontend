@@ -23,6 +23,7 @@ import {
 import { AUDIO, IMAGE, ALL_MEDIA, supportedMediaTypes } from '~/constants/media'
 import { USAGE_DATA } from '~/constants/store-modules'
 import MediaService from '~/data/media-service'
+import { useSearchStore } from '~/stores/search'
 
 /**
  * @return {import('./types').MediaState}
@@ -70,8 +71,8 @@ export const createActions = (services = mediaServices) => ({
    * @param {object} [payload]
    * @return {Promise<void>}
    */
-  async [FETCH_MEDIA]({ dispatch, rootState }, payload = {}) {
-    const mediaType = rootState.search.searchType
+  async [FETCH_MEDIA]({ dispatch, getters }, payload = {}) {
+    const mediaType = getters.searchType
     const mediaToFetch = mediaType !== ALL_MEDIA ? [mediaType] : [IMAGE, AUDIO]
 
     await Promise.all(
@@ -100,19 +101,16 @@ export const createActions = (services = mediaServices) => ({
    * @param {boolean} [payload.shouldPersistMedia] - whether the existing media should be added to or replaced.
    * @return {Promise<void>}
    */
-  async [FETCH_SINGLE_MEDIA_TYPE](
-    { commit, dispatch, rootState, rootGetters },
-    payload
-  ) {
+  async [FETCH_SINGLE_MEDIA_TYPE]({ commit, dispatch, rootState }, payload) {
     const {
       mediaType,
       page = undefined,
       shouldPersistMedia = false,
       ...params
     } = payload
-
+    const searchStore = useSearchStore()
     const queryParams = prepareSearchQueryParams({
-      ...rootGetters['search/searchQueryParams'],
+      ...searchStore.searchQueryParams,
       ...params,
     })
 
@@ -166,10 +164,11 @@ export const createActions = (services = mediaServices) => ({
     const resultRank = Object.keys(state.results[mediaType].items).findIndex(
       (item) => item === id
     )
+    const searchStore = useSearchStore()
     await dispatch(
       `${USAGE_DATA}/${SEND_RESULT_CLICKED_EVENT}`,
       {
-        query: rootState.search.query.q,
+        query: searchStore.query.q,
         resultUuid: id,
         resultRank,
         sessionId: rootState.user.usageSessionId,
@@ -297,8 +296,9 @@ export const getters = {
       )
     }
   },
-  searchType(state, getters, rootState) {
-    return rootState.search.searchType
+  searchType() {
+    const searchStore = useSearchStore()
+    return searchStore.searchType
   },
 }
 

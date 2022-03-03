@@ -1,91 +1,128 @@
 import { createPinia, setActivePinia } from 'pinia'
 
-import store from '~/store/search'
-
 import {
-  CLEAR_FILTERS,
-  SET_SEARCH_STATE_FROM_URL,
-  UPDATE_QUERY_FROM_FILTERS,
-} from '~/constants/action-types'
-import { SET_SEARCH_TYPE, SET_QUERY } from '~/constants/mutation-types'
-import { ALL_MEDIA, AUDIO, IMAGE } from '~/constants/media'
+  ALL_MEDIA,
+  AUDIO,
+  IMAGE,
+  supportedSearchTypes,
+  VIDEO,
+} from '~/constants/media'
+import { useSearchStore } from '~/stores/search'
 
-import { useFilterStore } from '~/stores/filter'
-
-const initialState = {
-  query: {
-    aspect_ratio: '',
-    categories: '',
-    duration: '',
-    extension: '',
-    license: '',
-    license_type: '',
-    mature: '',
-    q: '',
-    searchBy: '',
-    size: '',
-    source: '',
-  },
-  searchType: ALL_MEDIA,
-}
+import { mediaFilterKeys } from '~/constants/filters'
 
 describe('Search Store', () => {
+  beforeEach(() => {
+    setActivePinia(createPinia())
+  })
   describe('state', () => {
-    it('initial state is set correctly', () => {
-      const defaultState = store.state()
-      expect(defaultState).toEqual(initialState)
-    })
-  })
+    it('initializes correctly', () => {
+      const searchStore = useSearchStore()
 
-  describe('mutations', () => {
-    let state = null
-    let mutations = null
-
-    beforeEach(() => {
-      setActivePinia(createPinia())
-
-      state = {
-        search: {
-          searchType: 'image',
-          query: { q: 'foo' },
+      expect(searchStore.state).toEqual({
+        query: {
+          aspect_ratio: '',
+          categories: '',
+          duration: '',
+          extension: '',
+          license: '',
+          license_type: '',
+          mature: '',
+          q: '',
+          searchBy: '',
+          size: '',
+          source: '',
         },
-        ...store.state(),
-      }
-      mutations = store.mutations
-    })
-
-    it('SET_QUERY updates state', () => {
-      const params = { query: { q: 'foo' } }
-      mutations[SET_QUERY](state, params)
-
-      expect(state.query.q).toBe(params.query.q)
-    })
-
-    it('SET_SEARCH_TYPE updates the state', () => {
-      state.searchType = IMAGE
-      mutations[SET_SEARCH_TYPE](state, { searchType: AUDIO })
-      expect(state.searchType).toEqual(AUDIO)
+        searchType: ALL_MEDIA,
+      })
     })
   })
-
-  describe('actions', () => {
-    let state = null
-    let commitMock = null
-    let dispatchMock = null
-    let actions = null
-    let context = null
-
-    beforeEach(() => {
-      commitMock = jest.fn()
-      dispatchMock = jest.fn()
-      state = store.state()
-      actions = store.actions
-      context = {
-        commit: commitMock,
-        dispatch: dispatchMock,
-        rootState: {},
-        state: state,
+  describe('getters', () => {
+    /**
+     * For non-supported search types, the filters fall back to 'All content' filters.
+     * Number of displayed filters is one less than the number of mediaFilterKeys
+     * because `mature` filter is not displayed.
+     */
+    it.each`
+      searchType   | filterTypeCount
+      ${IMAGE}     | ${mediaFilterKeys[IMAGE].length}
+      ${AUDIO}     | ${mediaFilterKeys[AUDIO].length}
+      ${ALL_MEDIA} | ${mediaFilterKeys[ALL_MEDIA].length}
+      ${VIDEO}     | ${mediaFilterKeys[VIDEO].length}
+    `(
+      'mediaFiltersForDisplay returns $filterTypeCount filters for $searchType',
+      ({ searchType, filterTypeCount }) => {
+        const searchStore = useSearchStore()
+        searchStore.updateQuery({ searchType })
+        const filtersForDisplay = searchStore.searchFilters
+        const expectedFilterCount = Math.max(0, filterTypeCount - 1)
+        expect(Object.keys(filtersForDisplay).length).toEqual(
+          expectedFilterCount
+        )
       }
+    )
+    /**
+     * Check for some special cases:
+     * - `mature` and `searchBy`.
+     * - several options for single filter.
+     * - media specific filters that are unique (durations).
+     * - media specific filters that have the same API param (extensions)
+     */
+    it.each`
+      query                                               | searchType
+      ${{ q: 'cat', license: 'by', mature: 'true' }}      | ${IMAGE}
+      ${{ q: 'cat', license: 'by', searchBy: 'creator' }} | ${ALL_MEDIA}
+      ${{ q: 'cat', license: 'cc0,pdm,by,by-nc' }}        | ${ALL_MEDIA}
+      ${{ q: 'cat', duration: 'medium' }}                 | ${AUDIO}
+      ${{ q: 'cat', extension: 'svg' }}                   | ${IMAGE}
+      ${{ q: 'cat', extension: 'svg' }}                   | ${AUDIO}
+      ${{ q: 'cat', extension: 'mp3' }}                   | ${AUDIO}
+    `(
+      'returns correct searchQueryParams and filter status for $query and searchType $searchType',
+      ({ query, searchType }) => {
+        const searchStore = useSearchStore()
+        const expectedQueryParams = query
+        // It should discard the values that are not applicable for the search type:
+        if (searchType === AUDIO && query.extension === 'svg') {
+          delete expectedQueryParams.extension
+        }
+        searchStore.setSearchStateFromUrl({
+          path: `/search/${searchType === ALL_MEDIA ? '' : searchType}`,
+          query: { ...expectedQueryParams },
+        })
+        expect(searchStore.searchQueryParams).toEqual(expectedQueryParams)
+      }
+    )
+  })
+  describe('actions', () => {
+    it.each`
+      query           | searchType
+      ${{ q: 'foo' }} | ${undefined}
+      ${undefined}    | ${AUDIO}
+      ${{ q: 'cat' }} | ${AUDIO}
+    `(
+      '`updateQuery` updates query.q and searchType parameters with $query and $searchType',
+      ({ query, searchType }) => {
+        const searchStore = useSearchStore()
+        const expectedSearchTerm = query?.q ?? ''
+        const expectedSearchType = searchType ?? ALL_MEDIA
+
+        searchStore.updateQuery({ ...query, searchType })
+
+        expect(searchStore.query.q).toEqual(expectedSearchTerm)
+        expect(searchStore.searchType).toEqual(expectedSearchType)
+      }
+    )
+
+    it('`updateQuery` does not change anything without params', () => {
+      const searchStore = useSearchStore()
+      const expectedSearchTerm = ''
+      const expectedSearchType = ALL_MEDIA
+
+      searchStore.updateQuery()
+
+      expect(searchStore.query.q).toEqual(expectedSearchTerm)
+      expect(searchStore.searchType).toEqual(expectedSearchType)
     })
 
     it.each`
@@ -95,54 +132,82 @@ describe('Search Store', () => {
       ${'audio'} | ${'/search/audio/'}
       ${'video'} | ${'/search/video'}
     `(
-      "SET_SEARCH_STATE_FROM_URL should set searchType '$searchType' from path '$path'",
-      ({ searchType, path, mediaType }) => {
-        actions[SET_SEARCH_STATE_FROM_URL](
-          { commit: commitMock, dispatch: dispatchMock, state },
-          { path: path, query: {} }
-        )
-        expect(commitMock).toHaveBeenLastCalledWith(SET_SEARCH_TYPE, {
-          searchType,
-        })
-        expect(dispatchMock).toHaveBeenCalledWith(UPDATE_QUERY_FROM_FILTERS, {
-          mediaType: mediaType,
-        })
+      "`setSearchStateFromUrl` should set searchType '$searchType' from path '$path'",
+      ({ searchType, path }) => {
+        const searchStore = useSearchStore()
+        const expectedQuery = searchStore.query
+
+        searchStore.setSearchStateFromUrl({ path: path, query: {} })
+
+        expect(searchStore.searchType).toEqual(searchType)
+        expect(searchStore.query).toEqual(expectedQuery)
       }
     )
 
     it.each`
-      query                      | path                | searchType
-      ${{ license: 'cc0,by' }}   | ${'/search/'}       | ${ALL_MEDIA}
-      ${{ searchBy: 'creator' }} | ${'/search/image/'} | ${IMAGE}
-      ${{ mature: 'true' }}      | ${'/search/audio/'} | ${AUDIO}
-      ${{ durations: 'medium' }} | ${'/search/image'}  | ${IMAGE}
+      query                                | path                | searchType
+      ${{ license: 'cc0,by', q: 'cat' }}   | ${'/search/'}       | ${ALL_MEDIA}
+      ${{ searchBy: 'creator', q: 'dog' }} | ${'/search/image/'} | ${IMAGE}
+      ${{ mature: 'true', q: 'galah' }}    | ${'/search/audio/'} | ${AUDIO}
+      ${{ duration: 'medium' }}            | ${'/search/image'}  | ${IMAGE}
     `(
-      "SET_SEARCH_STATE_FROM_URL should set '$searchType' from query '$path'",
+      "`setSearchStateFromUrl` should set '$searchType' from query  $query and path '$path'",
       ({ query, path, searchType }) => {
-        actions[SET_SEARCH_STATE_FROM_URL](
-          { commit: commitMock, dispatch: dispatchMock, state },
-          { path: path, query: query }
-        )
-        expect(dispatchMock).toHaveBeenCalledWith(UPDATE_QUERY_FROM_FILTERS, {})
-        expect(context.commit).toHaveBeenLastCalledWith(SET_SEARCH_TYPE, {
-          searchType,
-        })
+        const searchStore = useSearchStore()
+        const expectedQuery = { ...searchStore.query, ...query }
+        // The values that are not applicable for the search type should be discarded
+        if (searchType === IMAGE) {
+          expectedQuery.duration = ''
+        }
+
+        searchStore.setSearchStateFromUrl({ path: path, query: query })
+
+        expect(searchStore.searchType).toEqual(searchType)
+        expect(searchStore.query).toEqual(expectedQuery)
       }
     )
 
-    it('CLEAR_FILTERS resets filters to initial state', async () => {
-      const filterStore = useFilterStore()
-      filterStore.toggleFilter({ filterType: 'licenses', code: 'by' })
-      filterStore.toggleFilter({ filterType: 'licenses', code: 'by-nc' })
-      filterStore.toggleFilter({ filterType: 'licenses', code: 'by-nd' })
-      actions[CLEAR_FILTERS]({
-        commit: commitMock,
-        dispatch: dispatchMock,
-        state,
-      })
-      expect(dispatchMock).toHaveBeenCalledWith(UPDATE_QUERY_FROM_FILTERS, {
-        q: '',
-      })
-    })
+    it.each`
+      filters                                                               | query
+      ${[['licenses', 'by'], ['licenses', 'by-nc-sa']]}                     | ${['license', 'by,by-nc-sa']}
+      ${[['licenseTypes', 'commercial'], ['licenseTypes', 'modification']]} | ${['license_type', 'commercial,modification']}
+      ${[['searchBy', 'creator']]}                                          | ${['searchBy', 'creator']}
+      ${[['mature', 'mature']]}                                             | ${['mature', 'true']}
+      ${[['sizes', 'large']]}                                               | ${['size', '']}
+    `(
+      'toggleFilter updates the query values to $query',
+      ({ filters, query }) => {
+        const searchStore = useSearchStore()
+        for (const filterItem of filters) {
+          const [filterType, code] = filterItem
+          searchStore.toggleFilter({ filterType, code })
+        }
+        expect(searchStore.query[query[0]]).toEqual(query[1])
+      }
+    )
+    // toggleFilter, clearFilters,
+
+    it.each([ALL_MEDIA, IMAGE, AUDIO, VIDEO])(
+      'Clears filters when search type is %s',
+      (searchType) => {
+        const searchStore = useSearchStore()
+        const expectedQuery = { ...searchStore.query, q: 'cat' }
+        searchStore.setSearchStateFromUrl({
+          path: `/search/${searchType === ALL_MEDIA ? '' : searchType}`,
+          query: {
+            q: 'cat',
+            license: 'cc0',
+            sizes: 'large',
+            extension: 'jpg,mp3',
+          },
+        })
+        if (supportedSearchTypes.includes(searchType)) {
+          expect(searchStore.query).not.toEqual(expectedQuery)
+        }
+
+        searchStore.clearFilters()
+        expect(searchStore.query).toEqual(expectedQuery)
+      }
+    )
   })
 })

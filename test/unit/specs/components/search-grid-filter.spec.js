@@ -5,8 +5,6 @@ import { createLocalVue } from '@vue/test-utils'
 import VueI18n from 'vue-i18n'
 import { createPinia, PiniaVuePlugin } from 'pinia'
 
-import { IMAGE } from '~/constants/media'
-import store from '~/store/search'
 import { FETCH_MEDIA } from '~/constants/action-types'
 
 import messages from '~/locales/en.json'
@@ -36,16 +34,6 @@ describe('SearchGridFilter', () => {
     })
     storeMock = new Vuex.Store({
       modules: {
-        search: {
-          namespaced: true,
-          state: {
-            searchType: IMAGE,
-            query: { q: '' },
-          },
-          mutations: store.mutations,
-          actions: store.actions,
-          getters: store.getters,
-        },
         media: {
           namespaced: true,
           state: {
@@ -101,7 +89,7 @@ describe('SearchGridFilter', () => {
     })
 
     expect(checkedFilters.length).toEqual(0)
-    // Filters are reset with the initial `filterData`
-    expect(uncheckedFilters.length).toEqual(24)
+    // Filters are reset with the initial `filterData` for ALL_MEDIA
+    expect(uncheckedFilters.length).toEqual(11)
   })
 })

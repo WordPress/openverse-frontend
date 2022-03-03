@@ -1,5 +1,6 @@
 import { capital } from 'case'
 
+import { useSearchStore } from '~/stores/search'
 import { useFilterStore } from '~/stores/filter'
 
 import MediaProviderService from '~/data/media-provider-service'
@@ -37,8 +38,9 @@ export const state = () => ({
 })
 
 export const getters = {
-  getProviderName: (state, getters, rootState) => (providerCode) => {
-    const mediaType = rootState.search.mediaType
+  getProviderName: (state) => (providerCode) => {
+    const searchStore = useSearchStore()
+    const mediaType = searchStore.mediaType
     const providersList = state[`${mediaType}Providers`]
     if (!providersList) {
       return capital(providerCode) || ''

@@ -27,17 +27,15 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import { isShallowEqualObjects } from '@wordpress/is-shallow-equal'
-import { inject } from '@nuxtjs/composition-api'
+import { computed, inject } from '@nuxtjs/composition-api'
 
-import {
-  FETCH_MEDIA,
-  UPDATE_QUERY,
-  SET_SEARCH_STATE_FROM_URL,
-} from '~/constants/action-types'
-import { ALL_MEDIA, supportedSearchTypes } from '~/constants/media'
-import { MEDIA, SEARCH } from '~/constants/store-modules'
+import { useSearchStore } from '~/stores/search'
+
+import { FETCH_MEDIA } from '~/constants/action-types'
+import { supportedSearchTypes } from '~/constants/media'
+import { MEDIA } from '~/constants/store-modules'
 import { isMinScreen } from '~/composables/use-media-query.js'
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
 
@@ -56,11 +54,25 @@ const BrowsePage = {
     const isMinScreenMd = isMinScreen('md')
     const { isVisible } = useFilterSidebarVisibility()
     const showScrollButton = inject('showScrollButton')
+    const searchStore = useSearchStore()
+
+    const query = computed(() => searchStore.query)
+    const searchType = computed(() => searchStore.searchType)
+    const searchQueryParams = computed(() => searchStore.searchQueryParams)
+    const supported = computed(() =>
+      supportedSearchTypes.includes(searchType.value)
+    )
 
     return {
       isMinScreenMd,
       isVisible,
       showScrollButton,
+      query,
+      searchType,
+      supported,
+      searchQueryParams,
+      setSearchStateFromUrl: searchStore.setSearchStateFromUrl,
+      onSearchFormSubmit: searchStore.updateQuery,
     }
   },
   scrollToTop: false,
@@ -69,21 +81,17 @@ const BrowsePage = {
       await this.fetchMedia({})
     }
   },
-  async asyncData({ route, store }) {
+  asyncData({ route, $pinia }) {
     if (process.server) {
-      await store.dispatch(`${SEARCH}/${SET_SEARCH_STATE_FROM_URL}`, {
+      const searchStore = useSearchStore($pinia)
+      searchStore.setSearchStateFromUrl({
         path: route.path,
         query: route.query,
       })
     }
   },
   computed: {
-    ...mapState(SEARCH, ['query', 'searchType']),
-    ...mapGetters(SEARCH, ['searchQueryParams', 'isAnyFilterApplied']),
     ...mapGetters(MEDIA, ['results', 'resultCount', 'fetchState']),
-    mediaType() {
-      return this.searchType ?? ALL_MEDIA
-    },
     /**
      * Number of search results. Returns 0 for unsupported types.
      * @returns {number}
@@ -91,19 +99,9 @@ const BrowsePage = {
     resultsCount() {
       return this.supported ? this.resultCount : 0 ?? 0
     },
-    supported() {
-      return supportedSearchTypes.includes(this.searchType)
-    },
   },
   methods: {
     ...mapActions(MEDIA, { fetchMedia: FETCH_MEDIA }),
-    ...mapActions(SEARCH, {
-      setSearchStateFromUrl: SET_SEARCH_STATE_FROM_URL,
-      updateQuery: UPDATE_QUERY,
-    }),
-    onSearchFormSubmit({ q }) {
-      this.updateQuery({ q })
-    },
   },
   watch: {
     /**

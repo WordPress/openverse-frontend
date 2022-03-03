@@ -45,16 +45,12 @@
 <script>
 import { computed, useContext, useRouter } from '@nuxtjs/composition-api'
 
+import { kebabize } from '~/utils/format-strings'
 import { useFilterStore } from '~/stores/filter'
+import { useSearchStore } from '~/stores/search'
 
-import {
-  CLEAR_FILTERS,
-  FETCH_MEDIA,
-  TOGGLE_FILTER,
-} from '~/constants/action-types'
-import { MEDIA, SEARCH } from '~/constants/store-modules'
-
-import { kebabize } from '~/utils/format-strings.ts'
+import { FETCH_MEDIA } from '~/constants/action-types'
+import { MEDIA } from '~/constants/store-modules'
 
 import VFilterChecklist from '~/components/VFilters/VFilterChecklist.vue'
 
@@ -65,12 +61,12 @@ export default {
   },
   setup() {
     const filterStore = useFilterStore()
-
+    const searchStore = useSearchStore()
     const { i18n, store } = useContext()
     const router = useRouter()
 
     const isAnyFilterApplied = computed(() => filterStore.isAnyFilterApplied)
-    const filters = computed(() => store.getters[`${SEARCH}/searchFilters`])
+    const filters = computed(() => searchStore.searchFilters)
     const filterTypes = computed(() => Object.keys(filters.value))
     const filterTypeTitle = (filterType) => {
       if (filterType === 'searchBy') {
@@ -80,18 +76,18 @@ export default {
     }
 
     const updateSearch = async () => {
-      await router.push({ query: store.getters['search/searchQueryParams'] })
+      await router.push({ query: searchStore.searchQueryParams })
       await store.dispatch(`${MEDIA}/${FETCH_MEDIA}`, {
-        ...store.getters['search/searchQueryParams'],
+        ...searchStore.searchQueryParams,
       })
     }
 
     const onUpdateFilter = async ({ code, filterType }) => {
-      await store.dispatch(`${SEARCH}/${TOGGLE_FILTER}`, { code, filterType })
+      searchStore.toggleFilter({ code, filterType })
       await updateSearch()
     }
     const clearFilters = async () => {
-      await store.dispatch(`${SEARCH}/${CLEAR_FILTERS}`)
+      searchStore.clearFilters()
 
       await updateSearch()
     }
