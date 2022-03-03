@@ -39,7 +39,11 @@
       </i18n>
     </header>
 
-    <VMetaSourceList class="mt-6 mb-10" :type="type" :query="metaQuery" />
+    <VMetaSourceList
+      class="md:justify-center mt-6 mb-10"
+      :type="type"
+      :query="metaQuery"
+    />
 
     <p class="caption font-semibold max-w-3xl my-0 mx-auto">
       {{ $t('meta-search.caption', { openverse: 'Openverse' }) }}

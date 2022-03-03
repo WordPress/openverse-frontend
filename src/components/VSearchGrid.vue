@@ -1,5 +1,5 @@
 <template>
-  <section class="">
+  <section v-if="resultsCount">
     <header
       v-if="query.q && isSupported"
       class="mt-4"
@@ -23,6 +23,12 @@
       :is-supported="isSupported"
     />
   </section>
+  <VErrorSection v-else-if="!fetchState.isFetching" class="w-full py-10">
+    <template #image>
+      <VErrorImage :error-code="NO_RESULT" />
+    </template>
+    <VNoResults :type="metaSearchFormType" :query="query" />
+  </VErrorSection>
 </template>
 
 <script>
@@ -30,11 +36,16 @@ import { computed } from '@nuxtjs/composition-api'
 
 import { ALL_MEDIA, IMAGE, supportedSearchTypes } from '~/constants/media'
 
+import { NO_RESULT } from '~/constants/errors'
+
 import VMetaSearchForm from '~/components/VMetaSearch/VMetaSearchForm.vue'
+import VErrorSection from '~/components/VErrorImage/VErrorSection.vue'
+import VErrorImage from '~/components/VErrorImage/VErrorImage.vue'
+import VNoResults from '~/components/VErrorImage/VNoResults.vue'
 
 export default {
   name: 'VSearchGrid',
-  components: { VMetaSearchForm },
+  components: { VErrorSection, VMetaSearchForm, VErrorImage, VNoResults },
   props: {
     supported: {
       type: Boolean,
@@ -81,6 +92,7 @@ export default {
       isSupported,
       metaSearchFormType,
       isAllView,
+      NO_RESULT,
     }
   },
 }
