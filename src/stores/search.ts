@@ -17,6 +17,7 @@ import {
   AUDIO,
   IMAGE,
   SupportedMediaType,
+  supportedMediaTypes,
   supportedSearchTypes,
 } from '~/constants/media'
 import {
@@ -25,17 +26,16 @@ import {
   queryToFilterData,
 } from '~/utils/search-query-transform'
 import {
+  FilterCategory,
+  FilterItem,
+  Filters,
   filterData,
   mediaFilterKeys,
   mediaUniqueFilterKeys,
 } from '~/constants/filters'
 import type { SupportedSearchType } from '~/constants/media'
-import type {
-  ApiQueryParams,
-  FilterCategory,
-  FilterItem,
-  Filters,
-} from '~/store/types'
+import type { ApiQueryParams } from '~/stores/types'
+import { useProviderStore } from '~/stores/provider'
 
 export const useSearchStore = defineStore('search', () => {
   const state: {
@@ -48,6 +48,20 @@ export const useSearchStore = defineStore('search', () => {
     filters: clonedeep(filterData),
   })
   const { filters, searchType, searchTerm } = toRefs(state)
+  const providersData = computed(() => useProviderStore().state.providers)
+
+  watch(
+    providersData,
+    (newProvidersData) => {
+      supportedMediaTypes.forEach((mediaType) => {
+        initProviderFilters({
+          mediaType,
+          providers: newProvidersData[mediaType],
+        })
+      })
+    },
+    { deep: true, immediate: true }
+  )
 
   // Setters
   const setSearchType = (type: SupportedSearchType) => {

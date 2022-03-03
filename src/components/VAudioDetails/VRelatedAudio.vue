@@ -45,7 +45,7 @@ export default {
    * @param {object} props
    * @param {string} props.audioId
    * @param {any} props.service
-   * @return {{ audios: import('~/composables/types').Ref<import('~/store/types').AudioDetail[]>, audioTrackSize: import('@nuxtjs/composition-api').ComputedRef<"l" | "s"> }}
+   * @return {{ audios: import('~/composables/types').Ref<import('~/stores/types').AudioDetail[]>, audioTrackSize: import('@nuxtjs/composition-api').ComputedRef<"l" | "s"> }}
    */
   setup(props) {
     const mainAudioId = ref(props.audioId)

@@ -7,7 +7,13 @@ export interface FetchState {
   hasStarted?: boolean
   isFinished?: boolean
 }
-
+export const initialFetchState = {
+  isFetching: false,
+  fetchingError: null,
+  canFetch: true,
+  hasStarted: false,
+  isFinished: false,
+}
 /* Constants */
 
 /**
@@ -41,11 +47,34 @@ const nonErrorStatuses: Status[] = [
 const canFetchStatuses: Status[] = [statuses.IDLE, statuses.SUCCESS]
 
 /* Composable */
+const initialFetchStateValue: {
+  status: Status
+  fetchError: null | string
+  isFinished: boolean
+} = {
+  status: statuses.IDLE,
+  fetchError: null,
+  isFinished: false,
+}
+export const useFetchState = (state: FetchState = initialFetchState) => {
+  const initialState = { ...initialFetchStateValue }
+  if (state) {
+    if (state.isFetching) {
+      initialState.status = statuses.FETCHING
+    } else if (state.fetchingError) {
+      initialState.status = statuses.ERROR
+      initialState.fetchError = state.fetchingError
+    } else if (state.hasStarted) {
+      initialState.status = statuses.SUCCESS
+    }
+    if (state.isFinished) {
+      initialState.isFinished = true
+    }
+  }
 
-export const useFetchState = (initialState = statuses.IDLE) => {
-  const fetchStatus: Ref<Status> = ref(initialState)
-  const fetchError: Ref<string | null> = ref(null)
-  const isFinished: Ref<boolean> = ref(false)
+  const fetchStatus: Ref<Status> = ref(initialState.status)
+  const fetchError: Ref<string | null> = ref(initialState.fetchError)
+  const isFinished: Ref<boolean> = ref(initialState.isFinished)
 
   watch(fetchStatus, () => {
     if (nonErrorStatuses.includes(fetchStatus.value)) {

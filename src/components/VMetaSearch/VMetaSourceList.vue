@@ -29,7 +29,7 @@ import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
 
 import { getAdditionalSources } from '~/utils/get-additional-sources'
 
-import type { ApiQueryParams } from '~/store/types'
+import type { ApiQueryParams } from '~/stores/types'
 
 import type { MediaType } from '~/constants/media'
 
