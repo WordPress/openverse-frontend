@@ -45,6 +45,8 @@
 <script>
 import { computed, useContext, useRouter } from '@nuxtjs/composition-api'
 
+import { useFilterStore } from '~/stores/filter'
+
 import {
   CLEAR_FILTERS,
   FETCH_MEDIA,
@@ -62,15 +64,13 @@ export default {
     VFilterChecklist,
   },
   setup() {
+    const filterStore = useFilterStore()
+
     const { i18n, store } = useContext()
     const router = useRouter()
 
-    const isAnyFilterApplied = computed(
-      () => store.getters[`${SEARCH}/isAnyFilterApplied`]
-    )
-    const filters = computed(() => {
-      return store.getters[`${SEARCH}/mediaFiltersForDisplay`] || {}
-    })
+    const isAnyFilterApplied = computed(() => filterStore.isAnyFilterApplied)
+    const filters = computed(() => store.getters[`${SEARCH}/searchFilters`])
     const filterTypes = computed(() => Object.keys(filters.value))
     const filterTypeTitle = (filterType) => {
       if (filterType === 'searchBy') {

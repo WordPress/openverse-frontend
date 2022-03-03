@@ -141,7 +141,6 @@ export interface FetchState {
 export interface SearchState {
   searchType: SupportedSearchType
   query: Query
-  filters: Filters
 }
 
 export interface ActiveMediaState {

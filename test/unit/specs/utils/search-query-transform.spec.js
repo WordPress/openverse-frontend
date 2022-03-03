@@ -6,8 +6,7 @@ import {
   queryStringToQueryData,
 } from '~/utils/search-query-transform'
 import { AUDIO, IMAGE } from '~/constants/media'
-
-import { filterData } from '~/constants/filters.ts'
+import { filterData } from '~/constants/filters'
 
 describe('searchQueryTransform', () => {
   it('converts initial filters to query data', () => {
@@ -15,6 +14,13 @@ describe('searchQueryTransform', () => {
       ...filterData,
     }
 
+    const result = filtersToQueryData(filters)
+    expect(result).toEqual({}) // toEqual checks for value equality
+  })
+  it('converts filter to query data', () => {
+    const filters = {
+      ...filterData,
+    }
     const result = filtersToQueryData(filters)
     expect(result).toEqual({})
   })
