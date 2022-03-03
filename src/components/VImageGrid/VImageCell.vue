@@ -19,7 +19,7 @@
         :alt="image.title"
         :src="getImageUrl(image)"
         :width="imgWidth"
-        :height="imageight"
+        :height="imgHeight"
         @load="getImgDimension"
         @error="onImageLoadError($event, image)"
       />
