@@ -32,7 +32,7 @@ import {
 import {
   filterData,
   mediaFilterKeys,
-  mediaSpecificFilters,
+  mediaUniqueFilterKeys,
 } from '~/constants/filters.ts'
 
 /**
@@ -293,7 +293,7 @@ const mutations = {
 
     let filterKeysToClear = []
     mediaTypesToClear.forEach((mediaType) => {
-      const filterKeys = mediaSpecificFilters[mediaType]
+      const filterKeys = mediaUniqueFilterKeys[mediaType]
       filterKeysToClear = [...filterKeysToClear, ...filterKeys]
     })
 

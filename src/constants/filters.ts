@@ -34,6 +34,23 @@ export const mediaFilterKeys = deepFreeze<Record<SearchType, FilterType[]>>({
   [ALL_MEDIA]: ['licenseTypes', 'licenses', 'searchBy', 'mature'],
 })
 
+/**
+ * A list of filters that are only used for the specific content type.
+ * This is used to clear filters from other content types when changing the content type.
+ */
+export const mediaUniqueFilterKeys = deepFreeze<Record<SearchType, string[]>>({
+  all: [],
+  image: [
+    'imageCategories',
+    'imageExtensions',
+    'aspectRatios',
+    'sizes',
+    'imageProviders',
+  ],
+  audio: ['audioCategories', 'audioExtensions', 'durations', 'audioProviders'],
+  video: [],
+})
+
 const filterCodesPerCategory = deepFreeze<Record<FilterType, string[]>>({
   licenses: ACTIVE_LICENSES,
   licenseTypes: ['commercial', 'modification'],
@@ -61,6 +78,7 @@ const filterCodesPerCategory = deepFreeze<Record<FilterType, string[]>>({
  *       "checked": false
  *     }, ...
  *   ],
+ * }
  *```
  */
 const initFilters = () =>
@@ -75,22 +93,5 @@ const initFilters = () =>
     }),
     {}
   )
-
-/**
- * A list of filters that are only used for the specific content type.
- * This is used to clear filters from other content types when changing the content type.
- */
-export const mediaSpecificFilters = deepFreeze<Record<SearchType, string[]>>({
-  all: [],
-  image: [
-    'imageCategories',
-    'imageExtensions',
-    'aspectRatios',
-    'sizes',
-    'imageProviders',
-  ],
-  audio: ['audioCategories', 'audioExtensions', 'durations', 'audioProviders'],
-  video: [],
-})
 
 export const filterData = deepFreeze(initFilters())
