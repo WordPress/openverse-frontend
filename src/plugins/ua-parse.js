@@ -11,8 +11,7 @@ export default function (context, inject) {
   var ua
   if (userAgent !== null || userAgent !== undefined) {
     ua = useragent.parse(userAgent)
-  }
-  else {
+  } else {
     ua = null
   }
 
