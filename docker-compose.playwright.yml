@@ -19,8 +19,12 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.proxy
+    volumes:
+      - .:/app
     ports:
       - "3000:3000"
+    environment:
+      UPDATE_TAPES: ${UPDATE_TAPES}
 
   playwright:
     image: mcr.microsoft.com/playwright:v${PLAYWRIGHT_VERSION}-focal

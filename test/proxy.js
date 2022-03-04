@@ -16,7 +16,9 @@ const host = 'https://api.openverse.engineering/v1'
 
 const tapeNameGenerator = (tapeNumber) => `response-${tapeNumber}`
 
-const updatingTapes = process.argv.includes('--update-tapes')
+const updatingTapes =
+  process.argv.includes('--update-tapes') || process.env.UPDATE_TAPES === 'true'
+
 const recordMode = updatingTapes
   ? talkback.Options.RecordMode.NEW
   : talkback.Options.RecordMode.DISABLED
