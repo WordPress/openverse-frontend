@@ -7,6 +7,8 @@ FROM node:16 AS builder
 
 WORKDIR /usr/app
 
+ARG API_URL
+
 # Install pnpm
 RUN npm install -g pnpm
 
@@ -50,7 +52,7 @@ COPY --from=builder /usr/app/pnpm-store /usr/app/pnpm-store
 ENV NUXT_TELEMETRY_DISABLED=1
 
 # install dependencies (development dependencies included)
-RUN pnpm install
+RUN pnpm install --store=pnpm-store
 
 # expose port 8443
 EXPOSE 8443

@@ -4,13 +4,14 @@ services:
     build:
       context: .
       target: app
+      args:
+        API_URL: http://api:3000
     ports:
       - "8443:8443"
     environment:
       # HOST is necessary for Nuxt + Docker
       HOST: 0.0.0.0
       PORT: 8443
-      API_URL: http://api:3000
     depends_on:
       - api
 

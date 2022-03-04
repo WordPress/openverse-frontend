@@ -28,6 +28,9 @@
 # 0. Addition of --work-dir option
 # 1. Fixed protocol-based binary tool check
 #
+# If https://github.com/eficode/wait-for/pull/82 is merged upstream then
+# we can remove the second fix listed above.
+#
 # When merging upstream changes to this file please make sure to preserve these changes
 ###
 
