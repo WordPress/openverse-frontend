@@ -19,11 +19,10 @@ const tapeNameGenerator = (tapeNumber) => `response-${tapeNumber}`
 const updatingTapes = process.argv.includes('--update-tapes')
 const recordMode = updatingTapes
   ? talkback.Options.RecordMode.NEW
-  : talkback.Options.RecordMode.NEW
-console.log('Record mode: ', recordMode)
+  : talkback.Options.RecordMode.DISABLED
 const opts = {
   host,
-  port: 3322,
+  port: 49152,
   path: './test/tapes',
   record: recordMode,
   fallbackMode: talkback.Options.FallbackMode.NOT_FOUND,
@@ -35,7 +34,7 @@ const opts = {
 
 const server = talkback(opts)
 
-server.start(() => console.log('Talkback started!'))
+server.start(() => console.log('Talkback started with record mode', recordMode))
 function closeServer() {
   server.close()
   console.log('Server closed, exiting process')

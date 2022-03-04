@@ -35,7 +35,6 @@ Please check the url: ${config.baseURL}${config.url}`
  * @param {string} [baseUrl]
  */
 export const createApiService = (baseUrl = process.env.apiUrl) => {
-  console.log('will create api service with ', baseUrl)
   const client = axios.create({
     baseURL: baseUrl,
     timeout: DEFAULT_REQUEST_TIMEOUT,
