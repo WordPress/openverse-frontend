@@ -40,6 +40,7 @@ export default defineComponent({
     },
     /**
      * The parent audio layout currently in use
+     *
      * @todo This type def should be extracted for reuse across components
      */
     layout: {

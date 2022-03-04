@@ -83,6 +83,7 @@ export default defineComponent({
   setup(props) {
     /**
      * Format the time as hh:mm:ss, dropping the hour part if it is zero.
+     *
      * @param {number} ms - the number of milliseconds in the duration
      * @returns {string} the duration in a human-friendly format
      */
@@ -99,6 +100,7 @@ export default defineComponent({
      * Returns specific display name for file format if there is a mapping for
      * provider's format display names (like Jamendo's `mp32` -> `MP3 V0`).
      * Otherwise, returns UpperCase format or ''
+     *
      * @param {string} provider
      * @param {string} [format]
      */

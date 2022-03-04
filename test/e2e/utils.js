@@ -28,6 +28,7 @@ const changeContentType = async (page, to) => {
 }
 /**
  * Finds a button with a popup to the left of the filters button which doesn't have a 'menu' label
+ *
  * @param page
  * @returns {Promise<string>}
  */

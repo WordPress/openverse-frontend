@@ -9,7 +9,7 @@ import {
 /**
  * Use an event listener. Shamelessly stolen from https://logaretm.com/blog/my-favorite-5-vuejs-composables/#useeventlistener
  *
- * @param {import('./types').MaybeRef<EventTarget | null> | EventTarget} target The target can be a reactive ref which adds flexibility
+ * @param {import('./types').MaybeRef<EventTarget | null> | EventTarget} target - The target can be a reactive ref which adds flexibility
  * @param {string} event
  * @param {(e: Event) => void} handler
  * @param {any} options

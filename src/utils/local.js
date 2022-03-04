@@ -18,7 +18,7 @@ const local = {
   },
   /**
    * @param {Parameters<typeof localStorage['setItem']>} args
-   * @return {void}
+   * @returns {void}
    */
   set(...args) {
     try {

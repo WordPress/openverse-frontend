@@ -31,6 +31,9 @@ const set = require('lodash.set')
 // https://github.com/messageformat/Jed/blob/351c47d5c57c5c81e418414c53ca84075c518edb/jed.js#L117
 const SPLIT_CHAR = String.fromCharCode(4)
 
+/**
+ * @param jed1xObject
+ */
 function jed1xJsonToJson(jed1xObject) {
   const result = {}
   Object.entries(jed1xObject?.locale_data?.messages).forEach(([key, value]) => {

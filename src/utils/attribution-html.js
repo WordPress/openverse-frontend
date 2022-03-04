@@ -1,4 +1,9 @@
 const linkProperties = 'target="_blank" rel="noopener noreferrer"'
+/**
+ * @param media
+ * @param licenseUrl
+ * @param fullLicenseName
+ */
 function getAttributionHtml(media, licenseUrl, fullLicenseName) {
   if (!media) {
     return ''

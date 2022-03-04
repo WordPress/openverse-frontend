@@ -1,5 +1,9 @@
 import useragent from 'express-useragent'
 
+/**
+ * @param context
+ * @param inject
+ */
 export default function (context, inject) {
   let userAgent
 

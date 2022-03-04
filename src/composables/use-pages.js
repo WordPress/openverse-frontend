@@ -1,5 +1,8 @@
 import { computed, useContext, useRoute } from '@nuxtjs/composition-api'
 
+/**
+ *
+ */
 export default function usePages() {
   const { app } = useContext()
 

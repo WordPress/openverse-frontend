@@ -4,8 +4,8 @@ export default () => {
     silentFallbackWarn: true,
     pluralizationRules: {
       /**
-       * @param choice {number} a choice index given by the input to $tc: `$tc('path.to.rule', choiceIndex)`
-       * @param choicesLength {number} an overall amount of available choices
+       * @param choice - {number} a choice index given by the input to $tc: `$tc('path.to.rule', choiceIndex)`
+       * @param choicesLength - {number} an overall amount of available choices
        * @returns a final choice index to select plural word by
        */
       ru: function (choice, choicesLength) {

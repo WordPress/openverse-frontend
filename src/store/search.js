@@ -142,6 +142,7 @@ const getBaseFiltersWithProviders = (state) => {
 /**
  * Returns true if any of the filters' checked property is true
  * except for `mature` filter, as it is not displayed as a tag
+ *
  * @param filters
  * @returns {boolean}
  */
@@ -162,7 +163,7 @@ const anyFilterApplied = (filters = {}) =>
  * depending on the media type. For example, `extension` query parameter can be `audioExtension`
  * or `imageExtension`, with different values for each.
  *
- * @return {import('./types').SearchState}
+ * @returns {import('./types').SearchState}
  */
 export const state = () => ({
   filters: clonedeep(filterData),
@@ -186,8 +187,9 @@ export const getters = {
   /**
    * Returns the search query parameters for API request:
    * drops all parameters with blank values.
+   *
    * @param {import('./types').SearchState} state
-   * @return {import('./types').ApiQueryParams}
+   * @returns {import('./types').ApiQueryParams}
    */
   searchQueryParams: (state) => {
     // Ensure that q filter always comes first
@@ -238,7 +240,7 @@ export const getters = {
    * Returns true if any filter except `mature` is applied.
    *
    * @param {import('./types').SearchState} state
-   * @return {boolean}
+   * @returns {boolean}
    */
   isAnyFilterApplied: (state) => {
     return anyFilterApplied(
@@ -251,8 +253,9 @@ export const getters = {
   /**
    * Returns the array of the filters applicable for current search type
    * for display on the Filter sidebar.
+   *
    * @param {import('./types').SearchState} state
-   * @return {{}}
+   * @returns {{}}
    */
   mediaFiltersForDisplay: (state) => {
     return getMediaTypeFilters({
@@ -266,11 +269,12 @@ export const getters = {
 const actions = {
   /**
    * Called when `q` search term or `searchType` are changed.
+   *
    * @param {import('vuex').ActionContext} context
    * @param {import('vuex').ActionPayload} params
    * @param {string} [params.q]
    * @param {import('./types').SupportedSearchType} [params.searchType]
-   * @return {Promise<void>}
+   * @returns {Promise<void>}
    */
   async [UPDATE_QUERY]({ commit, dispatch, state }, params = {}) {
     const { q, searchType } = params
@@ -287,6 +291,7 @@ const actions = {
   },
   /**
    * Toggles a filter's checked parameter
+   *
    * @param {import('vuex').ActionContext} context
    * @param params
    */
@@ -303,6 +308,7 @@ const actions = {
    * Resets all filters to initial values.
    * Provider filters are not in the initial filters, so they need to be
    * handled separately.
+   *
    * @param {import('vuex').ActionContext} context
    */
   async [CLEAR_FILTERS]({ commit, dispatch, state }) {
@@ -314,9 +320,10 @@ const actions = {
 
   /**
    * Called when a /search path is server-rendered.
+   *
    * @param {import('vuex').ActionContext} context
    * @param {string} path
-   * @param {Object} query
+   * @param {object} query
    */
   async [SET_SEARCH_STATE_FROM_URL](
     { commit, dispatch, state },
@@ -338,8 +345,9 @@ const actions = {
   },
   /**
    * After a change in filters, updates the query.
+   *
    * @param {import('vuex').ActionContext} context
-   * @param {Object} params
+   * @param {object} params
    * @param {string} [params.q]
    * @param {'audio'|'image'} [params.mediaType]
    */
@@ -355,6 +363,12 @@ const actions = {
   },
 }
 
+/**
+ * @param root0
+ * @param root0.filters
+ * @param root0.mediaType
+ * @param root0.includeMature
+ */
 function getMediaTypeFilters({ filters, mediaType, includeMature = false }) {
   if (!supportedSearchTypes.includes(mediaType)) {
     mediaType = ALL_MEDIA
@@ -374,6 +388,7 @@ const mutations = {
   /**
    * After a search type is changed, unchecks all the filters that are not
    * applicable for this Media type.
+   *
    * @param {import('./types').SearchState} state
    * @param {import('./types').SearchType} searchType
    */
@@ -466,6 +481,7 @@ const mutations = {
   },
   /**
    * Sets the content type to search.
+   *
    * @param {import('./types').SearchState} state
    * @param {import('./types').SearchType} searchType
    */
@@ -474,8 +490,10 @@ const mutations = {
   },
   /**
    * Replaces the query object that is used for API calls.
+   *
    * @param {import('./types').SearchState} state
-   * @param {Object} query
+   * @param query.query
+   * @param {object} query
    */
   [SET_QUERY](state, { query }) {
     state.query = query

@@ -9,6 +9,10 @@ const parser = require('node-html-parser')
 
 const baseUrl = `https://translate.wordpress.org/projects/meta/openverse`
 
+/**
+ * @param row
+ * @param locales
+ */
 function parseRow(row, locales) {
   const cells = row.querySelectorAll('td')
   const langLink = cells[0].querySelector('a')
@@ -32,6 +36,8 @@ function parseRow(row, locales) {
  * available at translate.wordpress.org. Also, adds the `code` (the same as GlotPress
  * `slug`), and `translated` with the percentage of translated strings, to each
  * locale object.
+ *
+ * @param gpLocales
  */
 const addFetchedTranslationStatus = async (gpLocales) => {
   const locales = Object.values(gpLocales)

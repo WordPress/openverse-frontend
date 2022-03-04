@@ -8,6 +8,9 @@ import { ref } from '@nuxtjs/composition-api'
  */
 const obj = ref(undefined)
 
+/**
+ *
+ */
 export function useActiveAudio() {
   return Object.freeze({ obj })
 }

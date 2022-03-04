@@ -5,13 +5,13 @@
 /**
  * Small Fast Counter is a seedable pseudo-random number generator. It accepts 4
  * numbers as seeds.
- * @see {@link https://github.com/bryc/code/blob/master/jshash/PRNGs.md#sfc32}
  *
+ * @see {@link https://github.com/bryc/code/blob/master/jshash/PRNGs.md#sfc32}
  * @param {number} a - first seed for SFC32
  * @param {number} b - second seed for SFC32
  * @param {number} c - third seed for SFC32
  * @param {number} d - fourth seed for SFC32
- * @return {() => number} the seeded PRNG
+ * @returns {() => number} the seeded PRNG
  */
 const sfc32 = (a, b, c, d) => () => {
   a |= 0
@@ -41,7 +41,7 @@ export const rand = (d) => sfc32(0x9e3779b9, 0x243f6a88, 0xb7e15162, d)
  * pseudo-random number generator.
  *
  * @param {string} str - the string to hash
- * @return {number} the number generated from hashing the string
+ * @returns {number} the number generated from hashing the string
  */
 export const hash = (str) => {
   let hash = 0

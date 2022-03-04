@@ -1,5 +1,9 @@
 import { capital } from 'case'
 
+/**
+ * @param providersList
+ * @param providerCode
+ */
 export default function getProviderName(providersList, providerCode) {
   if (!providersList) {
     return capital(providerCode) || ''

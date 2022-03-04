@@ -1,3 +1,7 @@
+/**
+ * @param key
+ * @param url
+ */
 export default function getParameterByName(key, url) {
   const name = key.replace(/[[\]]/g, '\\$&')
   const regex = new RegExp(`(${name})=([^&]*)+&*`, 'g')

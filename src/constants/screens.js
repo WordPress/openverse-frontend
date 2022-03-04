@@ -2,6 +2,7 @@
 
 /**
  * Mapping of a breakpoint name to the lower-bound of its screen-width range
+ *
  * @type {Map<Exclude<Breakpoints, 'mob'>, number>}
  */
 const SCREEN_SIZES = new Map([
@@ -27,6 +28,7 @@ const VIEWPORTS = Object.fromEntries(
 
 /**
  * Get the breakpoint in which the screen with the given width lies.
+ *
  * @param {number} screenWidth - the width of the screen
  * @returns {Breakpoints} the breakpoint in which the screen lies
  */

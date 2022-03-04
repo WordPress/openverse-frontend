@@ -22,6 +22,7 @@ const set = require('lodash.set')
  *   }
  * }
  *
+ * @param ngxObject
  */
 function ngxJsonToJson(ngxObject) {
   const result = {}

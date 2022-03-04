@@ -6,6 +6,9 @@ const isEmptyObject = (a) => !Object.keys(a).length
 const isSimple = (a) => !a || !isObject(a) || isEmptyObject(a)
 const pop = (a) => a.pop() || []
 
+/**
+ * @param obj
+ */
 function getAllPaths(obj) {
   const result = []
   const [currentResult, stack] = readPaths(obj)
@@ -25,6 +28,10 @@ function getAllPaths(obj) {
 
 const { entries } = Object
 
+/**
+ * @param obj
+ * @param path
+ */
 function readPaths(obj, path = '') {
   const divider = '.'
   const result = []

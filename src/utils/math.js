@@ -44,7 +44,7 @@ export const dist = (p0, p1) =>
  *
  * @param {[number, number][]} ctrlPts - the array of control points
  * @param {number} pointCount - the number of Bézier points to calculate
- * @return {[number]} the list of x-coordinates of Bézier points
+ * @returns {[number]} the list of x-coordinates of Bézier points
  */
 export const bezier = (ctrlPts, pointCount) => {
   const bezierPoints = []

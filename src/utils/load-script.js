@@ -1,3 +1,6 @@
+/**
+ * @param url
+ */
 export default function loadScript(url = '') {
   return new Promise((resolve, reject) => {
     if (typeof document === 'undefined') {

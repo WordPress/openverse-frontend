@@ -15,6 +15,7 @@ const disabled = !stringToBoolean(process.env.enableInternalAnalytics)
 /**
  * Catch api event failures, mainly to prevent SSR errors on test domains that cannot communicate with our API server.
  * Alternatively, just disable internal analytics on those servers with ENABLE_INTERNAL_ANALYTICS=true in the environment.
+ *
  * @param {string} eventName
  * @param {import('vue').default} context
  */

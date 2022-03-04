@@ -80,6 +80,9 @@ const VImageDetails = defineComponent({
       return i18n.t('image-details.information.unknown')
     })
 
+    /**
+     * @param nameCode
+     */
     function getProviderName(nameCode) {
       return nameCode ? store.getters['provider/getProviderName'](nameCode) : ''
     }

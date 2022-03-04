@@ -22,7 +22,7 @@ export const useGetLocaleFormattedNumber = () => {
   const { i18n } = useContext()
 
   /**
-   * @param {number} n The number to format
+   * @param {number} n - The number to format
    */
   return (n) => {
     let { locale } = i18n

@@ -14,9 +14,10 @@
 /**
  * Capitalized full license name from license slug and version:
  * ('by-sa', '4.0') -> 'CC BY-SA 4.0'
+ *
  * @param {License} license
  * @param {LicenseVersion} license_version
- * @return {string}
+ * @returns {string}
  */
 export const getFullLicenseName = (license, license_version) => {
   if (!license) {
@@ -31,8 +32,9 @@ export const getFullLicenseName = (license, license_version) => {
 /**
  * CC licenses have different legal status from the public domain marks
  * such as CC0 and PDM, and need different wording.
+ *
  * @param {License|LicenseName|''} licenseOrMark
- * @return {asserts licenseOrMark is Exclude<'pdm' | 'cc0', License | LicenseName | ''>} false if licenseOrMark is CC0 or PDM, true otherwise
+ * @returns {asserts licenseOrMark is Exclude<'pdm' | 'cc0', License | LicenseName | ''>} false if licenseOrMark is CC0 or PDM, true otherwise
  */
 export const isLicense = (licenseOrMark = '') => {
   return !['pdm', 'cc0'].includes(licenseOrMark.toLowerCase())
@@ -40,8 +42,9 @@ export const isLicense = (licenseOrMark = '') => {
 
 /**
  * Returns true if argument is PDM or CC0
+ *
  * @param {License|LicenseName|''} licenseOrMark
- * @return {boolean}
+ * @returns {boolean}
  */
 export const isPublicDomain = (licenseOrMark = '') => {
   return ['pdm', 'cc0'].includes(licenseOrMark.toLowerCase())

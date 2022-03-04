@@ -23,8 +23,9 @@ const checkStringForVars = (string) =>
  * For GlotPress to display warning when the translators try to
  * replace placeholders with something else, we need to wrap the
  * placeholders with `###WORD###`
+ *
  * @param string
- * @return {string}
+ * @returns {string}
  */
 const replaceVarsPlaceholders = (string) => {
   if (!containsCurlyWord(string)) {
@@ -37,8 +38,9 @@ const replaceVarsPlaceholders = (string) => {
 /**
  * Replace placeholder format for variables,
  * escape quotes (in a different PR)
+ *
  * @param string
- * @return {string}
+ * @returns {string}
  */
 const processValue = (string) => {
   return escapeQuotes(replaceVarsPlaceholders(string))
@@ -50,8 +52,9 @@ const PARSED_VUE_FILES = getParsedVueFiles('**/*.?(js|vue)')
  * Returns the comment with a reference github link to the line where the
  * string is used, if available. Example:
  * #: /components/HeroSection.vue:L6
- * @param {string} keyPath (eg."hero.title")
- * @return {string}
+ *
+ * @param {string} keyPath - (eg."hero.title")
+ * @returns {string}
  */
 const getRefComment = (keyPath) => {
   const keyValue = PARSED_VUE_FILES.find((k) => k.path === keyPath)
@@ -93,6 +96,9 @@ msgstr ""
 // msgid untranslated-string
 // msgstr translated-string
 
+/**
+ * @param json
+ */
 function potTime(json) {
   let potFileString = ''
   const jsonKeys = getAllPaths(json)

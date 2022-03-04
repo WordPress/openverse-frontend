@@ -174,9 +174,9 @@ export const legacySourceMap = {
  * getLegacySourceUrl
  *
  * Return a valid url of search results for the provided meta search type
- * @param {('image'|'audio'|'video')} type The type of media our meta search is for
  *
- *  */
+ * @param {('image'|'audio'|'video')} type - The type of media our meta search is for
+ */
 const getLegacySourceUrl = (type) => (sourceName, search) => {
   if (!search) {
     throw new Error(

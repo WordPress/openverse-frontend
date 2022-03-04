@@ -7,6 +7,8 @@ module.exports = srand
 
 /**
  * srand
+ *
+ * @param seed
  */
 function srand(seed) {
   let str

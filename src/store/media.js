@@ -25,7 +25,7 @@ import { USAGE_DATA } from '~/constants/store-modules'
 import MediaService from '~/data/media-service'
 
 /**
- * @return {import('./types').MediaState}
+ * @returns {import('./types').MediaState}
  */
 export const state = () => ({
   results: {
@@ -68,7 +68,7 @@ export const createActions = (services = mediaServices) => ({
    *
    * @param {import('vuex').ActionContext} context
    * @param {object} [payload]
-   * @return {Promise<void>}
+   * @returns {Promise<void>}
    */
   async [FETCH_MEDIA]({ dispatch, rootState }, payload = {}) {
     const mediaType = rootState.search.searchType
@@ -82,6 +82,7 @@ export const createActions = (services = mediaServices) => ({
   },
   /**
    * Do not use with ALL_MEDIA
+   *
    * @param {import('vuex').ActionContext} context
    * @param {object} payload
    * @param {import('./types').SupportedMediaType} payload.mediaType
@@ -94,11 +95,11 @@ export const createActions = (services = mediaServices) => ({
   /**
    *
    * @param {import('vuex').ActionContext} context
-   * @param {Object} payload
+   * @param {object} payload
    * @param {import('./types').SupportedMediaType} payload.mediaType - the mediaType to fetch (do not use 'All_media' here)
    * @param {number} [payload.page] - API page to load.
    * @param {boolean} [payload.shouldPersistMedia] - whether the existing media should be added to or replaced.
-   * @return {Promise<void>}
+   * @returns {Promise<void>}
    */
   async [FETCH_SINGLE_MEDIA_TYPE](
     { commit, dispatch, rootState, rootGetters },
@@ -159,7 +160,7 @@ export const createActions = (services = mediaServices) => ({
    * @param {object} params
    * @param {import('../constants/media').MediaType} params.mediaType
    * @param {string} params.id
-   * @return {Promise<void>}
+   * @returns {Promise<void>}
    */
   async [FETCH_MEDIA_ITEM]({ commit, dispatch, state, rootState }, params) {
     const { mediaType, id } = params
@@ -194,7 +195,7 @@ export const createActions = (services = mediaServices) => ({
    * @param {object} payload
    * @param {import('./types').SupportedMediaType} payload.mediaType
    * @param {unknown} payload.error
-   * @return {Promise<void>}
+   * @returns {Promise<void>}
    */
   async [HANDLE_MEDIA_ERROR]({ commit }, { mediaType, error }) {
     let errorMessage
@@ -229,9 +230,10 @@ const actions = createActions()
 export const getters = {
   /**
    * Returns the search result data related for selected media.
+   *
    * @param {import('./types').MediaState} state
    * @param getters
-   * @return {import('./types').MediaStoreResult[] | {'audio': import('./types').MediaStoreResult, 'image': import('./types').MediaStoreResult}}
+   * @returns {import('./types').MediaStoreResult[] | {'audio': import('./types').MediaStoreResult, 'image': import('./types').MediaStoreResult}}
    */
   results(state, getters) {
     if (getters.searchType === ALL_MEDIA) {
@@ -270,6 +272,7 @@ export const getters = {
   },
   /**
    * Search fetching state for selected media type.
+   *
    * @param {import('./types').MediaState} state
    * @param getters
    * @returns {import('./types').fetchState}
@@ -305,6 +308,7 @@ export const getters = {
 export const mutations = {
   /**
    * Sets the fetchState for all passed mediaTypes at the beginning of fetching.
+   *
    * @param _state
    * @param {import('./types').MediaType} mediaType
    */
@@ -315,6 +319,7 @@ export const mutations = {
   },
   /**
    * Sets the fetchState.isFetching to false for all passed mediaTypes at the end of fetching.
+   *
    * @param _state
    * @param {object} params
    * @param {import('./types').MediaType} params.mediaType
@@ -359,6 +364,7 @@ export const mutations = {
   },
   /**
    * Clears the items for all passed media types, and resets fetch state.
+   *
    * @param _state
    * @param {import('./types').MediaType} mediaType
    */
