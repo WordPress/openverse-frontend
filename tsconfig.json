@@ -49,8 +49,7 @@
     "src/stores/active-media.js",
     "src/stores/nav.js",
     "src/utils/decode-media-data.js",
-    "src/utils/deep-freeze.js",
-    "src/utils/key-codes.js"
+    "src/utils/deep-freeze.js"
   ],
   "exclude": ["node_modules"]
 }
