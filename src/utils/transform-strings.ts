@@ -1,6 +1,9 @@
-export const capitalize = (str) => str[0].toUpperCase() + str.slice(1)
-export const kebabize = (str) => {
-  return str
+/**
+ * Convert the given text to kebab-case.
+ * @param text - the text to convert
+ */
+export const kebabCase = (text: string): string => {
+  return text
     .split('')
     .map((letter, idx) => {
       return letter.toUpperCase() === letter
