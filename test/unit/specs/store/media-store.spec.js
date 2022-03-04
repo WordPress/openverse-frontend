@@ -1,3 +1,6 @@
+import { setActivePinia } from 'pinia'
+import { createTestingPinia } from '@pinia/testing'
+
 import store, { createActions } from '~/store/media'
 import {
   FETCH_END_MEDIA,
@@ -15,11 +18,7 @@ import {
   HANDLE_NO_MEDIA,
 } from '~/constants/action-types'
 import { AUDIO, IMAGE, supportedMediaTypes } from '~/constants/media'
-import {
-  SEND_RESULT_CLICKED_EVENT,
-  SEND_SEARCH_QUERY_EVENT,
-} from '~/constants/usage-data-analytics-types'
-import { USAGE_DATA } from '~/constants/store-modules'
+import { useUsageDataStore } from '~/stores/usage-data'
 
 describe('Search Store', () => {
   describe('state', () => {
@@ -54,10 +53,13 @@ describe('Search Store', () => {
 
   describe('mutations', () => {
     let state = null
+    let pinia = null
     const mutations = store.mutations
 
     beforeEach(() => {
       state = store.state()
+      pinia = createTestingPinia()
+      setActivePinia(pinia)
     })
 
     it('FETCH_START_MEDIA updates state', () => {
@@ -182,6 +184,7 @@ describe('Search Store', () => {
   })
 
   describe('actions', () => {
+    let pinia = null
     const detailData = { [AUDIO]: 'audioDetails', [IMAGE]: 'imageDetails' }
     const searchResults = {
       results: { foo: { id: 'foo' }, bar: { id: 'bar' }, zeta: { id: 'zeta' } },
@@ -192,6 +195,8 @@ describe('Search Store', () => {
     let state
     let context
     beforeEach(() => {
+      pinia = createTestingPinia()
+      setActivePinia(pinia)
       services = {
         [AUDIO]: {
           search: jest.fn(() => Promise.resolve(searchResults)),
@@ -271,17 +276,14 @@ describe('Search Store', () => {
 
     it('FETCH_SINGLE_MEDIA_TYPE dispatches SEND_SEARCH_QUERY_EVENT', async () => {
       const params = { q: 'foo', shouldPersistMedia: false, mediaType: IMAGE }
+      const usageDataStore = useUsageDataStore(pinia)
       const action = createActions(services)[FETCH_SINGLE_MEDIA_TYPE]
       await action(context, params)
 
-      expect(context.dispatch).toHaveBeenCalledWith(
-        `${USAGE_DATA}/${SEND_SEARCH_QUERY_EVENT}`,
-        {
-          query: params.q,
-          sessionId: context.rootState.user.usageSessionId,
-        },
-        { root: true }
-      )
+      expect(usageDataStore.sendSearchQueryEvent).toHaveBeenCalledWith({
+        query: params.q,
+        sessionId: context.rootState.user.usageSessionId,
+      })
     })
 
     it('does not dispatch SEND_SEARCH_QUERY_EVENT if page param is available', async () => {
@@ -293,13 +295,11 @@ describe('Search Store', () => {
       const action = createActions(services)[FETCH_SINGLE_MEDIA_TYPE]
       await action(context, params)
 
-      expect(context.dispatch).not.toHaveBeenCalledWith(
-        `${USAGE_DATA}/${SEND_SEARCH_QUERY_EVENT}`,
-        {
-          query: params.q,
-          sessionId: context.rootState.user.usageSessionId,
-        }
-      )
+      const usageDataStore = useUsageDataStore()
+      expect(usageDataStore.sendSearchQueryEvent).not.toHaveBeenCalledWith({
+        query: params.q,
+        sessionId: context.rootState.user.usageSessionId,
+      })
     })
 
     it('FETCH_SINGLE_MEDIA_TYPE on error', async () => {
@@ -383,19 +383,16 @@ describe('Search Store', () => {
       'FETCH_MEDIA_ITEM dispatches SEND_RESULT_CLICKED_EVENT',
       (mediaType) => {
         const params = { id: 'foo', mediaType }
+        const usageDataStore = useUsageDataStore()
         const action = createActions(services)[FETCH_MEDIA_ITEM]
         action(context, params)
 
-        expect(context.dispatch).toHaveBeenLastCalledWith(
-          `${USAGE_DATA}/${SEND_RESULT_CLICKED_EVENT}`,
-          {
-            query: context.rootState.search.query.q,
-            resultUuid: 'foo',
-            resultRank: 0,
-            sessionId: context.rootState.user.usageSessionId,
-          },
-          { root: true }
-        )
+        expect(usageDataStore.sendResultClickedEvent).toHaveBeenLastCalledWith({
+          query: context.rootState.search.query.q,
+          resultUuid: 'foo',
+          resultRank: 0,
+          sessionId: context.rootState.user.usageSessionId,
+        })
       }
     )
 

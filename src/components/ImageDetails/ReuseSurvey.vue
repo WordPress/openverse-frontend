@@ -13,11 +13,9 @@
 </template>
 
 <script>
-import {
-  SEND_DETAIL_PAGE_EVENT,
-  DETAIL_PAGE_EVENTS,
-} from '~/constants/usage-data-analytics-types'
-import { USAGE_DATA } from '~/constants/store-modules'
+import { DETAIL_PAGE_EVENTS } from '~/constants/usage-data-analytics-types'
+
+import { useUsageDataStore } from '~/stores/usage-data'
 
 import VLink from '~/components/VLink.vue'
 
@@ -29,6 +27,18 @@ export default {
   name: 'ReuseSurvey',
   components: { VLink },
   props: ['image'],
+  setup(props) {
+    const usageDataStore = useUsageDataStore()
+    const onReuseSurveyClick = async () => {
+      await usageDataStore.sendDetailPageEvent({
+        eventType: DETAIL_PAGE_EVENTS.REUSE_SURVEY,
+        resultUuid: props.image.id,
+      })
+    }
+    return {
+      onReuseSurveyClick,
+    }
+  },
   data: () => ({
     location: '',
   }),
@@ -40,14 +50,6 @@ export default {
   },
   mounted() {
     this.location = window.location.href
-  },
-  methods: {
-    onReuseSurveyClick() {
-      this.$store.dispatch(`${USAGE_DATA}/${SEND_DETAIL_PAGE_EVENT}`, {
-        eventType: DETAIL_PAGE_EVENTS.REUSE_SURVEY,
-        resultUuid: this.$props.image.id,
-      })
-    },
   },
 }
 </script>

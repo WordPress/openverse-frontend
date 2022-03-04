@@ -4,7 +4,6 @@ import type { ModuleConfiguration } from '@nuxtjs/sentry'
 
 /**
  * Get the Sentry configuration based on the current environment.
- * @param isDisabled - whether to disable Sentry
  * @returns the Sentry configuration to use
  */
 export const sentryConfig: ModuleConfiguration = {

@@ -1,48 +1,39 @@
-import { mount } from '@vue/test-utils'
+import { createLocalVue, mount } from '@vue/test-utils'
+import { PiniaVuePlugin } from 'pinia'
+import { createTestingPinia } from '@pinia/testing'
 
-import {
-  DETAIL_PAGE_EVENTS,
-  SEND_DETAIL_PAGE_EVENT,
-} from '~/constants/usage-data-analytics-types'
-import { USAGE_DATA } from '~/constants/store-modules'
+import { DETAIL_PAGE_EVENTS } from '~/constants/usage-data-analytics-types'
+import { useUsageDataStore } from '~/stores/usage-data'
 
 import ReuseSurvey from '~/components/ImageDetails/ReuseSurvey'
 
-import i18n from '../../../test-utils/i18n'
-import render from '../../../test-utils/render'
-
-describe('ImageAttribution', () => {
+jest.mock('~/utils/sentry-config.ts', () => ({
+  sentryConfig: { disabled: false },
+}))
+describe('ReuseSurvey', () => {
   let options = null
   let props = null
-  let dispatchMock = null
-  const $t = (key) => i18n.messages[key]
+  const localVue = createLocalVue()
+  localVue.use(PiniaVuePlugin)
+
   beforeEach(() => {
-    dispatchMock = jest.fn()
     props = {
-      image: {
-        id: 0,
-      },
+      image: { id: 0 },
     }
     options = {
+      localVue,
+      pinia: createTestingPinia(),
       propsData: props,
-      mocks: {
-        $store: {
-          dispatch: dispatchMock,
-        },
-        $t,
-      },
     }
   })
 
   it('should dispatch REUSE_SURVEY on reuse link clicked', () => {
-    const wrapper = render(ReuseSurvey, options, mount)
+    const usageDataStore = useUsageDataStore()
+    const wrapper = mount(ReuseSurvey, options)
     wrapper.find('a').trigger('click')
-    expect(dispatchMock).toHaveBeenCalledWith(
-      `${USAGE_DATA}/${SEND_DETAIL_PAGE_EVENT}`,
-      {
-        eventType: DETAIL_PAGE_EVENTS.REUSE_SURVEY,
-        resultUuid: props.image.id,
-      }
-    )
+    expect(usageDataStore.sendDetailPageEvent).toHaveBeenCalledWith({
+      eventType: DETAIL_PAGE_EVENTS.REUSE_SURVEY,
+      resultUuid: props.image.id,
+    })
   })
 })

@@ -81,18 +81,13 @@
 
 <script>
 import axios from 'axios'
-import { mapActions, mapState } from 'vuex'
+import { mapState } from 'vuex'
 
-import {
-  DETAIL_PAGE_EVENTS,
-  SEND_DETAIL_PAGE_EVENT,
-} from '~/constants/usage-data-analytics-types'
-
-import { MEDIA, USAGE_DATA } from '~/constants/store-modules'
-
+import { DETAIL_PAGE_EVENTS } from '~/constants/usage-data-analytics-types'
+import { MEDIA } from '~/constants/store-modules'
 import { FETCH_MEDIA_ITEM } from '~/constants/action-types'
-
 import { IMAGE } from '~/constants/media'
+import { useUsageDataStore } from '~/stores/usage-data'
 
 import VButton from '~/components/VButton.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'
@@ -101,6 +96,7 @@ import VImageDetails from '~/components/VImageDetails/VImageDetails.vue'
 import VMediaReuse from '~/components/VMediaInfo/VMediaReuse.vue'
 import VRelatedImages from '~/components/VImageDetails/VRelatedImages.vue'
 import SketchFabViewer from '~/components/SketchFabViewer.vue'
+import VBackToSearchResultsLink from '~/components/VBackToSearchResultsLink.vue'
 
 const VImageDetailsPage = {
   name: 'VImageDetailsPage',
@@ -112,6 +108,26 @@ const VImageDetailsPage = {
     VMediaReuse,
     VRelatedImages,
     SketchFabViewer,
+    VBackToSearchResultsLink,
+  },
+  setup() {
+    const usageDataStore = useUsageDataStore()
+    const onSourceLinkClicked = async () => {
+      await usageDataStore.sendDetailPageEven({
+        eventType: DETAIL_PAGE_EVENTS.SOURCE_CLICKED,
+        resultUuid: this.imageId,
+      })
+    }
+    const onCreatorLinkClicked = async () => {
+      await usageDataStore.sendDetailPageEvent({
+        eventType: DETAIL_PAGE_EVENTS.CREATOR_CLICKED,
+        resultUuid: this.imageId,
+      })
+    }
+    return {
+      onSourceLinkClicked,
+      onCreatorLinkClicked,
+    }
   },
   data() {
     return {
@@ -165,7 +181,6 @@ const VImageDetailsPage = {
     })
   },
   methods: {
-    ...mapActions(USAGE_DATA, { sendEvent: SEND_DETAIL_PAGE_EVENT }),
     onImageLoaded(event) {
       this.imageWidth = this.image.width || event.target.naturalWidth
       this.imageHeight = this.image.height || event.target.naturalHeight
@@ -177,18 +192,6 @@ const VImageDetailsPage = {
         })
       }
       this.isLoadingFullImage = false
-    },
-    onSourceLinkClicked() {
-      this.sendEvent({
-        eventType: DETAIL_PAGE_EVENTS.SOURCE_CLICKED,
-        resultUuid: this.imageId,
-      })
-    },
-    onCreatorLinkClicked() {
-      this.sendEvent({
-        eventType: DETAIL_PAGE_EVENTS.CREATOR_CLICKED,
-        resultUuid: this.imageId,
-      })
     },
   },
   head() {
