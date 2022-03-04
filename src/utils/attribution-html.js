@@ -41,18 +41,21 @@ function getAttributionHtml(media, licenseUrl, fullLicenseName) {
 export const getAttributionMarkup = (mediaItem) => {
   if (!mediaItem) return ''
 
+  const extLink = (href, text) =>
+    `<a rel="noopener noreferrer" target="_blank" href="${href}">${text}</a>`
+
   let title = `"${mediaItem.title}"`
   if (mediaItem.foreign_landing_url) {
-    title = `<a href="${mediaItem.foreign_landing_url}">${title}</a>`
+    title = extLink(mediaItem.foreign_landing_url, title)
   }
 
   let creator = mediaItem.creator
   if (mediaItem.creator_url) {
-    creator = `<a href="${mediaItem.creator_url}">${creator}</a>`
+    creator = extLink(mediaItem.creator_url, creator)
   }
 
   let license = `${mediaItem.license} ${mediaItem.license_version}`
-  license = `<a href="${mediaItem.license_url}">${license.toUpperCase()}</a>`
+  license = extLink(mediaItem.license_url, license.toUpperCase())
 
   return `${title} by ${creator} is licensed under ${license}.`
 }
