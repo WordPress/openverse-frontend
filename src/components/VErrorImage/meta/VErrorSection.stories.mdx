@@ -29,7 +29,7 @@ export const NoResultsTemplate = (args, { argTypes }) => ({
   template: `
     <VErrorSection>
       <template #image>
-       <VErrorImage :error-code=errorCode />
+       <VErrorImage :error-code="errorCode" />
       </template>
       <VNoResults :type="type" :query="query"/>
     </VErrorSection>
@@ -69,11 +69,11 @@ export const ServerTimeoutTemplate = (args, { argTypes }) => ({
     <VErrorSection>
       <template #image>
         <!-- On large screens, image is in the left pane. -->
-        <VErrorImage class="hidden md:block" :error-code=errorCode />
+        <VErrorImage class="hidden md:block" :error-code="errorCode" />
       </template>
       <VServerTimeout/>
       <!-- On small screens, image is below error message. -->
-      <VErrorImage class="md:hidden mt-10" :error-code=errorCode />
+      <VErrorImage class="md:hidden mt-10" :error-code="errorCode" />
     </VErrorSection>
   `,
   data: () => ({ SERVER_TIMEOUT }),
