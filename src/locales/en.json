@@ -625,7 +625,7 @@
   },
   "no-results": {
     "heading": "We couldn't find anything for \"{query}\".",
-    "alternatives": "Try a different search or see the additional sources."
+    "alternatives": "Try a different query or use one of the additional sources to expand your search."
   },
   "server-timeout": {
     "heading": "Whoops, it looks like that request took too long to complete. Please try again."

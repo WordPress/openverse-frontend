@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-03-03T11:25:39+00:00\n"
+"POT-Creation-Date: 2022-03-04T04:16:51+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -75,7 +75,7 @@ msgstr ""
 
 #: src/components/VErrorImage/VNoResults.vue:5
 msgctxt "no-results.alternatives"
-msgid "Try a different search or see the additional sources."
+msgid "Try a different query or use one of the additional sources to expand your search."
 msgstr ""
 
 msgctxt "error-images.depressed-musician"
