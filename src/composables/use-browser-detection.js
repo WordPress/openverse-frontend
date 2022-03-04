@@ -11,14 +11,14 @@ export const useBrowserIsBlink = () => {
     return browser.isChrome || browser.isEdge || browser.isOpera
   } else {
     return false
-  } 
+  }
 }
 
 export const useBrowserIsMobile = () => {
   const mobile = useBrowserDetection().isMobile
-  if (mobile !== 'null') {
-    return mobile
-  } else {
+  if (mobile === null) {
     return false
+  } else {
+    return mobile
   }
 }
