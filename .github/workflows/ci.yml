@@ -71,8 +71,8 @@ jobs:
       - uses: actions/checkout@v2
 
       # E2E tests run inside docker container and don't need installed deps,
-      # but we still need to use `pnpm ls` to determine what the specific
-      # version of playwright being used in pnpm-lock.yaml is
+      # but we still need to use `pnpm ls` to determine what version of
+      # playwright is resolved in pnpm-lock.yaml
       - uses: ./.github/actions/setup-node-env
         with:
           install: false
