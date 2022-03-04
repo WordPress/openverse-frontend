@@ -7,9 +7,20 @@ export const useBrowserDetection = () => {
 
 export const useBrowserIsBlink = () => {
   const browser = useBrowserDetection()
-  return browser.isChrome || browser.isEdge || browser.isOpera
+  if (browser!==null) {
+    return browser.isChrome || browser.isEdge || browser.isOpera
+  } else {
+    return null
+  }
+  
+  
 }
 
 export const useBrowserIsMobile = () => {
-  return useBrowserDetection().isMobile
+  const mobile = useBrowserDetection().isMobile
+  if (mobile!==null) {
+    return mobile
+  } else {
+    return null
+  }
 }

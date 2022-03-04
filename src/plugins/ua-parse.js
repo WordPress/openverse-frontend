@@ -8,7 +8,7 @@ export default function (context, inject) {
   } else if (typeof navigator !== 'undefined') {
     userAgent = navigator.userAgent
   }
-  var ua
+  let ua
   if (userAgent !== null || userAgent !== undefined) {
     ua = useragent.parse(userAgent)
   } else {
