@@ -39,9 +39,9 @@ import { ALL_MEDIA, IMAGE, supportedSearchTypes } from '~/constants/media'
 import { NO_RESULT } from '~/constants/errors'
 
 import VMetaSearchForm from '~/components/VMetaSearch/VMetaSearchForm.vue'
-import VErrorSection from '~/components/VErrorImage/VErrorSection.vue'
-import VErrorImage from '~/components/VErrorImage/VErrorImage.vue'
-import VNoResults from '~/components/VErrorImage/VNoResults.vue'
+import VErrorSection from '~/components/VErrorSection/VErrorSection.vue'
+import VErrorImage from '~/components/VErrorSection/VErrorImage.vue'
+import VNoResults from '~/components/VErrorSection/VNoResults.vue'
 
 export default {
   name: 'VSearchGrid',
