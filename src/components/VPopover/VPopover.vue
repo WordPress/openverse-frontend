@@ -39,7 +39,6 @@
 </template>
 
 <script>
-import VPopoverContent from '~/components/VPopover/VPopoverContent.vue'
 import {
   defineComponent,
   ref,
@@ -47,6 +46,8 @@ import {
   reactive,
   computed,
 } from '@nuxtjs/composition-api'
+
+import VPopoverContent from '~/components/VPopover/VPopoverContent.vue'
 
 export default defineComponent({
   name: 'VPopover',
@@ -88,7 +89,6 @@ export default defineComponent({
      * for `placement` passed to popper.js.
      *
      * @see https://popper.js.org/docs/v2/constructors/#options
-     *
      * @default 'bottom'
      */
     placement: {

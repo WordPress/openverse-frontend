@@ -21,12 +21,15 @@
 
 <script>
 import { computed, ref } from '@nuxtjs/composition-api'
+
 import { AUDIO } from '~/constants/media'
 
 import useRelated from '~/composables/use-related'
 import { isMinScreen } from '~/composables/use-media-query'
-import VAudioTrack from '~/components/VAudioTrack/VAudioTrack.vue'
+
 import LoadingIcon from '~/components/LoadingIcon.vue'
+
+import VAudioTrack from '~/components/VAudioTrack/VAudioTrack.vue'
 
 export default {
   name: 'VRelatedAudio',
@@ -40,10 +43,11 @@ export default {
   },
   /**
    * Fetches related audios on `audioId` change
+   *
    * @param {object} props
    * @param {string} props.audioId
    * @param {any} props.service
-   * @return {{ audios: import('~/composables/types').Ref<import('~/store/types').AudioDetail[]>, audioTrackSize: import('@nuxtjs/composition-api').ComputedRef<"l" | "s"> }}
+   * @returns {{ audios: import('~/composables/types').Ref<import('~/store/types').AudioDetail[]>, audioTrackSize: import('@nuxtjs/composition-api').ComputedRef<"l" | "s"> }}
    */
   setup(props) {
     const mainAudioId = ref(props.audioId)

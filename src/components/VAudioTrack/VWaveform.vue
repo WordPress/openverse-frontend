@@ -168,6 +168,7 @@ import {
   onMounted,
   ref,
 } from '@nuxtjs/composition-api'
+
 import { downsampleArray, upsampleArray } from '~/utils/resampling'
 import * as keycodes from '~/utils/key-codes'
 
@@ -250,6 +251,7 @@ export default defineComponent({
 
     /**
      * Format the time as hh:mm:ss, dropping the hour part if it is zero.
+     *
      * @param {number} seconds - the number of seconds in the duration
      * @returns {string} the duration in a human-friendly format
      */
@@ -261,6 +263,7 @@ export default defineComponent({
     /**
      * Get the x-coordinate of the event with respect to the bounding box of the
      * waveform.
+     *
      * @param {MouseEvent} event - the event from which to get the position
      * @returns {number} the x-position of the event inside the waveform
      */
@@ -270,6 +273,7 @@ export default defineComponent({
     /**
      * Get the x-position of the event with respect to the bounding box of the
      * waveform, as a fraction of the waveform width.
+     *
      * @param {MouseEvent} event - the event from which to get the position
      * @returns {number} the x-position of the event as a fraction
      */
@@ -279,6 +283,7 @@ export default defineComponent({
     }
     /**
      * Get the number of peaks that will fit within the given width.
+     *
      * @param {number} width - the number of pixels inside which to count peaks
      * @returns {number} the number of peaks that can be accommodated
      */

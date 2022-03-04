@@ -1,7 +1,6 @@
 import { getDocument } from 'reakit-utils/getDocument'
 import { getActiveElement } from 'reakit-utils/getActiveElement'
 import { getNextActiveElementOnBlur } from 'reakit-utils/getNextActiveElementOnBlur'
-
 import { ref, watch } from '@nuxtjs/composition-api'
 
 /**
@@ -13,7 +12,7 @@ import { ref, watch } from '@nuxtjs/composition-api'
 /**
  *
  * @param {Element | null} element
- * @return {element is Element}
+ * @returns {element is Element}
  */
 function isActualElement(element) {
   return (

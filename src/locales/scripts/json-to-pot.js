@@ -1,5 +1,7 @@
-const json = require('../en.json')
 const fs = require('fs')
+
+const json = require('../en.json')
+
 const { createPotFile } = require('./json-pot-helpers')
 
 const matchPotCreationDate = /^"POT-Creation-Date: .*\\n"$/gm
@@ -14,7 +16,7 @@ try {
 
   if (existingPotFile === potFile.replace(matchPotCreationDate, '')) {
     console.log('No change detected in pot file, skipping write')
-    return process.exit(0)
+    process.exit(0)
   }
 
   fs.writeFileSync(fileName, createPotFile(json))

@@ -3,10 +3,14 @@
 
 const fs = require('fs')
 const path = require('path')
+
 const glob = require('glob')
 
 const BASE_PATH = path.dirname(path.dirname(__dirname))
 
+/**
+ * @param src
+ */
 function readVueFiles(src) {
   const targetFiles = glob.sync(src)
 
@@ -25,6 +29,11 @@ function readVueFiles(src) {
   })
 }
 
+/**
+ * @param file
+ * @param regExp
+ * @param captureGroup
+ */
 function* getMatches(file, regExp, captureGroup = 1) {
   while (true) {
     const match = regExp.exec(file.content)
@@ -57,31 +66,43 @@ function* getMatches(file, regExp, captureGroup = 1) {
  * - **regexp pattern**: ((?:[^\\]|\\.)*?)
  *
  *   **description**: 2. capturing group. Matches anything except a backslash
- *   *or* matches any backslash followed by any character (e.g. “\"”, “\`”, “\t”, etc.)
+ *   or* matches any backslash followed by any character (e.g. “\"”, “\`”, “\t”, etc.)
  *
  * - **regexp pattern**: \1
  *
  *   **description**: matches whatever was matched by capturing group 1 (e.g. the starting string character)
  *
- * @param file a file object
+ * @param file - a file object
  * @returns a list of translation keys found in `file`.
  */
 
+/**
+ * @param file
+ */
 function extractMethodMatches(file) {
   const methodRegExp = /(?:[$ .]tc?)\(\s*?(["'`])((?:[^\\]|\\.)*?)\1/g
   return [...getMatches(file, methodRegExp, 2)]
 }
 
+/**
+ * @param file
+ */
 function extractComponentMatches(file) {
   const componentRegExp = /(?:<i18n)(?:.|\n)*?(?:[^:]path=("|'))(.*?)\1/gi
   return [...getMatches(file, componentRegExp, 2)]
 }
 
+/**
+ * @param file
+ */
 function extractDirectiveMatches(file) {
   const directiveRegExp = /v-t="'(.*?)'"/g
   return [...getMatches(file, directiveRegExp)]
 }
 
+/**
+ * @param sourceFiles
+ */
 function extractI18nItemsFromVueFiles(sourceFiles) {
   return sourceFiles.reduce((accumulator, file) => {
     const methodMatches = extractMethodMatches(file)
@@ -96,6 +117,9 @@ function extractI18nItemsFromVueFiles(sourceFiles) {
   }, [])
 }
 
+/**
+ * @param vueFilesPath
+ */
 function parseVueFiles(vueFilesPath) {
   const filesList = readVueFiles(vueFilesPath)
   return extractI18nItemsFromVueFiles(filesList)
@@ -109,9 +133,10 @@ function parseVueFiles(vueFilesPath) {
     line: 13,
     file: '/components/AppModal.vue'
   },
+ *
  * @param {string} vueFiles - glob pattern to find all the vue files,
  * from the BASE_PATH (`openverse-frontend/src`)
- * @return {Array<Object>}
+ * @returns {Array<object>}
  */
 const getParsedVueFiles = (vueFiles) => {
   const resolvedVueFiles = path.resolve(BASE_PATH, vueFiles)

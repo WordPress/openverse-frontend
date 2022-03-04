@@ -1,7 +1,9 @@
 import clonedeep from 'lodash.clonedeep'
+
 import { mediaFilterKeys } from '~/store/search'
-import getParameterByName from './get-parameter-by-name'
 import { ALL_MEDIA } from '~/constants/media'
+
+import getParameterByName from './get-parameter-by-name'
 
 const filterPropertyMappings = {
   licenses: 'license',
@@ -33,7 +35,8 @@ const getMediaFilterTypes = (searchType) => [...mediaFilterKeys[searchType]]
  * joins all the filters which have the checked property `true`
  * to a string separated by commas.
  * eg: "by,nd-nc,nc-sa"
- * @param {array} filter
+ *
+ * @param {Array} filter
  */
 const filterToString = (filter) =>
   filter
@@ -44,7 +47,8 @@ const filterToString = (filter) =>
 /**
  * converts the filter store object to the data format accepted by the API,
  * which has slightly different property names
- * @param {object} filters object containing the filter data that comes from the filter store
+ *
+ * @param {object} filters - object containing the filter data that comes from the filter store
  * @param {import('../store/types').SearchType} searchType
  * @param hideEmpty
  * @todo Refactor all of these 'reduce' calls to just use lodash methods :)
@@ -85,8 +89,9 @@ export const filtersToQueryData = (
  * of the path between `/search/` and query, or `all` by default.
  * `/search/?q=test`: all
  * `/search/image?q=test`: image
+ *
  * @param {string} queryString
- * @return {import('../store/types').SearchType}
+ * @returns {import('../store/types').SearchType}
  */
 export const queryStringToSearchType = (queryString) => {
   const searchTypePattern = /\/search\/(image|audio|video)\?*/
@@ -105,9 +110,10 @@ export const queryStringToSearchType = (queryString) => {
  * the `audioExtensions.ogg.checked` is set to true,
  * but for `search/images?extensions=ogg`, the extensions query parameter
  * is discarded, because `ogg` is not a valid extension for images.
+ *
  * @param filterParameter
  * @param parameterFilters
- * @return {*}
+ * @returns {*}
  */
 const getMediaTypeApiFilters = (filterParameter, parameterFilters) => {
   if (filterParameter !== '') {
@@ -129,10 +135,11 @@ const getMediaTypeApiFilters = (filterParameter, parameterFilters) => {
 
 /**
  * converts the browser filter query string into the internal filter store data format
+ *
  * @param {object} params
  * @param {object} params.query - browser filter query
  * @param {import('../store/types').SearchType} [params.searchType]
- * @param {object} params.defaultFilters default filters for testing purposes
+ * @param {object} params.defaultFilters - default filters for testing purposes
  */
 export const queryToFilterData = ({
   query,
@@ -189,6 +196,7 @@ export const queryToFilterData = ({
  *
  * TODO: we might be able to refactor to eliminate the need for these two
  * separate functions.
+ *
  * @param {string} queryString
  */
 export const queryStringToQueryData = (queryString) => {

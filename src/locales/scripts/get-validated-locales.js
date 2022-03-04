@@ -4,11 +4,13 @@ and saves lists of translated and untranslated locales with properties expected
 by Vue i18n.
  */
 const fs = require('fs')
+
 const localesList = require('./wp-locales.json')
 const { addFetchedTranslationStatus } = require('./get-translations-status')
 
 /**
  * Returns a list of locale objects with at least one translated string
+ *
  * @returns {{
  * translated: import('./types').I18nLocaleProps[],
  * untranslated: import('./types').I18nLocaleProps[]

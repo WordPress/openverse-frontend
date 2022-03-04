@@ -2,10 +2,12 @@
 This script extracts data for locales available in GlotPress and translate.wp.org,
  transforms some locale properties to match what Vue i18n expects,
  and saves it to `wp-locales-list.json`.
- **/
+ */
+
+const fs = require('fs')
 
 const axios = require('axios')
-const fs = require('fs')
+
 const { addFetchedTranslationStatus } = require('./get-translations-status.js')
 
 const base_url =
@@ -13,6 +15,7 @@ const base_url =
 
 /**
  * Fetches the data from GlotPress GitHub.
+ *
  * @returns {Promise<any>}
  */
 async function getGpLocalesData() {
@@ -50,6 +53,9 @@ const createPropertyRePatterns = ({
   return propertyRePatterns
 }
 
+/**
+ * @param rawData
+ */
 function parseLocaleData(rawData) {
   const wpLocalePattern = /wp_locale *= *'(.*)';/
   const propertyRePatterns = createPropertyRePatterns()
@@ -83,6 +89,7 @@ function parseLocaleData(rawData) {
  * by Vue i18n.
  * Fetches data from translate.wordpress.org, leaves only the locales available
  * there, and adds `code` and `translated` properties to each locale.
+ *
  * @returns {Promise<{}>}
  */
 async function getWpLocaleData() {

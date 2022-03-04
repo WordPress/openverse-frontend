@@ -7,11 +7,14 @@
 </template>
 
 <script>
-import { defineComponent, useStore } from '@nuxtjs/composition-api'
+import { computed, defineComponent } from '@nuxtjs/composition-api'
+
 import iframeHeight from '~/mixins/iframe-height'
-import { NAV } from '~/constants/store-modules'
+
+import { useNavStore } from '~/stores/nav'
 
 import VTranslationStatusBanner from '~/components/VTranslationStatusBanner.vue'
+
 import VMigrationNotice from '~/components/VMigrationNotice.vue'
 
 export default defineComponent({
@@ -19,8 +22,8 @@ export default defineComponent({
   components: { VMigrationNotice, VTranslationStatusBanner },
   mixins: [iframeHeight],
   setup() {
-    const store = useStore()
-    const isReferredFromCc = store.state[NAV].isReferredFromCc
+    const navStore = useNavStore()
+    const isReferredFromCc = computed(() => navStore.isReferredFromCc)
     return { isReferredFromCc }
   },
   head() {

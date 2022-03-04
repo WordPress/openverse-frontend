@@ -1,5 +1,4 @@
 import ApiService from '~/data/api-service'
-
 import decodeMediaData from '~/utils/decode-media-data'
 
 /**
@@ -18,6 +17,7 @@ class MediaService {
    * Decodes the text data to avoid encoding problems.
    * Also, converts the results from an array of media objects into an object with
    * media id as keys.
+   *
    * @param {import('axios').AxiosResponse<T>} data
    * @returns {import('../store/types').MediaStoreResult<T>}
    */
@@ -33,8 +33,9 @@ class MediaService {
 
   /**
    * Search for media items by keyword.
+   *
    * @param {import('../store/types').ApiQueryParams} params
-   * @return {Promise<import('axios').AxiosResponse<import('../store/types').MediaResult<T[]>>>}
+   * @returns {Promise<import('axios').AxiosResponse<import('../store/types').MediaResult<T[]>>>}
    */
   async search(params) {
     const res = await ApiService.query(this.mediaType, params)
@@ -44,8 +45,9 @@ class MediaService {
   /**
    * Retrieve media details by its id.
    * SSR-called
+   *
    * @param {{ id: string }} params
-   * @return {Promise<import('axios').AxiosResponse<import('../store/types').MediaResult<T>>>}
+   * @returns {Promise<import('axios').AxiosResponse<import('../store/types').MediaResult<T>>>}
    */
   async getMediaDetail(params) {
     if (!params.id) {
@@ -60,8 +62,9 @@ class MediaService {
 
   /**
    * Retrieve related media
+   *
    * @param {{ id: string }} params
-   * @return {Promise<import('axios').AxiosResponse<import('../store/types').MediaResult<T[]>>>}
+   * @returns {Promise<import('axios').AxiosResponse<import('../store/types').MediaResult<T[]>>>}
    */
   async getRelatedMedia(params) {
     if (!params.id) {

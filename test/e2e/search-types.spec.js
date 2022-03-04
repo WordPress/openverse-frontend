@@ -1,4 +1,5 @@
 const { test, expect } = require('@playwright/test')
+
 const { changeContentType } = require('./utils')
 
 /**
@@ -26,7 +27,7 @@ const searchTypes = [
   {
     id: 'all',
     name: 'All content',
-    url: '/search?q=birds',
+    url: '/search/?q=birds',
     canLoadMore: true,
     metaSourceCount: 6,
   },
@@ -48,15 +49,23 @@ const searchTypes = [
   },
 ]
 
+/**
+ * @param page
+ * @param searchType
+ */
 async function checkLoadMore(page, searchType) {
   const loadMoreSection = await page.locator('[data-testid="load-more"]')
   if (!searchType.canLoadMore) {
-    await expect(loadMoreSection).toHaveCount(0)
+    await expect(loadMoreSection).toHaveCount(0, { timeout: 300 })
   } else {
     await expect(loadMoreSection).toHaveCount(1)
     await expect(loadMoreSection).toContainText('Load more')
   }
 }
+/**
+ * @param page
+ * @param searchType
+ */
 async function checkMetasearchForm(page, searchType) {
   const metaSearchForm = await page.locator('[data-testid="meta-search-form"]')
   await expect(metaSearchForm).toHaveCount(1)
@@ -65,6 +74,10 @@ async function checkMetasearchForm(page, searchType) {
   await expect(sourceButtons).toHaveCount(searchType.metaSourceCount)
 }
 
+/**
+ * @param page
+ * @param searchType
+ */
 async function checkSearchMetadata(page, searchType) {
   if (searchType.canLoadMore) {
     const searchResult = await page.locator('[data-testid="search-results"]')
@@ -73,10 +86,28 @@ async function checkSearchMetadata(page, searchType) {
   }
 }
 
+/**
+ * @param page
+ * @param searchType
+ */
+async function checkPageMeta(page, searchType) {
+  const urlParam = searchType.id === 'all' ? '' : searchType.id
+
+  const expectedTitle = `birds | Openverse`
+  const expectedURL = `/search/${urlParam}?q=birds`
+
+  await expect(page).toHaveTitle(expectedTitle)
+  await expect(page).toHaveURL(expectedURL)
+}
+/**
+ * @param page
+ * @param searchType
+ */
 async function checkSearchResult(page, searchType) {
   await checkSearchMetadata(page, searchType)
   await checkLoadMore(page, searchType)
   await checkMetasearchForm(page, searchType)
+  await checkPageMeta(page, searchType)
 }
 
 for (const searchType of searchTypes) {
@@ -91,11 +122,6 @@ for (const searchType of searchTypes) {
     const pageToOpen = searchType.id === 'all' ? searchTypes[1] : searchTypes[0]
     await page.goto(pageToOpen.url)
     await changeContentType(page, searchType.name)
-
-    const urlParam = searchType.id === 'all' ? '' : searchType.id
-    const expectedURL = `/search/${urlParam}?q=birds`
-    await expect(page).toHaveURL(expectedURL)
-
     await checkSearchResult(page, searchType)
   })
 }

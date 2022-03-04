@@ -1,4 +1,5 @@
 const { test, expect } = require('@playwright/test')
+
 const {
   assertCheckboxCheckedStatus,
   openFilters,
@@ -65,7 +66,9 @@ test('filters are updated when media type changes', async ({ page }) => {
 
   await expect(page).toHaveURL('/search/audio?q=cat&license=cc0')
 
-  await expect(page.locator('label:has-text("Tall")')).toHaveCount(0)
+  await expect(page.locator('label:has-text("Tall")')).toHaveCount(0, {
+    timeout: 300,
+  })
   await assertCheckboxCheckedStatus(page, 'cc0')
 })
 

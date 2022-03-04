@@ -1,4 +1,5 @@
 import axios from 'axios'
+
 import { warn } from '~/utils/console'
 import { AUDIO, IMAGE } from '~/constants/media'
 
@@ -8,6 +9,7 @@ const DEFAULT_REQUEST_TIMEOUT = 30000
  * Returns a slug with trailing slash for a given resource name.
  * For media types, converts the name into resource slug when necessary (i.e. pluralizes 'image'),
  * for other resources uses the resource name as the slug.
+ *
  * @param {string} resource
  * @returns {string}
  */
@@ -69,8 +71,8 @@ export const createApiService = (baseUrl = process.env.apiUrl) => {
   return {
     /**
      * @template [T=unknown]
-     * @param {string} resource  The endpoint of the resource
-     * @param {import('axios').AxiosRequestConfig['params']} params  Url parameter object
+     * @param {string} resource  - The endpoint of the resource
+     * @param {import('axios').AxiosRequestConfig['params']} params  - Url parameter object
      * @returns {Promise<import('axios').AxiosResponse<T>>} response  The API response object
      */
     query(resource, params) {
@@ -79,8 +81,8 @@ export const createApiService = (baseUrl = process.env.apiUrl) => {
 
     /**
      * @template [T=unknown]
-     * @param {string} resource  The endpoint of the resource
-     * @param {string} slug The sub-endpoint of the resource
+     * @param {string} resource  - The endpoint of the resource
+     * @param {string} slug - The sub-endpoint of the resource
      * @returns {Promise<import('axios').AxiosResponse<T>>} Response The API response object
      */
     get(resource, slug) {
@@ -89,8 +91,8 @@ export const createApiService = (baseUrl = process.env.apiUrl) => {
 
     /**
      * @template [T=unknown]
-     * @param {string} resource  The endpoint of the resource
-     * @param {Parameters<typeof client['post']>[1]} data Url parameter object
+     * @param {string} resource  - The endpoint of the resource
+     * @param {Parameters<typeof client['post']>[1]} data - Url parameter object
      * @returns {Promise<import('axios').AxiosResponse<T>>} Response The API response object
      */
     post(resource, data) {
@@ -99,10 +101,10 @@ export const createApiService = (baseUrl = process.env.apiUrl) => {
 
     /**
      * @template [T=unknown]
-     * @param {string} resource  The endpoint of the resource
-     * @param {string} slug The sub-endpoint of the resource
-     * @param {Parameters<typeof client['put']>[1]} data Url parameter object
-     * @param {import('axios').AxiosRequestConfig['headers']} headers Headers object
+     * @param {string} resource  - The endpoint of the resource
+     * @param {string} slug - The sub-endpoint of the resource
+     * @param {Parameters<typeof client['put']>[1]} data - Url parameter object
+     * @param {import('axios').AxiosRequestConfig['headers']} headers - Headers object
      * @returns {Promise<import('axios').AxiosResponse<T>>} Response The API response object
      */
     update(resource, slug, data, headers) {
@@ -112,8 +114,8 @@ export const createApiService = (baseUrl = process.env.apiUrl) => {
     },
 
     /**
-     * @param {string} resource  The endpoint of the resource
-     * @param {import('axios').AxiosRequestConfig} params Url parameter object
+     * @param {string} resource  - The endpoint of the resource
+     * @param {import('axios').AxiosRequestConfig} params - Url parameter object
      * @returns {Promise<import('axios').AxiosResponse<any>>} Response The API response object
      */
     put(resource, params) {
@@ -121,9 +123,9 @@ export const createApiService = (baseUrl = process.env.apiUrl) => {
     },
 
     /**
-     * @param {string} resource  The endpoint of the resource
-     * @param {string} slug The sub-endpoint of the resource
-     * @param {import('axios').AxiosRequestConfig['headers']} headers Headers object
+     * @param {string} resource  - The endpoint of the resource
+     * @param {string} slug - The sub-endpoint of the resource
+     * @param {import('axios').AxiosRequestConfig['headers']} headers - Headers object
      * @returns {Promise<import('axios').AxiosResponse<any>>} Response The API response object
      */
     delete(resource, slug, headers) {

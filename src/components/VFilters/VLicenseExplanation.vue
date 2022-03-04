@@ -38,9 +38,9 @@
 <script>
 import { isLicense } from '~/utils/license'
 
-import VLicenseElements from '~/components/VLicenseElements.vue'
-
 import { DEPRECATED_LICENSES } from '~/constants/license'
+
+import VLicenseElements from '~/components/VLicenseElements.vue'
 
 /**
  * Renders the explanation of the license passed to it by breaking it down to
@@ -63,7 +63,8 @@ export default {
   computed: {
     /**
      * Public domain marks such as CC0 and PDM are not technically licenses.
-     * @return {boolean} true if the license is not CC0 or PDM, false otherwise
+     *
+     * @returns {boolean} true if the license is not CC0 or PDM, false otherwise
      */
     isTechnicallyLicense() {
       return isLicense(this.license)

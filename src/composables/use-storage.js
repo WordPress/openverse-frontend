@@ -1,4 +1,5 @@
 import { ref, unref, watch } from '@nuxtjs/composition-api'
+
 import { useEventListener } from '~/composables/use-event-listener'
 
 const defaultWindow =
@@ -30,6 +31,7 @@ export const StorageSerializers = {
 /**
  * Merges the options with the result of getDefaults.
  * If an error occurs during this process, it will return `null`
+ *
  * @template T
  * @param {T} options
  * @param {() => T} getDefaults
@@ -87,6 +89,9 @@ export function useStorage(key, initialValue, options = {}) {
   const data = ref(initialValue)
   const serializer = options.serializer ?? StorageSerializers[type]
 
+  /**
+   * @param event
+   */
   function read(event) {
     if (!storage || (event && event.key !== key)) return
 

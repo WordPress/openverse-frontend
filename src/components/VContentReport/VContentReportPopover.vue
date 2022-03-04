@@ -2,6 +2,7 @@
   <VPopover
     ref="popoverEl"
     :hide-on-click-outside="false"
+    :label="$t('media-details.content-report.long')"
     placement="bottom-end"
   >
     <template #trigger="{ a11yProps }">
@@ -29,9 +30,11 @@
 import { computed, useStore, defineComponent } from '@nuxtjs/composition-api'
 
 import VPopover from '~/components/VPopover/VPopover.vue'
+
 import VContentReportButton from '~/components/VContentReport/VContentReportButton.vue'
 
 import flagIcon from '~/assets/icons/flag.svg'
+
 import closeSmallIcon from '~/assets/icons/close-small.svg'
 
 export default defineComponent({

@@ -1,5 +1,6 @@
 import { ref, watch, computed } from '@nuxtjs/composition-api'
 import { getDocument } from 'reakit-utils/getDocument'
+
 import { useEventListenerOutside } from './use-event-listener-outside'
 
 /**
@@ -13,7 +14,7 @@ import { useEventListenerOutside } from './use-event-listener-outside'
 
 /**
  * @param {Props} props
- * @return {import('./types').Ref<EventTarget>}
+ * @returns {import('./types').Ref<EventTarget>}
  */
 function useMouseDownTargetRef({
   dialogRef,

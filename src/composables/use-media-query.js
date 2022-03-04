@@ -1,6 +1,7 @@
 /* this implementation is from https://github.com/vueuse/vueuse/packages/core/useMediaQuery/
  which, in turn, is ported from https://github.com/logaretm/vue-use-web by Abdelrahman Awad */
 import { onBeforeUnmount, ref } from '@nuxtjs/composition-api'
+
 import { SCREEN_SIZES } from '~/constants/screens'
 import { defaultWindow } from '~/composables/window'
 
@@ -53,6 +54,7 @@ export function useMediaQuery(query, options = { shouldPassInSSR: false }) {
 /**
  * Check whether the current screen meets
  * or exceeds the provided breakpoint size.
+ *
  * @param {'sm'|'md'|'lg'|'xl'|'2xl'} breakpointName
  * @param {Options} [options]
  * @returns {import('@nuxtjs/composition-api').Ref<boolean>}
@@ -66,6 +68,7 @@ export const isMinScreen = (breakpointName, options) => {
 
 /**
  * Check if the user prefers reduced motion or not.
+ *
  * @param {Options} options
  * @returns {import('@nuxtjs/composition-api').Ref<boolean>}
  */

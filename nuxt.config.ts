@@ -1,5 +1,3 @@
-import type { NuxtConfig } from '@nuxt/types'
-
 import pkg from './package.json'
 import locales from './src/locales/scripts/valid-locales.json'
 
@@ -9,10 +7,12 @@ import { isProd } from './src/utils/node-env'
 import { sentryConfig } from './src/utils/sentry-config'
 import { env } from './src/utils/env'
 
+import type { NuxtConfig } from '@nuxt/types'
+
 /**
  * The default metadata for the site. Can be extended and/or overwritten per page. And even in components!
  * See the Nuxt.js docs for more info.
- * {@link https://nuxtjs.org/guides/features/meta-tags-seo Nuxt.js Docs}
+ * {@link https://nuxtjs.org/guides/features/meta-tags-seo} Nuxt.js Docs
  */
 const meta = [
   { charset: 'utf-8' },
@@ -147,6 +147,8 @@ const config: NuxtConfig = {
     '@nuxtjs/style-resources',
     '@nuxtjs/svg',
     '@nuxtjs/eslint-module',
+    // @todo: Remove `disableVuex` once all stores are migrated to pinia
+    ['@pinia/nuxt', { disableVuex: false }],
   ],
   // Load the scss variables into every component:
   // No need to import them. Since the variables will not exist in the final build,
@@ -220,9 +222,16 @@ const config: NuxtConfig = {
         'postcss-focus-visible': {},
       },
     },
-    // Enables use of IDE debuggers
     extend(config, ctx) {
+      // Enables use of IDE debuggers
       config.devtool = ctx.isClient ? 'source-map' : 'inline-source-map'
+
+      // Mitigates import errors for Pinia
+      config.module?.rules.push({
+        test: /\.mjs$/,
+        include: /node_modules/,
+        type: 'javascript/auto',
+      })
     },
   },
   storybook: {

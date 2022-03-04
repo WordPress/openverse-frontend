@@ -29,12 +29,14 @@
 
 <script>
 import { computed, defineComponent, ref } from '@nuxtjs/composition-api'
+
 import useSearchType from '~/composables/use-search-type'
-import checkIcon from '~/assets/icons/checkmark.svg'
 
 import VPopover from '~/components/VPopover/VPopover.vue'
 import VSearchTypeButton from '~/components/VContentSwitcher/VSearchTypeButton.vue'
 import VSearchTypes from '~/components/VContentSwitcher/VSearchTypes.vue'
+
+import checkIcon from '~/assets/icons/checkmark.svg'
 
 export default defineComponent({
   name: 'VSearchTypePopover',
@@ -65,6 +67,7 @@ export default defineComponent({
     /**
      * When in the searchbar, content switcher button has a border when the
      * search bar group is hovered on.
+     *
      * @type {ComputedRef<boolean>}
      */
     const isInSearchBar = computed(() => props.placement === 'searchbar')

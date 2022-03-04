@@ -30,6 +30,7 @@ import {
   computed,
 } from '@nuxtjs/composition-api'
 import { ensureFocus } from 'reakit-utils/ensureFocus'
+
 import { useI18n } from '~/composables/use-i18n'
 import * as keycodes from '~/utils/key-codes'
 
@@ -100,9 +101,7 @@ export default defineComponent({
      * @see https://www.w3.org/TR/wai-aria-1.1/#menu
      *
      * `radiogroup` should be used when providing a menu of options where only one can be selected at a time.
-     *
      * @see https://www.w3.org/TR/wai-aria-1.1/#radiogroup
-     *
      * @default 'menu'
      */
     type: {
@@ -144,6 +143,7 @@ export default defineComponent({
      * because the DOM order gets reversed to be opposite the visual order relative to left/right movement.
      *
      * For vertical locales it should remain the same.
+     *
      * @param {string} ltr
      * @param {string} rtl
      */

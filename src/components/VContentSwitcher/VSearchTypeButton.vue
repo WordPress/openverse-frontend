@@ -25,20 +25,22 @@
   </VButton>
 </template>
 <script>
-import { ALL_MEDIA, supportedSearchTypes } from '~/constants/media'
 import {
   computed,
   defineComponent,
   inject,
   useContext,
 } from '@nuxtjs/composition-api'
+
+import { ALL_MEDIA, supportedSearchTypes } from '~/constants/media'
 import useSearchType from '~/composables/use-search-type'
 import { isMinScreen } from '~/composables/use-media-query'
 
-import caretDownIcon from '~/assets/icons/caret-down.svg'
+import VIcon from '~/components/VIcon/VIcon.vue'
 
 import VButton from '~/components/VButton.vue'
-import VIcon from '~/components/VIcon/VIcon.vue'
+
+import caretDownIcon from '~/assets/icons/caret-down.svg'
 
 export default defineComponent({
   name: 'VSearchTypeButton',
@@ -77,7 +79,7 @@ export default defineComponent({
         /**
           When there is a caret down icon (on 'md' screens), paddings are balanced,
           without it, paddings need to be adjusted.
-          */
+         */
         return 'ps-2 pe-3 md:px-2'
       }
     })

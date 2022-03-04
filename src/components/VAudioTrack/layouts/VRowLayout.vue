@@ -84,6 +84,7 @@
 
 <script>
 import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
+
 import { useBrowserIsBlink } from '~/composables/use-browser-detection'
 
 import VAudioThumbnail from '~/components/VAudioThumbnail/VAudioThumbnail.vue'
@@ -112,6 +113,7 @@ export default defineComponent({
 
     /**
      * Format the time as hh:mm:ss, dropping the hour part if it is zero.
+     *
      * @param {number} ms - the number of milliseconds in the duration
      * @returns {string} the duration in a human-friendly format
      */

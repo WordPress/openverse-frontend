@@ -22,7 +22,10 @@
       </VCheckbox>
 
       <!-- License explanation -->
-      <VPopover v-if="filterType === 'licenses'">
+      <VPopover
+        v-if="filterType === 'licenses'"
+        :label="$t('browse-page.aria.license-explanation')"
+      >
         <template #trigger="{ a11yProps }">
           <VButton
             v-bind="a11yProps"
@@ -56,7 +59,9 @@
 import VLicenseExplanation from '~/components/VFilters/VLicenseExplanation.vue'
 import VCheckbox from '~/components/VCheckbox/VCheckbox.vue'
 import VLicense from '~/components/License/VLicense.vue'
+import VButton from '~/components/VButton.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'
+import VIconButton from '~/components/VIconButton/VIconButton.vue'
 import VPopover from '~/components/VPopover/VPopover.vue'
 
 import helpIcon from '~/assets/icons/help.svg'
@@ -66,7 +71,9 @@ export default {
   name: 'FilterCheckList',
   components: {
     VCheckbox,
+    VButton,
     VIcon,
+    VIconButton,
     VLicense,
     VLicenseExplanation,
     VPopover,

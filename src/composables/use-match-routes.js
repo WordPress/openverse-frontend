@@ -1,5 +1,4 @@
-import { useContext } from '@nuxtjs/composition-api'
-import { ref, useRoute, useRouter } from '@nuxtjs/composition-api'
+import { useContext, ref, useRoute, useRouter } from '@nuxtjs/composition-api'
 
 /**
  * Reactive property that returns true only on the matching routes.
@@ -8,6 +7,7 @@ import { ref, useRoute, useRouter } from '@nuxtjs/composition-api'
  * Routes are also localized before comparison, so 'search' becomes
  * 'search__en', for example.
  *
+ * @param routes
  * @returns {{matches: import('@nuxtjs/composition-api').Ref<boolean>}}
  */
 export const useMatchRoute = (routes = []) => {

@@ -4,7 +4,9 @@
  */
 const { writeFile } = require('fs/promises')
 const os = require('os')
+
 const axios = require('axios')
+
 const jed1xJsonToJson = require('./jed1x-json-to-json')
 const localeJSON = require('./wp-locales.json')
 
@@ -16,6 +18,7 @@ const localeJSON = require('./wp-locales.json')
 
 /**
  * A GlotPress Output format for translation strings
+ *
  * @typedef {("android"|"po"|"mo"|"resx"|"strings"|"properties"|"json"|"jed1x"|"ngx" & JSONFormat)} Format
  */
 
@@ -33,6 +36,7 @@ const makeTranslationUrl =
 
 /**
  * fetch a json translation from GlotPress
+ *
  * @param {string} locale
  */
 const fetchJed1xTranslation = (locale) =>
@@ -55,6 +59,7 @@ const replacePlaceholders = (json) => {
 }
 /**
  * Write translation strings to a file in the locale directory
+ *
  * @param {string} locale
  * @param {any} rawTranslations
  */
@@ -68,6 +73,7 @@ const writeLocaleFile = (locale, rawTranslations) => {
 
 /**
  * Write a file for each translation object
+ *
  * @param {{[locale: string]: {[translation: string]: string}}} translationsByLocale
  */
 const writeLocaleFiles = (translationsByLocale) =>
