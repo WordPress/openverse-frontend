@@ -2,7 +2,6 @@ import {
   SEND_SEARCH_QUERY_EVENT,
   SEND_RESULT_CLICKED_EVENT,
   SEND_DETAIL_PAGE_EVENT,
-  SEND_SEARCH_RATING_EVENT,
 } from '~/constants/usage-data-analytics-types'
 
 import UsageDataService from '~/data/usage-data-service'
@@ -49,13 +48,6 @@ export const createActions = (usageDataService) => ({
       SEND_RESULT_CLICKED_EVENT,
       this
     )(usageDataService.sendResultClickedEvent(params))
-  },
-  [SEND_SEARCH_RATING_EVENT](context, params) {
-    if (disabled) return
-    handleUsageEvent(
-      SEND_SEARCH_RATING_EVENT,
-      this
-    )(usageDataService.sendSearchRatingEvent(params))
   },
   [SEND_DETAIL_PAGE_EVENT](context, params) {
     if (disabled) return
