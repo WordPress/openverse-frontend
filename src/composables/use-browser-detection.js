@@ -18,7 +18,8 @@ export const useBrowserIsMobile = () => {
   const mobile = useBrowserDetection().isMobile
   if (mobile === null) {
     return false
-  } else {
+  }
+  if (mobile) {
     return mobile
   }
 }
