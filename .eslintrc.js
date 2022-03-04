@@ -149,8 +149,16 @@ module.exports = {
       files: ['*.js', '*.vue'],
       extends: ['plugin:jsdoc/recommended'],
       rules: {
-        'jsdoc/check-tag-names': ['warn', { definedTags: ['values'] }],
-        'jsdoc/require-hyphen-before-param-description': ['warn'],
+        'jsdoc/check-tag-names': [
+          'error',
+          {
+            definedTags: [
+              'values', // Vue Docgen: https://vue-styleguidist.github.io/docs/Documenting.html#available-tags
+              'template', // TypeDoc: https://www.typescriptlang.org/docs/handbook/jsdoc-supported-types.html#template
+            ],
+          },
+        ],
+        'jsdoc/require-hyphen-before-param-description': ['error'],
       },
     },
     {
