@@ -10,7 +10,7 @@ export const useBrowserIsBlink = () => {
   if (browser!==null) {
     return browser.isChrome || browser.isEdge || browser.isOpera
   } else {
-    return null
+    return false
   }
   
   
@@ -21,6 +21,6 @@ export const useBrowserIsMobile = () => {
   if (mobile!==null) {
     return mobile
   } else {
-    return null
+    return false
   }
 }
