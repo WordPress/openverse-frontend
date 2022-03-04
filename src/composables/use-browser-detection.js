@@ -15,10 +15,10 @@ export const useBrowserIsBlink = () => {
 }
 
 export const useBrowserIsMobile = () => {
-  const mobile = useBrowserDetection()
-  if (mobile === null) {
+  const browser = useBrowserDetection()
+  if (browser === null) {
     return false
   } else {
-    return mobile.isMobile
+    return browser.isMobile
   }
 }
