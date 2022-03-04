@@ -1,0 +1,13 @@
+FROM node:16
+
+WORKDIR /usr/app
+
+RUN npm install talkback
+
+COPY test/proxy.js proxy.js
+COPY test/tapes test/tapes
+
+# todo change to updated port
+EXPOSE 3000
+
+ENTRYPOINT ["node", "proxy.js"]
