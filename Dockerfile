@@ -16,7 +16,7 @@ COPY pnpm-lock.yaml .
 COPY .npmrc .
 
 # install dependencies including local development tools
-RUN pnpm install
+RUN pnpm install --store=pnpm-store
 
 # copy the rest of the content
 COPY . /usr/app
@@ -43,6 +43,8 @@ ENV CYPRESS_INSTALL_BINARY=0
 
 # copy files from local machine
 COPY . /usr/app
+
+COPY --from=builder /usr/app/pnpm-store /usr/app/pnpm-store
 
 # disable telemetry when building the app
 ENV NUXT_TELEMETRY_DISABLED=1
@@ -89,8 +91,9 @@ COPY --from=builder /usr/app/src/locales /usr/app/src/locales
 COPY --from=builder /usr/app/src/utils  /usr/app/src/utils
 COPY --from=builder /usr/app/src/constants  /usr/app/src/constants
 COPY --from=builder /usr/app/src/server-middleware  /usr/app/src/server-middleware
+COPY --from=builder /usr/app/pnpm-store /usr/app/pnpm-store
 
-RUN pnpm install --frozen-lockfile
+RUN pnpm install --frozen-lockfile --store=pnpm-store
 
 # set app serving to permissive / assigned
 ENV NUXT_HOST=0.0.0.0

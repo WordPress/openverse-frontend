@@ -1,0 +1,31 @@
+version: "3"
+services:
+  web:
+    build:
+      context: .
+      target: app
+    ports:
+      - "8443:8443"
+    environment:
+      # HOST is necessary for Nuxt + Docker
+      HOST: 0.0.0.0
+      PORT: 8443
+      API_URL: http://api:3000
+    depends_on:
+      - api
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.proxy
+    ports:
+      - "3000:3000"
+
+  playwright:
+    image: mcr.microsoft.com/playwright:v${PLAYWRIGHT_VERSION}-focal
+    volumes:
+      - .:/app
+    command: bash -c '/app/bin/wait-for.sh http://web:8443 --work-dir=app -- npm run test:${TEST_TYPE}:local'
+    depends_on:
+      - web
+      - api

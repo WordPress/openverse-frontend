@@ -1,8 +1,8 @@
 /** @type {import('@playwright/test').PlaywrightTestConfig} */
 const config = {
-  testDir: 'test/e2e',
+  testDir: '.',
   use: {
-    baseURL: 'http://localhost:8443',
+    baseURL: 'http://web:8443',
   },
   timeout: 60 * 1000,
 }
