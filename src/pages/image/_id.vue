@@ -81,18 +81,14 @@
 
 <script>
 import axios from 'axios'
-import { mapActions, mapState } from 'vuex'
+import { mapState } from 'vuex'
 
-import {
-  DETAIL_PAGE_EVENTS,
-  SEND_DETAIL_PAGE_EVENT,
-} from '~/constants/usage-data-analytics-types'
-
-import { MEDIA, USAGE_DATA } from '~/constants/store-modules'
+import { sendDetailPageEvent } from '~/utils/usage-data'
 
 import { FETCH_MEDIA_ITEM } from '~/constants/action-types'
-
 import { IMAGE } from '~/constants/media'
+import { DETAIL_PAGE_EVENTS } from '~/constants/usage-data-analytics-types'
+import { MEDIA } from '~/constants/store-modules'
 
 import VButton from '~/components/VButton.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'
@@ -165,7 +161,6 @@ const VImageDetailsPage = {
     })
   },
   methods: {
-    ...mapActions(USAGE_DATA, { sendEvent: SEND_DETAIL_PAGE_EVENT }),
     onImageLoaded(event) {
       this.imageWidth = this.image.width || event.target.naturalWidth
       this.imageHeight = this.image.height || event.target.naturalHeight
@@ -179,13 +174,13 @@ const VImageDetailsPage = {
       this.isLoadingFullImage = false
     },
     onSourceLinkClicked() {
-      this.sendEvent({
+      sendDetailPageEvent({
         eventType: DETAIL_PAGE_EVENTS.SOURCE_CLICKED,
         resultUuid: this.imageId,
       })
     },
     onCreatorLinkClicked() {
-      this.sendEvent({
+      sendDetailPageEvent({
         eventType: DETAIL_PAGE_EVENTS.CREATOR_CLICKED,
         resultUuid: this.imageId,
       })

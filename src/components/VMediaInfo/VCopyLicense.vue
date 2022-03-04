@@ -143,20 +143,12 @@
 </template>
 
 <script>
-import {
-  computed,
-  defineComponent,
-  ref,
-  useContext,
-} from '@nuxtjs/composition-api'
+import { computed, defineComponent, ref } from '@nuxtjs/composition-api'
 
-import { USAGE_DATA } from '~/constants/store-modules'
-import {
-  SEND_DETAIL_PAGE_EVENT,
-  DETAIL_PAGE_EVENTS,
-} from '~/constants/usage-data-analytics-types'
+import { DETAIL_PAGE_EVENTS } from '~/constants/usage-data-analytics-types'
 import getAttributionHtml from '~/utils/attribution-html'
 import { isPublicDomain } from '~/utils/license'
+import { sendDetailPageEvent } from '~/utils/usage-data'
 
 import VLink from '~/components/VLink.vue'
 
@@ -174,8 +166,6 @@ const VCopyLicense = defineComponent({
     },
   },
   setup(props) {
-    const { store } = useContext()
-
     const activeTab = ref('rich')
     const tabs = ['rich', 'html', 'plain']
 
@@ -192,23 +182,22 @@ const VCopyLicense = defineComponent({
       return getAttributionHtml(props.media, licenseUrl, props.fullLicenseName)
     })
 
-    const sendDetailPageEvent = (eventType) => {
-      const eventData = {
+    const sendEvent = (eventType) => {
+      sendDetailPageEvent({
         eventType,
         resultUuid: props.media.id,
-      }
-      store.dispatch(`${USAGE_DATA}/${SEND_DETAIL_PAGE_EVENT}`, eventData)
+      })
     }
 
     const onCreatorLinkClicked = () => {
-      sendDetailPageEvent(DETAIL_PAGE_EVENTS.CREATOR_CLICKED)
+      sendEvent(DETAIL_PAGE_EVENTS.CREATOR_CLICKED)
     }
 
     const onSourceLinkClicked = () =>
-      sendDetailPageEvent(DETAIL_PAGE_EVENTS.SOURCE_CLICKED)
+      sendEvent(DETAIL_PAGE_EVENTS.SOURCE_CLICKED)
 
     const onCopyAttribution = () => {
-      sendDetailPageEvent(DETAIL_PAGE_EVENTS.ATTRIBUTION_CLICKED)
+      sendEvent(DETAIL_PAGE_EVENTS.ATTRIBUTION_CLICKED)
     }
 
     const period = '.'
