@@ -103,7 +103,7 @@ export default defineComponent({
      * To change the underlying component for the VButton,
      * pass `as` prop.
      *
-     * @variants 'button', 'VLink'
+     * @values 'button', 'VLink'
      */
     as: {
       type: String,
