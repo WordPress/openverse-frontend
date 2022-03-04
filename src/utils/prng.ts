@@ -1,4 +1,4 @@
-/*
+/**
  * Utilities for generating pseudo-random numbers.
  */
 
