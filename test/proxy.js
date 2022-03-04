@@ -23,6 +23,38 @@ const recordMode = updatingTapes
   ? talkback.Options.RecordMode.NEW
   : talkback.Options.RecordMode.DISABLED
 console.log('Record mode: ', recordMode)
+
+const subUpstreamForProxy = (obj) => {
+  return Object.entries(obj).reduce(
+    (acc, [key, val]) => {
+      if (typeof val === 'string') {
+        acc[key] = val.replace(
+          /https?:\/\/api.openverse.engineering\/v1/,
+          'http://api:3000'
+        )
+      }
+
+      return acc
+    },
+    { ...obj }
+  )
+}
+
+/**
+ * Transform any response values to use the talkback
+ * proxy instead of pointing directly upstream
+ *
+ * @param tape
+ */
+const tapeDecorator = (tape) => {
+  const responseBody = JSON.parse(tape.res.body.toString())
+  if (Array.isArray(responseBody.results)) {
+    responseBody.results = responseBody.results.map(subUpstreamForProxy)
+    tape.res.body = Buffer.from(JSON.stringify(responseBody))
+  }
+  return tape
+}
+
 const opts = {
   host,
   port: 3000,
@@ -33,6 +65,7 @@ const opts = {
   name: 'Openverse e2e proxy',
   summary: false,
   tapeNameGenerator,
+  tapeDecorator,
 }
 
 const server = talkback(opts)
