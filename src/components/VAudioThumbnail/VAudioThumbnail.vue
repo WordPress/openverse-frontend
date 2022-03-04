@@ -30,9 +30,8 @@
 <script>
 import { ref, onMounted, useContext, computed } from '@nuxtjs/composition-api'
 
-import { lerp, dist, bezier } from '~/utils/math'
-
 import { rand, hash } from '~/utils/prng'
+import { lerp, dist, bezier } from '~/utils/math'
 
 /**
  * Displays the cover art for the audio in a square aspect ratio.
