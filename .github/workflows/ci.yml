@@ -70,10 +70,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: ./.github/actions/setup-node-env
-
+      # E2E runs inside docker and doesn't need any node dependencies
       - name: Run E2E
-        run: pnpm test:e2e
+        run: PLAYWRIGHT_VERSION=1.17.1 TEST_TYPE=e2e docker-compose -f docker-compose.playwright.yml up --abort-on-container-exit --exit-code-from playwright
 
   storybook:
     name: Check Storybook build
