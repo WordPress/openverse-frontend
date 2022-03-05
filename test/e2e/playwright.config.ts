@@ -20,6 +20,7 @@ const config: PlaywrightTestConfig = {
      */
     command: './node_modules/.bin/npm-run-all -p -r talkback prod',
     port: 8443,
+    reuseExistingServer: !process.env.CI || process.env.PWDEBUG === '1',
     env: {
       API_URL: 'http://localhost:3000',
       UPDATE_TAPES: process.env.UPDATE_TAPES || '',
