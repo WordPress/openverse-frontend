@@ -7,7 +7,5 @@ services:
     user: pwuser
     working_dir: /app
     command: npm run test:${TEST_TYPE}:local
-    depends_on:
-      - api
     environment:
       - UPDATE_TAPES=${UPDATE_TAPES:-false}
