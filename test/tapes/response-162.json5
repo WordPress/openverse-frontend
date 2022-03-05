@@ -1,0 +1,91 @@
+{
+    meta: {
+        createdAt: '2022-03-05T03:19:38.022Z',
+        host: 'https://api.openverse.engineering/v1',
+    },
+    req: {
+        headers: {
+            connection: 'keep-alive',
+            pragma: 'no-cache',
+            'cache-control': 'no-cache',
+            'sec-ch-ua': '',
+            accept: 'application/json, text/plain, */*',
+            'sec-ch-ua-mobile': '?0',
+            'sec-ch-ua-platform': '',
+            'sec-fetch-site': 'same-site',
+            'sec-fetch-mode': 'cors',
+            'sec-fetch-dest': 'empty',
+            referer: 'http://localhost:8443/',
+            'accept-encoding': 'gzip, deflate, br',
+        },
+        url: '/images/ea7e24ee-1374-4c49-9f6f-5c4529b701d8/',
+        method: 'GET',
+        body: '',
+    },
+    res: {
+        status: 200,
+        headers: {
+            date: [
+                'Sat, 05 Mar 2022 03:19:38 GMT',
+            ],
+            'content-type': [
+                'application/json',
+            ],
+            'transfer-encoding': [
+                'chunked',
+            ],
+            connection: [
+                'keep-alive',
+            ],
+            vary: [
+                'Accept-Encoding, Accept, Authorization, Origin',
+            ],
+            allow: [
+                'GET, HEAD, OPTIONS',
+            ],
+            'x-frame-options': [
+                'DENY',
+            ],
+            'access-control-allow-origin': [
+                '*',
+            ],
+            'x-content-type-options': [
+                'nosniff',
+            ],
+            'referrer-policy': [
+                'same-origin',
+            ],
+            'cache-control': [
+                'max-age=14400',
+            ],
+            'cf-cache-status': [
+                'HIT',
+            ],
+            age: [
+                '9476',
+            ],
+            'last-modified': [
+                'Sat, 05 Mar 2022 00:41:42 GMT',
+            ],
+            'expect-ct': [
+                'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"',
+            ],
+            'strict-transport-security': [
+                'max-age=15552000; includeSubDomains; preload',
+            ],
+            server: [
+                'cloudflare',
+            ],
+            'cf-ray': [
+                '6e6fb60f3df61853-ATL',
+            ],
+            'content-encoding': [
+                'br',
+            ],
+            'alt-svc': [
+                'h3=":443"; ma=86400, h3-29=":443"; ma=86400',
+            ],
+        },
+        body: 'G+IDAJwFdrMyEayt7FqkH0ktsrdV08g5lc29DqEbkKqaLA4IUoelr2GGst6MnEpYIH3vaOvncXEZFXTA54GPRjLGqs49oNwG3IB2lUfi44+znoF5E+bazudMmWCZndrE0sIvmJtap9MkSDWLiN97YPRh/kYij6sgvlTdLztAa2uxW0+3lx8R6BthUnJaJtXKkMJ5a1XUXmpEbH+B8319PRwf92vLuv7PIGYwDizHum+9d9rboVyvJvMkpUkmNtVEa3K4hcGWQR5oHXB7nzDyu2DyZocpTq7iAmo91VweI4PDeUYpwRYi9G7lKtxSwgUlMq4MqKDTcBF6B7U4wfgYYRnV8IQL3DfC4P6C0mMKcm7By4JM3oQGnazfEkAWo89dWSeWSTSXnIwn35rs77bq2SG71dacMMUzqucmzEZKIjKsEwYV/hiSUIqb05oHNwz7ds6F4ouHUtviSGeEfxhwVI4wX0fryQP1rDliJ1ixBf4=',
+    },
+}

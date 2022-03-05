@@ -1,0 +1,91 @@
+{
+    meta: {
+        createdAt: '2022-03-05T03:19:27.134Z',
+        host: 'https://api.openverse.engineering/v1',
+    },
+    req: {
+        headers: {
+            connection: 'keep-alive',
+            pragma: 'no-cache',
+            'cache-control': 'no-cache',
+            'sec-ch-ua': '',
+            accept: 'application/json, text/plain, */*',
+            'sec-ch-ua-mobile': '?0',
+            'sec-ch-ua-platform': '',
+            'sec-fetch-site': 'same-site',
+            'sec-fetch-mode': 'cors',
+            'sec-fetch-dest': 'empty',
+            referer: 'http://localhost:8443/',
+            'accept-encoding': 'gzip, deflate, br',
+        },
+        url: '/audio/?q=cat',
+        method: 'GET',
+        body: '',
+    },
+    res: {
+        status: 200,
+        headers: {
+            date: [
+                'Sat, 05 Mar 2022 03:19:27 GMT',
+            ],
+            'content-type': [
+                'application/json',
+            ],
+            'transfer-encoding': [
+                'chunked',
+            ],
+            connection: [
+                'keep-alive',
+            ],
+            vary: [
+                'Accept-Encoding, Accept, Authorization, Origin',
+            ],
+            allow: [
+                'GET, HEAD, OPTIONS',
+            ],
+            'x-frame-options': [
+                'DENY',
+            ],
+            'access-control-allow-origin': [
+                '*',
+            ],
+            'x-content-type-options': [
+                'nosniff',
+            ],
+            'referrer-policy': [
+                'same-origin',
+            ],
+            'cache-control': [
+                'max-age=14400',
+            ],
+            'cf-cache-status': [
+                'HIT',
+            ],
+            age: [
+                '1045',
+            ],
+            'last-modified': [
+                'Sat, 05 Mar 2022 03:02:02 GMT',
+            ],
+            'expect-ct': [
+                'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"',
+            ],
+            'strict-transport-security': [
+                'max-age=15552000; includeSubDomains; preload',
+            ],
+            server: [
+                'cloudflare',
+            ],
+            'cf-ray': [
+                '6e6fb5cb18be63ce-ATL',
+            ],
+            'content-encoding': [
+                'br',
+            ],
+            'alt-svc': [
+                'h3=":443"; ma=86400, h3-29=":443"; ma=86400',
+            ],
+        },
+        body: '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',
+    },
+}
