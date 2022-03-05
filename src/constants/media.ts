@@ -21,6 +21,8 @@ export type SupportedMediaType = typeof IMAGE | typeof AUDIO
  */
 export const supportedSearchTypes = [ALL_MEDIA, IMAGE, AUDIO]
 
+export type SupportedSearchType = typeof ALL_MEDIA | SupportedMediaType
+
 /* Media support */
 
 const SUPPORTED = 'supported' // Native search

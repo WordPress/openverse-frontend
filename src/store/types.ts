@@ -1,5 +1,5 @@
-export type SupportedMediaType = 'audio' | 'image'
-export type SupportedSearchType = 'all' | SupportedMediaType
+import type { SupportedMediaType, SupportedSearchType } from '~/constants/media'
+
 export type MediaType = 'audio' | 'image' | 'video'
 export type SearchType = 'all' | MediaType
 /**
