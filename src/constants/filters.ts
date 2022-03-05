@@ -1,7 +1,9 @@
+import { kebab } from 'case'
+
 import { ALL_MEDIA, AUDIO, IMAGE, VIDEO } from '~/constants/media'
 import { ACTIVE_LICENSES } from '~/constants/license'
-import { kebabize } from '~/utils/format-strings'
 import { deepFreeze } from '~/utils/deep-freeze'
+
 import type { FilterCategory, FilterItem, SearchType } from '~/store/types'
 
 /**
@@ -91,7 +93,7 @@ const initFilters = () =>
       ...acc,
       [filterType]: filters.map((item) => ({
         code: item,
-        name: `filters.${kebabize(filterType)}.${item}`,
+        name: `filters.${kebab(filterType)}.${item}`,
         checked: false,
       })),
     }),

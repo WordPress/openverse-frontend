@@ -44,6 +44,7 @@
 
 <script>
 import { computed, useContext, useRouter } from '@nuxtjs/composition-api'
+import { kebab } from 'case'
 
 import {
   CLEAR_FILTERS,
@@ -51,8 +52,6 @@ import {
   TOGGLE_FILTER,
 } from '~/constants/action-types'
 import { MEDIA, SEARCH } from '~/constants/store-modules'
-
-import { kebabize } from '~/utils/format-strings.ts'
 
 import VFilterChecklist from '~/components/VFilters/VFilterChecklist.vue'
 
@@ -76,7 +75,7 @@ export default {
       if (filterType === 'searchBy') {
         return ''
       }
-      return i18n.t(`filters.${kebabize(filterType)}.title`)
+      return i18n.t(`filters.${kebab(filterType)}.title`)
     }
 
     const updateSearch = async () => {
