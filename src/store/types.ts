@@ -144,13 +144,6 @@ export interface SearchState {
   filters: Filters
 }
 
-export interface ActiveMediaState {
-  type: SupportedMediaType | null
-  id: string | null
-  status: 'ejected' | 'playing' | 'paused' // 'ejected' means player is closed
-  message: string | null
-}
-
 export type MediaStoreResult<T extends FrontendMediaType> = MediaResult<
   Record<MediaDetail['id'], T>
 >

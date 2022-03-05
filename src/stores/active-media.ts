@@ -4,9 +4,9 @@ import { reactive, readonly, toRefs } from '@nuxtjs/composition-api'
 import type { SupportedMediaType } from '~/constants/media'
 import type { Media } from '~/models/media'
 
-type MediaStatus = 'ejected' | 'playing' | 'paused'
+type MediaStatus = 'ejected' | 'playing' | 'paused' // 'ejected' means player is closed
 
-interface ActiveMediaState {
+export interface ActiveMediaState {
   type: SupportedMediaType | null
   id: Media['id'] | null
   status: MediaStatus
