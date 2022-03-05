@@ -116,7 +116,7 @@ export const createActions = (services = mediaServices) => ({
     // does not send event if user is paginating for more results
     if (!page) {
       const sessionId = rootState.user.usageSessionId
-      await usageDataStore.sendSearchQueryEvent({
+      usageDataStore.sendSearchQueryEvent({
         query: queryParams.q,
         sessionId,
       })
@@ -163,7 +163,7 @@ export const createActions = (services = mediaServices) => ({
       (item) => item === id
     )
     const usageDataStore = useUsageDataStore()
-    await usageDataStore.sendResultClickedEvent({
+    usageDataStore.sendResultClickedEvent({
       query: rootState.search.query.q,
       resultUuid: id,
       resultRank,

@@ -20,7 +20,7 @@ import {
 import { AUDIO, IMAGE, supportedMediaTypes } from '~/constants/media'
 import { useUsageDataStore } from '~/stores/usage-data'
 
-describe('Search Store', () => {
+describe('Media Store', () => {
   describe('state', () => {
     it('exports default state', () => {
       const state = store.state()

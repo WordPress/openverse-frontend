@@ -83,11 +83,13 @@ describe('Usage Data Store Store', () => {
         $sentryReady: () =>
           Promise.resolve({ captureException: captureExceptionMock }),
       }
-      await usageDataStore.sendResultClickedEvent(data)
+      usageDataStore.sendResultClickedEvent(data)
 
       expect(usageDataServiceMock.sendResultClickedEvent).toHaveBeenCalledWith(
         data
       )
+      // Need to wait for the async function to be called
+      await new Promise((r) => setTimeout(r, 1000))
       expect(captureExceptionMock).toHaveBeenCalledTimes(1)
       expect(captureExceptionMock.mock.calls[0][0]).toEqual(expectedError)
       expect(typeof captureExceptionMock.mock.calls[0][1]).toEqual('function')

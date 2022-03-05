@@ -20,7 +20,7 @@ import Clipboard from 'clipboard'
 import VButton from '~/components/VButton.vue'
 
 export default {
-  name: 'CopyButton',
+  name: 'VCopyButton',
   components: { VButton },
   props: {
     el: {

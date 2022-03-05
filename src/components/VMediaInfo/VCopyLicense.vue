@@ -132,7 +132,7 @@
         </i18n>
       </div>
 
-      <CopyButton
+      <VCopyButton
         :id="`copyattr-${tab}`"
         :el="`#attribution-${tab}`"
         class="mt-6"
@@ -152,11 +152,11 @@ import { isPublicDomain } from '~/utils/license'
 import { useUsageDataStore } from '~/stores/usage-data'
 
 import VLink from '~/components/VLink.vue'
-import CopyButton from '~/components/CopyButton.vue'
+import VCopyButton from '~/components/VCopyButton.vue'
 
 const VCopyLicense = defineComponent({
   name: 'VCopyLicense',
-  components: { CopyButton, VLink },
+  components: { VCopyButton, VLink },
   props: {
     media: {
       type: Object,
@@ -184,23 +184,23 @@ const VCopyLicense = defineComponent({
       return getAttributionHtml(props.media, licenseUrl, props.fullLicenseName)
     })
 
-    const sendDetailPageEvent = async (eventType) => {
+    const sendDetailPageEvent = (eventType) => {
       const eventData = {
         eventType,
         resultUuid: props.media.id,
       }
-      await usageDataStore.sendDetailPageEvent(eventData)
+      usageDataStore.sendDetailPageEvent(eventData)
     }
 
-    const onCreatorLinkClicked = async () => {
-      await sendDetailPageEvent(DETAIL_PAGE_EVENTS.CREATOR_CLICKED)
+    const onCreatorLinkClicked = () => {
+      sendDetailPageEvent(DETAIL_PAGE_EVENTS.CREATOR_CLICKED)
     }
 
-    const onSourceLinkClicked = async () =>
-      await sendDetailPageEvent(DETAIL_PAGE_EVENTS.SOURCE_CLICKED)
+    const onSourceLinkClicked = () =>
+      sendDetailPageEvent(DETAIL_PAGE_EVENTS.SOURCE_CLICKED)
 
-    const onCopyAttribution = async () => {
-      await sendDetailPageEvent(DETAIL_PAGE_EVENTS.ATTRIBUTION_CLICKED)
+    const onCopyAttribution = () => {
+      sendDetailPageEvent(DETAIL_PAGE_EVENTS.ATTRIBUTION_CLICKED)
     }
 
     const period = '.'

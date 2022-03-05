@@ -32,32 +32,32 @@ const handleUsageEvent = (eventName, context) => (promise) =>
         })
       )
   )
-
+// Analytics requests shouldn't block because they don't have any bearing on the UI and blocking on them will make UI less responsive
 export const createUseUsageDataStore = (usageDataService = UsageDataService) =>
   defineStore('usage-data', {
     actions: {
-      async sendSearchQueryEvent(params) {
+      sendSearchQueryEvent(params) {
         if (disabled) return
         handleUsageEvent(
           SEND_SEARCH_QUERY_EVENT,
           this.$nuxt
         )(usageDataService.sendSearchQueryEvent(params))
       },
-      async sendResultClickedEvent(params) {
+      sendResultClickedEvent(params) {
         if (disabled) return
         handleUsageEvent(
           SEND_RESULT_CLICKED_EVENT,
           this.$nuxt
         )(usageDataService.sendResultClickedEvent(params))
       },
-      async sendSearchRatingEvent(params) {
+      sendSearchRatingEvent(params) {
         if (disabled) return
         handleUsageEvent(
           SEND_SEARCH_RATING_EVENT,
           this.$nuxt
         )(usageDataService.sendSearchRatingEvent(params))
       },
-      async sendDetailPageEvent(params) {
+      sendDetailPageEvent(params) {
         if (disabled) return
         handleUsageEvent(
           SEND_DETAIL_PAGE_EVENT,

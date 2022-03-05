@@ -24,13 +24,13 @@ const reuseForm =
 const imageLinkEntry = '2039681354'
 
 export default {
-  name: 'ReuseSurvey',
+  name: 'VReuseSurvey',
   components: { VLink },
   props: ['image'],
   setup(props) {
     const usageDataStore = useUsageDataStore()
-    const onReuseSurveyClick = async () => {
-      await usageDataStore.sendDetailPageEvent({
+    const onReuseSurveyClick = () => {
+      usageDataStore.sendDetailPageEvent({
         eventType: DETAIL_PAGE_EVENTS.REUSE_SURVEY,
         resultUuid: props.image.id,
       })

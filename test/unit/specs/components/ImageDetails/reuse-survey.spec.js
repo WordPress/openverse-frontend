@@ -5,12 +5,12 @@ import { createTestingPinia } from '@pinia/testing'
 import { DETAIL_PAGE_EVENTS } from '~/constants/usage-data-analytics-types'
 import { useUsageDataStore } from '~/stores/usage-data'
 
-import ReuseSurvey from '~/components/ImageDetails/ReuseSurvey'
+import VReuseSurvey from '~/components/ImageDetails/VReuseSurvey'
 
 jest.mock('~/utils/sentry-config.ts', () => ({
   sentryConfig: { disabled: false },
 }))
-describe('ReuseSurvey', () => {
+describe('VReuseSurvey', () => {
   let options = null
   let props = null
   const localVue = createLocalVue()
@@ -29,7 +29,7 @@ describe('ReuseSurvey', () => {
 
   it('should dispatch REUSE_SURVEY on reuse link clicked', () => {
     const usageDataStore = useUsageDataStore()
-    const wrapper = mount(ReuseSurvey, options)
+    const wrapper = mount(VReuseSurvey, options)
     wrapper.find('a').trigger('click')
     expect(usageDataStore.sendDetailPageEvent).toHaveBeenCalledWith({
       eventType: DETAIL_PAGE_EVENTS.REUSE_SURVEY,
