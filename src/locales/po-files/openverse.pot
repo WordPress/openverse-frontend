@@ -62,6 +62,30 @@ msgctxt "search-type.see-audio"
 msgid "See all audio"
 msgstr ""
 
+#: src/components/VErrorSection/VServerTimeout.vue:3
+msgctxt "server-timeout.heading"
+msgid "Whoops, it looks like that request took too long to complete. Please try again."
+msgstr ""
+
+#. Do not translate words between ### ###.
+#: src/components/VErrorSection/VNoResults.vue:3
+msgctxt "no-results.heading"
+msgid "We couldn't find anything for \"###query###\"."
+msgstr ""
+
+#: src/components/VErrorSection/VNoResults.vue:5
+msgctxt "no-results.alternatives"
+msgid "Try a different query or use one of the additional sources to expand your search."
+msgstr ""
+
+msgctxt "error-images.depressed-musician"
+msgid "A depressed pianist rests their head in their hands."
+msgstr ""
+
+msgctxt "error-images.waiting-for-a-bite"
+msgid "Three boys sit on a broken log while two of them fish."
+msgstr ""
+
 #: src/components/VFilters/VFilterChecklist.vue:44
 msgctxt "modal.close"
 msgid "Close"
@@ -272,7 +296,7 @@ msgid "Edge"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VMetaSearch/VMetaSearchForm.vue:45
+#: src/components/VMetaSearch/VMetaSearchForm.vue:49
 msgctxt "meta-search.caption"
 msgid "###openverse### does not currently index the sources listed above, but through this interface is offering convenient access to search services provided by other independent organizations. ###openverse### has no control over the results that are returned. Do not assume that the results displayed in this search portal are under a CC license. Always verify that the work is actually under a CC license by following the link. If you are in doubt, you should contact the copyright holder directly, or try to contact the site where you found the content."
 msgstr ""
@@ -711,7 +735,7 @@ msgid "Load more results"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VAllResultsGrid/VAllResultsGrid.vue:147
+#: src/components/VAllResultsGrid/VAllResultsGrid.vue:151
 msgctxt "browse-page.fetching-error"
 msgid "Error fetching ###type###:"
 msgstr ""
@@ -792,7 +816,7 @@ msgctxt "browse-page.search-form.image"
 msgid "images"
 msgstr ""
 
-#: src/components/VAllResultsGrid/VAllResultsGrid.vue:146
+#: src/components/VAllResultsGrid/VAllResultsGrid.vue:150
 msgctxt "browse-page.search-form.audio"
 msgid "audio"
 msgstr ""
