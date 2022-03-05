@@ -18,7 +18,7 @@
     <VMetaSearchForm
       v-if="!fetchState.isFetching"
       :type="metaSearchFormType"
-      :has-no-result="hasNoResult"
+      :has-no-results="hasNoResult"
       :query="query"
       :is-supported="isSupported"
     />
@@ -42,10 +42,17 @@ import VMetaSearchForm from '~/components/VMetaSearch/VMetaSearchForm.vue'
 import VErrorSection from '~/components/VErrorSection/VErrorSection.vue'
 import VErrorImage from '~/components/VErrorSection/VErrorImage.vue'
 import VNoResults from '~/components/VErrorSection/VNoResults.vue'
+import VSearchResultsTitle from '~/components/VSearchResultsTitle.vue'
 
 export default {
   name: 'VSearchGrid',
-  components: { VErrorSection, VMetaSearchForm, VErrorImage, VNoResults },
+  components: {
+    VErrorSection,
+    VMetaSearchForm,
+    VErrorImage,
+    VNoResults,
+    VSearchResultsTitle,
+  },
   props: {
     supported: {
       type: Boolean,
