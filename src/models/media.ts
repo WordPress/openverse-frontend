@@ -1,10 +1,8 @@
-import type { supportedMediaTypes } from '~/constants/media'
+import type { SupportedMediaType } from '~/constants/media'
 
 export interface Tag {
   name: string
 }
-
-type MediaType = typeof supportedMediaTypes[number]
 
 export interface ApiMedia {
   id: string
@@ -28,7 +26,7 @@ export interface ApiMedia {
  * for individual media
  */
 export interface Media extends ApiMedia {
-  frontendMediaType: MediaType
+  frontendMediaType: SupportedMediaType
 
   tags: Tag[]
 }

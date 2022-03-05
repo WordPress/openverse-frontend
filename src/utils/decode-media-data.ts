@@ -1,11 +1,9 @@
 import { title } from 'case'
 
 import { decodeData as decodeString } from '~/utils/decode-data'
-import type { supportedMediaTypes } from '~/constants/media'
+import type { SupportedMediaType } from '~/constants/media'
 import { IMAGE } from '~/constants/media'
 import type { ApiMedia, Media } from '~/models/media'
-
-type MediaType = typeof supportedMediaTypes[number]
 
 /**
  * For any given media, decode the media title, creator name and individual tag
@@ -17,7 +15,7 @@ type MediaType = typeof supportedMediaTypes[number]
  */
 export const decodeMediaData = (
   media: ApiMedia,
-  mediaType: MediaType = IMAGE
+  mediaType: SupportedMediaType = IMAGE
 ): Media => ({
   ...media,
   frontendMediaType: mediaType,
