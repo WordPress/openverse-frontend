@@ -81,7 +81,7 @@
 import axios from 'axios'
 import { mapState } from 'vuex'
 
-import { sendDetailPageEvent } from '~/utils/usage-data'
+import usageData from '~/utils/usage-data'
 
 import { FETCH_MEDIA_ITEM } from '~/constants/action-types'
 import { IMAGE } from '~/constants/media'
@@ -172,13 +172,11 @@ const VImageDetailsPage = {
       this.isLoadingFullImage = false
     },
     sendEvent(eventType) {
-      sendDetailPageEvent(
-        {
-          eventType: eventType,
-          resultUuid: this.imageId,
-        },
-        this.$nuxt.context
-      )
+      const eventData = {
+        eventType: eventType,
+        resultUuid: this.imageId,
+      }
+      usageData.sendDetailPageEvent(eventData, this.$nuxt.context.app)
     },
     onSourceLinkClicked() {
       this.sendEvent(DETAIL_PAGE_EVENTS.SOURCE_CLICKED)

@@ -26,26 +26,30 @@ const handleUsageEvent = (eventName, context) => (promise) =>
       )
   })
 
-export function sendSearchQueryEvent(params, context) {
-  if (disabled) return
-  handleUsageEvent(
-    SEND_SEARCH_QUERY_EVENT,
-    context
-  )(UsageDataService.sendSearchQueryEvent(params))
+const usageData = {
+  sendSearchQueryEvent(params, context) {
+    if (disabled) return
+    handleUsageEvent(
+      SEND_SEARCH_QUERY_EVENT,
+      context
+    )(UsageDataService.sendSearchQueryEvent(params))
+  },
+
+  sendResultClickedEvent(params, context) {
+    if (disabled) return
+    handleUsageEvent(
+      SEND_SEARCH_QUERY_EVENT,
+      context
+    )(UsageDataService.sendResultClickedEvent(params))
+  },
+
+  sendDetailPageEvent(params, context) {
+    if (disabled) return
+    handleUsageEvent(
+      SEND_DETAIL_PAGE_EVENT,
+      context
+    )(UsageDataService.sendDetailPageEvent(params))
+  },
 }
 
-export function sendResultClickedEvent(params, context) {
-  if (disabled) return
-  handleUsageEvent(
-    SEND_SEARCH_QUERY_EVENT,
-    context
-  )(UsageDataService.sendResultClickedEvent(params))
-}
-
-export function sendDetailPageEvent(params, context) {
-  if (disabled) return
-  handleUsageEvent(
-    SEND_DETAIL_PAGE_EVENT,
-    context
-  )(UsageDataService.sendDetailPageEvent(params))
-}
+export default usageData

@@ -50,7 +50,7 @@
 import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
 
 import { DETAIL_PAGE_EVENTS } from '~/constants/usage-data-analytics-types'
-import { sendDetailPageEvent } from '~/utils/usage-data'
+import usageData from '~/utils/usage-data'
 
 import VContentReportPopover from '~/components/VContentReport/VContentReportPopover.vue'
 import VMediaTag from '~/components/VMediaTag/VMediaTag.vue'
@@ -74,7 +74,7 @@ const VImageDetails = defineComponent({
     },
   },
   setup(props) {
-    const { store, i18n } = useContext()
+    const { app, store, i18n } = useContext()
 
     const imgType = computed(() => {
       if (props.imageType) {
@@ -94,14 +94,13 @@ const VImageDetails = defineComponent({
 
     const sourceName = computed(() => getProviderName(props.image.source))
 
-    const onSourceLinkClicked = () =>
-      sendDetailPageEvent(
-        {
-          eventType: DETAIL_PAGE_EVENTS.SOURCE_CLICKED,
-          resultUuid: props.image.id,
-        },
-        this.$nuxt.context
-      )
+    const onSourceLinkClicked = () => {
+      const eventData = {
+        eventType: DETAIL_PAGE_EVENTS.SOURCE_CLICKED,
+        resultUuid: props.image.id,
+      }
+      usageData.sendDetailPageEvent(eventData, app)
+    }
 
     return { imgType, providerName, sourceName, onSourceLinkClicked }
   },

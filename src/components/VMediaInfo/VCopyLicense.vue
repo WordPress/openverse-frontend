@@ -153,7 +153,7 @@ import {
 import { DETAIL_PAGE_EVENTS } from '~/constants/usage-data-analytics-types'
 import getAttributionHtml from '~/utils/attribution-html'
 import { isPublicDomain } from '~/utils/license'
-import { sendDetailPageEvent } from '~/utils/usage-data'
+import usageData from '~/utils/usage-data'
 
 import VLink from '~/components/VLink.vue'
 
@@ -189,13 +189,11 @@ const VCopyLicense = defineComponent({
     })
 
     const sendEvent = (eventType) => {
-      sendDetailPageEvent(
-        {
-          eventType,
-          resultUuid: props.media.id,
-        },
-        app
-      )
+      const eventData = {
+        eventType: eventType,
+        resultUuid: props.media.id,
+      }
+      usageData.sendDetailPageEvent(eventData, app)
     }
 
     const onCreatorLinkClicked = () => {

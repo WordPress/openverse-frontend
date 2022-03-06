@@ -18,10 +18,7 @@ import {
 } from '~/constants/mutation-types'
 import { AUDIO, IMAGE, ALL_MEDIA, supportedMediaTypes } from '~/constants/media'
 import MediaService from '~/data/media-service'
-import {
-  sendSearchQueryEvent,
-  sendResultClickedEvent,
-} from '~/utils/usage-data'
+import usageData from '~/utils/usage-data'
 
 /**
  * @return {import('./types').MediaState}
@@ -118,7 +115,7 @@ export const createActions = (services = mediaServices) => ({
     // does not send event if user is paginating for more results
     if (!page) {
       const sessionId = rootState.user.usageSessionId
-      sendSearchQueryEvent({ query: queryParams.q, sessionId }, this)
+      usageData.sendSearchQueryEvent({ query: queryParams.q, sessionId }, this)
     }
 
     commit(FETCH_START_MEDIA, { mediaType })
@@ -167,7 +164,7 @@ export const createActions = (services = mediaServices) => ({
       resultRank,
       sessionId: rootState.user.usageSessionId,
     }
-    sendResultClickedEvent(eventData, this)
+    usageData.sendResultClickedEvent(eventData, this)
     commit(SET_MEDIA_ITEM, { item: {}, mediaType })
     try {
       const data = await services[mediaType].getMediaDetail(params)
