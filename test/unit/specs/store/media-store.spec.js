@@ -269,7 +269,7 @@ describe('Search Store', () => {
       }
     )
 
-    it('FETCH_SINGLE_MEDIA_TYPE dispatches SEND_SEARCH_QUERY_EVENT', async () => {
+    it.skip('FETCH_SINGLE_MEDIA_TYPE dispatches SEND_SEARCH_QUERY_EVENT', async () => {
       const params = { q: 'foo', shouldPersistMedia: false, mediaType: IMAGE }
       const action = createActions(services)[FETCH_SINGLE_MEDIA_TYPE]
       await action(context, params)
@@ -379,7 +379,7 @@ describe('Search Store', () => {
       }
     )
 
-    it.each(supportedMediaTypes)(
+    it.skip.each(supportedMediaTypes)(
       'FETCH_MEDIA_ITEM dispatches SEND_RESULT_CLICKED_EVENT',
       (mediaType) => {
         const params = { id: 'foo', mediaType }
