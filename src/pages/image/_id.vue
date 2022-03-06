@@ -173,17 +173,20 @@ const VImageDetailsPage = {
       }
       this.isLoadingFullImage = false
     },
+    sendEvent(eventType) {
+      sendDetailPageEvent(
+        {
+          eventType: eventType,
+          resultUuid: this.imageId,
+        },
+        this.$nuxt.context
+      )
+    },
     onSourceLinkClicked() {
-      sendDetailPageEvent({
-        eventType: DETAIL_PAGE_EVENTS.SOURCE_CLICKED,
-        resultUuid: this.imageId,
-      })
+      this.sendEvent(DETAIL_PAGE_EVENTS.SOURCE_CLICKED)
     },
     onCreatorLinkClicked() {
-      sendDetailPageEvent({
-        eventType: DETAIL_PAGE_EVENTS.CREATOR_CLICKED,
-        resultUuid: this.imageId,
-      })
+      this.sendEvent(DETAIL_PAGE_EVENTS.CREATOR_CLICKED)
     },
   },
   head() {

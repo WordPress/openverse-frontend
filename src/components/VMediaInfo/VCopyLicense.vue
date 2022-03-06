@@ -143,7 +143,12 @@
 </template>
 
 <script>
-import { computed, defineComponent, ref } from '@nuxtjs/composition-api'
+import {
+  computed,
+  defineComponent,
+  ref,
+  useContext,
+} from '@nuxtjs/composition-api'
 
 import { DETAIL_PAGE_EVENTS } from '~/constants/usage-data-analytics-types'
 import getAttributionHtml from '~/utils/attribution-html'
@@ -166,6 +171,7 @@ const VCopyLicense = defineComponent({
     },
   },
   setup(props) {
+    const { app } = useContext()
     const activeTab = ref('rich')
     const tabs = ['rich', 'html', 'plain']
 
@@ -183,10 +189,13 @@ const VCopyLicense = defineComponent({
     })
 
     const sendEvent = (eventType) => {
-      sendDetailPageEvent({
-        eventType,
-        resultUuid: props.media.id,
-      })
+      sendDetailPageEvent(
+        {
+          eventType,
+          resultUuid: props.media.id,
+        },
+        app
+      )
     }
 
     const onCreatorLinkClicked = () => {
