@@ -117,10 +117,10 @@ export const getters = {
     if (state.query.mature === true) {
       params.mature = true
     }
-    if (!toCheckIfQueryisNull){
+    if (!toCheckIfQueryisNull) {
       return params
     } else {
-      return redirect ('/')
+      return redirect('/')
     }
   },
   /**
