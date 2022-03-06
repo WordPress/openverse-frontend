@@ -101,6 +101,10 @@ export const getters = {
   searchQueryParams: (state) => {
     // Ensure that q filter always comes first
     const params = { q: state.query.q.trim() }
+    let toCheckIfQueryisNull = false
+    if (params.q === 'null') {
+      toCheckIfQueryisNull = true
+    }
     // Handle mature filter separately
     const filterKeys = Object.keys(state.query).filter(
       (key) => !['q', 'mature'].includes(key)
@@ -113,7 +117,11 @@ export const getters = {
     if (state.query.mature === true) {
       params.mature = true
     }
-    return params
+    if (!toCheckIfQueryisNull){
+      return params
+    } else {
+      return redirect ('/')
+    }
   },
   /**
    * Returns all applied filters in unified format
