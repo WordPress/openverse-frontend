@@ -1,8 +1,7 @@
-import {
-  DETAIL_PAGE_EVENTS,
-  SEND_DETAIL_PAGE_EVENT,
-} from '~/constants/usage-data-analytics-types'
-import { USAGE_DATA } from '~/constants/store-modules'
+// import {
+//   DETAIL_PAGE_EVENTS,
+//   SEND_DETAIL_PAGE_EVENT,
+// } from '~/constants/usage-data-analytics-types'
 
 import VCopyLicense from '~/components/VMediaInfo/VCopyLicense.vue'
 
@@ -60,12 +59,12 @@ describe('VCopyLicense', () => {
   it.skip('should dispatch SEND_DETAIL_PAGE_EVENT on copy attribution', () => {
     const wrapper = render(VCopyLicense, options)
     wrapper.vm.onCopyAttribution(copyData.type, copyData.event)
-    expect(dispatchMock).toHaveBeenCalledWith(
-      `${USAGE_DATA}/${SEND_DETAIL_PAGE_EVENT}`,
-      {
-        eventType: DETAIL_PAGE_EVENTS.ATTRIBUTION_CLICKED,
-        resultUuid: props.media.id,
-      }
-    )
+    // expect(dispatchMock).toHaveBeenCalledWith(
+    //   `${USAGE_DATA}/${SEND_DETAIL_PAGE_EVENT}`,
+    //   {
+    //     eventType: DETAIL_PAGE_EVENTS.ATTRIBUTION_CLICKED,
+    //     resultUuid: props.media.id,
+    //   }
+    // )
   })
 })
