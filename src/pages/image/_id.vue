@@ -31,8 +31,6 @@
       <VButton
         as="VLink"
         :href="image.foreign_landing_url"
-        target="blank"
-        rel="noopener noreferrer"
         class="btn-main flex-initial w-full md:w-max mb-4 md:mb-0"
         size="large"
         @click="onSourceLinkClicked"

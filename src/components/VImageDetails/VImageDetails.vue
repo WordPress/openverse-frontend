@@ -26,9 +26,12 @@
       <div>
         <dt>{{ $t('image-details.information.source') }}</dt>
         <dd>
-          <VLink :href="image.foreign_landing_url" class="text-pink">{{
-            sourceName
-          }}</VLink>
+          <VLink
+            :href="image.foreign_landing_url"
+            @click="onSourceLinkClicked"
+            @keyup.enter="onSourceLinkClicked"
+            >{{ sourceName }}</VLink
+          >
         </dd>
       </div>
       <div>
@@ -45,6 +48,9 @@
 
 <script>
 import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
+
+import { DETAIL_PAGE_EVENTS } from '~/constants/usage-data-analytics-types'
+import { sendDetailPageEvent } from '~/utils/usage-data'
 
 import VContentReportPopover from '~/components/VContentReport/VContentReportPopover.vue'
 import VMediaTag from '~/components/VMediaTag/VMediaTag.vue'
@@ -88,7 +94,16 @@ const VImageDetails = defineComponent({
 
     const sourceName = computed(() => getProviderName(props.image.source))
 
-    return { imgType, providerName, sourceName }
+    const onSourceLinkClicked = () =>
+      sendDetailPageEvent(
+        {
+          eventType: DETAIL_PAGE_EVENTS.SOURCE_CLICKED,
+          resultUuid: props.image.id,
+        },
+        this.$nuxt.context
+      )
+
+    return { imgType, providerName, sourceName, onSourceLinkClicked }
   },
 })
 export default VImageDetails
