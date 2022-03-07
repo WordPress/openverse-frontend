@@ -72,8 +72,8 @@ jobs:
 
       - uses: ./.github/actions/setup-node-env
 
-      - name: Build and warm cache
-        run: pnpm build
+      - name: chown permissively to allow docker to write to build cache
+        run: sudo chown -R 0777 $(pwd)
 
       - name: Run E2E
         run: ./bin/playwright.sh e2e
