@@ -6,6 +6,6 @@ services:
       - .:/app
     user: pwuser
     working_dir: /app
-    command: /bin/sh -c 'npm config set unsafe-perm true && npm run test:${TEST_TYPE}:local'
+    command: /bin/sh -c 'npm config set unsafe-perm true && npm config set allow-root true && npm run test:${TEST_TYPE}:local'
     environment:
       - UPDATE_TAPES=${UPDATE_TAPES:-false}
