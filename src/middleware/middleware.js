@@ -23,10 +23,17 @@ export default function ({ query, route, $pinia }) {
     navStore.setIsEmbedded(query.embedded === 'true')
   }
   if (process.client) {
-    sendWindowMessage({
-      type: 'urlChange',
-      value: { path: route.fullPath, title: document.title },
-    })
+    if (query===null) {
+      sendWindowMessage({
+        type: 'urlChange',
+        value: { path: '/', title: document.title },
+      })
+    } else {
+      sendWindowMessage({
+        type: 'urlChange',
+        value: { path: route.fullPath, title: document.title },
+      })
+    }
   }
 
   if (process.client && navStore.isReferredFromCc) {

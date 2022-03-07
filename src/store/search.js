@@ -101,7 +101,8 @@ export const getters = {
   searchQueryParams: (state) => {
     // Ensure that q filter always comes first
     const params = { q: state.query.q.trim() }
-    let toCheckIfQueryisNull = false
+    //  Here the use of this variable is optional
+    let toCheckIfQueryisNull = false 
     if (params.q === 'null') {
       toCheckIfQueryisNull = true
     }
@@ -120,7 +121,7 @@ export const getters = {
     if (!toCheckIfQueryisNull) {
       return params
     } else {
-      return redirect('/')
+      return null
     }
   },
   /**
