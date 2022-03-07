@@ -53,8 +53,6 @@
 <script>
 import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
 
-import { rand as prng, hash } from '~/utils/prng'
-
 import VImageCellSquare from '~/components/VAllResultsGrid/VImageCellSquare.vue'
 import VAudioCell from '~/components/VAllResultsGrid/VAudioCell.vue'
 import VLoadMore from '~/components/VLoadMore.vue'
@@ -90,48 +88,49 @@ export default defineComponent({
      *
      * @type { ComputedRef<import('../../store/types').AudioDetail[] | import('../../store/types').ImageDetail[]> }
      */
-    const allMedia = computed(() => {
-      // if (resultsLoading.value) return []
-      const media = store.getters['media/resultItems']
-      const mediaKeys = Object.keys(media)
-
-      // Seed the random number generator with the ID of
-      // the first and last search result, so the non-image
-      // distribution is the same on repeated searches
-      let seed = media[mediaKeys[0]]?.id
-      if (typeof seed === 'string') {
-        seed = hash(seed)
-      }
-      const rand = prng(seed)
-      const randomIntegerInRange = (min, max) =>
-        Math.floor(rand() * (max - min + 1)) + min
-      /**
-       * When navigating from All page to Audio page, VAllResultsGrid is displayed
-       * for a short period of time. Then media['image'] is undefined, and it throws an error
-       * `TypeError: can't convert undefined to object`. To fix it, we add `|| {}` to the media['image'].
-       */
-      /** @type {import('../../store/types').AudioDetail[] | import('../../store/types').ImageDetail[]} */
-      const newResults = []
-      // first push all images to the results list
-      for (const item of media['image'] || []) {
-        newResults.push(item)
-      }
-
-      // push other items into the list, using a random index.
-      let nonImageIndex = 1
-      for (const type of Object.keys(media).slice(1)) {
-        for (const item of media[type]) {
-          newResults.splice(nonImageIndex, 0, item)
-          if (nonImageIndex > newResults.length + 1) break
-          nonImageIndex = randomIntegerInRange(
-            nonImageIndex + 1,
-            nonImageIndex + 6
-          )
-        }
-      }
-
-      return newResults
-    })
+    const allMedia = computed(() => store.getters['media/allMedia'])
+    // const allMedia = computed(() => {
+    //   // if (resultsLoading.value) return []
+    //   const media = store.getters['media/resultItems']
+    //   const mediaKeys = Object.keys(media)
+    //
+    //   // Seed the random number generator with the ID of
+    //   // the first and last search result, so the non-image
+    //   // distribution is the same on repeated searches
+    //   let seed = media[mediaKeys[0]]?.id
+    //   if (typeof seed === 'string') {
+    //     seed = hash(seed)
+    //   }
+    //   const rand = prng(seed)
+    //   const randomIntegerInRange = (min, max) =>
+    //     Math.floor(rand() * (max - min + 1)) + min
+    //   /**
+    //    * When navigating from All page to Audio page, VAllResultsGrid is displayed
+    //    * for a short period of time. Then media['image'] is undefined, and it throws an error
+    //    * `TypeError: can't convert undefined to object`. To fix it, we add `|| {}` to the media['image'].
+    //    */
+    //   /** @type {import('../../store/types').AudioDetail[] | import('../../store/types').ImageDetail[]} */
+    //   const newResults = []
+    //   // first push all images to the results list
+    //   for (const item of media['image'] || []) {
+    //     newResults.push(item)
+    //   }
+    //
+    //   // push other items into the list, using a random index.
+    //   let nonImageIndex = 1
+    //   for (const type of Object.keys(media).slice(1)) {
+    //     for (const item of media[type]) {
+    //       newResults.splice(nonImageIndex, 0, item)
+    //       if (nonImageIndex > newResults.length + 1) break
+    //       nonImageIndex = randomIntegerInRange(
+    //         nonImageIndex + 1,
+    //         nonImageIndex + 6
+    //       )
+    //     }
+    //   }
+    //
+    //   return newResults
+    // })
 
     const isError = computed(
       () => !!store.getters['media/fetchState'].fetchingError

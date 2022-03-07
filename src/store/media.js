@@ -20,6 +20,8 @@ import {
 import { AUDIO, IMAGE, ALL_MEDIA, supportedMediaTypes } from '~/constants/media'
 import MediaService from '~/data/media-service'
 
+import { hash, rand as prng } from '~/utils/prng.ts'
+
 /**
  * @return {import('./types').MediaState}
  */
@@ -241,21 +243,6 @@ export const getters = {
     return supportedMediaTypes.map((type) => [type, state.results[type].page])
   },
   /**
-   * Returns the search result data related for selected media.
-   * @param {import('./types').MediaState} state
-   * @param getters
-   * @return {import('./types').MediaStoreResult[] | {'audio': import('./types').MediaStoreResult, 'image': import('./types').MediaStoreResult}}
-   */
-  results(state, getters) {
-    if (getters.searchType === ALL_MEDIA) {
-      return { [IMAGE]: state.results[IMAGE], [AUDIO]: state.results[AUDIO] }
-    } else {
-      return getters.searchType
-        ? { [getters.searchType]: state.results[getters.searchType] }
-        : {}
-    }
-  },
-  /**
    * Returns the total count of results for selected search type, sums all media results for ALL_MEDIA.
    * If the count is more than 10000, returns 10000 to match the API result.
    * @param {import('./types').MediaState} state
@@ -298,6 +285,48 @@ export const getters = {
         }
       )
     }
+  },
+  allMedia(state, getters) {
+    // if (resultsLoading.value) return []
+    const media = getters.resultItems
+    const mediaKeys = Object.keys(media)
+
+    // Seed the random number generator with the ID of
+    // the first and last search result, so the non-image
+    // distribution is the same on repeated searches
+    let seed = media[mediaKeys[0]]?.id
+    if (typeof seed === 'string') {
+      seed = hash(seed)
+    }
+    const rand = prng(seed)
+    const randomIntegerInRange = (min, max) =>
+      Math.floor(rand() * (max - min + 1)) + min
+    /**
+     * When navigating from All page to Audio page, VAllResultsGrid is displayed
+     * for a short period of time. Then media['image'] is undefined, and it throws an error
+     * `TypeError: can't convert undefined to object`. To fix it, we add `|| {}` to the media['image'].
+     */
+    /** @type {import('./types').AudioDetail[] | import('./types').ImageDetail[]} */
+    const newResults = []
+    // first push all images to the results list
+    for (const item of media['image'] || []) {
+      newResults.push(item)
+    }
+
+    // push other items into the list, using a random index.
+    let nonImageIndex = 1
+    for (const type of Object.keys(media).slice(1)) {
+      for (const item of media[type]) {
+        newResults.splice(nonImageIndex, 0, item)
+        if (nonImageIndex > newResults.length + 1) break
+        nonImageIndex = randomIntegerInRange(
+          nonImageIndex + 1,
+          nonImageIndex + 6
+        )
+      }
+    }
+
+    return newResults
   },
   searchType(state, getters, rootState) {
     return rootState.search.searchType
