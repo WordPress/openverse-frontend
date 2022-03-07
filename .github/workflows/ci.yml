@@ -72,6 +72,9 @@ jobs:
 
       - uses: ./.github/actions/setup-node-env
 
+      - name: Build and warm cache
+        run: pnpm build
+
       - name: Run E2E
         run: ./bin/playwright.sh e2e
 

@@ -4,6 +4,7 @@ services:
     image: mcr.microsoft.com/playwright:v${PLAYWRIGHT_VERSION}-focal
     volumes:
       - .:/app
+    user: pwuser
     working_dir: /app
     command: npm run test:${TEST_TYPE}:local
     environment:
