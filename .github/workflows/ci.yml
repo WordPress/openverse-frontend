@@ -72,11 +72,8 @@ jobs:
 
       - uses: ./.github/actions/setup-node-env
 
-      - name: Install pnpm for sudo
-        run: sudo npm install -g pnpm --allow-root
-
       - name: Run E2E
-        run: sudo /bin/sh -c './bin/playwright.sh e2e'
+        run: ./bin/playwright.sh e2e
 
   storybook:
     name: Check Storybook build
