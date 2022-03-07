@@ -52,9 +52,8 @@ const AudioSearch = defineComponent({
 
     useMeta({ title: `${props.searchTerm} | Openverse` })
 
-    const results = computed(() =>
-      Object.values(props.mediaResults?.audio?.items ?? [])
-    )
+    const results = computed(() => props.resultItems.audio)
+
     const isMinScreenMd = isMinScreen('md', { shouldPassInSSR: false })
 
     // On SSR, we set the size to small if the User Agent is mobile, otherwise we set the size to medium.

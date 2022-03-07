@@ -9,15 +9,19 @@ import { MEDIA } from '~/constants/store-modules'
  * @param {import('../pages/search/search-page.types').Props} props
  * @returns {{ onLoadMore: ((function(): Promise<void>)|void), canLoadMore: import('@nuxtjs/composition-api').ComputedRef<boolean>}}
  */
-export const useLoadMore = (props) => {
+export const useLoadMore = ({ searchTerm }) => {
   const { store } = useContext()
 
   const searchParams = computed(() => {
+    const pagesPerMediaType = store.getters['media/pagesPerMediaType']
+    /** @type {{ [key: import('../store/types').MediaType]: number }} */
     const pages = {}
-    Object.keys(props.mediaResults).forEach((key) => {
-      const mediaPage = props.mediaResults[key]?.page || 0
-      pages[key] = mediaPage ? mediaPage + 1 : undefined
-    })
+    for (let [mediaType, page] of pagesPerMediaType) {
+      const mediaPage = page || 0
+      if (mediaPage) {
+        pages[mediaType] = mediaPage + 1
+      }
+    }
     return {
       page: pages,
       shouldPersistMedia: true,
@@ -25,7 +29,7 @@ export const useLoadMore = (props) => {
   })
 
   const canLoadMore = computed(() => {
-    return props.searchTerm.trim() !== ''
+    return searchTerm.trim() !== ''
   })
 
   const onLoadMore = async () => {

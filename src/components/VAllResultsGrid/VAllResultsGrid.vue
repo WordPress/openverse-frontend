@@ -5,11 +5,11 @@
       class="results-grid grid grid-cols-2 lg:grid-cols-5 2xl:grid-cols-6 gap-4 mb-4"
     >
       <VContentLink
-        v-for="[key, item] in results"
-        :key="key"
-        :media-type="key"
-        :results-count="item.count"
-        :to="localePath({ path: `/search/${key}`, query: $route.query })"
+        v-for="[mediaType, count] in resultCounts"
+        :key="mediaType"
+        :media-type="mediaType"
+        :results-count="count"
+        :to="localePath({ path: `/search/${mediaType}`, query: $route.query })"
         class="lg:col-span-2"
       />
     </div>
@@ -92,13 +92,13 @@ export default defineComponent({
      */
     const allMedia = computed(() => {
       // if (resultsLoading.value) return []
-      const media = store.getters['media/mediaResults']
+      const media = store.getters['media/resultItems']
       const mediaKeys = Object.keys(media)
 
       // Seed the random number generator with the ID of
       // the first and last search result, so the non-image
       // distribution is the same on repeated searches
-      let seed = Object.keys(media[mediaKeys[0]])[0]
+      let seed = media[mediaKeys[0]]?.id
       if (typeof seed === 'string') {
         seed = hash(seed)
       }
@@ -113,18 +113,14 @@ export default defineComponent({
       /** @type {import('../../store/types').AudioDetail[] | import('../../store/types').ImageDetail[]} */
       const newResults = []
       // first push all images to the results list
-      for (const id of Object.keys(media['image'] || {})) {
-        const item = media['image'][id]
-        item.frontendMediaType = 'image'
+      for (const item of media['image'] || []) {
         newResults.push(item)
       }
 
       // push other items into the list, using a random index.
       let nonImageIndex = 1
       for (const type of Object.keys(media).slice(1)) {
-        for (const id of Object.keys(media[type])) {
-          const item = media[type][id]
-          item.frontendMediaType = type
+        for (const item of media[type]) {
           newResults.splice(nonImageIndex, 0, item)
           if (nonImageIndex > newResults.length + 1) break
           nonImageIndex = randomIntegerInRange(
@@ -151,8 +147,8 @@ export default defineComponent({
       return i18n.t('browse-page.fetching-error', { type })
     })
 
-    const results = computed(() => {
-      return Object.entries(store.getters['media/results'])
+    const resultCounts = computed(() => {
+      return store.getters['media/resultCountsPerMediaType']
     })
 
     const noResults = computed(
@@ -166,7 +162,7 @@ export default defineComponent({
       onLoadMore,
       fetchState,
       resultsLoading,
-      results,
+      resultCounts,
       noResults,
     }
   },
