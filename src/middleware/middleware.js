@@ -23,7 +23,7 @@ export default function ({ query, route, $pinia }) {
     navStore.setIsEmbedded(query.embedded === 'true')
   }
   if (process.client) {
-    if (query===null) {
+    if (query === null) {
       sendWindowMessage({
         type: 'urlChange',
         value: { path: '/', title: document.title },

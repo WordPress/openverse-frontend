@@ -102,7 +102,7 @@ export const getters = {
     // Ensure that q filter always comes first
     const params = { q: state.query.q.trim() }
     //  Here the use of this variable is optional
-    let toCheckIfQueryisNull = false 
+    let toCheckIfQueryisNull = false
     if (params.q === 'null') {
       toCheckIfQueryisNull = true
     }
