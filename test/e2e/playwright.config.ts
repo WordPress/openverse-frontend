@@ -19,6 +19,7 @@ const config: PlaywrightTestConfig = {
      * switch this back to `prod` and see if your tests pass.
      */
     command: './node_modules/.bin/npm-run-all -p -r talkback prod',
+    timeout: 120000,
     port: 8443,
     reuseExistingServer: !process.env.CI || process.env.PWDEBUG === '1',
     env: {
