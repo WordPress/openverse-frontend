@@ -29,7 +29,6 @@
           <VLink
             :href="image.foreign_landing_url"
             @click="onSourceLinkClicked"
-            @keyup.enter="onSourceLinkClicked"
             >{{ sourceName }}</VLink
           >
         </dd>

@@ -18,7 +18,6 @@
             : 'border-tx',
         ]"
         @click.prevent="setActiveTab(tab)"
-        @keyup.enter.prevent="setActiveTab(tab)"
       >
         {{ $t(`media-details.reuse.copy-license.${tab}`) }}
       </button>
@@ -45,7 +44,6 @@
             <VLink
               :href="media.foreign_landing_url"
               @click="onSourceLinkClicked"
-              @keyup.enter="onSourceLinkClicked"
               >{{ media.title }}</VLink
             ></template
           >
@@ -60,7 +58,6 @@
                   v-if="media.creator_url"
                   :href="media.creator_url"
                   @click="onCreatorLinkClicked"
-                  @keyup.enter="onCreatorLinkClicked"
                   >{{ media.creator }}</VLink
                 >
                 <span v-else>{{ media.creator }}</span>

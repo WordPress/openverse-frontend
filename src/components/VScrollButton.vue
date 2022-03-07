@@ -5,7 +5,6 @@
     class="scroll text-white bg-pink hover:bg-dark-pink transition-all duration-100 ease-linear fixed bottom-4 w-14 h-14 hover:shadow-md rounded-full text-center"
     :class="hClass"
     @click="scrollToTop"
-    @keyup.enter="scrollToTop"
   >
     <svg
       viewBox="0 0 24 24"

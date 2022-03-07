@@ -31,7 +31,6 @@
               :aria-selected="activeTab === index"
               :aria-controls="`tab-${name}`"
               @click.prevent="setActiveTab(index)"
-              @keyup.enter.prevent="setActiveTab(index)"
             >
               {{ $t(`feedback.${name}`) }}
             </button>

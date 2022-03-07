@@ -34,7 +34,6 @@
         class="btn-main flex-initial w-full md:w-max mb-4 md:mb-0"
         size="large"
         @click="onSourceLinkClicked"
-        @keyup.enter="onSourceLinkClicked"
         >{{ $t('image-details.weblink') }}</VButton
       >
       <span class="flex-1 flex flex-col justify-center">
@@ -57,7 +56,6 @@
               "
               :href="image.creator_url"
               @click="onCreatorLinkClicked"
-              @keyup.enter="onCreatorLinkClicked"
               >{{ image.creator }}</VLink
             >
             <span v-else>{{ image.creator }}</span>
