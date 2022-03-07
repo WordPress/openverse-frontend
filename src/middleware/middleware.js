@@ -12,7 +12,7 @@ import { useNavStore } from '~/stores/nav'
  *
  * Messages sent to the outer window have the following format:
  * {type: <event type>, value: <event value>}.
- * Currently, one event types is used:
+ * Currently, one event type is used:
  * - `urlChange` sends the relative path of the URL on every URL change.
  */
 export default function ({ query, route, $pinia }) {
