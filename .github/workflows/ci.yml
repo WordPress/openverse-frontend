@@ -72,11 +72,8 @@ jobs:
 
       - uses: ./.github/actions/setup-node-env
 
-      - name: chown permissively to allow docker to write to build cache
-        run: sudo chown -R 0777 $(pwd)
-
       - name: Run E2E
-        run: ./bin/playwright.sh e2e
+        run: PW_USER=root ./bin/playwright.sh e2e
 
   storybook:
     name: Check Storybook build
