@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-03-06T17:06:28+00:00\n"
+"POT-Creation-Date: 2022-03-08T00:52:21+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -395,12 +395,12 @@ msgid "Genre"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/image/_id.vue:44
+#: src/pages/image/_id.vue:43
 msgctxt "image-details.creator"
 msgid "by ###name###"
 msgstr ""
 
-#: src/pages/image/_id.vue:38
+#: src/pages/image/_id.vue:37
 msgctxt "image-details.weblink"
 msgid "Go to image's website"
 msgstr ""
@@ -430,7 +430,7 @@ msgctxt "image-details.information.provider"
 msgid "Provider"
 msgstr ""
 
-#: src/components/VImageDetails/VImageDetails.vue:38
+#: src/components/VImageDetails/VImageDetails.vue:37
 msgctxt "image-details.information.dimensions"
 msgid "Dimensions"
 msgstr ""
@@ -440,12 +440,12 @@ msgctxt "image-details.information.source"
 msgid "Source"
 msgstr ""
 
-#: src/components/VImageDetails/VImageDetails.vue:42
+#: src/components/VImageDetails/VImageDetails.vue:41
 msgctxt "image-details.information.pixels"
 msgid "pixels"
 msgstr ""
 
-#: src/components/VImageDetails/VImageDetails.vue:86
+#: src/components/VImageDetails/VImageDetails.vue:85
 msgctxt "image-details.information.unknown"
 msgid "Unknown"
 msgstr ""
@@ -582,7 +582,7 @@ msgid "Open form"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/image/_id.vue:54
+#: src/pages/image/_id.vue:53
 msgctxt "media-details.aria.creator-url"
 msgid "author ###name###"
 msgstr ""
@@ -652,39 +652,39 @@ msgid "Copied!"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VMediaInfo/VCopyLicense.vue:38
+#: src/components/VMediaInfo/VCopyLicense.vue:37
 msgctxt "media-details.reuse.credit.text"
 msgid "\"###title###\"###creator######marked-licensed######license######view-legal###"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VMediaInfo/VCopyLicense.vue:53
+#: src/components/VMediaInfo/VCopyLicense.vue:51
 msgctxt "media-details.reuse.credit.creator-text"
 msgid " by ###creator-name###"
 msgstr ""
 
-#: src/components/VMediaInfo/VCopyLicense.vue:73
+#: src/components/VMediaInfo/VCopyLicense.vue:70
 msgctxt "media-details.reuse.credit.marked"
 msgid "is marked with"
 msgstr ""
 
-#: src/components/VMediaInfo/VCopyLicense.vue:74
+#: src/components/VMediaInfo/VCopyLicense.vue:71
 msgctxt "media-details.reuse.credit.licensed"
 msgid "is licensed under"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VMediaInfo/VCopyLicense.vue:119
+#: src/components/VMediaInfo/VCopyLicense.vue:116
 msgctxt "media-details.reuse.credit.view-legal-text"
 msgid ". To view ###terms-copy###visit ###URL###"
 msgstr ""
 
-#: src/components/VMediaInfo/VCopyLicense.vue:123
+#: src/components/VMediaInfo/VCopyLicense.vue:120
 msgctxt "media-details.reuse.credit.terms-text"
 msgid "the terms,"
 msgstr ""
 
-#: src/components/VMediaInfo/VCopyLicense.vue:124
+#: src/components/VMediaInfo/VCopyLicense.vue:121
 msgctxt "media-details.reuse.credit.copy-text"
 msgid "a copy of this license,"
 msgstr ""
@@ -1115,7 +1115,7 @@ msgid "An error occurred"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/image/_id.vue:142
+#: src/pages/image/_id.vue:140
 msgctxt "error.image-not-found"
 msgid "Couldn't find image with id ###id###"
 msgstr ""
@@ -1192,7 +1192,7 @@ msgctxt "feedback.report"
 msgid "Report a Bug"
 msgstr ""
 
-#: src/pages/feedback.vue:54
+#: src/pages/feedback.vue:53
 msgctxt "feedback.loading"
 msgid "Loading..."
 msgstr ""
