@@ -14,17 +14,13 @@ export const useLoadMore = ({ searchTerm }) => {
 
   const searchParams = computed(() => {
     const pagesPerMediaType = store.getters['media/pagesPerMediaType']
-    /** @type {{ [key: import('../store/types').MediaType]: number }} */
-    const pages = {}
-    for (let [mediaType, page] of pagesPerMediaType) {
-      const mediaPage = page || 0
-      if (mediaPage) {
-        pages[mediaType] = mediaPage + 1
-      }
-    }
     return {
-      page: pages,
       shouldPersistMedia: true,
+      page: pagesPerMediaType.reduce(
+        (pages, [mediaType, page]) =>
+          page ? { ...pages, [mediaType]: page + 1 } : pages,
+        /** @type {{ [key: import('../store/types').MediaType]: number }} */ {}
+      ),
     }
   })
 
