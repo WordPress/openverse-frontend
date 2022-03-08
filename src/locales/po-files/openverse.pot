@@ -1121,7 +1121,7 @@ msgid "Couldn't find image with id ###id###"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/audio/_id.vue:67
+#: src/pages/audio/_id.vue:65
 msgctxt "error.media-not-found"
 msgid "Couldn't find ###mediaType### with id ###id###"
 msgstr ""
