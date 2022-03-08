@@ -287,14 +287,12 @@ export const getters = {
     }
   },
   allMedia(state, getters) {
-    // if (resultsLoading.value) return []
     const media = getters.resultItems
-    const mediaKeys = Object.keys(media)
 
     // Seed the random number generator with the ID of
-    // the first and last search result, so the non-image
+    // the first search result, so the non-image
     // distribution is the same on repeated searches
-    let seed = media[mediaKeys[0]]?.id
+    let seed = media[IMAGE][0]?.id
     if (typeof seed === 'string') {
       seed = hash(seed)
     }
@@ -306,16 +304,15 @@ export const getters = {
      * for a short period of time. Then media['image'] is undefined, and it throws an error
      * `TypeError: can't convert undefined to object`. To fix it, we add `|| {}` to the media['image'].
      */
-    /** @type {import('./types').AudioDetail[] | import('./types').ImageDetail[]} */
-    const newResults = []
-    // first push all images to the results list
-    for (const item of media['image'] || []) {
-      newResults.push(item)
-    }
+    /**
+     * First, set the results to all images
+     * @type {import('./types').MediaDetail[]}
+     */
+    const newResults = media.image
 
     // push other items into the list, using a random index.
     let nonImageIndex = 1
-    for (const type of Object.keys(media).slice(1)) {
+    for (const type of supportedMediaTypes.slice(1)) {
       for (const item of media[type]) {
         newResults.splice(nonImageIndex, 0, item)
         if (nonImageIndex > newResults.length + 1) break
@@ -379,7 +376,7 @@ export const mutations = {
       mediaToSet = media
     }
     const mediaPage = page || 1
-    _state.results[mediaType].items = mediaToSet
+    _state.results[mediaType].items = Object.freeze(mediaToSet)
     _state.results[mediaType].count = mediaCount || 0
     _state.results[mediaType].page = mediaPage
     _state.results[mediaType].pageCount = pageCount
