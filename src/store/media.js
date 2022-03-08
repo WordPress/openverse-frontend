@@ -1,11 +1,11 @@
 import prepareSearchQueryParams from '~/utils/prepare-search-query-params'
 import {
+  CLEAR_MEDIA,
   FETCH_MEDIA,
+  FETCH_MEDIA_ITEM,
   FETCH_SINGLE_MEDIA_TYPE,
   HANDLE_MEDIA_ERROR,
   HANDLE_NO_MEDIA,
-  CLEAR_MEDIA,
-  FETCH_MEDIA_ITEM,
 } from '~/constants/action-types'
 import {
   FETCH_END_MEDIA,
@@ -13,14 +13,15 @@ import {
   FETCH_START_MEDIA,
   MEDIA_NOT_FOUND,
   RESET_MEDIA,
-  SET_MEDIA_ITEM,
   SET_MEDIA,
+  SET_MEDIA_ITEM,
+  SET_USAGE_SESSION_ID,
 } from '~/constants/mutation-types'
 import {
   SEND_RESULT_CLICKED_EVENT,
   SEND_SEARCH_QUERY_EVENT,
 } from '~/constants/usage-data-analytics-types'
-import { AUDIO, IMAGE, ALL_MEDIA, supportedMediaTypes } from '~/constants/media'
+import { ALL_MEDIA, AUDIO, IMAGE, supportedMediaTypes } from '~/constants/media'
 import { USAGE_DATA } from '~/constants/store-modules'
 import MediaService from '~/data/media-service'
 
@@ -56,6 +57,7 @@ export const state = () => ({
   },
   audio: {},
   image: {},
+  usageSessionId: null,
 })
 
 export const mediaServices = {
@@ -101,7 +103,7 @@ export const createActions = (services = mediaServices) => ({
    * @return {Promise<void>}
    */
   async [FETCH_SINGLE_MEDIA_TYPE](
-    { commit, dispatch, rootState, rootGetters },
+    { commit, dispatch, rootGetters, state },
     payload
   ) {
     const {
@@ -118,7 +120,7 @@ export const createActions = (services = mediaServices) => ({
 
     // does not send event if user is paginating for more results
     if (!page) {
-      const sessionId = rootState.user.usageSessionId
+      const sessionId = state.usageSessionId
       await dispatch(
         `${USAGE_DATA}/${SEND_SEARCH_QUERY_EVENT}`,
         { query: queryParams.q, sessionId },
@@ -172,7 +174,7 @@ export const createActions = (services = mediaServices) => ({
         query: rootState.search.query.q,
         resultUuid: id,
         resultRank,
-        sessionId: rootState.user.usageSessionId,
+        sessionId: state.usageSessionId,
       },
       { root: true }
     )
@@ -367,6 +369,16 @@ export const mutations = {
     _state.results[mediaType].count = 0
     _state.results[mediaType].page = undefined
     _state.results[mediaType].pageCount = 0
+  },
+  /**
+   * Sets per-request usage session ID on the server. ssrRef can only be used in a setup function of
+   * a component. Its value is set in the layout file that the user first opens, and then persisted
+   * in the media store as a ref.
+   * @param _state
+   * @param {string} sessionId
+   */
+  [SET_USAGE_SESSION_ID](_state, sessionId) {
+    _state.usageSessionId = sessionId
   },
 }
 

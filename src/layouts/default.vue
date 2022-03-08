@@ -18,19 +18,21 @@
   </div>
 </template>
 <script>
-import { computed, provide, ref, watch } from '@nuxtjs/composition-api'
+import {
+  computed,
+  provide,
+  ref,
+  useContext,
+  watch,
+} from '@nuxtjs/composition-api'
 
 import { useScroll } from '~/composables/use-scroll'
-
 import { useMatchSearchRoutes } from '~/composables/use-match-routes'
-
 import { isMinScreen } from '~/composables/use-media-query'
-
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
-
 import iframeHeight from '~/mixins/iframe-height'
-
 import { useNavStore } from '~/stores/nav'
+import { useUsageSessionId } from '~/composables/use-usage-session-id'
 
 import VMigrationNotice from '~/components/VMigrationNotice.vue'
 import VTranslationStatusBanner from '~/components/VTranslationStatusBanner.vue'
@@ -61,6 +63,8 @@ const embeddedPage = {
     const mainRef = ref(null)
 
     const navStore = useNavStore()
+    const { store } = useContext()
+    useUsageSessionId(store)
     const isReferredFromCc = computed(() => navStore.isReferredFromCc)
 
     const { isVisible: isFilterVisible } = useFilterSidebarVisibility()
