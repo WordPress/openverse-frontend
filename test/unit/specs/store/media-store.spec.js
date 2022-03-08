@@ -21,6 +21,9 @@ import {
 } from '~/constants/usage-data-analytics-types'
 import { USAGE_DATA } from '~/constants/store-modules'
 
+jest.mock('~/composables/use-usage-session-id', () => ({
+  usageSessionId: 'mockSessionId',
+}))
 describe('Search Store', () => {
   describe('state', () => {
     it('exports default state', () => {
@@ -219,13 +222,13 @@ describe('Search Store', () => {
             },
           },
         },
+        usageSessionId: 'mockSessionId',
       }
 
       context = {
         commit: jest.fn(),
         dispatch: jest.fn(),
         rootState: {
-          user: { usageSessionId: 'foo' },
           search: { query: { q: 'cat' } },
         },
         rootGetters: {
@@ -278,7 +281,7 @@ describe('Search Store', () => {
         `${USAGE_DATA}/${SEND_SEARCH_QUERY_EVENT}`,
         {
           query: params.q,
-          sessionId: context.rootState.user.usageSessionId,
+          sessionId: 'mockSessionId',
         },
         { root: true }
       )
@@ -297,7 +300,7 @@ describe('Search Store', () => {
         `${USAGE_DATA}/${SEND_SEARCH_QUERY_EVENT}`,
         {
           query: params.q,
-          sessionId: context.rootState.user.usageSessionId,
+          sessionId: 'mockSessionId',
         }
       )
     })
@@ -392,7 +395,7 @@ describe('Search Store', () => {
             query: context.rootState.search.query.q,
             resultUuid: 'foo',
             resultRank: 0,
-            sessionId: context.rootState.user.usageSessionId,
+            sessionId: 'mockSessionId',
           },
           { root: true }
         )

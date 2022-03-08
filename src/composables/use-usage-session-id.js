@@ -5,9 +5,10 @@ import { v4 as uuidv4 } from 'uuid'
  * Sets the usageSessionId as a per-request ssrRef. The value is created on the server
  * in one of the layout components, and is saved to the store to be used when outside
  * the component context.
+ * TODO: refactor to use Pinia store during the media store refactor.
  *
  * @param store
- * @returns {{usageSessionId: string}}
+ * @returns {{ usageSessionId: string }}
  */
 export function useUsageSessionId(store) {
   let usageSessionId = ssrRef('')
