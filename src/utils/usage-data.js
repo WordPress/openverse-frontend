@@ -26,6 +26,10 @@ const handleUsageEvent = (eventName, context) => (promise) =>
       )
   })
 
+/**
+ * Analytics requests shouldn't block because they don't have any bearing on
+ * the UI and blocking on them will make UI less responsive.
+ */
 const usageData = {
   sendSearchQueryEvent(params, context) {
     if (disabled) return

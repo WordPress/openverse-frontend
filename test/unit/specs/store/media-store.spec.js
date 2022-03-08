@@ -22,7 +22,7 @@ jest.mock('~/utils/usage-data', () => ({
   sendResultClickedEvent: jest.fn(),
 }))
 
-describe('Search Store', () => {
+describe('Media Store', () => {
   describe('state', () => {
     it('exports default state', () => {
       const state = store.state()
