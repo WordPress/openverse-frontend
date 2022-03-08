@@ -11,7 +11,7 @@ import { v4 as uuidv4 } from 'uuid'
  * @returns {{ usageSessionId: string }}
  */
 export function useUsageSessionId(store) {
-  let usageSessionId = ssrRef('')
+  const usageSessionId = ssrRef('', 'usage-session-id')
   if (!store.state.media.usageSessionId) {
     if (process.server) {
       usageSessionId.value = uuidv4()
