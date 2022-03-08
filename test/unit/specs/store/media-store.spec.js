@@ -15,10 +15,12 @@ import {
   HANDLE_NO_MEDIA,
 } from '~/constants/action-types'
 import { AUDIO, IMAGE, supportedMediaTypes } from '~/constants/media'
-// import {
-//   SEND_RESULT_CLICKED_EVENT,
-//   SEND_SEARCH_QUERY_EVENT,
-// } from '~/constants/usage-data-analytics-types'
+import usageData from '~/utils/usage-data'
+
+jest.mock('~/utils/usage-data', () => ({
+  sendSearchQueryEvent: jest.fn(),
+  sendResultClickedEvent: jest.fn(),
+}))
 
 describe('Search Store', () => {
   describe('state', () => {
@@ -234,6 +236,11 @@ describe('Search Store', () => {
       }
     })
 
+    afterEach(() => {
+      usageData.sendSearchQueryEvent.mockReset()
+      usageData.sendResultClickedEvent.mockReset()
+    })
+
     it.each(supportedMediaTypes)(
       'FETCH_SINGLE_MEDIA_TYPE (%s) on success',
       async (mediaType) => {
@@ -268,37 +275,25 @@ describe('Search Store', () => {
       }
     )
 
-    it.skip('FETCH_SINGLE_MEDIA_TYPE dispatches SEND_SEARCH_QUERY_EVENT', async () => {
+    it('FETCH_SINGLE_MEDIA_TYPE does SEND_SEARCH_QUERY_EVENT', async () => {
       const params = { q: 'foo', shouldPersistMedia: false, mediaType: IMAGE }
       const action = createActions(services)[FETCH_SINGLE_MEDIA_TYPE]
       await action(context, params)
 
-      // expect(context.dispatch).toHaveBeenCalledWith(
-      //   `${USAGE_DATA}/${SEND_SEARCH_QUERY_EVENT}`,
-      //   {
-      //     query: params.q,
-      //     sessionId: context.rootState.user.usageSessionId,
-      //   },
-      //   { root: true }
-      // )
+      expect(usageData.sendSearchQueryEvent).toHaveBeenCalled()
     })
 
-    it.skip('does not dispatch SEND_SEARCH_QUERY_EVENT if page param is available', async () => {
+    it('FETCH_SINGLE_MEDIA_TYPE does not SEND_SEARCH_QUERY_EVENT if page param is available', async () => {
       const params = {
         q: 'foo',
         page: 1,
         shouldPersistMedia: false,
+        mediaType: IMAGE,
       }
       const action = createActions(services)[FETCH_SINGLE_MEDIA_TYPE]
       await action(context, params)
 
-      // expect(context.dispatch).not.toHaveBeenCalledWith(
-      //   `${USAGE_DATA}/${SEND_SEARCH_QUERY_EVENT}`,
-      //   {
-      //     query: params.q,
-      //     sessionId: context.rootState.user.usageSessionId,
-      //   }
-      // )
+      expect(usageData.sendSearchQueryEvent).not.toHaveBeenCalled()
     })
 
     it('FETCH_SINGLE_MEDIA_TYPE on error', async () => {
@@ -378,23 +373,14 @@ describe('Search Store', () => {
       }
     )
 
-    it.skip.each(supportedMediaTypes)(
-      'FETCH_MEDIA_ITEM dispatches SEND_RESULT_CLICKED_EVENT',
+    it.each(supportedMediaTypes)(
+      'FETCH_MEDIA_ITEM does SEND_RESULT_CLICKED_EVENT',
       (mediaType) => {
         const params = { id: 'foo', mediaType }
         const action = createActions(services)[FETCH_MEDIA_ITEM]
         action(context, params)
 
-        // expect(context.dispatch).toHaveBeenLastCalledWith(
-        //   `${USAGE_DATA}/${SEND_RESULT_CLICKED_EVENT}`,
-        //   {
-        //     query: context.rootState.search.query.q,
-        //     resultUuid: 'foo',
-        //     resultRank: 0,
-        //     sessionId: context.rootState.user.usageSessionId,
-        //   },
-        //   { root: true }
-        // )
+        expect(usageData.sendResultClickedEvent).toHaveBeenCalled()
       }
     )
 
