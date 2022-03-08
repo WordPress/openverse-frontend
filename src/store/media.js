@@ -259,14 +259,17 @@ export const getters = {
     if (getters.searchType === ALL_MEDIA) {
       return {
         isFetching:
-          state.fetchState[AUDIO].isFetching ||
-          state.fetchState[IMAGE].isFetching,
+          supportedMediaTypes.filter(
+            (type) => state.fetchState[type].isFetching
+          ).length > 0,
         fetchError:
-          state.fetchState[AUDIO].fetchError ||
-          state.fetchState[IMAGE].fetchError,
+          supportedMediaTypes.filter(
+            (type) => !!state.fetchState[type].fetchingError
+          ).length > 0,
         isFinished:
-          state.fetchState[AUDIO].isFinished &&
-          state.fetchState[IMAGE].isFinished,
+          supportedMediaTypes.filter(
+            (type) => state.fetchState[type].isFinished
+          ).length === supportedMediaTypes.length,
       }
     } else {
       return (
