@@ -1,11 +1,7 @@
 <template>
   <div class="reuse-survey caption mt-1">
     {{ $t('photo-details.survey.content') }}
-    <VLink
-      :href="formLink"
-      @click="onReuseSurveyClick"
-      @keyup.enter="onReuseSurveyClick"
-    >
+    <VLink :href="formLink">
       {{ $t('photo-details.survey.link') }}
     </VLink>
     {{ $t('photo-details.survey.answer') }}
@@ -13,12 +9,6 @@
 </template>
 
 <script>
-import {
-  SEND_DETAIL_PAGE_EVENT,
-  DETAIL_PAGE_EVENTS,
-} from '~/constants/usage-data-analytics-types'
-import { USAGE_DATA } from '~/constants/store-modules'
-
 import VLink from '~/components/VLink.vue'
 
 const reuseForm =
@@ -40,14 +30,6 @@ export default {
   },
   mounted() {
     this.location = window.location.href
-  },
-  methods: {
-    onReuseSurveyClick() {
-      this.$store.dispatch(`${USAGE_DATA}/${SEND_DETAIL_PAGE_EVENT}`, {
-        eventType: DETAIL_PAGE_EVENTS.REUSE_SURVEY,
-        resultUuid: this.$props.image.id,
-      })
-    },
   },
 }
 </script>
