@@ -13,7 +13,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .lds-ring {
   display: inline-block;
   position: relative;

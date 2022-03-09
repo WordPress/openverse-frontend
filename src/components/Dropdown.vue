@@ -87,7 +87,7 @@ const Dropdown = {
 export default Dropdown
 </script>
 
-<style lang="scss">
+<style>
 .navbar-dropdown:not(.visible) {
   /**
    * Accessible VisuallyHidden styles taken from @wordpress/components. Allows these components to be
