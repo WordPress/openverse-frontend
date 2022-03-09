@@ -13,7 +13,8 @@ const zlib = require('zlib')
 
 const talkback = require('talkback')
 
-const host = 'https://api.openverse.engineering/v1'
+const port = 49152
+const host = 'https://api.openverse.engineering'
 
 const tapeNameGenerator = (tapeNumber) => `response-${tapeNumber}`
 
@@ -23,7 +24,23 @@ const updatingTapes =
 const recordMode = updatingTapes
   ? talkback.Options.RecordMode.NEW
   : talkback.Options.RecordMode.DISABLED
-console.log('Record mode: ', recordMode)
+
+const identity = (x) => x
+
+const BodyUtils = Object.freeze({
+  gzip: { read: zlib.gunzipSync, save: zlib.gzipSync },
+  br: { read: zlib.brotliDecompressSync, save: zlib.brotliCompressSync },
+  deflate: { read: zlib.inflate, save: zlib.deflate },
+  default: {
+    read: identity,
+    save: identity,
+  },
+})
+
+const getBodyUtil = (tape) =>
+  Object.entries(BodyUtils).find(([key]) =>
+    tape.res.headers['content-encoding']?.includes(key)
+  )?.[1] ?? BodyUtils.default
 
 /**
  * Transform any response values to use the talkback
@@ -33,7 +50,7 @@ console.log('Record mode: ', recordMode)
  * Ignore thumbnail and non-successful requests, those
  * don't return JSON bodies so we can save them as-is.
  *
- * Sometimes we get a raw brotli buffer back from upstream
+ * Sometimes we get a raw compressed buffer back from upstream
  * and we need to decompress it. Sometimes we get the actual
  * JSON. I'm fairly confident this has something to do with Cloudflare
  * cached responses being compressed and others not? In any case,
@@ -62,29 +79,21 @@ console.log('Record mode: ', recordMode)
 const tapeDecorator = (tape) => {
   if (tape.req.url.endsWith('/thumb/') || tape.res.status >= 399) return tape
 
-  let responseBody,
-    isBrotli = tape.res.headers['content-encoding']?.includes('br')
-
-  if (isBrotli) {
-    responseBody = zlib.brotliDecompressSync(tape.res.body).toString()
-  } else {
-    responseBody = tape.res.body.toString()
-  }
+  const bodyUtil = getBodyUtil(tape)
+  const responseBody = bodyUtil.read(tape.res.body).toString()
 
   const fixedResponseBody = responseBody.replace(
-    /https?:\/\/api.openverse.engineering\/v1/g,
-    'http://localhost:3000'
+    /https?:\/\/api.openverse.engineering/g,
+    `http://localhost:${port}`
   )
 
-  tape.res.body = isBrotli
-    ? zlib.brotliCompressSync(fixedResponseBody)
-    : Buffer.from(fixedResponseBody)
+  tape.res.body = Buffer.from(bodyUtil.save(fixedResponseBody))
   return tape
 }
 
 const opts = {
   host,
-  port: 3000,
+  port,
   path: './test/tapes',
   record: recordMode,
   fallbackMode: talkback.Options.FallbackMode.NOT_FOUND,
@@ -97,7 +106,7 @@ const opts = {
 
 const server = talkback(opts)
 
-server.start(() => console.log('Talkback started!'))
+server.start(() => console.log('Talkback started with record mode', recordMode))
 function closeServer() {
   server.close()
   console.log('Server closed, exiting process')

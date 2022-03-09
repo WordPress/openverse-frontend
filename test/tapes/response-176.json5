@@ -1,7 +1,7 @@
 {
     meta: {
-        createdAt: '2022-03-05T03:19:40.598Z',
-        host: 'https://api.openverse.engineering/v1',
+        createdAt: '2022-03-09T20:06:57.809Z',
+        host: 'https://api.openverse.engineering',
         resHumanReadable: true,
     },
     req: {
@@ -19,7 +19,7 @@
             referer: 'http://localhost:8443/',
             'accept-encoding': 'gzip, deflate, br',
         },
-        url: '/audio/c3b1fd0c-5fa0-4064-b9d7-fdccabe6fe45/thumb/',
+        url: '/v1/audio/241a444f-6037-4b92-9691-6d759d36bb39/thumb/',
         method: 'GET',
         body: '',
     },
@@ -27,7 +27,7 @@
         status: 404,
         headers: {
             date: [
-                'Sat, 05 Mar 2022 03:19:40 GMT',
+                'Wed, 09 Mar 2022 20:06:58 GMT',
             ],
             'content-type': [
                 'application/json',
@@ -60,7 +60,7 @@
                 'HIT',
             ],
             age: [
-                '106620',
+                '50873',
             ],
             'expect-ct': [
                 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"',
@@ -72,7 +72,7 @@
                 'cloudflare',
             ],
             'cf-ray': [
-                '6e6fb61f59698d5e-ATL',
+                '6e966f24aef663d5-ATL',
             ],
             'alt-svc': [
                 'h3=":443"; ma=86400, h3-29=":443"; ma=86400',

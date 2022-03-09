@@ -1,7 +1,7 @@
 {
     meta: {
-        createdAt: '2022-03-05T03:19:37.236Z',
-        host: 'https://api.openverse.engineering/v1',
+        createdAt: '2022-03-09T20:06:49.865Z',
+        host: 'https://api.openverse.engineering',
     },
     req: {
         headers: {
@@ -18,7 +18,7 @@
             referer: 'http://localhost:8443/',
             'accept-encoding': 'gzip, deflate, br',
         },
-        url: '/images/1aa5017d-58f3-4198-b97e-1d2cf9bf6cae/thumb/',
+        url: '/v1/images/1aa5017d-58f3-4198-b97e-1d2cf9bf6cae/thumb/',
         method: 'GET',
         body: '',
     },
@@ -26,7 +26,7 @@
         status: 200,
         headers: {
             date: [
-                'Sat, 05 Mar 2022 03:19:37 GMT',
+                'Wed, 09 Mar 2022 20:06:50 GMT',
             ],
             'content-type': [
                 'image/jpeg',
@@ -62,10 +62,10 @@
                 'HIT',
             ],
             age: [
-                '135953',
+                '194486',
             ],
             'last-modified': [
-                'Thu, 03 Mar 2022 13:33:44 GMT',
+                'Mon, 07 Mar 2022 14:05:24 GMT',
             ],
             'accept-ranges': [
                 'bytes',
@@ -80,7 +80,7 @@
                 'cloudflare',
             ],
             'cf-ray': [
-                '6e6fb60aa920f1be-ATL',
+                '6e966ef29ac98d4f-ATL',
             ],
             'alt-svc': [
                 'h3=":443"; ma=86400, h3-29=":443"; ma=86400',

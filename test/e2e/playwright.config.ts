@@ -23,7 +23,7 @@ const config: PlaywrightTestConfig = {
     port: 8443,
     reuseExistingServer: !process.env.CI || process.env.PWDEBUG === '1',
     env: {
-      API_URL: 'http://localhost:3000',
+      API_URL: 'http://localhost:49152/',
       UPDATE_TAPES: process.env.UPDATE_TAPES || '',
     },
   },
