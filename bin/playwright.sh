@@ -4,6 +4,4 @@
 
 export PLAYWRIGHT_VERSION=$(pnpm ls --dev --depth=0 | grep playwright | awk '{print $2}')
 export TEST_TYPE=$1
-docker-compose -f docker-compose.playwright.yml up \
-    --abort-on-container-exit \
-    --exit-code-from playwright
+docker-compose -f docker-compose.playwright.yml run playwright
