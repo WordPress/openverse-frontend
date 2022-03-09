@@ -58,7 +58,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 button {
   @apply py-2 px-3 text-sr;
 }

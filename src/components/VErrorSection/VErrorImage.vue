@@ -47,12 +47,11 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped>
 ::v-deep .attribution {
   @apply text-dark-charcoal-70;
-
-  a {
-    @apply text-current underline;
-  }
+}
+::v-deep .attribution a {
+  @apply text-current underline;
 }
 </style>

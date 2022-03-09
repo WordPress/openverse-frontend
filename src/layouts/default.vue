@@ -102,25 +102,20 @@ const embeddedPage = {
 }
 export default embeddedPage
 </script>
-<style lang="scss" scoped>
+<style scoped>
 .app {
   grid-template-rows: auto 1fr;
 }
 
 @screen md {
-  // Logic for displaying the filter sidebar and search results
-  // as independently-scrolling sections.
   .main {
     height: 100%;
     display: grid;
     grid-template-columns: 1fr 316px;
   }
-  // Make the main content area span both grid columns
-  // when the sidebar is closed...
   .main > *:first-child {
     grid-column: span 2;
   }
-  // ...and only one column when it is visible.
   .main.has-sidebar > *:first-child {
     grid-column: 1;
   }

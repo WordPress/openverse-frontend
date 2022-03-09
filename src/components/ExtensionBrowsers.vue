@@ -47,14 +47,3 @@ export default {
   },
 }
 </script>
-
-<style scoped lang="scss">
-.browser-button {
-  background-color: $color-white;
-
-  img {
-    height: 1.5em;
-    width: 1.5em;
-  }
-}
-</style>

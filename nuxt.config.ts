@@ -121,22 +121,14 @@ const config: NuxtConfig = {
   router: {
     middleware: 'middleware',
   },
-  components: [
-    { path: '~/components', extensions: ['vue'], pathPrefix: false },
-  ],
+  components: true,
   plugins: [
     { src: '~/plugins/url-change.js' },
     { src: '~/plugins/migration-notice.js' },
     { src: '~/plugins/ua-parse.js' },
     { src: '~/plugins/focus-visible', mode: 'client' },
   ],
-  css: [
-    '~/styles/tailwind.css',
-    '~/assets/fonts.css',
-    '~/styles/vocabulary.scss',
-    '~/styles/global.scss',
-    '~/styles/accent.scss',
-  ],
+  css: ['~/app.css'],
   head,
   env,
   dev: !isProd,

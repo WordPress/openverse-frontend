@@ -138,19 +138,3 @@ export default defineComponent({
   },
 })
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss" scoped>
-@import '~/styles/text-only-page.scss';
-
-figure {
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
-  border: 1px solid black;
-}
-
-h4 {
-  margin: 1rem 0;
-}
-</style>
