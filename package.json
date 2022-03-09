@@ -31,7 +31,7 @@
     "types": "tsc --noEmit",
     "lint": "eslint --ext .js,.vue,.ts --ignore-path .gitignore --ignore-path .eslintignore .",
     "lintfix": "pnpm run lint -- --fix",
-    "format": "prettier --write .",
+    "format": "prettier --write --loglevel=warn .",
     "format:test": "prettier --check .",
     "vue-i18n-check": "vue-i18n-extract report --vueFiles './src/**/*.?(js|vue)' --languageFiles './src/locales/*.?(json)'",
     "prepare": "husky install",
