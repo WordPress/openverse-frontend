@@ -30,7 +30,6 @@ import { useScroll } from '~/composables/use-scroll'
 import { useMatchSearchRoutes } from '~/composables/use-match-routes'
 import { isMinScreen } from '~/composables/use-media-query'
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
-import iframeHeight from '~/mixins/iframe-height'
 import { useNavStore } from '~/stores/nav'
 import { useUsageSessionId } from '~/composables/use-usage-session-id'
 
@@ -54,7 +53,6 @@ const embeddedPage = {
     VGlobalAudioSection,
   },
   layout: 'embedded',
-  mixins: [iframeHeight],
   head() {
     return this.$nuxtI18nHead({ addSeoAttributes: true, addDirAttribute: true })
   },
