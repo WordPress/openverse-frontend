@@ -29,9 +29,9 @@ const SUPPORTED = 'supported' // Native search
 const BETA = 'beta' // Native but incomplete search
 const ADDITIONAL = 'additional' // Meta search
 
-export const contentStatus = {
+export const contentStatus = Object.freeze({
   [ALL_MEDIA]: SUPPORTED,
   [IMAGE]: SUPPORTED,
   [AUDIO]: BETA,
   [VIDEO]: ADDITIONAL,
-}
+} as const)
