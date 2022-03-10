@@ -140,11 +140,13 @@ export default defineComponent({
   },
   setup(props) {
     const service = props.reportService || ReportService
+    const description = ref('')
 
     /** @type {import('@nuxtjs/composition-api').Ref<string|null>} */
     const status = ref(statuses.WIP)
+
+    /** @type {import('@nuxtjs/composition-api').Ref<string|null>} */
     const selectedReason = ref(reasons.DMCA)
-    const description = ref('')
 
     /* Buttons */
     const handleCancel = () => {
