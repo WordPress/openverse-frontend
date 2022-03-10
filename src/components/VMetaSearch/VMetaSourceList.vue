@@ -12,7 +12,12 @@
       >
         {{ source.name }}
         <sup class="top-0">
-          <VIcon :icon-path="externalLinkIcon" :size="4" class="ms-2" />
+          <VIcon
+            :icon-path="externalLinkIcon"
+            :size="4"
+            :rtl-flip="true"
+            class="ms-2"
+          />
         </sup>
       </VButton>
     </li>
