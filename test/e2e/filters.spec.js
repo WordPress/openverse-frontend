@@ -7,10 +7,63 @@ const {
   changeContentType,
 } = require('./utils')
 
+// Cannot require media constants because they use `export`
+const ALL_MEDIA = 'all'
+const AUDIO = 'audio'
+const IMAGE = 'image'
+const supportedSearchTypes = [ALL_MEDIA, AUDIO, IMAGE]
+
 test.beforeEach(async ({ context }) => {
   await mockProviderApis(context)
 })
 
+/**
+ * @param page
+ * @param {'checked'|'notChecked'|'total'} checked
+ * @param {number} count
+ * @returns {Promise<void>}
+ */
+const assertCheckboxCount = async (page, checked, count) => {
+  let checkedString = {
+    checked: ':checked',
+    notChecked: ':not(:checked)',
+    total: '',
+  }[checked]
+  const locatorString = `input[type="checkbox"]${checkedString}`
+  await expect(page.locator(locatorString)).toHaveCount(count, { timeout: 200 })
+}
+
+const FILTER_COUNTS = {
+  [ALL_MEDIA]: 11,
+  [AUDIO]: 23,
+  [IMAGE]: 70,
+}
+
+for (const searchType of supportedSearchTypes) {
+  test(`correct total number of filters is displayed for ${searchType}`, async ({
+    page,
+  }) => {
+    const searchTypePath = searchType === ALL_MEDIA ? '' : searchType
+    const searchUrl = `/search/${searchTypePath}/?q=cat`
+    await page.goto(searchUrl)
+
+    await openFilters(page)
+
+    await assertCheckboxCount(page, 'total', FILTER_COUNTS[searchType])
+  })
+}
+
+test('initial filters are applied based on the url', async ({ page }) => {
+  await page.goto(
+    '/search/?q=cat&license_type=commercial&license=cc0&searchBy=creator'
+  )
+  await openFilters(page)
+  const expectedFilters = ['cc0', 'commercial', 'creator']
+
+  for (let checkbox of expectedFilters) {
+    await assertCheckboxStatus(page, checkbox)
+  }
+})
 test('common filters are retained when media type changes from all media to single type', async ({
   page,
 }) => {
@@ -18,17 +71,14 @@ test('common filters are retained when media type changes from all media to sing
     '/search/?q=cat&license_type=commercial&license=cc0&searchBy=creator'
   )
   await openFilters(page)
+  const expectedFilters = ['cc0', 'commercial', 'creator']
 
-  for (let checkbox of ['cc0', 'commercial', 'creator']) {
-    await assertCheckboxStatus(page, checkbox)
-  }
   await changeContentType(page, 'Images')
 
   await expect(page).toHaveURL(
     '/search/image?q=cat&license_type=commercial&license=cc0&searchBy=creator'
   )
-
-  for (let checkbox of ['cc0', 'commercial', 'creator']) {
+  for (let checkbox of expectedFilters) {
     await assertCheckboxStatus(page, checkbox)
   }
 })
