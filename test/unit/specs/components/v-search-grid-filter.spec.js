@@ -72,7 +72,6 @@ describe('VSearchGridFilter', () => {
           },
         },
       },
-      stubs: { VIcon: true },
     }
     filterStore = useFilterStore(pinia)
   })
@@ -81,7 +80,6 @@ describe('VSearchGridFilter', () => {
     render(VSearchGridFilter, options)
     const checked = screen.queryAllByRole('checkbox', { checked: true })
     expect(checked.length).toEqual(0)
-    screen.debug()
     await fireEvent.click(screen.queryByLabelText(/commercial/i))
     // `getBy` serves as expect because it throws an error if no element is found
     screen.getByRole('checkbox', { checked: true })

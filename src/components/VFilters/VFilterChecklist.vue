@@ -111,8 +111,10 @@ export default {
       })
     },
     isDisabled(item) {
-      const filterStore = useFilterStore()
-      return filterStore.isFilterDisabled(item) ?? this.disabled
+      return (
+        useFilterStore().isFilterDisabled(item, this.filterType) ??
+        this.disabled
+      )
     },
   },
 }
