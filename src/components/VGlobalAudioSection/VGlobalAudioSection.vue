@@ -14,6 +14,7 @@
 import { useStore, useRoute, watch, computed } from '@nuxtjs/composition-api'
 
 import { useActiveAudio } from '~/composables/use-active-audio'
+
 import { useActiveMediaStore } from '~/stores/active-media'
 import { AUDIO } from '~/constants/media'
 
