@@ -5,9 +5,6 @@
 @layer base {
   html {
     @apply text-dark-charcoal m-0 font-normal leading-loose;
-    -moz-osx-font-smoothing: grayscale;
-    font-weight: 400;
-    margin: 0;
     font-display: swap;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
