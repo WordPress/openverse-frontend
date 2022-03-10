@@ -162,7 +162,7 @@ export default defineComponent({
       // Submit report
       try {
         await service.sendReport({
-          identifier: props.media.identifier,
+          identifier: props.media.id,
           reason: selectedReason.value,
           description: description.value,
         })
