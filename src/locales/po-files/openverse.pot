@@ -1134,12 +1134,12 @@ msgctxt "error.audio"
 msgid "audio"
 msgstr ""
 
-#: src/pages/extension.vue:91
+#: src/pages/extension.vue:90
 msgctxt "extension.title"
 msgid "Web extension"
 msgstr ""
 
-#: src/pages/extension.vue:61
+#: src/pages/extension.vue:60
 msgctxt "extension.conclusion"
 msgid "Have your favourite content while browsing the web"
 msgstr ""
@@ -1843,7 +1843,7 @@ msgctxt "header.loading"
 msgid "Loading..."
 msgstr ""
 
-#: src/components/VContentSwitcher/VMobileMenuModal.vue:14
+#: src/components/VContentSwitcher/VMobileMenuModal.vue:15
 msgctxt "header.filter-button.simple"
 msgid "Filters"
 msgstr ""
