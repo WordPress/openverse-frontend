@@ -334,7 +334,7 @@ export default defineComponent({
     const peaks = computed(() =>
       props.peaks?.length
         ? props.peaks
-        : Array.from({ length: 1000 }, () => Math.random())
+        : Array.from({ length: 100 }, () => Math.random())
     )
     const normalizedPeaks = computed(() => {
       let samples = peaks.value
