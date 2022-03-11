@@ -30,7 +30,7 @@
       :aria-labelledby="tab"
       role="tabpanel"
       tabindex="0"
-      class="border border-dark-charcoal-20 p-4 md:p-6 text-sm md:text-base foxus:border-tx focus:outline-none focus:shadow-[0_0_0_1.5px_#c52b9b_inset] h-[190px] flex flex-col justify-between items-start"
+      class="border border-dark-charcoal-20 p-4 md:p-6 text-sm md:text-base focus:border-tx focus:outline-none focus:shadow-[0_0_0_1.5px_#c52b9b_inset] h-[190px] flex flex-col justify-between items-start"
       :class="{ hidden: activeTab !== tab }"
     >
       <div class="flex-grow-1 overflow-y-scroll w-full">
