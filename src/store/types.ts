@@ -1,5 +1,5 @@
-export type SupportedMediaType = 'audio' | 'image'
-export type SupportedSearchType = 'all' | SupportedMediaType
+import type { SupportedSearchType } from '~/constants/media'
+
 export type MediaType = 'audio' | 'image' | 'video'
 export type SearchType = 'all' | MediaType
 /**
@@ -140,13 +140,6 @@ export interface FetchState {
 export interface SearchState {
   searchType: SupportedSearchType
   query: Query
-}
-
-export interface ActiveMediaState {
-  type: SupportedMediaType | null
-  id: string | null
-  status: 'ejected' | 'playing' | 'paused' // 'ejected' means player is closed
-  message: string | null
 }
 
 export type MediaStoreResult<T extends FrontendMediaType> = MediaResult<

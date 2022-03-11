@@ -10,7 +10,7 @@
  * to forget ones like Spacebar, while also removing "magic strings".
  */
 
-export const keycodes = {
+export const keycodes = Object.freeze({
   Spacebar: ' ',
   Home: 'Home',
   End: 'End',
@@ -22,4 +22,4 @@ export const keycodes = {
   PageUp: 'PageUp',
   PageDown: 'PageDown',
   Tab: 'Tab',
-} as const
+} as const)

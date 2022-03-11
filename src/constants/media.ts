@@ -21,15 +21,17 @@ export type SupportedMediaType = typeof IMAGE | typeof AUDIO
  */
 export const supportedSearchTypes = [ALL_MEDIA, IMAGE, AUDIO]
 
+export type SupportedSearchType = typeof ALL_MEDIA | SupportedMediaType
+
 /* Media support */
 
 const SUPPORTED = 'supported' // Native search
 const BETA = 'beta' // Native but incomplete search
 const ADDITIONAL = 'additional' // Meta search
 
-export const contentStatus = {
+export const contentStatus = Object.freeze({
   [ALL_MEDIA]: SUPPORTED,
   [IMAGE]: SUPPORTED,
   [AUDIO]: BETA,
   [VIDEO]: ADDITIONAL,
-}
+} as const)
