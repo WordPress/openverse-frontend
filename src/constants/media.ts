@@ -11,17 +11,17 @@ export const ALL_MEDIA = 'all'
  * - These types also support custom filters.
  * - `IMAGE` should always be first here.
  */
-export const supportedMediaTypes = [IMAGE, AUDIO]
+export const supportedMediaTypes = [IMAGE, AUDIO] as const
 
-export type SupportedMediaType = typeof IMAGE | typeof AUDIO
+export type SupportedMediaType = typeof supportedMediaTypes[number]
 
 /**
  * the types of content that users can search; `ALL_MEDIA` is also a valid
  * option here.
  */
-export const supportedSearchTypes = [ALL_MEDIA, IMAGE, AUDIO]
+export const supportedSearchTypes = [ALL_MEDIA, IMAGE, AUDIO] as const
 
-export type SupportedSearchType = typeof ALL_MEDIA | SupportedMediaType
+export type SupportedSearchType = typeof supportedSearchTypes[number]
 
 /* Media support */
 
