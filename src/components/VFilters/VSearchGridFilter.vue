@@ -44,8 +44,8 @@
 
 <script>
 import { computed, useContext, useRouter } from '@nuxtjs/composition-api'
+import { kebab } from 'case'
 
-import { kebabize } from '~/utils/format-strings'
 import { useFilterStore } from '~/stores/filter'
 import { useSearchStore } from '~/stores/search'
 
@@ -72,7 +72,7 @@ export default {
       if (filterType === 'searchBy') {
         return ''
       }
-      return i18n.t(`filters.${kebabize(filterType)}.title`)
+      return i18n.t(`filters.${kebab(filterType)}.title`)
     }
 
     const updateSearch = async () => {

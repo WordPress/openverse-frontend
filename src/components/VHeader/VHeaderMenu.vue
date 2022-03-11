@@ -13,9 +13,7 @@ import useSearchType from '~/composables/use-search-type'
 import { useSearchStore } from '~/stores/search'
 
 import { ALL_MEDIA, supportedMediaTypes } from '~/constants/media'
-
 import { FETCH_MEDIA } from '~/constants/action-types'
-
 import { MEDIA } from '~/constants/store-modules'
 
 import VMobileMenuModal from '~/components/VContentSwitcher/VMobileMenuModal.vue'

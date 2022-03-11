@@ -168,19 +168,19 @@ describe('Filter Store', () => {
       }
     )
     it.each`
-      item                        | dependency                                              | disabled
-      ${{ code: 'by-nc' }}        | ${{ filterType: 'licenseTypes', code: 'commercial' }}   | ${true}
-      ${{ code: 'by-nc-nd' }}     | ${{ filterType: 'licenseTypes', code: 'commercial' }}   | ${true}
-      ${{ code: 'by-nc-sa' }}     | ${{ filterType: 'licenseTypes', code: 'commercial' }}   | ${true}
-      ${{ code: 'by-nd' }}        | ${{ filterType: 'licenseTypes', code: 'modification' }} | ${true}
-      ${{ code: 'by-nc-nd' }}     | ${{ filterType: 'licenseTypes', code: 'modification' }} | ${true}
-      ${{ code: 'by-nc' }}        | ${{ filterType: 'licenseTypes', code: 'modification' }} | ${false}
-      ${{ code: 'by-nd' }}        | ${{ filterType: 'licenseTypes', code: 'commercial' }}   | ${false}
-      ${{ code: 'commercial' }}   | ${{ filterType: 'licenses', code: 'by-nc' }}            | ${true}
-      ${{ code: 'commercial' }}   | ${{ filterType: 'licenses', code: 'by-nc-nd' }}         | ${true}
-      ${{ code: 'commercial' }}   | ${{ filterType: 'licenses', code: 'by-nc-sa' }}         | ${true}
-      ${{ code: 'modification' }} | ${{ filterType: 'licenses', code: 'by-nd' }}            | ${true}
-      ${{ code: 'modification' }} | ${{ filterType: 'licenses', code: 'by-nc-nd' }}         | ${true}
+      item                                                    | dependency                                              | disabled
+      ${{ code: 'by-nc', filterType: 'licenses' }}            | ${{ filterType: 'licenseTypes', code: 'commercial' }}   | ${true}
+      ${{ code: 'by-nc-nd', filterType: 'licenses' }}         | ${{ filterType: 'licenseTypes', code: 'commercial' }}   | ${true}
+      ${{ code: 'by-nc-sa', filterType: 'licenses' }}         | ${{ filterType: 'licenseTypes', code: 'commercial' }}   | ${true}
+      ${{ code: 'by-nd', filterType: 'licenses' }}            | ${{ filterType: 'licenseTypes', code: 'modification' }} | ${true}
+      ${{ code: 'by-nc-nd', filterType: 'licenses' }}         | ${{ filterType: 'licenseTypes', code: 'modification' }} | ${true}
+      ${{ code: 'by-nc', filterType: 'licenses' }}            | ${{ filterType: 'licenseTypes', code: 'modification' }} | ${false}
+      ${{ code: 'by-nd', filterType: 'licenses' }}            | ${{ filterType: 'licenseTypes', code: 'commercial' }}   | ${false}
+      ${{ code: 'commercial', filterType: 'licenseTypes' }}   | ${{ filterType: 'licenses', code: 'by-nc' }}            | ${true}
+      ${{ code: 'commercial', filterType: 'licenseTypes' }}   | ${{ filterType: 'licenses', code: 'by-nc-nd' }}         | ${true}
+      ${{ code: 'commercial', filterType: 'licenseTypes' }}   | ${{ filterType: 'licenses', code: 'by-nc-sa' }}         | ${true}
+      ${{ code: 'modification', filterType: 'licenseTypes' }} | ${{ filterType: 'licenses', code: 'by-nd' }}            | ${true}
+      ${{ code: 'modification', filterType: 'licenseTypes' }} | ${{ filterType: 'licenses', code: 'by-nc-nd' }}         | ${true}
     `(
       'isFilterDisabled for $item.code should return $disabled when $dependency.code is checked',
       ({ item, dependency, disabled }) => {
@@ -189,7 +189,7 @@ describe('Filter Store', () => {
           filterType: dependency.filterType,
           code: dependency.code,
         })
-        const isDisabled = filterStore.isFilterDisabled(item)
+        const isDisabled = filterStore.isFilterDisabled(item, item.filterType)
         expect(isDisabled).toBe(disabled)
       }
     )

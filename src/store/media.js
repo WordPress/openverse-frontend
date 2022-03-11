@@ -16,12 +16,7 @@ import {
   SET_MEDIA_ITEM,
   SET_MEDIA,
 } from '~/constants/mutation-types'
-import {
-  SEND_RESULT_CLICKED_EVENT,
-  SEND_SEARCH_QUERY_EVENT,
-} from '~/constants/usage-data-analytics-types'
 import { AUDIO, IMAGE, ALL_MEDIA, supportedMediaTypes } from '~/constants/media'
-import { USAGE_DATA } from '~/constants/store-modules'
 import MediaService from '~/data/media-service'
 import { useSearchStore } from '~/stores/search'
 
@@ -101,7 +96,7 @@ export const createActions = (services = mediaServices) => ({
    * @param {boolean} [payload.shouldPersistMedia] - whether the existing media should be added to or replaced.
    * @return {Promise<void>}
    */
-  async [FETCH_SINGLE_MEDIA_TYPE]({ commit, dispatch, rootState }, payload) {
+  async [FETCH_SINGLE_MEDIA_TYPE]({ commit, dispatch }, payload) {
     const {
       mediaType,
       page = undefined,
@@ -113,16 +108,6 @@ export const createActions = (services = mediaServices) => ({
       ...searchStore.searchQueryParams,
       ...params,
     })
-
-    // does not send event if user is paginating for more results
-    if (!page) {
-      const sessionId = rootState.user.usageSessionId
-      await dispatch(
-        `${USAGE_DATA}/${SEND_SEARCH_QUERY_EVENT}`,
-        { query: queryParams.q, sessionId },
-        { root: true }
-      )
-    }
 
     commit(FETCH_START_MEDIA, { mediaType })
     try {
@@ -159,22 +144,8 @@ export const createActions = (services = mediaServices) => ({
    * @param {string} params.id
    * @return {Promise<void>}
    */
-  async [FETCH_MEDIA_ITEM]({ commit, dispatch, state, rootState }, params) {
-    const { mediaType, id } = params
-    const resultRank = Object.keys(state.results[mediaType].items).findIndex(
-      (item) => item === id
-    )
-    const searchStore = useSearchStore()
-    await dispatch(
-      `${USAGE_DATA}/${SEND_RESULT_CLICKED_EVENT}`,
-      {
-        query: searchStore.query.q,
-        resultUuid: id,
-        resultRank,
-        sessionId: rootState.user.usageSessionId,
-      },
-      { root: true }
-    )
+  async [FETCH_MEDIA_ITEM]({ commit, dispatch }, params) {
+    const { mediaType } = params
     commit(SET_MEDIA_ITEM, { item: {}, mediaType })
     try {
       const data = await services[mediaType].getMediaDetail(params)

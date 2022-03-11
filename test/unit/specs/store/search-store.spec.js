@@ -8,9 +8,24 @@ import {
   VIDEO,
 } from '~/constants/media'
 import { useSearchStore } from '~/stores/search'
-
 import { mediaFilterKeys } from '~/constants/filters'
 
+const initialState = {
+  query: {
+    aspect_ratio: '',
+    categories: '',
+    duration: '',
+    extension: '',
+    license: '',
+    license_type: '',
+    mature: '',
+    q: '',
+    searchBy: '',
+    size: '',
+    source: '',
+  },
+  searchType: ALL_MEDIA,
+}
 describe('Search Store', () => {
   beforeEach(() => {
     setActivePinia(createPinia())
@@ -19,22 +34,7 @@ describe('Search Store', () => {
     it('initializes correctly', () => {
       const searchStore = useSearchStore()
 
-      expect(searchStore.state).toEqual({
-        query: {
-          aspect_ratio: '',
-          categories: '',
-          duration: '',
-          extension: '',
-          license: '',
-          license_type: '',
-          mature: '',
-          q: '',
-          searchBy: '',
-          size: '',
-          source: '',
-        },
-        searchType: ALL_MEDIA,
-      })
+      expect(searchStore.state).toEqual(initialState)
     })
   })
   describe('getters', () => {

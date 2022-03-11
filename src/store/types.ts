@@ -36,10 +36,9 @@ export interface MediaResult<
 }
 
 export type Query = {
-  mediaType: SupportedMediaType
   q: string
-  license: string
   license_type: string
+  license: string
   extension: string
   size: string
   aspect_ratio: string
@@ -130,7 +129,7 @@ export interface Filters {
   searchBy: FilterItem[]
   mature: FilterItem[]
 }
-export type FilterType = keyof Filters
+export type FilterCategory = keyof Filters
 
 export interface FetchState {
   isFetching: boolean

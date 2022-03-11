@@ -2,13 +2,10 @@ import { render, screen } from '@testing-library/vue'
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import { ref } from '@nuxtjs/composition-api'
-
 import { createPinia, PiniaVuePlugin } from 'pinia'
 
-import SearchIndex from '~/pages/search.vue'
-
 import { useSearchStore } from '~/stores/search'
-
+import SearchIndex from '~/pages/search.vue'
 import { IMAGE } from '~/constants/media'
 
 describe('SearchIndex', () => {

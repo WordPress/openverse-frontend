@@ -12,14 +12,16 @@ import { queryToFilterData } from '~/utils/search-query-transform'
 import {
   filterData,
   mediaFilterKeys,
-  mediaSpecificFilters,
+  mediaUniqueFilterKeys,
 } from '~/constants/filters'
 import { warn } from '~/utils/console'
 
 export const useFilterStore = defineStore('filter', () => {
   /** @type {{ filters: import('../store/types').Filters}} */
   const filters = reactive(clonedeep(filterData))
-  const searchType = ref(ALL_MEDIA)
+  const searchType = /** @type {import('../store/types').SearchType} */ (
+    ref(ALL_MEDIA)
+  )
 
   /**
    * @param {import('../store/types').SearchType} type
@@ -80,31 +82,17 @@ export const useFilterStore = defineStore('filter', () => {
   })
 
   /**
-   * Returns true if any of the filters' checked property is true
-   * except for `mature` filter, as it is not displayed as a tag.
-   * @param {Partial<import('~/store/types').Filters>} filters
-   * @returns {boolean}
-   */
-  const anyFilterApplied = (filters = {}) => {
-    // filtering out `mature` because we do not show mature in `FilterDisplay.vue` like the other filters
-    return Object.keys(filters).some(
-      (filterKey) =>
-        filterKey !== 'mature' &&
-        filters[filterKey]?.some((filter) => filter.checked)
-    )
-  }
-
-  /**
-   * True if any filter except `mature` is applied.
+   * True if any filter for selected search type except `mature` is checked.
    *
    * @type {import('@nuxtjs/composition-api').ComputedRef<boolean>}
    */
   const isAnyFilterApplied = computed(() => {
-    return anyFilterApplied(
-      getMediaTypeFilters({
-        filters,
-        mediaType: searchType.value,
-      })
+    const searchTypeFilters = getMediaTypeFilters({
+      mediaType: searchType.value,
+    })
+    return Object.entries(searchTypeFilters).some(
+      ([filterKey, filterItems]) =>
+        filterKey !== 'mature' && filterItems.some((filter) => filter.checked)
     )
   })
 
@@ -118,7 +106,7 @@ export const useFilterStore = defineStore('filter', () => {
       (type) => type !== searchType
     )
     let filterKeysToClear = mediaTypesToClear.reduce((acc, type) => {
-      acc = [...acc, ...mediaSpecificFilters[type]]
+      acc = [...acc, ...mediaUniqueFilterKeys[type]]
       return acc
     }, [])
 
@@ -157,12 +145,11 @@ export const useFilterStore = defineStore('filter', () => {
   }
 
   /**
+   * Merge providers from API response with the filters that came from the browse URL search query string
+   * and match the checked properties in the store.
    * @param {{ mediaType: import('../store/types').SupportedMediaType, providers: {source_name: string, display_name: string}[]}} params
    */
   function initProviderFilters({ mediaType, providers }) {
-    // merge providers from API response with the filters that came from the
-    // browse URL search query string and match the checked properties
-    // in the store
     const providersKey = `${mediaType}Providers`
     const currentProviders = filters[providersKey]
       ? [...filters[providersKey]]
@@ -245,9 +232,13 @@ export const useFilterStore = defineStore('filter', () => {
    * the currently checked filter items.
    *
    * @param {import('../store/types').FilterItem} item
+   * @param {import('../store/types').FilterCategory} filterCategory
    * @returns {boolean|undefined}
    */
-  function isFilterDisabled(item) {
+  function isFilterDisabled(item, filterCategory) {
+    if (!['licenseTypes', 'licenses'].includes(filterCategory)) {
+      return
+    }
     if (['commercial', 'modification'].includes(item.code)) {
       let targetCode = /** @type {string} */ (
         { commercial: 'nc', modification: 'nd' }[item.code]

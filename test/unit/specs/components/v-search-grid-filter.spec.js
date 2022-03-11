@@ -1,19 +1,17 @@
 import Vuex from 'vuex'
 import { fireEvent, render, screen } from '@testing-library/vue'
 import { createLocalVue } from '@vue/test-utils'
-
 import VueI18n from 'vue-i18n'
 import { createPinia, PiniaVuePlugin } from 'pinia'
 
-import { FETCH_MEDIA } from '~/constants/action-types'
-
 import messages from '~/locales/en.json'
 
+import { FETCH_MEDIA } from '~/constants/action-types'
 import { useFilterStore } from '~/stores/filter'
 
-import SearchGridFilter from '~/components/VFilters/VSearchGridFilter.vue'
+import VSearchGridFilter from '~/components/VFilters/VSearchGridFilter.vue'
 
-describe('SearchGridFilter', () => {
+describe('VSearchGridFilter', () => {
   let options = {}
   let storeMock
   let localVue
@@ -60,16 +58,14 @@ describe('SearchGridFilter', () => {
           },
         },
       },
-      stubs: { VIcon: true },
     }
     filterStore = useFilterStore(pinia)
   })
 
   it('toggles filter', async () => {
-    render(SearchGridFilter, options)
+    render(VSearchGridFilter, options)
     const checked = screen.queryAllByRole('checkbox', { checked: true })
     expect(checked.length).toEqual(0)
-
     await fireEvent.click(screen.queryByLabelText(/commercial/i))
     // `getBy` serves as expect because it throws an error if no element is found
     screen.getByRole('checkbox', { checked: true })
@@ -78,7 +74,7 @@ describe('SearchGridFilter', () => {
 
   it('clears filters', async () => {
     filterStore.toggleFilter({ filterType: 'licenses', code: 'by' })
-    await render(SearchGridFilter, options)
+    await render(VSearchGridFilter, options)
     // if no checked checkboxes were found, this would raise an error
     screen.getByRole('checkbox', { checked: true })
 

@@ -1,40 +1,63 @@
+import { kebab } from 'case'
+
 import { ALL_MEDIA, AUDIO, IMAGE, VIDEO } from '~/constants/media'
 import { ACTIVE_LICENSES } from '~/constants/license'
-import { kebabize } from '~/utils/format-strings'
 import { deepFreeze } from '~/utils/deep-freeze'
-import type { FilterType, SearchType } from '~/store/types'
+
+import type { FilterCategory, FilterItem, SearchType } from '~/store/types'
 
 /**
  * List of filters available for each search type. The order of the keys
  * is the same as in the filter checklist display (sidebar or modal).
  */
-export const mediaFilterKeys = deepFreeze<Record<SearchType, FilterType[]>>({
-  [IMAGE]: [
-    'licenseTypes',
-    'licenses',
+export const mediaFilterKeys = deepFreeze<Record<SearchType, FilterCategory[]>>(
+  {
+    [IMAGE]: [
+      'licenseTypes',
+      'licenses',
+      'imageCategories',
+      'imageExtensions',
+      'aspectRatios',
+      'sizes',
+      'imageProviders',
+      'searchBy',
+      'mature',
+    ],
+    [AUDIO]: [
+      'licenseTypes',
+      'licenses',
+      'audioCategories',
+      'audioExtensions',
+      'durations',
+      'audioProviders',
+      'searchBy',
+      'mature',
+    ],
+    [VIDEO]: [],
+    [ALL_MEDIA]: ['licenseTypes', 'licenses', 'searchBy', 'mature'],
+  }
+)
+
+/**
+ * A list of filters that are only used for the specific content type.
+ * This is used to clear filters from other content types when changing the content type.
+ */
+export const mediaUniqueFilterKeys = deepFreeze<
+  Record<SearchType, FilterCategory[]>
+>({
+  all: [],
+  image: [
     'imageCategories',
     'imageExtensions',
     'aspectRatios',
     'sizes',
     'imageProviders',
-    'searchBy',
-    'mature',
   ],
-  [AUDIO]: [
-    'licenseTypes',
-    'licenses',
-    'audioCategories',
-    'audioExtensions',
-    'durations',
-    'audioProviders',
-    'searchBy',
-    'mature',
-  ],
-  [VIDEO]: [],
-  [ALL_MEDIA]: ['licenseTypes', 'licenses', 'searchBy', 'mature'],
+  audio: ['audioCategories', 'audioExtensions', 'durations', 'audioProviders'],
+  video: [],
 })
 
-const filterCodesPerCategory = deepFreeze<Record<FilterType, string[]>>({
+const filterCodesPerCategory = deepFreeze<Record<FilterCategory, string[]>>({
   licenses: ACTIVE_LICENSES,
   licenseTypes: ['commercial', 'modification'],
   audioCategories: ['music', 'sound', 'podcast'],
@@ -61,6 +84,7 @@ const filterCodesPerCategory = deepFreeze<Record<FilterType, string[]>>({
  *       "checked": false
  *     }, ...
  *   ],
+ * }
  *```
  */
 const initFilters = () =>
@@ -69,28 +93,11 @@ const initFilters = () =>
       ...acc,
       [filterType]: filters.map((item) => ({
         code: item,
-        name: `filters.${kebabize(filterType)}.${item}`,
+        name: `filters.${kebab(filterType)}.${item}`,
         checked: false,
       })),
     }),
-    {}
+    {} as Record<FilterCategory, FilterItem>
   )
-
-/**
- * A list of filters that are only used for the specific content type.
- * This is used to clear filters from other content types when changing the content type.
- */
-export const mediaSpecificFilters = deepFreeze<Record<SearchType, string[]>>({
-  all: [],
-  image: [
-    'imageCategories',
-    'imageExtensions',
-    'aspectRatios',
-    'sizes',
-    'imageProviders',
-  ],
-  audio: ['audioCategories', 'audioExtensions', 'durations', 'audioProviders'],
-  video: [],
-})
 
 export const filterData = deepFreeze(initFilters())
