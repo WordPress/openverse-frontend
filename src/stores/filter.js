@@ -38,12 +38,9 @@ export const useFilterStore = defineStore('filter', () => {
     if (!includeMature) {
       filterKeys = filterKeys.filter((filterKey) => filterKey !== 'mature')
     }
-    const mediaTypeFilters =
-      /** @type {Partial<import('../store/types').Filters>} */ ({})
-    filterKeys.forEach((filterKey) => {
-      mediaTypeFilters[filterKey] = filters[filterKey]
-    })
-    return mediaTypeFilters
+    return filterKeys.reduce((obj, filterKey) => {
+      return { ...obj, [filterKey]: filters[filterKey] }
+    }, /** @type {Partial<import('../store/types').Filters>} */ ({}))
   }
 
   const allFilterCategories =
