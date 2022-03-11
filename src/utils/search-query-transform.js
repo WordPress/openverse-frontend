@@ -53,13 +53,14 @@ const filterToString = (filterItem) => {
  * @param {import('../store/types').SearchType} searchType
  * @param hideEmpty
  * @todo Refactor all of these 'reduce' calls to just use lodash methods :)
+ * @returns {import('../store/types').Query}
  */
 export const filtersToQueryData = (
   filters,
   searchType = ALL_MEDIA,
   hideEmpty = true
 ) => {
-  let queryDataObject = {}
+  let queryDataObject = /** @type {import('../store/types').Query} */ ({})
 
   let mediaFilterTypes = getMediaFilterTypes(searchType)
   mediaFilterTypes.reduce((queryData, filterDataKey) => {

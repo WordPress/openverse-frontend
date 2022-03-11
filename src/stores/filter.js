@@ -17,11 +17,12 @@ import {
 import { warn } from '~/utils/console'
 
 export const useFilterStore = defineStore('filter', () => {
-  /** @type {{ filters: import('../store/types').Filters}} */
+  /** @type {import('../store/types').Filters} */
   const filters = reactive(clonedeep(filterData))
-  const searchType = /** @type {import('../store/types').SearchType} */ (
-    ref(ALL_MEDIA)
-  )
+  const searchType =
+    /** @type {import('@nuxtjs/composition-api').Ref<import('../store/types').SearchType>} */ (
+      ref(ALL_MEDIA)
+    )
 
   /**
    * @param {import('../store/types').SearchType} type
@@ -37,12 +38,18 @@ export const useFilterStore = defineStore('filter', () => {
     if (!includeMature) {
       filterKeys = filterKeys.filter((filterKey) => filterKey !== 'mature')
     }
-    const mediaTypeFilters = {}
+    const mediaTypeFilters =
+      /** @type {Partial<import('../store/types').Filters>} */ ({})
     filterKeys.forEach((filterKey) => {
       mediaTypeFilters[filterKey] = filters[filterKey]
     })
     return mediaTypeFilters
   }
+
+  const allFilterCategories =
+    /** @type {import('../store/types').FilterCategory[]} */ (
+      Object.keys(filters)
+    )
   /**
    * Initial filters do not include the provider filters. We create the provider filters object
    * when we fetch the provider data on the Nuxt server initialization.
@@ -76,8 +83,8 @@ export const useFilterStore = defineStore('filter', () => {
     const filterKeys = mediaFilterKeys[searchType.value].filter(
       (f) => f !== 'mature'
     )
-    return filterKeys.reduce((count, filterType) => {
-      return count + filters[filterType].filter((f) => f.checked).length
+    return filterKeys.reduce((count, filterCategory) => {
+      return count + filters[filterCategory].filter((f) => f.checked).length
     }, 0)
   })
 
@@ -108,11 +115,11 @@ export const useFilterStore = defineStore('filter', () => {
     let filterKeysToClear = mediaTypesToClear.reduce((acc, type) => {
       acc = [...acc, ...mediaUniqueFilterKeys[type]]
       return acc
-    }, [])
+    }, /** @type {import('../store/types').FilterCategory[]} */ ([]))
 
-    Object.keys(filters).forEach((filterType) => {
-      if (filterKeysToClear.includes(filterType)) {
-        filters[filterType] = filters[filterType].map((f) => ({
+    allFilterCategories.forEach((filterCategory) => {
+      if (filterKeysToClear.includes(filterCategory)) {
+        filters[filterCategory] = filters[filterCategory].map((f) => ({
           ...f,
           checked: false,
         }))
@@ -128,18 +135,21 @@ export const useFilterStore = defineStore('filter', () => {
    * @param {import('../store/types').Filters} params.newFilterData
    */
   function replaceFilters({ newFilterData }) {
-    Object.keys(filters).forEach((filterType) => {
-      if (['audioProviders', 'imageProviders'].includes(filterType)) {
-        newFilterData[filterType].forEach((provider) => {
-          const idx = filters[filterType].findIndex(
+    /** @type {import('../store/types').FilterCategory[]} */
+    const providerFilters = ['audioProviders', 'imageProviders']
+
+    allFilterCategories.forEach((filterCategory) => {
+      if (providerFilters.includes(filterCategory)) {
+        newFilterData[filterCategory].forEach((provider) => {
+          const idx = filters[filterCategory].findIndex(
             (p) => p.code === provider.code
           )
           if (idx > -1) {
-            filters[filterType][idx].checked = provider.checked
+            filters[filterCategory][idx].checked = provider.checked
           }
         })
       } else {
-        filters[filterType] = newFilterData[filterType]
+        filters[filterCategory] = newFilterData[filterCategory]
       }
     })
   }
@@ -150,7 +160,10 @@ export const useFilterStore = defineStore('filter', () => {
    * @param {{ mediaType: import('../store/types').SupportedMediaType, providers: {source_name: string, display_name: string}[]}} params
    */
   function initProviderFilters({ mediaType, providers }) {
-    const providersKey = `${mediaType}Providers`
+    const providersKey =
+      /** @type {import('../store/types').FilterCategory} */ (
+        `${mediaType}Providers`
+      )
     const currentProviders = filters[providersKey]
       ? [...filters[providersKey]]
       : []
@@ -172,7 +185,7 @@ export const useFilterStore = defineStore('filter', () => {
   }
   /**
    * Toggles a filter's checked parameter. Requires either codeIdx or code.
-   * @param {{ filterType: string, codeIdx?: number, code?: string}} params
+   * @param {{ filterType: import('../store/types').FilterCategory, codeIdx?: number, code?: string}} params
    */
   function toggleFilter(params) {
     if (

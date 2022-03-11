@@ -42,6 +42,9 @@ export const useSearchStore = defineStore('search', () => {
   })
   const { searchType, query } = toRefs(state)
 
+  /**
+   * @param {import('../store/types').SupportedSearchType} type
+   */
   const setSearchType = (type) => {
     state.searchType = type
     filterStore.setSearchType(type)
@@ -99,6 +102,9 @@ export const useSearchStore = defineStore('search', () => {
   }
   /**
    * After a change in filters, updates the query. If the filter is not selected, query should be set to blank string "".
+   * @param {object} [params]
+   * @param {import('../store/types').SupportedSearchType} [params.mediaType]
+   * @param {string} [params.q]
    */
   function updateQueryFromFilters(params = {}) {
     const queryFromFilters = filtersToQueryData(
@@ -109,22 +115,25 @@ export const useSearchStore = defineStore('search', () => {
 
     // If the filter was unchecked, its value in `queryFromFilters` would be falsy, ''.
     // So we check if the key exists, not if the value is not falsy.
-    const changedKeys = Object.keys(queryFromFilters)
-    state.query = /** @type {import('../store/types').Query} */ (
-      Object.keys(state.query).reduce((obj, key) => {
-        if (key === 'q') {
-          obj[key] = params?.q || state.query.q
-        } else {
-          obj[key] = changedKeys.includes(key) ? queryFromFilters[key] : ''
-        }
-        return obj
-      }, {})
+    const changedKeys = /** @type {import('../store/types').QueryKey[]} */ (
+      Object.keys(queryFromFilters)
     )
+    const queryKeys = /** @type {import('../store/types').QueryKey[]} */ (
+      Object.keys(state.query)
+    )
+    state.query = queryKeys.reduce((obj, key) => {
+      if (key === 'q') {
+        obj[key] = params?.q || state.query.q
+      } else {
+        obj[key] = changedKeys.includes(key) ? queryFromFilters[key] : ''
+      }
+      return obj
+    }, /** @type {import('../store/types').Query} */ ({}))
   }
 
   /**
    * Toggles a filter's checked parameter
-   * @param {{ filterType: string, [codeIdx]: number, [code]: string}} params
+   * @param {{ filterType: import('../store/types').FilterCategory, codeIdx?: number, code?: string}} params
    */
   function toggleFilter(params) {
     filterStore.toggleFilter(params)

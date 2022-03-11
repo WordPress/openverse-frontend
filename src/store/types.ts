@@ -48,6 +48,7 @@ export type Query = {
   duration: string
   mature: string
 }
+export type QueryKey = keyof Query
 
 export type ApiQueryParams = {
   q: string
