@@ -35,7 +35,7 @@ export interface MediaResult<
     : never
 }
 
-export type Query = {
+export interface Query {
   q: string
   license_type: string
   license: string
@@ -50,7 +50,7 @@ export type Query = {
 }
 export type QueryKey = keyof Query
 
-export type ApiQueryParams = {
+export interface ApiQueryParams {
   q: string
   license?: string
   license_type?: string
@@ -63,6 +63,7 @@ export type ApiQueryParams = {
   duration?: string
   mature?: string
 }
+export type ApiQueryFilters = Omit<ApiQueryParams, 'q'>
 
 export interface Tag {
   name: string

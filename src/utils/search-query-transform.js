@@ -47,41 +47,28 @@ const filterToString = (filterItem) => {
 }
 
 /**
- * converts the filter store object to the data format accepted by the API,
- * which has slightly different property names
+ * Converts the filter store object to the data format accepted by the API,
+ * which has slightly different property names.
  * @param {object} filters object containing the filter data that comes from the filter store
  * @param {import('../store/types').SearchType} searchType
- * @param hideEmpty
- * @todo Refactor all of these 'reduce' calls to just use lodash methods :)
- * @returns {import('../store/types').Query}
+ * @param {boolean} hideEmpty
+ * @returns {import('../store/types').ApiQueryFilters}
  */
 export const filtersToQueryData = (
   filters,
   searchType = ALL_MEDIA,
   hideEmpty = true
 ) => {
-  let queryDataObject = /** @type {import('../store/types').Query} */ ({})
-
   let mediaFilterTypes = getMediaFilterTypes(searchType)
-  mediaFilterTypes.reduce((queryData, filterDataKey) => {
-    const queryDataKey = filterPropertyMappings[filterDataKey]
-    queryData[queryDataKey] = filterToString(filters[filterDataKey])
-    return queryData
-  }, queryDataObject)
 
-  if (hideEmpty) {
-    queryDataObject = Object.entries(queryDataObject).reduce(
-      (obj, [key, value]) => {
-        if (value) {
-          obj[key] = value
-        }
-        return obj
-      },
-      {}
-    )
-  }
-
-  return queryDataObject
+  return mediaFilterTypes.reduce((query, filterCategory) => {
+    const queryKey = filterPropertyMappings[filterCategory]
+    const queryValue = filterToString(filters[filterCategory])
+    if (queryValue || !hideEmpty) {
+      query[queryKey] = queryValue
+    }
+    return query
+  }, /** @type {import('../store/types').ApiQueryFilters} */ ({}))
 }
 
 /**
