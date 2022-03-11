@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-03-05T11:49:03+00:00\n"
+"POT-Creation-Date: 2022-03-11T05:53:49+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -395,12 +395,12 @@ msgid "Genre"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/image/_id.vue:46
+#: src/pages/image/_id.vue:42
 msgctxt "image-details.creator"
 msgid "by ###name###"
 msgstr ""
 
-#: src/pages/image/_id.vue:40
+#: src/pages/image/_id.vue:36
 msgctxt "image-details.weblink"
 msgid "Go to image's website"
 msgstr ""
@@ -445,7 +445,7 @@ msgctxt "image-details.information.pixels"
 msgid "pixels"
 msgstr ""
 
-#: src/components/VImageDetails/VImageDetails.vue:80
+#: src/components/VImageDetails/VImageDetails.vue:81
 msgctxt "image-details.information.unknown"
 msgid "Unknown"
 msgstr ""
@@ -582,7 +582,7 @@ msgid "Open form"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/image/_id.vue:56
+#: src/pages/image/_id.vue:52
 msgctxt "media-details.aria.creator-url"
 msgid "author ###name###"
 msgstr ""
@@ -652,39 +652,39 @@ msgid "Copied!"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VMediaInfo/VCopyLicense.vue:38
+#: src/components/VMediaInfo/VCopyLicense.vue:37
 msgctxt "media-details.reuse.credit.text"
 msgid "\"###title###\"###creator######marked-licensed######license######view-legal###"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VMediaInfo/VCopyLicense.vue:53
+#: src/components/VMediaInfo/VCopyLicense.vue:49
 msgctxt "media-details.reuse.credit.creator-text"
 msgid " by ###creator-name###"
 msgstr ""
 
-#: src/components/VMediaInfo/VCopyLicense.vue:73
+#: src/components/VMediaInfo/VCopyLicense.vue:65
 msgctxt "media-details.reuse.credit.marked"
 msgid "is marked with"
 msgstr ""
 
-#: src/components/VMediaInfo/VCopyLicense.vue:74
+#: src/components/VMediaInfo/VCopyLicense.vue:66
 msgctxt "media-details.reuse.credit.licensed"
 msgid "is licensed under"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VMediaInfo/VCopyLicense.vue:119
+#: src/components/VMediaInfo/VCopyLicense.vue:111
 msgctxt "media-details.reuse.credit.view-legal-text"
 msgid ". To view ###terms-copy###visit ###URL###"
 msgstr ""
 
-#: src/components/VMediaInfo/VCopyLicense.vue:123
+#: src/components/VMediaInfo/VCopyLicense.vue:115
 msgctxt "media-details.reuse.credit.terms-text"
 msgid "the terms,"
 msgstr ""
 
-#: src/components/VMediaInfo/VCopyLicense.vue:124
+#: src/components/VMediaInfo/VCopyLicense.vue:116
 msgctxt "media-details.reuse.credit.copy-text"
 msgid "a copy of this license,"
 msgstr ""
@@ -886,7 +886,6 @@ msgid "Filter By"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VFilters/VFilterTag.vue:4
 msgctxt "filters.aria.remove-filter"
 msgid "Remove ###label### filter"
 msgstr ""
@@ -917,7 +916,7 @@ msgctxt "filters.license-explanation.more.read-more"
 msgid "Read more"
 msgstr ""
 
-#: src/components/VFilters/VFilterChecklist.vue:95
+#: src/components/VFilters/VFilterChecklist.vue:97
 msgctxt "filters.search-by.title"
 msgid "Search By"
 msgstr ""
@@ -1115,13 +1114,13 @@ msgid "An error occurred"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/image/_id.vue:148
+#: src/pages/image/_id.vue:137
 msgctxt "error.image-not-found"
 msgid "Couldn't find image with id ###id###"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/audio/_id.vue:67
+#: src/pages/audio/_id.vue:78
 msgctxt "error.media-not-found"
 msgid "Couldn't find ###mediaType### with id ###id###"
 msgstr ""
@@ -1134,12 +1133,12 @@ msgctxt "error.audio"
 msgid "audio"
 msgstr ""
 
-#: src/pages/extension.vue:91
+#: src/pages/extension.vue:90
 msgctxt "extension.title"
 msgid "Web extension"
 msgstr ""
 
-#: src/pages/extension.vue:61
+#: src/pages/extension.vue:60
 msgctxt "extension.conclusion"
 msgid "Have your favourite content while browsing the web"
 msgstr ""
@@ -1843,13 +1842,13 @@ msgctxt "header.loading"
 msgid "Loading..."
 msgstr ""
 
-#: src/components/VContentSwitcher/VMobileMenuModal.vue:14
+#: src/components/VContentSwitcher/VMobileMenuModal.vue:15
 msgctxt "header.filter-button.simple"
 msgid "Filters"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VHeader/VFilterButton.vue:82
+#: src/components/VHeader/VFilterButton.vue:83
 msgctxt "header.filter-button.with-count"
 msgid "###count### Filter"
 msgid_plural "###count### Filters"
