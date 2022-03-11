@@ -3,7 +3,17 @@ import { title } from 'case'
 import { decodeData as decodeString } from '~/utils/decode-data'
 import type { SupportedMediaType } from '~/constants/media'
 import { IMAGE } from '~/constants/media'
-import type { ApiMedia, Media } from '~/models/media'
+import type { Media, Tag } from '~/models/media'
+
+/**
+ * This interface is a subset of `Media` that types dictionaries sent by the API
+ * being decoded in the `decodeMediaData` function.
+ */
+interface ApiMedia extends Omit<Media, 'frontendMediaType' | 'title' | 'tags'> {
+  title?: string
+
+  tags?: Tag[]
+}
 
 /**
  * For any given media, decode the media title, creator name and individual tag

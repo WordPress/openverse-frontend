@@ -4,12 +4,16 @@ export interface Tag {
   name: string
 }
 
-export interface ApiMedia {
+/**
+ * Stores properties common to all media items. This is extended by interfaces
+ * for individual media
+ */
+export interface Media {
   id: string
   title: string
 
   creator: string
-  creator_url: string
+  creator_url?: string
 
   url: string
   foreign_landing_url: string
@@ -18,14 +22,6 @@ export interface ApiMedia {
   license_version: string
   license_url: string
 
-  tags?: Tag[]
-}
-
-/**
- * Stores properties common to all media items. This is extended by interfaces
- * for individual media
- */
-export interface Media extends ApiMedia {
   frontendMediaType: SupportedMediaType
 
   tags: Tag[]
