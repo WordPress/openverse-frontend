@@ -31,20 +31,13 @@ import { computed, useStore, defineComponent } from '@nuxtjs/composition-api'
 
 import VPopover from '~/components/VPopover/VPopover.vue'
 import VContentReportButton from '~/components/VContentReport/VContentReportButton.vue'
-import VContentReportForm from '~/components/VContentReport/VContentReportForm'
-import VIconButton from '~/components/VIconButton/VIconButton'
 
 import flagIcon from '~/assets/icons/flag.svg'
 import closeSmallIcon from '~/assets/icons/close-small.svg'
 
 export default defineComponent({
   name: 'VContentReportPopover',
-  components: {
-    VIconButton,
-    VPopover,
-    VContentReportButton,
-    VContentReportForm,
-  },
+  components: { VPopover, VContentReportButton },
   props: {
     /**
      * the media item to report; This can either be an audio track or an image.

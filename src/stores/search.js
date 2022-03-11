@@ -69,9 +69,9 @@ export const useSearchStore = defineStore('search', () => {
   })
 
   /**
-   * Called when `q` search term or `searchType` are changed.
+   * Called when `q` search term or `searchType` are changed. Updates the filters for
+   * the current search type, and then updates the search query accordingly.
    * @param {{ q?: string, searchType?: import('../store/types').SupportedSearchType }} params
-   *
    */
   function updateQuery(params = {}) {
     const { q, searchType } = params
@@ -149,6 +149,11 @@ export const useSearchStore = defineStore('search', () => {
     filterStore.clearFilters()
     updateQueryFromFilters()
   }
+
+  /**
+   * Returns the object with filters for selected search type, with codes, names for i18n labels, and checked status.
+   * @returns {import('@nuxtjs/composition-api').ComputedRef<Partial<import('../store/types').Filters>>}
+   */
   const searchFilters = computed(() => {
     return filterStore.getMediaTypeFilters({ mediaType: searchType.value })
   })
