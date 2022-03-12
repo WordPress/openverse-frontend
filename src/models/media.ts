@@ -6,7 +6,7 @@ export interface Tag {
 
 /**
  * Stores properties common to all media items. This is extended by interfaces
- * for individual media
+ * for individual media.
  */
 export interface Media {
   id: string
