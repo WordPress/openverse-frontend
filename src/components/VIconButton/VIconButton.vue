@@ -1,6 +1,6 @@
 <template>
   <VButton
-    variant="plain"
+    :variant="variant"
     size="disabled"
     class="icon-button flex flex-shrink-0 items-center justify-center border-1.5 active:shadow-ring"
     :class="[...buttonSizeClasses]"
@@ -49,6 +49,14 @@ export default {
      * documentation on `VIcon`.
      */
     iconProps: {},
+    /**
++     * `variant` prop to pass to `VButton`. See `VButton` for documentation
++     * and possible values.
++     */
++    variant: {
++      type: String,
++      default: 'plain',
++    },
   },
   setup(props, { attrs }) {
     const type = attrs['type'] ?? 'button'
