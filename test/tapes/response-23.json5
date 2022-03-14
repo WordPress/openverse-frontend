@@ -1,53 +1,41 @@
 {
     meta: {
-        createdAt: '2022-03-12T15:05:37.014Z',
+        createdAt: '2022-03-14T15:07:26.774Z',
         host: 'https://api.openverse.engineering',
+        resHumanReadable: true,
     },
     req: {
         headers: {
-            connection: 'keep-alive',
-            pragma: 'no-cache',
-            'cache-control': 'no-cache',
-            'sec-ch-ua': '',
             accept: 'application/json, text/plain, */*',
-            'sec-ch-ua-mobile': '?0',
-            'sec-ch-ua-platform': '',
-            'sec-fetch-site': 'same-site',
-            'sec-fetch-mode': 'cors',
-            'sec-fetch-dest': 'empty',
-            referer: 'http://localhost:8443/',
-            'accept-encoding': 'gzip, deflate, br',
+            connection: 'close',
         },
-        url: '/v1/images/e9d97a98-621b-4ec2-bf70-f47a74380452/thumb/',
-        method: 'HEAD',
+        url: '/v1/audio/?q=galah',
+        method: 'GET',
         body: '',
     },
     res: {
         status: 200,
         headers: {
             date: [
-                'Sat, 12 Mar 2022 15:05:37 GMT',
+                'Mon, 14 Mar 2022 15:07:41 GMT',
             ],
             'content-type': [
-                'image/jpeg',
+                'application/json',
             ],
-            'content-length': [
-                '67718',
+            'transfer-encoding': [
+                'chunked',
             ],
             connection: [
-                'keep-alive',
+                'close',
             ],
             vary: [
-                'Accept, Authorization, Origin, Accept-Encoding',
+                'Accept-Encoding, Accept, Authorization, Origin',
             ],
             allow: [
                 'GET, HEAD, OPTIONS',
             ],
             'x-frame-options': [
                 'DENY',
-            ],
-            'access-control-allow-origin': [
-                '*',
             ],
             'x-content-type-options': [
                 'nosniff',
@@ -59,13 +47,13 @@
                 'max-age=14400',
             ],
             'cf-cache-status': [
-                'MISS',
+                'HIT',
+            ],
+            age: [
+                '3313',
             ],
             'last-modified': [
-                'Sat, 12 Mar 2022 15:05:37 GMT',
-            ],
-            'accept-ranges': [
-                'bytes',
+                'Mon, 14 Mar 2022 14:12:28 GMT',
             ],
             'expect-ct': [
                 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"',
@@ -77,12 +65,53 @@
                 'cloudflare',
             ],
             'cf-ray': [
-                '6ead6dd75dade4d8-ATL',
+                '6ebdeba0cbdef305-ATL',
             ],
             'alt-svc': [
                 'h3=":443"; ma=86400, h3-29=":443"; ma=86400',
             ],
         },
-        body: '',
+        body: {
+            result_count: 1,
+            page_count: 0,
+            page_size: 20,
+            page: 1,
+            results: [
+                {
+                    id: '632d0076-fdbd-4919-8b8f-b498ef246ee8',
+                    title: 'RainBirdsThunder.wav',
+                    foreign_landing_url: 'https://freesound.org/people/NobodyYouKnowOf/sounds/456258',
+                    creator: 'NobodyYouKnowOf',
+                    creator_url: 'https://freesound.org/people/NobodyYouKnowOf',
+                    url: 'https://freesound.org/data/previews/456/456258_3895722-hq.mp3',
+                    license: 'cc0',
+                    license_version: '1.0',
+                    license_url: 'https://creativecommons.org/publicdomain/zero/1.0/',
+                    provider: 'freesound',
+                    source: 'freesound',
+                    category: 'sound',
+                    tags: [
+                        {
+                            name: 'thunder',
+                        },
+                        {
+                            name: 'birds',
+                        },
+                        {
+                            name: 'rain',
+                        },
+                    ],
+                    fields_matched: [
+                        'description',
+                    ],
+                    duration: 204218,
+                    bit_rate: 128000,
+                    thumbnail: 'http://localhost:49152/v1/audio/632d0076-fdbd-4919-8b8f-b498ef246ee8/thumb/',
+                    waveform: 'http://localhost:49152/v1/audio/632d0076-fdbd-4919-8b8f-b498ef246ee8/waveform/',
+                    detail_url: 'http://localhost:49152/v1/audio/632d0076-fdbd-4919-8b8f-b498ef246ee8/',
+                    related_url: 'http://localhost:49152/v1/audio/632d0076-fdbd-4919-8b8f-b498ef246ee8/related/',
+                },
+            ],
+        },
     },
 }

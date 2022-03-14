@@ -1,7 +1,8 @@
 {
     meta: {
-        createdAt: '2022-03-12T15:05:53.710Z',
+        createdAt: '2022-03-14T15:08:54.797Z',
         host: 'https://api.openverse.engineering',
+        resHumanReadable: true,
     },
     req: {
         headers: {
@@ -9,30 +10,30 @@
             pragma: 'no-cache',
             'cache-control': 'no-cache',
             'sec-ch-ua': '',
-            accept: 'application/json, text/plain, */*',
             'sec-ch-ua-mobile': '?0',
             'sec-ch-ua-platform': '',
+            accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
             'sec-fetch-site': 'same-site',
-            'sec-fetch-mode': 'cors',
-            'sec-fetch-dest': 'empty',
+            'sec-fetch-mode': 'no-cors',
+            'sec-fetch-dest': 'image',
             referer: 'http://localhost:8443/',
             'accept-encoding': 'gzip, deflate, br',
         },
-        url: '/v1/images/ea7e24ee-1374-4c49-9f6f-5c4529b701d8/thumb/',
-        method: 'HEAD',
+        url: '/v1/audio/ed1bb169-1a31-4522-860d-922f2a536a8b/thumb/',
+        method: 'GET',
         body: '',
     },
     res: {
-        status: 200,
+        status: 404,
         headers: {
             date: [
-                'Sat, 12 Mar 2022 15:05:53 GMT',
+                'Mon, 14 Mar 2022 15:08:58 GMT',
             ],
             'content-type': [
-                'image/jpeg',
+                'application/json',
             ],
             'content-length': [
-                '74436',
+                '36',
             ],
             connection: [
                 'keep-alive',
@@ -46,9 +47,6 @@
             'x-frame-options': [
                 'DENY',
             ],
-            'access-control-allow-origin': [
-                '*',
-            ],
             'x-content-type-options': [
                 'nosniff',
             ],
@@ -61,12 +59,6 @@
             'cf-cache-status': [
                 'MISS',
             ],
-            'last-modified': [
-                'Sat, 12 Mar 2022 15:05:53 GMT',
-            ],
-            'accept-ranges': [
-                'bytes',
-            ],
             'expect-ct': [
                 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"',
             ],
@@ -77,12 +69,14 @@
                 'cloudflare',
             ],
             'cf-ray': [
-                '6ead6e3f8e330ffc-ATL',
+                '6ebded810fbd8d55-ATL',
             ],
             'alt-svc': [
                 'h3=":443"; ma=86400, h3-29=":443"; ma=86400',
             ],
         },
-        body: '',
+        body: {
+            detail: 'Could not find artwork.',
+        },
     },
 }
