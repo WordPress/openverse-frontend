@@ -137,6 +137,7 @@ search-types.spec.js:102:3 › Can open Images page client-side
 ```
 
 Don't be alarmed if you notice this.
+
 </aside>
 
 When writing e2e tests, it can be helpful to use Playwright [codegen](https://playwright.dev/docs/cli#generate-code) to generate the tests by performing actions in the browser:
