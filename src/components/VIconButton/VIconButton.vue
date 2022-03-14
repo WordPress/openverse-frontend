@@ -50,13 +50,13 @@ export default {
      */
     iconProps: {},
     /**
-+     * `variant` prop to pass to `VButton`. See `VButton` for documentation
-+     * and possible values.
-+     */
-+    variant: {
-+      type: String,
-+      default: 'plain',
-+    },
+     * `variant` prop to pass to `VButton`. See `VButton` for documentation
+     * and possible values.
+     */
+    variant: {
+      type: String,
+      default: 'plain',
+    },
   },
   setup(props, { attrs }) {
     const type = attrs['type'] ?? 'button'
