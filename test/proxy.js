@@ -11,35 +11,54 @@
 const process = require('process')
 const zlib = require('zlib')
 
+// TS doesn't pull the type in correctly for the next dependency when it's `require`'d.
+
+/** @type {import('talkback')['default']} */
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 const talkback = require('talkback')
+
+// Talkback does not export its types so we've got to pull them out of the Options
+/** @typedef {Required<typeof talkback['Options']['Default']>} TalkbackOptions */
+/** @typedef {ReturnType<TalkbackOptions['tapeDecorator']>} Tape */
 
 const port = 49152
 const host = 'https://api.openverse.engineering'
 
+/** @type {TalkbackOptions['tapeNameGenerator']} */
 const tapeNameGenerator = (tapeNumber) => `response-${tapeNumber}`
 
 const updatingTapes =
   process.argv.includes('--update-tapes') || process.env.UPDATE_TAPES === 'true'
 
+/** @type {TalkbackOptions['record']} */
 const recordMode = updatingTapes
   ? talkback.Options.RecordMode.NEW
   : talkback.Options.RecordMode.DISABLED
 
+/**
+ * @template T
+ * @param {T} x
+ * @returns {T}
+ */
 const identity = (x) => x
 
 const BodyUtils = Object.freeze({
   gzip: { read: zlib.gunzipSync, save: zlib.gzipSync },
   br: { read: zlib.brotliDecompressSync, save: zlib.brotliCompressSync },
-  deflate: { read: zlib.inflate, save: zlib.deflate },
+  deflate: { read: zlib.inflateSync, save: zlib.deflateSync },
   default: {
     read: identity,
     save: identity,
   },
 })
 
+/**
+ * @param {Tape} tape
+ */
 const getBodyUtil = (tape) =>
   Object.entries(BodyUtils).find(([key]) =>
-    tape.res.headers['content-encoding']?.includes(key)
+    tape.res?.headers['content-encoding']?.includes(key)
   )?.[1] ?? BodyUtils.default
 
 /**
@@ -74,10 +93,11 @@ const getBodyUtil = (tape) =>
  * be something else, but I'd check those two things first
  * before digging elsewhere.
  *
- * @param tape
+ * @type {TalkbackOptions['tapeDecorator']}
  */
 const tapeDecorator = (tape) => {
-  if (tape.req.url.endsWith('/thumb/') || tape.res.status >= 399) return tape
+  if (!tape.res || tape.req.url.endsWith('/thumb/') || tape.res.status >= 399)
+    return tape
 
   const bodyUtil = getBodyUtil(tape)
   const responseBody = bodyUtil.read(tape.res.body).toString()
@@ -91,7 +111,7 @@ const tapeDecorator = (tape) => {
   return tape
 }
 
-const opts = {
+const opts = /** @type {Partial<TalkbackOptions>} */ ({
   host,
   port,
   path: './test/tapes',
@@ -102,7 +122,7 @@ const opts = {
   summary: false,
   tapeNameGenerator,
   tapeDecorator,
-}
+})
 
 const server = talkback(opts)
 

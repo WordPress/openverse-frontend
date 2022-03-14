@@ -128,6 +128,17 @@ pnpm test:e2e:debug
 
 Note that this still runs the talkback proxy and the Nuxt server for you. If you'd like to avoid this, simply run the Nuxt server before you run the `test:e2e:debug` script and Playwright will automatically prefer your previously running Nuxt server.
 
+<aside>
+For some reason the following two tests are consistently flaky when updating tapes but appear to be stable when running the e2e tapes with pre-existing tapes.
+
+```
+search-types.spec.js:102:3 › Can open All content page client-side
+search-types.spec.js:102:3 › Can open Images page client-side
+```
+
+Don't be alarmed if you notice this.
+</aside>
+
 When writing e2e tests, it can be helpful to use Playwright [codegen](https://playwright.dev/docs/cli#generate-code) to generate the tests by performing actions in the browser:
 
 ```

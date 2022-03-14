@@ -32,6 +32,16 @@ const config: PlaywrightTestConfig = {
     trace: 'retain-on-failure',
   },
   timeout: 60 * 1e3,
+  /**
+   * When updating or recreating tapes, if we have more than one worker running
+   * then Talkback is liable to see multiple requests at the same time that would
+   * otherwise all match the same tape. Because the requests come in all at once
+   * there isn't time for Talkback to have written the tape for one of the requests
+   * and then reuse it for the others. If we run with a single worker when updating
+   * tapes then we can avoid this problem. Defaulting to `undefined` means the
+   * Playwright default of using 1/2 of the number of CPU cores continues to work otherwise.
+   */
+  workers: process.env.UPDATE_TAPES ? 1 : undefined,
 }
 
 export default config

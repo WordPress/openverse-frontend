@@ -1,6 +1,6 @@
 {
     meta: {
-        createdAt: '2022-03-14T15:07:56.927Z',
+        createdAt: '2022-03-14T17:05:53.560Z',
         host: 'https://api.openverse.engineering',
         resHumanReadable: true,
         resUncompressed: true,
@@ -8,8 +8,6 @@
     req: {
         headers: {
             connection: 'keep-alive',
-            pragma: 'no-cache',
-            'cache-control': 'no-cache',
             'sec-ch-ua': '',
             accept: 'application/json, text/plain, */*',
             'sec-ch-ua-mobile': '?0',
@@ -20,7 +18,7 @@
             referer: 'http://localhost:8443/',
             'accept-encoding': 'gzip, deflate, br',
         },
-        url: '/v1/audio/?license_type=commercial&license=cc0&searchBy=creator&creator=cat',
+        url: '/v1/images/cfa45160-a7be-4911-9b9f-4e66678ec7f7/',
         method: 'GET',
         body: '',
     },
@@ -28,7 +26,7 @@
         status: 200,
         headers: {
             date: [
-                'Mon, 14 Mar 2022 15:08:06 GMT',
+                'Mon, 14 Mar 2022 17:05:53 GMT',
             ],
             'content-type': [
                 'application/json',
@@ -40,7 +38,7 @@
                 'keep-alive',
             ],
             vary: [
-                'Accept, Authorization, Origin, Accept-Encoding',
+                'Accept-Encoding, Accept, Authorization, Origin',
             ],
             allow: [
                 'GET, HEAD, OPTIONS',
@@ -64,10 +62,10 @@
                 'HIT',
             ],
             age: [
-                '3290',
+                '7104',
             ],
             'last-modified': [
-                'Mon, 14 Mar 2022 14:13:16 GMT',
+                'Mon, 14 Mar 2022 15:07:29 GMT',
             ],
             'expect-ct': [
                 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"',
@@ -79,7 +77,7 @@
                 'cloudflare',
             ],
             'cf-ray': [
-                '6ebdec3ccba98d40-ATL',
+                '6ebe98c68cf48d4c-ATL',
             ],
             'content-encoding': [
                 'br',
@@ -89,11 +87,104 @@
             ],
         },
         body: {
-            result_count: 0,
-            page_count: 0,
-            page_size: 20,
-            page: 1,
-            results: [],
+            id: 'cfa45160-a7be-4911-9b9f-4e66678ec7f7',
+            title: 'Mandala Base',
+            foreign_landing_url: 'http://clevelandart.org/art/1987.58',
+            creator: '',
+            creator_url: null,
+            url: 'https://openaccess-cdn.clevelandart.org/1987.58/1987.58_web.jpg',
+            filesize: null,
+            filetype: null,
+            license: 'cc0',
+            license_version: '1.0',
+            license_url: 'https://creativecommons.org/publicdomain/zero/1.0/',
+            provider: 'clevelandmuseum',
+            source: 'clevelandmuseum',
+            category: null,
+            tags: [
+                {
+                    name: 'round',
+                    accuracy: 0.99684,
+                },
+                {
+                    name: 'round out',
+                    accuracy: 0.99316,
+                },
+                {
+                    name: 'pattern',
+                    accuracy: 0.98679,
+                },
+                {
+                    name: 'abstract',
+                    accuracy: 0.98468,
+                },
+                {
+                    name: 'flower',
+                    accuracy: 0.98185,
+                },
+                {
+                    name: 'handmade',
+                    accuracy: 0.98109,
+                },
+                {
+                    name: 'decoration',
+                    accuracy: 0.98013,
+                },
+                {
+                    name: 'texture',
+                    accuracy: 0.96998,
+                },
+                {
+                    name: 'circular',
+                    accuracy: 0.96578,
+                },
+                {
+                    name: 'proportion',
+                    accuracy: 0.96274,
+                },
+                {
+                    name: 'embroidery',
+                    accuracy: 0.955,
+                },
+                {
+                    name: 'snowflake',
+                    accuracy: 0.953,
+                },
+                {
+                    name: 'art',
+                    accuracy: 0.95269,
+                },
+                {
+                    name: 'retro',
+                    accuracy: 0.94539,
+                },
+                {
+                    name: 'floral',
+                    accuracy: 0.92184,
+                },
+                {
+                    name: 'arabesque',
+                    accuracy: 0.92109,
+                },
+                {
+                    name: 'geometric',
+                    accuracy: 0.91432,
+                },
+                {
+                    name: 'ornate',
+                    accuracy: 0.91071,
+                },
+                {
+                    name: 'illustration',
+                    accuracy: 0.90214,
+                },
+            ],
+            attribution: '"Mandala Base" is licensed under CC-CC0 1.0. To view a copy of this license, visit https://creativecommons.org/licenses/cc0/1.0/.',
+            height: 893,
+            width: 1054,
+            thumbnail: 'http://localhost:49152/v1/images/cfa45160-a7be-4911-9b9f-4e66678ec7f7/thumb/',
+            detail_url: 'http://localhost:49152/v1/images/cfa45160-a7be-4911-9b9f-4e66678ec7f7/',
+            related_url: 'http://localhost:49152/v1/images/cfa45160-a7be-4911-9b9f-4e66678ec7f7/related/',
         },
     },
 }

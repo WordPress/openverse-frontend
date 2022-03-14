@@ -1,35 +1,45 @@
 {
     meta: {
-        createdAt: '2022-03-14T15:07:26.774Z',
+        createdAt: '2022-03-14T17:05:22.842Z',
         host: 'https://api.openverse.engineering',
         resHumanReadable: true,
     },
     req: {
         headers: {
-            accept: 'application/json, text/plain, */*',
-            connection: 'close',
+            connection: 'keep-alive',
+            pragma: 'no-cache',
+            'cache-control': 'no-cache',
+            'sec-ch-ua': '',
+            'sec-ch-ua-mobile': '?0',
+            'sec-ch-ua-platform': '',
+            accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+            'sec-fetch-site': 'same-site',
+            'sec-fetch-mode': 'no-cors',
+            'sec-fetch-dest': 'image',
+            referer: 'http://localhost:8443/',
+            'accept-encoding': 'gzip, deflate, br',
         },
-        url: '/v1/audio/?q=galah',
+        url: '/v1/audio/dcc5d424-526d-41c2-97c2-d4521b0444f4/thumb/',
         method: 'GET',
         body: '',
     },
     res: {
-        status: 200,
+        status: 404,
         headers: {
             date: [
-                'Mon, 14 Mar 2022 15:07:41 GMT',
+                'Mon, 14 Mar 2022 17:05:23 GMT',
             ],
             'content-type': [
                 'application/json',
             ],
-            'transfer-encoding': [
-                'chunked',
+            'content-length': [
+                '36',
             ],
             connection: [
-                'close',
+                'keep-alive',
             ],
             vary: [
-                'Accept-Encoding, Accept, Authorization, Origin',
+                'Accept, Authorization, Origin, Accept-Encoding',
             ],
             allow: [
                 'GET, HEAD, OPTIONS',
@@ -50,10 +60,7 @@
                 'HIT',
             ],
             age: [
-                '3313',
-            ],
-            'last-modified': [
-                'Mon, 14 Mar 2022 14:12:28 GMT',
+                '10364',
             ],
             'expect-ct': [
                 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"',
@@ -65,53 +72,14 @@
                 'cloudflare',
             ],
             'cf-ray': [
-                '6ebdeba0cbdef305-ATL',
+                '6ebe9807e855182b-ATL',
             ],
             'alt-svc': [
                 'h3=":443"; ma=86400, h3-29=":443"; ma=86400',
             ],
         },
         body: {
-            result_count: 1,
-            page_count: 0,
-            page_size: 20,
-            page: 1,
-            results: [
-                {
-                    id: '632d0076-fdbd-4919-8b8f-b498ef246ee8',
-                    title: 'RainBirdsThunder.wav',
-                    foreign_landing_url: 'https://freesound.org/people/NobodyYouKnowOf/sounds/456258',
-                    creator: 'NobodyYouKnowOf',
-                    creator_url: 'https://freesound.org/people/NobodyYouKnowOf',
-                    url: 'https://freesound.org/data/previews/456/456258_3895722-hq.mp3',
-                    license: 'cc0',
-                    license_version: '1.0',
-                    license_url: 'https://creativecommons.org/publicdomain/zero/1.0/',
-                    provider: 'freesound',
-                    source: 'freesound',
-                    category: 'sound',
-                    tags: [
-                        {
-                            name: 'thunder',
-                        },
-                        {
-                            name: 'birds',
-                        },
-                        {
-                            name: 'rain',
-                        },
-                    ],
-                    fields_matched: [
-                        'description',
-                    ],
-                    duration: 204218,
-                    bit_rate: 128000,
-                    thumbnail: 'http://localhost:49152/v1/audio/632d0076-fdbd-4919-8b8f-b498ef246ee8/thumb/',
-                    waveform: 'http://localhost:49152/v1/audio/632d0076-fdbd-4919-8b8f-b498ef246ee8/waveform/',
-                    detail_url: 'http://localhost:49152/v1/audio/632d0076-fdbd-4919-8b8f-b498ef246ee8/',
-                    related_url: 'http://localhost:49152/v1/audio/632d0076-fdbd-4919-8b8f-b498ef246ee8/related/',
-                },
-            ],
+            detail: 'Could not find artwork.',
         },
     },
 }
