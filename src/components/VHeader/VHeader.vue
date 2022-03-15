@@ -63,7 +63,7 @@ import {
 
 import { MEDIA } from '~/constants/store-modules'
 import { CLEAR_MEDIA, FETCH_MEDIA } from '~/constants/action-types'
-import { supportedMediaTypes } from '~/constants/media'
+import { ALL_MEDIA, supportedMediaTypes } from '~/constants/media'
 import { isMinScreen } from '~/composables/use-media-query'
 import { useMatchSearchRoutes } from '~/composables/use-match-routes'
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
@@ -152,55 +152,55 @@ const VHeader = defineComponent({
       return getI18nCount(resultsCount.value)
     })
 
-    const localSearchTerm = ref(searchStore.query.q)
+    /**
+     * Search term has a getter and setter to be used as a v-model.
+     * To prevent sending unnecessary requests, we also keep track of whether
+     * the search term was changed.
+     * @type {import('@nuxtjs/composition-api').WritableComputedRef<string>}
+     */
     const searchTerm = computed({
-      get: () => localSearchTerm.value,
-      set: async (value) => {
-        localSearchTerm.value = value
+      get: () => searchStore.query.q,
+      set: (value) => {
+        searchStore.updateQuery({ q: value })
+        searchTermChanged.value = true
       },
     })
+    const searchTermChanged = ref(false)
 
-    watch(
-      () => searchStore.query.q,
-      (newSearchTerm) => {
-        if (newSearchTerm !== localSearchTerm.value) {
-          localSearchTerm.value = newSearchTerm
-        }
-      }
-    )
-
+    /**
+     * If search term hasn't changed, don't do anything on a search route,
+     * and change path to search path (all content types) from other pages.
+     * If is search route and search term hasn't changed: return
+     * If is not search route and search term hasn't changed: set the search type to all, set path.
+     * If is search route and search term changed: set the query, set path
+     * If is not search route, and search term changed: set search type to all, set query, set path
+     */
     const handleSearch = async () => {
-      /**
-       * If search term hasn't changed, don't do anything on a search route,
-       * and change path to search path (all content types) from other pages.
-       * If is search route and search term hasn't changed: return
-       * If is not search route and search term hasn't changed: set the search type to all, set path.
-       * If is search route and search term changed: set the query, set path
-       * If is not search route, and search term changed: set search type to all, set query, set path
-       */
-      const searchTermChanged = localSearchTerm.value !== searchStore.query.q
-      if (isSearchRoute.value && !searchTermChanged) return
-      const searchType = searchStore.searchType
-      if (searchTermChanged) {
+      const searchType = isSearchRoute.value
+        ? searchStore.searchType
+        : ALL_MEDIA
+      if (
+        isSearchRoute.value &&
+        (!searchTermChanged.value || searchTerm.value === '')
+      )
+        return
+      if (searchTermChanged.value) {
         await Promise.all(
           supportedMediaTypes.map((mediaType) =>
             store.dispatch(`${MEDIA}/${CLEAR_MEDIA}`, { mediaType })
           )
         )
-        searchStore.updateQuery({
-          q: localSearchTerm.value,
-          searchType,
-        })
+        searchStore.updateQuery({ searchType })
       }
       const newPath = app.localePath({
         path: `/search/${searchType === 'all' ? '' : searchType}`,
         query: searchStore.searchQueryParams,
       })
       router.push(newPath)
-
       await store.dispatch(`${MEDIA}/${FETCH_MEDIA}`, {
         ...searchStore.searchQueryParams,
       })
+      searchTermChanged.value = false
     }
 
     return {

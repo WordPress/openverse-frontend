@@ -67,7 +67,9 @@ export const useSearchStore = defineStore('search', () => {
    */
   function updateQuery(params) {
     const { q, searchType } = params
-    if (q) {
+    // If we check for a falsy value of q, we cannot set the searchTerm to a blank string
+    // when the users delete the search bar contents.
+    if (typeof q !== 'undefined') {
       state.query.q = q.trim()
     }
     if (searchType && searchType !== state.searchType) {
