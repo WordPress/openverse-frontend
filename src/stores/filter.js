@@ -19,10 +19,7 @@ import { warn } from '~/utils/console'
 export const useFilterStore = defineStore('filter', () => {
   /** @type {import('../store/types').Filters} */
   const filters = reactive(clonedeep(filterData))
-  const searchType =
-    /** @type {import('@nuxtjs/composition-api').Ref<import('../store/types').SearchType>} */ (
-      ref(ALL_MEDIA)
-    )
+  const searchType = ref(/** @type {import('~/store/types').SearchType} */ (ALL_MEDIA))
 
   /**
    * @param {import('../store/types').SearchType} type

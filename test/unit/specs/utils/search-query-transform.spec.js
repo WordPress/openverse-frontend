@@ -19,9 +19,7 @@ describe('searchQueryTransform', () => {
     expect(result).toEqual({})
   })
   it('converts filter to query data', () => {
-    const filters = {
-      ...filterData,
-    }
+    const filters = { ...filterData }
     const result = filtersToQueryData(filters)
     expect(result).toEqual({})
   })

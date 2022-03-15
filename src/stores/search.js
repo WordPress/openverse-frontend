@@ -21,7 +21,7 @@ import {
 export const useSearchStore = defineStore('search', () => {
   const filterStore = useFilterStore()
   /**
-   * @type {import('../store/types').SearchState}}
+   * @type {import('../store/types').SearchState}
    */
   const state = reactive({
     searchType: ALL_MEDIA,
@@ -54,16 +54,16 @@ export const useSearchStore = defineStore('search', () => {
    * Returns the search query parameters for API request:
    * drops all parameters with blank values.
    *
-   * @returns {import('@nuxtjs/composition-api').ComputedRef<import('../store/types').ApiQueryParams>}
+   * @type {import('@nuxtjs/composition-api').ComputedRef<import('../store/types').ApiQueryParams>}
    */
   const searchQueryParams = computed(() => {
-    // Ensure that q filter always comes first
     return Object.keys(state.query).reduce(
       (obj, key) => {
         return !['q'].includes(key) && state.query[key].length
           ? { ...obj, [key]: state.query[key] }
           : obj
       },
+      // Ensure that q filter always comes first
       { q: state.query.q.trim() }
     )
   })
@@ -152,7 +152,7 @@ export const useSearchStore = defineStore('search', () => {
 
   /**
    * Returns the object with filters for selected search type, with codes, names for i18n labels, and checked status.
-   * @returns {import('@nuxtjs/composition-api').ComputedRef<Partial<import('../store/types').Filters>>}
+   * @type {import('@nuxtjs/composition-api').ComputedRef<Partial<import('../store/types').Filters>>}
    */
   const searchFilters = computed(() => {
     return filterStore.getMediaTypeFilters({ mediaType: searchType.value })
