@@ -1,13 +1,8 @@
 import { defineStore } from 'pinia'
-import { computed, reactive, readonly, ref } from '@nuxtjs/composition-api'
+import { computed, reactive, readonly } from '@nuxtjs/composition-api'
 import clonedeep from 'lodash.clonedeep'
 
-import {
-  ALL_MEDIA,
-  AUDIO,
-  IMAGE,
-  supportedSearchTypes,
-} from '~/constants/media'
+import { AUDIO, IMAGE, supportedSearchTypes } from '~/constants/media'
 import { queryToFilterData } from '~/utils/search-query-transform'
 import {
   filterData,
@@ -16,15 +11,19 @@ import {
 } from '~/constants/filters'
 import { warn } from '~/utils/console'
 
+import { useSearchStore } from '~/stores/search'
+
 export const useFilterStore = defineStore('filter', () => {
   /** @type {import('../store/types').Filters} */
   const filters = reactive(clonedeep(filterData))
-  const searchType = ref(/** @type {import('~/store/types').SearchType} */ (ALL_MEDIA))
 
   /**
-   * @param {import('../store/types').SearchType} type
+   * Search store state can only be accessed inside a function to prevent circular imports.
+   * @type {import('@nuxtjs/composition-api').ComputedRef<import('../store/types').SearchType>}
    */
-  const setSearchType = (type) => (searchType.value = type)
+  const searchType = computed(() => {
+    return useSearchStore().state.searchType
+  })
   /**
    *
    * @param {{ mediaType: import('../store/types').SearchType, includeMature?: boolean }} params
@@ -36,7 +35,8 @@ export const useFilterStore = defineStore('filter', () => {
       filterKeys = filterKeys.filter((filterKey) => filterKey !== 'mature')
     }
     return filterKeys.reduce((obj, filterKey) => {
-      return { ...obj, [filterKey]: filters[filterKey] }
+      obj[filterKey] = filters[filterKey]
+      return obj
     }, /** @type {Partial<import('../store/types').Filters>} */ ({}))
   }
 
@@ -107,8 +107,7 @@ export const useFilterStore = defineStore('filter', () => {
       (type) => type !== searchType
     )
     let filterKeysToClear = mediaTypesToClear.reduce((acc, type) => {
-      acc = [...acc, ...mediaUniqueFilterKeys[type]]
-      return acc
+      return [...acc, ...mediaUniqueFilterKeys[type]]
     }, /** @type {import('../store/types').FilterCategory[]} */ ([]))
 
     allFilterCategories.forEach((filterCategory) => {
@@ -278,7 +277,6 @@ export const useFilterStore = defineStore('filter', () => {
     // These are used by the searchStore internally
     clearOtherMediaTypeFilters,
     clearFilters,
-    setSearchType,
     toggleFilter,
     updateFiltersFromUrl,
     // Filters are exported for testing

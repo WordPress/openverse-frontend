@@ -43,14 +43,6 @@ export const useSearchStore = defineStore('search', () => {
   const { searchType, query } = toRefs(state)
 
   /**
-   * @param {import('../store/types').SupportedSearchType} type
-   */
-  const setSearchType = (type) => {
-    state.searchType = type
-    filterStore.setSearchType(type)
-  }
-
-  /**
    * Returns the search query parameters for API request:
    * drops all parameters with blank values.
    *
@@ -79,7 +71,7 @@ export const useSearchStore = defineStore('search', () => {
       state.query.q = q.trim()
     }
     if (searchType && searchType !== state.searchType) {
-      setSearchType(searchType)
+      state.searchType = searchType
       filterStore.clearOtherMediaTypeFilters({ searchType })
     }
     updateQueryFromFilters()
@@ -95,7 +87,7 @@ export const useSearchStore = defineStore('search', () => {
     }
 
     const searchType = queryStringToSearchType(path)
-    setSearchType(searchType)
+    state.searchType = searchType
 
     filterStore.updateFiltersFromUrl(query, searchType)
     updateQueryFromFilters()

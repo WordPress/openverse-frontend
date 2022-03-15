@@ -7,8 +7,8 @@ import { createPinia, PiniaVuePlugin } from 'pinia'
 
 import messages from '~/locales/en.json'
 import { useFilterStore } from '~/stores/filter'
+import { useSearchStore } from '~/stores/search'
 import { filterData, mediaFilterKeys } from '~/constants/filters'
-
 import { IMAGE } from '~/constants/media'
 
 import VFilterButton from '~/components/VHeader/VFilterButton.vue'
@@ -42,6 +42,7 @@ describe('VFilterButton', () => {
   }
   let pinia
   let filterStore
+  let searchStore
 
   const i18n = new VueI18n({
     locale: 'en',
@@ -55,9 +56,10 @@ describe('VFilterButton', () => {
     localVue.use(PiniaVuePlugin)
     pinia = createPinia()
     filterStore = useFilterStore(pinia)
+    searchStore = useSearchStore(pinia)
     // the default ALL_MEDIA has fewer filters that can be applied,
     // ensure that we can test for more than 10 filters
-    filterStore.setSearchType(IMAGE)
+    searchStore.updateQuery({ searchType: IMAGE })
 
     options = {
       localVue,
