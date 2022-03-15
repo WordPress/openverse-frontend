@@ -29,7 +29,8 @@ export const decodeMediaData = (
   frontendMediaType: mediaType,
   title: decodeString(media.title) || title(mediaType),
   creator: decodeString(media.creator),
-  tags: media.tags.map((tag) => ({
+  // TODO: remove `?? []`
+  tags: (media.tags ?? []).map((tag) => ({
     ...tag,
     name: decodeString(tag.name),
   })),
