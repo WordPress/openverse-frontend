@@ -114,17 +114,6 @@ describe('Search Store', () => {
       }
     )
 
-    it('`updateQuery` does not change anything without params', () => {
-      const searchStore = useSearchStore()
-      const expectedSearchTerm = ''
-      const expectedSearchType = ALL_MEDIA
-
-      searchStore.updateQuery()
-
-      expect(searchStore.query.q).toEqual(expectedSearchTerm)
-      expect(searchStore.searchType).toEqual(expectedSearchType)
-    })
-
     it.each`
       searchType | path
       ${'all'}   | ${'/search/'}

@@ -1,7 +1,7 @@
 import { setActivePinia, createPinia } from 'pinia'
 
 import { useFilterStore } from '~/stores/filter'
-
+import { useSearchStore } from '~/stores/search'
 import { filterData } from '~/constants/filters'
 import { ALL_MEDIA, AUDIO, IMAGE, VIDEO } from '~/constants/media'
 import { warn } from '~/utils/console'
@@ -40,7 +40,8 @@ describe('Filter Store', () => {
       'returns correct filter status for $query and searchType $searchType',
       ({ query, searchType, filterCount }) => {
         const filterStore = useFilterStore()
-        filterStore.setSearchType(searchType)
+        const searchStore = useSearchStore()
+        searchStore.updateQuery({ searchType })
         for (let [filterType, values] of Object.entries(query)) {
           values.forEach((val) =>
             filterStore.toggleFilter({ filterType, code: val })
@@ -76,7 +77,8 @@ describe('Filter Store', () => {
 
     it('toggleFilter updates isFilterApplied with provider', () => {
       const filterStore = useFilterStore()
-      filterStore.setSearchType(IMAGE)
+      const searchStore = useSearchStore()
+      searchStore.updateQuery({ searchType: IMAGE })
       filterStore.initProviderFilters({
         mediaType: IMAGE,
         providers: [{ source_name: 'met', display_name: 'Met' }],
@@ -252,13 +254,14 @@ describe('Filter Store', () => {
     )
     it('Does not set filter or count filter as applied, and does not raise error for unsupported search types', () => {
       const filterStore = useFilterStore()
+      const searchStore = useSearchStore()
       filterStore.toggleFilter({
         filterType: 'licenseTypes',
         code: 'commercial',
       })
       expect(filterStore.isAnyFilterApplied).toEqual(true)
 
-      filterStore.setSearchType(VIDEO)
+      searchStore.updateQuery({ searchType: VIDEO })
       filterStore.toggleFilter({
         filterType: 'licenseTypes',
         code: 'commercial',

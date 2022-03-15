@@ -65,7 +65,7 @@ export const useSearchStore = defineStore('search', () => {
    * the current search type, and then updates the search query accordingly.
    * @param {{ q?: string, searchType?: import('../store/types').SupportedSearchType }} params
    */
-  function updateQuery(params = {}) {
+  function updateQuery(params) {
     const { q, searchType } = params
     if (q) {
       state.query.q = q.trim()
@@ -93,15 +93,17 @@ export const useSearchStore = defineStore('search', () => {
     updateQueryFromFilters()
   }
   /**
-   * After a change in filters, updates the query. If the filter is not selected, query should be set to blank string "".
-   * @param {object} [params]
-   * @param {import('../store/types').SupportedSearchType} [params.mediaType]
-   * @param {string} [params.q]
+   * After a change in filters, updates the query. If none of the filter items in a filter category are checked,
+   * the value of the corresponding query filter category should be set to a blank string `''`:
+   * `state.query.extensions=''`
    */
-  function updateQueryFromFilters(params = {}) {
+  function updateQueryFromFilters() {
+    /**
+     * @type {import('../store/types').ApiQueryFilters}
+     */
     const queryFromFilters = filtersToQueryData(
       filterStore.filters,
-      params.mediaType || state.searchType,
+      state.searchType,
       true
     )
 
@@ -115,7 +117,7 @@ export const useSearchStore = defineStore('search', () => {
     )
     state.query = queryKeys.reduce((obj, key) => {
       if (key === 'q') {
-        obj[key] = params?.q || state.query.q
+        obj[key] = state.query.q
       } else {
         obj[key] = changedKeys.includes(key) ? queryFromFilters[key] : ''
       }
