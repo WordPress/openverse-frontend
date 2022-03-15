@@ -4,7 +4,7 @@ import { useSearchStore } from '~/stores/search'
 import { useFilterStore } from '~/stores/filter'
 
 import MediaProviderService from '~/data/media-provider-service'
-import { AUDIO, IMAGE } from '~/constants/media'
+import { ALL_MEDIA, AUDIO, IMAGE } from '~/constants/media'
 import {
   FETCH_MEDIA_TYPE_PROVIDERS,
   FETCH_MEDIA_PROVIDERS,
@@ -40,7 +40,8 @@ export const state = () => ({
 export const getters = {
   getProviderName: (state) => (providerCode) => {
     const searchStore = useSearchStore()
-    const mediaType = searchStore.mediaType
+    const mediaType =
+      searchStore.searchType === ALL_MEDIA ? IMAGE : searchStore.searchType
     const providersList = state[`${mediaType}Providers`]
     if (!providersList) {
       return capital(providerCode) || ''
