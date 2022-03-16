@@ -38,7 +38,6 @@ import { isMinScreen } from '~/composables/use-media-query'
 import { isValidSearchType } from '~/utils/prop-validators'
 
 import VIcon from '~/components/VIcon/VIcon.vue'
-
 import VButton from '~/components/VButton.vue'
 
 import caretDownIcon from '~/assets/icons/caret-down.svg'

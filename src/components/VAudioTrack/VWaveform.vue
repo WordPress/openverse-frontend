@@ -170,7 +170,8 @@ import {
 } from '@nuxtjs/composition-api'
 
 import { downsampleArray, upsampleArray } from '~/utils/resampling'
-import * as keycodes from '~/utils/key-codes'
+
+import { keycodes } from '~/constants/key-codes'
 
 /**
  * Renders an SVG representation of the waveform given a list of heights for the
@@ -186,7 +187,6 @@ export default defineComponent({
     peaks: {
       type: Array,
       required: false,
-      default: () => Array.from({ length: 100 }, () => Math.random()),
       validator: (val) => val.every((item) => item >= 0 && item <= 1),
     },
     /**
@@ -336,8 +336,13 @@ export default defineComponent({
     const peakCount = computed(() =>
       getPeaksInWidth(waveformDimens.value.width)
     )
+    const peaks = computed(() =>
+      props.peaks?.length
+        ? props.peaks
+        : Array.from({ length: 100 }, () => Math.random())
+    )
     const normalizedPeaks = computed(() => {
-      let samples = props.peaks
+      let samples = peaks.value
 
       const givenLength = samples.length
       const required = peakCount.value

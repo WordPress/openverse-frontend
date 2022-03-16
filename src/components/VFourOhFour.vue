@@ -60,6 +60,7 @@ import { MEDIA } from '~/constants/store-modules'
 import { FETCH_MEDIA } from '~/constants/action-types'
 
 import VSearchBar from '~/components/VHeader/VSearchBar/VSearchBar'
+import VLink from '~/components/VLink.vue'
 
 import Oops from '~/assets/oops.svg?inline'
 import OpenverseLogo from '~/assets/logo.svg?inline'
@@ -71,6 +72,7 @@ const VFourOhFour = defineComponent({
     OpenverseLogo,
     OpenverseBrand,
     Oops,
+    VLink,
     VSearchBar,
   },
   props: ['error'],
