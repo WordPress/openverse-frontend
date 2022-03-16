@@ -1,7 +1,5 @@
 import type { SupportedSearchType } from '~/constants/media'
 
-export type MediaType = 'audio' | 'image' | 'video'
-export type SearchType = 'all' | MediaType
 /**
  * The search result object
  */

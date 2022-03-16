@@ -1,9 +1,16 @@
 /* Media types */
 
-export const AUDIO = 'audio'
 export const IMAGE = 'image'
+export const AUDIO = 'audio'
 export const VIDEO = 'video'
 export const ALL_MEDIA = 'all'
+
+/**
+ * all existing media types
+ */
+export const mediaTypes = [IMAGE, AUDIO, VIDEO] as const
+
+export type MediaType = typeof mediaTypes[number]
 
 /**
  * real media types that the API supports;
@@ -15,11 +22,15 @@ export const supportedMediaTypes = [IMAGE, AUDIO] as const
 
 export type SupportedMediaType = typeof supportedMediaTypes[number]
 
+export const searchTypes = [ALL_MEDIA, ...mediaTypes]
+
+export type SearchType = typeof searchTypes[number]
+
 /**
  * the types of content that users can search; `ALL_MEDIA` is also a valid
  * option here.
  */
-export const supportedSearchTypes = [ALL_MEDIA, IMAGE, AUDIO] as const
+export const supportedSearchTypes = [ALL_MEDIA, ...supportedMediaTypes] as const
 
 export type SupportedSearchType = typeof supportedSearchTypes[number]
 
