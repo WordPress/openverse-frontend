@@ -3,19 +3,20 @@
     <h5 class="mb-4 text-base md:text-2xl font-semibold">
       {{ headerText }}
     </h5>
+
     <template v-if="isLicense">
       <i18n
         path="media-details.reuse.attribution"
         tag="span"
-        class="block text-sm md:text-base"
+        class="block text-sm md:text-base mb-2"
       >
         <template #link>
-          <VLink class="uppercase text-pink" :href="licenseUrl">
+          <VLink class="uppercase" :href="licenseUrl">
             {{ fullLicenseName }}
           </VLink>
         </template>
       </i18n>
-      <VLicenseElements v-if="license" :license="license" class="md:py-4" />
+      <VLicenseElements v-if="license" :license="license" />
       <i18n
         v-if="!isLicense"
         path="media-details.reuse.license.content"
@@ -32,8 +33,9 @@
         </template>
       </i18n>
     </template>
+
     <template v-else>
-      <VLicenseElements v-if="license" :license="license" class="md:py-4" />
+      <VLicenseElements v-if="license" :license="license" />
       <i18n
         path="media-details.reuse.tool.content"
         tag="span"
