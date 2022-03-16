@@ -1,6 +1,5 @@
 import { capital } from 'case'
 
-import { useSearchStore } from '~/stores/search'
 import { useFilterStore } from '~/stores/filter'
 
 import MediaProviderService from '~/data/media-provider-service'
@@ -39,9 +38,9 @@ export const state = () => ({
 
 export const getters = {
   getProviderName: (state) => (providerCode) => {
-    const searchStore = useSearchStore()
+    const filterStore = useFilterStore()
     const mediaType =
-      searchStore.searchType === ALL_MEDIA ? IMAGE : searchStore.searchType
+      filterStore.searchType === ALL_MEDIA ? IMAGE : filterStore.searchType
     const providersList = state[`${mediaType}Providers`]
     if (!providersList) {
       return capital(providerCode) || ''
@@ -71,12 +70,13 @@ export const createActions = (services) => ({
     let sortedProviders
     return providerService
       .getProviderStats()
-      .then(({ data }) => {
+      .then((res) => {
+        const { data } = res
         sortedProviders = sortProviders(data)
       })
       .catch((error) => {
         warn(
-          `Error getting ${mediaType} providers: ${error}. Will use saved provider data instead.`
+          `Error getting ${mediaType} providers: ${error} Will use saved provider data instead.`
         )
         commit(SET_PROVIDER_FETCH_ERROR, { mediaType, error: true })
       })

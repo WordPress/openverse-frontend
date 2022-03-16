@@ -1,10 +1,17 @@
 import { setActivePinia, createPinia } from 'pinia'
 
+import { nextTick } from '@nuxtjs/composition-api'
+
 import { useFilterStore } from '~/stores/filter'
-import { useSearchStore } from '~/stores/search'
-import { filterData } from '~/constants/filters'
-import { ALL_MEDIA, AUDIO, IMAGE, VIDEO } from '~/constants/media'
-import { warn } from '~/utils/console'
+import { filterData, mediaFilterKeys } from '~/constants/filters.ts'
+import {
+  ALL_MEDIA,
+  AUDIO,
+  IMAGE,
+  supportedSearchTypes,
+  VIDEO,
+} from '~/constants/media'
+import { warn } from '~/utils/console.ts'
 
 jest.mock('~/utils/console', () => ({
   warn: jest.fn(),
@@ -40,8 +47,7 @@ describe('Filter Store', () => {
       'returns correct filter status for $query and searchType $searchType',
       ({ query, searchType, filterCount }) => {
         const filterStore = useFilterStore()
-        const searchStore = useSearchStore()
-        searchStore.updateQuery({ searchType })
+        filterStore.setSearchType(searchType)
         for (let [filterType, values] of Object.entries(query)) {
           values.forEach((val) =>
             filterStore.toggleFilter({ filterType, code: val })
@@ -50,6 +56,175 @@ describe('Filter Store', () => {
 
         expect(filterStore.appliedFilterCount).toEqual(filterCount)
         expect(filterStore.isAnyFilterApplied).toBe(filterCount > 0)
+      }
+    )
+  })
+  describe('getters', () => {
+    /**
+     * For non-supported search types, the filters fall back to 'All content' filters.
+     * Number of displayed filters is one less than the number of mediaFilterKeys
+     * because `mature` filter is not displayed.
+     */
+    it.each`
+      searchType   | filterTypeCount
+      ${IMAGE}     | ${mediaFilterKeys[IMAGE].length}
+      ${AUDIO}     | ${mediaFilterKeys[AUDIO].length}
+      ${ALL_MEDIA} | ${mediaFilterKeys[ALL_MEDIA].length}
+      ${VIDEO}     | ${mediaFilterKeys[VIDEO].length}
+    `(
+      'mediaFiltersForDisplay returns $filterTypeCount filters for $searchType',
+      ({ searchType, filterTypeCount }) => {
+        const filterStore = useFilterStore()
+        filterStore.setSearchType(searchType)
+        const filtersForDisplay = filterStore.searchFilters
+        const expectedFilterCount = Math.max(0, filterTypeCount - 1)
+        expect(Object.keys(filtersForDisplay).length).toEqual(
+          expectedFilterCount
+        )
+      }
+    )
+    /**
+     * Check for some special cases:
+     * - `mature` and `searchBy`.
+     * - several options for single filter.
+     * - media specific filters that are unique (durations).
+     * - media specific filters that have the same API param (extensions)
+     * - no 'q' parameter in the query.
+     */
+    it.each`
+      query                                               | searchType
+      ${{ q: 'cat', license: 'by', mature: 'true' }}      | ${IMAGE}
+      ${{ license: 'by', mature: 'true' }}                | ${IMAGE}
+      ${{ license: '', mature: '' }}                      | ${IMAGE}
+      ${{ q: 'cat', license: 'by', searchBy: 'creator' }} | ${ALL_MEDIA}
+      ${{ q: 'cat', license: 'cc0,pdm,by,by-nc' }}        | ${ALL_MEDIA}
+      ${{ q: 'cat', duration: 'medium' }}                 | ${AUDIO}
+      ${{ q: 'cat', extension: 'svg' }}                   | ${IMAGE}
+      ${{ q: 'cat', extension: 'svg' }}                   | ${AUDIO}
+      ${{ q: 'cat', extension: 'mp3' }}                   | ${AUDIO}
+    `(
+      'returns correct searchQueryParams and filter status for $query and searchType $searchType',
+      ({ query, searchType }) => {
+        const filterStore = useFilterStore()
+        const expectedQueryParams = query
+        // It should discard the values that are not applicable for the search type:
+        if (searchType === AUDIO && query.extension === 'svg') {
+          delete expectedQueryParams.extension
+        }
+        filterStore.setSearchStateFromUrl({
+          path: `/search/${searchType === ALL_MEDIA ? '' : searchType}`,
+          urlQuery: { ...expectedQueryParams },
+        })
+        // Edge-case: query parameter value is a blank string
+        for (let param in expectedQueryParams) {
+          if (expectedQueryParams[param] === '')
+            delete expectedQueryParams[param]
+        }
+        // Should add a blank string as `q` value if `q` is not in query
+        if (!('q' in expectedQueryParams)) {
+          expectedQueryParams.q = ''
+        }
+        expect(filterStore.searchQueryParams).toEqual(expectedQueryParams)
+      }
+    )
+  })
+  describe('actions', () => {
+    it.each(['foo', ''])(
+      '`setSearchTerm correctly updates the searchTerm',
+      (searchTerm) => {
+        const filterStore = useFilterStore()
+        const expectedSearchTerm = searchTerm
+        filterStore.setSearchTerm(searchTerm)
+        expect(filterStore.searchTerm).toEqual(expectedSearchTerm)
+      }
+    )
+    it.each(supportedSearchTypes)(
+      'setSearchType correctly updates the searchType',
+      (type) => {
+        const filterStore = useFilterStore()
+        filterStore.setSearchType(type)
+
+        expect(filterStore.searchType).toEqual(type)
+      }
+    )
+
+    it.each`
+      searchType | path
+      ${'all'}   | ${'/search/'}
+      ${'image'} | ${'/search/image/'}
+      ${'audio'} | ${'/search/audio/'}
+      ${'video'} | ${'/search/video'}
+    `(
+      "`setSearchStateFromUrl` should set searchType '$searchType' from path '$path'",
+      ({ searchType, path }) => {
+        const filterStore = useFilterStore()
+        filterStore.setSearchStateFromUrl({ path: path, urlQuery: {} })
+
+        expect(filterStore.searchType).toEqual(searchType)
+      }
+    )
+
+    it.each`
+      query                                | path                | searchType
+      ${{ license: 'cc0,by', q: 'cat' }}   | ${'/search/'}       | ${ALL_MEDIA}
+      ${{ searchBy: 'creator', q: 'dog' }} | ${'/search/image/'} | ${IMAGE}
+      ${{ mature: 'true', q: 'galah' }}    | ${'/search/audio/'} | ${AUDIO}
+      ${{ duration: 'medium' }}            | ${'/search/image'}  | ${IMAGE}
+    `(
+      "`setSearchStateFromUrl` should set '$searchType' from query  $query and path '$path'",
+      ({ query, path, searchType }) => {
+        const filterStore = useFilterStore()
+        const expectedQuery = { ...filterStore.searchQueryParams, ...query }
+        // The values that are not applicable for the search type should be discarded
+        if (searchType === IMAGE) {
+          delete expectedQuery.duration
+        }
+
+        filterStore.setSearchStateFromUrl({ path: path, urlQuery: query })
+
+        expect(filterStore.searchType).toEqual(searchType)
+        expect(filterStore.searchQueryParams).toEqual(expectedQuery)
+      }
+    )
+
+    it.each`
+      filters                                                               | query
+      ${[['licenses', 'by'], ['licenses', 'by-nc-sa']]}                     | ${['license', 'by,by-nc-sa']}
+      ${[['licenseTypes', 'commercial'], ['licenseTypes', 'modification']]} | ${['license_type', 'commercial,modification']}
+      ${[['searchBy', 'creator']]}                                          | ${['searchBy', 'creator']}
+      ${[['mature', 'mature']]}                                             | ${['mature', 'true']}
+      ${[['sizes', 'large']]}                                               | ${['size', undefined]}
+    `(
+      'toggleFilter updates the query values to $query',
+      ({ filters, query }) => {
+        const filterStore = useFilterStore()
+        for (const filterItem of filters) {
+          const [filterType, code] = filterItem
+          filterStore.toggleFilter({ filterType, code })
+        }
+        expect(filterStore.searchQueryParams[query[0]]).toEqual(query[1])
+      }
+    )
+
+    it.each([ALL_MEDIA, IMAGE, AUDIO, VIDEO])(
+      'Clears filters when search type is %s',
+      (searchType) => {
+        const filterStore = useFilterStore()
+        const expectedQueryParams = { q: 'cat' }
+        filterStore.setSearchStateFromUrl({
+          path: `/search/${searchType === ALL_MEDIA ? '' : searchType}`,
+          urlQuery: {
+            q: 'cat',
+            license: 'cc0',
+            sizes: 'large',
+            extension: 'jpg,mp3',
+          },
+        })
+        if (supportedSearchTypes.includes(searchType)) {
+          expect(filterStore.query).not.toEqual(expectedQueryParams)
+        }
+        filterStore.clearFilters()
+        expect(filterStore.searchQueryParams).toEqual(expectedQueryParams)
       }
     )
   })
@@ -77,8 +252,7 @@ describe('Filter Store', () => {
 
     it('toggleFilter updates isFilterApplied with provider', () => {
       const filterStore = useFilterStore()
-      const searchStore = useSearchStore()
-      searchStore.updateQuery({ searchType: IMAGE })
+      filterStore.setSearchType(IMAGE)
       filterStore.initProviderFilters({
         mediaType: IMAGE,
         providers: [{ source_name: 'met', display_name: 'Met' }],
@@ -208,24 +382,26 @@ describe('Filter Store', () => {
     })
 
     it.each`
-      searchType   | expectedFilterCount
-      ${IMAGE}     | ${25}
-      ${AUDIO}     | ${21}
-      ${VIDEO}     | ${12}
-      ${ALL_MEDIA} | ${12}
+      searchType   | nextSearchType | expectedFilterCount
+      ${AUDIO}     | ${IMAGE}       | ${25}
+      ${IMAGE}     | ${ALL_MEDIA}   | ${34}
+      ${ALL_MEDIA} | ${VIDEO}       | ${12}
+      ${VIDEO}     | ${AUDIO}       | ${21}
+      ${ALL_MEDIA} | ${IMAGE}       | ${25}
     `(
-      'clearOtherMediaTypeFilters clears all but $expectedFilterCount $searchType filters ',
-      ({ searchType, expectedFilterCount }) => {
+      'changing searchType clears all but $expectedFilterCount $nextSearchType filters ',
+      async ({ searchType, nextSearchType, expectedFilterCount }) => {
         const filterStore = useFilterStore()
-
+        filterStore.setSearchType(searchType)
         // Set all filters to checked
         for (let ft in filterStore.filters) {
           for (let f of filterStore.filters[ft]) {
             filterStore.toggleFilter({ filterType: ft, code: f.code })
           }
         }
+        filterStore.setSearchType(nextSearchType)
+        await nextTick()
 
-        filterStore.clearOtherMediaTypeFilters({ searchType })
         const checkedFilterCount = Object.keys(filterStore.filters)
           .map(
             (key) => filterStore.filters[key].filter((f) => f.checked).length
@@ -235,33 +411,47 @@ describe('Filter Store', () => {
       }
     )
 
+    /**
+     * Changing the search type to ALL_MEDIA does not fire the watcher that clears the filters
+     * in tests, but does fire it in the app. TODO: Figure out why???
+     */
     it.each`
-      query                                             | checkedFilters
-      ${{ q: 'cat', license: 'by-sa', mature: 'true' }} | ${[['licenses', 'by-sa'], ['mature', 'mature']]}
-      ${{ license: 'cc0', extension: 'svg' }}           | ${[['licenses', 'cc0'], ['imageExtensions', 'svg']]}
+      searchType   | nextSearchType | expectedFilterCount
+      ${AUDIO}     | ${ALL_MEDIA}   | ${34}
+      ${IMAGE}     | ${ALL_MEDIA}   | ${34}
+      ${ALL_MEDIA} | ${ALL_MEDIA}   | ${34}
+      ${VIDEO}     | ${ALL_MEDIA}   | ${34}
     `(
-      'updateFiltersFromUrl sets correct filters from $query',
-      ({ query, checkedFilters }) => {
+      'changing searchType clears all but $expectedFilterCount ALL_MEDIA filters',
+      async ({ searchType, nextSearchType, expectedFilterCount }) => {
         const filterStore = useFilterStore()
-        filterStore.updateFiltersFromUrl(query, IMAGE)
-        for (let [filterType, filterCode] of checkedFilters) {
-          const filterItem = filterStore.filters[filterType].find(
-            (f) => f.code === filterCode
-          )
-          expect(filterItem.checked).toEqual(true)
+        filterStore.setSearchType(searchType)
+        // Set all filters to checked
+        for (let [fc, filter_items] of Object.entries(filterStore.filters)) {
+          for (let f of filter_items) {
+            filterStore.toggleFilter({ filterType: fc, code: f.code })
+          }
         }
+        filterStore.setSearchType(nextSearchType)
+        const checkedFilterCount = Object.keys(filterStore.filters)
+          .map(
+            (key) => filterStore.filters[key].filter((f) => f.checked).length
+          )
+          .reduce((partialSum, count) => partialSum + count, 0)
+
+        expect(checkedFilterCount).toEqual(expectedFilterCount)
       }
     )
+
     it('Does not set filter or count filter as applied, and does not raise error for unsupported search types', () => {
       const filterStore = useFilterStore()
-      const searchStore = useSearchStore()
       filterStore.toggleFilter({
         filterType: 'licenseTypes',
         code: 'commercial',
       })
       expect(filterStore.isAnyFilterApplied).toEqual(true)
 
-      searchStore.updateQuery({ searchType: VIDEO })
+      filterStore.setSearchType(VIDEO)
       filterStore.toggleFilter({
         filterType: 'licenseTypes',
         code: 'commercial',

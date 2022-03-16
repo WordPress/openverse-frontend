@@ -68,10 +68,9 @@ import { isMinScreen } from '~/composables/use-media-query'
 import { useMatchSearchRoutes } from '~/composables/use-match-routes'
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
 import { useI18nResultsCount } from '~/composables/use-i18n-utilities'
-import { useSearchStore } from '~/stores/search'
+import { useFilterStore } from '~/stores/filter'
 
 import VLogoButton from '~/components/VHeader/VLogoButton.vue'
-
 import VHeaderFilter from '~/components/VHeader/VHeaderFilter.vue'
 import VSearchBar from '~/components/VHeader/VSearchBar/VSearchBar.vue'
 import VHeaderMenu from '~/components/VHeader/VHeaderMenu.vue'
@@ -92,7 +91,7 @@ const VHeader = defineComponent({
     VSearchBar,
   },
   setup() {
-    const searchStore = useSearchStore()
+    const filterStore = useFilterStore()
     const { app, i18n, store } = useContext()
     const router = useRouter()
 
@@ -147,7 +146,7 @@ const VHeader = defineComponent({
      * Shows the loading state or result count.
      */
     const searchStatus = computed(() => {
-      if (!isSearchRoute.value || searchStore.query.q === '') return ''
+      if (!isSearchRoute.value || filterStore.searchTerm === '') return ''
       if (isFetching.value) return i18n.t('header.loading')
       return getI18nCount(resultsCount.value)
     })
@@ -159,9 +158,9 @@ const VHeader = defineComponent({
      * @type {import('@nuxtjs/composition-api').WritableComputedRef<string>}
      */
     const searchTerm = computed({
-      get: () => searchStore.query.q,
+      get: () => filterStore.searchTerm,
       set: (value) => {
-        searchStore.updateQuery({ q: value })
+        filterStore.setSearchTerm(value)
         searchTermChanged.value = true
       },
     })
@@ -177,7 +176,7 @@ const VHeader = defineComponent({
      */
     const handleSearch = async () => {
       const searchType = isSearchRoute.value
-        ? searchStore.searchType
+        ? useFilterStore().searchType
         : ALL_MEDIA
       if (
         isSearchRoute.value &&
@@ -190,15 +189,15 @@ const VHeader = defineComponent({
             store.dispatch(`${MEDIA}/${CLEAR_MEDIA}`, { mediaType })
           )
         )
-        searchStore.updateQuery({ searchType })
+        useFilterStore().setSearchType(searchType)
       }
       const newPath = app.localePath({
         path: `/search/${searchType === 'all' ? '' : searchType}`,
-        query: searchStore.searchQueryParams,
+        query: filterStore.searchQueryParams,
       })
       router.push(newPath)
       await store.dispatch(`${MEDIA}/${FETCH_MEDIA}`, {
-        ...searchStore.searchQueryParams,
+        ...filterStore.searchQueryParams,
       })
       searchTermChanged.value = false
     }

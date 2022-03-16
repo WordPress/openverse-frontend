@@ -255,6 +255,10 @@ export default defineComponent({
      * @returns {string} the duration in a human-friendly format
      */
     const timeFmt = (seconds) => {
+      // Hotfix for crashes when seconds is NaN
+      if (Number.isNaN(seconds)) {
+        seconds = 0
+      }
       const date = new Date(0)
       date.setSeconds(seconds)
       return date.toISOString().substr(11, 8).replace(/^00:/, '')

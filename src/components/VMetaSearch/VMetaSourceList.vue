@@ -41,7 +41,7 @@ export default {
   components: { VButton, VIcon },
   props: {
     type: { type: String },
-    query: { type: Object },
+    queryParams: { type: Object },
   },
   setup(props) {
     const sources = computed(() =>
@@ -49,7 +49,7 @@ export default {
         .filter((sourceName) => legacySourceMap[sourceName][props.type])
         .map((source) => ({
           name: source,
-          url: getLegacySourceUrl(props.type)(source, props.query),
+          url: getLegacySourceUrl(props.type)(source, props.queryParams || {}),
         }))
     )
 

@@ -28,7 +28,7 @@
         class="b-header mb-2"
       >
         <template #type>{{ type }}</template>
-        <template #query>{{ query.q }}</template>
+        <template #query>{{ searchTerm }}</template>
       </i18n>
       <i18n path="meta-search.form.caption" tag="p">
         <template #type>{{ type }}</template>
@@ -42,7 +42,7 @@
     <VMetaSourceList
       class="md:justify-center mt-6 mb-10"
       :type="type"
-      :query="metaQuery"
+      :query-params="metaQuery"
     />
 
     <p class="caption font-semibold max-w-3xl my-0 mx-auto">
@@ -53,6 +53,7 @@
 
 <script>
 import { AUDIO, IMAGE, VIDEO } from '~/constants/media'
+import { useFilterStore } from '~/stores/filter'
 
 import VMetaSourceList from './VMetaSourceList.vue'
 
@@ -62,12 +63,15 @@ export default {
     VMetaSourceList,
   },
   props: {
-    query: { type: Object, required: true },
     type: { type: String, required: true },
+    searchTerm: { type: String, required: true },
     isSupported: { type: Boolean, default: false },
     hasNoResults: { type: Boolean, required: true },
   },
   computed: {
+    licenseTypeFilters() {
+      return useFilterStore().searchQueryParams?.license_type
+    },
     unsupportedByUsefilter() {
       if (this.type === AUDIO) {
         return 'CC Mixter'
@@ -78,13 +82,13 @@ export default {
     },
     metaQuery() {
       return {
-        q: this.query.q,
+        q: this.searchTerm,
         filters: {
-          commercial: this.query.license_type
-            ? this.query.license_type.includes('commercial')
+          commercial: this.licenseTypeFilters
+            ? this.licenseTypeFilters.includes('commercial')
             : false,
-          modify: this.query.license_type
-            ? this.query.license_type.includes('modification')
+          modify: this.licenseTypeFilters
+            ? this.licenseTypeFilters.includes('modification')
             : false,
         },
       }

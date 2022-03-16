@@ -1,7 +1,6 @@
 import { computed, ref } from '@nuxtjs/composition-api'
 
-import { useSearchStore } from '~/stores/search'
-
+import { useFilterStore } from '~/stores/filter'
 import { supportedSearchTypes } from '~/constants/media'
 
 import allIcon from '~/assets/icons/all-content.svg'
@@ -16,13 +15,11 @@ const icons = {
 const searchTypes = [...supportedSearchTypes]
 
 export default function useSearchType() {
-  const searchStore = useSearchStore()
-
-  const activeType = computed(() => searchStore.searchType)
+  const activeType = computed(() => useFilterStore().searchType)
   const previousSearchType = ref(activeType.value)
   const setActiveType = (searchType) => {
     if (previousSearchType.value === searchType) return
-    searchStore.updateQuery({ searchType })
+    useFilterStore().setSearchType(searchType)
     previousSearchType.value = searchType
   }
   return {

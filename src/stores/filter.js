@@ -1,17 +1,30 @@
 import { defineStore } from 'pinia'
-import { computed, reactive, readonly } from '@nuxtjs/composition-api'
+import {
+  computed,
+  reactive,
+  readonly,
+  ref,
+  watch,
+} from '@nuxtjs/composition-api'
 import clonedeep from 'lodash.clonedeep'
 
-import { AUDIO, IMAGE, supportedSearchTypes } from '~/constants/media'
-import { queryToFilterData } from '~/utils/search-query-transform'
+import {
+  ALL_MEDIA,
+  AUDIO,
+  IMAGE,
+  supportedSearchTypes,
+} from '~/constants/media'
+import {
+  filtersToQueryData,
+  queryStringToSearchType,
+  queryToFilterData,
+} from '~/utils/search-query-transform'
 import {
   filterData,
   mediaFilterKeys,
   mediaUniqueFilterKeys,
 } from '~/constants/filters'
 import { warn } from '~/utils/console'
-
-import { useSearchStore } from '~/stores/search'
 
 export const useFilterStore = defineStore('filter', () => {
   /** @type {import('../store/types').Filters} */
@@ -21,19 +34,53 @@ export const useFilterStore = defineStore('filter', () => {
    * Search store state can only be accessed inside a function to prevent circular imports.
    * @type {import('@nuxtjs/composition-api').ComputedRef<import('../store/types').SearchType>}
    */
-  const searchType = computed(() => {
-    return useSearchStore().state.searchType
+  const searchType = ref(ALL_MEDIA)
+  watch(searchType, (searchType) => {
+    clearOtherMediaTypeFilters({ searchType })
   })
+  const setSearchType = (type) => {
+    searchType.value = type
+  }
+
+  const searchTerm = ref('')
+
+  /**
+   * Returns the search query parameters for API request:
+   * drops all parameters with blank values.
+   *
+   * @type {import('@nuxtjs/composition-api').ComputedRef<import('../store/types').ApiQueryParams>}
+   */
+  const searchQueryParams = computed(() => {
+    const query = { ...filtersToQueryData(filters, searchType.value) }
+
+    return Object.keys(query).reduce(
+      (obj, key) => {
+        if (key !== 'q' && query[key].length) {
+          obj[key] = query[key]
+        }
+        return obj
+      },
+      // Ensure that q filter always comes first
+      { q: searchTerm.value.trim() }
+    )
+  })
+
+  /**
+   * Called when the `searchTerm` or `searchType` are changed. Updates the filters for
+   * the current search type, and then updates the search query accordingly.
+   * @param {string} term
+   */
+  function setSearchTerm(term) {
+    searchTerm.value = term.trim()
+  }
   /**
    *
-   * @param {{ mediaType: import('../store/types').SearchType, includeMature?: boolean }} params
+   * @param {import('../store/types').SearchType} mediaType
    * @returns {Partial<import('../store/types').Filters>}
    */
-  function getMediaTypeFilters({ mediaType, includeMature = false }) {
+  function getMediaTypeFilters(mediaType) {
     let filterKeys = mediaFilterKeys[mediaType]
-    if (!includeMature) {
-      filterKeys = filterKeys.filter((filterKey) => filterKey !== 'mature')
-    }
+    filterKeys = filterKeys.filter((filterKey) => filterKey !== 'mature')
     return filterKeys.reduce((obj, filterKey) => {
       obj[filterKey] = filters[filterKey]
       return obj
@@ -88,9 +135,7 @@ export const useFilterStore = defineStore('filter', () => {
    * @type {import('@nuxtjs/composition-api').ComputedRef<boolean>}
    */
   const isAnyFilterApplied = computed(() => {
-    const searchTypeFilters = getMediaTypeFilters({
-      mediaType: searchType.value,
-    })
+    const searchTypeFilters = getMediaTypeFilters(searchType.value)
     return Object.entries(searchTypeFilters).some(
       ([filterKey, filterItems]) =>
         filterKey !== 'mature' && filterItems.some((filter) => filter.checked)
@@ -198,28 +243,6 @@ export const useFilterStore = defineStore('filter', () => {
   }
 
   /**
-   *
-   * @param {Record<string, string>} searchQuery
-   * @param {import('../store/types').SupportedSearchType} searchType
-   */
-  function updateFiltersFromUrl(searchQuery, searchType) {
-    // When setting filters from URL query, 'mature' has a value of 'true',
-    // but we need the 'mature' code. Creating a local shallow copy to prevent mutation.
-    const query = { ...searchQuery }
-    if (query.mature === 'true') {
-      query.mature = 'mature'
-    } else {
-      delete query.mature
-    }
-
-    const newFilterData = queryToFilterData({
-      query,
-      searchType,
-      defaultFilters: getBaseFiltersWithProviders(),
-    })
-    replaceFilters({ newFilterData })
-  }
-  /**
    * Resets all filters to initial values.
    * Provider filters are not in the initial filters, so they need to be
    * handled separately.
@@ -267,18 +290,57 @@ export const useFilterStore = defineStore('filter', () => {
     }
   }
 
+  /**
+   * Returns the object with filters for selected search type, with codes, names for i18n labels, and checked status.
+   * @type {import('@nuxtjs/composition-api').ComputedRef<Partial<import('../store/types').Filters>>}
+   */
+  const searchFilters = computed(() => {
+    return getMediaTypeFilters(searchType.value)
+  })
+
+  /**
+   * Called when a /search path is server-rendered.
+   * @param {{ path: string, query: { [key: string]: string} }} params
+   */
+  function setSearchStateFromUrl({ path, urlQuery }) {
+    if (urlQuery.q) {
+      setSearchTerm(urlQuery.q.trim())
+    }
+    searchType.value = queryStringToSearchType(path)
+    // When setting filters from URL query, 'mature' has a value of 'true',
+    // but we need the 'mature' code. Creating a local shallow copy to prevent mutation.
+    const query = { ...urlQuery }
+    if (query.mature === 'true') {
+      query.mature = 'mature'
+    } else {
+      delete query.mature
+    }
+
+    const newFilterData = queryToFilterData({
+      query,
+      searchType: searchType.value,
+      defaultFilters: getBaseFiltersWithProviders(),
+    })
+    replaceFilters({ newFilterData })
+  }
+
   return {
+    searchTerm,
+    searchType,
     appliedFilterCount,
     isAnyFilterApplied,
+    searchFilters,
+    searchQueryParams,
 
     getMediaTypeFilters,
     initProviderFilters,
     isFilterDisabled,
-    // These are used by the searchStore internally
-    clearOtherMediaTypeFilters,
+    setSearchTerm,
+    setSearchType,
+    setSearchStateFromUrl,
     clearFilters,
     toggleFilter,
-    updateFiltersFromUrl,
+
     // Filters are exported for testing
     filters: readonly(filters),
   }

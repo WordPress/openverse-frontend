@@ -9,7 +9,7 @@
       </div>
       <div class="flex flex-col gap-4 lg:gap-6 flex-grow">
         <p v-if="audio.description" class="mb-6">{{ audio.description }}</p>
-        <ul class="flex flex-wrap gap-2">
+        <ul v-if="audio.tags" class="flex flex-wrap gap-2">
           <VMediaTag
             v-for="(tag, index) in audio.tags.filter((i) => !!i)"
             :key="index"

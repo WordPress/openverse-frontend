@@ -134,7 +134,7 @@
 <script>
 import { ref, useContext, useRouter, useStore } from '@nuxtjs/composition-api'
 
-import { useSearchStore } from '~/stores/search'
+import { useFilterStore } from '~/stores/filter'
 
 import { FETCH_MEDIA } from '~/constants/action-types'
 import { MEDIA } from '~/constants/store-modules'
@@ -175,7 +175,7 @@ const HomePage = {
   setup() {
     const { app } = useContext()
     const router = useRouter()
-    const searchStore = useSearchStore()
+    const filterStore = useFilterStore()
     const store = useStore()
 
     const featuredSearches = imageInfo.sets.map((setItem) => ({
@@ -203,27 +203,24 @@ const HomePage = {
     const setSearchType = (type) => {
       searchType.value = type
       contentSwitcher.value?.closeMenu()
-      searchStore.updateQuery({ searchType: type })
+      useFilterStore().setSearchType(type)
     }
 
     const searchTerm = ref('')
     const handleSearch = async () => {
       if (!searchTerm.value) return
-      searchStore.updateQuery({
-        q: searchTerm.value,
-        searchType: searchType.value,
-      })
+      filterStore.setSearchTerm(searchTerm.value)
+      filterStore.setSearchType(searchType.value)
+      const query = filterStore.searchQueryParams
       const newPath = app.localePath({
         path: `/search/${
           searchType.value === ALL_MEDIA ? '' : searchType.value
         }`,
-        query: searchStore.searchQueryParams,
+        query,
       })
       router.push(newPath)
 
-      await store.dispatch(`${MEDIA}/${FETCH_MEDIA}`, {
-        ...searchStore.searchQueryParams,
-      })
+      await store.dispatch(`${MEDIA}/${FETCH_MEDIA}`, { ...query })
     }
 
     return {

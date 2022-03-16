@@ -4,9 +4,10 @@
   >
     <VSearchGrid
       :fetch-state="fetchState"
-      :query="query"
       :supported="supported"
       :search-type="searchType"
+      :search-term="searchTerm"
+      :search-params="searchQueryParams"
       :results-count="resultsCount"
       data-testid="search-grid"
     >
@@ -16,7 +17,7 @@
           :media-results="results"
           :fetch-state="fetchState"
           :is-filter-visible="isVisible"
-          :search-term="query.q"
+          :search-term="searchTerm"
           :supported="supported"
           data-testid="search-results"
         />
@@ -31,7 +32,7 @@ import { mapActions, mapGetters } from 'vuex'
 import { isShallowEqualObjects } from '@wordpress/is-shallow-equal'
 import { computed, inject } from '@nuxtjs/composition-api'
 
-import { useSearchStore } from '~/stores/search'
+import { useFilterStore } from '~/stores/filter'
 
 import { FETCH_MEDIA } from '~/constants/action-types'
 import { supportedSearchTypes } from '~/constants/media'
@@ -54,11 +55,11 @@ const BrowsePage = {
     const isMinScreenMd = isMinScreen('md')
     const { isVisible } = useFilterSidebarVisibility()
     const showScrollButton = inject('showScrollButton')
-    const searchStore = useSearchStore()
+    const filterStore = useFilterStore()
 
-    const query = computed(() => searchStore.query)
-    const searchType = computed(() => searchStore.searchType)
-    const searchQueryParams = computed(() => searchStore.searchQueryParams)
+    const searchTerm = computed(() => filterStore.searchTerm)
+    const searchType = computed(() => filterStore.searchType)
+    const searchQueryParams = computed(() => filterStore.searchQueryParams)
     const supported = computed(() =>
       supportedSearchTypes.includes(searchType.value)
     )
@@ -67,26 +68,25 @@ const BrowsePage = {
       isMinScreenMd,
       isVisible,
       showScrollButton,
-      query,
+      searchTerm,
       searchType,
       supported,
       searchQueryParams,
-      setSearchStateFromUrl: searchStore.setSearchStateFromUrl,
-      onSearchFormSubmit: searchStore.updateQuery,
+      setSearchStateFromUrl: filterStore.setSearchStateFromUrl,
     }
   },
   scrollToTop: false,
   async fetch() {
-    if (this.supported && !this.resultCount && this.query.q.trim() !== '') {
+    if (this.supported && !this.resultCount && this.searchTerm.trim() !== '') {
       await this.fetchMedia({})
     }
   },
   asyncData({ route, $pinia }) {
     if (process.server) {
-      const searchStore = useSearchStore($pinia)
-      searchStore.setSearchStateFromUrl({
+      const filterStore = useFilterStore($pinia)
+      filterStore.setSearchStateFromUrl({
         path: route.path,
-        query: route.query,
+        urlQuery: route.query,
       })
     }
   },
@@ -114,7 +114,8 @@ const BrowsePage = {
         newRoute.path !== oldRoute.path ||
         !isShallowEqualObjects(newRoute.query, oldRoute.query)
       ) {
-        await this.setSearchStateFromUrl(newRoute)
+        const { query, path } = newRoute
+        await this.setSearchStateFromUrl({ urlQuery: query, path })
         this.fetchMedia(this.searchQueryParams)
       }
     },

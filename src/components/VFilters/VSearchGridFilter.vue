@@ -47,7 +47,6 @@ import { computed, useContext, useRouter } from '@nuxtjs/composition-api'
 import { kebab } from 'case'
 
 import { useFilterStore } from '~/stores/filter'
-import { useSearchStore } from '~/stores/search'
 
 import { FETCH_MEDIA } from '~/constants/action-types'
 import { MEDIA } from '~/constants/store-modules'
@@ -61,12 +60,12 @@ export default {
   },
   setup() {
     const filterStore = useFilterStore()
-    const searchStore = useSearchStore()
+
     const { i18n, store } = useContext()
     const router = useRouter()
 
     const isAnyFilterApplied = computed(() => filterStore.isAnyFilterApplied)
-    const filters = computed(() => searchStore.searchFilters)
+    const filters = computed(() => filterStore.searchFilters)
     const filterTypes = computed(() => Object.keys(filters.value))
     const filterTypeTitle = (filterType) => {
       if (filterType === 'searchBy') {
@@ -76,19 +75,18 @@ export default {
     }
 
     const updateSearch = async () => {
-      await router.push({ query: searchStore.searchQueryParams })
+      await router.push({ query: filterStore.searchQueryParams })
       await store.dispatch(`${MEDIA}/${FETCH_MEDIA}`, {
-        ...searchStore.searchQueryParams,
+        ...filterStore.searchQueryParams,
       })
     }
 
     const onUpdateFilter = async ({ code, filterType }) => {
-      searchStore.toggleFilter({ code, filterType })
+      filterStore.toggleFilter({ code, filterType })
       await updateSearch()
     }
     const clearFilters = async () => {
-      searchStore.clearFilters()
-
+      filterStore.clearFilters()
       await updateSearch()
     }
 
