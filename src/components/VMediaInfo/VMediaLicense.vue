@@ -17,21 +17,6 @@
         </template>
       </i18n>
       <VLicenseElements v-if="license" :license="license" />
-      <i18n
-        v-if="!isLicense"
-        path="media-details.reuse.license.content"
-        tag="span"
-        class="caption font-semibold"
-      >
-        <template #link>
-          <VLink
-            :aria-label="$t('media-details.aria.attribution.license')"
-            :href="licenseUrl"
-            class="text-pink"
-            >{{ $t('media-details.reuse.license.link') }}</VLink
-          >
-        </template>
-      </i18n>
     </template>
 
     <template v-else>
@@ -39,13 +24,12 @@
       <i18n
         path="media-details.reuse.tool.content"
         tag="span"
-        class="caption font-semibold"
+        class="text-sm font-semibold"
       >
         <template #link>
           <VLink
             :aria-label="$t('media-details.aria.attribution.tool')"
             :href="licenseUrl"
-            class="text-pink"
             >{{ $t('media-details.reuse.tool.link') }}</VLink
           >
         </template>
