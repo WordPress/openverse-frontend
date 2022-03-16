@@ -22,7 +22,7 @@ export const supportedMediaTypes = [IMAGE, AUDIO] as const
 
 export type SupportedMediaType = typeof supportedMediaTypes[number]
 
-export const searchTypes = [ALL_MEDIA, ...mediaTypes]
+export const searchTypes = [ALL_MEDIA, ...mediaTypes] as const
 
 export type SearchType = typeof searchTypes[number]
 
