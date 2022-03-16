@@ -113,7 +113,7 @@
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-tsdoc": "^0.2.14",
-    "eslint-plugin-unicorn": "^35.0.0",
+    "eslint-plugin-unicorn": "^41.0.0",
     "eslint-plugin-vue": "^7.8.0",
     "eslint-plugin-vuejs-accessibility": "^1.1.1",
     "husky": "^7.0.1",
