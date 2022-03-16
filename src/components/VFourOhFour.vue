@@ -55,9 +55,10 @@ import {
   useRouter,
 } from '@nuxtjs/composition-api'
 
-import { useFilterStore } from '~/stores/filter'
 import { MEDIA } from '~/constants/store-modules'
 import { FETCH_MEDIA } from '~/constants/action-types'
+
+import { useSearchStore } from '~/stores/search'
 
 import VSearchBar from '~/components/VHeader/VSearchBar/VSearchBar'
 import VLink from '~/components/VLink.vue'
@@ -77,7 +78,7 @@ const VFourOhFour = defineComponent({
   },
   props: ['error'],
   setup() {
-    const filterStore = useFilterStore()
+    const searchStore = useSearchStore()
     const { app, store } = useContext()
     const router = useRouter()
 
@@ -89,7 +90,7 @@ const VFourOhFour = defineComponent({
     const handleSearch = async () => {
       if (searchTerm.value === '') return
 
-      filterStore.setSearchTerm(searchTerm.value)
+      searchStore.setSearchTerm(searchTerm.value)
       await store.dispatch(`${MEDIA}/${FETCH_MEDIA}`, {
         query: { q: searchTerm.value },
       })

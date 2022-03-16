@@ -46,10 +46,7 @@
 import { computed, useContext, useRouter } from '@nuxtjs/composition-api'
 import { kebab } from 'case'
 
-import { useFilterStore } from '~/stores/filter'
-
-import { FETCH_MEDIA } from '~/constants/action-types'
-import { MEDIA } from '~/constants/store-modules'
+import { useSearchStore } from '~/stores/search'
 
 import VFilterChecklist from '~/components/VFilters/VFilterChecklist.vue'
 
@@ -59,13 +56,13 @@ export default {
     VFilterChecklist,
   },
   setup() {
-    const filterStore = useFilterStore()
+    const searchStore = useSearchStore()
 
-    const { i18n, store } = useContext()
+    const { i18n } = useContext()
     const router = useRouter()
 
-    const isAnyFilterApplied = computed(() => filterStore.isAnyFilterApplied)
-    const filters = computed(() => filterStore.searchFilters)
+    const isAnyFilterApplied = computed(() => searchStore.isAnyFilterApplied)
+    const filters = computed(() => searchStore.searchFilters)
     const filterTypes = computed(() => Object.keys(filters.value))
     const filterTypeTitle = (filterType) => {
       if (filterType === 'searchBy') {
@@ -75,28 +72,18 @@ export default {
     }
 
     const updateSearch = async () => {
-      await router.push({ query: filterStore.searchQueryParams })
-      await store.dispatch(`${MEDIA}/${FETCH_MEDIA}`, {
-        ...filterStore.searchQueryParams,
-      })
+      router.push({ query: searchStore.searchQueryParams })
     }
 
-    const onUpdateFilter = async ({ code, filterType }) => {
-      filterStore.toggleFilter({ code, filterType })
-      await updateSearch()
-    }
-    const clearFilters = async () => {
-      filterStore.clearFilters()
-      await updateSearch()
-    }
+    searchStore.$subscribe(() => updateSearch())
 
     return {
       isAnyFilterApplied,
       filters,
       filterTypes,
       filterTypeTitle,
-      clearFilters,
-      onUpdateFilter,
+      clearFilters: searchStore.clearFilters,
+      onUpdateFilter: searchStore.toggleFilter,
     }
   },
 }

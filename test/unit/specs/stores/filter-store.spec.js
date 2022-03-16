@@ -2,7 +2,6 @@ import { setActivePinia, createPinia } from 'pinia'
 
 import { nextTick } from '@nuxtjs/composition-api'
 
-import { useFilterStore } from '~/stores/filter'
 import { filterData, mediaFilterKeys } from '~/constants/filters.ts'
 import {
   ALL_MEDIA,
@@ -12,6 +11,8 @@ import {
   VIDEO,
 } from '~/constants/media'
 import { warn } from '~/utils/console.ts'
+
+import { useSearchStore } from '~/stores/search'
 
 jest.mock('~/utils/console', () => ({
   warn: jest.fn(),
@@ -23,7 +24,7 @@ describe('Filter Store', () => {
   })
   describe('state', () => {
     it('sets initial filters to filterData', () => {
-      const filterStore = useFilterStore()
+      const filterStore = useSearchStore()
       expect(filterStore.filters).toEqual(filterData)
     })
   })
@@ -46,7 +47,7 @@ describe('Filter Store', () => {
     `(
       'returns correct filter status for $query and searchType $searchType',
       ({ query, searchType, filterCount }) => {
-        const filterStore = useFilterStore()
+        const filterStore = useSearchStore()
         filterStore.setSearchType(searchType)
         for (let [filterType, values] of Object.entries(query)) {
           values.forEach((val) =>
@@ -74,7 +75,7 @@ describe('Filter Store', () => {
     `(
       'mediaFiltersForDisplay returns $filterTypeCount filters for $searchType',
       ({ searchType, filterTypeCount }) => {
-        const filterStore = useFilterStore()
+        const filterStore = useSearchStore()
         filterStore.setSearchType(searchType)
         const filtersForDisplay = filterStore.searchFilters
         const expectedFilterCount = Math.max(0, filterTypeCount - 1)
@@ -105,7 +106,7 @@ describe('Filter Store', () => {
     `(
       'returns correct searchQueryParams and filter status for $query and searchType $searchType',
       ({ query, searchType }) => {
-        const filterStore = useFilterStore()
+        const filterStore = useSearchStore()
         const expectedQueryParams = query
         // It should discard the values that are not applicable for the search type:
         if (searchType === AUDIO && query.extension === 'svg') {
@@ -132,7 +133,7 @@ describe('Filter Store', () => {
     it.each(['foo', ''])(
       '`setSearchTerm correctly updates the searchTerm',
       (searchTerm) => {
-        const filterStore = useFilterStore()
+        const filterStore = useSearchStore()
         const expectedSearchTerm = searchTerm
         filterStore.setSearchTerm(searchTerm)
         expect(filterStore.searchTerm).toEqual(expectedSearchTerm)
@@ -141,13 +142,14 @@ describe('Filter Store', () => {
     it.each(supportedSearchTypes)(
       'setSearchType correctly updates the searchType',
       (type) => {
-        const filterStore = useFilterStore()
+        const filterStore = useSearchStore()
         filterStore.setSearchType(type)
 
         expect(filterStore.searchType).toEqual(type)
       }
     )
 
+    // TODO: add support for video path
     it.each`
       searchType | path
       ${'all'}   | ${'/search/'}
@@ -157,7 +159,7 @@ describe('Filter Store', () => {
     `(
       "`setSearchStateFromUrl` should set searchType '$searchType' from path '$path'",
       ({ searchType, path }) => {
-        const filterStore = useFilterStore()
+        const filterStore = useSearchStore()
         filterStore.setSearchStateFromUrl({ path: path, urlQuery: {} })
 
         expect(filterStore.searchType).toEqual(searchType)
@@ -173,7 +175,7 @@ describe('Filter Store', () => {
     `(
       "`setSearchStateFromUrl` should set '$searchType' from query  $query and path '$path'",
       ({ query, path, searchType }) => {
-        const filterStore = useFilterStore()
+        const filterStore = useSearchStore()
         const expectedQuery = { ...filterStore.searchQueryParams, ...query }
         // The values that are not applicable for the search type should be discarded
         if (searchType === IMAGE) {
@@ -197,7 +199,7 @@ describe('Filter Store', () => {
     `(
       'toggleFilter updates the query values to $query',
       ({ filters, query }) => {
-        const filterStore = useFilterStore()
+        const filterStore = useSearchStore()
         for (const filterItem of filters) {
           const [filterType, code] = filterItem
           filterStore.toggleFilter({ filterType, code })
@@ -209,7 +211,7 @@ describe('Filter Store', () => {
     it.each([ALL_MEDIA, IMAGE, AUDIO, VIDEO])(
       'Clears filters when search type is %s',
       (searchType) => {
-        const filterStore = useFilterStore()
+        const filterStore = useSearchStore()
         const expectedQueryParams = { q: 'cat' }
         filterStore.setSearchStateFromUrl({
           path: `/search/${searchType === ALL_MEDIA ? '' : searchType}`,
@@ -242,7 +244,7 @@ describe('Filter Store', () => {
     `(
       'toggleFilter updates $filterType filter state',
       ({ filterType, codeIdx }) => {
-        const filterStore = useFilterStore()
+        const filterStore = useSearchStore()
 
         filterStore.toggleFilter({ filterType, codeIdx })
         const filterItem = filterStore.filters[filterType][codeIdx]
@@ -251,7 +253,7 @@ describe('Filter Store', () => {
     )
 
     it('toggleFilter updates isFilterApplied with provider', () => {
-      const filterStore = useFilterStore()
+      const filterStore = useSearchStore()
       filterStore.setSearchType(IMAGE)
       filterStore.initProviderFilters({
         mediaType: IMAGE,
@@ -264,14 +266,14 @@ describe('Filter Store', () => {
     })
 
     it('toggleFilter updates isFilterApplied with license type', () => {
-      const filterStore = useFilterStore()
+      const filterStore = useSearchStore()
       filterStore.toggleFilter({ filterType: 'licenseTypes', codeIdx: 0 })
 
       expect(filterStore.isAnyFilterApplied).toEqual(true)
     })
 
     it('initProviderFilters merges with existing provider filters', () => {
-      const filterStore = useFilterStore()
+      const filterStore = useSearchStore()
       const existingProviderFilters = [{ code: 'met', checked: true }]
 
       filterStore.$patch({
@@ -294,7 +296,7 @@ describe('Filter Store', () => {
     })
 
     it('clearFilters resets filters to initial state', async () => {
-      const filterStore = useFilterStore()
+      const filterStore = useSearchStore()
       filterStore.filters.licenses = [
         { code: 'by', checked: true },
         { code: 'by-nc', checked: true },
@@ -305,7 +307,7 @@ describe('Filter Store', () => {
     })
 
     it('clearFilters sets providers filters checked to false', async () => {
-      const filterStore = useFilterStore()
+      const filterStore = useSearchStore()
       filterStore.filters.imageProviders = [
         { code: 'met', name: 'Metropolitan', checked: true },
         { code: 'flickr', name: 'Flickr', checked: false },
@@ -335,7 +337,7 @@ describe('Filter Store', () => {
     `(
       "toggleFilter should set filter '$code' of type '$filterType",
       ({ filterType, code, idx }) => {
-        const filterStore = useFilterStore()
+        const filterStore = useSearchStore()
         filterStore.toggleFilter({ filterType: filterType, code: code })
 
         const filterItem = filterStore.filters[filterType][idx]
@@ -360,7 +362,7 @@ describe('Filter Store', () => {
     `(
       'isFilterDisabled for $item.code should return $disabled when $dependency.code is checked',
       ({ item, dependency, disabled }) => {
-        const filterStore = useFilterStore()
+        const filterStore = useSearchStore()
         filterStore.toggleFilter({
           filterType: dependency.filterType,
           code: dependency.code,
@@ -371,7 +373,7 @@ describe('Filter Store', () => {
     )
 
     it('toggleFilter without code or codeIdx parameters warns about it', () => {
-      const filterStore = useFilterStore()
+      const filterStore = useSearchStore()
       const expectedFilters = filterStore.filters
 
       filterStore.toggleFilter({ filterType: 'licenses' })
@@ -391,7 +393,7 @@ describe('Filter Store', () => {
     `(
       'changing searchType clears all but $expectedFilterCount $nextSearchType filters ',
       async ({ searchType, nextSearchType, expectedFilterCount }) => {
-        const filterStore = useFilterStore()
+        const filterStore = useSearchStore()
         filterStore.setSearchType(searchType)
         // Set all filters to checked
         for (let ft in filterStore.filters) {
@@ -424,7 +426,7 @@ describe('Filter Store', () => {
     `(
       'changing searchType clears all but $expectedFilterCount ALL_MEDIA filters',
       async ({ searchType, nextSearchType, expectedFilterCount }) => {
-        const filterStore = useFilterStore()
+        const filterStore = useSearchStore()
         filterStore.setSearchType(searchType)
         // Set all filters to checked
         for (let [fc, filter_items] of Object.entries(filterStore.filters)) {
@@ -444,7 +446,7 @@ describe('Filter Store', () => {
     )
 
     it('Does not set filter or count filter as applied, and does not raise error for unsupported search types', () => {
-      const filterStore = useFilterStore()
+      const filterStore = useSearchStore()
       filterStore.toggleFilter({
         filterType: 'licenseTypes',
         code: 'commercial',

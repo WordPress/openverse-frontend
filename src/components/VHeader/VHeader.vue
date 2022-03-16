@@ -68,7 +68,7 @@ import { isMinScreen } from '~/composables/use-media-query'
 import { useMatchSearchRoutes } from '~/composables/use-match-routes'
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
 import { useI18nResultsCount } from '~/composables/use-i18n-utilities'
-import { useFilterStore } from '~/stores/filter'
+import { useSearchStore } from '~/stores/search'
 
 import VLogoButton from '~/components/VHeader/VLogoButton.vue'
 import VHeaderFilter from '~/components/VHeader/VHeaderFilter.vue'
@@ -91,7 +91,7 @@ const VHeader = defineComponent({
     VSearchBar,
   },
   setup() {
-    const filterStore = useFilterStore()
+    const searchStore = useSearchStore()
     const { app, i18n, store } = useContext()
     const router = useRouter()
 
@@ -146,7 +146,7 @@ const VHeader = defineComponent({
      * Shows the loading state or result count.
      */
     const searchStatus = computed(() => {
-      if (!isSearchRoute.value || filterStore.searchTerm === '') return ''
+      if (!isSearchRoute.value || searchStore.searchTerm === '') return ''
       if (isFetching.value) return i18n.t('header.loading')
       return getI18nCount(resultsCount.value)
     })
@@ -158,9 +158,9 @@ const VHeader = defineComponent({
      * @type {import('@nuxtjs/composition-api').WritableComputedRef<string>}
      */
     const searchTerm = computed({
-      get: () => filterStore.searchTerm,
+      get: () => searchStore.searchTerm,
       set: (value) => {
-        filterStore.setSearchTerm(value)
+        searchStore.setSearchTerm(value)
         searchTermChanged.value = true
       },
     })
@@ -176,7 +176,7 @@ const VHeader = defineComponent({
      */
     const handleSearch = async () => {
       const searchType = isSearchRoute.value
-        ? useFilterStore().searchType
+        ? useSearchStore().searchType
         : ALL_MEDIA
       if (
         isSearchRoute.value &&
@@ -189,15 +189,15 @@ const VHeader = defineComponent({
             store.dispatch(`${MEDIA}/${CLEAR_MEDIA}`, { mediaType })
           )
         )
-        useFilterStore().setSearchType(searchType)
+        useSearchStore().setSearchType(searchType)
       }
       const newPath = app.localePath({
         path: `/search/${searchType === 'all' ? '' : searchType}`,
-        query: filterStore.searchQueryParams,
+        query: searchStore.searchQueryParams,
       })
       router.push(newPath)
       await store.dispatch(`${MEDIA}/${FETCH_MEDIA}`, {
-        ...filterStore.searchQueryParams,
+        ...searchStore.searchQueryParams,
       })
       searchTermChanged.value = false
     }

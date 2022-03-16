@@ -6,9 +6,11 @@ import { ref } from '@nuxtjs/composition-api'
 import { createPinia, PiniaVuePlugin } from 'pinia'
 
 import messages from '~/locales/en.json'
-import { useFilterStore } from '~/stores/filter'
+
 import { filterData, mediaFilterKeys } from '~/constants/filters'
 import { IMAGE } from '~/constants/media'
+
+import { useSearchStore } from '~/stores/search'
 
 import VFilterButton from '~/components/VHeader/VFilterButton.vue'
 
@@ -53,7 +55,7 @@ describe('VFilterButton', () => {
     localVue.use(VueI18n)
     localVue.use(PiniaVuePlugin)
     pinia = createPinia()
-    filterStore = useFilterStore(pinia)
+    filterStore = useSearchStore(pinia)
     // the default ALL_MEDIA has fewer filters that can be applied,
     // ensure that we can test for more than 10 filters
     filterStore.setSearchType(IMAGE)

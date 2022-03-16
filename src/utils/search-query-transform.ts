@@ -1,11 +1,21 @@
+// @ts-ignore
 import clonedeep from 'lodash.clonedeep'
 
 import { mediaFilterKeys } from '~/constants/filters'
-import { ALL_MEDIA } from '~/constants/media'
+import { ALL_MEDIA, SupportedSearchType } from '~/constants/media'
 
 import { getParameterByName } from '~/utils/url-params'
+import type {
+  ApiQueryFilters,
+  ApiQueryKeys,
+  ApiQueryParams,
+  FilterCategory,
+  FilterItem,
+  Filters,
+  QueryKey,
+} from '~/store/types'
 
-const filterPropertyMappings = {
+const filterPropertyMappings: Record<FilterCategory, ApiQueryKeys> = {
   licenses: 'license',
   licenseTypes: 'license_type',
   audioCategories: 'categories',
@@ -21,7 +31,9 @@ const filterPropertyMappings = {
   mature: 'mature',
 }
 
-const getMediaFilterTypes = (searchType) => [...mediaFilterKeys[searchType]]
+const getMediaFilterTypes = (searchType: SupportedSearchType) => [
+  ...mediaFilterKeys[searchType],
+]
 // {
 //   license: 'cc0,pdm,by,by-sa,by-nc,by-nd,by-nc-sa,by-nc-nd',
 //   imageCategories: 'photograph,illustration,digitized_artwork',
@@ -35,9 +47,8 @@ const getMediaFilterTypes = (searchType) => [...mediaFilterKeys[searchType]]
  * Joins all the filters which have the checked property `true`
  * to a string separated by commas for the API request URL, e.g.: "by,nd-nc,nc-sa".
  * Mature is a special case, and is converted to `true`.
- * @param {import('../store/types').FilterItem[]} filterItem
  */
-const filterToString = (filterItem) => {
+const filterToString = (filterItem: FilterItem[]) => {
   const filterString = filterItem
     .filter((f) => f.checked)
     .map((filterItem) => filterItem.code)
@@ -48,18 +59,17 @@ const filterToString = (filterItem) => {
 /**
  * Converts the filter store object to the data format accepted by the API,
  * which has slightly different property names.
- * @param {object} filters object containing the filter data that comes from the filter store
- * @param {import('../constants/media').SearchType} searchType
- * @param hideEmpty
- * @todo Refactor all of these 'reduce' calls to just use lodash methods :)
- * @returns {import('../store/types').ApiQueryFilters}
+ * @param filters - object containing the filter data that comes from the filter store
+ * @param searchType - search type for which API query should be created
+ * @param hideEmpty - whether the query params with empty values should be removed
+ * TODO: Refactor all of these 'reduce' calls to just use lodash methods :)
  */
 export const filtersToQueryData = (
-  filters,
-  searchType = ALL_MEDIA,
+  filters: Filters,
+  searchType: SupportedSearchType = ALL_MEDIA,
   hideEmpty = true
-) => {
-  let mediaFilterTypes = getMediaFilterTypes(searchType)
+): ApiQueryFilters => {
+  const mediaFilterTypes = getMediaFilterTypes(searchType)
 
   return mediaFilterTypes.reduce((query, filterCategory) => {
     const queryKey = filterPropertyMappings[filterCategory]
@@ -68,7 +78,7 @@ export const filtersToQueryData = (
       query[queryKey] = queryValue
     }
     return query
-  }, /** @type {import('../store/types').ApiQueryFilters} */ ({}))
+  }, {} as ApiQueryFilters)
 }
 
 /**
@@ -76,13 +86,16 @@ export const filtersToQueryData = (
  * of the path between `/search/` and query, or `all` by default.
  * `/search/?q=test`: all
  * `/search/image?q=test`: image
- * @param {string} queryString
- * @return {import('../constants/media').SearchType}
+ * @param queryString - the query string from the url
  */
-export const queryStringToSearchType = (queryString) => {
+export const queryStringToSearchType = (
+  queryString: string
+): SupportedSearchType => {
   const searchTypePattern = /\/search\/(image|audio|video)\?*/
-  let matchedType = queryString.match(searchTypePattern)
-  return matchedType === null ? ALL_MEDIA : matchedType[1]
+  const matchedType = queryString.match(searchTypePattern)
+  return matchedType === null
+    ? ALL_MEDIA
+    : (matchedType[1] as SupportedSearchType)
 }
 
 /**
@@ -96,15 +109,15 @@ export const queryStringToSearchType = (queryString) => {
  * the `audioExtensions.ogg.checked` is set to true,
  * but for `search/images?extensions=ogg`, the extensions query parameter
  * is discarded, because `ogg` is not a valid extension for images.
- * @param {string} filterParameter
- * @param {import('../store/types').FilterItem[]} parameterFilters
- * @return {import('../store/types').FilterItem[]}
  */
-const getMediaTypeApiFilters = (filterParameter, parameterFilters) => {
+const getMediaTypeApiFilters = (
+  filterParameter: string,
+  parameterFilters: FilterItem[]
+): FilterItem[] => {
   if (filterParameter !== '') {
     const parameterValues = filterParameter.split(',')
     parameterValues.forEach((parameter) => {
-      let existingParameterIdx = parameterFilters.findIndex(
+      const existingParameterIdx = parameterFilters.findIndex(
         (p) => p.code === parameter
       )
       if (existingParameterIdx > -1) {
@@ -119,20 +132,23 @@ const getMediaTypeApiFilters = (filterParameter, parameterFilters) => {
 }
 
 /**
- * converts the browser filter query string into the internal filter store data format
- * @param {object} params
- * @param {Record<string, string>} params.query - browser filter query
- * @param {import('../constants/media').SearchType} [params.searchType]
- * @param {object} params.defaultFilters default filters for testing purposes
+ * Converts the browser filter query string into the internal filter store data format
+ * @param query - browser filter query
+ * @param searchType - search type determines which filters are applied
+ * @param defaultFilters - default filters for testing purposes
  */
 export const queryToFilterData = ({
   query,
   searchType = 'image',
   defaultFilters,
+}: {
+  query: Record<string, string>
+  searchType: SupportedSearchType
+  defaultFilters: Partial<Filters>
 }) => {
   // The default filterData object from search store doesn't contain provider filters,
   // so we can't use it.
-  const filters = clonedeep(defaultFilters)
+  const filters = clonedeep(defaultFilters) as Filters
   const filterTypes = getMediaFilterTypes(searchType)
   const differentFiltersWithSameApiParams = [
     'audioProviders',
@@ -155,7 +171,7 @@ export const queryToFilterData = ({
       const queryDataKey = filterPropertyMappings[filterDataKey]
       if (query[queryDataKey]) {
         const filterValues = query[queryDataKey].split(',')
-        filterValues.forEach((val) => {
+        filterValues.forEach((val: string) => {
           const idx = filters[filterDataKey].findIndex((f) => f.code === val)
           if (idx >= 0) {
             filters[filterDataKey][idx].checked = true
@@ -176,10 +192,9 @@ export const queryToFilterData = ({
  *
  * TODO: we might be able to refactor to eliminate the need for these two
  * separate functions.
- * @param {string} queryString
  */
-export const queryStringToQueryData = (queryString) => {
-  const queryDataObject = {}
+export const queryStringToQueryData = (queryString: string) => {
+  const queryDataObject = {} as ApiQueryParams
   const searchType = queryStringToSearchType(queryString)
   const filterTypes = getMediaFilterTypes(searchType)
   filterTypes.forEach((filterDataKey) => {
@@ -194,8 +209,12 @@ export const queryStringToQueryData = (queryString) => {
   return queryDataObject
 }
 
-export const areQueriesEqual = (oldQuery, newQuery) => {
-  for (let key of Object.keys(oldQuery)) {
+export const areQueriesEqual = (
+  oldQuery: ApiQueryParams,
+  newQuery: ApiQueryParams
+): boolean => {
+  const oldQueryKeys = Object.keys(oldQuery) as QueryKey[]
+  for (const key of oldQueryKeys) {
     if (oldQuery[key] !== newQuery[key]) {
       return false
     }

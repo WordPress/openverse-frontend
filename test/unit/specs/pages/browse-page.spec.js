@@ -4,9 +4,10 @@ import Vuex from 'vuex'
 import { ref } from '@nuxtjs/composition-api'
 import { createPinia, PiniaVuePlugin } from 'pinia'
 
-import { useFilterStore } from '~/stores/filter'
 import SearchIndex from '~/pages/search.vue'
 import { IMAGE } from '~/constants/media'
+
+import { useSearchStore } from '~/stores/search'
 
 describe('SearchIndex', () => {
   let options
@@ -19,7 +20,7 @@ describe('SearchIndex', () => {
     localVue.use(Vuex)
     localVue.use(PiniaVuePlugin)
     pinia = createPinia()
-    filterStore = useFilterStore(pinia)
+    filterStore = useSearchStore(pinia)
     filterStore.setSearchTerm('cat')
     filterStore.setSearchType(IMAGE)
     storeMock = new Vuex.Store({

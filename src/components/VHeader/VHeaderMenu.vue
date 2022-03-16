@@ -10,11 +10,12 @@ import {
 import isEmpty from 'lodash.isempty'
 
 import useSearchType from '~/composables/use-search-type'
-import { useFilterStore } from '~/stores/filter'
 
 import { ALL_MEDIA, supportedMediaTypes } from '~/constants/media'
 import { FETCH_MEDIA } from '~/constants/action-types'
 import { MEDIA } from '~/constants/store-modules'
+
+import { useSearchStore } from '~/stores/search'
 
 import VMobileMenuModal from '~/components/VContentSwitcher/VMobileMenuModal.vue'
 import VSearchTypePopover from '~/components/VContentSwitcher/VSearchTypePopover.vue'
@@ -42,7 +43,7 @@ export default {
     const menuModalRef = ref(null)
     const content = useSearchType()
     const { app } = useContext()
-    const filterStore = useFilterStore()
+    const searchStore = useSearchStore()
     const store = useStore()
     const router = useRouter()
 
@@ -56,7 +57,7 @@ export default {
 
       const newPath = app.localePath({
         path: `/search/${type === ALL_MEDIA ? '' : type}`,
-        query: filterStore.searchQueryParams,
+        query: searchStore.searchQueryParams,
       })
       router.push(newPath)
 
@@ -71,7 +72,7 @@ export default {
 
       if (shouldFetchMedia) {
         await store.dispatch(`${MEDIA}/${FETCH_MEDIA}`, {
-          ...filterStore.searchQueryParams,
+          ...searchStore.searchQueryParams,
         })
       }
     }

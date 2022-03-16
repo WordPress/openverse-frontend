@@ -7,7 +7,8 @@ import { createPinia, PiniaVuePlugin } from 'pinia'
 import messages from '~/locales/en.json'
 
 import { FETCH_MEDIA } from '~/constants/action-types'
-import { useFilterStore } from '~/stores/filter'
+
+import { useSearchStore } from '~/stores/search'
 
 import VSearchGridFilter from '~/components/VFilters/VSearchGridFilter.vue'
 
@@ -59,7 +60,7 @@ describe('VSearchGridFilter', () => {
         },
       },
     }
-    filterStore = useFilterStore(pinia)
+    filterStore = useSearchStore(pinia)
   })
 
   it('toggles filter', async () => {

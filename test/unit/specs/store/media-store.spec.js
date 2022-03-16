@@ -17,7 +17,8 @@ import {
   HANDLE_NO_MEDIA,
 } from '~/constants/action-types'
 import { AUDIO, IMAGE, supportedMediaTypes } from '~/constants/media'
-import { useFilterStore } from '~/stores/filter'
+
+import { useSearchStore } from '~/stores/search'
 
 describe('Search Store', () => {
   describe('state', () => {
@@ -233,7 +234,7 @@ describe('Search Store', () => {
     it.each(supportedMediaTypes)(
       'FETCH_SINGLE_MEDIA_TYPE (%s) on success',
       async (mediaType) => {
-        filterStore = useFilterStore()
+        filterStore = useSearchStore()
         filterStore.setSearchTerm('cat')
         const params = {
           q: 'foo',
@@ -363,7 +364,7 @@ describe('Search Store', () => {
       'FETCH_MEDIA_ITEM dispatches SEND_RESULT_CLICKED_EVENT',
       (mediaType) => {
         const params = { id: 'foo', mediaType }
-        filterStore = useFilterStore()
+        filterStore = useSearchStore()
         filterStore.setSearchTerm('cat')
         const action = createActions(services)[FETCH_MEDIA_ITEM]
         action(context, params)

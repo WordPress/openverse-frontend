@@ -62,6 +62,7 @@ export interface ApiQueryParams {
   mature?: string
 }
 export type ApiQueryFilters = Omit<ApiQueryParams, 'q'>
+export type ApiQueryKeys = keyof ApiQueryFilters
 
 export interface Tag {
   name: string

@@ -134,12 +134,12 @@
 <script>
 import { ref, useContext, useRouter, useStore } from '@nuxtjs/composition-api'
 
-import { useFilterStore } from '~/stores/filter'
-
 import { FETCH_MEDIA } from '~/constants/action-types'
 import { MEDIA } from '~/constants/store-modules'
 import { ALL_MEDIA, supportedSearchTypes } from '~/constants/media'
 import { isMinScreen } from '~/composables/use-media-query'
+
+import { useSearchStore } from '~/stores/search'
 
 import VLink from '~/components/VLink.vue'
 import VLogoButton from '~/components/VHeader/VLogoButton.vue'
@@ -175,7 +175,7 @@ const HomePage = {
   setup() {
     const { app } = useContext()
     const router = useRouter()
-    const filterStore = useFilterStore()
+    const searchStore = useSearchStore()
     const store = useStore()
 
     const featuredSearches = imageInfo.sets.map((setItem) => ({
@@ -203,15 +203,15 @@ const HomePage = {
     const setSearchType = (type) => {
       searchType.value = type
       contentSwitcher.value?.closeMenu()
-      useFilterStore().setSearchType(type)
+      useSearchStore().setSearchType(type)
     }
 
     const searchTerm = ref('')
     const handleSearch = async () => {
       if (!searchTerm.value) return
-      filterStore.setSearchTerm(searchTerm.value)
-      filterStore.setSearchType(searchType.value)
-      const query = filterStore.searchQueryParams
+      searchStore.setSearchTerm(searchTerm.value)
+      searchStore.setSearchType(searchType.value)
+      const query = searchStore.searchQueryParams
       const newPath = app.localePath({
         path: `/search/${
           searchType.value === ALL_MEDIA ? '' : searchType.value

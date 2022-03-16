@@ -4,10 +4,9 @@
   >
     <VSearchGrid
       :fetch-state="fetchState"
+      :query="query"
       :supported="supported"
       :search-type="searchType"
-      :search-term="searchTerm"
-      :search-params="searchQueryParams"
       :results-count="resultsCount"
       data-testid="search-grid"
     >
@@ -17,7 +16,7 @@
           :media-results="results"
           :fetch-state="fetchState"
           :is-filter-visible="isVisible"
-          :search-term="searchTerm"
+          :search-term="query.q"
           :supported="supported"
           data-testid="search-results"
         />
@@ -32,13 +31,13 @@ import { mapActions, mapGetters } from 'vuex'
 import { isShallowEqualObjects } from '@wordpress/is-shallow-equal'
 import { computed, inject } from '@nuxtjs/composition-api'
 
-import { useFilterStore } from '~/stores/filter'
-
 import { FETCH_MEDIA } from '~/constants/action-types'
 import { supportedSearchTypes } from '~/constants/media'
 import { MEDIA } from '~/constants/store-modules'
 import { isMinScreen } from '~/composables/use-media-query.js'
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
+
+import { useSearchStore } from '~/stores/search'
 
 import VSearchGrid from '~/components/VSearchGrid.vue'
 import VSkipToContentContainer from '~/components/VSkipToContentContainer.vue'
@@ -55,11 +54,11 @@ const BrowsePage = {
     const isMinScreenMd = isMinScreen('md')
     const { isVisible } = useFilterSidebarVisibility()
     const showScrollButton = inject('showScrollButton')
-    const filterStore = useFilterStore()
+    const searchStore = useSearchStore()
 
-    const searchTerm = computed(() => filterStore.searchTerm)
-    const searchType = computed(() => filterStore.searchType)
-    const searchQueryParams = computed(() => filterStore.searchQueryParams)
+    const searchTerm = computed(() => searchStore.searchTerm)
+    const searchType = computed(() => searchStore.searchType)
+    const query = computed(() => searchStore.searchQueryParams)
     const supported = computed(() =>
       supportedSearchTypes.includes(searchType.value)
     )
@@ -71,8 +70,8 @@ const BrowsePage = {
       searchTerm,
       searchType,
       supported,
-      searchQueryParams,
-      setSearchStateFromUrl: filterStore.setSearchStateFromUrl,
+      query,
+      setSearchStateFromUrl: searchStore.setSearchStateFromUrl,
     }
   },
   scrollToTop: false,
@@ -83,8 +82,8 @@ const BrowsePage = {
   },
   asyncData({ route, $pinia }) {
     if (process.server) {
-      const filterStore = useFilterStore($pinia)
-      filterStore.setSearchStateFromUrl({
+      const searchStore = useSearchStore($pinia)
+      searchStore.setSearchStateFromUrl({
         path: route.path,
         urlQuery: route.query,
       })

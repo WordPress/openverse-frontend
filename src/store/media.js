@@ -18,7 +18,8 @@ import {
 } from '~/constants/mutation-types'
 import { AUDIO, IMAGE, ALL_MEDIA, supportedMediaTypes } from '~/constants/media'
 import MediaService from '~/data/media-service'
-import { useFilterStore } from '~/stores/filter'
+
+import { useSearchStore } from '~/stores/search'
 
 /**
  * @return {import('./types').MediaState}
@@ -104,7 +105,7 @@ export const createActions = (services = mediaServices) => ({
       ...params
     } = payload
     const queryParams = prepareSearchQueryParams({
-      ...useFilterStore().searchQueryParams,
+      ...useSearchStore().searchQueryParams,
       ...params,
     })
 
@@ -267,7 +268,7 @@ export const getters = {
     }
   },
   searchType() {
-    return useFilterStore().searchType
+    return useSearchStore().searchType
   },
 }
 

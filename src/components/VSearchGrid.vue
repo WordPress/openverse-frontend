@@ -1,7 +1,7 @@
 <template>
   <section v-if="resultsCount">
     <header
-      v-if="searchTerm && supported"
+      v-if="query.q && supported"
       class="mt-4"
       :class="isAllView ? 'mb-10' : 'mb-8'"
     >
@@ -9,7 +9,7 @@
         class="leading-10"
         :size="isAllView ? 'large' : 'default'"
       >
-        {{ searchTerm }}
+        {{ query.q }}
       </VSearchResultsTitle>
     </header>
 
@@ -19,7 +19,7 @@
       v-if="!fetchState.isFetching"
       :type="metaSearchFormType"
       :has-no-results="hasNoResults"
-      :search-term="searchTerm"
+      :query="query"
       :is-supported="supported"
     />
   </section>
@@ -27,7 +27,7 @@
     <template #image>
       <VErrorImage :error-code="NO_RESULT" />
     </template>
-    <VNoResults :type="metaSearchFormType" :query="searchQueryParams" />
+    <VNoResults :type="metaSearchFormType" :query="query" />
   </VErrorSection>
 </template>
 
@@ -57,8 +57,8 @@ export default {
       type: Boolean,
       required: true,
     },
-    searchTerm: {
-      type: String,
+    query: {
+      type: Object,
       required: true,
     },
     searchType: {
@@ -66,9 +66,6 @@ export default {
         String
       ),
       required: true,
-    },
-    searchQueryParams: {
-      type: Object,
     },
     fetchState: {
       required: true,
@@ -83,7 +80,7 @@ export default {
       // noResult is hard-coded for search types that are not currently
       // supported by Openverse built-in search
       return props.supported
-        ? props.searchTerm !== '' && props.resultsCount === 0
+        ? props.query.q !== '' && props.resultsCount === 0
         : false
     })
     const metaSearchFormType = computed(() => {
