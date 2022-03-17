@@ -151,6 +151,10 @@ const VHeader = defineComponent({
       return getI18nCount(resultsCount.value)
     })
 
+    const localSearchTerm = ref(searchStore.searchTerm)
+    let searchTermChanged = computed(() => {
+      return searchStore.searchTerm !== localSearchTerm.value
+    })
     /**
      * Search term has a getter and setter to be used as a v-model.
      * To prevent sending unnecessary requests, we also keep track of whether
@@ -158,25 +162,29 @@ const VHeader = defineComponent({
      * @type {import('@nuxtjs/composition-api').WritableComputedRef<string>}
      */
     const searchTerm = computed({
-      get: () => searchStore.searchTerm,
+      get: () => localSearchTerm.value,
       set: (value) => {
-        searchStore.setSearchTerm(value)
-        searchTermChanged.value = true
+        localSearchTerm.value = value
       },
     })
-    const searchTermChanged = ref(false)
 
     /**
-     * If search term hasn't changed, don't do anything on a search route,
-     * and change path to search path (all content types) from other pages.
-     * If is search route and search term hasn't changed: return
-     * If is not search route and search term hasn't changed: set the search type to all, set path.
-     * If is search route and search term changed: set the query, set path
-     * If is not search route, and search term changed: set search type to all, set query, set path
+     * Called when the 'search' button in the header is clicked.
+     * There are several scenarios:
+     * - search term hasn't changed:
+     *   - on a search route, do nothing.
+     *   - on other routes: set searchType to 'All content', reset the media,
+     *     change the path to `/search/` (All content) and fetch media.
+     * - search term changed:
+     *   - on a search route: Update the store searchTerm value, update query `q` param, reset media,
+     *     fetch new media.
+     *   - on other routes: Update the store searchTerm value, set searchType to 'All content', reset media,
+     *     update query `q` param, fetch new media.
      */
     const handleSearch = async () => {
+      const searchStore = useSearchStore()
       const searchType = isSearchRoute.value
-        ? useSearchStore().searchType
+        ? searchStore.searchType
         : ALL_MEDIA
       if (
         isSearchRoute.value &&
@@ -189,7 +197,8 @@ const VHeader = defineComponent({
             store.dispatch(`${MEDIA}/${CLEAR_MEDIA}`, { mediaType })
           )
         )
-        useSearchStore().setSearchType(searchType)
+        searchStore.setSearchTerm(searchTerm.value)
+        searchStore.setSearchType(searchType)
       }
       const newPath = app.localePath({
         path: `/search/${searchType === 'all' ? '' : searchType}`,
@@ -199,7 +208,6 @@ const VHeader = defineComponent({
       await store.dispatch(`${MEDIA}/${FETCH_MEDIA}`, {
         ...searchStore.searchQueryParams,
       })
-      searchTermChanged.value = false
     }
 
     return {

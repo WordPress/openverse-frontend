@@ -93,8 +93,6 @@ export default {
             query: searchStore.searchQueryParams,
           })
           router.push(newPath)
-        } else {
-          console.log('Why did this fire? ', newQuery, oldQuery)
         }
       }
     )

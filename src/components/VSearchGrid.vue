@@ -1,5 +1,7 @@
 <template>
-  <section v-if="resultsCount">
+  <section
+    v-if="fetchState.isFetching || (!fetchState.isFetching && resultsCount)"
+  >
     <header
       v-if="query.q && supported"
       class="mt-4"

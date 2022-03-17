@@ -209,12 +209,19 @@ export const queryStringToQueryData = (queryString: string) => {
   return queryDataObject
 }
 
+/**
+ * Compares two API queries, excluding the search term (`q`) parameter.
+ */
 export const areQueriesEqual = (
-  oldQuery: ApiQueryParams,
-  newQuery: ApiQueryParams
+  newQuery: ApiQueryParams,
+  oldQuery: ApiQueryParams
 ): boolean => {
-  const oldQueryKeys = Object.keys(oldQuery) as QueryKey[]
-  if (oldQueryKeys.length !== Object.keys(newQuery).length) return false
+  const queryKeys = (query: ApiQueryParams) =>
+    Object.keys(query).filter((k) => k !== 'q') as QueryKey[]
+  const oldQueryKeys = queryKeys(oldQuery)
+  const newQueryKeys = queryKeys(newQuery)
+  if (oldQueryKeys.length !== newQueryKeys.length) return false
+
   for (const key of oldQueryKeys) {
     if (oldQuery[key] !== newQuery[key]) {
       return false
