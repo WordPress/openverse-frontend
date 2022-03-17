@@ -26,7 +26,6 @@ import {
   mediaFilterKeys,
   mediaUniqueFilterKeys,
 } from '~/constants/filters'
-import { warn } from '~/utils/console'
 import type { SupportedSearchType } from '~/constants/media'
 import type {
   ApiQueryParams,
@@ -228,10 +227,9 @@ export const useSearchStore = defineStore('search', () => {
     code?: string
   }) {
     if (typeof codeIdx === 'undefined' && typeof code === 'undefined') {
-      warn(
+      throw new Error(
         `Cannot toggle filter of type ${filterType}. Use code or codeIdx parameter`
       )
-      return
     }
     const filterItems = state.filters[filterType]
     const idx = codeIdx ?? filterItems.findIndex((f) => f.code === code)
@@ -284,9 +282,9 @@ export const useSearchStore = defineStore('search', () => {
         dependentFilters.push('modification')
       }
       return (
-        state.filters.licenseTypes.filter(
+        state.filters.licenseTypes.some(
           (item) => dependentFilters.includes(item.code) && item.checked
-        ).length > 0
+        )
       )
     }
   }

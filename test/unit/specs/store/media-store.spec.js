@@ -191,7 +191,7 @@ describe('Search Store', () => {
     let services = null
     let state
     let context
-    let filterStore
+    let searchStore
 
     beforeEach(() => {
       setActivePinia(createPinia())
@@ -234,8 +234,8 @@ describe('Search Store', () => {
     it.each(supportedMediaTypes)(
       'FETCH_SINGLE_MEDIA_TYPE (%s) on success',
       async (mediaType) => {
-        filterStore = useSearchStore()
-        filterStore.setSearchTerm('cat')
+        searchStore = useSearchStore()
+        searchStore.setSearchTerm('cat')
         const params = {
           q: 'foo',
           page: { [mediaType]: 1 },
@@ -364,8 +364,8 @@ describe('Search Store', () => {
       'FETCH_MEDIA_ITEM dispatches SEND_RESULT_CLICKED_EVENT',
       (mediaType) => {
         const params = { id: 'foo', mediaType }
-        filterStore = useSearchStore()
-        filterStore.setSearchTerm('cat')
+        searchStore = useSearchStore()
+        searchStore.setSearchTerm('cat')
         const action = createActions(services)[FETCH_MEDIA_ITEM]
         action(context, params)
       }

@@ -17,7 +17,7 @@ describe('VSearchGridFilter', () => {
   let storeMock
   let localVue
   let pinia
-  let filterStore
+  let searchStore
   const routerMock = { push: jest.fn() }
   const routeMock = { path: jest.fn() }
 
@@ -63,7 +63,7 @@ describe('VSearchGridFilter', () => {
         },
       },
     }
-    filterStore = useSearchStore(pinia)
+    searchStore = useSearchStore(pinia)
   })
 
   it('toggles filter', async () => {
@@ -77,7 +77,7 @@ describe('VSearchGridFilter', () => {
   })
 
   it('clears filters', async () => {
-    filterStore.toggleFilter({ filterType: 'licenses', code: 'by' })
+    searchStore.toggleFilter({ filterType: 'licenses', code: 'by' })
     await render(VSearchGridFilter, options)
     // if no checked checkboxes were found, this would raise an error
     screen.getByRole('checkbox', { checked: true })

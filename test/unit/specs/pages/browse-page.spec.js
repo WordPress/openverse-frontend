@@ -14,15 +14,15 @@ describe('SearchIndex', () => {
   let localVue
   let storeMock
   let pinia
-  let filterStore
+  let searchStore
   beforeEach(() => {
     localVue = createLocalVue()
     localVue.use(Vuex)
     localVue.use(PiniaVuePlugin)
     pinia = createPinia()
-    filterStore = useSearchStore(pinia)
-    filterStore.setSearchTerm('cat')
-    filterStore.setSearchType(IMAGE)
+    searchStore = useSearchStore(pinia)
+    searchStore.setSearchTerm('cat')
+    searchStore.setSearchType(IMAGE)
     storeMock = new Vuex.Store({
       modules: {
         media: {

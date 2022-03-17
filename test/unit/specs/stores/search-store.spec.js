@@ -24,8 +24,8 @@ describe('Search Store', () => {
   })
   describe('state', () => {
     it('sets initial filters to filterData', () => {
-      const filterStore = useSearchStore()
-      expect(filterStore.filters).toEqual(filterData)
+      const searchStore = useSearchStore()
+      expect(searchStore.filters).toEqual(filterData)
     })
   })
   describe('getters', () => {
