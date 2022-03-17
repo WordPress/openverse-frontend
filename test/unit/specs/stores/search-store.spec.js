@@ -18,7 +18,7 @@ jest.mock('~/utils/console', () => ({
   warn: jest.fn(),
 }))
 
-describe('Filter Store', () => {
+describe('Search Store', () => {
   beforeEach(() => {
     setActivePinia(createPinia())
   })
@@ -47,16 +47,16 @@ describe('Filter Store', () => {
     `(
       'returns correct filter status for $query and searchType $searchType',
       ({ query, searchType, filterCount }) => {
-        const filterStore = useSearchStore()
-        filterStore.setSearchType(searchType)
+        const searchStore = useSearchStore()
+        searchStore.setSearchType(searchType)
         for (let [filterType, values] of Object.entries(query)) {
           values.forEach((val) =>
-            filterStore.toggleFilter({ filterType, code: val })
+            searchStore.toggleFilter({ filterType, code: val })
           )
         }
 
-        expect(filterStore.appliedFilterCount).toEqual(filterCount)
-        expect(filterStore.isAnyFilterApplied).toBe(filterCount > 0)
+        expect(searchStore.appliedFilterCount).toEqual(filterCount)
+        expect(searchStore.isAnyFilterApplied).toBe(filterCount > 0)
       }
     )
   })
@@ -75,9 +75,9 @@ describe('Filter Store', () => {
     `(
       'mediaFiltersForDisplay returns $filterTypeCount filters for $searchType',
       ({ searchType, filterTypeCount }) => {
-        const filterStore = useSearchStore()
-        filterStore.setSearchType(searchType)
-        const filtersForDisplay = filterStore.searchFilters
+        const searchStore = useSearchStore()
+        searchStore.setSearchType(searchType)
+        const filtersForDisplay = searchStore.searchFilters
         const expectedFilterCount = Math.max(0, filterTypeCount - 1)
         expect(Object.keys(filtersForDisplay).length).toEqual(
           expectedFilterCount
@@ -106,13 +106,13 @@ describe('Filter Store', () => {
     `(
       'returns correct searchQueryParams and filter status for $query and searchType $searchType',
       ({ query, searchType }) => {
-        const filterStore = useSearchStore()
+        const searchStore = useSearchStore()
         const expectedQueryParams = query
         // It should discard the values that are not applicable for the search type:
         if (searchType === AUDIO && query.extension === 'svg') {
           delete expectedQueryParams.extension
         }
-        filterStore.setSearchStateFromUrl({
+        searchStore.setSearchStateFromUrl({
           path: `/search/${searchType === ALL_MEDIA ? '' : searchType}`,
           urlQuery: { ...expectedQueryParams },
         })
@@ -125,7 +125,7 @@ describe('Filter Store', () => {
         if (!('q' in expectedQueryParams)) {
           expectedQueryParams.q = ''
         }
-        expect(filterStore.searchQueryParams).toEqual(expectedQueryParams)
+        expect(searchStore.searchQueryParams).toEqual(expectedQueryParams)
       }
     )
   })
@@ -133,19 +133,19 @@ describe('Filter Store', () => {
     it.each(['foo', ''])(
       '`setSearchTerm correctly updates the searchTerm',
       (searchTerm) => {
-        const filterStore = useSearchStore()
+        const searchStore = useSearchStore()
         const expectedSearchTerm = searchTerm
-        filterStore.setSearchTerm(searchTerm)
-        expect(filterStore.searchTerm).toEqual(expectedSearchTerm)
+        searchStore.setSearchTerm(searchTerm)
+        expect(searchStore.searchTerm).toEqual(expectedSearchTerm)
       }
     )
     it.each(supportedSearchTypes)(
       'setSearchType correctly updates the searchType',
       (type) => {
-        const filterStore = useSearchStore()
-        filterStore.setSearchType(type)
+        const searchStore = useSearchStore()
+        searchStore.setSearchType(type)
 
-        expect(filterStore.searchType).toEqual(type)
+        expect(searchStore.searchType).toEqual(type)
       }
     )
 
@@ -159,10 +159,10 @@ describe('Filter Store', () => {
     `(
       "`setSearchStateFromUrl` should set searchType '$searchType' from path '$path'",
       ({ searchType, path }) => {
-        const filterStore = useSearchStore()
-        filterStore.setSearchStateFromUrl({ path: path, urlQuery: {} })
+        const searchStore = useSearchStore()
+        searchStore.setSearchStateFromUrl({ path: path, urlQuery: {} })
 
-        expect(filterStore.searchType).toEqual(searchType)
+        expect(searchStore.searchType).toEqual(searchType)
       }
     )
 
@@ -175,17 +175,17 @@ describe('Filter Store', () => {
     `(
       "`setSearchStateFromUrl` should set '$searchType' from query  $query and path '$path'",
       ({ query, path, searchType }) => {
-        const filterStore = useSearchStore()
-        const expectedQuery = { ...filterStore.searchQueryParams, ...query }
+        const searchStore = useSearchStore()
+        const expectedQuery = { ...searchStore.searchQueryParams, ...query }
         // The values that are not applicable for the search type should be discarded
         if (searchType === IMAGE) {
           delete expectedQuery.duration
         }
 
-        filterStore.setSearchStateFromUrl({ path: path, urlQuery: query })
+        searchStore.setSearchStateFromUrl({ path: path, urlQuery: query })
 
-        expect(filterStore.searchType).toEqual(searchType)
-        expect(filterStore.searchQueryParams).toEqual(expectedQuery)
+        expect(searchStore.searchType).toEqual(searchType)
+        expect(searchStore.searchQueryParams).toEqual(expectedQuery)
       }
     )
 
@@ -199,21 +199,21 @@ describe('Filter Store', () => {
     `(
       'toggleFilter updates the query values to $query',
       ({ filters, query }) => {
-        const filterStore = useSearchStore()
+        const searchStore = useSearchStore()
         for (const filterItem of filters) {
           const [filterType, code] = filterItem
-          filterStore.toggleFilter({ filterType, code })
+          searchStore.toggleFilter({ filterType, code })
         }
-        expect(filterStore.searchQueryParams[query[0]]).toEqual(query[1])
+        expect(searchStore.searchQueryParams[query[0]]).toEqual(query[1])
       }
     )
 
     it.each([ALL_MEDIA, IMAGE, AUDIO, VIDEO])(
       'Clears filters when search type is %s',
       (searchType) => {
-        const filterStore = useSearchStore()
+        const searchStore = useSearchStore()
         const expectedQueryParams = { q: 'cat' }
-        filterStore.setSearchStateFromUrl({
+        searchStore.setSearchStateFromUrl({
           path: `/search/${searchType === ALL_MEDIA ? '' : searchType}`,
           urlQuery: {
             q: 'cat',
@@ -223,10 +223,10 @@ describe('Filter Store', () => {
           },
         })
         if (supportedSearchTypes.includes(searchType)) {
-          expect(filterStore.query).not.toEqual(expectedQueryParams)
+          expect(searchStore.query).not.toEqual(expectedQueryParams)
         }
-        filterStore.clearFilters()
-        expect(filterStore.searchQueryParams).toEqual(expectedQueryParams)
+        searchStore.clearFilters()
+        expect(searchStore.searchQueryParams).toEqual(expectedQueryParams)
       }
     )
   })
@@ -244,39 +244,39 @@ describe('Filter Store', () => {
     `(
       'toggleFilter updates $filterType filter state',
       ({ filterType, codeIdx }) => {
-        const filterStore = useSearchStore()
+        const searchStore = useSearchStore()
 
-        filterStore.toggleFilter({ filterType, codeIdx })
-        const filterItem = filterStore.filters[filterType][codeIdx]
+        searchStore.toggleFilter({ filterType, codeIdx })
+        const filterItem = searchStore.filters[filterType][codeIdx]
         expect(filterItem.checked).toEqual(true)
       }
     )
 
     it('toggleFilter updates isFilterApplied with provider', () => {
-      const filterStore = useSearchStore()
-      filterStore.setSearchType(IMAGE)
-      filterStore.initProviderFilters({
+      const searchStore = useSearchStore()
+      searchStore.setSearchType(IMAGE)
+      searchStore.initProviderFilters({
         mediaType: IMAGE,
         providers: [{ source_name: 'met', display_name: 'Met' }],
       })
 
-      filterStore.toggleFilter({ filterType: 'imageProviders', code: 'met' })
-      expect(filterStore.appliedFilterCount).toEqual(1)
-      expect(filterStore.isAnyFilterApplied).toEqual(true)
+      searchStore.toggleFilter({ filterType: 'imageProviders', code: 'met' })
+      expect(searchStore.appliedFilterCount).toEqual(1)
+      expect(searchStore.isAnyFilterApplied).toEqual(true)
     })
 
     it('toggleFilter updates isFilterApplied with license type', () => {
-      const filterStore = useSearchStore()
-      filterStore.toggleFilter({ filterType: 'licenseTypes', codeIdx: 0 })
+      const searchStore = useSearchStore()
+      searchStore.toggleFilter({ filterType: 'licenseTypes', codeIdx: 0 })
 
-      expect(filterStore.isAnyFilterApplied).toEqual(true)
+      expect(searchStore.isAnyFilterApplied).toEqual(true)
     })
 
     it('initProviderFilters merges with existing provider filters', () => {
-      const filterStore = useSearchStore()
+      const searchStore = useSearchStore()
       const existingProviderFilters = [{ code: 'met', checked: true }]
 
-      filterStore.$patch({
+      searchStore.$patch({
         filters: { imageProviders: existingProviderFilters },
       })
       const providers = [
@@ -284,44 +284,43 @@ describe('Filter Store', () => {
         { source_name: 'flickr', display_name: 'Flickr' },
       ]
 
-      filterStore.initProviderFilters({
+      searchStore.initProviderFilters({
         mediaType: 'image',
         providers: providers,
       })
 
-      expect(filterStore.filters.imageProviders).toEqual([
+      expect(searchStore.filters.imageProviders).toEqual([
         { code: 'met', name: 'Metropolitan', checked: true },
         { code: 'flickr', name: 'Flickr', checked: false },
       ])
     })
 
-    it('clearFilters resets filters to initial state', async () => {
-      const filterStore = useSearchStore()
-      filterStore.filters.licenses = [
-        { code: 'by', checked: true },
-        { code: 'by-nc', checked: true },
-        { code: 'by-nd', checked: true },
-      ]
-      filterStore.clearFilters()
-      expect(filterStore.filters).toEqual(filterData)
+    it('clearFilters resets filters to initial state', () => {
+      const searchStore = useSearchStore()
+      searchStore.toggleFilter({ filterType: 'licenses', code: 'by' })
+      searchStore.toggleFilter({ filterType: 'licenses', code: 'by-nc' })
+      searchStore.toggleFilter({ filterType: 'licenses', code: 'by-nd' })
+
+      searchStore.clearFilters()
+      expect(searchStore.filters).toEqual(filterData)
     })
 
-    it('clearFilters sets providers filters checked to false', async () => {
-      const filterStore = useSearchStore()
-      filterStore.filters.imageProviders = [
+    it('clearFilters sets providers filters checked to false', () => {
+      const searchStore = useSearchStore()
+      searchStore.filters.imageProviders = [
         { code: 'met', name: 'Metropolitan', checked: true },
         { code: 'flickr', name: 'Flickr', checked: false },
       ]
 
-      filterStore.clearFilters()
+      searchStore.clearFilters()
       const expectedFilters = {
-        ...filterStore.filters,
+        ...searchStore.filters,
         imageProviders: [
           { code: 'met', name: 'Metropolitan', checked: false },
           { code: 'flickr', name: 'Flickr', checked: false },
         ],
       }
-      expect(filterStore.filters).toEqual(expectedFilters)
+      expect(searchStore.filters).toEqual(expectedFilters)
     })
 
     it.each`
@@ -337,10 +336,10 @@ describe('Filter Store', () => {
     `(
       "toggleFilter should set filter '$code' of type '$filterType",
       ({ filterType, code, idx }) => {
-        const filterStore = useSearchStore()
-        filterStore.toggleFilter({ filterType: filterType, code: code })
+        const searchStore = useSearchStore()
+        searchStore.toggleFilter({ filterType: filterType, code: code })
 
-        const filterItem = filterStore.filters[filterType][idx]
+        const filterItem = searchStore.filters[filterType][idx]
 
         expect(filterItem.checked).toEqual(true)
       }
@@ -362,25 +361,25 @@ describe('Filter Store', () => {
     `(
       'isFilterDisabled for $item.code should return $disabled when $dependency.code is checked',
       ({ item, dependency, disabled }) => {
-        const filterStore = useSearchStore()
-        filterStore.toggleFilter({
+        const searchStore = useSearchStore()
+        searchStore.toggleFilter({
           filterType: dependency.filterType,
           code: dependency.code,
         })
-        const isDisabled = filterStore.isFilterDisabled(item, item.filterType)
+        const isDisabled = searchStore.isFilterDisabled(item, item.filterType)
         expect(isDisabled).toBe(disabled)
       }
     )
 
     it('toggleFilter without code or codeIdx parameters warns about it', () => {
-      const filterStore = useSearchStore()
-      const expectedFilters = filterStore.filters
+      const searchStore = useSearchStore()
+      const expectedFilters = searchStore.filters
 
-      filterStore.toggleFilter({ filterType: 'licenses' })
+      searchStore.toggleFilter({ filterType: 'licenses' })
       expect(warn).toHaveBeenCalledWith(
         'Cannot toggle filter of type licenses. Use code or codeIdx parameter'
       )
-      expect(filterStore.filters).toEqual(expectedFilters)
+      expect(searchStore.filters).toEqual(expectedFilters)
     })
 
     it.each`
@@ -393,20 +392,20 @@ describe('Filter Store', () => {
     `(
       'changing searchType clears all but $expectedFilterCount $nextSearchType filters ',
       async ({ searchType, nextSearchType, expectedFilterCount }) => {
-        const filterStore = useSearchStore()
-        filterStore.setSearchType(searchType)
+        const searchStore = useSearchStore()
+        searchStore.setSearchType(searchType)
         // Set all filters to checked
-        for (let ft in filterStore.filters) {
-          for (let f of filterStore.filters[ft]) {
-            filterStore.toggleFilter({ filterType: ft, code: f.code })
+        for (let ft in searchStore.filters) {
+          for (let f of searchStore.filters[ft]) {
+            searchStore.toggleFilter({ filterType: ft, code: f.code })
           }
         }
-        filterStore.setSearchType(nextSearchType)
+        searchStore.setSearchType(nextSearchType)
         await nextTick()
 
-        const checkedFilterCount = Object.keys(filterStore.filters)
+        const checkedFilterCount = Object.keys(searchStore.filters)
           .map(
-            (key) => filterStore.filters[key].filter((f) => f.checked).length
+            (key) => searchStore.filters[key].filter((f) => f.checked).length
           )
           .reduce((partialSum, count) => partialSum + count, 0)
         expect(checkedFilterCount).toEqual(expectedFilterCount)
@@ -426,18 +425,18 @@ describe('Filter Store', () => {
     `(
       'changing searchType clears all but $expectedFilterCount ALL_MEDIA filters',
       async ({ searchType, nextSearchType, expectedFilterCount }) => {
-        const filterStore = useSearchStore()
-        filterStore.setSearchType(searchType)
+        const searchStore = useSearchStore()
+        searchStore.setSearchType(searchType)
         // Set all filters to checked
-        for (let [fc, filter_items] of Object.entries(filterStore.filters)) {
+        for (let [fc, filter_items] of Object.entries(searchStore.filters)) {
           for (let f of filter_items) {
-            filterStore.toggleFilter({ filterType: fc, code: f.code })
+            searchStore.toggleFilter({ filterType: fc, code: f.code })
           }
         }
-        filterStore.setSearchType(nextSearchType)
-        const checkedFilterCount = Object.keys(filterStore.filters)
+        searchStore.setSearchType(nextSearchType)
+        const checkedFilterCount = Object.keys(searchStore.filters)
           .map(
-            (key) => filterStore.filters[key].filter((f) => f.checked).length
+            (key) => searchStore.filters[key].filter((f) => f.checked).length
           )
           .reduce((partialSum, count) => partialSum + count, 0)
 
@@ -446,19 +445,19 @@ describe('Filter Store', () => {
     )
 
     it('Does not set filter or count filter as applied, and does not raise error for unsupported search types', () => {
-      const filterStore = useSearchStore()
-      filterStore.toggleFilter({
+      const searchStore = useSearchStore()
+      searchStore.toggleFilter({
         filterType: 'licenseTypes',
         code: 'commercial',
       })
-      expect(filterStore.isAnyFilterApplied).toEqual(true)
+      expect(searchStore.isAnyFilterApplied).toEqual(true)
 
-      filterStore.setSearchType(VIDEO)
-      filterStore.toggleFilter({
+      searchStore.setSearchType(VIDEO)
+      searchStore.toggleFilter({
         filterType: 'licenseTypes',
         code: 'commercial',
       })
-      expect(filterStore.isAnyFilterApplied).toEqual(false)
+      expect(searchStore.isAnyFilterApplied).toEqual(false)
     })
   })
 })

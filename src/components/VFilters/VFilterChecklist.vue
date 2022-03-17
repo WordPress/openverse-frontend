@@ -105,7 +105,7 @@ export default {
         : this.$t(item.name)
     },
     onValueChange({ value }) {
-      this.$emit('filterChanged', {
+      this.$emit('toggle-filter', {
         code: value,
         filterType: this.filterType,
       })

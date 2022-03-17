@@ -214,6 +214,7 @@ export const areQueriesEqual = (
   newQuery: ApiQueryParams
 ): boolean => {
   const oldQueryKeys = Object.keys(oldQuery) as QueryKey[]
+  if (oldQueryKeys.length !== Object.keys(newQuery).length) return false
   for (const key of oldQueryKeys) {
     if (oldQuery[key] !== newQuery[key]) {
       return false

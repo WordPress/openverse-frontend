@@ -63,7 +63,15 @@ export const useSearchStore = defineStore('search', () => {
    * drops all parameters with blank values.
    */
   const searchQueryParams: ComputedRef<ApiQueryParams> = computed(() => {
-    const query = { ...filtersToQueryData(state.filters, state.searchType) }
+    return computeQueryParams(searchType.value, filters.value)
+  })
+
+  const computeQueryParams = (
+    searchType: SupportedSearchType,
+    filters: Filters = state.filters
+  ) => {
+    const query = { ...filtersToQueryData(filters, searchType) }
+
     const queryKeys = Object.keys(query) as QueryKey[]
     return queryKeys.reduce(
       (obj, key: QueryKey) => {
@@ -75,7 +83,7 @@ export const useSearchStore = defineStore('search', () => {
       // Ensure that q filter always comes first
       { q: state.searchTerm.trim() } as ApiQueryParams
     )
-  })
+  }
 
   const allFilterCategories = Object.keys(state.filters) as FilterCategory[]
   /**
@@ -210,26 +218,24 @@ export const useSearchStore = defineStore('search', () => {
   /**
    * Toggles a filter's checked parameter. Requires either codeIdx or code.
    */
-  function toggleFilter(params: {
-    filterType: import('../store/types').FilterCategory
+  function toggleFilter({
+    filterType,
+    codeIdx,
+    code,
+  }: {
+    filterType: FilterCategory
     codeIdx?: number
     code?: string
   }) {
-    if (
-      typeof params.codeIdx === 'undefined' &&
-      typeof params.code === 'undefined'
-    ) {
+    if (typeof codeIdx === 'undefined' && typeof code === 'undefined') {
       warn(
-        `Cannot toggle filter of type ${params.filterType}. Use code or codeIdx parameter`
+        `Cannot toggle filter of type ${filterType}. Use code or codeIdx parameter`
       )
       return
     }
-    const { filterType } = params
-    const codeIdx =
-      params.codeIdx ??
-      state.filters[filterType].findIndex((f) => f.code === params.code)
-    state.filters[filterType][codeIdx].checked =
-      !state.filters[filterType][codeIdx].checked
+    const filterItems = state.filters[filterType]
+    const idx = codeIdx ?? filterItems.findIndex((f) => f.code === code)
+    state.filters[filterType][idx].checked = !filterItems[idx].checked
   }
 
   /**
@@ -238,7 +244,15 @@ export const useSearchStore = defineStore('search', () => {
    * handled separately.
    *
    */
-  const clearFilters = () => replaceFilters(getBaseFiltersWithProviders())
+  const clearFilters = () => {
+    for (const filterCategory of Object.keys(
+      state.filters
+    ) as FilterCategory[]) {
+      for (const filterItem of state.filters[filterCategory]) {
+        filterItem.checked = false
+      }
+    }
+  }
 
   /**
    * Selecting some filter items disables related items. For example, selecting an `nc`
@@ -297,7 +311,7 @@ export const useSearchStore = defineStore('search', () => {
     urlQuery,
   }: {
     path: string
-    urlQuery: { [key: string]: string }
+    urlQuery: Record<string, string>
   }) {
     if (urlQuery.q) {
       setSearchTerm(urlQuery.q.trim())
@@ -337,5 +351,6 @@ export const useSearchStore = defineStore('search', () => {
     isFilterDisabled,
     clearFilters,
     toggleFilter,
+    computeQueryParams,
   }
 })

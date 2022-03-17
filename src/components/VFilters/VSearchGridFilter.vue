@@ -2,9 +2,6 @@
   <div
     class="filters py-8 px-10 min-h-full md:bg-dark-charcoal-06"
     data-testid="filters-list"
-    @onUpdateFilter="onUpdateFilter"
-    @onToggleSearchGridFilter="$emit('close')"
-    @onClearFilters="clearFilters"
   >
     <div class="flex items-center justify-between mt-2 mb-6">
       <h4 class="text-sr font-semibold py-2 uppercase">
@@ -27,7 +24,7 @@
         :options="filters[filterType]"
         :title="filterTypeTitle(filterType)"
         :filter-type="filterType"
-        @filterChanged="onUpdateFilter"
+        @toggle-filter="toggleFilter"
       />
     </form>
     <footer v-if="isAnyFilterApplied" class="flex justify-between">
@@ -43,10 +40,17 @@
 </template>
 
 <script>
-import { computed, useContext, useRouter } from '@nuxtjs/composition-api'
+import {
+  computed,
+  useContext,
+  useRoute,
+  useRouter,
+  watch,
+} from '@nuxtjs/composition-api'
 import { kebab } from 'case'
 
 import { useSearchStore } from '~/stores/search'
+import { areQueriesEqual } from '~/utils/search-query-transform'
 
 import VFilterChecklist from '~/components/VFilters/VFilterChecklist.vue'
 
@@ -58,7 +62,8 @@ export default {
   setup() {
     const searchStore = useSearchStore()
 
-    const { i18n } = useContext()
+    const { app, i18n } = useContext()
+    const route = useRoute()
     const router = useRouter()
 
     const isAnyFilterApplied = computed(() => searchStore.isAnyFilterApplied)
@@ -71,11 +76,28 @@ export default {
       return i18n.t(`filters.${kebab(filterType)}.title`)
     }
 
-    const updateSearch = async () => {
-      router.push({ query: searchStore.searchQueryParams })
-    }
-
-    searchStore.$subscribe(() => updateSearch())
+    /**
+     * This watcher fires even when the queries are equal. We update the path only
+     * when the queries change.
+     */
+    watch(
+      () => searchStore.searchQueryParams,
+      /**
+       * @param {import('../../store/types').ApiQueryParams} newQuery
+       * @param {import('../../store/types').ApiQueryParams} oldQuery
+       */
+      (newQuery, oldQuery) => {
+        if (!areQueriesEqual(newQuery, oldQuery)) {
+          const newPath = app.localePath({
+            path: route.value.path,
+            query: searchStore.searchQueryParams,
+          })
+          router.push(newPath)
+        } else {
+          console.log('Why did this fire? ', newQuery, oldQuery)
+        }
+      }
+    )
 
     return {
       isAnyFilterApplied,
@@ -83,7 +105,7 @@ export default {
       filterTypes,
       filterTypeTitle,
       clearFilters: searchStore.clearFilters,
-      onUpdateFilter: searchStore.toggleFilter,
+      toggleFilter: searchStore.toggleFilter,
     }
   },
 }

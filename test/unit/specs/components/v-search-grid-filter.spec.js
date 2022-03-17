@@ -19,6 +19,7 @@ describe('VSearchGridFilter', () => {
   let pinia
   let filterStore
   const routerMock = { push: jest.fn() }
+  const routeMock = { path: jest.fn() }
 
   beforeEach(() => {
     localVue = createLocalVue()
@@ -50,10 +51,12 @@ describe('VSearchGridFilter', () => {
       pinia,
       i18n,
       mocks: {
+        $route: routeMock,
         $router: routerMock,
         $store: storeMock,
         $nuxt: {
           context: {
+            app: { localePath: jest.fn() },
             i18n: { t: (s) => s },
             store: storeMock,
           },
