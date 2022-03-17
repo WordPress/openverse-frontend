@@ -40,6 +40,7 @@ export const legacySourceMap = {
   Europeana: {
     audio(search) {
       let query = `${search.q} AND RIGHTS:*creative*` // search cc licensed works
+
       if (search.filters && search.filters.commercial) {
         if (search.filters.commercial) query = `${query} AND NOT RIGHTS:*nc*`
         if (search.filters.modify) query = `${query} AND NOT RIGHTS:*nd*`

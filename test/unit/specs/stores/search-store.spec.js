@@ -10,13 +10,8 @@ import {
   supportedSearchTypes,
   VIDEO,
 } from '~/constants/media'
-import { warn } from '~/utils/console.ts'
 
 import { useSearchStore } from '~/stores/search'
-
-jest.mock('~/utils/console', () => ({
-  warn: jest.fn(),
-}))
 
 describe('Search Store', () => {
   beforeEach(() => {
@@ -375,10 +370,12 @@ describe('Search Store', () => {
       const searchStore = useSearchStore()
       const expectedFilters = searchStore.filters
 
-      searchStore.toggleFilter({ filterType: 'licenses' })
-      expect(warn).toHaveBeenCalledWith(
+      expect(() =>
+        searchStore.toggleFilter({ filterType: 'licenses' })
+      ).toThrow(
         'Cannot toggle filter of type licenses. Use code or codeIdx parameter'
       )
+
       expect(searchStore.filters).toEqual(expectedFilters)
     })
 

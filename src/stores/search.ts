@@ -158,28 +158,15 @@ export const useSearchStore = defineStore('search', () => {
   }
 
   /**
-   * Replaces filters with the newFilterData parameter, making sure that
-   * audio/image provider filters are handled correctly.
+   * Replaces filters with the newFilterData object that was created using initial filters,
+   * and setting parameters from the search query to checked.
+   *
+   *
+   *
    */
   function replaceFilters(newFilterData: Filters) {
-    const providerFilters: FilterCategory[] = [
-      'audioProviders',
-      'imageProviders',
-    ]
-
     allFilterCategories.forEach((filterCategory) => {
-      if (providerFilters.includes(filterCategory)) {
-        newFilterData[filterCategory].forEach((provider) => {
-          const idx = state.filters[filterCategory].findIndex(
-            (p) => p.code === provider.code
-          )
-          if (idx > -1) {
-            state.filters[filterCategory][idx].checked = provider.checked
-          }
-        })
-      } else {
-        state.filters[filterCategory] = newFilterData[filterCategory]
-      }
+      state.filters[filterCategory] = newFilterData[filterCategory]
     })
   }
 
@@ -281,10 +268,8 @@ export const useSearchStore = defineStore('search', () => {
       if (item.code.includes('nd')) {
         dependentFilters.push('modification')
       }
-      return (
-        state.filters.licenseTypes.some(
-          (item) => dependentFilters.includes(item.code) && item.checked
-        )
+      return state.filters.licenseTypes.some(
+        (item) => dependentFilters.includes(item.code) && item.checked
       )
     }
   }

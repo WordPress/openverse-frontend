@@ -104,6 +104,7 @@ export const queryStringToSearchType = (
  * `source` - audioProviders/imageProviders
  * `extensions` - audioExtensions/imageExtensions
  * `categories` - audioCategories/imageCategories
+ *
  * This function sets only filters that are possible for current
  * media type. E.g., for queryString `search/audio?extensions=ogg`
  * the `audioExtensions.ogg.checked` is set to true,
@@ -132,7 +133,13 @@ const getMediaTypeApiFilters = (
 }
 
 /**
- * Converts the browser filter query string into the internal filter store data format
+ * Converts the browser filter query string into the internal filter store data format.
+ * For the API parameters that have the same name, but correspond to different filter categories
+ * (`differentFiltersWithSameApiParams`), only the filters that exist for the selected search type
+ * are used:
+ * E.g. when the search type is `audio`, `extension=jpg,mp3` sets the audioExtensions mp3.checked to true,
+ * and discards `jpg`.
+ *
  * @param query - browser filter query
  * @param searchType - search type determines which filters are applied
  * @param defaultFilters - default filters for testing purposes
@@ -160,23 +167,29 @@ export const queryToFilterData = ({
   ]
   filterTypes.forEach((filterDataKey) => {
     if (differentFiltersWithSameApiParams.includes(filterDataKey)) {
-      const parameter = query[filterPropertyMappings[filterDataKey]]
-      if (parameter) {
-        filters[filterDataKey] = getMediaTypeApiFilters(
-          parameter,
-          filters[filterDataKey]
-        )
+      if (filterDataKey.startsWith(searchType)) {
+        const parameter = query[filterPropertyMappings[filterDataKey]]
+        if (parameter) {
+          filters[filterDataKey] = getMediaTypeApiFilters(
+            parameter,
+            filters[filterDataKey]
+          )
+        }
       }
     } else {
       const queryDataKey = filterPropertyMappings[filterDataKey]
       if (query[queryDataKey]) {
-        const filterValues = query[queryDataKey].split(',')
-        filterValues.forEach((val: string) => {
-          const idx = filters[filterDataKey].findIndex((f) => f.code === val)
-          if (idx >= 0) {
-            filters[filterDataKey][idx].checked = true
-          }
-        })
+        if (queryDataKey === 'mature' && query[queryDataKey].length > 0) {
+          filters[filterDataKey][0].checked = true
+        } else {
+          const filterValues = query[queryDataKey].split(',')
+          filterValues.forEach((val: string) => {
+            const idx = filters[filterDataKey].findIndex((f) => f.code === val)
+            if (idx >= 0) {
+              filters[filterDataKey][idx].checked = true
+            }
+          })
+        }
       }
     }
   })
