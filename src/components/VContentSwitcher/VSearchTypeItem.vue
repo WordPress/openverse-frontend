@@ -2,6 +2,7 @@
   <VItem
     :selected="selected"
     :is-first="itemId === 0"
+    v-bind="component"
     @click.native="$emit('click', item)"
   >
     <div class="flex flex-row items-center text-base">
@@ -15,10 +16,12 @@
 </template>
 
 <script>
-import { computed } from '@nuxtjs/composition-api'
+import { computed, useContext } from '@nuxtjs/composition-api'
 import { defineComponent } from '@vue/composition-api'
 
-import { contentStatus } from '~/constants/media'
+import { ALL_MEDIA, contentStatus } from '~/constants/media'
+
+import { useSearchStore } from '~/stores/search'
 
 import VIcon from '~/components/VIcon/VIcon.vue'
 import VItem from '~/components/VItemGroup/VItem.vue'
@@ -30,16 +33,33 @@ const propTypes = {
   itemId: { type: Number, required: true },
   selected: { type: Boolean, default: false },
   icon: { type: String, required: true },
+  isInHeader: { type: Boolean, default: true },
 }
 export default defineComponent({
   name: 'VSearchTypeItem',
   components: { VIcon, VItem, VPill },
   props: propTypes,
   setup(props) {
+    const { app } = useContext()
+
+    const searchStore = useSearchStore()
     const status = computed(() => {
       return contentStatus[props.item]
     })
+
+    const component = computed(() => {
+      if (props.isInHeader) {
+        return {
+          as: 'VLink',
+          href: app.localePath({
+            path: `/search/${props.item === ALL_MEDIA ? '' : props.item}`,
+            query: searchStore.computeQueryParams(props.item),
+          }),
+        }
+      } else return {}
+    })
     return {
+      component,
       status,
     }
   },
