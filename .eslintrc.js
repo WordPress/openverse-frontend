@@ -11,8 +11,8 @@ module.exports = {
     parser: '@typescript-eslint/parser',
   },
   extends: [
-    'plugin:@typescript-eslint/recommended',
     'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
     'plugin:vue/recommended',
     'plugin:prettier/recommended',
     'plugin:vuejs-accessibility/recommended',
@@ -143,9 +143,6 @@ module.exports = {
         ],
       },
     ],
-    // https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/no-unused-vars.md
-    'no-unused-vars': 'off',
-    '@typescript-eslint/no-unused-vars': ['error'],
   },
   overrides: [
     {
