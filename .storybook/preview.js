@@ -8,12 +8,12 @@
  */
 
 // eslint-disable-next-line import/export, import/no-unresolved
-export * from '~~/.nuxt-storybook/storybook/preview.js'
+export * from '~~/.nuxt-storybook/storybook/preview'
 import {
   globalTypes as nuxtGlobalTypes,
   decorators as nuxtDecorators,
   // eslint-disable-next-line import/no-unresolved
-} from '~~/.nuxt-storybook/storybook/preview.js'
+} from '~~/.nuxt-storybook/storybook/preview'
 
 // eslint-disable-next-line import/order
 import { WithRTL } from './decorators/with-rtl'
