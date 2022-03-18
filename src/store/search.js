@@ -49,6 +49,11 @@ export const getters = {
   searchQueryParams: (state) => {
     // Ensure that q filter always comes first
     const params = { q: state.query.q.trim() }
+    //  Here the use of this variable is optional
+    let toCheckIfQueryisNull = false
+    if (params.q === 'null') {
+      toCheckIfQueryisNull = true
+    }
     // Handle mature filter separately
     const filterKeys = Object.keys(state.query).filter(
       (key) => !['q', 'mature'].includes(key)
@@ -61,7 +66,11 @@ export const getters = {
     if (state.query.mature === true) {
       params.mature = true
     }
-    return params
+    if (!toCheckIfQueryisNull) {
+      return params
+    } else {
+      return null
+    }
   },
   searchFilters: (state) => {
     return useFilterStore().getMediaTypeFilters({ mediaType: state.searchType })
