@@ -80,11 +80,7 @@ export default {
     const licenseName = computed(() => {
       return {
         readable: i18n.t(`license-readable-names.${props.license}`),
-        full:
-          // This is the list of licenses without abbreviation
-          props.license === 'pdm'
-            ? i18n.t(`license-names.${props.license}`)
-            : getFullLicenseName(props.license),
+        full: getFullLicenseName(props.license, '', i18n),
       }
     })
 

@@ -1,25 +1,11 @@
-import type {
-  License,
-  PublicDomainMark,
-  LicenseVersion,
-  CcLicense,
-} from '~/constants/license'
+import type { License, LicenseVersion } from '~/constants/license'
 import {
   CC_LICENSES,
   DEPRECATED_CC_LICENSES,
   PUBLIC_DOMAIN_MARKS,
 } from '~/constants/license'
 
-// type LicenseName =
-//   | `${Uppercase<PublicDomainMark>} 1.0`
-//   | `CC ${Capitalize<DeprecatedCcLicense>} 1.0`
-//   | `CC ${Uppercase<CcLicense>} ${LicenseVersion}`
-
-type LicenseName =
-  | `${Uppercase<PublicDomainMark>} ${LicenseVersion}` // technically only v1
-  | `CC Sampling+ ${LicenseVersion}` // technically only v1
-  | `CC NC-Sampling+ ${LicenseVersion}` // technically only v1
-  | `CC ${Uppercase<CcLicense>} ${LicenseVersion}`
+import type { IVueI18n } from 'vue-i18n'
 
 /**
  * Get the full name of the license in a displayable format from the license
@@ -27,21 +13,33 @@ type LicenseName =
  *
  * @param license - the slug of the license
  * @param licenseVersion - the version number of the license
+ * @param i18n - the i18n instance to access translations
  * @returns the full name of the license
  */
 export const getFullLicenseName = (
   license: License,
-  licenseVersion: LicenseVersion = '' // unknown version
-): LicenseName => {
-  if ((PUBLIC_DOMAIN_MARKS as ReadonlyArray<License>).includes(license)) {
-    const licenseUpper = license.toUpperCase() as Uppercase<PublicDomainMark>
-    return `${licenseUpper} ${licenseVersion}`
-  }
-  if (license === 'nc-sampling+') return `CC NC-Sampling+ ${licenseVersion}`
-  if (license === 'sampling+') return `CC Sampling+ ${licenseVersion}`
+  licenseVersion: LicenseVersion = '', // unknown version
+  i18n: IVueI18n | null = null
+): string | undefined => {
+  let licenseName
 
-  const licenseUpper = license.toUpperCase() as Uppercase<CcLicense>
-  return `CC ${licenseUpper} ${licenseVersion}`
+  // PDM has no abbreviation
+  if (license === 'pdm' && i18n) {
+    licenseName = i18n.t(`license-readable-names.${license}`).toString()
+  } else {
+    licenseName = license.toUpperCase().replace('SAMPLING', 'Sampling')
+  }
+
+  // If version is known, append version to the name
+  if (licenseVersion) {
+    licenseName = `${licenseName} ${licenseVersion}`
+  }
+
+  // For licenses other than public-domain marks, prepend 'CC' to the name
+  if (!(PUBLIC_DOMAIN_MARKS as ReadonlyArray<License>).includes(license)) {
+    licenseName = `CC ${licenseName}`
+  }
+  return licenseName.trim()
 }
 
 /**

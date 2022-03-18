@@ -7,13 +7,9 @@ export const CC_LICENSES = [
   'by-nc-nd',
 ] as const
 
-export type CcLicense = typeof CC_LICENSES[number]
-
 export const DEPRECATED_CC_LICENSES = ['nc-sampling+', 'sampling+'] as const
 
 export const PUBLIC_DOMAIN_MARKS = ['pdm', 'cc0'] as const
-
-export type PublicDomainMark = typeof PUBLIC_DOMAIN_MARKS[number]
 
 export const ACTIVE_LICENSES = [...PUBLIC_DOMAIN_MARKS, ...CC_LICENSES] as const
 
