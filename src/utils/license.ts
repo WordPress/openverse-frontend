@@ -20,7 +20,7 @@ export const getFullLicenseName = (
   license: License,
   licenseVersion: LicenseVersion = '', // unknown version
   i18n: IVueI18n | null = null
-): string | undefined => {
+): string => {
   let licenseName
 
   // PDM has no abbreviation
