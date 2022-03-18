@@ -9,11 +9,11 @@ import { MEDIA } from '~/constants/store-modules'
  * @param {import('../pages/search/search-page.types').Props} props
  * @returns {{ onLoadMore: ((function(): Promise<void>)|void), canLoadMore: import('@nuxtjs/composition-api').ComputedRef<boolean>}}
  */
-export const useLoadMore = ({ searchTerm }) => {
+export const useLoadMore = (props) => {
   const { store } = useContext()
 
   const canLoadMore = computed(() => {
-    return searchTerm.trim() !== ''
+    return props.searchTerm.trim() !== ''
   })
 
   const onLoadMore = async () => {
