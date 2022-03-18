@@ -223,7 +223,7 @@ export const getters = {
         ...items,
         [type]: Object.values(state.results[type].items),
       }),
-      /** @type{{ [key: import('./types').MediaType]: import('./types').MediaDetail[] }} */ {}
+      /** @type{{ [key: import('./types').MediaType]: import('./types').MediaDetail[] }} */ ({})
     )
   },
   /**
