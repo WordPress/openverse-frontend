@@ -345,10 +345,6 @@ describe('Search Store', () => {
         const action = createActions(services)[FETCH_MEDIA_ITEM]
         await action(context, params)
         expect(context.commit).toHaveBeenCalledWith(SET_MEDIA_ITEM, {
-          item: {},
-          mediaType,
-        })
-        expect(context.commit).toHaveBeenCalledWith(SET_MEDIA_ITEM, {
           item: detailData[mediaType],
           mediaType,
         })

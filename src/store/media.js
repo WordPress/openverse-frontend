@@ -158,11 +158,11 @@ export const createActions = (services = mediaServices) => ({
    */
   async [FETCH_MEDIA_ITEM]({ commit, dispatch }, params) {
     const { mediaType } = params
-    commit(SET_MEDIA_ITEM, { item: {}, mediaType })
     try {
       const data = await services[mediaType].getMediaDetail(params)
       commit(SET_MEDIA_ITEM, { item: data, mediaType })
     } catch (error) {
+      commit(SET_MEDIA_ITEM, { item: {}, mediaType })
       if (error.response && error.response.status === 404) {
         commit(MEDIA_NOT_FOUND, { mediaType })
       } else {
