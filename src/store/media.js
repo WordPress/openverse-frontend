@@ -257,15 +257,22 @@ export const getters = {
    */
   fetchState(state, getters) {
     if (getters.searchType === ALL_MEDIA) {
+      /**
+       * For all_media, we return the error for the first media type that has an error.
+       */
+      const mediaTypeErrors = supportedMediaTypes.filter(
+        (type) => !!state.fetchState[type].fetchingError
+      )
+      const allContentFetchError = mediaTypeErrors.length
+        ? mediaTypeErrors[0]
+        : null
+
       return {
         isFetching:
           supportedMediaTypes.filter(
             (type) => state.fetchState[type].isFetching
           ).length > 0,
-        fetchError:
-          supportedMediaTypes.filter(
-            (type) => !!state.fetchState[type].fetchingError
-          ).length > 0,
+        fetchError: allContentFetchError,
         isFinished:
           supportedMediaTypes.filter(
             (type) => state.fetchState[type].isFinished
