@@ -12,8 +12,8 @@ export const defaultRef = <T>(getDefault: () => T) => {
   const explicitlySet = ref<T | typeof NotSet>(NotSet)
   return computed<T>({
     get() {
-      if (explicitlySet.value !== NotSet) return explicitlySet.value as T
-      return getDefault()
+      if (explicitlySet.value === NotSet) return getDefault()
+      return explicitlySet.value as T
     },
     set(v) {
       explicitlySet.value = v as UnwrapRef<T>
