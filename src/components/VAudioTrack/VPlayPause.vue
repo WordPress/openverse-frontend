@@ -2,7 +2,8 @@
   <VIconButton
     v-bind="$attrs"
     :tabindex="layout === 'box' ? -1 : 0"
-    class="play-pause flex-shrink-0 bg-dark-charcoal border-dark-charcoal text-white disabled:opacity-70 focus-visible:border-pink focus-visible:outline-none focus-visible:shadow-ring"    :icon-props="{ iconPath: icon }"
+    class="play-pause flex-shrink-0 bg-dark-charcoal border-dark-charcoal text-white disabled:opacity-70 focus-visible:border-pink focus-visible:outline-none focus-visible:shadow-ring"
+    :icon-props="{ iconPath: icon }"
     :aria-label="$t(label)"
     variant="plain-dangerous"
     @click="handleClick"
