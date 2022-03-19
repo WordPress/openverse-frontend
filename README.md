@@ -49,13 +49,15 @@ localhost+1-key.pem # The private key file
 localhost+1.pem # The certificate file
 ```
 
-The easiest way to create these files is with a local development tool called [mkcrt](https://github.com/FiloSottile/mkcert). After [installing mkcert](https://github.com/FiloSottile/mkcert#installation) and activating it with `mkcert -install`, run the following command in the root of the repository:
+The easiest way to create these files is with a local development tool called [mkcrt](https://github.com/FiloSottile/mkcert). First make sure you have [mkcert installed](https://github.com/FiloSottile/mkcert#installation) and activated with `mkcert -install`. Then use `mkcert` to create a certificate for `localhost` and for the external IP address used by Nuxt's development process. That command looks like this:
+
+```shell
+mkcert localhost 192.168.50.119
+```
+
+You can find the IP address to use for the second argument by looking at the output of `nuxt dev`. For example:
 
 ```bash
-# Use `mkcert` to create a certificate for `localhost` and for the external IP address used by nuxt.
-# You may need to regenerate the certificate if this IP address changes for any reason.
-#
-# You can find the IP by looking at the output of `nuxt dev`. For example:
 #  ╭────────────────────────────────────────────╮
 #  │                                           │
 #  │   Nuxt @ v2.15.8                          │
@@ -67,9 +69,9 @@ The easiest way to create these files is with a local development tool called [m
 #  │   Listening: http://192.168.50.119:8443/  │ # <-- Use this IP Address
 #  │                                           │
 #  ╰────────────────────────────────────────────╯
-
-mkcert localhost 192.168.50.119
 ```
+
+You will need to regenerate the certificate if this IP address changes for any reason, like by enabling a VPN or changing networks.
 
 ### Docker setup
 
