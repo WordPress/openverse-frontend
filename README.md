@@ -42,7 +42,7 @@ pnpm dev
 
 ### Using HTTPS Locally
 
-To enable SSL support in loval development, use the `pnpm dev:secure` command. This requires you to have a private key and certificate in the root of the repository with the following names:
+To enable SSL support in local development, use the `pnpm dev:secure` command. This requires you to have a private key and certificate in the root of the repository with the following names:
 
 ```shell
 localhost+1-key.pem # The private key file
