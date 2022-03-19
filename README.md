@@ -55,7 +55,11 @@ The easiest way to create these files is with a local development tool called [m
 mkcert localhost 192.168.50.119
 ```
 
-You can find the IP address to use for the second argument by looking at the output of `nuxt dev`. For example:
+Be sure to replace the IP address in the example with your own. See the next section for how to identify that IP address.
+
+#### Finding your local IP address
+
+You can find the local IP address Nuxt uses by looking at the output of `nuxt dev`. Look in your console for a box of configuration details that looks like this:
 
 ```bash
 #  ╭────────────────────────────────────────────╮
