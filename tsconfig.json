@@ -43,7 +43,6 @@
     "src/composables/use-media-query.js",
     "src/composables/window.js",
     "src/constants/screens.js",
-    "src/data/api-service.js",
     "src/utils/deep-freeze.js"
   ],
   "exclude": ["node_modules"]
