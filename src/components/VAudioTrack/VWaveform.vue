@@ -187,7 +187,7 @@ export default defineComponent({
     peaks: {
       type: Array,
       required: false,
-      validator: (val) => val.every((item) => item >= -0.3 && item <= 1),
+      validator: (val) => val.every((item) => typeof item === 'number'),
     },
     /**
      * the message to display instead of the waveform; This is useful when
