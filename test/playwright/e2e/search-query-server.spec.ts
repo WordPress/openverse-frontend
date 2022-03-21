@@ -4,8 +4,8 @@ import {
   openFilters,
   currentContentType,
   assertCheckboxStatus,
-} from '../utils/navigation'
-import { mockProviderApis } from '../utils/route'
+} from '~~/test/playwright/utils/navigation'
+import { mockProviderApis } from '~~/test/playwright/utils/route'
 
 /**
  * URL is correctly converted into search state:

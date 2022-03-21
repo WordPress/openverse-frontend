@@ -1,6 +1,6 @@
 import { test, expect, Page } from '@playwright/test'
 
-import { changeContentType } from '../utils/navigation'
+import { changeContentType } from '~~/test/playwright/utils/navigation'
 
 /**
  * Using SSR:

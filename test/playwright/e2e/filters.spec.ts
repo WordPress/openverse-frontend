@@ -1,19 +1,19 @@
 import { test, expect, Page } from '@playwright/test'
 
 import {
+  assertCheckboxStatus,
+  openFilters,
+  changeContentType,
+} from '~~/test/playwright/utils/navigation'
+
+import { mockProviderApis } from '~~/test/playwright/utils/route'
+
+import {
   supportedSearchTypes,
   ALL_MEDIA,
   IMAGE,
   AUDIO,
 } from '~/constants/media'
-
-import {
-  assertCheckboxStatus,
-  openFilters,
-  changeContentType,
-} from '../utils/navigation'
-
-import { mockProviderApis } from '../utils/route'
 
 test.beforeEach(async ({ context }) => {
   await mockProviderApis(context)

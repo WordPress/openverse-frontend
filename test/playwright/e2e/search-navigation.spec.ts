@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test'
 
-import { openFilters } from '../utils/navigation'
+import { openFilters } from '~~/test/playwright/utils/navigation'
 
 test.beforeEach(async ({ context }) => {
   await context.route('**.jamendo.**', (r) => r.abort())

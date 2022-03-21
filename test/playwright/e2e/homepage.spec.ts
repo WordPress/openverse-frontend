@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 
-import { mockProviderApis } from '../utils/route'
+import { mockProviderApis } from '~~/test/playwright/utils/route'
 
 test.beforeEach(async ({ context }) => {
   await mockProviderApis(context)

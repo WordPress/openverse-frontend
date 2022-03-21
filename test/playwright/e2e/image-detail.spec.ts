@@ -1,6 +1,6 @@
 import { test, expect, Page } from '@playwright/test'
 
-const { mockProviderApis } = require('../utils/utils')
+import { mockProviderApis } from '~~/test/playwright/utils/route'
 
 const goToCustomImagePage = async (page: Page) => {
   // Test in a custom image detail page, it should apply the same for any image.

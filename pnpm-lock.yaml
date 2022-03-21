@@ -28,6 +28,7 @@ specifiers:
   '@testing-library/vue': ^5.8.2
   '@types/express-useragent': ^1.0.2
   '@types/jest': ^26.0.22
+  '@types/module-alias': ^2.0.1
   '@types/uuid': ^8.3.4
   '@typescript-eslint/eslint-plugin': ^5.15.0
   '@typescript-eslint/parser': ^5.15.0
@@ -69,6 +70,7 @@ specifiers:
   lodash.set: ^4.3.2
   lodash.sortby: ^4.7.0
   lodash.throttle: ^4.1.1
+  module-alias: ^2.2.2
   node-html-parser: ^5.1.0
   npm-run-all: ^4.1.5
   nuxt: ^2.15.4
@@ -150,6 +152,7 @@ devDependencies:
   '@testing-library/vue': 5.8.2
   '@types/express-useragent': 1.0.2
   '@types/jest': 26.0.24
+  '@types/module-alias': 2.0.1
   '@types/uuid': 8.3.4
   '@typescript-eslint/eslint-plugin': 5.15.0_5400bdff049a1444f15d03ace6195cd2
   '@typescript-eslint/parser': 5.15.0_eslint@7.32.0+typescript@4.6.2
@@ -171,6 +174,7 @@ devDependencies:
   jest: 26.6.3_ts-node@10.5.0
   jest-transform-stub: 2.0.0
   lint-staged: 11.2.6
+  module-alias: 2.2.2
   npm-run-all: 4.1.5
   postcss: 8.4.5
   prettier: 2.6.0
@@ -5446,6 +5450,10 @@ packages:
 
   /@types/minimatch/3.0.5:
     resolution: {integrity: sha512-Klz949h02Gz2uZCMGwDUSDS1YBlTdDDgbWHi+81l29tQALUtvz4rAYi5uoVhE5Lagoq6DeqAUlbrHvW/mXDgdQ==}
+    dev: true
+
+  /@types/module-alias/2.0.1:
+    resolution: {integrity: sha512-DN/CCT1HQG6HquBNJdLkvV+4v5l/oEuwOHUPLxI+Eub0NED+lk0YUfba04WGH90EINiUrNgClkNnwGmbICeWMQ==}
     dev: true
 
   /@types/node-fetch/2.6.1:
@@ -12852,6 +12860,10 @@ packages:
     resolution: {integrity: sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==}
     engines: {node: '>=10'}
     hasBin: true
+
+  /module-alias/2.2.2:
+    resolution: {integrity: sha512-A/78XjoX2EmNvppVWEhM2oGk3x4lLxnkEA4jTbaK97QKSDjkIoOsKQlfylt/d3kKKi596Qy3NP5XrXJ6fZIC9Q==}
+    dev: true
 
   /move-concurrently/1.0.1:
     resolution: {integrity: sha1-viwAX9oy4LKa8fBdfEszIUxwH5I=}
