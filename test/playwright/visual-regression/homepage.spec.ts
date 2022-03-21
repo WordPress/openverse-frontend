@@ -25,7 +25,7 @@ test.describe('homepage snapshots', () => {
     )
 
     test.describe('search input', () => {
-      breakpoints.describeEvery((breakpoint) =>
+      breakpoints.describeEvery((breakpoint) => {
         test('unfocused', async ({ page }) => {
           expect(
             await page.locator('form:has(input)').screenshot()
@@ -33,9 +33,7 @@ test.describe('homepage snapshots', () => {
             name: `unfocused-search-ltr-${breakpoint}`,
           })
         })
-      )
 
-      breakpoints.describeEvery((breakpoint) =>
         test('focused', async ({ page }) => {
           await page.focus('input')
           expect(
@@ -44,7 +42,7 @@ test.describe('homepage snapshots', () => {
             name: `focused-search-ltr-${breakpoint}`,
           })
         })
-      )
+      })
     })
   })
 
@@ -64,7 +62,7 @@ test.describe('homepage snapshots', () => {
     )
 
     test.describe('search input', () => {
-      breakpoints.describeEvery((breakpoint) =>
+      breakpoints.describeEvery((breakpoint) => {
         test('unfocused', async ({ page }) => {
           expect(
             await page.locator('form:has(input)').screenshot()
@@ -72,9 +70,7 @@ test.describe('homepage snapshots', () => {
             name: `unfocused-search-rtl-${breakpoint}`,
           })
         })
-      )
 
-      breakpoints.describeEvery((breakpoint) =>
         test('focused', async ({ page }) => {
           await page.focus('input')
           expect(
@@ -83,7 +79,7 @@ test.describe('homepage snapshots', () => {
             name: `focused-search-rtl-${breakpoint}`,
           })
         })
-      )
+      })
     })
   })
 })
