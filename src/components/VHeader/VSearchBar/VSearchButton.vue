@@ -8,7 +8,7 @@
     :class="[
       isIcon
         ? 'search-button focus-visible:bg-pink focus-visible:text-white p-[0.5px] ps-[1.5px]'
-        : 'py-6 px-6 whitespace-nowrap h-full',
+        : 'py-6 px-10 whitespace-nowrap h-full',
       sizeClasses,
       isHomeRoute
         ? 'bg-pink border-b border-b-pink text-white border-tx'
