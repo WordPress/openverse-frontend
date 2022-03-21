@@ -1,4 +1,4 @@
-import { test, expect, Page } from '@playwright/test'
+import { test, Page } from '@playwright/test'
 
 import breakpoints from '~~/test/playwright/utils/breakpoints'
 
@@ -14,33 +14,28 @@ test.describe('homepage snapshots', () => {
       await page.goto('/')
     })
 
-    breakpoints.describeEachDesktop((breakpoint) =>
+    breakpoints.describeEachDesktop(({ expectSnapshot }) =>
       test('full page', async ({ page }) => {
         await deleteImageCarousel(page)
-
-        expect(await page.screenshot()).toMatchSnapshot({
-          name: `index-ltr-${breakpoint}`,
-        })
+        await expectSnapshot('index-ltr', page)
       })
     )
 
     test.describe('search input', () => {
-      breakpoints.describeEvery((breakpoint) => {
+      breakpoints.describeEvery(({ expectSnapshot }) => {
         test('unfocused', async ({ page }) => {
-          expect(
-            await page.locator('form:has(input)').screenshot()
-          ).toMatchSnapshot({
-            name: `unfocused-search-ltr-${breakpoint}`,
-          })
+          await expectSnapshot(
+            'unfocused-search-ltr',
+            page.locator('form:has(input)')
+          )
         })
 
         test('focused', async ({ page }) => {
           await page.focus('input')
-          expect(
-            await page.locator('form:has(input)').screenshot()
-          ).toMatchSnapshot({
-            name: `focused-search-ltr-${breakpoint}`,
-          })
+          await expectSnapshot(
+            'focused-search-ltr',
+            page.locator('form:has(input)')
+          )
         })
       })
     })
@@ -51,33 +46,28 @@ test.describe('homepage snapshots', () => {
       await page.goto('/ar')
     })
 
-    breakpoints.describeEachDesktop((breakpoint) =>
+    breakpoints.describeEachDesktop(({ expectSnapshot }) =>
       test('full page', async ({ page }) => {
         await deleteImageCarousel(page)
-
-        expect(await page.screenshot()).toMatchSnapshot({
-          name: `index-rtl-${breakpoint}`,
-        })
+        await expectSnapshot('index-rtl', page)
       })
     )
 
     test.describe('search input', () => {
-      breakpoints.describeEvery((breakpoint) => {
+      breakpoints.describeEvery(({ expectSnapshot }) => {
         test('unfocused', async ({ page }) => {
-          expect(
-            await page.locator('form:has(input)').screenshot()
-          ).toMatchSnapshot({
-            name: `unfocused-search-rtl-${breakpoint}`,
-          })
+          await expectSnapshot(
+            'unfocused-search-rtl',
+            page.locator('form:has(input)')
+          )
         })
 
         test('focused', async ({ page }) => {
           await page.focus('input')
-          expect(
-            await page.locator('form:has(input)').screenshot()
-          ).toMatchSnapshot({
-            name: `focused-search-rtl-${breakpoint}`,
-          })
+          await expectSnapshot(
+            'focused-search-rtl',
+            page.locator('form:has(input)')
+          )
         })
       })
     })

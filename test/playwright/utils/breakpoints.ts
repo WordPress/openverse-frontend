@@ -1,4 +1,4 @@
-import { test } from '@playwright/test'
+import { test, expect } from '@playwright/test'
 
 import {
   Breakpoints as AllBreakpoints,
@@ -7,14 +7,40 @@ import {
 
 type Breakpoint = Exclude<AllBreakpoints, 'mob'>
 
+type ScreenshotAble = {
+  screenshot(): Promise<Buffer>
+}
+
+type ExpectSnapshot = (name: string, s: ScreenshotAble) => Promise<Buffer>
+
+type BreakpointBlock = (options: {
+  getConfigValues: (name: string) => {
+    name: `${typeof name}-${Breakpoint}.png`
+  }
+  breakpoint: Breakpoint
+  expectSnapshot: ExpectSnapshot
+}) => void
+
 const makeBreakpointDescribe =
-  (breakpoint: Breakpoint, screenWidth: number) =>
-  (block: (breakpoint: Breakpoint) => void) => {
+  (breakpoint: Breakpoint, screenWidth: number) => (block: BreakpointBlock) => {
     test.describe(
       `screen at breakpoint ${breakpoint} with width ${screenWidth}`,
       () => {
         test.use({ viewport: { width: screenWidth, height: 700 } })
-        block(breakpoint)
+        const getConfigValues = (name: string) => ({
+          name: `${name}-${breakpoint}.png` as const,
+        })
+        const expectSnapshot = async (
+          name: string,
+          screenshotAble: ScreenshotAble
+        ) => {
+          const { name: snapshotName } = getConfigValues(name)
+          return expect(await screenshotAble.screenshot()).toMatchSnapshot({
+            name: snapshotName,
+          })
+        }
+
+        block({ breakpoint, getConfigValues, expectSnapshot })
       }
     )
   }
@@ -37,7 +63,7 @@ const breakpointTests = Array.from(SCREEN_SIZES.entries()).reduce(
 )
 
 const describeEachBreakpoint =
-  (breakpoints: Breakpoint[]) => (block: (breakpoint: Breakpoint) => void) => {
+  (breakpoints: Breakpoint[]) => (block: BreakpointBlock) => {
     Object.entries(breakpointTests).forEach(([bp, describe]) => {
       if (
         breakpoints.includes(
