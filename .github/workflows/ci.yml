@@ -71,7 +71,7 @@ jobs:
       - uses: ./.github/actions/setup-node-env
 
       - name: Run playwright tests
-        run: PW_USER=root pnpm test:playwright
+        run: USER_ID=root pnpm test:playwright
 
   storybook:
     name: Check Storybook build

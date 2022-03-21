@@ -26,7 +26,7 @@
     "talkback": "node ./test/proxy.js",
     "playwright-version": "pnpm ls --dev --depth=0 | grep playwright | awk '{print $2}'",
     "pretest:playwright": "pnpm install",
-    "test:playwright": "USER_ID=$(id -u) PLAYWRIGHT_VERSION=$(pnpm playwright-version --silent) docker-compose -f docker-compose.playwright.yml up --abort-on-container-exit --exit-code-from playwright",
+    "test:playwright": "USER_ID=${USER_ID:-$(id -u)}; PLAYWRIGHT_VERSION=$(pnpm playwright-version --silent) docker-compose -f docker-compose.playwright.yml up --abort-on-container-exit --exit-code-from playwright",
     "test:playwright:local": "playwright test -c test/playwright",
     "test:playwright:debug": "PWDEBUG=1 pnpm test:playwright:local",
     "test:playwright:recreate-tapes": "rimraf test/tapes && test:playwright:update-tapes",
