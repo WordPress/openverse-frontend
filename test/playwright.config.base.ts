@@ -1,6 +1,6 @@
 import type { PlaywrightTestConfig } from '@playwright/test'
 
-const config: PlaywrightTestConfig = {
+export const config: PlaywrightTestConfig = {
   testDir: '.',
   webServer: {
     /**
@@ -43,5 +43,3 @@ const config: PlaywrightTestConfig = {
    */
   workers: process.env.UPDATE_TAPES ? 1 : undefined,
 }
-
-export default config

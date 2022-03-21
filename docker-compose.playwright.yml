@@ -13,6 +13,6 @@ services:
     command: |
       sh -c "
         echo 'Please wait while Playwright initializes the web server before running tests. This can take several minutes.';
-        pnpm test:${TEST_TYPE}:local;"
+        pnpm test:playwright:local;"
     environment:
       - UPDATE_TAPES=${UPDATE_TAPES:-false}

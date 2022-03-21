@@ -1,6 +1,6 @@
-const { expect, test } = require('@playwright/test')
+import { expect, test } from '@playwright/test'
 
-const { openFilters } = require('./utils')
+import { openFilters } from '../utils/navigation'
 
 test.beforeEach(async ({ context }) => {
   await context.route('**.jamendo.**', (r) => r.abort())
