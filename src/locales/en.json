@@ -572,13 +572,6 @@
   "search": {
     "search": "Search"
   },
-  "audio-categories": {
-    "title": "Audio Category",
-    "music": "Music",
-    "sound": "Sound effects",
-    "podcast": "Podcast",
-    "pronunciation": "Pronunciation"
-  },
   "license-readable-names": {
     "cc0": "Zero",
     "pdm": "Public Domain Mark",
