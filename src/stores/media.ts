@@ -268,7 +268,7 @@ export const createUseMediaStore = (services = mediaServices) =>
     }
 
     /**
-     * Calls FETCH_SINGLE_MEDIA_TYPE for selected media type(s). Can be called by changing the search query
+     * Calls `fetchSingleMediaType` for selected media type(s). Can be called by changing the search query
      * (search term or filter item), or by clicking 'Load more' button.
      * If the search query changed, fetch state is reset, otherwise only the media types for which
      * fetchState.isFinished is not true are fetched.
