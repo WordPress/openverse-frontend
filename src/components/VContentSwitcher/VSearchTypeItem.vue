@@ -31,7 +31,7 @@ const propTypes = {
   itemId: { type: Number, required: true },
   selected: { type: Boolean, default: false },
   icon: { type: String, required: true },
-  isInHeader: { type: Boolean, default: true },
+  useLinks: { type: Boolean, default: true },
 }
 export default defineComponent({
   name: 'VSearchTypeItem',
@@ -51,16 +51,17 @@ export default defineComponent({
      * we will set the query specific for the search type using `computeQueryParams(props.item)` method.
      */
     const component = computed(() => {
-      if (props.isInHeader) {
-        return {
-          as: 'VLink',
-          href: app.localePath({
-            path: `/search/${props.item === ALL_MEDIA ? '' : props.item}`,
-            // query: searchStore.computeQueryParams(props.item),
-            query: route.value.query,
-          }),
-        }
-      } else return {}
+      if (!props.isInHeader) {
+				return {}
+      }
+      return {
+        as: 'VLink',
+        href: app.localePath({
+          path: `/search/${props.item === ALL_MEDIA ? '' : props.item}`,
+          // query: searchStore.computeQueryParams(props.item),
+          query: route.value.query,
+        }),
+      }
     })
     return {
       component,
