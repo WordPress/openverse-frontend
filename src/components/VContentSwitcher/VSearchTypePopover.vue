@@ -22,7 +22,7 @@
       id="content-switcher-popover"
       size="medium"
       :active-item="activeItem"
-      :placement="placement"
+      :use-links="placement === 'header'"
       @select="selectItem"
     />
   </VPopover>

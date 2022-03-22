@@ -51,8 +51,8 @@ export default defineComponent({
      * we will set the query specific for the search type using `computeQueryParams(props.item)` method.
      */
     const component = computed(() => {
-      if (!props.isInHeader) {
-				return {}
+      if (!props.useLinks) {
+        return {}
       }
       return {
         as: 'VLink',

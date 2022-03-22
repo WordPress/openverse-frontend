@@ -14,7 +14,7 @@
       :item="item"
       :item-id="idx"
       :icon="content.icons[item]"
-      :is-in-header="placement === 'header'"
+      :use-links="useLinks"
       :selected="item === activeItem"
       @click="handleClick(item)"
     />
@@ -47,9 +47,9 @@ export default defineComponent({
       required: true,
       validator: (val) => supportedSearchTypes.includes(val),
     },
-    placement: {
-      type: String,
-      required: true,
+    useLinks: {
+      type: Boolean,
+      default: true,
     },
   },
   setup(props, { emit }) {
