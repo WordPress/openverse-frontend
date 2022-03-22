@@ -21,12 +21,31 @@ type BreakpointBlock = (options: {
   expectSnapshot: ExpectSnapshot
 }) => void
 
+const desktopBreakpoints = ['2xl', 'xl', 'lg', 'md'] as const
+const mobileBreakpoints = ['sm', 'xs'] as const
+
+// For desktop UA use the default
+const desktopUa = undefined
+const mobileUa =
+  'Mozilla/5.0 (Android 7.0; Mobile; rv:54.0) Gecko/54.0 Firefox/54.0'
+
+const mockUaStrings: Readonly<Record<Breakpoint, string | undefined>> =
+  Object.freeze(
+    Object.fromEntries([
+      ...desktopBreakpoints.map((b) => [b, desktopUa]),
+      ...mobileBreakpoints.map((b) => [b, mobileUa]),
+    ])
+  )
+
 const makeBreakpointDescribe =
   (breakpoint: Breakpoint, screenWidth: number) => (block: BreakpointBlock) => {
     test.describe(
       `screen at breakpoint ${breakpoint} with width ${screenWidth}`,
       () => {
-        test.use({ viewport: { width: screenWidth, height: 700 } })
+        test.use({
+          viewport: { width: screenWidth, height: 700 },
+          userAgent: mockUaStrings[breakpoint],
+        })
         const getConfigValues = (name: string) => ({
           name: `${name}-${breakpoint}.png` as const,
         })
@@ -63,7 +82,7 @@ const breakpointTests = Array.from(SCREEN_SIZES.entries()).reduce(
 )
 
 const describeEachBreakpoint =
-  (breakpoints: Breakpoint[]) => (block: BreakpointBlock) => {
+  (breakpoints: readonly Breakpoint[]) => (block: BreakpointBlock) => {
     Object.entries(breakpointTests).forEach(([bp, describe]) => {
       if (
         breakpoints.includes(
@@ -75,8 +94,8 @@ const describeEachBreakpoint =
   }
 
 const describeEvery = describeEachBreakpoint(Array.from(SCREEN_SIZES.keys()))
-const describeEachDesktop = describeEachBreakpoint(['2xl', 'xl', 'lg', 'md'])
-const describeEachMobile = describeEachBreakpoint(['sm', 'xs'])
+const describeEachDesktop = describeEachBreakpoint(desktopBreakpoints)
+const describeEachMobile = describeEachBreakpoint(mobileBreakpoints)
 
 export default {
   ...breakpointTests,
