@@ -53,6 +53,8 @@ import { defaultRef } from '~/composables/default-ref'
 import { useActiveMediaStore } from '~/stores/active-media'
 import { useMediaStore } from '~/stores/media'
 
+import { AUDIO } from '~/constants/media'
+
 import VPlayPause from '~/components/VAudioTrack/VPlayPause.vue'
 import VWaveform from '~/components/VAudioTrack/VWaveform.vue'
 import VFullLayout from '~/components/VAudioTrack/layouts/VFullLayout.vue'
@@ -255,7 +257,7 @@ export default defineComponent({
       const mediaStore = useMediaStore()
       if (
         route.value.params.id === props.audio.id ||
-        mediaStore.getItemById(props.audio.id)
+        mediaStore.getItemById(AUDIO, props.audio.id)
       ) {
         /**
          * If switching to any route other than the single result

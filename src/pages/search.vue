@@ -118,7 +118,7 @@ const BrowsePage = {
       ) {
         const { query, path } = newRoute
         await this.setSearchStateFromUrl({ urlQuery: query, path })
-        this.fetchMedia(this.searchQueryParams)
+        this.fetchMedia()
       }
     },
   },
