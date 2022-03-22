@@ -2,7 +2,7 @@ import { setActivePinia, createPinia } from 'pinia'
 
 import { nextTick } from '@nuxtjs/composition-api'
 
-import { filterData, mediaFilterKeys } from '~/constants/filters.ts'
+import { filterData, mediaFilterKeys } from '~/constants/filters'
 import {
   ALL_MEDIA,
   AUDIO,
@@ -93,7 +93,7 @@ describe('Search Store', () => {
       ${{ license: 'by', mature: 'true' }}                | ${IMAGE}
       ${{ license: '', mature: '' }}                      | ${IMAGE}
       ${{ q: 'cat', license: 'by', searchBy: 'creator' }} | ${ALL_MEDIA}
-      ${{ q: 'cat', license: 'cc0,pdm,by,by-nc' }}        | ${ALL_MEDIA}
+      ${{ q: 'cat', license: 'pdm,cc0,by,by-nc' }}        | ${ALL_MEDIA}
       ${{ q: 'cat', duration: 'medium' }}                 | ${AUDIO}
       ${{ q: 'cat', extension: 'svg' }}                   | ${IMAGE}
       ${{ q: 'cat', extension: 'svg' }}                   | ${AUDIO}
@@ -320,7 +320,7 @@ describe('Search Store', () => {
 
     it.each`
       filterType           | code              | idx
-      ${'licenses'}        | ${'cc0'}          | ${0}
+      ${'licenses'}        | ${'cc0'}          | ${1}
       ${'licenseTypes'}    | ${'modification'} | ${1}
       ${'imageExtensions'} | ${'svg'}          | ${3}
       ${'imageCategories'} | ${'photograph'}   | ${0}

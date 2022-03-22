@@ -60,7 +60,7 @@ import { FETCH_MEDIA } from '~/constants/action-types'
 
 import { useSearchStore } from '~/stores/search'
 
-import VSearchBar from '~/components/VHeader/VSearchBar/VSearchBar'
+import VSearchBar from '~/components/VHeader/VSearchBar/VSearchBar.vue'
 import VLink from '~/components/VLink.vue'
 
 import Oops from '~/assets/oops.svg?inline'
