@@ -34,7 +34,7 @@ import { computed, inject } from '@nuxtjs/composition-api'
 import { FETCH_MEDIA } from '~/constants/action-types'
 import { supportedSearchTypes } from '~/constants/media'
 import { MEDIA } from '~/constants/store-modules'
-import { isMinScreen } from '~/composables/use-media-query.js'
+import { isMinScreen } from '~/composables/use-media-query'
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
 
 import { useSearchStore } from '~/stores/search'
