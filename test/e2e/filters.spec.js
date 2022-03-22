@@ -64,7 +64,7 @@ test('initial filters are applied based on the url', async ({ page }) => {
     await assertCheckboxStatus(page, checkbox)
   }
 })
-test.skip('common filters are retained when media type changes from all media to single type', async ({
+test('common filters are retained when media type changes from all media to single type', async ({
   page,
 }) => {
   await page.goto(
@@ -86,7 +86,7 @@ test.skip('common filters are retained when media type changes from all media to
   }
 })
 
-test.skip('common filters are retained when media type changes from single type to all media', async ({
+test('common filters are retained when media type changes from single type to all media', async ({
   page,
 }) => {
   await page.goto(
@@ -131,7 +131,7 @@ test('selecting some filters can disable dependent filters', async ({
   }
 })
 
-test.skip('filters are updated when media type changes', async ({ page }) => {
+test('filters are updated when media type changes', async ({ page }) => {
   await page.goto('/search/image?q=cat&aspect_ratio=tall&license=cc0')
   await openFilters(page)
 

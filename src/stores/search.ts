@@ -6,6 +6,9 @@ import {
   toRefs,
   watch,
 } from '@nuxtjs/composition-api'
+// We plan to remove this dependency, so don't need to add types for it:
+// https://github.com/WordPress/openverse-frontend/issues/1103
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import clonedeep from 'lodash.clonedeep'
 

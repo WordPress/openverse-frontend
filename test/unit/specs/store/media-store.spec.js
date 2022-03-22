@@ -20,7 +20,7 @@ import { AUDIO, IMAGE, supportedMediaTypes } from '~/constants/media'
 
 import { useSearchStore } from '~/stores/search'
 
-describe('Search Store', () => {
+describe('Media Store', () => {
   describe('state', () => {
     it('exports default state', () => {
       const state = store.state()
@@ -57,7 +57,6 @@ describe('Search Store', () => {
 
     beforeEach(() => {
       state = store.state()
-      setActivePinia(createPinia())
     })
 
     it('FETCH_START_MEDIA updates state', () => {
