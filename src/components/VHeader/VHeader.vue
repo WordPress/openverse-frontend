@@ -90,8 +90,9 @@ const VHeader = defineComponent({
     VSearchBar,
   },
   setup() {
+    const mediaStore = useMediaStore()
     const searchStore = useSearchStore()
-    const { app, i18n, store } = useContext()
+    const { app, i18n } = useContext()
     const router = useRouter()
 
     const { matches: isSearchRoute } = useMatchSearchRoutes()
@@ -134,11 +135,11 @@ const VHeader = defineComponent({
 
     /**  @type {import('@nuxtjs/composition-api').ComputedRef<boolean>} */
     const isFetching = computed(() => {
-      return store.getters['media/fetchState'].isFetching
+      return mediaStore.fetchState.isFetching
     })
 
     /** @type {import('@nuxtjs/composition-api').ComputedRef<number>} */
-    const resultsCount = computed(() => store.getters['media/resultCount'])
+    const resultsCount = computed(() => mediaStore.resultCount)
     const { getI18nCount } = useI18nResultsCount()
     /**
      * Additional text at the end of the search bar.
