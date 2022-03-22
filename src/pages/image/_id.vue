@@ -119,7 +119,7 @@ const VImageDetailsPage = {
   },
   computed: {
     sketchFabUid() {
-      if (this.image.source !== 'sketchfab' || this.sketchFabfailure) {
+      if (this.image?.source !== 'sketchfab' || this.sketchFabfailure) {
         return null
       }
       return this.image.url
