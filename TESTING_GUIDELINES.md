@@ -12,7 +12,7 @@ Staging is redeployed everytime we merge to the `main` branch, so if you're look
 
 Once you have the application running, you can visit it in your browser at http://localhost:8443.
 
-You can also access it from other devices in your same network (like a mobile phone) for additional testing. See the [finding your local IP address](./README.md#finding-your-local-ip-address) section of the README for how to identify the local IP adress Nuxt is served on. Once you have identified your local IP address, you can access the website running on your computer by visiting `http://<local IP>:8443` replacing `<local IP>` (including the brackets) with the value you found using the instructions above in your mobile devices browser.
+You can also access it from other devices in your same network (like a mobile phone) for additional testing. See the [finding your local IP address](./README.md#finding-your-local-ip-address) section of the README for how to identify the local IP adress Nuxt is served on. Once you have identified your local IP address, you can access the website running on your computer by visiting `https://<local IP>:8443` replacing `<local IP>` (including the brackets) with the value you found using the instructions above in your mobile devices browser.
 
 Testing from multiple different devices as often as possible is a great way to contribute to Openverse's frontend development.
 
