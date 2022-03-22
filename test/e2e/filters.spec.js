@@ -35,7 +35,7 @@ const assertCheckboxCount = async (page, checked, count) => {
 
 const FILTER_COUNTS = {
   [ALL_MEDIA]: 11,
-  [AUDIO]: 23,
+  [AUDIO]: 26,
   [IMAGE]: 70,
 }
 
