@@ -45,7 +45,7 @@ class MediaService<T extends FrontendMediaType> {
   ): Promise<MediaResult<Record<string, T>>> {
     const res = await VersionedApiService.query<MediaResult<T[]>>(
       this.mediaType,
-      params
+      params as unknown as Record<string, string>
     )
     return this.transformResults(res.data)
   }

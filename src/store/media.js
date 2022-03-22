@@ -18,10 +18,9 @@ import {
   RESET_FETCH_STATE,
 } from '~/constants/mutation-types'
 import { AUDIO, IMAGE, ALL_MEDIA, supportedMediaTypes } from '~/constants/media'
-
-import { hash, rand as prng } from '~/utils/prng'
-
 import MediaService from '~/data/media-service'
+import { hash, rand as prng } from '~/utils/prng'
+import { useSearchStore } from '~/stores/search'
 
 /**
  * @return {import('./types').MediaState}
@@ -109,14 +108,11 @@ export const createActions = (services = mediaServices) => ({
    * @param {boolean} [payload.shouldPersistMedia] - whether the existing media should be added to or replaced.
    * @return {Promise<void>}
    */
-  async [FETCH_SINGLE_MEDIA_TYPE](
-    { commit, dispatch, rootGetters, state },
-    payload
-  ) {
+  async [FETCH_SINGLE_MEDIA_TYPE]({ commit, dispatch, state }, payload) {
     const { mediaType, shouldPersistMedia = false, ...params } = payload
 
     const queryParams = prepareSearchQueryParams({
-      ...rootGetters['search/searchQueryParams'],
+      ...useSearchStore().searchQueryParams,
       ...params,
     })
 
@@ -289,6 +285,9 @@ export const getters = {
       )
     }
   },
+  searchType() {
+    return useSearchStore().searchType
+  },
   allMedia(state, getters) {
     const media = getters.resultItems
 
@@ -327,9 +326,6 @@ export const getters = {
     }
 
     return newResults
-  },
-  searchType(state, getters, rootState) {
-    return rootState.search.searchType
   },
 }
 
