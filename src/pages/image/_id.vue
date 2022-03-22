@@ -114,7 +114,7 @@ const VImageDetailsPage = {
   },
   setup() {
     const mediaStore = useMediaStore()
-    const image = computed(() => mediaStore.image)
+    const image = computed(() => mediaStore.state.image)
     return { image }
   },
   computed: {

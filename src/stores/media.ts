@@ -362,6 +362,8 @@ export const createUseMediaStore = (services = mediaServices) =>
     }) => {
       const { mediaType } = params
       try {
+        // TODO: Fix this!
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         state[mediaType] = await services[mediaType].getMediaDetail(params.id)
       } catch (error: unknown) {
@@ -403,8 +405,6 @@ export const createUseMediaStore = (services = mediaServices) =>
 
     return {
       state,
-      image: state.image,
-      audio: state.audio,
 
       getItemById,
       resultItems,

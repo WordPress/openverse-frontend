@@ -50,7 +50,7 @@ const AudioDetailPage = {
   },
   setup() {
     const mediaStore = useMediaStore()
-    const audio = computed(() => mediaStore.audio)
+    const audio = computed(() => mediaStore.state.audio)
 
     return { audio }
   },
