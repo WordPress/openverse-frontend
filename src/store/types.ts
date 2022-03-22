@@ -4,7 +4,7 @@ import type { SupportedSearchType } from '~/constants/media'
  * The search result object
  */
 
-export type FrontendMediaType = MediaDetail['frontendMediaType']
+type FrontendMediaType = MediaDetail['frontendMediaType']
 export interface MediaResult<
   T extends
     | FrontendMediaType
@@ -14,7 +14,6 @@ export interface MediaResult<
   result_count: number
   page_count: number
   page_size: number
-  page: number
   /**
    * This monstrosity maps media type keys like `image` or `audio` to a concrete model
    * We're doing this to make MediaService able to infer which type of media it's for
@@ -67,7 +66,7 @@ export type ApiQueryKeys = keyof ApiQueryFilters
 
 export interface Tag {
   name: string
-  provider?: string
+  provider: [string]
 }
 
 export interface BaseMediaDetail<FrontendMediaType extends string> {

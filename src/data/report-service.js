@@ -1,6 +1,6 @@
-import { IMAGE } from '~/constants/media'
-
 import { getResourceSlug, VersionedApiService } from '~/data/api-service'
+
+import { IMAGE } from '~/constants/media'
 
 const ReportService = {
   sendReport(params) {
