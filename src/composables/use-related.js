@@ -1,6 +1,6 @@
 import { ref, useFetch } from '@nuxtjs/composition-api'
 
-import { mediaServices } from '~/store/media'
+import { mediaServices } from '~/stores/media'
 
 export default function useRelated({
   mediaType,
