@@ -31,12 +31,8 @@
       <VButton
         as="VLink"
         :href="image.foreign_landing_url"
-        target="blank"
-        rel="noopener noreferrer"
         class="btn-main flex-initial w-full md:w-max mb-4 md:mb-0"
         size="large"
-        @click="onSourceLinkClicked"
-        @keyup.enter="onSourceLinkClicked"
         >{{ $t('image-details.weblink') }}</VButton
       >
       <span class="flex-1 flex flex-col justify-center">
@@ -58,8 +54,6 @@
                 })
               "
               :href="image.creator_url"
-              @click="onCreatorLinkClicked"
-              @keyup.enter="onCreatorLinkClicked"
               >{{ image.creator }}</VLink
             >
             <span v-else>{{ image.creator }}</span>
@@ -81,17 +75,10 @@
 
 <script>
 import axios from 'axios'
-import { mapActions, mapState } from 'vuex'
+import { mapState } from 'vuex'
 
-import {
-  DETAIL_PAGE_EVENTS,
-  SEND_DETAIL_PAGE_EVENT,
-} from '~/constants/usage-data-analytics-types'
-
-import { MEDIA, USAGE_DATA } from '~/constants/store-modules'
-
+import { MEDIA } from '~/constants/store-modules'
 import { FETCH_MEDIA_ITEM } from '~/constants/action-types'
-
 import { IMAGE } from '~/constants/media'
 
 import VButton from '~/components/VButton.vue'
@@ -101,6 +88,7 @@ import VImageDetails from '~/components/VImageDetails/VImageDetails.vue'
 import VMediaReuse from '~/components/VMediaInfo/VMediaReuse.vue'
 import VRelatedImages from '~/components/VImageDetails/VRelatedImages.vue'
 import SketchFabViewer from '~/components/SketchFabViewer.vue'
+import VBackToSearchResultsLink from '~/components/VBackToSearchResultsLink.vue'
 
 const VImageDetailsPage = {
   name: 'VImageDetailsPage',
@@ -112,6 +100,7 @@ const VImageDetailsPage = {
     VMediaReuse,
     VRelatedImages,
     SketchFabViewer,
+    VBackToSearchResultsLink,
   },
   data() {
     return {
@@ -165,30 +154,25 @@ const VImageDetailsPage = {
     })
   },
   methods: {
-    ...mapActions(USAGE_DATA, { sendEvent: SEND_DETAIL_PAGE_EVENT }),
     onImageLoaded(event) {
       this.imageWidth = this.image.width || event.target.naturalWidth
       this.imageHeight = this.image.height || event.target.naturalHeight
       if (this.image.filetype) {
         this.imageType = this.image.filetype
       } else {
-        axios.head(event.target.src).then((res) => {
-          this.imageType = res.headers['content-type']
-        })
+        axios
+          .head(event.target.src)
+          .then((res) => {
+            this.imageType = res.headers['content-type']
+          })
+          .catch(() => {
+            /**
+             * Do nothing. This avoid the console warning "Uncaught (in promise) Error:
+             * Network Error" in Firefox in development mode.
+             */
+          })
       }
       this.isLoadingFullImage = false
-    },
-    onSourceLinkClicked() {
-      this.sendEvent({
-        eventType: DETAIL_PAGE_EVENTS.SOURCE_CLICKED,
-        resultUuid: this.imageId,
-      })
-    },
-    onCreatorLinkClicked() {
-      this.sendEvent({
-        eventType: DETAIL_PAGE_EVENTS.CREATOR_CLICKED,
-        resultUuid: this.imageId,
-      })
     },
   },
   head() {

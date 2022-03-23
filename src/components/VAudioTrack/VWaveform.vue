@@ -170,7 +170,8 @@ import {
 } from '@nuxtjs/composition-api'
 
 import { downsampleArray, upsampleArray } from '~/utils/resampling'
-import * as keycodes from '~/utils/key-codes'
+
+import { keycodes } from '~/constants/key-codes'
 
 /**
  * Renders an SVG representation of the waveform given a list of heights for the
@@ -186,8 +187,7 @@ export default defineComponent({
     peaks: {
       type: Array,
       required: false,
-      default: () => Array.from({ length: 100 }, () => Math.random()),
-      validator: (val) => val.every((item) => item >= 0 && item <= 1),
+      validator: (val) => val.every((item) => typeof item === 'number'),
     },
     /**
      * the message to display instead of the waveform; This is useful when
@@ -332,8 +332,13 @@ export default defineComponent({
     const peakCount = computed(() =>
       getPeaksInWidth(waveformDimens.value.width)
     )
+    const peaks = computed(() =>
+      props.peaks?.length
+        ? props.peaks
+        : Array.from({ length: 100 }, () => Math.random())
+    )
     const normalizedPeaks = computed(() => {
-      let samples = props.peaks
+      let samples = peaks.value
 
       const givenLength = samples.length
       const required = peakCount.value
@@ -343,7 +348,9 @@ export default defineComponent({
         samples = downsampleArray(samples, required)
       }
 
-      return samples.map((peak) => peak * waveformDimens.value.height)
+      return samples.map(
+        (peak) => Math.max(peak, 0) * waveformDimens.value.height
+      )
     })
 
     /* SVG drawing */

@@ -1,3 +1,5 @@
+import { createPinia, setActivePinia } from 'pinia'
+
 import store, { createActions } from '~/store/media'
 import {
   FETCH_END_MEDIA,
@@ -15,13 +17,10 @@ import {
   HANDLE_NO_MEDIA,
 } from '~/constants/action-types'
 import { AUDIO, IMAGE, supportedMediaTypes } from '~/constants/media'
-import {
-  SEND_RESULT_CLICKED_EVENT,
-  SEND_SEARCH_QUERY_EVENT,
-} from '~/constants/usage-data-analytics-types'
-import { USAGE_DATA } from '~/constants/store-modules'
 
-describe('Search Store', () => {
+import { useSearchStore } from '~/stores/search'
+
+describe('Media Store', () => {
   describe('state', () => {
     it('exports default state', () => {
       const state = store.state()
@@ -191,7 +190,10 @@ describe('Search Store', () => {
     let services = null
     let state
     let context
+    let searchStore
+
     beforeEach(() => {
+      setActivePinia(createPinia())
       services = {
         [AUDIO]: {
           search: jest.fn(() => Promise.resolve(searchResults)),
@@ -210,6 +212,7 @@ describe('Search Store', () => {
               bar: { id: 'bar' },
               zeta: { id: 'zeta' },
             },
+            page: undefined,
           },
           audio: {
             items: {
@@ -217,6 +220,7 @@ describe('Search Store', () => {
               bar: { id: 'bar' },
               zeta: { id: 'zeta' },
             },
+            page: undefined,
           },
         },
       }
@@ -224,13 +228,6 @@ describe('Search Store', () => {
       context = {
         commit: jest.fn(),
         dispatch: jest.fn(),
-        rootState: {
-          user: { usageSessionId: 'foo' },
-          search: { query: { q: 'cat' } },
-        },
-        rootGetters: {
-          search: { searchQueryParams: () => ({ q: 'cat' }) },
-        },
         state: state,
       }
     })
@@ -238,12 +235,14 @@ describe('Search Store', () => {
     it.each(supportedMediaTypes)(
       'FETCH_SINGLE_MEDIA_TYPE (%s) on success',
       async (mediaType) => {
+        searchStore = useSearchStore()
+        searchStore.setSearchTerm('cat')
         const params = {
           q: 'foo',
-          page: { [mediaType]: 1 },
           shouldPersistMedia: true,
           mediaType,
         }
+        state.results[mediaType].page = 2
         const action = createActions(services)[FETCH_SINGLE_MEDIA_TYPE]
         await action(context, params)
         expect(context.commit).toHaveBeenCalledWith(FETCH_START_MEDIA, {
@@ -252,9 +251,7 @@ describe('Search Store', () => {
         expect(context.commit).toHaveBeenCalledWith(FETCH_END_MEDIA, {
           mediaType,
         })
-
-        // Page parameter is converted from an object into a number
-        params.page = 1
+        params.page = 3
         expect(context.commit).toHaveBeenCalledWith(SET_MEDIA, {
           media: searchResults.results,
           mediaCount: searchResults.result_count,
@@ -273,15 +270,6 @@ describe('Search Store', () => {
       const params = { q: 'foo', shouldPersistMedia: false, mediaType: IMAGE }
       const action = createActions(services)[FETCH_SINGLE_MEDIA_TYPE]
       await action(context, params)
-
-      expect(context.dispatch).toHaveBeenCalledWith(
-        `${USAGE_DATA}/${SEND_SEARCH_QUERY_EVENT}`,
-        {
-          query: params.q,
-          sessionId: context.rootState.user.usageSessionId,
-        },
-        { root: true }
-      )
     })
 
     it('does not dispatch SEND_SEARCH_QUERY_EVENT if page param is available', async () => {
@@ -292,14 +280,6 @@ describe('Search Store', () => {
       }
       const action = createActions(services)[FETCH_SINGLE_MEDIA_TYPE]
       await action(context, params)
-
-      expect(context.dispatch).not.toHaveBeenCalledWith(
-        `${USAGE_DATA}/${SEND_SEARCH_QUERY_EVENT}`,
-        {
-          query: params.q,
-          sessionId: context.rootState.user.usageSessionId,
-        }
-      )
     })
 
     it('FETCH_SINGLE_MEDIA_TYPE on error', async () => {
@@ -368,10 +348,6 @@ describe('Search Store', () => {
         const action = createActions(services)[FETCH_MEDIA_ITEM]
         await action(context, params)
         expect(context.commit).toHaveBeenCalledWith(SET_MEDIA_ITEM, {
-          item: {},
-          mediaType,
-        })
-        expect(context.commit).toHaveBeenCalledWith(SET_MEDIA_ITEM, {
           item: detailData[mediaType],
           mediaType,
         })
@@ -383,19 +359,10 @@ describe('Search Store', () => {
       'FETCH_MEDIA_ITEM dispatches SEND_RESULT_CLICKED_EVENT',
       (mediaType) => {
         const params = { id: 'foo', mediaType }
+        searchStore = useSearchStore()
+        searchStore.setSearchTerm('cat')
         const action = createActions(services)[FETCH_MEDIA_ITEM]
         action(context, params)
-
-        expect(context.dispatch).toHaveBeenLastCalledWith(
-          `${USAGE_DATA}/${SEND_RESULT_CLICKED_EVENT}`,
-          {
-            query: context.rootState.search.query.q,
-            resultUuid: 'foo',
-            resultRank: 0,
-            sessionId: context.rootState.user.usageSessionId,
-          },
-          { root: true }
-        )
       }
     )
 

@@ -64,7 +64,7 @@
         href="https://github.com/WordPress/openverse-catalog/issues/new?assignees=&labels=%F0%9F%9A%A6+status%3A+awaiting+triage%2C+%F0%9F%A7%B9+status%3A+ticket+work+required%2C+%E2%98%81%EF%B8%8F+provider%3A+any&template=new-source-suggestion.md&title=%5BSource+Suggestion%5D+Insert+source+name+here"
       >
         {{ $t('sources.issue-button') }}
-        <i class="icon external-link ms-2" />
+        <VIcon :icon-path="externalLinkIcon" :rtl-flip="true" class="mx-2" />
       </VButton>
     </p>
 
@@ -118,9 +118,7 @@
       <tbody>
         <tr v-for="(imageProvider, index) in sortedProviders" :key="index">
           <td class="font-semibold">
-            <VLink :href="`/search?source=${imageProvider.source_name}`">
-              {{ imageProvider.display_name }}
-            </VLink>
+            {{ imageProvider.display_name }}
           </td>
           <td class="font-semibold">
             <VLink :href="imageProvider.source_url">
@@ -143,11 +141,16 @@ import { mapState } from 'vuex'
 import { PROVIDER } from '~/constants/store-modules'
 import { useGetLocaleFormattedNumber } from '~/composables/use-get-locale-formatted-number'
 
+import VButton from '~/components/VButton.vue'
 import VLink from '~/components/VLink.vue'
+import VIcon from '~/components/VIcon/VIcon.vue'
+import TableSortIcon from '~/components/TableSortIcon.vue'
+
+import externalLinkIcon from '~/assets/icons/external-link.svg'
 
 const SourcePage = {
   name: 'source-page',
-  components: { VLink },
+  components: { VButton, VIcon, VLink, TableSortIcon },
   data() {
     return {
       sort: {
@@ -159,7 +162,7 @@ const SourcePage = {
   setup() {
     const getLocaleFormattedNumber = useGetLocaleFormattedNumber()
 
-    return { getLocaleFormattedNumber }
+    return { getLocaleFormattedNumber, externalLinkIcon }
   },
   computed: {
     ...mapState(PROVIDER, ['imageProviders']),

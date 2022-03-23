@@ -56,6 +56,8 @@
 </template>
 
 <script>
+import { useSearchStore } from '~/stores/search'
+
 import VLicenseExplanation from '~/components/VFilters/VLicenseExplanation.vue'
 import VCheckbox from '~/components/VCheckbox/VCheckbox.vue'
 import VLicense from '~/components/License/VLicense.vue'
@@ -103,36 +105,16 @@ export default {
         : this.$t(item.name)
     },
     onValueChange({ value }) {
-      this.$emit('filterChanged', {
+      this.$emit('toggle-filter', {
         code: value,
         filterType: this.filterType,
       })
     },
-    getFilterTypeValue(filterKey, val) {
-      return this.$store.state.search.filters[filterKey].filter((item) =>
-        item.code.includes(val)
-      )
-    },
     isDisabled(item) {
-      if (this.filterType === 'licenseTypes') {
-        const nc = this.getFilterTypeValue('licenses', 'nc')
-        const nd = this.getFilterTypeValue('licenses', 'nd')
-        return (
-          (item.code === 'commercial' && nc.some((li) => li.checked)) ||
-          (item.code === 'modification' && nd.some((li) => li.checked))
-        )
-      } else if (this.filterType === 'licenses') {
-        const commercial = this.getFilterTypeValue('licenseTypes', 'commercial')
-        const modification = this.getFilterTypeValue(
-          'licenseTypes',
-          'modification'
-        )
-        return (
-          (commercial[0].checked && item.code.includes('nc')) ||
-          (modification[0].checked && item.code.includes('nd'))
-        )
-      }
-      return this.disabled
+      return (
+        useSearchStore().isFilterDisabled(item, this.filterType) ??
+        this.disabled
+      )
     },
   },
 }

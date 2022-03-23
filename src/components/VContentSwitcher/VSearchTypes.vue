@@ -14,6 +14,7 @@
       :item="item"
       :item-id="idx"
       :icon="content.icons[item]"
+      :use-links="useLinks"
       :selected="item === activeItem"
       @click="handleClick(item)"
     />
@@ -23,11 +24,9 @@
 import { computed, defineComponent } from '@nuxtjs/composition-api'
 
 import { supportedSearchTypes } from '~/constants/media'
-
 import useSearchType from '~/composables/use-search-type'
 
 import VItemGroup from '~/components/VItemGroup/VItemGroup.vue'
-
 import VSearchTypeItem from '~/components/VContentSwitcher/VSearchTypeItem.vue'
 
 export default defineComponent({
@@ -47,6 +46,10 @@ export default defineComponent({
       type: String,
       required: true,
       validator: (val) => supportedSearchTypes.includes(val),
+    },
+    useLinks: {
+      type: Boolean,
+      default: true,
     },
   },
   setup(props, { emit }) {

@@ -1,7 +1,5 @@
-export type SupportedMediaType = 'audio' | 'image'
-export type SupportedSearchType = 'all' | SupportedMediaType
-export type MediaType = 'audio' | 'image' | 'video'
-export type SearchType = 'all' | MediaType
+import type { SupportedSearchType } from '~/constants/media'
+
 /**
  * The search result object
  */
@@ -35,11 +33,10 @@ export interface MediaResult<
     : never
 }
 
-export type Query = {
-  mediaType: SupportedMediaType
+export interface Query {
   q: string
-  license: string
   license_type: string
+  license: string
   extension: string
   size: string
   aspect_ratio: string
@@ -49,8 +46,9 @@ export type Query = {
   duration: string
   mature: string
 }
+export type QueryKey = keyof Query
 
-export type ApiQueryParams = {
+export interface ApiQueryParams {
   q: string
   license?: string
   license_type?: string
@@ -63,6 +61,8 @@ export type ApiQueryParams = {
   duration?: string
   mature?: string
 }
+export type ApiQueryFilters = Omit<ApiQueryParams, 'q'>
+export type ApiQueryKeys = keyof ApiQueryFilters
 
 export interface Tag {
   name: string
@@ -141,14 +141,6 @@ export interface FetchState {
 export interface SearchState {
   searchType: SupportedSearchType
   query: Query
-  filters: Filters
-}
-
-export interface ActiveMediaState {
-  type: SupportedMediaType | null
-  id: string | null
-  status: 'ejected' | 'playing' | 'paused' // 'ejected' means player is closed
-  message: string | null
 }
 
 export type MediaStoreResult<T extends FrontendMediaType> = MediaResult<

@@ -11,8 +11,8 @@ module.exports = {
     parser: '@typescript-eslint/parser',
   },
   extends: [
-    'plugin:@typescript-eslint/recommended',
     'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
     'plugin:vue/recommended',
     'plugin:prettier/recommended',
     'plugin:vuejs-accessibility/recommended',
@@ -143,6 +143,7 @@ module.exports = {
         ],
       },
     ],
+    'import/extensions': ['error', 'always', { js: 'never', ts: 'never' }],
   },
   overrides: [
     {

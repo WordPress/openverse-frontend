@@ -1,6 +1,2 @@
-export const RELATED = 'related'
 export const PROVIDER = 'provider'
-export const USAGE_DATA = 'usage-data'
-export const SEARCH = 'search'
 export const MEDIA = 'media'
-export const BUG_REPORT = 'bug-report'

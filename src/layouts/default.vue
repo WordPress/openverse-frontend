@@ -21,11 +21,8 @@
 import { computed, provide, ref, watch } from '@nuxtjs/composition-api'
 
 import { useScroll } from '~/composables/use-scroll'
-
 import { useMatchSearchRoutes } from '~/composables/use-match-routes'
-
 import { isMinScreen } from '~/composables/use-media-query'
-
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
 
 import { useNavStore } from '~/stores/nav'
@@ -113,7 +110,7 @@ export default embeddedPage
   .main {
     height: 100%;
     display: grid;
-    grid-template-columns: 1fr 316px;
+    grid-template-columns: 1fr 336px;
   }
   // Make the main content area span both grid columns
   // when the sidebar is closed...

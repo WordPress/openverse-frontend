@@ -3,7 +3,7 @@
     <li
       v-for="element in elements"
       :key="element"
-      class="flex items-center gap-3 mt-2"
+      class="flex items-center gap-3 mb-2 text-sm md:text-base"
     >
       <VIcon
         view-box="0 0 30 30"
@@ -23,6 +23,8 @@
 <script>
 import { computed, defineComponent } from '@nuxtjs/composition-api'
 
+import VIcon from '~/components/VIcon/VIcon.vue'
+
 import by from '~/assets/licenses/by.svg'
 import cc0 from '~/assets/licenses/cc0.svg'
 import nc from '~/assets/licenses/nc.svg'
@@ -34,6 +36,7 @@ import samplingPlus from '~/assets/licenses/sampling-plus.svg'
 
 export default defineComponent({
   name: 'VLicenseElements',
+  components: { VIcon },
   props: {
     license: {
       type: String,

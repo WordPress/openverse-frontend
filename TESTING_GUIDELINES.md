@@ -12,25 +12,7 @@ Staging is redeployed everytime we merge to the `main` branch, so if you're look
 
 Once you have the application running, you can visit it in your browser at http://localhost:8443.
 
-You can also access it from other devices in your same network (like a mobile phone) for additional testing. Typically, the address for this will be displayed in the output of the `pnpm dev` command that you ran to start the server. It will look something like `http://192.168.0.123:8443` or `http://10.0.0.45:8443` depending on your local network configuration. If you can't find this in the output you will need to determine your local IP address yourself.
-
-To do this, follow these instructions for getting your computer's local network IP address:
-
-- Windows:
-  1. Find your IP address: https://support.microsoft.com/en-us/windows/find-your-ip-address-in-windows-f21a9bbc-c582-55cd-35e0-73431160a1b9
-  2. Make sure that your Wi-Fi network is set to "private": https://support.microsoft.com/en-US/windows/make-a-wi-fi-network-public-or-private-in-windows-0460117d-8d3e-a7ac-f003-7a0da607448d
-- macOS:
-  1. Open the Network Preferences app
-  2. Select Wi-Fi from the list of network devices
-  3. Your local IP address will be listed below the "Deactivate Wi-Fi" button
-- Linux:
-  1. Follow the instructions for your distro. Most likely the `ip` command will work. Run `ip address show` in your terminal and find your wireless card in the list (probably the second entry). Look for the `inet` line and copy the first 4 groups of numbers for your IP before the `/24`. The line will probably look like this:
-  ```
-  inet 192.168.86.234/24 brd 192.168.86.255 scope global dynamic noprefixroute <wireless card name>
-  ```
-  In this case my local IP was 192.168.86.234
-
-Once you have identified your local IP address, you can access the website running on your computer by visiting `http://<local IP>:8443` replacing `<local IP>` (including the brackets) with the value you found using the instructions above in your mobile devices browser.
+You can also access it from other devices in your same network (like a mobile phone) for additional testing. See the [finding your local IP address](./README.md#finding-your-local-ip-address) section of the README for how to identify the local IP adress Nuxt is served on. Once you have identified your local IP address, you can access the website running on your computer by visiting `https://<local IP>:8443` replacing `<local IP>` (including the brackets) with the value you found using the instructions above in your mobile devices browser.
 
 Testing from multiple different devices as often as possible is a great way to contribute to Openverse's frontend development.
 
@@ -92,36 +74,60 @@ Openverse uses [Vue Testing Library](https://testing-library.com/docs/vue-testin
 
 There are also legacy unit tests written in [Vue Test Utils](https://vue-test-utils.vuejs.org/) but those are slated to be re-written using testing library.
 
-### E2e tests
+### End-to-end tests
 
-Before running the e2e tests, install the browsers that Playwright needs:
+Our end-to-end test suite runs inside a Playwright docker container in order to prevent cross-platform browser differences from creating flaky test behavior.
+
+Having docker and docker-compose is a pre-requisite to running the end-to-end tests locally. Please follow [the relevant instructions for your operating system for how to install docker and docker-compose](https://docs.docker.com/get-docker/). If you're on Windows 10 Home Edition, please note that you'll need to [install and run docker inside WSL2](https://www.freecodecamp.org/news/how-to-run-docker-on-windows-10-home-edition/).
+
+If it's not possible for you to run docker locally, don't fret! Our CI will run it on every pull request and another contributor who is able to run the tests locally can help you develop new or update existing tests for your changes.
+
+The Playwright docker container runs everything needed for the end-to-end tests, including the Nuxt server and a [Talkback proxy](https://github.com/ijpiantanida/talkback) for the API.
+
+To run the end-to-end tests, after having installed docker, run the following:
+
+```bash
+pnpm test:e2e
+```
+
+If you've added new tests or updated existing ones, you may get errors about API responses not being found. To remedy this, you'll need to update the tapes:
+
+```bash
+pnpm test:e2e:update-tapes
+```
+
+If for some reason you find yourself needing to completely recreate the tapes, you may do so using the `test:e2e:recreate-tapes` script. Please use this sparingly as it creates massive diffs in PRs (tens of thousands of lines across over literally hundreds of JSON files). Note that you may be rate-limited by the upstream production API if you do this. There is no official workaround for this at the moment.
+
+Additional debugging may be accomplished in two ways. You may inspect the trace output of failed tests by finding the `trace.zip` for the relevant test in the `test-results` folder. Traces are only saved for failed tests. You can use the [Playwright Trace Viewer](https://playwright.dev/docs/trace-viewer) to inspect these (or open the zip yourself and poke around the files on your own).
+
+Additionally, you can run run the tests in debug mode. This will run the tests with a headed browser as opposed to a headless (invisible) one and allow you to watch the test happen in real time. It's not possible for a headed browser to run inside the docker container, however, so be aware that when debugging the environment will be slightly different. For example, if you're on any OS other than Linux, the browser you're running will have small differences in how it renders the page compared to the docker container.
+
+To run the debug tests:
+
+```bash
+pnpm test:e2e:debug
+```
+
+Note that this still runs the talkback proxy and the Nuxt server for you. If you'd like to avoid this, simply run the Nuxt server before you run the `test:e2e:debug` script and Playwright will automatically prefer your previously running Nuxt server.
+
+<aside>
+For some reason the following two tests are consistently flaky when updating tapes but appear to be stable when running the e2e tapes with pre-existing tapes.
 
 ```
-pnpx install playwright
+search-types.spec.js:102:3 › Can open All content page client-side
+search-types.spec.js:102:3 › Can open Images page client-side
 ```
 
-If you don't have the app running, start by running it in the dev mode:
+Don't be alarmed if you notice this.
 
-```
-pnpm run dev
-```
-
-After the dev server has finished building, run the e2e tests:
-
-```
-pnpm run test:e2e
-```
+</aside>
 
 When writing e2e tests, it can be helpful to use Playwright [codegen](https://playwright.dev/docs/cli#generate-code) to generate the tests by performing actions in the browser:
 
 ```
-pnpm run generate-e2e-tests
+pnpm run generate-playwright-tests
 ```
 
 This will open the app in a new browser window, and record any actions you take in a format that can be used in e2e tests.
 
-The CI uses [talkback](https://github.com/ijpiantanida/talkback) to ensure that the e2e tests are independent of the network status by recording the network responses in the `/test/tapes` folder. If you add new e2e tests, you may need to update the tapes by running
-
-```
-pnpm run update-tapes
-```
+Note that this does _not_ run the server for you; you must run the Nuxt server using `pnpm start` or `pnpm dev` separately before running the codegen script.

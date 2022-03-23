@@ -15,14 +15,12 @@ import {
   RESET_MEDIA,
   SET_MEDIA_ITEM,
   SET_MEDIA,
+  RESET_FETCH_STATE,
 } from '~/constants/mutation-types'
-import {
-  SEND_RESULT_CLICKED_EVENT,
-  SEND_SEARCH_QUERY_EVENT,
-} from '~/constants/usage-data-analytics-types'
 import { AUDIO, IMAGE, ALL_MEDIA, supportedMediaTypes } from '~/constants/media'
-import { USAGE_DATA } from '~/constants/store-modules'
 import MediaService from '~/data/media-service'
+import { hash, rand as prng } from '~/utils/prng'
+import { useSearchStore } from '~/stores/search'
 
 /**
  * @return {import('./types').MediaState}
@@ -65,14 +63,24 @@ export const mediaServices = {
 
 export const createActions = (services = mediaServices) => ({
   /**
+   * Calls FETCH_SINGLE_MEDIA_TYPE for selected media type(s). Can be called by changing the search query
+   * (search term or filter item), or by clicking 'Load more' button.
+   * If the search query changed, fetch state is reset, otherwise only the media types for which
+   * fetchState.isFinished is not true are fetched.
    *
    * @param {import('vuex').ActionContext} context
    * @param {object} [payload]
+   * @param {boolean} [payload.shouldPersistMedia] - true when fetching more media for the same query.
    * @return {Promise<void>}
    */
-  async [FETCH_MEDIA]({ dispatch, rootState }, payload = {}) {
-    const mediaType = rootState.search.searchType
-    const mediaToFetch = mediaType !== ALL_MEDIA ? [mediaType] : [IMAGE, AUDIO]
+  async [FETCH_MEDIA]({ commit, dispatch, getters, state }, payload = {}) {
+    const mediaType = getters.searchType
+    if (!payload.shouldPersistMedia) {
+      commit(RESET_FETCH_STATE)
+    }
+    const mediaToFetch = (
+      mediaType !== ALL_MEDIA ? [mediaType] : [IMAGE, AUDIO]
+    ).filter((type) => !state.fetchState[type].isFinished)
 
     await Promise.all(
       mediaToFetch.map((type) =>
@@ -94,42 +102,26 @@ export const createActions = (services = mediaServices) => ({
   /**
    *
    * @param {import('vuex').ActionContext} context
-   * @param {Object} payload
+   * @param {object} payload
    * @param {import('./types').SupportedMediaType} payload.mediaType - the mediaType to fetch (do not use 'All_media' here)
    * @param {number} [payload.page] - API page to load.
    * @param {boolean} [payload.shouldPersistMedia] - whether the existing media should be added to or replaced.
    * @return {Promise<void>}
    */
-  async [FETCH_SINGLE_MEDIA_TYPE](
-    { commit, dispatch, rootState, rootGetters },
-    payload
-  ) {
-    const {
-      mediaType,
-      page = undefined,
-      shouldPersistMedia = false,
-      ...params
-    } = payload
+  async [FETCH_SINGLE_MEDIA_TYPE]({ commit, dispatch, state }, payload) {
+    const { mediaType, shouldPersistMedia = false, ...params } = payload
 
     const queryParams = prepareSearchQueryParams({
-      ...rootGetters['search/searchQueryParams'],
+      ...useSearchStore().searchQueryParams,
       ...params,
     })
 
-    // does not send event if user is paginating for more results
-    if (!page) {
-      const sessionId = rootState.user.usageSessionId
-      await dispatch(
-        `${USAGE_DATA}/${SEND_SEARCH_QUERY_EVENT}`,
-        { query: queryParams.q, sessionId },
-        { root: true }
-      )
-    }
-
     commit(FETCH_START_MEDIA, { mediaType })
     try {
-      const mediaPage = typeof page === 'undefined' ? page : page[mediaType]
-
+      let mediaPage
+      if (shouldPersistMedia) {
+        mediaPage = state.results[mediaType].page + 1
+      }
       const data = await services[mediaType].search({
         ...queryParams,
         page: mediaPage,
@@ -161,26 +153,13 @@ export const createActions = (services = mediaServices) => ({
    * @param {string} params.id
    * @return {Promise<void>}
    */
-  async [FETCH_MEDIA_ITEM]({ commit, dispatch, state, rootState }, params) {
-    const { mediaType, id } = params
-    const resultRank = Object.keys(state.results[mediaType].items).findIndex(
-      (item) => item === id
-    )
-    await dispatch(
-      `${USAGE_DATA}/${SEND_RESULT_CLICKED_EVENT}`,
-      {
-        query: rootState.search.query.q,
-        resultUuid: id,
-        resultRank,
-        sessionId: rootState.user.usageSessionId,
-      },
-      { root: true }
-    )
-    commit(SET_MEDIA_ITEM, { item: {}, mediaType })
+  async [FETCH_MEDIA_ITEM]({ commit, dispatch }, params) {
+    const { mediaType } = params
     try {
       const data = await services[mediaType].getMediaDetail(params)
       commit(SET_MEDIA_ITEM, { item: data, mediaType })
     } catch (error) {
+      commit(SET_MEDIA_ITEM, { item: {}, mediaType })
       if (error.response && error.response.status === 404) {
         commit(MEDIA_NOT_FOUND, { mediaType })
       } else {
@@ -227,46 +206,45 @@ export const createActions = (services = mediaServices) => ({
 const actions = createActions()
 
 export const getters = {
+  getItemById: (state) => (mediaType, id) => {
+    return state.results[mediaType].items[id]
+  },
   /**
-   * Returns the search result data related for selected media.
+   * Returns object with a key for each supported media type and arrays of media items for each.
+   * @param {import('./types').MediaState} state
+   * @returns {{[p: import('./types').MediaType]: import('./types').MediaDetail[]}}
+   */
+  resultItems(state) {
+    return supportedMediaTypes.reduce(
+      (items, type) => ({
+        ...items,
+        [type]: Object.values(state.results[type].items),
+      }),
+      /** @type{{ [key: import('./types').MediaType]: import('./types').MediaDetail[] }} */ ({})
+    )
+  },
+  /**
+   * Returns result item counts for each supported media type.
+   * @param {import('./types').MediaState} state
+   * @returns {[import('./types').MediaType, number][]}
+   */
+  resultCountsPerMediaType(state) {
+    return supportedMediaTypes.map((type) => [type, state.results[type].count])
+  },
+  /**
+   * Returns the total count of results for selected search type, sums all media results for ALL_MEDIA.
+   * If the count is more than 10000, returns 10000 to match the API result.
    * @param {import('./types').MediaState} state
    * @param getters
-   * @return {import('./types').MediaStoreResult[] | {'audio': import('./types').MediaStoreResult, 'image': import('./types').MediaStoreResult}}
+   * @returns {number}
    */
-  results(state, getters) {
-    if (getters.searchType === ALL_MEDIA) {
-      return { [IMAGE]: state.results[IMAGE], [AUDIO]: state.results[AUDIO] }
-    } else {
-      return getters.searchType
-        ? { [getters.searchType]: state.results[getters.searchType] }
-        : {}
-    }
-  },
-  mediaResults(state, getters) {
-    if (getters.searchType === ALL_MEDIA) {
-      return {
-        [IMAGE]: state.results[IMAGE].items,
-        [AUDIO]: state.results[AUDIO].items,
-      }
-    } else {
-      return {
-        [getters.searchType]: state.results[getters.searchType].items ?? {},
-      }
-    }
-  },
   resultCount(state, getters) {
-    if (getters.searchType === ALL_MEDIA) {
-      /**
-       * API returns 10 000 if there are more than 10 000 results,
-       * Count for all media also returns at most 10 000.
-       */
-      const count = supportedMediaTypes
-        .map((type) => state.results[type].count)
-        .reduce((a, b) => a + b, 0)
-      return count > 10000 ? 10000 : count
-    } else {
-      return state.results[getters.searchType]?.count || 0
-    }
+    const count = (
+      getters.searchType === ALL_MEDIA
+        ? supportedMediaTypes
+        : [getters.searchType]
+    ).reduce((sum, mediaType) => sum + state.results[mediaType].count, 0)
+    return Math.min(count, 10000)
   },
   /**
    * Search fetching state for selected media type.
@@ -276,16 +254,26 @@ export const getters = {
    */
   fetchState(state, getters) {
     if (getters.searchType === ALL_MEDIA) {
+      /**
+       * For all_media, we return the error for the first media type that has an error.
+       */
+      const mediaTypeErrors = supportedMediaTypes.filter(
+        (type) => !!state.fetchState[type].fetchingError
+      )
+      const allContentFetchError = mediaTypeErrors.length
+        ? mediaTypeErrors[0]
+        : null
+
       return {
         isFetching:
-          state.fetchState[AUDIO].isFetching ||
-          state.fetchState[IMAGE].isFetching,
-        fetchError:
-          state.fetchState[AUDIO].fetchError ||
-          state.fetchState[IMAGE].fetchError,
+          supportedMediaTypes.filter(
+            (type) => state.fetchState[type].isFetching
+          ).length > 0,
+        fetchError: allContentFetchError,
         isFinished:
-          state.fetchState[AUDIO].isFinished &&
-          state.fetchState[IMAGE].isFinished,
+          supportedMediaTypes.filter(
+            (type) => state.fetchState[type].isFinished
+          ).length === supportedMediaTypes.length,
       }
     } else {
       return (
@@ -297,8 +285,47 @@ export const getters = {
       )
     }
   },
-  searchType(state, getters, rootState) {
-    return rootState.search.searchType
+  searchType() {
+    return useSearchStore().searchType
+  },
+  allMedia(state, getters) {
+    const media = getters.resultItems
+
+    // Seed the random number generator with the ID of
+    // the first search result, so the non-image
+    // distribution is the same on repeated searches
+    let seed = media[IMAGE][0]?.id
+    if (typeof seed === 'string') {
+      seed = hash(seed)
+    }
+    const rand = prng(seed)
+    const randomIntegerInRange = (min, max) =>
+      Math.floor(rand() * (max - min + 1)) + min
+    /**
+     * When navigating from All page to Audio page, VAllResultsGrid is displayed
+     * for a short period of time. Then media['image'] is undefined, and it throws an error
+     * `TypeError: can't convert undefined to object`. To fix it, we add `|| {}` to the media['image'].
+     */
+    /**
+     * First, set the results to all images
+     * @type {import('./types').MediaDetail[]}
+     */
+    const newResults = media.image
+
+    // push other items into the list, using a random index.
+    let nonImageIndex = 1
+    for (const type of supportedMediaTypes.slice(1)) {
+      for (const item of media[type]) {
+        newResults.splice(nonImageIndex, 0, item)
+        if (nonImageIndex > newResults.length + 1) break
+        nonImageIndex = randomIntegerInRange(
+          nonImageIndex + 1,
+          nonImageIndex + 6
+        )
+      }
+    }
+
+    return newResults
   },
 }
 
@@ -348,7 +375,7 @@ export const mutations = {
       mediaToSet = media
     }
     const mediaPage = page || 1
-    _state.results[mediaType].items = mediaToSet
+    _state.results[mediaType].items = Object.freeze(mediaToSet)
     _state.results[mediaType].count = mediaCount || 0
     _state.results[mediaType].page = mediaPage
     _state.results[mediaType].pageCount = pageCount
@@ -367,6 +394,13 @@ export const mutations = {
     _state.results[mediaType].count = 0
     _state.results[mediaType].page = undefined
     _state.results[mediaType].pageCount = 0
+  },
+  [RESET_FETCH_STATE](_state) {
+    for (let mediaType of supportedMediaTypes) {
+      _state.fetchState[mediaType].isFetching = false
+      _state.fetchState[mediaType].isFinished = false
+      _state.fetchState[mediaType].fetchingError = null
+    }
   },
 }
 

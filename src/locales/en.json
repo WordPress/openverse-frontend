@@ -411,10 +411,6 @@
       "tool-header": "Public Domain",
       "audio": "Audio",
       "image": "Image",
-      "license": {
-        "content": "Read more about the license {link}",
-        "link": "here"
-      },
       "tool": {
         "content": "Read more about the tool {link}.",
         "link": "here"
@@ -579,16 +575,6 @@
     "podcast": "Podcast",
     "pronunciation": "Pronunciation"
   },
-  "license-names": {
-    "cc0": "CC0",
-    "pdm": "Public Domain Mark",
-    "by": "BY",
-    "by-sa": "BY-SA",
-    "by-nc": "BY-NC",
-    "by-nd": "BY-ND",
-    "by-nc-sa": "BY-NC-SA",
-    "by-nc-nd": "BY-NC-ND"
-  },
   "license-readable-names": {
     "cc0": "Zero",
     "pdm": "Public Domain Mark",
@@ -597,7 +583,9 @@
     "by-nc": "Attribution-NonCommercial",
     "by-nd": "Attribution-NoDerivatives",
     "by-nc-sa": "Attribution-NonCommercial-Share-Alike",
-    "by-nc-nd": "Attribution-NonCommercial-NoDerivatives"
+    "by-nc-nd": "Attribution-NonCommercial-NoDerivatives",
+    "sampling+": "Sampling Plus",
+    "nc-sampling+": "NonCommercial Sampling Plus"
   },
   "dropdown-button": {
     "aria": {
