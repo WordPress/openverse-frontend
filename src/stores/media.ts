@@ -14,12 +14,17 @@ import MediaService from '~/data/media-service'
 import { hash, rand as prng } from '~/utils/prng'
 import { useSearchStore } from '~/stores/search'
 import type { MediaState } from '~/store/types'
-import type { DetailFromMediaType, MediaDetail } from '~/models/media'
+import type {
+  Media,
+  AudioDetail,
+  ImageDetail,
+  DetailFromMediaType,
+} from '~/models/media'
 
 export const mediaServices = {
-  [AUDIO]: new MediaService(AUDIO),
-  [IMAGE]: new MediaService(IMAGE),
-}
+  [AUDIO]: new MediaService<AudioDetail>(AUDIO),
+  [IMAGE]: new MediaService<ImageDetail>(IMAGE),
+} as const
 
 export const createUseMediaStore = (services = mediaServices) =>
   defineStore('media', () => {
@@ -70,7 +75,7 @@ export const createUseMediaStore = (services = mediaServices) =>
           ...items,
           [type]: Object.values(state.results[type].items),
         }),
-        {} as Record<SupportedMediaType, MediaDetail[]>
+        {} as Record<SupportedMediaType, Media[]>
       )
     })
     /**

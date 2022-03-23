@@ -2,7 +2,7 @@ import type {
   AudioDetail,
   DetailFromMediaType,
   ImageDetail,
-  MediaDetail,
+  Media,
 } from '~/models/media'
 import type { SupportedMediaType } from '~/constants/media'
 
@@ -11,7 +11,7 @@ import type { SupportedMediaType } from '~/constants/media'
  * Properties use snake_case, unlike the camelCase in the store.
  */
 export interface MediaResult<
-  T extends MediaDetail | MediaDetail[] | Record<string, MediaDetail>
+  T extends Media | Media[] | Record<string, Media>
 > {
   result_count: number
   page_count: number
