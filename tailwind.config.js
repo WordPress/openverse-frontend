@@ -202,6 +202,21 @@ module.exports = {
         ring: 'inset 0 0 0 1px white',
         'ring-1.5': 'inset 0 0 0 1.5px white',
       },
+      typography: (theme) => ({
+        DEFAULT: {
+          css: {
+            '--tw-prose-body': theme('colors.dark-charcoal'),
+            '--tw-prose-headings': theme('colors.dark-charcoal'),
+            '--tw-prose-links': theme('colors.pink'),
+            a: {
+              textDecoration: 'none',
+              '&:hover': {
+                'text-decoration': 'underline',
+              },
+            },
+          },
+        },
+      }),
     },
   },
   plugins: [

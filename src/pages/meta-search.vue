@@ -122,11 +122,12 @@
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
 
+import VContentPage from '~/components/VContentPage.vue'
 import VLink from '~/components/VLink.vue'
 
 export default defineComponent({
   name: 'MetaSearchPage',
-  components: { VLink },
+  components: { VContentPage, VLink },
   head() {
     return {
       title: `${this.$t('meta-search-page.title')} | Openverse`,

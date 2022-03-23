@@ -95,7 +95,7 @@ export const FeedbackPage = {
 export default FeedbackPage
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .form-iframe {
   width: 100%;
   height: 1200px;
