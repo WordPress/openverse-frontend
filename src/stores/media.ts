@@ -289,13 +289,14 @@ export const createUseMediaStore = (services = mediaServices) =>
 
       await Promise.all(
         mediaToFetch.map((type) =>
-          fetchSingleMediaType({ mediaType: type, ...payload })
+          fetchSingleMediaType({
+            mediaType: type,
+            shouldPersistMedia: Boolean(payload.shouldPersistMedia),
+          })
         )
       )
     }
-    /**
-     * Do not use with ALL_MEDIA
-     */
+
     const clearMedia = () => {
       supportedMediaTypes.forEach((mediaType) => {
         resetMedia(mediaType)
@@ -303,34 +304,31 @@ export const createUseMediaStore = (services = mediaServices) =>
     }
     /**
      * @param mediaType - the mediaType to fetch (do not use 'All_media' here)
-     * @param page - API page to load.
      * @param shouldPersistMedia - whether the existing media should be added to or replaced.
      */
-    const fetchSingleMediaType = async (payload: {
+    const fetchSingleMediaType = async ({
+      mediaType,
+      shouldPersistMedia,
+    }: {
       mediaType: SupportedMediaType
-      shouldPersistMedia?: boolean
+      shouldPersistMedia: boolean
     }) => {
-      const { mediaType, shouldPersistMedia = false, ...params } = payload
-
       const queryParams = prepareSearchQueryParams({
         ...useSearchStore().searchQueryParams,
-        ...params,
       })
-      let mediaPage
+      let page
       if (shouldPersistMedia) {
         /**
          * If `shouldPersistMedia` is true, then we increment the page that was set by a previous
          * fetch. Normally, if `shouldPersistMedia` is true, `page` should have been set to 1 by the
          * previous fetch. But if it wasn't and is still undefined, we set it to 0, and increment it.
          */
-        mediaPage = (state.results[mediaType].page ?? 0) + 1
+        page = (state.results[mediaType].page ?? 0) + 1
+        queryParams.page = `${page}`
       }
       fetchStartMedia(mediaType)
       try {
-        const data = await services[mediaType].search({
-          ...queryParams,
-          page: `${mediaPage}`,
-        })
+        const data = await services[mediaType].search(queryParams)
 
         fetchEndMedia(mediaType)
         const mediaCount = data.result_count
@@ -339,7 +337,7 @@ export const createUseMediaStore = (services = mediaServices) =>
             mediaType,
             errorMessage: `No ${mediaType} found for this query`,
           })
-          mediaPage = undefined
+          page = undefined
         }
         setMedia({
           mediaType,
@@ -347,7 +345,7 @@ export const createUseMediaStore = (services = mediaServices) =>
           mediaCount,
           pageCount: data.page_count,
           shouldPersistMedia,
-          page: mediaPage,
+          page,
         })
       } catch (error) {
         await handleMediaError({ mediaType, error })
