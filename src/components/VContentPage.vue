@@ -7,9 +7,10 @@
     </div>
   </div>
 </template>
-<script>
-const VContentPage = {
+
+<script lang="ts">
+import { defineComponent } from '@nuxtjs/composition-api'
+export default defineComponent({
   name: 'VContentPage',
-}
-export default VContentPage
+})
 </script>
