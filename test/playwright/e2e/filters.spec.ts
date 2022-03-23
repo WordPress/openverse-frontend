@@ -74,7 +74,7 @@ test('common filters are retained when media type changes from all media to sing
   await openFilters(page)
   const expectedFilters = ['cc0', 'commercial', 'creator']
 
-  for (let checkbox of expectedFilters) {
+  for (const checkbox of expectedFilters) {
     await assertCheckboxStatus(page, checkbox)
   }
   await changeContentType(page, 'Images')
