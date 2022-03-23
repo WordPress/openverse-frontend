@@ -1,0 +1,21 @@
+#################################
+# Dependabot Configuration File #
+#################################
+
+# current Github-native version of Dependabot
+version: 2
+
+updates:
+  # Enable version updates for JavaScript packages
+  - package-ecosystem: "npm"
+    # Look for a `package.json` file
+    directory: "."
+    # Check for updates once a week
+    schedule:
+      interval: "weekly"
+    labels:
+      - "💻 aspect: code"
+      - "🧰 goal: internal improvement"
+      - "🟩 priority: low"
+      - "🟨 tech: javascript"
+      - "dependencies"
