@@ -45,7 +45,7 @@ const searchTypes = [
     url: '/search/audio?q=birds',
     canLoadMore: true,
     metaSourceCount: 3,
-    results: /93 results/,
+    results: /764 results/,
   },
 ]
 
