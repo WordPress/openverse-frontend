@@ -2,16 +2,14 @@ import { decodeMediaData } from '~/utils/decode-media-data'
 import { VersionedApiService } from '~/data/api-service'
 
 import type { ApiQueryParams, MediaResult } from '~/store/types'
-import type { DetailFromMediaType, MediaDetail } from '~/models/media'
-
-import type { SupportedMediaType } from '~/constants/media'
+import type { Media } from '~/models/media'
 
 import type { AxiosResponse } from 'axios'
 
-class MediaService<T extends SupportedMediaType> {
-  private readonly mediaType: T
+class MediaService<T extends Media> {
+  private readonly mediaType: T['frontendMediaType']
 
-  constructor(mediaType: T) {
+  constructor(mediaType: T['frontendMediaType']) {
     this.mediaType = mediaType
   }
 
@@ -21,16 +19,14 @@ class MediaService<T extends SupportedMediaType> {
    * media id as keys.
    * @param data - search result data
    */
-  transformResults(
-    data: MediaResult<DetailFromMediaType<T>[]>
-  ): MediaResult<Record<string, DetailFromMediaType<T>>> {
-    const mediaResults = <DetailFromMediaType<T>[]>data.results
+  transformResults(data: MediaResult<T[]>): MediaResult<Record<string, T>> {
+    const mediaResults = <T[]>data.results
     return {
       ...data,
       results: mediaResults.reduce((acc, item) => {
         acc[item.id] = decodeMediaData(item, this.mediaType)
         return acc
-      }, {} as Record<string, DetailFromMediaType<T>>),
+      }, {} as Record<string, T>),
     }
   }
 
@@ -40,10 +36,11 @@ class MediaService<T extends SupportedMediaType> {
    */
   async search(
     params: ApiQueryParams
-  ): Promise<MediaResult<Record<string, MediaDetail>>> {
-    const res = await VersionedApiService.query<
-      MediaResult<DetailFromMediaType<T>[]>
-    >(this.mediaType, params as unknown as Record<string, string>)
+  ): Promise<MediaResult<Record<string, Media>>> {
+    const res = await VersionedApiService.query<MediaResult<T[]>>(
+      this.mediaType,
+      params as unknown as Record<string, string>
+    )
     return this.transformResults(res.data)
   }
 
@@ -52,26 +49,21 @@ class MediaService<T extends SupportedMediaType> {
    * SSR-called
    * @param id - the media id to fetch
    */
-  async getMediaDetail(id: string): Promise<DetailFromMediaType<T>> {
+  async getMediaDetail(id: string): Promise<T> {
     if (!id) {
       throw new Error(
         `MediaService.getMediaDetail() id parameter required to retrieve ${this.mediaType} details.`
       )
     }
-    const res = await VersionedApiService.get<DetailFromMediaType<T>>(
-      this.mediaType,
-      id
-    )
-    return decodeMediaData<T>(res.data, this.mediaType)
+    const res = await VersionedApiService.get<T>(this.mediaType, id)
+    return decodeMediaData(res.data, this.mediaType)
   }
 
   /**
    * Retrieve related media
    * @param params - object with id of the main media, for which to fetch related media
    */
-  async getRelatedMedia(params: {
-    id: string
-  }): Promise<MediaResult<DetailFromMediaType<T>[]>> {
+  async getRelatedMedia(params: { id: string }): Promise<MediaResult<T[]>> {
     if (!params.id) {
       throw new Error(
         `MediaService.getRelatedMedia() id parameter required to retrieve related media.`
@@ -81,12 +73,12 @@ class MediaService<T extends SupportedMediaType> {
     const res = (await VersionedApiService.get(
       this.mediaType,
       `${params.id}/related`
-    )) as AxiosResponse<MediaResult<DetailFromMediaType<T>[]>>
+    )) as AxiosResponse<MediaResult<T[]>>
     return {
       ...res.data,
       results: res.data.results.map((item) =>
         decodeMediaData(item, this.mediaType)
-      ) as DetailFromMediaType<T>[],
+      ) as T[],
     }
   }
 }

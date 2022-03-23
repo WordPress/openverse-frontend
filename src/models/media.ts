@@ -54,7 +54,5 @@ export interface AudioDetail extends Media {
   peaks?: number[]
 }
 
-export type MediaDetail = ImageDetail | AudioDetail
-
 export type DetailFromMediaType<T extends SupportedMediaType> =
   T extends 'image' ? ImageDetail : T extends 'audio' ? AudioDetail : never
