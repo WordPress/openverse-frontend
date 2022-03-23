@@ -88,7 +88,7 @@ export default defineComponent({
     })
 
     /**
-     * @type { ComputedRef<import('../../store/types').MediaDetail[]> }
+     * @type { ComputedRef<import('../../store/types').Media[]> }
      */
     const allMedia = computed(() => mediaStore.allMedia)
 

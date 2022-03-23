@@ -2,13 +2,13 @@ import type {
   AudioDetail,
   DetailFromMediaType,
   ImageDetail,
-  MediaDetail,
+  Media,
 } from '~/models/media'
 import type { FetchState } from '~/composables/use-fetch-state'
 type FrontendMediaType = MediaDetail['frontendMediaType']
 
 export interface MediaResult<
-  T extends MediaDetail | MediaDetail[] | Record<string, MediaDetail>
+  T extends Media | Media[] | Record<string, Media>
 > {
   result_count: number
   page_count: number
