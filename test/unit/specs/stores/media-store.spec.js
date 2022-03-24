@@ -19,6 +19,8 @@ const initialFetchState = {
   fetchingError: null,
   isFetching: false,
   isFinished: false,
+  canFetchAgain: true,
+  hasStarted: false,
 }
 
 const uuids = [
@@ -194,26 +196,17 @@ describe('Media Store', () => {
     it.each`
       searchType   | fetchState
       ${ALL_MEDIA} | ${{ fetchingError: 'Error', isFetching: true, isFinished: false }}
-      ${AUDIO}     | ${{ fetchingError: 'Error', isFetching: false, isFinished: true }}
-      ${IMAGE}     | ${{ fetchingError: null, isFetching: true, isFinished: false }}
+      ${AUDIO}     | ${{ fetchingError: 'Error', isFetching: false, isFinished: false, canFetchAgain: false, hasStarted: true }}
+      ${IMAGE}     | ${{ fetchingError: null, isFetching: true, isFinished: false, canFetchAgain: false, hasStarted: true }}
     `(
       'fetchState for $searchType returns $fetchState',
       ({ searchType, fetchState }) => {
         const mediaStore = useMediaStore()
         const searchStore = useSearchStore()
         searchStore.setSearchType(searchType)
-        mediaStore.$patch({
-          state: {
-            fetchState: {
-              audio: {
-                isFetching: false,
-                fetchingError: 'Error',
-                isFinished: true,
-              },
-              image: { ...initialFetchState, isFetching: true },
-            },
-          },
-        })
+        mediaStore.test.fetchStates.audio.endFetching({ errorMessage: 'Error' })
+        mediaStore.test.fetchStates.image.startFetching()
+
         expect(mediaStore.fetchState).toEqual(fetchState)
       }
     )
@@ -230,35 +223,6 @@ describe('Media Store', () => {
       services.image.search.mockClear()
       services.audio.getMediaDetail.mockClear()
       services.image.getMediaDetail.mockClear()
-    })
-    it('fetchStartMedia updates state', () => {
-      const mediaStore = useMediaStore()
-      mediaStore.test.fetchStartMedia(IMAGE)
-
-      expect(mediaStore.state.fetchState.image.isFetching).toBeTruthy()
-      expect(mediaStore.state.fetchState.image.fetchingError).toBeFalsy()
-    })
-
-    it('fetchEndMedia updates state', () => {
-      const mediaStore = useMediaStore()
-
-      mediaStore.test.fetchEndMedia(IMAGE)
-
-      expect(mediaStore.state.fetchState.image.isFetching).toBeFalsy()
-    })
-
-    it('fetchMediaError updates state', () => {
-      const mediaStore = useMediaStore()
-      mediaStore.test.fetchMediaError({
-        mediaType: IMAGE,
-        errorMessage: 'error',
-      })
-
-      expect(mediaStore.state.fetchState.image).toEqual({
-        isFetching: false,
-        fetchingError: 'error',
-        isFinished: true,
-      })
     })
 
     it('setMedia updates state persisting images', () => {
@@ -387,6 +351,8 @@ describe('Media Store', () => {
         isFetching: false,
         isFinished: true,
         fetchingError: `No ${mediaType} found for this query`,
+        canFetchAgain: false,
+        hasStarted: true,
       })
     })
 

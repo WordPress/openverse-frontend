@@ -1,10 +1,4 @@
-import type {
-  AudioDetail,
-  DetailFromMediaType,
-  ImageDetail,
-  Media,
-} from '~/models/media'
-import type { SupportedMediaType } from '~/constants/media'
+import type { Media } from '~/models/media'
 
 /**
  * The search result object that comes from the API.
@@ -69,23 +63,4 @@ export interface FetchState {
   isFetching: boolean
   fetchingError: null | string
   isFinished?: boolean
-}
-
-export interface MediaStoreResult<T extends SupportedMediaType> {
-  count: number
-  pageCount: number
-  page: number | undefined
-  items: Record<string, DetailFromMediaType<T>>
-}
-export interface MediaState {
-  results: {
-    audio: MediaStoreResult<'audio'>
-    image: MediaStoreResult<'image'>
-  }
-  fetchState: {
-    audio: FetchState
-    image: FetchState
-  }
-  audio: AudioDetail | null
-  image: ImageDetail | null
 }
