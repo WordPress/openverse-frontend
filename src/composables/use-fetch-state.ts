@@ -93,7 +93,7 @@ export const useFetchState = (initialState = statuses.IDLE) => {
   const isFinished = computed(() => fetchStatus.value === statuses.FINISHED)
   const fetchingError = computed(() => fetchError.value)
 
-  const fetchState = reactive({
+  const fetchState: FetchState = reactive({
     hasStarted,
     isFetching,
     canFetch,
