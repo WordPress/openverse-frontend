@@ -163,26 +163,6 @@ msgctxt "license-readable-names.nc-sampling+"
 msgid "NonCommercial Sampling Plus"
 msgstr ""
 
-msgctxt "audio-categories.title"
-msgid "Audio Category"
-msgstr ""
-
-msgctxt "audio-categories.music"
-msgid "Music"
-msgstr ""
-
-msgctxt "audio-categories.sound"
-msgid "Sound effects"
-msgstr ""
-
-msgctxt "audio-categories.podcast"
-msgid "Podcast"
-msgstr ""
-
-msgctxt "audio-categories.pronunciation"
-msgid "Pronunciation"
-msgstr ""
-
 #: src/components/VHeader/VSearchBar/VSearchButton.vue:4
 msgctxt "search.search"
 msgid "Search"
@@ -1005,16 +985,32 @@ msgctxt "filters.audio-categories.title"
 msgid "Audio category"
 msgstr ""
 
+msgctxt "filters.audio-categories.audiobook"
+msgid "Audiobook"
+msgstr ""
+
 msgctxt "filters.audio-categories.music"
 msgid "Music"
 msgstr ""
 
-msgctxt "filters.audio-categories.sound"
-msgid "Sound effects"
+msgctxt "filters.audio-categories.news"
+msgid "News"
 msgstr ""
 
 msgctxt "filters.audio-categories.podcast"
 msgid "Podcast"
+msgstr ""
+
+msgctxt "filters.audio-categories.pronunciation"
+msgid "Pronunciation"
+msgstr ""
+
+msgctxt "filters.audio-categories.sound_effect"
+msgid "Sound effects"
+msgstr ""
+
+msgctxt "filters.audio-categories.sound"
+msgid "Sound effects"
 msgstr ""
 
 msgctxt "filters.audio-providers.title"
