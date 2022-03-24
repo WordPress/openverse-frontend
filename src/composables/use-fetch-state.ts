@@ -1,4 +1,4 @@
-import { computed, Ref, ref, watch } from '@nuxtjs/composition-api'
+import { computed, reactive, Ref, ref, watch } from '@nuxtjs/composition-api'
 
 export interface FetchState {
   isFetching: boolean
@@ -84,16 +84,18 @@ export const useFetchState = (initialState = statuses.IDLE) => {
   const isFetching = computed(() => fetchStatus.value === statuses.FETCHING)
   const canFetch = computed(() => canFetchStatuses.includes(fetchStatus.value))
   const isFinished = computed(() => fetchStatus.value === statuses.FINISHED)
-  const isError = computed(() => fetchStatus.value === statuses.ERROR)
   const fetchingError = computed(() => fetchError.value)
 
-  return {
-    isFetching,
-    fetchingError,
-    canFetch,
+  const fetchState = reactive({
     hasStarted,
+    isFetching,
+    canFetch,
     isFinished,
-    isError,
+    fetchingError,
+  })
+
+  return {
+    fetchState,
 
     startFetching,
     endFetching,
