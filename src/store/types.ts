@@ -1,6 +1,7 @@
 /**
  * The search result object
  */
+import type { FetchState } from '~/composables/use-fetch-state'
 
 type FrontendMediaType = MediaDetail['frontendMediaType']
 export interface MediaResult<
@@ -129,14 +130,6 @@ export interface Filters {
   mature: FilterItem[]
 }
 export type FilterCategory = keyof Filters
-
-export interface FetchState {
-  isFetching: boolean
-  fetchingError: null | string
-  canFetchAgain?: boolean
-  hasStarted?: boolean
-  isFinished?: boolean
-}
 
 export type MediaStoreResult<T extends FrontendMediaType> = MediaResult<
   Record<MediaDetail['id'], T>

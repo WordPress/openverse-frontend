@@ -1,6 +1,12 @@
-import { computed, reactive, Ref, ref, watch } from '@nuxtjs/composition-api'
+import { computed, Ref, ref, watch } from '@nuxtjs/composition-api'
 
-import type { FetchState } from '~/store/types'
+export interface FetchState {
+  isFetching: boolean
+  fetchingError: null | string
+  canFetch?: boolean
+  hasStarted?: boolean
+  isFinished?: boolean
+}
 
 /* Constants */
 
@@ -13,13 +19,13 @@ import type { FetchState } from '~/store/types'
  * - `finished`: for multi-page requests, this is true when no more pages are left.
  * - `error`: an error response was received.
  */
-const statuses = {
+const statuses = Object.freeze({
   IDLE: 'idle',
   FETCHING: 'fetching',
   SUCCESS: 'success',
   ERROR: 'error',
   FINISHED: 'finished',
-} as const
+} as const)
 
 type Status = typeof statuses[keyof typeof statuses]
 /**
@@ -34,7 +40,7 @@ const nonErrorStatuses: Status[] = [
  * With these statuses, it is possible to send the same request for a new page.
  * This can help debounce requests and prevent racing states.
  */
-const canFetchAgainStatuses: Status[] = [statuses.IDLE, statuses.SUCCESS]
+const canFetchStatuses: Status[] = [statuses.IDLE, statuses.SUCCESS]
 
 /* Composable */
 
@@ -76,30 +82,18 @@ export const useFetchState = (initialState = statuses.IDLE) => {
    */
   const hasStarted = computed(() => fetchStatus.value !== statuses.IDLE)
   const isFetching = computed(() => fetchStatus.value === statuses.FETCHING)
-  const canFetchAgain = computed(() =>
-    canFetchAgainStatuses.includes(fetchStatus.value)
-  )
+  const canFetch = computed(() => canFetchStatuses.includes(fetchStatus.value))
   const isFinished = computed(() => fetchStatus.value === statuses.FINISHED)
   const isError = computed(() => fetchStatus.value === statuses.ERROR)
   const fetchingError = computed(() => fetchError.value)
 
-  const fetchingState: FetchState = reactive({
-    hasStarted,
-    isFetching,
-    canFetchAgain,
-    fetchingError,
-    isFinished,
-  })
-
   return {
     isFetching,
     fetchingError,
-    canFetchAgain,
+    canFetch,
     hasStarted,
     isFinished,
     isError,
-
-    fetchingState,
 
     startFetching,
     endFetching,

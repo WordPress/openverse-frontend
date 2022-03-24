@@ -3,56 +3,51 @@ import { useFetchState } from '~/composables/use-fetch-state'
 describe('useFetchState', () => {
   it('should use the default values', () => {
     const fetchState = useFetchState()
-    expect(fetchState.fetchingState).toEqual({
-      isFetching: false,
-      isFinished: false,
-      fetchingError: null,
-      canFetchAgain: true,
-      hasStarted: false,
-    })
+
+    expect(fetchState.isFetching).toEqual(false)
+    expect(fetchState.isFinished).toEqual(false)
+    expect(fetchState.fetchingError).toEqual(null)
+    expect(fetchState.canFetch).toEqual(true)
+    expect(fetchState.hasStarted).toEqual(false)
   })
   it('should start fetching', () => {
     const fetchState = useFetchState()
     fetchState.startFetching()
-    expect(fetchState.fetchingState).toEqual({
-      isFetching: true,
-      isFinished: false,
-      fetchingError: null,
-      canFetchAgain: false,
-      hasStarted: true,
-    })
+
+    expect(fetchState.isFetching).toEqual(true)
+    expect(fetchState.isFinished).toEqual(false)
+    expect(fetchState.fetchingError).toEqual(null)
+    expect(fetchState.canFetch).toEqual(false)
+    expect(fetchState.hasStarted).toEqual(true)
   })
   it('should end fetching with success', () => {
     const fetchState = useFetchState()
     fetchState.endFetching()
-    expect(fetchState.fetchingState).toEqual({
-      isFetching: false,
-      isFinished: false,
-      fetchingError: null,
-      canFetchAgain: true,
-      hasStarted: true,
-    })
+
+    expect(fetchState.isFetching).toEqual(false)
+    expect(fetchState.isFinished).toEqual(false)
+    expect(fetchState.fetchingError).toEqual(null)
+    expect(fetchState.canFetch).toEqual(true)
+    expect(fetchState.hasStarted).toEqual(true)
   })
   it('should end fetching with error', () => {
     const fetchState = useFetchState()
-    fetchState.endFetching({ errorMessage: 'Server Error' })
-    expect(fetchState.fetchingState).toEqual({
-      isFetching: false,
-      isFinished: false,
-      fetchingError: 'Server Error',
-      canFetchAgain: false,
-      hasStarted: true,
-    })
+    fetchState.endFetching('Server Error')
+
+    expect(fetchState.isFetching).toEqual(false)
+    expect(fetchState.isFinished).toEqual(false)
+    expect(fetchState.fetchingError).toEqual('Server Error')
+    expect(fetchState.canFetch).toEqual(false)
+    expect(fetchState.hasStarted).toEqual(true)
   })
   it('should set fetching to finished', () => {
     const fetchState = useFetchState()
     fetchState.setFinished()
-    expect(fetchState.fetchingState).toEqual({
-      isFetching: false,
-      isFinished: true,
-      fetchingError: null,
-      canFetchAgain: false,
-      hasStarted: true,
-    })
+
+    expect(fetchState.isFetching).toEqual(false)
+    expect(fetchState.isFinished).toEqual(true)
+    expect(fetchState.fetchingError).toEqual(null)
+    expect(fetchState.canFetch).toEqual(false)
+    expect(fetchState.hasStarted).toEqual(true)
   })
 })
