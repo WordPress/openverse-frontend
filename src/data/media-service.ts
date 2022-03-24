@@ -2,11 +2,12 @@ import { decodeMediaData } from '~/utils/decode-media-data'
 import { VersionedApiService } from '~/data/api-service'
 
 import type { ApiQueryParams, MediaResult } from '~/store/types'
-import type { Media } from '~/models/media'
+import type { AudioDetail, ImageDetail, Media } from '~/models/media'
+import { AUDIO, IMAGE } from '~/constants/media'
 
 import type { AxiosResponse } from 'axios'
 
-class MediaService<T extends Media> {
+export class MediaService<T extends Media> {
   private readonly mediaType: T['frontendMediaType']
 
   constructor(mediaType: T['frontendMediaType']) {
@@ -83,4 +84,8 @@ class MediaService<T extends Media> {
   }
 }
 
-export default MediaService
+export const getServices = () =>
+  ({
+    [AUDIO]: new MediaService<AudioDetail>(AUDIO),
+    [IMAGE]: new MediaService<ImageDetail>(IMAGE),
+  } as const)

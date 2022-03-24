@@ -10,7 +10,7 @@ import {
   SupportedMediaType,
   supportedMediaTypes,
 } from '~/constants/media'
-import MediaService from '~/data/media-service'
+import { getServices } from '~/data/media-service'
 import { hash, rand as prng } from '~/utils/prng'
 import { useSearchStore } from '~/stores/search'
 import type { FetchState } from '~/store/types'
@@ -21,11 +21,6 @@ import type {
   DetailFromMediaType,
 } from '~/models/media'
 import { useFetchState } from '~/composables/use-fetch-state'
-
-export const mediaServices = {
-  [AUDIO]: new MediaService<AudioDetail>(AUDIO),
-  [IMAGE]: new MediaService<ImageDetail>(IMAGE),
-} as const
 
 export interface MediaStoreResult<T extends Media> {
   count: number
@@ -46,379 +41,372 @@ export interface MediaState {
   audio: AudioDetail | null
   image: ImageDetail | null
 }
-export const createUseMediaStore = (services = mediaServices) =>
-  defineStore('media', () => {
-    /* State */
-    /**
-     * TODO: Split media store into single-type media stores.
-     */
-    const fetchStates = {
-      [AUDIO]: useFetchState(),
-      [IMAGE]: useFetchState(),
-    }
 
-    const state: MediaState = reactive({
-      results: {
-        [IMAGE]: {
-          count: 0,
-          page: undefined,
-          pageCount: 0,
-          items: {},
-        },
-        [AUDIO]: {
-          count: 0,
-          page: undefined,
-          pageCount: 0,
-          items: {},
-        },
+export const useMediaStore = defineStore('media', () => {
+  /* State */
+  /**
+   * TODO: Split media store into single-type media stores.
+   */
+  const fetchStates = {
+    [AUDIO]: useFetchState(),
+    [IMAGE]: useFetchState(),
+  }
+
+  const state: MediaState = reactive({
+    results: {
+      [IMAGE]: {
+        count: 0,
+        page: undefined,
+        pageCount: 0,
+        items: {},
       },
-      fetchState: {
-        audio: fetchStates[AUDIO].fetchingState,
-        image: fetchStates[IMAGE].fetchingState,
+      [AUDIO]: {
+        count: 0,
+        page: undefined,
+        pageCount: 0,
+        items: {},
       },
-      audio: null,
-      image: null,
-    })
+    },
+    fetchState: {
+      audio: fetchStates[AUDIO].fetchingState,
+      image: fetchStates[IMAGE].fetchingState,
+    },
+    audio: null,
+    image: null,
+  })
 
-    /* Getters */
+  /* Getters */
 
-    const getItemById = (mediaType: SupportedMediaType, id: string) => {
-      return state.results[mediaType].items[id]
-    }
-    /**
-     * Returns object with a key for each supported media type and arrays of media items for each.
-     */
-    const resultItems = computed(() => {
-      return supportedMediaTypes.reduce(
-        (items, type) => ({
-          ...items,
-          [type]: Object.values(state.results[type].items),
-        }),
-        {} as Record<SupportedMediaType, Media[]>
-      )
-    })
-    /**
-     * Returns result item counts for each supported media type.
-     */
-    const resultCountsPerMediaType: ComputedRef<
-      [SupportedMediaType, number][]
-    > = computed(() =>
+  const getItemById = (mediaType: SupportedMediaType, id: string) => {
+    return state.results[mediaType].items[id]
+  }
+  /**
+   * Returns object with a key for each supported media type and arrays of media items for each.
+   */
+  const resultItems = computed(() => {
+    return supportedMediaTypes.reduce(
+      (items, type) => ({
+        ...items,
+        [type]: Object.values(state.results[type].items),
+      }),
+      {} as Record<SupportedMediaType, Media[]>
+    )
+  })
+  /**
+   * Returns result item counts for each supported media type.
+   */
+  const resultCountsPerMediaType: ComputedRef<[SupportedMediaType, number][]> =
+    computed(() =>
       supportedMediaTypes.map((type) => [type, state.results[type].count])
     )
-    /**
-     * Returns the total count of results for selected search type, sums all media results for ALL_MEDIA.
-     * If the count is more than 10000, returns 10000 to match the API result.
-     */
-    const resultCount = computed(() => {
-      const types = (
-        searchType.value === ALL_MEDIA
-          ? supportedMediaTypes
-          : [searchType.value]
-      ) as SupportedMediaType[]
-      const count = types.reduce(
-        (sum, mediaType) => sum + state.results[mediaType].count,
-        0
+  /**
+   * Returns the total count of results for selected search type, sums all media results for ALL_MEDIA.
+   * If the count is more than 10000, returns 10000 to match the API result.
+   */
+  const resultCount = computed(() => {
+    const types = (
+      searchType.value === ALL_MEDIA ? supportedMediaTypes : [searchType.value]
+    ) as SupportedMediaType[]
+    const count = types.reduce(
+      (sum, mediaType) => sum + state.results[mediaType].count,
+      0
+    )
+    return Math.min(count, 10000)
+  })
+  /**
+   * Search fetching state for selected search type. For 'All content', aggregates
+   * the values for supported media types.
+   */
+  const fetchState = computed(() => {
+    if (searchType.value === ALL_MEDIA) {
+      /**
+       * For all_media, we return the error for the first media type that has an error.
+       */
+      const mediaTypesWithErrors = supportedMediaTypes.filter(
+        (type) => state.fetchState[type].fetchingError !== null
       )
-      return Math.min(count, 10000)
-    })
-    /**
-     * Search fetching state for selected search type. For 'All content', aggregates
-     * the values for supported media types.
-     */
-    const fetchState = computed(() => {
-      if (searchType.value === ALL_MEDIA) {
-        /**
-         * For all_media, we return the error for the first media type that has an error.
-         */
-        const mediaTypesWithErrors = supportedMediaTypes.filter(
-          (type) => state.fetchState[type].fetchingError !== null
-        )
-        const allContentFetchError = mediaTypesWithErrors.length
-          ? state.fetchState[mediaTypesWithErrors[0]].fetchingError
-          : null
+      const allContentFetchError = mediaTypesWithErrors.length
+        ? state.fetchState[mediaTypesWithErrors[0]].fetchingError
+        : null
 
-        return {
-          isFetching:
-            supportedMediaTypes.filter(
-              (type) => state.fetchState[type].isFetching
-            ).length > 0,
-          fetchingError: allContentFetchError,
-          isFinished:
-            supportedMediaTypes.filter(
-              (type) => state.fetchState[type].isFinished
-            ).length === supportedMediaTypes.length,
-        }
-      } else {
-        return (
-          state.fetchState[searchType.value] || {
-            isFetching: false,
-            fetchingError: false,
-            isFinished: true,
-          }
-        )
+      return {
+        isFetching:
+          supportedMediaTypes.filter(
+            (type) => state.fetchState[type].isFetching
+          ).length > 0,
+        fetchingError: allContentFetchError,
+        isFinished:
+          supportedMediaTypes.filter(
+            (type) => state.fetchState[type].isFinished
+          ).length === supportedMediaTypes.length,
       }
-    })
-    const searchType = computed(() => useSearchStore().searchType)
-
-    const allMedia = computed(() => {
-      const media = resultItems.value
-
-      // Seed the random number generator with the ID of
-      // the first search result, so the non-image
-      // distribution is the same on repeated searches
-      const seedString = media[IMAGE][0]?.id
-      let seed: number
-      if (typeof seedString === 'string') {
-        seed = hash(seedString)
-      } else {
-        let otherTypeId = 'string'
-        for (const type of supportedMediaTypes.slice(1)) {
-          if (typeof media[type][0]?.id === 'string') {
-            otherTypeId = media[type][0].id
-            break
-          }
+    } else {
+      return (
+        state.fetchState[searchType.value] || {
+          isFetching: false,
+          fetchingError: false,
+          isFinished: true,
         }
-        seed = hash(otherTypeId)
-      }
-      const rand = prng(seed)
-      const randomIntegerInRange = (min: number, max: number) =>
-        Math.floor(rand() * (max - min + 1)) + min
-      /**
-       * When navigating from All page to Audio page, VAllResultsGrid is displayed
-       * for a short period of time. Then media['image'] is undefined, and it throws an error
-       * `TypeError: can't convert undefined to object`. To fix it, we add `|| {}` to the media['image'].
-       */
-      /**
-       * First, set the results to all images
-       */
-      const newResults = media.image
+      )
+    }
+  })
+  const searchType = computed(() => useSearchStore().searchType)
 
-      // push other items into the list, using a random index.
-      let nonImageIndex = 1
+  const allMedia = computed(() => {
+    const media = resultItems.value
+
+    // Seed the random number generator with the ID of
+    // the first search result, so the non-image
+    // distribution is the same on repeated searches
+    const seedString = media[IMAGE][0]?.id
+    let seed: number
+    if (typeof seedString === 'string') {
+      seed = hash(seedString)
+    } else {
+      let otherTypeId = 'string'
       for (const type of supportedMediaTypes.slice(1)) {
-        for (const item of media[type]) {
-          newResults.splice(nonImageIndex, 0, item)
-          // TODO: Fix the algorithm. Currently, when there is no images, the nonImageIndex can get higher
-          //  than general index, and items can get discarded.
-          if (nonImageIndex > newResults.length + 1) break
-          nonImageIndex = randomIntegerInRange(
-            nonImageIndex + 1,
-            nonImageIndex + 6
-          )
+        if (typeof media[type][0]?.id === 'string') {
+          otherTypeId = media[type][0].id
+          break
         }
       }
-
-      return newResults
-    })
-
-    /* Actions */
-    const setMedia = <T extends Media>(params: {
-      mediaType: Media['frontendMediaType']
-      media: Record<string, Media>
-      mediaCount: number
-      page: number | undefined
-      pageCount: number
-      shouldPersistMedia: boolean | undefined
-    }) => {
-      const {
-        mediaType,
-        media,
-        mediaCount,
-        page,
-        pageCount,
-        shouldPersistMedia,
-      } = params
-      let mediaToSet
-      if (shouldPersistMedia) {
-        mediaToSet = { ...state.results[mediaType].items, ...media }
-      } else {
-        mediaToSet = media
-      }
-      const mediaPage = page || 1
-      // @ts-ignore
-      state.results[mediaType].items = mediaToSet as Record<
-        string,
-        DetailFromMediaType<T['frontendMediaType']>
-      >
-      state.results[mediaType].count = mediaCount || 0
-      state.results[mediaType].page = mediaCount === 0 ? undefined : mediaPage
-      state.results[mediaType].pageCount = pageCount
-      if (mediaPage >= pageCount) {
-        fetchStates[mediaType].setFinished()
-      }
+      seed = hash(otherTypeId)
     }
-    const mediaNotFound = (mediaType: SupportedMediaType) => {
-      throw new Error(`Media of type ${mediaType} not found`)
-    }
+    const rand = prng(seed)
+    const randomIntegerInRange = (min: number, max: number) =>
+      Math.floor(rand() * (max - min + 1)) + min
     /**
-     * Clears the items for all passed media types, and resets fetch state.
+     * When navigating from All page to Audio page, VAllResultsGrid is displayed
+     * for a short period of time. Then media['image'] is undefined, and it throws an error
+     * `TypeError: can't convert undefined to object`. To fix it, we add `|| {}` to the media['image'].
      */
-    const resetMedia = (mediaType: SupportedMediaType) => {
-      state.results[mediaType].items = {}
-      state.results[mediaType].count = 0
-      state.results[mediaType].page = undefined
-      state.results[mediaType].pageCount = 0
-    }
-    const resetFetchState = () => {
-      for (const mediaType of supportedMediaTypes) {
-        fetchStates[mediaType].reset()
-      }
-    }
-
     /**
-     * Calls `fetchSingleMediaType` for selected media type(s). Can be called by changing the search query
-     * (search term or filter item), or by clicking 'Load more' button.
-     * If the search query changed, fetch state is reset, otherwise only the media types for which
-     * fetchState.isFinished is not true are fetched.
+     * First, set the results to all images
      */
-    const fetchMedia = async (
-      payload: { shouldPersistMedia?: boolean } = {}
-    ) => {
-      const mediaType = searchType.value
-      if (!payload.shouldPersistMedia) {
-        resetFetchState()
-      }
-      const types = (
-        mediaType !== ALL_MEDIA ? [mediaType] : [IMAGE, AUDIO]
-      ) as SupportedMediaType[]
-      const mediaToFetch = types.filter(
-        (type) => state.fetchState[type].canFetchAgain
-      )
+    const newResults = media.image
 
-      await Promise.all(
-        mediaToFetch.map((type) =>
-          fetchSingleMediaType({
-            mediaType: type,
-            shouldPersistMedia: Boolean(payload.shouldPersistMedia),
-          })
+    // push other items into the list, using a random index.
+    let nonImageIndex = 1
+    for (const type of supportedMediaTypes.slice(1)) {
+      for (const item of media[type]) {
+        newResults.splice(nonImageIndex, 0, item)
+        // TODO: Fix the algorithm. Currently, when there is no images, the nonImageIndex can get higher
+        //  than general index, and items can get discarded.
+        if (nonImageIndex > newResults.length + 1) break
+        nonImageIndex = randomIntegerInRange(
+          nonImageIndex + 1,
+          nonImageIndex + 6
         )
-      )
-    }
-
-    const clearMedia = () => {
-      supportedMediaTypes.forEach((mediaType) => {
-        resetMedia(mediaType)
-      })
-    }
-    /**
-     * @param mediaType - the mediaType to fetch (do not use 'All_media' here)
-     * @param shouldPersistMedia - whether the existing media should be added to or replaced.
-     */
-    const fetchSingleMediaType = async <T extends Media>({
-      mediaType,
-      shouldPersistMedia,
-    }: {
-      mediaType: T['frontendMediaType']
-      shouldPersistMedia: boolean
-    }) => {
-      const queryParams = prepareSearchQueryParams({
-        ...useSearchStore().searchQueryParams,
-      })
-      let page
-      if (shouldPersistMedia) {
-        /**
-         * If `shouldPersistMedia` is true, then we increment the page that was set by a previous
-         * fetch. Normally, if `shouldPersistMedia` is true, `page` should have been set to 1 by the
-         * previous fetch. But if it wasn't and is still undefined, we set it to 0, and increment it.
-         */
-        page = (state.results[mediaType].page ?? 0) + 1
-        queryParams.page = `${page}`
       }
-      fetchStates[mediaType].startFetching()
-      try {
-        const data = await services[mediaType].search(queryParams)
+    }
 
-        fetchStates[mediaType].endFetching()
-        const mediaCount = data.result_count
-        if (!mediaCount) {
-          fetchStates[mediaType].endFetching({
-            errorMessage: `No ${mediaType} found for this query`,
-          })
-          page = undefined
-        }
-        setMedia<T>({
-          mediaType,
-          media: data.results as Record<string, Media>,
-          mediaCount,
-          pageCount: data.page_count,
-          shouldPersistMedia,
-          page,
+    return newResults
+  })
+
+  /* Actions */
+  const setMedia = <T extends Media>(params: {
+    mediaType: Media['frontendMediaType']
+    media: Record<string, Media>
+    mediaCount: number
+    page: number | undefined
+    pageCount: number
+    shouldPersistMedia: boolean | undefined
+  }) => {
+    const {
+      mediaType,
+      media,
+      mediaCount,
+      page,
+      pageCount,
+      shouldPersistMedia,
+    } = params
+    let mediaToSet
+    if (shouldPersistMedia) {
+      mediaToSet = { ...state.results[mediaType].items, ...media }
+    } else {
+      mediaToSet = media
+    }
+    const mediaPage = page || 1
+    // @ts-ignore
+    state.results[mediaType].items = mediaToSet as Record<
+      string,
+      DetailFromMediaType<T['frontendMediaType']>
+    >
+    state.results[mediaType].count = mediaCount || 0
+    state.results[mediaType].page = mediaCount === 0 ? undefined : mediaPage
+    state.results[mediaType].pageCount = pageCount
+    if (mediaPage >= pageCount) {
+      fetchStates[mediaType].setFinished()
+    }
+  }
+  const mediaNotFound = (mediaType: SupportedMediaType) => {
+    throw new Error(`Media of type ${mediaType} not found`)
+  }
+  /**
+   * Clears the items for all passed media types, and resets fetch state.
+   */
+  const resetMedia = (mediaType: SupportedMediaType) => {
+    state.results[mediaType].items = {}
+    state.results[mediaType].count = 0
+    state.results[mediaType].page = undefined
+    state.results[mediaType].pageCount = 0
+  }
+  const resetFetchState = () => {
+    for (const mediaType of supportedMediaTypes) {
+      fetchStates[mediaType].reset()
+    }
+  }
+
+  /**
+   * Calls `fetchSingleMediaType` for selected media type(s). Can be called by changing the search query
+   * (search term or filter item), or by clicking 'Load more' button.
+   * If the search query changed, fetch state is reset, otherwise only the media types for which
+   * fetchState.isFinished is not true are fetched.
+   */
+  const fetchMedia = async (payload: { shouldPersistMedia?: boolean } = {}) => {
+    const mediaType = searchType.value
+    if (!payload.shouldPersistMedia) {
+      resetFetchState()
+    }
+    const types = (
+      mediaType !== ALL_MEDIA ? [mediaType] : [IMAGE, AUDIO]
+    ) as SupportedMediaType[]
+    const mediaToFetch = types.filter(
+      (type) => state.fetchState[type].canFetchAgain
+    )
+
+    await Promise.all(
+      mediaToFetch.map((type) =>
+        fetchSingleMediaType({
+          mediaType: type,
+          shouldPersistMedia: Boolean(payload.shouldPersistMedia),
         })
-      } catch (error) {
+      )
+    )
+  }
+
+  const clearMedia = () => {
+    supportedMediaTypes.forEach((mediaType) => {
+      resetMedia(mediaType)
+    })
+  }
+  /**
+   * @param mediaType - the mediaType to fetch (do not use 'All_media' here)
+   * @param shouldPersistMedia - whether the existing media should be added to or replaced.
+   */
+  const fetchSingleMediaType = async <T extends Media>({
+    mediaType,
+    shouldPersistMedia,
+  }: {
+    mediaType: T['frontendMediaType']
+    shouldPersistMedia: boolean
+  }) => {
+    const queryParams = prepareSearchQueryParams({
+      ...useSearchStore().searchQueryParams,
+    })
+    let page
+    if (shouldPersistMedia) {
+      /**
+       * If `shouldPersistMedia` is true, then we increment the page that was set by a previous
+       * fetch. Normally, if `shouldPersistMedia` is true, `page` should have been set to 1 by the
+       * previous fetch. But if it wasn't and is still undefined, we set it to 0, and increment it.
+       */
+      page = (state.results[mediaType].page ?? 0) + 1
+      queryParams.page = `${page}`
+    }
+    fetchStates[mediaType].startFetching()
+    try {
+      const data = await getServices()[mediaType].search(queryParams)
+
+      fetchStates[mediaType].endFetching()
+      const mediaCount = data.result_count
+      if (!mediaCount) {
+        fetchStates[mediaType].endFetching({
+          errorMessage: `No ${mediaType} found for this query`,
+        })
+        page = undefined
+      }
+      setMedia<T>({
+        mediaType,
+        media: data.results as Record<string, Media>,
+        mediaCount,
+        pageCount: data.page_count,
+        shouldPersistMedia,
+        page,
+      })
+    } catch (error) {
+      await handleMediaError({ mediaType, error })
+    }
+  }
+  /**
+   *
+   */
+  const fetchMediaItem = async (params: {
+    mediaType: SupportedMediaType
+    id: string
+  }) => {
+    const { mediaType } = params
+    try {
+      // @ts-ignore
+      state[mediaType] = await getServices()[mediaType].getMediaDetail(
+        params.id
+      )
+    } catch (error: unknown) {
+      state[mediaType] = null
+      if (axios.isAxiosError(error) && error.response?.status === 404) {
+        mediaNotFound(mediaType)
+      } else {
         await handleMediaError({ mediaType, error })
       }
     }
-    /**
-     *
-     */
-    const fetchMediaItem = async (params: {
-      mediaType: SupportedMediaType
-      id: string
-    }) => {
-      const { mediaType } = params
-      try {
-        // @ts-ignore
-        state[mediaType] = await services[mediaType].getMediaDetail(params.id)
-      } catch (error: unknown) {
-        state[mediaType] = null
-        if (axios.isAxiosError(error) && error.response?.status === 404) {
-          mediaNotFound(mediaType)
-        } else {
-          await handleMediaError({ mediaType, error })
-        }
-      }
+  }
+  /**
+   *
+   */
+  const handleMediaError = async ({
+    mediaType,
+    error,
+  }: {
+    mediaType: SupportedMediaType
+    error: unknown
+  }) => {
+    let errorMessage
+    if (axios.isAxiosError(error)) {
+      errorMessage =
+        error.response?.status === 500
+          ? 'There was a problem with our servers'
+          : `Request failed with status ${error.response?.status ?? 'unknown'}`
+    } else {
+      errorMessage =
+        error instanceof Error ? error.message : 'Oops! Something went wrong'
     }
-    /**
-     *
-     */
-    const handleMediaError = async ({
-      mediaType,
-      error,
-    }: {
-      mediaType: SupportedMediaType
-      error: unknown
-    }) => {
-      let errorMessage
-      if (axios.isAxiosError(error)) {
-        errorMessage =
-          error.response?.status === 500
-            ? 'There was a problem with our servers'
-            : `Request failed with status ${
-                error.response?.status ?? 'unknown'
-              }`
-      } else {
-        errorMessage =
-          error instanceof Error ? error.message : 'Oops! Something went wrong'
-      }
-      fetchStates[mediaType].endFetching({ errorMessage })
-      if (!axios.isAxiosError(error)) {
-        throw new Error(errorMessage)
-      }
+    fetchStates[mediaType].endFetching({ errorMessage })
+    if (!axios.isAxiosError(error)) {
+      throw new Error(errorMessage)
     }
+  }
 
-    return {
-      state,
+  return {
+    state,
 
-      resultItems,
-      resultCountsPerMediaType,
-      resultCount,
-      fetchState,
-      allMedia,
+    resultItems,
+    resultCountsPerMediaType,
+    resultCount,
+    fetchState,
+    allMedia,
 
-      getItemById,
-      fetchSingleMediaType,
-      fetchMediaItem,
-      fetchMedia,
-      clearMedia,
+    getItemById,
+    fetchSingleMediaType,
+    fetchMediaItem,
+    fetchMedia,
+    clearMedia,
 
-      // Elements exported only for testing, should not be used by components
-      test: {
-        setMedia,
-        mediaNotFound,
-        handleMediaError,
-        fetchStates,
-      },
-    }
-  })
-
-export const useMediaStore = createUseMediaStore()
+    // Elements exported only for testing, should not be used by components
+    test: {
+      setMedia,
+      mediaNotFound,
+      handleMediaError,
+      fetchStates,
+    },
+  }
+})

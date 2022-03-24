@@ -1,7 +1,9 @@
 import { createPinia, setActivePinia } from 'pinia'
 
-import { createUseMediaStore } from '~/stores/media'
+import { useMediaStore } from '~/stores/media'
 import { ALL_MEDIA, AUDIO, IMAGE, supportedMediaTypes } from '~/constants/media'
+
+import { getServices } from '~/data/media-service'
 
 import { useSearchStore } from '~/stores/search'
 
@@ -9,6 +11,9 @@ jest.mock('axios', () => ({
   ...jest.requireActual('axios'),
   isAxiosError: jest.fn((obj) => 'response' in obj),
 }))
+
+jest.mock('~/data/media-service')
+
 const initialResults = {
   count: 0,
   items: {},
@@ -58,7 +63,7 @@ const searchResults = (mediaType) => ({
   result_count: 22,
   page_count: 2,
 })
-const services = {
+const mockServices = {
   [AUDIO]: /** @type {typeof import('~/data/services').MediaService} */ ({
     search: jest.fn(() => Promise.resolve({ ...searchResults(AUDIO) })),
     getMediaDetail: jest.fn(() => Promise.resolve(detailData[AUDIO])),
@@ -68,8 +73,6 @@ const services = {
     getMediaDetail: jest.fn(() => Promise.resolve(detailData[IMAGE])),
   }),
 }
-
-const useMediaStore = createUseMediaStore(services)
 
 describe('Media Store', () => {
   describe('state', () => {
@@ -219,14 +222,15 @@ describe('Media Store', () => {
       setActivePinia(createPinia())
     })
     afterEach(() => {
-      services.audio.search.mockClear()
-      services.image.search.mockClear()
-      services.audio.getMediaDetail.mockClear()
-      services.image.getMediaDetail.mockClear()
+      // services.audio.search.mockClear()
+      // services.image.search.mockClear()
+      // services.audio.getMediaDetail.mockClear()
+      // services.image.getMediaDetail.mockClear()
     })
 
     it('setMedia updates state persisting images', () => {
       const mediaStore = useMediaStore()
+      getServices.mockImplementationOnce(() => mockServices)
 
       const img1 = {
         id: '81e551de-52ab-4852-90eb-bc3973c342a0',
@@ -259,6 +263,8 @@ describe('Media Store', () => {
     })
 
     it('setMedia updates state not persisting images', () => {
+      getServices.mockImplementationOnce(() => mockServices)
+
       const mediaStore = useMediaStore()
       const img = { title: 'Foo', creator: 'bar', tags: [] }
       mediaStore.state.results.image.items = ['img1']
@@ -279,6 +285,8 @@ describe('Media Store', () => {
     })
 
     it('setMedia updates state with default count and page', () => {
+      getServices.mockImplementationOnce(() => mockServices)
+
       const mediaStore = useMediaStore()
 
       const img = { title: 'Foo', creator: 'bar', tags: [] }
@@ -302,6 +310,8 @@ describe('Media Store', () => {
     it.each(supportedMediaTypes)(
       'fetchSingleMediaType (%s) on success',
       async (mediaType) => {
+        getServices.mockImplementationOnce(() => mockServices)
+
         const mediaStore = useMediaStore()
 
         searchStore = useSearchStore()
@@ -326,7 +336,7 @@ describe('Media Store', () => {
     it('fetchSingleMediaType throws an error if result count is 0', async () => {
       const mediaType = IMAGE
       const localServices = {
-        [mediaType]: {
+        image: {
           search: jest.fn(() =>
             Promise.resolve({
               results: {},
@@ -336,7 +346,8 @@ describe('Media Store', () => {
           ),
         },
       }
-      const mediaStore = createUseMediaStore(localServices)()
+      getServices.mockImplementationOnce(() => localServices)
+      const mediaStore = useMediaStore()
 
       const params = {
         q: 'foo',
@@ -357,6 +368,8 @@ describe('Media Store', () => {
     })
 
     it('fetchSingleMediaType resets images if shouldPersistMedia is false', async () => {
+      getServices.mockImplementationOnce(() => mockServices)
+
       const mediaStore = useMediaStore()
 
       const mediaType = IMAGE
@@ -375,6 +388,8 @@ describe('Media Store', () => {
     })
 
     it('fetchSingleMediaType does not reset images if page is defined', async () => {
+      getServices.mockImplementationOnce(() => mockServices)
+
       const mediaStore = useMediaStore()
 
       const mediaType = IMAGE
@@ -388,6 +403,8 @@ describe('Media Store', () => {
     })
 
     it('clearMedia resets the results', () => {
+      getServices.mockImplementationOnce(() => mockServices)
+
       const mediaStore = useMediaStore()
       const searchStore = useSearchStore()
       searchStore.setSearchType(ALL_MEDIA)
@@ -401,6 +418,8 @@ describe('Media Store', () => {
     it.each(supportedMediaTypes)(
       'fetchMediaItem (%s) on success',
       async (mediaType) => {
+        getServices.mockImplementationOnce(() => mockServices)
+
         const mediaStore = useMediaStore()
 
         const params = { id: 'foo', mediaType }
@@ -415,13 +434,20 @@ describe('Media Store', () => {
         const expectedErrorMessage = 'error'
 
         const localServices = {
-          [mediaType]: {
+          audio: {
+            getMediaDetail: jest.fn(() =>
+              Promise.reject(new Error(expectedErrorMessage))
+            ),
+          },
+          image: {
             getMediaDetail: jest.fn(() =>
               Promise.reject(new Error(expectedErrorMessage))
             ),
           },
         }
-        const mediaStore = createUseMediaStore(localServices)()
+        getServices.mockImplementationOnce(() => localServices)
+
+        const mediaStore = useMediaStore()
 
         const params = { id: 'foo', mediaType }
         await expect(() => mediaStore.fetchMediaItem(params)).rejects.toThrow(
@@ -440,8 +466,9 @@ describe('Media Store', () => {
             ),
           },
         }
+        getServices.mockImplementationOnce(() => localServices)
 
-        const mediaStore = createUseMediaStore(localServices)()
+        const mediaStore = useMediaStore()
         const params = { id: 'foo', mediaType }
         await expect(() => mediaStore.fetchMediaItem(params)).rejects.toThrow(
           `Media of type ${mediaType} not found`
