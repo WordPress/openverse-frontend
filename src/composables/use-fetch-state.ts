@@ -58,9 +58,7 @@ export const useFetchState = (initialState = statuses.IDLE) => {
    * pass the errorMessage string as a parameter.
    * @param errorMessage - the message to show for response error.
    */
-  const endFetching = ({
-    errorMessage = undefined,
-  }: { errorMessage?: string } = {}) => {
+  const endFetching = (errorMessage?: string) => {
     if (errorMessage) {
       fetchStatus.value = statuses.ERROR
       fetchError.value = errorMessage
