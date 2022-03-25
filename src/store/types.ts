@@ -5,7 +5,7 @@ import type {
   Media,
 } from '~/models/media'
 import type { FetchState } from '~/composables/use-fetch-state'
-type FrontendMediaType = MediaDetail['frontendMediaType']
+import type { SupportedMediaType } from '~/constants/media'
 
 export interface MediaResult<
   T extends Media | Media[] | Record<string, Media>
@@ -62,11 +62,11 @@ export interface Filters {
 }
 export type FilterCategory = keyof Filters
 
-export type MediaStoreResult<T extends FrontendMediaType> = {
+export type MediaStoreResult<T extends SupportedMediaType> = {
   count: number
   pageCount: number
   page: number | undefined
-  items: Record<MediaDetail['id'], DetailFromMediaType<T>>
+  items: Record<string, DetailFromMediaType<T>>
 }
 
 export interface MediaState {
