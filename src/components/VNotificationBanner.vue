@@ -1,6 +1,8 @@
 <template>
   <div
-    class="wrapper px-4 md:px-7 py-2 md:flex md:items-center md:justify-between"
+    v-if="shouldShow"
+    class="px-4 md:px-7 py-2 md:flex md:items-center md:justify-between"
+    :class="$style[variant]"
     dir="ltr"
   >
     <p class="text-center md:text-left">
@@ -11,8 +13,8 @@
         <button
           class="button is-text small dismiss-button"
           type="button"
-          :aria-label="$t('modal.close')"
-          @click="$emit('close')"
+          :aria-label="closeLabel"
+          @click="handleClose"
         >
           <VIcon :icon-path="closeIcon" />
         </button>
@@ -21,29 +23,54 @@
   </div>
 </template>
 
-<script>
-import { defineComponent } from '@nuxtjs/composition-api'
+<script lang="ts">
+import { defineComponent, PropType } from '@nuxtjs/composition-api'
+
+import { useI18n } from '~/composables/use-i18n'
+import { useStorage } from '~/composables/use-storage'
 
 import VIcon from '~/components/VIcon/VIcon.vue'
 
 import closeIcon from '~/assets/icons/close.svg'
 
-const VNotificationBanner = defineComponent({
+export default defineComponent({
   name: 'VNotificationBanner',
   components: {
     VIcon,
   },
-  setup() {
-    return { closeIcon }
+  props: {
+    variant: {
+      type: String as PropType<'announcement' | 'informational'>,
+      required: true,
+    },
+    id: {
+      type: String,
+      required: true,
+    },
+  },
+  emits: ['close'],
+  setup(props, { emit }) {
+    const i18n = useI18n()
+    const shouldShow = useStorage(`banner:show-${props.id}`, true)
+    const dismissBanner = () => (shouldShow.value = false)
+    const handleClose = () => {
+      dismissBanner()
+      emit('close')
+    }
+    const closeLabel = i18n.t('modal.close') as string
+    return { closeIcon, closeLabel, handleClose, shouldShow }
   },
 })
-export default VNotificationBanner
 </script>
 
-<style scoped>
-/** Styles from learn.wordpress.org **/
-.wrapper {
+<style module>
+/* Styles from learn.wordpress.org */
+.informational {
   background-color: #fff8e5;
   border-left: 0.25rem solid #ffb900;
+}
+
+.announcement {
+  @apply bg-trans-blue text-white;
 }
 </style>

@@ -80,7 +80,7 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
+<style scoped lang="postcss">
 [dir='rtl'] .v-icon.rtl-flip {
   @apply transform -scale-x-100;
 }
