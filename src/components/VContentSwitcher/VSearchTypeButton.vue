@@ -99,6 +99,7 @@ export default defineComponent({
         audio: 'search-type.audio',
         all: 'search-type.all',
         video: 'search-type.video',
+        '3d-model': 'search-type.3d-model',
       }[props.activeItem]
       return i18n.t(labelKey)
     })

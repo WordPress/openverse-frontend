@@ -381,6 +381,7 @@
       "image": "images",
       "audio": "audio",
       "video": "videos",
+      "3d-models": "3D Models",
       "all": "content",
       "collection-placeholder": "Search this collection",
       "button": "Search"
@@ -620,8 +621,10 @@
     "audio": "Audio",
     "all": "All content",
     "video": "Videos",
+    "3d-model": "3D Models",
     "label": "Type of content to search",
     "heading": "Content types",
+    "additional": "Additional sources",
     "status-beta": "Beta",
     "see-image": "See all images",
     "see-audio": "See all audio"
