@@ -10,17 +10,16 @@ import {
   SupportedMediaType,
   supportedMediaTypes,
 } from '~/constants/media'
-import { getServices } from '~/data/media-service'
+import { services } from '~/data/media-service'
 import { hash, rand as prng } from '~/utils/prng'
 import { useSearchStore } from '~/stores/search'
-import type { FetchState } from '~/store/types'
 import type {
   Media,
   AudioDetail,
   ImageDetail,
   DetailFromMediaType,
 } from '~/models/media'
-import { useFetchState } from '~/composables/use-fetch-state'
+import { FetchState, useFetchState } from '~/composables/use-fetch-state'
 
 export interface MediaStoreResult<T extends Media> {
   count: number
@@ -68,8 +67,8 @@ export const useMediaStore = defineStore('media', () => {
       },
     },
     fetchState: {
-      audio: fetchStates[AUDIO].fetchingState,
-      image: fetchStates[IMAGE].fetchingState,
+      audio: fetchStates[AUDIO].fetchState,
+      image: fetchStates[IMAGE].fetchState,
     },
     audio: null,
     image: null,
@@ -271,9 +270,7 @@ export const useMediaStore = defineStore('media', () => {
     const types = (
       mediaType !== ALL_MEDIA ? [mediaType] : [IMAGE, AUDIO]
     ) as SupportedMediaType[]
-    const mediaToFetch = types.filter(
-      (type) => state.fetchState[type].canFetchAgain
-    )
+    const mediaToFetch = types.filter((type) => state.fetchState[type].canFetch)
 
     await Promise.all(
       mediaToFetch.map((type) =>
@@ -316,14 +313,14 @@ export const useMediaStore = defineStore('media', () => {
     }
     fetchStates[mediaType].startFetching()
     try {
-      const data = await getServices()[mediaType].search(queryParams)
+      const data = await services[mediaType].search(queryParams)
 
       fetchStates[mediaType].endFetching()
       const mediaCount = data.result_count
       if (!mediaCount) {
-        fetchStates[mediaType].endFetching({
-          errorMessage: `No ${mediaType} found for this query`,
-        })
+        fetchStates[mediaType].endFetching(
+          `No ${mediaType} found for this query`
+        )
         page = undefined
       }
       setMedia<T>({
@@ -348,9 +345,7 @@ export const useMediaStore = defineStore('media', () => {
     const { mediaType } = params
     try {
       // @ts-ignore
-      state[mediaType] = await getServices()[mediaType].getMediaDetail(
-        params.id
-      )
+      state[mediaType] = await services[mediaType].getMediaDetail(params.id)
     } catch (error: unknown) {
       state[mediaType] = null
       if (axios.isAxiosError(error) && error.response?.status === 404) {
@@ -380,7 +375,7 @@ export const useMediaStore = defineStore('media', () => {
       errorMessage =
         error instanceof Error ? error.message : 'Oops! Something went wrong'
     }
-    fetchStates[mediaType].endFetching({ errorMessage })
+    fetchStates[mediaType].endFetching(errorMessage)
     if (!axios.isAxiosError(error)) {
       throw new Error(errorMessage)
     }

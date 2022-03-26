@@ -84,8 +84,7 @@ export class MediaService<T extends Media> {
   }
 }
 
-export const getServices = () =>
-  ({
-    [AUDIO]: new MediaService<AudioDetail>(AUDIO),
-    [IMAGE]: new MediaService<ImageDetail>(IMAGE),
-  } as const)
+export const services = {
+  [AUDIO]: new MediaService<AudioDetail>(AUDIO),
+  [IMAGE]: new MediaService<ImageDetail>(IMAGE),
+} as const

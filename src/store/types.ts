@@ -1,9 +1,5 @@
 import type { Media } from '~/models/media'
 
-/**
- * The search result object that comes from the API.
- * Properties use snake_case, unlike the camelCase in the store.
- */
 export interface MediaResult<
   T extends Media | Media[] | Record<string, Media>
 > {
@@ -58,9 +54,3 @@ export interface Filters {
   mature: FilterItem[]
 }
 export type FilterCategory = keyof Filters
-
-export interface FetchState {
-  isFetching: boolean
-  fetchingError: null | string
-  isFinished?: boolean
-}
