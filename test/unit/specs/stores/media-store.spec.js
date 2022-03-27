@@ -17,7 +17,9 @@ const initialResults = {
   pageCount: 0,
 }
 const initialFetchState = {
+  canFetch: true,
   fetchingError: null,
+  hasStarted: false,
   isFetching: false,
   isFinished: false,
 }
@@ -82,10 +84,8 @@ for (const mediaType of [AUDIO, IMAGE]) {
 
 describe('Media Store', () => {
   describe('state', () => {
-    beforeEach(() => {
-      setActivePinia(createPinia())
-    })
     it('sets default state', () => {
+      setActivePinia(createPinia())
       const mediaStore = useMediaStore()
 
       expect(mediaStore.state.results).toEqual({
@@ -204,27 +204,18 @@ describe('Media Store', () => {
 
     it.each`
       searchType   | fetchState
-      ${ALL_MEDIA} | ${{ fetchingError: 'Error', isFetching: true, isFinished: false }}
-      ${AUDIO}     | ${{ fetchingError: 'Error', isFetching: false, isFinished: true }}
-      ${IMAGE}     | ${{ fetchingError: null, isFetching: true, isFinished: false }}
+      ${ALL_MEDIA} | ${{ canFetch: false, hasStarted: true, fetchingError: 'Error', isFetching: true, isFinished: false }}
+      ${AUDIO}     | ${{ canFetch: false, fetchingError: 'Error', hasStarted: true, isFetching: false, isFinished: true }}
+      ${IMAGE}     | ${{ canFetch: false, fetchingError: null, hasStarted: true, isFetching: true, isFinished: false }}
     `(
       'fetchState for $searchType returns $fetchState',
       ({ searchType, fetchState }) => {
         const mediaStore = useMediaStore()
         const searchStore = useSearchStore()
         searchStore.setSearchType(searchType)
-        mediaStore.$patch({
-          state: {
-            fetchState: {
-              audio: {
-                isFetching: false,
-                fetchingError: 'Error',
-                isFinished: true,
-              },
-              image: { ...initialFetchState, isFetching: true },
-            },
-          },
-        })
+        mediaStore.test.fetchStates.audio.endFetching('Error')
+        mediaStore.test.fetchStates.image.startFetching()
+
         expect(mediaStore.fetchState).toEqual(fetchState)
       }
     )
@@ -241,35 +232,6 @@ describe('Media Store', () => {
       services.image.search.mockClear()
       services.audio.getMediaDetail.mockClear()
       services.image.getMediaDetail.mockClear()
-    })
-    it('fetchStartMedia updates state', () => {
-      const mediaStore = useMediaStore()
-      mediaStore.test.fetchStartMedia(IMAGE)
-
-      expect(mediaStore.state.fetchState.image.isFetching).toBeTruthy()
-      expect(mediaStore.state.fetchState.image.fetchingError).toBeFalsy()
-    })
-
-    it('fetchEndMedia updates state', () => {
-      const mediaStore = useMediaStore()
-
-      mediaStore.test.fetchEndMedia(IMAGE)
-
-      expect(mediaStore.state.fetchState.image.isFetching).toBeFalsy()
-    })
-
-    it('fetchMediaError updates state', () => {
-      const mediaStore = useMediaStore()
-      mediaStore.test.fetchMediaError({
-        mediaType: IMAGE,
-        errorMessage: 'error',
-      })
-
-      expect(mediaStore.state.fetchState.image).toEqual({
-        isFetching: false,
-        fetchingError: 'error',
-        isFinished: true,
-      })
     })
 
     it('setMedia updates state persisting images', () => {
@@ -372,7 +334,7 @@ describe('Media Store', () => {
 
     it('fetchSingleMediaType throws an error if result count is 0', async () => {
       const mediaType = IMAGE
-      services[IMAGE].search.mockImplementationOnce(() =>
+      services[mediaType].search.mockImplementationOnce(() =>
         Promise.resolve({
           results: {},
           result_count: 0,
@@ -391,9 +353,11 @@ describe('Media Store', () => {
       await mediaStore.fetchSingleMediaType(params)
 
       expect(mediaStore.state.results[mediaType]).toEqual(initialResults)
-      expect(mediaStore.state.fetchState[mediaType]).toEqual({
+      expect(mediaStore.fetchState).toEqual({
         isFetching: false,
-        isFinished: true,
+        canFetch: true,
+        hasStarted: true,
+        isFinished: false,
         fetchingError: `No ${mediaType} found for this query`,
       })
     })

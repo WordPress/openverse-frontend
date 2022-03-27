@@ -24,7 +24,6 @@ const statuses = Object.freeze({
   FETCHING: 'fetching',
   SUCCESS: 'success',
   ERROR: 'error',
-  FINISHED: 'finished',
 } as const)
 
 type Status = typeof statuses[keyof typeof statuses]
@@ -47,6 +46,7 @@ const canFetchStatuses: Status[] = [statuses.IDLE, statuses.SUCCESS]
 export const useFetchState = (initialState = statuses.IDLE) => {
   const fetchStatus: Ref<Status> = ref(initialState)
   const fetchError: Ref<string | null> = ref(null)
+  const isFinished: Ref<boolean> = ref(false)
 
   watch(fetchStatus, () => {
     if (nonErrorStatuses.includes(fetchStatus.value)) {
@@ -68,12 +68,16 @@ export const useFetchState = (initialState = statuses.IDLE) => {
     if (errorMessage) {
       fetchStatus.value = statuses.ERROR
       fetchError.value = errorMessage
+      isFinished.value = true
     } else {
       fetchStatus.value = statuses.SUCCESS
     }
   }
-  const setFinished = () => {
-    fetchStatus.value = statuses.FINISHED
+  /**
+   * Used for paginated requests, `isFinished` means there are no more pages left.
+   */
+  const setFinished = (value = true) => {
+    isFinished.value = value
   }
 
   /**
@@ -87,10 +91,6 @@ export const useFetchState = (initialState = statuses.IDLE) => {
    * Use this to ensure that prevent racing requests.
    */
   const canFetch = computed(() => canFetchStatuses.includes(fetchStatus.value))
-  /**
-   * Used for paginated requests, `isFinished` means there are no more pages left.
-   */
-  const isFinished = computed(() => fetchStatus.value === statuses.FINISHED)
   const fetchingError = computed(() => fetchError.value)
 
   const fetchState: FetchState = reactive({

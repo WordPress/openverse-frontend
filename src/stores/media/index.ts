@@ -10,15 +10,41 @@ import {
   SupportedMediaType,
   supportedMediaTypes,
 } from '~/constants/media'
-import { hash, rand as prng } from '~/utils/prng'
-import { useSearchStore } from '~/stores/search'
-import type { MediaState } from '~/store/types'
 import type { Media, DetailFromMediaType } from '~/models/media'
+import { hash, rand as prng } from '~/utils/prng'
 import { services } from '~/stores/media/services'
+import { useSearchStore } from '~/stores/search'
+import { FetchState, useFetchState } from '~/composables/use-fetch-state'
+
+export type MediaStoreResult = {
+  count: number
+  pageCount: number
+  page: number | undefined
+  items: Record<string, Media>
+}
+
+export interface MediaState {
+  results: {
+    audio: MediaStoreResult
+    image: MediaStoreResult
+  }
+  fetchState: {
+    audio: FetchState
+    image: FetchState
+  }
+  audio: DetailFromMediaType<'audio'> | null
+  image: DetailFromMediaType<'image'> | null
+}
 
 export const useMediaStore = defineStore('media', () => {
   /* State */
-
+  /**
+   * TODO: Split media store into single-type media stores.
+   */
+  const fetchStates = {
+    [AUDIO]: useFetchState(),
+    [IMAGE]: useFetchState(),
+  }
   const state: MediaState = reactive({
     results: {
       [IMAGE]: {
@@ -35,16 +61,8 @@ export const useMediaStore = defineStore('media', () => {
       },
     },
     fetchState: {
-      audio: {
-        isFetching: false,
-        fetchingError: null,
-        isFinished: false,
-      },
-      image: {
-        isFetching: false,
-        fetchingError: null,
-        isFinished: false,
-      },
+      audio: fetchStates[AUDIO].fetchState,
+      image: fetchStates[AUDIO].fetchState,
     },
     audio: null,
     image: null,
@@ -89,39 +107,38 @@ export const useMediaStore = defineStore('media', () => {
     return Math.min(count, 10000)
   })
   /**
-   * Search fetching state for selected media type.
+   * Search fetching state for selected search type. For 'All content', aggregates
+   * the values for supported media types.
    */
   const fetchState = computed(() => {
     if (searchType.value === ALL_MEDIA) {
       /**
        * For all_media, we return the error for the first media type that has an error.
        */
-      const mediaTypesWithErrors = supportedMediaTypes.filter(
-        (type) => state.fetchState[type].fetchingError !== null
-      )
-      const allContentFetchError = mediaTypesWithErrors.length
-        ? state.fetchState[mediaTypesWithErrors[0]].fetchingError
-        : null
+      const findFirstError = () => {
+        for (const type of supportedMediaTypes) {
+          if (fetchStates[type].fetchState.fetchingError) {
+            return fetchStates[type].fetchState.fetchingError
+          }
+        }
+        return null
+      }
+      const atLeastOne = (property: keyof FetchState) =>
+        supportedMediaTypes.some(
+          (type) => fetchStates[type].fetchState[property]
+        )
 
       return {
-        isFetching:
-          supportedMediaTypes.filter(
-            (type) => state.fetchState[type].isFetching
-          ).length > 0,
-        fetchingError: allContentFetchError,
-        isFinished:
-          supportedMediaTypes.filter(
-            (type) => state.fetchState[type].isFinished
-          ).length === supportedMediaTypes.length,
+        isFetching: atLeastOne('isFetching'),
+        fetchingError: findFirstError(),
+        canFetch: atLeastOne('canFetch'),
+        hasStarted: atLeastOne('hasStarted'),
+        isFinished: supportedMediaTypes.every(
+          (type) => fetchStates[type].fetchState.isFinished
+        ),
       }
     } else {
-      return (
-        state.fetchState[searchType.value] || {
-          isFetching: false,
-          fetchingError: false,
-          isFinished: true,
-        }
-      )
+      return fetchStates[searchType.value].fetchState
     }
   })
   const searchType = computed(() => useSearchStore().searchType)
@@ -179,32 +196,6 @@ export const useMediaStore = defineStore('media', () => {
 
   /* Actions */
 
-  /**
-   * Sets the fetchState for all passed mediaTypes at the beginning of fetching.
-   */
-  const fetchStartMedia = (mediaType: SupportedMediaType) => {
-    state.fetchState[mediaType].isFetching = true
-    state.fetchState[mediaType].fetchingError = null
-    state.fetchState[mediaType].isFinished = false
-  }
-  /**
-   * Sets the fetchState.isFetching to false for all passed mediaTypes at the end of fetching.
-   */
-  const fetchEndMedia = (mediaType: SupportedMediaType) => {
-    state.fetchState[mediaType].isFetching = false
-  }
-  const fetchMediaError = ({
-    mediaType,
-    errorMessage,
-  }: {
-    mediaType: SupportedMediaType
-    errorMessage: string
-  }) => {
-    state.fetchState[mediaType].isFetching = false
-    state.fetchState[mediaType].fetchingError = errorMessage
-    state.fetchState[mediaType].isFinished = true
-  }
-
   const setMedia = <T extends SupportedMediaType>(params: {
     mediaType: T
     media: Record<string, DetailFromMediaType<T>>
@@ -231,12 +222,13 @@ export const useMediaStore = defineStore('media', () => {
       mediaToSet = media
     }
     const mediaPage = page || 1
-    // @ts-ignore
     state.results[mediaType].items = mediaToSet
     state.results[mediaType].count = mediaCount || 0
     state.results[mediaType].page = mediaCount === 0 ? undefined : mediaPage
     state.results[mediaType].pageCount = pageCount
-    state.fetchState[mediaType].isFinished = mediaPage >= pageCount
+    if (mediaPage >= pageCount) {
+      fetchStates[mediaType].setFinished(true)
+    }
   }
   const mediaNotFound = (mediaType: SupportedMediaType) => {
     throw new Error(`Media of type ${mediaType} not found`)
@@ -252,9 +244,7 @@ export const useMediaStore = defineStore('media', () => {
   }
   const resetFetchState = () => {
     for (const mediaType of supportedMediaTypes) {
-      state.fetchState[mediaType].isFetching = false
-      state.fetchState[mediaType].isFinished = false
-      state.fetchState[mediaType].fetchingError = null
+      fetchStates[mediaType].reset()
     }
   }
 
@@ -273,7 +263,7 @@ export const useMediaStore = defineStore('media', () => {
       mediaType !== ALL_MEDIA ? [mediaType] : [IMAGE, AUDIO]
     ) as SupportedMediaType[]
     const mediaToFetch = types.filter(
-      (type) => !state.fetchState[type].isFinished
+      (type) => fetchStates[type].fetchState.canFetch
     )
 
     await Promise.all(
@@ -315,19 +305,17 @@ export const useMediaStore = defineStore('media', () => {
       page = (state.results[mediaType].page ?? 0) + 1
       queryParams.page = `${page}`
     }
-    fetchStartMedia(mediaType)
+    fetchStates[mediaType].startFetching()
     try {
       const data = await services[mediaType].search(queryParams)
 
-      fetchEndMedia(mediaType)
       const mediaCount = data.result_count
+      let errorMessage
       if (!mediaCount) {
-        fetchMediaError({
-          mediaType,
-          errorMessage: `No ${mediaType} found for this query`,
-        })
+        errorMessage = `No ${mediaType} found for this query`
         page = undefined
       }
+      fetchStates[mediaType].endFetching(errorMessage)
       setMedia({
         mediaType,
         media: data.results,
@@ -382,7 +370,7 @@ export const useMediaStore = defineStore('media', () => {
       errorMessage =
         error instanceof Error ? error.message : 'Oops! Something went wrong'
     }
-    fetchMediaError({ mediaType, errorMessage: errorMessage })
+    fetchStates[mediaType].endFetching(errorMessage)
     if (!axios.isAxiosError(error)) {
       throw new Error(errorMessage)
     }
@@ -405,12 +393,10 @@ export const useMediaStore = defineStore('media', () => {
 
     // Elements exported only for testing, should not be used by components
     test: {
-      fetchStartMedia,
-      fetchEndMedia,
-      fetchMediaError,
       setMedia,
       mediaNotFound,
       handleMediaError,
+      fetchStates,
     },
   }
 })

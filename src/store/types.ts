@@ -1,11 +1,4 @@
-import type {
-  AudioDetail,
-  DetailFromMediaType,
-  ImageDetail,
-  Media,
-} from '~/models/media'
-import type { FetchState } from '~/composables/use-fetch-state'
-import type { SupportedMediaType } from '~/constants/media'
+import type { Media } from '~/models/media'
 
 export interface MediaResult<
   T extends Media | Media[] | Record<string, Media>
@@ -61,23 +54,3 @@ export interface Filters {
   mature: FilterItem[]
 }
 export type FilterCategory = keyof Filters
-
-export type MediaStoreResult<T extends SupportedMediaType> = {
-  count: number
-  pageCount: number
-  page: number | undefined
-  items: Record<string, DetailFromMediaType<T>>
-}
-
-export interface MediaState {
-  results: {
-    audio: MediaStoreResult<'audio'>
-    image: MediaStoreResult<'image'>
-  }
-  fetchState: {
-    audio: FetchState
-    image: FetchState
-  }
-  audio: AudioDetail | null
-  image: ImageDetail | null
-}

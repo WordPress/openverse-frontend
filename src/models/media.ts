@@ -55,4 +55,4 @@ export interface AudioDetail extends Media {
 }
 
 export type DetailFromMediaType<T extends SupportedMediaType> =
-  T extends 'image' ? ImageDetail : T extends 'audio' ? AudioDetail : never
+  T extends 'audio' ? AudioDetail : ImageDetail
