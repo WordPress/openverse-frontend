@@ -1,6 +1,10 @@
 <template>
   <section
-    v-if="fetchState.isFetching || (!fetchState.isFetching && resultsCount)"
+    v-if="
+      !fetchState.hasStarted ||
+      fetchState.isFetching ||
+      (!fetchState.isFetching && resultsCount)
+    "
   >
     <header
       v-if="query.q && supported"
