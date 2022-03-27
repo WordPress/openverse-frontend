@@ -227,7 +227,7 @@ export const useMediaStore = defineStore('media', () => {
     state.results[mediaType].page = mediaCount === 0 ? undefined : mediaPage
     state.results[mediaType].pageCount = pageCount
     if (mediaPage >= pageCount) {
-      fetchStates[mediaType].setFinished(true)
+      fetchStates[mediaType].setFinished()
     }
   }
   const mediaNotFound = (mediaType: SupportedMediaType) => {
