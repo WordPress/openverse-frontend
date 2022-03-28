@@ -3,10 +3,18 @@
     direction="vertical"
     :size="size"
     :bordered="bordered"
-    :heading="$t('search-type.heading')"
     type="radiogroup"
     class="z-10 w-[260px] max-w-full"
   >
+    <h4
+      :class="{
+        'ps-0': !bordered,
+        'ps-6': !bordered,
+      }"
+      class="text-sr pt-6 pe-6 pb-4 uppercase font-semibold"
+    >
+      {{ $t('search-type.heading') }}
+    </h4>
     <VSearchTypeItem
       v-for="(item, idx) in content.types"
       :key="item"
@@ -20,9 +28,18 @@
     />
     <div
       v-if="content.additionalTypes && content.additionalTypes.length > 0"
-      class="bg-dark-charcoal-06 border-t border-dark-charcoal-20 mt-2"
+      class="mt-2"
+      :class="{
+        'bg-dark-charcoal-06 border-t border-dark-charcoal-20': !bordered,
+      }"
     >
-      <h4 class="text-sr p-6 pb-4 uppercase font-semibold">
+      <h4
+        :class="{
+          'ps-0': !bordered,
+          'ps-6': !bordered,
+        }"
+        class="text-sr pt-6 pe-6 pb-4 uppercase font-semibold"
+      >
         {{ $t('search-type.additional') }}
       </h4>
       <VSearchTypeItem
