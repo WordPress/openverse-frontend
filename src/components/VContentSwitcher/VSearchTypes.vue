@@ -81,7 +81,7 @@ export default defineComponent({
      * like `const additional = [...content.types.filter(i => i.status === ADDITIONAL)]`.
      */
     if (isDev) {
-      content.additionalTypes = ['3d-model']
+      content.additionalTypes = ['model']
     }
 
     const bordered = computed(() => props.size === 'small')

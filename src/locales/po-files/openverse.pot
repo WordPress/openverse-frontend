@@ -39,7 +39,7 @@ msgctxt "search-type.video"
 msgid "Videos"
 msgstr ""
 
-msgctxt "search-type.3d-model"
+msgctxt "search-type.model"
 msgid "3D Models"
 msgstr ""
 
@@ -778,7 +778,7 @@ msgctxt "browse-page.search-form.video"
 msgid "videos"
 msgstr ""
 
-msgctxt "browse-page.search-form.3d-models"
+msgctxt "browse-page.search-form.model"
 msgid "3D Models"
 msgstr ""
 

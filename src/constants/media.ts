@@ -3,7 +3,7 @@
 export const IMAGE = 'image'
 export const AUDIO = 'audio'
 export const VIDEO = 'video'
-export const MODEL_3D = '3d-model'
+export const MODEL_3D = 'model'
 export const ALL_MEDIA = 'all'
 
 /**
