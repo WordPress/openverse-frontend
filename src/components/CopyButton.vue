@@ -61,7 +61,11 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
+/**
+  * Styles are applied here to 'hack' and overrule specificity.
+  * @todo Find a better way to handle this in the template.
+**/
 button {
   @apply py-2 px-3 text-sr;
 }

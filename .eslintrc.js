@@ -44,6 +44,12 @@ module.exports = {
     'vue/html-closing-bracket-newline': 'off',
     'vue/html-indent': 'off',
     'vue/singleline-html-element-content-newline': 'off',
+    'vue/block-lang': [
+      'error',
+      {
+        style: { allowNoLang: true },
+      },
+    ],
     'vue/component-name-in-template-casing': [
       'error',
       'PascalCase',
