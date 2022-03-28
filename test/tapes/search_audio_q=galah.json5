@@ -1,24 +1,13 @@
 {
     meta: {
-        createdAt: '2022-03-28T12:24:01.849Z',
+        createdAt: '2022-03-28T13:03:42.480Z',
         host: 'https://api.openverse.engineering',
         resHumanReadable: true,
-        resUncompressed: true,
     },
     req: {
         headers: {
-            connection: 'keep-alive',
-            pragma: 'no-cache',
-            'cache-control': 'no-cache',
-            'sec-ch-ua': '',
             accept: 'application/json, text/plain, */*',
-            'sec-ch-ua-mobile': '?0',
-            'sec-ch-ua-platform': '',
-            'sec-fetch-site': 'same-site',
-            'sec-fetch-mode': 'cors',
-            'sec-fetch-dest': 'empty',
-            referer: 'http://localhost:8443/',
-            'accept-encoding': 'gzip, deflate, br',
+            connection: 'close',
         },
         url: '/v1/audio/?q=galah',
         method: 'GET',
@@ -28,7 +17,7 @@
         status: 200,
         headers: {
             date: [
-                'Mon, 28 Mar 2022 12:24:02 GMT',
+                'Mon, 28 Mar 2022 13:03:42 GMT',
             ],
             'content-type': [
                 'application/json',
@@ -37,7 +26,7 @@
                 'chunked',
             ],
             connection: [
-                'keep-alive',
+                'close',
             ],
             vary: [
                 'Accept-Encoding, Accept, Authorization, Origin',
@@ -47,9 +36,6 @@
             ],
             'x-frame-options': [
                 'DENY',
-            ],
-            'access-control-allow-origin': [
-                '*',
             ],
             'x-content-type-options': [
                 'nosniff',
@@ -67,10 +53,10 @@
                 'HIT',
             ],
             age: [
-                '93159',
+                '95542',
             ],
             'last-modified': [
-                'Sun, 27 Mar 2022 10:31:23 GMT',
+                'Sun, 27 Mar 2022 10:31:20 GMT',
             ],
             'expect-ct': [
                 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"',
@@ -82,10 +68,7 @@
                 'cloudflare',
             ],
             'cf-ray': [
-                '6f305725af026852-BUD',
-            ],
-            'content-encoding': [
-                'br',
+                '6f309143fc421cd4-BUD',
             ],
             'alt-svc': [
                 'h3=":443"; ma=86400, h3-29=":443"; ma=86400',

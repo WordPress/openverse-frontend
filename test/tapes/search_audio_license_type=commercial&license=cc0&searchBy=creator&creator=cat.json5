@@ -1,24 +1,13 @@
 {
     meta: {
-        createdAt: '2022-03-28T12:23:40.904Z',
+        createdAt: '2022-03-28T13:03:20.748Z',
         host: 'https://api.openverse.engineering',
         resHumanReadable: true,
-        resUncompressed: true,
     },
     req: {
         headers: {
-            connection: 'keep-alive',
-            pragma: 'no-cache',
-            'cache-control': 'no-cache',
-            'sec-ch-ua': '',
             accept: 'application/json, text/plain, */*',
-            'sec-ch-ua-mobile': '?0',
-            'sec-ch-ua-platform': '',
-            'sec-fetch-site': 'same-site',
-            'sec-fetch-mode': 'cors',
-            'sec-fetch-dest': 'empty',
-            referer: 'http://localhost:8443/',
-            'accept-encoding': 'gzip, deflate, br',
+            connection: 'close',
         },
         url: '/v1/audio/?license_type=commercial&license=cc0&searchBy=creator&creator=cat',
         method: 'GET',
@@ -28,28 +17,25 @@
         status: 200,
         headers: {
             date: [
-                'Mon, 28 Mar 2022 12:23:42 GMT',
+                'Mon, 28 Mar 2022 13:03:20 GMT',
             ],
             'content-type': [
                 'application/json',
             ],
-            'transfer-encoding': [
-                'chunked',
+            'content-length': [
+                '70',
             ],
             connection: [
-                'keep-alive',
+                'close',
             ],
             vary: [
-                'Accept, Authorization, Origin, Accept-Encoding',
+                'Accept, Authorization, Origin',
             ],
             allow: [
                 'GET, HEAD, OPTIONS',
             ],
             'x-frame-options': [
                 'DENY',
-            ],
-            'access-control-allow-origin': [
-                '*',
             ],
             'x-content-type-options': [
                 'nosniff',
@@ -67,10 +53,13 @@
                 'HIT',
             ],
             age: [
-                '90491',
+                '95556',
             ],
             'last-modified': [
-                'Sun, 27 Mar 2022 11:15:31 GMT',
+                'Sun, 27 Mar 2022 10:30:44 GMT',
+            ],
+            'accept-ranges': [
+                'bytes',
             ],
             'expect-ct': [
                 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"',
@@ -82,10 +71,7 @@
                 'cloudflare',
             ],
             'cf-ray': [
-                '6f3056a9a99968ad-BUD',
-            ],
-            'content-encoding': [
-                'br',
+                '6f3090bc2b7968b0-BUD',
             ],
             'alt-svc': [
                 'h3=":443"; ma=86400, h3-29=":443"; ma=86400',
