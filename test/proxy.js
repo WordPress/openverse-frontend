@@ -25,8 +25,40 @@ const talkback = require('talkback')
 const port = 49152
 const host = 'https://api.openverse.engineering'
 
+const urlPatterns = {
+  thumb: /\/(?<mediaType>images|audio)\/(?<uuid>[\w-]{32,})\/thumb/,
+  related: /\/(?<mediaType>images|audio)\/(?<uuid>[\w-]{32,})\/related/,
+  search: /\/(?<mediaType>images|audio)\/*\?(?<query>[\w&=]+)/,
+  detail: /\/(?<mediaType>images|audio)\/(?<uuid>[\w-]{32,})\//,
+}
+
+/**
+ * @param {string} urlString
+ * @returns {{match: ({groups}|*), type: string}|null}
+ */
+const findTypeMatch = (urlString) => {
+  for (let [matchName, matchPattern] of Object.entries(urlPatterns)) {
+    const patternMatch = urlString.match(matchPattern)
+    if (patternMatch && patternMatch.groups) {
+      return { type: matchName, match: patternMatch }
+    }
+  }
+  return null
+}
 /** @type {TalkbackOptions['tapeNameGenerator']} */
-const tapeNameGenerator = (tapeNumber) => `response-${tapeNumber}`
+const tapeNameGenerator = (tapeNumber, tape) => {
+  const typeMatch = findTypeMatch(tape.req.url)
+  if (typeMatch && typeMatch.type) {
+    const groups = typeMatch.match.groups
+    if (typeMatch.type === 'search') {
+      return `search_${groups.mediaType}_${groups.query}`
+    } else {
+      return `${typeMatch.type}_${groups.mediaType}_${groups.uuid}`
+    }
+  } else {
+    return `response-${tapeNumber}`
+  }
+}
 
 const updatingTapes =
   process.argv.includes('--update-tapes') || process.env.UPDATE_TAPES === 'true'
@@ -117,6 +149,7 @@ const opts = /** @type {Partial<TalkbackOptions>} */ ({
   path: './test/tapes',
   record: recordMode,
   fallbackMode: talkback.Options.FallbackMode.NOT_FOUND,
+  ignoreBody: true,
   ignoreHeaders: ['user-agent', 'origin', 'referrer', 'content-length', 'host'],
   name: 'Openverse e2e proxy',
   summary: false,
