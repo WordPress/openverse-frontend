@@ -25,7 +25,6 @@ import {
   provide,
   ref,
   readonly,
-  computed,
 } from '@nuxtjs/composition-api'
 import { ensureFocus } from 'reakit-utils/ensureFocus'
 
