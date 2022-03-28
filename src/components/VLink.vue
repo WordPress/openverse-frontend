@@ -4,7 +4,7 @@
   /></Component>
 </template>
 
-<script>
+<script lang="ts">
 /**
  * This is a wrapper component for all links. If a link is dynamically generated and doesn't have
  * an `href` prop (as the links for detail pages when the image detail hasn't loaded yet),
@@ -16,31 +16,37 @@
  */
 import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
 
-const defaultProps = { target: '_blank', rel: 'noopener noreferrer' }
+const defaultProps = Object.freeze({
+  target: '_blank',
+  rel: 'noopener noreferrer',
+})
 
 export default defineComponent({
   name: 'VLink',
   props: {
     href: {
       type: String,
-      validator: (v) =>
+      required: false,
+      validator: (v: unknown) =>
         (typeof v === 'string' && v.length > 0) || typeof v === 'undefined',
     },
   },
   setup(props) {
     const { app } = useContext()
-    const hasHref = computed(
-      () => typeof props.href === 'string' && !['', '#'].includes(props.href)
-    )
+    function checkHref(p: typeof props): p is { href: string } {
+      return typeof p.href === 'string' && !['', '#'].includes(p.href)
+    }
+
+    const hasHref = computed(() => checkHref(props))
     const isInternal = computed(
-      () => hasHref.value && props.href.startsWith('/')
+      () => hasHref.value && props.href?.startsWith('/')
     )
     const linkComponent = computed(() =>
       hasHref.value ? (isInternal.value ? 'NuxtLink' : 'a') : 'span'
     )
 
     let linkProperties = computed(() =>
-      hasHref.value
+      checkHref(props)
         ? isInternal.value
           ? { to: app?.localePath(props.href) ?? props.href }
           : { ...defaultProps, href: props.href }

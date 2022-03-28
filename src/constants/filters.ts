@@ -4,7 +4,8 @@ import { ALL_MEDIA, AUDIO, IMAGE, VIDEO } from '~/constants/media'
 import { ACTIVE_LICENSES } from '~/constants/license'
 import { deepFreeze } from '~/utils/deep-freeze'
 
-import type { FilterCategory, FilterItem, SearchType } from '~/store/types'
+import type { SearchType } from '~/constants/media'
+import type { FilterCategory, FilterItem } from '~/store/types'
 
 /**
  * List of filters available for each search type. The order of the keys
@@ -58,9 +59,16 @@ export const mediaUniqueFilterKeys = deepFreeze<
 })
 
 const filterCodesPerCategory = deepFreeze<Record<FilterCategory, string[]>>({
-  licenses: ACTIVE_LICENSES,
+  licenses: [...ACTIVE_LICENSES],
   licenseTypes: ['commercial', 'modification'],
-  audioCategories: ['music', 'sound', 'podcast'],
+  audioCategories: [
+    'audiobook',
+    'music',
+    'news',
+    'podcast',
+    'pronunciation',
+    'sound_effect',
+  ],
   imageCategories: ['photograph', 'illustration', 'digitized_artwork'],
   audioExtensions: ['mp3', 'ogg', 'flac'],
   imageExtensions: ['jpg', 'png', 'gif', 'svg'],
@@ -87,7 +95,7 @@ const filterCodesPerCategory = deepFreeze<Record<FilterCategory, string[]>>({
  * }
  *```
  */
-const initFilters = () =>
+export const initFilters = () =>
   Object.entries(filterCodesPerCategory).reduce(
     (acc, [filterType, filters]) => ({
       ...acc,

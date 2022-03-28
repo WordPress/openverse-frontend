@@ -7,13 +7,14 @@ import {
   useRouter,
   useStore,
 } from '@nuxtjs/composition-api'
-import isEmpty from 'lodash.isempty'
 
 import useSearchType from '~/composables/use-search-type'
 
 import { ALL_MEDIA, supportedMediaTypes } from '~/constants/media'
 import { FETCH_MEDIA } from '~/constants/action-types'
 import { MEDIA } from '~/constants/store-modules'
+
+import { useSearchStore } from '~/stores/search'
 
 import VMobileMenuModal from '~/components/VContentSwitcher/VMobileMenuModal.vue'
 import VSearchTypePopover from '~/components/VContentSwitcher/VSearchTypePopover.vue'
@@ -41,6 +42,7 @@ export default {
     const menuModalRef = ref(null)
     const content = useSearchType()
     const { app } = useContext()
+    const searchStore = useSearchStore()
     const store = useStore()
     const router = useRouter()
 
@@ -50,16 +52,16 @@ export default {
     })
     const selectSearchType = async (type) => {
       menuModalRef.value?.closeMenu()
-      await content.setActiveType(type)
+      content.setActiveType(type)
 
       const newPath = app.localePath({
         path: `/search/${type === ALL_MEDIA ? '' : type}`,
-        query: store.getters['search/searchQueryParams'],
+        query: searchStore.searchQueryParams,
       })
       router.push(newPath)
 
       function typeWithoutMedia(mediaType) {
-        return isEmpty(store.getters['media/mediaResults'][mediaType])
+        return store.getters['media/resultCountsPerMediaType'][mediaType] === 0
       }
 
       const shouldFetchMedia =
@@ -69,7 +71,7 @@ export default {
 
       if (shouldFetchMedia) {
         await store.dispatch(`${MEDIA}/${FETCH_MEDIA}`, {
-          ...store.getters['search/searchQueryParams'],
+          ...searchStore.searchQueryParams,
         })
       }
     }

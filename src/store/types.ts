@@ -1,10 +1,7 @@
-export type SupportedMediaType = 'audio' | 'image'
-export type SupportedSearchType = 'all' | SupportedMediaType
-export type MediaType = 'audio' | 'image' | 'video'
-export type SearchType = 'all' | MediaType
 /**
  * The search result object
  */
+import type { FetchState } from '~/composables/use-fetch-state'
 
 type FrontendMediaType = MediaDetail['frontendMediaType']
 export interface MediaResult<
@@ -35,7 +32,7 @@ export interface MediaResult<
     : never
 }
 
-export type Query = {
+export interface Query {
   q: string
   license_type: string
   license: string
@@ -48,8 +45,9 @@ export type Query = {
   duration: string
   mature: string
 }
+export type QueryKey = keyof Query
 
-export type ApiQueryParams = {
+export interface ApiQueryParams {
   q: string
   license?: string
   license_type?: string
@@ -62,6 +60,8 @@ export type ApiQueryParams = {
   duration?: string
   mature?: string
 }
+export type ApiQueryFilters = Omit<ApiQueryParams, 'q'>
+export type ApiQueryKeys = keyof ApiQueryFilters
 
 export interface Tag {
   name: string
@@ -131,24 +131,6 @@ export interface Filters {
 }
 export type FilterCategory = keyof Filters
 
-export interface FetchState {
-  isFetching: boolean
-  fetchingError: null | string
-  isFinished?: boolean
-}
-
-export interface SearchState {
-  searchType: SupportedSearchType
-  query: Query
-}
-
-export interface ActiveMediaState {
-  type: SupportedMediaType | null
-  id: string | null
-  status: 'ejected' | 'playing' | 'paused' // 'ejected' means player is closed
-  message: string | null
-}
-
 export type MediaStoreResult<T extends FrontendMediaType> = MediaResult<
   Record<MediaDetail['id'], T>
 >
@@ -158,16 +140,10 @@ export interface MediaState {
     audio: MediaStoreResult<'audio'>
     image: MediaStoreResult<'image'>
   }
-  mediaFetchState: {
+  fetchState: {
     audio: FetchState
     image: FetchState
   }
   audio: AudioDetail
   image: ImageDetail
-}
-
-export interface MediaFetchState {
-  isFetching: boolean
-  fetchingError: string | null
-  isFinished?: boolean
 }
