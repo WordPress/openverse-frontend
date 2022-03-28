@@ -5,7 +5,6 @@ import {
   ref,
   useContext,
   useRouter,
-  useStore,
 } from '@nuxtjs/composition-api'
 
 import { ALL_MEDIA, supportedMediaTypes } from '~/constants/media'
@@ -41,7 +40,6 @@ export default {
     const { app } = useContext()
     const mediaStore = useMediaStore()
     const searchStore = useSearchStore()
-    const store = useStore()
     const router = useRouter()
 
     const isMounted = ref(false)
