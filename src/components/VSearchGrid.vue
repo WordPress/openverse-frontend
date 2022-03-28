@@ -29,7 +29,7 @@
       :is-supported="supported"
     />
   </section>
-  <VErrorSection v-else-if="!fetchState.isFetching" class="w-full py-10">
+  <VErrorSection v-else class="w-full py-10">
     <template #image>
       <VErrorImage :error-code="NO_RESULT" />
     </template>
