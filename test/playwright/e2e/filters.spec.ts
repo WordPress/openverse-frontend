@@ -91,7 +91,7 @@ test('common filters are retained when media type changes from single type to al
   page,
 }) => {
   await page.goto(
-    '/search/audio?q=cat&license_type=commercial&license=cc0&searchBy=creator'
+    '/search/image?q=cat&license_type=commercial&license=cc0&searchBy=creator'
   )
   await openFilters(page)
 
