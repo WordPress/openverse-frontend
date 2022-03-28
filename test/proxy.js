@@ -26,9 +26,9 @@ const port = 49152
 const host = 'https://api.openverse.engineering'
 
 const urlPatterns = {
+  search: /\/(?<mediaType>images|audio)\/*\?(?<query>[\w&=]+)/,
   thumb: /\/(?<mediaType>images|audio)\/(?<uuid>[\w-]{32,})\/thumb/,
   related: /\/(?<mediaType>images|audio)\/(?<uuid>[\w-]{32,})\/related/,
-  search: /\/(?<mediaType>images|audio)\/*\?(?<query>[\w&=]+)/,
   detail: /\/(?<mediaType>images|audio)\/(?<uuid>[\w-]{32,})\//,
 }
 
@@ -50,10 +50,12 @@ const tapeNameGenerator = (tapeNumber, tape) => {
   const typeMatch = findTypeMatch(tape.req.url)
   if (typeMatch && typeMatch.type) {
     const groups = typeMatch.match.groups
+    const prefix = `${typeMatch.type}_${groups.mediaType}`
+    const suffix = tape.req.headers.connection
     if (typeMatch.type === 'search') {
-      return `search_${groups.mediaType}_${groups.query}`
+      return `${prefix}_${groups.query}_${suffix}`
     } else {
-      return `${typeMatch.type}_${groups.mediaType}_${groups.uuid}`
+      return `${prefix}_${groups.uuid}_${suffix}`
     }
   } else {
     return `response-${tapeNumber}`

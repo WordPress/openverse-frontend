@@ -1,35 +1,45 @@
 {
     meta: {
-        createdAt: '2022-03-28T15:05:18.852Z',
+        createdAt: '2022-03-28T15:06:58.369Z',
         host: 'https://api.openverse.engineering',
         resHumanReadable: true,
     },
     req: {
         headers: {
-            accept: 'application/json, text/plain, */*',
-            connection: 'close',
+            connection: 'keep-alive',
+            pragma: 'no-cache',
+            'cache-control': 'no-cache',
+            'sec-ch-ua': '',
+            'sec-ch-ua-mobile': '?0',
+            'sec-ch-ua-platform': '',
+            accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+            'sec-fetch-site': 'same-site',
+            'sec-fetch-mode': 'no-cors',
+            'sec-fetch-dest': 'image',
+            referer: 'http://localhost:8443/',
+            'accept-encoding': 'gzip, deflate, br',
         },
-        url: '/v1/audio/stats/',
+        url: '/v1/audio/99103ce4-2772-4f10-876e-e708a106251e/thumb/',
         method: 'GET',
         body: '',
     },
     res: {
-        status: 200,
+        status: 404,
         headers: {
             date: [
-                'Mon, 28 Mar 2022 15:05:19 GMT',
+                'Mon, 28 Mar 2022 15:06:58 GMT',
             ],
             'content-type': [
                 'application/json',
             ],
             'content-length': [
-                '426',
+                '36',
             ],
             connection: [
-                'close',
+                'keep-alive',
             ],
             vary: [
-                'Accept, Authorization, Origin',
+                'Accept, Authorization, Origin, Accept-Encoding',
             ],
             allow: [
                 'GET, HEAD, OPTIONS',
@@ -53,13 +63,7 @@
                 'HIT',
             ],
             age: [
-                '102890',
-            ],
-            'last-modified': [
-                'Sun, 27 Mar 2022 10:30:29 GMT',
-            ],
-            'accept-ranges': [
-                'bytes',
+                '102883',
             ],
             'expect-ct': [
                 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"',
@@ -71,34 +75,14 @@
                 'cloudflare',
             ],
             'cf-ray': [
-                '6f314366883668b0-BUD',
+                '6f3145d45d4f68bc-BUD',
             ],
             'alt-svc': [
                 'h3=":443"; ma=86400, h3-29=":443"; ma=86400',
             ],
         },
-        body: [
-            {
-                source_name: 'jamendo',
-                display_name: 'Jamendo',
-                source_url: 'https://www.jamendo.com/start',
-                logo_url: null,
-                media_count: 47262,
-            },
-            {
-                source_name: 'wikimedia_audio',
-                display_name: 'Wikimedia Commons',
-                source_url: 'https://commons.wikimedia.org/wiki/Main_Page',
-                logo_url: null,
-                media_count: 1238,
-            },
-            {
-                source_name: 'freesound',
-                display_name: 'Freesound',
-                source_url: 'https://freesound.org/',
-                logo_url: null,
-                media_count: 47458,
-            },
-        ],
+        body: {
+            detail: 'Could not find artwork.',
+        },
     },
 }
