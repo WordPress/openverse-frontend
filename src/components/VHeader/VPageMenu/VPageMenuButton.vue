@@ -2,7 +2,7 @@
   <VButton
     variant="action-menu"
     size="disabled"
-    class="font-semibold p-2 w-12 leading-7"
+    class="font-semibold p-2 w-12 leading-7 focus-visible:border-tx focus-visible:ring focus-visible:ring-pink"
     :aria-label="$t('header.aria.menu')"
     v-bind="a11yProps"
     @click="$emit('click')"

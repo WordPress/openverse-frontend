@@ -308,19 +308,4 @@ a.button {
 .plain {
   @apply focus-visible:ring focus-visible:ring-pink;
 }
-
-/**
- * Requeried styles for backwards compatibility on Safari
- * See: https://github.com/WICG/focus-visible/blob/main/README.md#backwards-compatibility
- */
-.primary:focus:not(.focus-visible),
-.secondary:focus:not(.focus-visible),
-.tertiary:focus:not(.focus-visible),
-.action-menu:focus:not(.focus-visible),
-.action-menu-secondary:focus:not(.focus-visible),
-.action-menu-muted:focus:not(.focus-visible),
-.full:focus:not(.focus-visible),
-.plain:focus:not(.focus-visible) {
-  @apply focus:ring focus:ring-pink;
-}
 </style>

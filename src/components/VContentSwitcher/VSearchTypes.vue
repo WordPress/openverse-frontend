@@ -10,7 +10,6 @@
     <VSearchTypeItem
       v-for="(item, idx) in content.types"
       :key="item"
-      class="md:mb-1"
       :item="item"
       :item-id="idx"
       :icon="content.icons[item]"
