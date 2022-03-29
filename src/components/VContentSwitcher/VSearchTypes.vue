@@ -4,7 +4,7 @@
     :size="size"
     :bordered="bordered"
     type="radiogroup"
-    class="z-10 w-[260px] max-w-full"
+    class="z-10 md:w-[260px] max-w-full"
   >
     <h4
       :class="bordered ? 'ps-0' : 'ps-6'"
