@@ -47,6 +47,8 @@ module.exports = {
     'vue/block-lang': [
       'error',
       {
+	// This confusing naming prevents the use of 'lang' directives 
+	// entirely on Vue SFC style blocks.
         style: { allowNoLang: true },
       },
     ],
