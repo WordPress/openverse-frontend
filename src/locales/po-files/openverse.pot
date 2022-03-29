@@ -5,6 +5,7 @@ msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
 "POT-Creation-Date: 2022-03-29T13:26:48+00:00\n"
+
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -596,12 +597,12 @@ msgctxt "media-details.reuse.copy-license.plain"
 msgid "Plain text"
 msgstr ""
 
-#: src/components/CopyButton.vue:9
+#: src/components/VCopyButton.vue:11
 msgctxt "media-details.reuse.copy-license.copy-text"
 msgid "Copy text"
 msgstr ""
 
-#: src/components/CopyButton.vue:12
+#: src/components/VCopyButton.vue:14
 msgctxt "media-details.reuse.copy-license.copied"
 msgid "Copied!"
 msgstr ""
@@ -680,6 +681,7 @@ msgstr ""
 
 #. Do not translate words between ### ###.
 #: src/components/VAllResultsGrid/VAllResultsGrid.vue:101
+
 msgctxt "browse-page.fetching-error"
 msgid "Error fetching ###type###:"
 msgstr ""
@@ -761,6 +763,7 @@ msgid "images"
 msgstr ""
 
 #: src/components/VAllResultsGrid/VAllResultsGrid.vue:100
+
 msgctxt "browse-page.search-form.audio"
 msgid "audio"
 msgstr ""
@@ -1074,13 +1077,13 @@ msgid "An error occurred"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/image/_id.vue:137
+#: src/pages/image/_id.vue:142
 msgctxt "error.image-not-found"
 msgid "Couldn't find image with id ###id###"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/audio/_id.vue:82
+#: src/pages/audio/_id.vue:87
 msgctxt "error.media-not-found"
 msgid "Couldn't find ###mediaType### with id ###id###"
 msgstr ""
@@ -1866,15 +1869,6 @@ msgstr ""
 
 msgctxt "hero.aria.search-type"
 msgid "search type"
-msgstr ""
-
-#: src/components/LocaleSelector.vue:3
-msgctxt "hero.locale.label"
-msgid "Languages available"
-msgstr ""
-
-msgctxt "hero.locale.icon"
-msgid "locale"
 msgstr ""
 
 msgctxt "hero.license-filter.label"
