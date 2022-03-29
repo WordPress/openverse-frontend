@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-03-29T13:35:00+00:00\n"
+"POT-Creation-Date: 2022-03-29T13:36:12+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1879,15 +1879,6 @@ msgstr ""
 
 msgctxt "hero.aria.search-type"
 msgid "search type"
-msgstr ""
-
-#: src/components/LocaleSelector.vue:3
-msgctxt "hero.locale.label"
-msgid "Languages available"
-msgstr ""
-
-msgctxt "hero.locale.icon"
-msgid "locale"
 msgstr ""
 
 msgctxt "hero.license-filter.label"
