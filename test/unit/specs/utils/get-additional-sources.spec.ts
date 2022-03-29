@@ -1,5 +1,5 @@
 import { getAdditionalSources } from '~/utils/get-additional-sources'
-import { AUDIO, IMAGE, MediaType, MODELS_3D, VIDEO } from '~/constants/media'
+import { AUDIO, IMAGE, MediaType, MODEL_3D, VIDEO } from '~/constants/media'
 
 /**
  * These tests do not test the health or uptime of URLS, only that a valid URL
@@ -11,7 +11,7 @@ describe('getAdditionalSources', () => {
     ${AUDIO}
     ${VIDEO}
     ${IMAGE}
-    ${MODELS_3D}
+    ${MODEL_3D}
   `(
     `returns a URL for each $mediaType source`,
     ({ mediaType }: { mediaType: MediaType }) => {

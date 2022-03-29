@@ -1,6 +1,6 @@
 import { kebab } from 'case'
 
-import { ALL_MEDIA, AUDIO, IMAGE, MODELS_3D, VIDEO } from '~/constants/media'
+import { ALL_MEDIA, AUDIO, IMAGE, VIDEO, MODEL_3D } from '~/constants/media'
 import { ACTIVE_LICENSES } from '~/constants/license'
 import { deepFreeze } from '~/utils/deep-freeze'
 
@@ -35,7 +35,7 @@ export const mediaFilterKeys = deepFreeze<Record<SearchType, FilterCategory[]>>(
       'mature',
     ],
     [VIDEO]: [],
-    [MODELS_3D]: [],
+    [MODEL_3D]: [],
     [ALL_MEDIA]: ['licenseTypes', 'licenses', 'searchBy', 'mature'],
   }
 )
@@ -62,7 +62,7 @@ export const mediaUniqueFilterKeys = deepFreeze<
     'audioProviders',
   ],
   [VIDEO]: [],
-  [MODELS_3D]: [],
+  [MODEL_3D]: [],
 })
 
 const filterCodesPerCategory = deepFreeze<Record<FilterCategory, string[]>>({
