@@ -7,10 +7,7 @@
     class="z-10 w-[260px] max-w-full"
   >
     <h4
-      :class="{
-        'ps-0': !bordered,
-        'ps-6': !bordered,
-      }"
+      :class="bordered ? 'ps-0' : 'ps-6'"
       class="text-sr pt-6 pe-6 pb-4 uppercase font-semibold"
     >
       {{ $t('search-type.heading') }}
@@ -34,10 +31,7 @@
       }"
     >
       <h4
-        :class="{
-          'ps-0': !bordered,
-          'ps-6': !bordered,
-        }"
+        :class="bordered ? 'ps-0' : 'ps-6'"
         class="text-sr pt-6 pe-6 pb-4 uppercase font-semibold"
       >
         {{ $t('search-type.additional') }}
