@@ -596,12 +596,12 @@ msgctxt "media-details.reuse.copy-license.plain"
 msgid "Plain text"
 msgstr ""
 
-#: src/components/CopyButton.vue:9
+#: src/components/VCopyButton.vue:11
 msgctxt "media-details.reuse.copy-license.copy-text"
 msgid "Copy text"
 msgstr ""
 
-#: src/components/CopyButton.vue:12
+#: src/components/VCopyButton.vue:14
 msgctxt "media-details.reuse.copy-license.copied"
 msgid "Copied!"
 msgstr ""
@@ -1866,15 +1866,6 @@ msgstr ""
 
 msgctxt "hero.aria.search-type"
 msgid "search type"
-msgstr ""
-
-#: src/components/LocaleSelector.vue:3
-msgctxt "hero.locale.label"
-msgid "Languages available"
-msgstr ""
-
-msgctxt "hero.locale.icon"
-msgid "locale"
 msgstr ""
 
 msgctxt "hero.license-filter.label"
