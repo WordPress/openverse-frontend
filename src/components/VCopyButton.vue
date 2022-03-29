@@ -3,6 +3,8 @@
     :id="id"
     type="button"
     variant="secondary"
+    size="disabled"
+    class="py-2 px-3 text-sr"
     :data-clipboard-target="el"
   >
     <span v-if="!success">
@@ -20,7 +22,7 @@ import Clipboard from 'clipboard'
 import VButton from '~/components/VButton.vue'
 
 export default {
-  name: 'CopyButton',
+  name: 'VCopyButton',
   components: { VButton },
   props: {
     el: {
@@ -60,13 +62,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-/**
-  * Styles are applied here to 'hack' and overrule specificity.
-  * @todo Find a better way to handle this in the template.
-**/
-button {
-  @apply py-2 px-3 text-sr;
-}
-</style>
