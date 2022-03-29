@@ -18,7 +18,8 @@
       :class="[
         $style[`${contextProps.direction}-button`],
         selected && 'bg-dark-charcoal-10 ring-offset-dark-charcoal-10',
-        as === 'VLink' && 'text-dark-charcoal',
+        as === 'VLink' &&
+          'text-dark-charcoal focus-visible:ring focus-visible:ring-pink',
       ]"
       :variant="
         contextProps.size === 'small' && !contextProps.bordered
@@ -40,12 +41,7 @@
     >
       <div
         class="flex-grow whitespace-nowrap my-0 rounded-sm px-2"
-        :class="[
-          contextProps.size === 'small' &&
-            !contextProps.bordered &&
-            'group-focus-visible:ring group-focus-visible:ring-pink',
-          $style[`${contextProps.direction}-content`],
-        ]"
+        :class="[$style[`${contextProps.direction}-content`]]"
       >
         <slot name="default" />
       </div>
