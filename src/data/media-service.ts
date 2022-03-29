@@ -15,8 +15,8 @@ class MediaService<T extends Media> {
 
   /**
    * Decodes the text data to avoid encoding problems.
-   * Also, converts the results from an array of media objects into an object with
-   * media id as keys.
+   * Also, converts the results from an array of media
+   * objects into an object with media id as keys.
    * @param data - search result data
    */
   transformResults(data: MediaResult<T[]>): MediaResult<Record<string, T>> {
@@ -60,7 +60,7 @@ class MediaService<T extends Media> {
   }
 
   /**
-   * Retrieve related media
+   * Retrieve related media.
    * @param params - object with id of the main media, for which to fetch related media
    */
   async getRelatedMedia(params: { id: string }): Promise<MediaResult<T[]>> {
@@ -69,7 +69,6 @@ class MediaService<T extends Media> {
         `MediaService.getRelatedMedia() id parameter required to retrieve related media.`
       )
     }
-
     const res = (await VersionedApiService.get(
       this.mediaType,
       `${params.id}/related`

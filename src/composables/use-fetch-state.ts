@@ -11,12 +11,11 @@ export interface FetchState {
 /* Constants */
 
 /**
- * Statuses of requests:
+ * Mutually exclusive request statuses:
  * - `idle`: the current request has never been sent yet, for example,
  * on the first app load, or after a change in search filters or search term.
  * - `fetching`: the request was sent, but no response was received yet.
  * - `success`: a successful response was received for the current request.
- * - `finished`: for multi-page requests, this is true when no more pages are left.
  * - `error`: an error response was received.
  */
 const statuses = Object.freeze({
