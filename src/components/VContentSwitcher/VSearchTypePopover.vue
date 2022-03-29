@@ -10,6 +10,7 @@
         :a11y-props="a11yProps"
         aria-controls="content-switcher-popover"
         :active-item="activeItem"
+        class="focus-visible:border-tx focus-visible:ring focus-visible:ring-pink"
         :class="{
           '!border-tx': isInSearchBar,
           'group-hover:!border-dark-charcoal-20':

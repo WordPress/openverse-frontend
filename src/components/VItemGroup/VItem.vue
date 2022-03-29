@@ -14,12 +14,11 @@
     <VButton
       data-item-group-item
       :as="as"
-      class="flex justify-between min-w-full group relative hover:bg-dark-charcoal-10 px-2 py-2 focus:z-10"
+      class="flex justify-between min-w-full group relative hover:bg-dark-charcoal-10 px-2 py-2 focus:z-10 focus-visible:ring focus-visible:ring-pink"
       :class="[
         $style[`${contextProps.direction}-button`],
         selected && 'bg-dark-charcoal-10 ring-offset-dark-charcoal-10',
-        as === 'VLink' &&
-          'text-dark-charcoal focus-visible:ring focus-visible:ring-pink',
+        as === 'VLink' && 'text-dark-charcoal',
       ]"
       :variant="
         contextProps.size === 'small' && !contextProps.bordered

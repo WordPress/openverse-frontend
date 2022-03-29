@@ -1,6 +1,6 @@
 <template>
   <VButton
-    class="flex flex-row font-semibold py-2 text-sr md:text-base focus-visible:border-tx focus-visible:ring focus-visible:ring-pink"
+    class="flex flex-row font-semibold py-2 text-sr md:text-base"
     :class="[
       sizeClasses,
       showLabel ? 'max-w-[10rem] sm:max-w-[20rem] md:max-w-[16rem]' : '',
