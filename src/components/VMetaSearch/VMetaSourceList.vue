@@ -13,7 +13,7 @@
         {{ source.name }}
         <sup class="top-0">
           <VIcon
-            :icon-path="externalLinkIcon"
+            :icon-path="icons.externalLink"
             :size="4"
             :rtl-flip="true"
             class="ms-2"
@@ -24,39 +24,38 @@
   </ul>
 </template>
 
-<script>
-import { computed } from '@nuxtjs/composition-api'
+<script lang="ts">
+import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
 
-import getLegacySourceUrl, {
-  legacySourceMap,
-} from '~/utils/get-legacy-source-url'
+import { getAdditionalSources } from '~/utils/get-additional-sources'
+
+import type { ApiQueryParams } from '~/store/types'
+
+import type { MediaType } from '~/constants/media'
 
 import VButton from '~/components/VButton.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'
 
 import externalLinkIcon from '~/assets/icons/external-link.svg'
 
-export default {
-  name: 'MetaSourceList',
+export default defineComponent({
+  name: 'VMetaSourceList',
   components: { VButton, VIcon },
   props: {
-    type: { type: String },
-    query: { type: Object },
+    type: { type: String as PropType<MediaType>, required: true },
+    query: { type: Object as PropType<ApiQueryParams>, required: true },
   },
   setup(props) {
     const sources = computed(() =>
-      Object.keys(legacySourceMap)
-        .filter((sourceName) => legacySourceMap[sourceName][props.type])
-        .map((source) => ({
-          name: source,
-          url: getLegacySourceUrl(props.type)(source, props.query),
-        }))
+      getAdditionalSources(props.type, props.query)
     )
 
     return {
-      externalLinkIcon,
+      icons: {
+        externalLink: externalLinkIcon,
+      },
       sources,
     }
   },
-}
+})
 </script>

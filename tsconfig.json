@@ -40,6 +40,7 @@
     "src/components/VIcon.vue",
     "src/components/VButton.vue",
     "src/components/VContentPage.vue",
+    "src/components/VMetaSearch/*.vue",
     "src/composables/types.js",
     "src/composables/use-event-listener-outside.js",
     "src/composables/use-active-audio.js",
