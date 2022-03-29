@@ -13,7 +13,7 @@
       <template #media>
         <NuxtChild
           :key="$route.path"
-          :media-results="results"
+          :result-items="resultItems"
           :fetch-state="fetchState"
           :is-filter-visible="isVisible"
           :search-term="query.q"
@@ -27,19 +27,15 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from 'vuex'
 import { isShallowEqualObjects } from '@wordpress/is-shallow-equal'
-import { inject } from '@nuxtjs/composition-api'
+import { computed, inject } from '@nuxtjs/composition-api'
 
-import {
-  FETCH_MEDIA,
-  UPDATE_QUERY,
-  SET_SEARCH_STATE_FROM_URL,
-} from '~/constants/action-types'
 import { supportedSearchTypes } from '~/constants/media'
-import { MEDIA, SEARCH } from '~/constants/store-modules'
-import { isMinScreen } from '~/composables/use-media-query.js'
+import { isMinScreen } from '~/composables/use-media-query'
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
+
+import { useMediaStore } from '~/stores/media'
+import { useSearchStore } from '~/stores/search'
 
 import VSearchGrid from '~/components/VSearchGrid.vue'
 import VSkipToContentContainer from '~/components/VSkipToContentContainer.vue'
@@ -56,50 +52,57 @@ const BrowsePage = {
     const isMinScreenMd = isMinScreen('md')
     const { isVisible } = useFilterSidebarVisibility()
     const showScrollButton = inject('showScrollButton')
+    const mediaStore = useMediaStore()
+    const searchStore = useSearchStore()
+
+    const searchTerm = computed(() => searchStore.searchTerm)
+    const searchType = computed(() => searchStore.searchType)
+    const query = computed(() => searchStore.searchQueryParams)
+    const supported = computed(() =>
+      supportedSearchTypes.includes(searchType.value)
+    )
+    const resultCount = computed(() => mediaStore.resultCount)
+    const fetchState = computed(() => mediaStore.fetchState)
+    const resultItems = computed(() => mediaStore.resultItems)
 
     return {
       isMinScreenMd,
       isVisible,
       showScrollButton,
+      searchTerm,
+      searchType,
+      supported,
+      query,
+
+      resultCount,
+      fetchState,
+      resultItems,
+      fetchMedia: mediaStore.fetchMedia,
+      setSearchStateFromUrl: searchStore.setSearchStateFromUrl,
     }
   },
   scrollToTop: false,
   async fetch() {
-    if (this.supported && !this.resultCount && this.query.q.trim() !== '') {
-      await this.fetchMedia({})
+    if (this.supported && !this.resultCount && this.searchTerm.trim() !== '') {
+      await this.fetchMedia()
     }
   },
-  async asyncData({ route, store }) {
+  asyncData({ route, $pinia }) {
     if (process.server) {
-      await store.dispatch(`${SEARCH}/${SET_SEARCH_STATE_FROM_URL}`, {
+      const searchStore = useSearchStore($pinia)
+      searchStore.setSearchStateFromUrl({
         path: route.path,
-        query: route.query,
+        urlQuery: route.query,
       })
     }
   },
   computed: {
-    ...mapState(SEARCH, ['query', 'searchType']),
-    ...mapGetters(SEARCH, ['searchQueryParams']),
-    ...mapGetters(MEDIA, ['results', 'resultCount', 'fetchState']),
     /**
      * Number of search results. Returns 0 for unsupported types.
      * @returns {number}
      */
     resultsCount() {
       return this.supported ? this.resultCount : 0 ?? 0
-    },
-    supported() {
-      return supportedSearchTypes.includes(this.searchType)
-    },
-  },
-  methods: {
-    ...mapActions(MEDIA, { fetchMedia: FETCH_MEDIA }),
-    ...mapActions(SEARCH, {
-      setSearchStateFromUrl: SET_SEARCH_STATE_FROM_URL,
-      updateQuery: UPDATE_QUERY,
-    }),
-    onSearchFormSubmit({ q }) {
-      this.updateQuery({ q })
     },
   },
   watch: {
@@ -113,8 +116,9 @@ const BrowsePage = {
         newRoute.path !== oldRoute.path ||
         !isShallowEqualObjects(newRoute.query, oldRoute.query)
       ) {
-        await this.setSearchStateFromUrl(newRoute)
-        this.fetchMedia(this.searchQueryParams)
+        const { query, path } = newRoute
+        await this.setSearchStateFromUrl({ urlQuery: query, path })
+        this.fetchMedia()
       }
     },
   },

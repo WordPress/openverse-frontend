@@ -18,6 +18,8 @@ The frontend app is built using [Vue.js](https://vuejs.org/) and [Nuxt.js](https
 
 ## Local Development
 
+**Note for Windows users:** Please use [WSL](https://docs.microsoft.com/en-us/windows/wsl/install) for developing on the Openverse frontend. Several scripts, primarily support scripts, rely on a general \*nix type environment. Maintaining parity for cross platform scripts proved complicated without significant duplication. If you run into issues with running the Openverse frontend in WSL please let us know by opening an issue or [joining us on Slack](https://make.wordpress.org/chat/) in the `#openverse` room and ask for help.
+
 We use [Volta](https://volta.sh/) to manage our local environment tools. Please install it using the instructions on their website.
 
 Once you have volta installed, manually install `pnpm` using volta. [Volta does not currently officially support `pnpm`](https://github.com/volta-cli/volta/issues/737) so this is a stop gap solution until that support is implemented:
@@ -37,7 +39,45 @@ pnpm i18n:get-translations
 
 # Builds and serves assets with hot-reload
 pnpm dev
+
 ```
+
+### Using HTTPS Locally
+
+To enable SSL support in local development, use the `pnpm dev:secure` command. This requires you to have a private key and certificate in the root of the repository with the following names:
+
+```shell
+localhost+1-key.pem # The private key file
+localhost+1.pem # The certificate file
+```
+
+The easiest way to create these files is with a local development tool called [mkcrt](https://github.com/FiloSottile/mkcert). First make sure you have [mkcert installed](https://github.com/FiloSottile/mkcert#installation) and activated with `mkcert -install`. Then use `mkcert` to create a certificate for `localhost` and for the external IP address used by Nuxt's development process. That command looks like this:
+
+```shell
+mkcert localhost 192.168.50.119
+```
+
+Be sure to replace the IP address in the example with your own. See the next section for how to identify that IP address.
+
+#### Finding your local IP address
+
+You can find the local IP address Nuxt uses by looking at the output of `nuxt dev`. Look in your console for a box of configuration details that looks like this:
+
+```bash
+#  ╭────────────────────────────────────────────╮
+#  │                                           │
+#  │   Nuxt @ v2.15.8                          │
+#  │                                           │
+#  │   ▸ Environment: development              │
+#  │   ▸ Rendering:   server-side              │
+#  │   ▸ Target:      server                   │
+#  │                                           │
+#  │   Listening: http://192.168.50.119:8443/  │ # <-- Use this IP Address
+#  │                                           │
+#  ╰────────────────────────────────────────────╯
+```
+
+You will need to regenerate the certificate if this IP address changes for any reason, like by enabling a VPN or changing networks.
 
 ### Docker setup
 

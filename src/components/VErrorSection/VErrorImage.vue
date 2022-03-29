@@ -1,6 +1,8 @@
 <template>
   <figure class="error-image">
     <img :src="image.src" :alt="$t(image.alt)" :title="$t(image.alt)" />
+    <!-- Disable reason: We control the attribution HTML generation so this is safe and will not lead to XSS attacks -->
+    <!-- eslint-disable-next-line vue/no-v-html -->
     <figcaption class="attribution" v-html="image.attribution" />
   </figure>
 </template>
@@ -47,12 +49,11 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped>
 ::v-deep .attribution {
   @apply text-dark-charcoal-70;
-
-  a {
-    @apply text-current underline;
-  }
+}
+::v-deep a {
+  @apply text-current underline;
 }
 </style>

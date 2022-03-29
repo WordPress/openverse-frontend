@@ -1,6 +1,14 @@
 // WebStorm fix for `~` alias not working:
 // https://intellij-support.jetbrains.com/hc/en-us/community/posts/115000771544-ESLint-does-not-work-with-webpack-import-resolver-in-2017-3
 process.chdir(__dirname)
+// [id.properties:has([key.name="${methodName}"])]
+const i18nDestructureRules = ['t', 'tc', 'te', 'td', 'd', 'n'].map(
+  (methodName) => ({
+    selector: `VariableDeclarator[id.type="ObjectPattern"]:has(Property[key.name="${methodName}"])[init.callee.name="useI18n"]`,
+    message: `Do not destructure ${methodName} from the i18n object as its methods internally depend on "this". Instead, use it directly (e.g., "i18n.${methodName}"). If you need an independent reference to the function then bind it or wrap it in a closure.`,
+  })
+)
+
 module.exports = {
   root: true,
   env: {
@@ -11,8 +19,8 @@ module.exports = {
     parser: '@typescript-eslint/parser',
   },
   extends: [
-    'plugin:@typescript-eslint/recommended',
     'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
     'plugin:vue/recommended',
     'plugin:prettier/recommended',
     'plugin:vuejs-accessibility/recommended',
@@ -36,6 +44,14 @@ module.exports = {
     'vue/html-closing-bracket-newline': 'off',
     'vue/html-indent': 'off',
     'vue/singleline-html-element-content-newline': 'off',
+    'vue/block-lang': [
+      'error',
+      {
+        // This confusing naming prevents the use of 'lang' directives
+        // entirely on Vue SFC style blocks.
+        style: { allowNoLang: true },
+      },
+    ],
     'vue/component-name-in-template-casing': [
       'error',
       'PascalCase',
@@ -78,6 +94,7 @@ module.exports = {
         message: 'Use the <VLink> component instead of <RouterLink>.',
       },
     ],
+    'no-restricted-syntax': ['error', ...i18nDestructureRules],
     'unicorn/filename-case': ['error', { case: 'kebabCase' }],
     '@typescript-eslint/ban-ts-comment': ['warn'],
     '@typescript-eslint/no-var-requires': ['off'],
@@ -143,6 +160,7 @@ module.exports = {
         ],
       },
     ],
+    'import/extensions': ['error', 'always', { js: 'never', ts: 'never' }],
   },
   overrides: [
     {

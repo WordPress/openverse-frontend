@@ -5,11 +5,11 @@
       class="results-grid grid grid-cols-2 lg:grid-cols-5 2xl:grid-cols-6 gap-4 mb-4"
     >
       <VContentLink
-        v-for="[key, item] in results"
-        :key="key"
-        :media-type="key"
-        :results-count="item.count"
-        :to="localePath({ path: `/search/${key}`, query: $route.query })"
+        v-for="[mediaType, count] in resultCounts"
+        :key="mediaType"
+        :media-type="mediaType"
+        :results-count="count"
+        :to="localePath({ path: `/search/${mediaType}`, query: $route.query })"
         class="lg:col-span-2"
       />
     </div>
@@ -53,7 +53,7 @@
 <script>
 import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
 
-import { rand as prng, hash } from '~/utils/prng'
+import { useMediaStore } from '~/stores/media'
 
 import VImageCellSquare from '~/components/VAllResultsGrid/VImageCellSquare.vue'
 import VAudioCell from '~/components/VAllResultsGrid/VAudioCell.vue'
@@ -72,7 +72,8 @@ export default defineComponent({
   },
   props: ['canLoadMore'],
   setup(_, { emit }) {
-    const { i18n, store } = useContext()
+    const { i18n } = useContext()
+    const mediaStore = useMediaStore()
 
     const onLoadMore = () => {
       emit('load-more')
@@ -81,79 +82,27 @@ export default defineComponent({
     /** @type {import('@nuxtjs/composition-api').ComputedRef<boolean>} */
     const resultsLoading = computed(() => {
       return (
-        Boolean(store.getters['media/fetchState'].fetchingError) ||
-        store.getters['media/fetchState'].isFetching
+        Boolean(mediaStore.fetchState.fetchingError) ||
+        mediaStore.fetchState.isFetching
       )
     })
 
     /**
-     *
-     * @type { ComputedRef<import('../../store/types').AudioDetail[] | import('../../store/types').ImageDetail[]> }
+     * @type { ComputedRef<import('../../store/types').Media[]> }
      */
-    const allMedia = computed(() => {
-      // if (resultsLoading.value) return []
-      const media = store.getters['media/mediaResults']
-      const mediaKeys = Object.keys(media)
+    const allMedia = computed(() => mediaStore.allMedia)
 
-      // Seed the random number generator with the ID of
-      // the first and last search result, so the non-image
-      // distribution is the same on repeated searches
-      let seed = Object.keys(media[mediaKeys[0]])[0]
-      if (typeof seed === 'string') {
-        seed = hash(seed)
-      }
-      const rand = prng(seed)
-      const randomIntegerInRange = (min, max) =>
-        Math.floor(rand() * (max - min + 1)) + min
-      /**
-       * When navigating from All page to Audio page, VAllResultsGrid is displayed
-       * for a short period of time. Then media['image'] is undefined, and it throws an error
-       * `TypeError: can't convert undefined to object`. To fix it, we add `|| {}` to the media['image'].
-       */
-      /** @type {import('../../store/types').AudioDetail[] | import('../../store/types').ImageDetail[]} */
-      const newResults = []
-      // first push all images to the results list
-      for (const id of Object.keys(media['image'] || {})) {
-        const item = media['image'][id]
-        item.frontendMediaType = 'image'
-        newResults.push(item)
-      }
-
-      // push other items into the list, using a random index.
-      let nonImageIndex = 1
-      for (const type of Object.keys(media).slice(1)) {
-        for (const id of Object.keys(media[type])) {
-          const item = media[type][id]
-          item.frontendMediaType = type
-          newResults.splice(nonImageIndex, 0, item)
-          if (nonImageIndex > newResults.length + 1) break
-          nonImageIndex = randomIntegerInRange(
-            nonImageIndex + 1,
-            nonImageIndex + 6
-          )
-        }
-      }
-
-      return newResults
-    })
-
-    const isError = computed(
-      () => !!store.getters['media/fetchState'].fetchingError
-    )
+    const isError = computed(() => !!mediaStore.fetchState.fetchingError)
 
     /** @type {import('@nuxtjs/composition-api').ComputedRef<import('../../store/types').FetchState>} */
-    const fetchState = computed(() => {
-      return store.getters['media/fetchState']
-    })
+    const fetchState = computed(() => mediaStore.fetchState)
 
     const errorHeader = computed(() => {
       const type = i18n.t('browse-page.search-form.audio')
       return i18n.t('browse-page.fetching-error', { type })
     })
 
-    const results = computed(() => {
-      return Object.entries(store.getters['media/results'])
-    })
+    const resultCounts = computed(() => mediaStore.resultCountsPerMediaType)
 
     const noResults = computed(
       () => fetchState.value.isFinished && allMedia.value.length === 0
@@ -166,7 +115,7 @@ export default defineComponent({
       onLoadMore,
       fetchState,
       resultsLoading,
-      results,
+      resultCounts,
       noResults,
     }
   },

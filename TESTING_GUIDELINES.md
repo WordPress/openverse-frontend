@@ -12,25 +12,7 @@ Staging is redeployed everytime we merge to the `main` branch, so if you're look
 
 Once you have the application running, you can visit it in your browser at http://localhost:8443.
 
-You can also access it from other devices in your same network (like a mobile phone) for additional testing. Typically, the address for this will be displayed in the output of the `pnpm dev` command that you ran to start the server. It will look something like `http://192.168.0.123:8443` or `http://10.0.0.45:8443` depending on your local network configuration. If you can't find this in the output you will need to determine your local IP address yourself.
-
-To do this, follow these instructions for getting your computer's local network IP address:
-
-- Windows:
-  1. Find your IP address: https://support.microsoft.com/en-us/windows/find-your-ip-address-in-windows-f21a9bbc-c582-55cd-35e0-73431160a1b9
-  2. Make sure that your Wi-Fi network is set to "private": https://support.microsoft.com/en-US/windows/make-a-wi-fi-network-public-or-private-in-windows-0460117d-8d3e-a7ac-f003-7a0da607448d
-- macOS:
-  1. Open the Network Preferences app
-  2. Select Wi-Fi from the list of network devices
-  3. Your local IP address will be listed below the "Deactivate Wi-Fi" button
-- Linux:
-  1. Follow the instructions for your distro. Most likely the `ip` command will work. Run `ip address show` in your terminal and find your wireless card in the list (probably the second entry). Look for the `inet` line and copy the first 4 groups of numbers for your IP before the `/24`. The line will probably look like this:
-  ```
-  inet 192.168.86.234/24 brd 192.168.86.255 scope global dynamic noprefixroute <wireless card name>
-  ```
-  In this case my local IP was 192.168.86.234
-
-Once you have identified your local IP address, you can access the website running on your computer by visiting `http://<local IP>:8443` replacing `<local IP>` (including the brackets) with the value you found using the instructions above in your mobile devices browser.
+You can also access it from other devices in your same network (like a mobile phone) for additional testing. See the [finding your local IP address](./README.md#finding-your-local-ip-address) section of the README for how to identify the local IP adress Nuxt is served on. Once you have identified your local IP address, you can access the website running on your computer by visiting `https://<local IP>:8443` replacing `<local IP>` (including the brackets) with the value you found using the instructions above in your mobile devices browser.
 
 Testing from multiple different devices as often as possible is a great way to contribute to Openverse's frontend development.
 
@@ -86,42 +68,12 @@ The Openverse frontend is a Nuxt SSR application. This means the initial Vue pag
 
 Please note that these are non-expert and non-exhaustive recommendations. Spend time reading the [WAI-ARIA spec](https://www.w3.org/TR/wai-aria/) and other web accessibility materials. Even just knowing about specific roles and interactions that exist and are meant to be developed in consistent ways is a good first step to learning what to look out for when testing.
 
-## Running the tests
+# Automated tests
 
-Openverse uses [Vue Testing Library](https://testing-library.com/docs/vue-testing-library/intro/) for unit testing, and [Playwright](https://playwright.dev) for End-to-End (e2e) testing.
+Openverse uses [Vue Testing Library](https://testing-library.com/docs/vue-testing-library/intro/) for unit testing with [Jest](https://jestjs.io/docs/), and [Playwright](https://playwright.dev) for end-to-end and visual-regression testing.
 
 There are also legacy unit tests written in [Vue Test Utils](https://vue-test-utils.vuejs.org/) but those are slated to be re-written using testing library.
 
-### E2e tests
+### Playwright tests
 
-Before running the e2e tests, install the browsers that Playwright needs:
-
-```
-pnpx install playwright
-```
-
-If you don't have the app running, start by running it in the dev mode:
-
-```
-pnpm run dev
-```
-
-After the dev server has finished building, run the e2e tests:
-
-```
-pnpm run test:e2e
-```
-
-When writing e2e tests, it can be helpful to use Playwright [codegen](https://playwright.dev/docs/cli#generate-code) to generate the tests by performing actions in the browser:
-
-```
-pnpm run generate-e2e-tests
-```
-
-This will open the app in a new browser window, and record any actions you take in a format that can be used in e2e tests.
-
-The CI uses [talkback](https://github.com/ijpiantanida/talkback) to ensure that the e2e tests are independent of the network status by recording the network responses in the `/test/tapes` folder. If you add new e2e tests, you may need to update the tapes by running
-
-```
-pnpm run update-tapes
-```
+Please see the [Playwright test README.md](./test/playwright/README.md) for instructions on running and maintaining the Playwright test suite.

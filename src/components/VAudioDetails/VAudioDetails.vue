@@ -30,7 +30,7 @@
           <div v-if="audio.category">
             <dt>{{ $t('audio-details.table.category') }}</dt>
             <dd>
-              {{ audio.category }}
+              {{ $t(`filters.audio-categories.${audio.category}`) }}
             </dd>
           </div>
           <div v-if="audio.sample_rate">
@@ -82,11 +82,9 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 
 import { PROVIDER } from '~/constants/store-modules'
-
-import getProviderName from '~/utils/get-provider-name'
 
 import VLink from '~/components/VLink.vue'
 import VAudioThumbnail from '~/components/VAudioThumbnail/VAudioThumbnail.vue'
@@ -98,24 +96,21 @@ export default {
   props: ['audio'],
   computed: {
     ...mapState(PROVIDER, ['audioProviders']),
+    ...mapGetters(PROVIDER, ['getProviderName']),
     providerName() {
-      return getProviderName(this.audioProviders, this.$props.audio.provider)
+      return this.getProviderName(this.$props.audio.provider)
     },
     sourceName() {
-      return getProviderName(this.audioProviders, this.$props.audio.source)
+      return this.getProviderName(this.$props.audio.source)
     },
   },
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 dl {
-  @apply grid gap-4;
+  @apply grid gap-4 lg:gap-5;
   grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-
-  @screen lg {
-    @apply gap-5;
-  }
 }
 dl div {
   display: flex;

@@ -1,3 +1,6 @@
+import path from 'path'
+import fs from 'fs'
+
 import pkg from './package.json'
 import locales from './src/locales/scripts/valid-locales.json'
 
@@ -8,6 +11,7 @@ import { sentryConfig } from './src/utils/sentry-config'
 import { env } from './src/utils/env'
 
 import type { NuxtConfig } from '@nuxt/types'
+import type { LocaleObject } from '@nuxtjs/i18n'
 
 /**
  * The default metadata for the site. Can be extended and/or overwritten per page. And even in components!
@@ -117,7 +121,15 @@ const config: NuxtConfig = {
   },
   srcDir: 'src/',
   modern: 'client',
-  server: { port: process.env.PORT || 8443 },
+  server: {
+    port: process.env.PORT || 8443,
+    https: process.env.LOCAL_SSL
+      ? {
+          key: fs.readFileSync(path.resolve(__dirname, 'localhost+1-key.pem')),
+          cert: fs.readFileSync(path.resolve(__dirname, 'localhost+1.pem')),
+        }
+      : undefined,
+  },
   router: {
     middleware: 'middleware',
   },
@@ -178,7 +190,7 @@ const config: NuxtConfig = {
         file: 'en.json',
       },
       ...(locales ?? []),
-    ].filter((l) => Boolean(l.iso)),
+    ].filter((l) => Boolean(l.iso)) as LocaleObject[],
     lazy: true,
     langDir: 'locales',
     defaultLocale: 'en',

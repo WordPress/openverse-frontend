@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import loadScript from '~/utils/load-script'
+import { loadScript } from '~/utils/load-script'
 import { log } from '~/utils/console'
 
 const sketchfabUrl =
@@ -69,7 +69,7 @@ export default {
   },
 }
 </script>
-<style lang="scss" scoped>
+<style scoped>
 .image {
   display: block;
 }

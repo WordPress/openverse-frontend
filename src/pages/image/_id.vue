@@ -75,11 +75,11 @@
 
 <script>
 import axios from 'axios'
-import { mapState } from 'vuex'
 
-import { MEDIA } from '~/constants/store-modules'
-import { FETCH_MEDIA_ITEM } from '~/constants/action-types'
+import { computed } from '@nuxtjs/composition-api'
+
 import { IMAGE } from '~/constants/media'
+import { useMediaStore } from '~/stores/media'
 
 import VButton from '~/components/VButton.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'
@@ -112,10 +112,14 @@ const VImageDetailsPage = {
       sketchFabfailure: false,
     }
   },
+  setup() {
+    const mediaStore = useMediaStore()
+    const image = computed(() => mediaStore.state.image)
+    return { image }
+  },
   computed: {
-    ...mapState(MEDIA, ['image']),
     sketchFabUid() {
-      if (this.image.source !== 'sketchfab' || this.sketchFabfailure) {
+      if (this.image?.source !== 'sketchfab' || this.sketchFabfailure) {
         return null
       }
       return this.image.url
@@ -123,10 +127,11 @@ const VImageDetailsPage = {
         .split('/')[0]
     },
   },
-  async asyncData({ app, error, route, store }) {
+  async asyncData({ app, error, route, $pinia }) {
     const imageId = route.params.id
+    const mediaStore = useMediaStore($pinia)
     try {
-      await store.dispatch(`${MEDIA}/${FETCH_MEDIA_ITEM}`, {
+      await mediaStore.fetchMediaItem({
         id: imageId,
         mediaType: IMAGE,
       })
@@ -160,9 +165,17 @@ const VImageDetailsPage = {
       if (this.image.filetype) {
         this.imageType = this.image.filetype
       } else {
-        axios.head(event.target.src).then((res) => {
-          this.imageType = res.headers['content-type']
-        })
+        axios
+          .head(event.target.src)
+          .then((res) => {
+            this.imageType = res.headers['content-type']
+          })
+          .catch(() => {
+            /**
+             * Do nothing. This avoid the console warning "Uncaught (in promise) Error:
+             * Network Error" in Firefox in development mode.
+             */
+          })
       }
       this.isLoadingFullImage = false
     },

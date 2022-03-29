@@ -1,4 +1,4 @@
-import decodeMediaData from '~/utils/decode-media-data'
+import { decodeMediaData } from '~/utils/decode-media-data'
 import { IMAGE } from '~/constants/media'
 
 describe('decodeImageData', () => {
@@ -16,6 +16,6 @@ describe('decodeImageData', () => {
       frontendMediaType: IMAGE,
     }
 
-    expect(decodeMediaData(data)).toEqual(expected)
+    expect(decodeMediaData(data, IMAGE)).toEqual(expected)
   })
 })
