@@ -58,8 +58,8 @@ import VIcon from '~/components/VIcon/VIcon.vue'
 
 import caretDown from '~/assets/icons/caret-down.svg'
 
-const DropdownButton = defineComponent({
-  name: 'DropdownButton',
+const VDropdownButton = defineComponent({
+  name: 'VDropdownButton',
   components: { VIcon },
   props: {
     dropdownAriaLabel: {
@@ -168,7 +168,7 @@ const DropdownButton = defineComponent({
   },
 })
 
-export default DropdownButton
+export default VDropdownButton
 </script>
 
 <style scoped>
