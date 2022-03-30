@@ -85,7 +85,7 @@ export default defineComponent({
      * like `const additional = [...content.types.filter(i => i.status === ADDITIONAL)]`.
      */
     if (isDev) {
-      content.additionalTypes = ['model']
+      content.additionalTypes = ['model_3d']
       contentTypeGroups.push({
         heading: 'additional',
         items: content.additionalTypes,

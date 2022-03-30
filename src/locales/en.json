@@ -377,7 +377,7 @@
       "image": "images",
       "audio": "audio",
       "video": "videos",
-      "model": "3D Models",
+      "model_3d": "3D Models",
       "all": "content",
       "collection-placeholder": "Search this collection",
       "button": "Search"
@@ -617,7 +617,7 @@
     "audio": "Audio",
     "all": "All content",
     "video": "Videos",
-    "model": "3D Models",
+    "model_3d": "3D Models",
     "label": "Type of content to search",
     "heading": "Content types",
     "additional": "Additional sources",
