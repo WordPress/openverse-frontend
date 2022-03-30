@@ -35,7 +35,6 @@
       </div>
     </div>
 
-    <h5>{{ errorHeader }}</h5>
 
     <VLoadMore
       v-if="canLoadMore && !fetchState.isFinished"
