@@ -38,11 +38,21 @@ import VIcon from '~/components/VIcon/VIcon.vue'
 
 import externalLinkIcon from '~/assets/icons/external-link.svg'
 
+/**
+ * This component renders a list of pre-populated links to additional sources
+ * when there are insufficient or zero search results.
+ */
 export default defineComponent({
   name: 'VMetaSourceList',
   components: { VButton, VIcon },
   props: {
+    /**
+     * the media type to use as the criteria for filtering additional sources
+     */
     type: { type: String as PropType<MediaType>, required: true },
+    /**
+     * the search query to pre-populate in the additional sources link
+     */
     query: { type: Object as PropType<ApiQueryParams>, required: true },
   },
   setup(props) {
