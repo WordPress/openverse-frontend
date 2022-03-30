@@ -25,9 +25,7 @@
         @click="toggleOpen"
         @keydown.space.prevent="toggleOpen"
       >
-        <svg class="h-2 w-4 pointer-events-none">
-          <use :href="`${icons.caretDown}#icon`" />
-        </svg>
+        <VIcon :icon-path="icons.caretDown" />
       </button>
     </div>
 
@@ -56,10 +54,13 @@ import { defineComponent } from '@nuxtjs/composition-api'
 
 import { keycodes } from '~/constants/key-codes'
 
+import VIcon from '~/components/VIcon/VIcon.vue'
+
 import caretDown from '~/assets/icons/caret-down.svg'
 
 const DropdownButton = defineComponent({
   name: 'DropdownButton',
+  components: { VIcon },
   props: {
     dropdownAriaLabel: {
       type: String,
