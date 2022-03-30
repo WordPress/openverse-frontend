@@ -51,7 +51,7 @@ localhost+1-key.pem # The private key file
 localhost+1.pem # The certificate file
 ```
 
-The easiest way to create these files is with a local development tool called [mkcrt](https://github.com/FiloSottile/mkcert). First make sure you have [mkcert installed](https://github.com/FiloSottile/mkcert#installation) and activated with `mkcert -install`. Then use `mkcert` to create a certificate for `localhost` and for the external IP address used by Nuxt's development process. That command looks like this:
+The easiest way to create these files is with a local development tool called [mkcert](https://github.com/FiloSottile/mkcert). First make sure you have [mkcert installed](https://github.com/FiloSottile/mkcert#installation) and activated with `mkcert -install`. Then use `mkcert` to create a certificate for `localhost` and for the external IP address used by Nuxt's development process. That command looks like this:
 
 ```shell
 mkcert localhost 192.168.50.119
