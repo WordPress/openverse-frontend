@@ -20,7 +20,9 @@
       <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
       <template #openverse>Openverse</template>
       <template #meta>
-        <VLink href="/meta-search">{{ $t('about.planning.meta') }}</VLink>
+        <VLink href="/additional-sources">{{
+          $t('about.planning.meta')
+        }}</VLink>
       </template>
       <template #search>
         <VLink href="https://github.com/wordpress/openverse-frontend/">{{

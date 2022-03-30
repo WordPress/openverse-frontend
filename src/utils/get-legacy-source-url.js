@@ -183,8 +183,8 @@ export const legacySourceMap = {
 /**
  * getLegacySourceUrl
  *
- * Return a valid url of search results for the provided meta search type
- * @param {('image'|'audio'|'video')} type The type of media our meta search is for
+ * Return a valid url of search results for the provided additional Sources type
+ * @param {('image'|'audio'|'video')} type The type of media our additional Sources is for
  *
  *  */
 const getLegacySourceUrl = (type) => (sourceName, search) => {
@@ -203,7 +203,9 @@ const getLegacySourceUrl = (type) => (sourceName, search) => {
 
   const getSourceUrlInfo = source[type]
   if (!getSourceUrlInfo) {
-    throw new Error(`${sourceName} does not offer meta search for ${type}`)
+    throw new Error(
+      `${sourceName} does not offer Additional Sources for ${type}`
+    )
   }
 
   const urlInfo = getSourceUrlInfo(search)

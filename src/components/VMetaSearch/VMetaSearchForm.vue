@@ -1,16 +1,16 @@
 <template>
   <section
     :key="type"
-    class="p-6 meta-search text-center mt-12"
-    data-testid="meta-search-form"
+    class="p-6 additional-sources text-center mt-12"
+    data-testid="additional-sources-form"
   >
     <header class="mb-10">
       <i18n
         v-if="!hasNoResults"
         :path="
           isSupported
-            ? 'meta-search.form.supported-title'
-            : 'meta-search.form.unsupported-title'
+            ? 'additional-sources.form.supported-title'
+            : 'additional-sources.form.unsupported-title'
         "
         tag="h4"
         class="b-header mb-2"
@@ -23,14 +23,14 @@
       </i18n>
       <i18n
         v-else
-        path="meta-search.form.no-results-title"
+        path="additional-sources.form.no-results-title"
         tag="h4"
         class="b-header mb-2"
       >
         <template #type>{{ type }}</template>
         <template #query>{{ query.q }}</template>
       </i18n>
-      <i18n path="meta-search.form.caption" tag="p">
+      <i18n path="additional-sources.form.caption" tag="p">
         <template #type>{{ type }}</template>
         <template #break>
           <br />
@@ -46,7 +46,7 @@
     />
 
     <p class="caption font-semibold max-w-3xl my-0 mx-auto">
-      {{ $t('meta-search.caption', { openverse: 'Openverse' }) }}
+      {{ $t('additional-sources.caption', { openverse: 'Openverse' }) }}
     </p>
   </section>
 </template>

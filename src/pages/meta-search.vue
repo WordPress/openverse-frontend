@@ -1,118 +1,128 @@
 <template>
   <VContentPage>
     <h1>
-      {{ $t('meta-search-page.title') }}
+      {{ $t('additional-sources-page.title') }}
     </h1>
 
-    <i18n path="meta-search-page.intro" tag="p">
+    <i18n path="additional-sources-page.intro" tag="p">
       <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
       <template #openverse>Openverse</template>
       <template #link>
-        <VLink href="/sources">{{ $t('meta-search-page.link') }}</VLink>
+        <VLink href="/sources">{{ $t('additional-sources-page.link') }}</VLink>
       </template>
     </i18n>
-    <p>{{ $t('meta-search-page.license', { openverse: 'Openverse' }) }}</p>
+    <p>
+      {{ $t('additional-sources-page.license', { openverse: 'Openverse' }) }}
+    </p>
     <h2>
-      {{ $t('meta-search-page.content') }}
+      {{ $t('additional-sources-page.content') }}
     </h2>
     <p>
-      {{ $t('meta-search-page.content-types', { openverse: 'Openverse' }) }}
+      {{
+        $t('additional-sources-page.content-types', { openverse: 'Openverse' })
+      }}
     </p>
 
     <h2>
-      {{ $t('meta-search-page.images.title') }}
+      {{ $t('additional-sources-page.images.title') }}
     </h2>
     <p>
-      {{ $t('meta-search-page.images.content', { openverse: 'Openverse' }) }}
+      {{
+        $t('additional-sources-page.images.content', { openverse: 'Openverse' })
+      }}
     </p>
     <div>
       <ol>
         <li>
-          <i18n path="meta-search-page.images.continue">
+          <i18n path="additional-sources-page.images.continue">
             <template #load-more>
               <strong>{{ $t('browse-page.load') }}</strong>
             </template>
           </i18n>
         </li>
         <li>
-          <i18n path="meta-search-page.images.not-finding">
+          <i18n path="additional-sources-page.images.not-finding">
             <template #not-finding>
               <strong>{{
-                $t('meta-search.form.supported-title', { type: ' ' })
+                $t('additional-sources.form.supported-title', { type: ' ' })
               }}</strong>
             </template>
           </i18n>
         </li>
       </ol>
     </div>
-    <i18n path="meta-search-page.images.info" tag="p">
+    <i18n path="additional-sources-page.images.info" tag="p">
       <template #use>
-        <strong>{{ $t('meta-search-page.use') }}</strong>
+        <strong>{{ $t('additional-sources-page.use') }}</strong>
       </template>
       <template #not-finding>
         <strong>{{
-          $t('meta-search.form.supported-title', { type: ' ' })
+          $t('additional-sources.form.supported-title', { type: ' ' })
         }}</strong>
       </template>
     </i18n>
     <figure>
       <img
-        :alt="$t('meta-search-page.images.demo-label', { type: ' ' })"
+        :alt="$t('additional-sources-page.images.demo-label', { type: ' ' })"
         src="~/assets/screenshots/supported.png"
         aria-hidden="true"
       />
     </figure>
 
     <h2>
-      {{ $t('meta-search-page.audio-video.title') }}
+      {{ $t('additional-sources-page.audio-video.title') }}
     </h2>
     <p>
       {{
-        $t('meta-search-page.audio-video.content', { openverse: 'Openverse' })
+        $t('additional-sources-page.audio-video.content', {
+          openverse: 'Openverse',
+        })
       }}
     </p>
-    <i18n path="meta-search-page.audio-video.filter" tag="p">
+    <i18n path="additional-sources-page.audio-video.filter" tag="p">
       <template #use>
-        <strong>{{ $t('meta-search-page.use') }}</strong>
+        <strong>{{ $t('additional-sources-page.use') }}</strong>
       </template>
     </i18n>
     <figure>
       <img
-        :alt="$t('meta-search-page.audio-video.demo-label', { type: ' ' })"
+        :alt="
+          $t('additional-sources-page.audio-video.demo-label', { type: ' ' })
+        "
         src="~/assets/screenshots/unsupported.png"
         aria-hidden="true"
       />
     </figure>
     <h2>
-      {{ $t('meta-search-page.new.title') }}
+      {{ $t('additional-sources-page.new.title') }}
     </h2>
-    <i18n path="meta-search-page.new.content" tag="p">
+    <i18n path="additional-sources-page.new.content" tag="p">
       <template #issue>
         <VLink
           aria-label="issue"
           href="https://github.com/WordPress/openverse-catalog/issues/new?assignees=&labels=%F0%9F%9A%A6+status%3A+awaiting+triage%2C%F0%9F%A7%B9+status%3A+ticket+work+required%2C%E2%98%81%EF%B8%8F+provider%3A+any&template=new_source_suggestion.yml&title=%3CSource+name+here%3E"
-          >{{ $t('meta-search-page.new.issue') }}</VLink
+          >{{ $t('additional-sources-page.new.issue') }}</VLink
         >
       </template>
       <template #email>
         <VLink aria-label="email" href="mailto:openverse@wordpress.org">{{
-          $t('meta-search-page.new.email')
+          $t('additional-sources-page.new.email')
         }}</VLink>
       </template>
     </i18n>
     <h2>
-      {{ $t('meta-search-page.why.title') }}
+      {{ $t('additional-sources-page.why.title') }}
     </h2>
-    <p>{{ $t('meta-search-page.why.content') }}</p>
+    <p>{{ $t('additional-sources-page.why.content') }}</p>
     <p>
-      {{ $t('meta-search-page.why.new', { openverse: 'Openverse' }) }}
+      {{ $t('additional-sources-page.why.new', { openverse: 'Openverse' }) }}
     </p>
-    <i18n path="meta-search-page.why.feedback-suggestions" tag="p">
+    <i18n path="additional-sources-page.why.feedback-suggestions" tag="p">
       <template #feedback>
         <VLink
-          :aria-label="$t('meta-search-page.why.aria-label')"
+          :aria-label="$t('additional-sources-page.why.aria-label')"
           href="/feedback"
-          >{{ $t('meta-search-page.why.feedback-link') }}</VLink
+          >{{ $t('additional-sources-page.why.feedback-link') }}</VLink
         >
       </template>
     </i18n>
@@ -130,7 +140,7 @@ export default defineComponent({
   components: { VContentPage, VLink },
   head() {
     return {
-      title: `${this.$t('meta-search-page.title')} | Openverse`,
+      title: `${this.$t('additional-sources-page.title')} | Openverse`,
     }
   },
 })
