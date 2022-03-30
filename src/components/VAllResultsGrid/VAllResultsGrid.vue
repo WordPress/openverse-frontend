@@ -35,7 +35,6 @@
       </div>
     </div>
 
-
     <VLoadMore
       v-if="canLoadMore && !fetchState.isFinished"
       class="mt-4"
