@@ -6,38 +6,23 @@
     type="radiogroup"
     class="z-10 md:w-[260px] max-w-full"
   >
-    <h4
-      :class="bordered ? 'ps-0' : 'ps-6'"
-      class="text-sr pt-6 pe-6 pb-4 uppercase font-semibold"
-    >
-      {{ $t('search-type.heading') }}
-    </h4>
-    <VSearchTypeItem
-      v-for="(item, idx) in content.types"
-      :key="item"
-      class="md:mb-1"
-      :item="item"
-      :item-id="idx"
-      :icon="content.icons[item]"
-      :use-links="useLinks"
-      :selected="item === activeItem"
-      @click="handleClick(item)"
-    />
     <div
-      v-if="content.additionalTypes && content.additionalTypes.length > 0"
-      class="mt-2"
+      v-for="(category, index) in contentTypeGroups"
+      :key="index"
       :class="{
-        'bg-dark-charcoal-06 border-t border-dark-charcoal-20': !bordered,
+        'mt-2': index > 0,
+        'bg-dark-charcoal-06 border-t border-dark-charcoal-20':
+          index > 0 && !bordered,
       }"
     >
       <h4
         :class="bordered ? 'ps-0' : 'ps-6'"
         class="text-sr pt-6 pe-6 pb-4 uppercase font-semibold"
       >
-        {{ $t('search-type.additional') }}
+        {{ $t(`search-type.${category.heading}`) }}
       </h4>
       <VSearchTypeItem
-        v-for="(item, idx) in content.additionalTypes"
+        v-for="(item, idx) in category.items"
         :key="item"
         class="md:mb-1"
         :item="item"
@@ -86,6 +71,14 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const content = useSearchType()
+
+    const contentTypeGroups = [
+      {
+        heading: 'heading',
+        items: content.types,
+      },
+    ]
+
     /**
      * @todo This is for testing purposes only! We may want a different abstraction here;
      * For example having all content types under `content.types` and making them filterable,
@@ -93,6 +86,10 @@ export default defineComponent({
      */
     if (isDev) {
       content.additionalTypes = ['model']
+      contentTypeGroups.push({
+        heading: 'additional',
+        items: content.additionalTypes,
+      })
     }
 
     const bordered = computed(() => props.size === 'small')
@@ -101,6 +98,7 @@ export default defineComponent({
     }
     return {
       content,
+      contentTypeGroups,
       bordered,
       handleClick,
     }
