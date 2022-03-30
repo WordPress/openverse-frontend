@@ -186,7 +186,7 @@ Note the bespoke `py-[0.86rem]` class used below is necessary
 to match the height of the small Audio play/pause button.
 
 This is currently the only application of the DropdownButton
-component (via the DownloadButton component) so as a stop-gap
+component (via the VDownloadButton component) so as a stop-gap
 solution to get the redesign out the door in a timely manner it
 is necessary.
 

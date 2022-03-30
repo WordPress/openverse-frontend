@@ -70,7 +70,7 @@ import VLink from '~/components/VLink.vue'
 const LS_DOWNLOAD_FORMAT_EXTENSION_KEY = 'openverse:download-format-extension'
 
 export default {
-  name: 'DownloadButton',
+  name: 'VDownloadButton',
   components: { VDropdownButton, VLink },
   props: {
     formats: {
