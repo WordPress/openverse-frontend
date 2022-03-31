@@ -44,7 +44,7 @@ export const changeContentType = async (
   // Ensure that the asynchronous navigation is finished before next steps
   await Promise.all([
     page.waitForNavigation(),
-    page.locator(`a:has-text("${to}")`).click(),
+    page.locator(`#content-switcher-popover a:has-text("${to}")`).click(),
   ])
 }
 
