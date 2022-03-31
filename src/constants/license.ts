@@ -23,3 +23,26 @@ export type License = typeof ALL_LICENSES[number]
 export const LICENSE_VERSIONS = ['', '1.0', '2.0', '2.5', '3.0', '4.0'] as const
 
 export type LicenseVersion = typeof LICENSE_VERSIONS[number]
+
+/**
+ * Each of these elements can be constructed into an SVG in Creative Commons'
+ * press-kit assets using the following URL.
+ * ```
+ * https://mirrors.creativecommons.org/presskit/icons/{licenseElement}.svg
+ * ```
+ */
+const LICENSE_ELEMENTS = [
+  'cc',
+  'by',
+  'nc',
+  'sa',
+  'nd',
+  'pd',
+  'zero',
+  'sampling',
+  'sampling-plus',
+  'remix',
+  'share',
+] as const
+
+export type LicenseElement = typeof LICENSE_ELEMENTS[number]

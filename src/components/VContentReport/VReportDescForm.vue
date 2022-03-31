@@ -23,7 +23,7 @@
 <script>
 import { computed, defineComponent } from '@nuxtjs/composition-api'
 
-import { reasons } from '~/constants/content-report'
+import { reasons, OTHER } from '~/constants/content-report'
 
 export default defineComponent({
   name: 'VReportDescForm',
@@ -44,7 +44,7 @@ export default defineComponent({
      */
     reason: {
       type: String,
-      validator: (val) => Object.values(reasons).includes(val),
+      validator: (val) => reasons.includes(val),
     },
   },
   setup(props, { emit }) {
@@ -53,7 +53,7 @@ export default defineComponent({
       set: (val) => emit('input', val),
     })
 
-    const isRequired = computed(() => props.reason === reasons.OTHER)
+    const isRequired = computed(() => props.reason === OTHER)
 
     return {
       isRequired,

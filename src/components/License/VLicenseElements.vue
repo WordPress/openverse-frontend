@@ -1,7 +1,7 @@
 <template>
   <ul>
     <li
-      v-for="element in elements"
+      v-for="element in elementNames"
       :key="element"
       class="flex items-center gap-3 mb-2 text-sm md:text-base"
     >
@@ -10,7 +10,7 @@
         :size="isSmall ? 5 : 6"
         :icon-path="icons[element]"
       />
-      <span v-if="elements.length > 1" class="sr-only">{{
+      <span v-if="elementNames.length > 1" class="sr-only">{{
         element.toUpperCase()
       }}</span>
       <p :class="{ 'text-sm': isSmall }">
@@ -23,21 +23,26 @@
 <script>
 import { computed, defineComponent } from '@nuxtjs/composition-api'
 
+import { getElements } from '~/utils/license'
+
 import VIcon from '~/components/VIcon/VIcon.vue'
 
 import by from '~/assets/licenses/by.svg'
-import cc0 from '~/assets/licenses/cc0.svg'
+import zero from '~/assets/licenses/zero.svg'
 import nc from '~/assets/licenses/nc.svg'
 import nd from '~/assets/licenses/nd.svg'
-import pdm from '~/assets/licenses/pdm.svg'
+import pd from '~/assets/licenses/pd.svg'
 import sa from '~/assets/licenses/sa.svg'
-import sampling from '~/assets/licenses/sampling.svg'
-import samplingPlus from '~/assets/licenses/sampling-plus.svg'
+import samplingPlus from '~/assets/licenses/sampling.plus.svg'
 
 export default defineComponent({
   name: 'VLicenseElements',
   components: { VIcon },
   props: {
+    /**
+     * the slug of the license
+     * @values
+     */
     license: {
       type: String,
       required: true,
@@ -49,7 +54,9 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const elements = computed(() => props.license.split('-'))
+    const elementNames = computed(() =>
+      getElements(props.license).filter((icon) => icon !== 'cc')
+    )
 
     const isSmall = computed(() => props.size === 'small')
 
@@ -58,13 +65,13 @@ export default defineComponent({
         by,
         nc,
         nd,
+        pd,
         sa,
-        cc0,
-        pdm,
-        sampling,
-        'sampling+': samplingPlus,
+        zero,
+        'sampling-plus': samplingPlus,
       },
-      elements,
+
+      elementNames,
       isSmall,
     }
   },
