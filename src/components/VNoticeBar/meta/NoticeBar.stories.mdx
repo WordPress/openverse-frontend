@@ -10,10 +10,12 @@ import NoticeBar from '~/components/VNoticeBar/VNoticeBar'
 
 <Meta title="Components/Notice bar" component={NoticeBar} />
 
-export const Template = (args, { argTypes }) => ({
-  template: `<NoticeBar>{{ text }}</NoticeBar>`,
+export const Template = (args) => ({
+  template: `<NoticeBar>{{ args.text }}</NoticeBar>`,
   components: { NoticeBar },
-  props: Object.keys(argTypes),
+  setup() {
+    return { args }
+  },
 })
 
 # Notice bar
