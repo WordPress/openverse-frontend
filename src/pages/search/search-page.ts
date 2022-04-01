@@ -1,11 +1,13 @@
 import type { FetchState } from '~/composables/use-fetch-state'
 import type { Media } from '~/models/media'
 
+import type { SupportedMediaType } from '~/constants/media'
+
 import type { ExtractPropTypes, PropType } from '@nuxtjs/composition-api'
 
 export const propTypes = {
   resultItems: {
-    type: Object as PropType<Media[]>,
+    type: Object as PropType<Record<SupportedMediaType, Media[]>>,
     required: true,
   },
   fetchState: {

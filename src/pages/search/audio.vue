@@ -74,7 +74,9 @@ const AudioSearch = defineComponent({
       return i18n.t('browse-page.fetching-error', { type })
     })
 
-    const { canLoadMore, onLoadMore } = useLoadMore(props)
+    const { canLoadMore, onLoadMore } = useLoadMore(
+      /** @type {SearchPageProps} */ (props)
+    )
 
     return {
       results,

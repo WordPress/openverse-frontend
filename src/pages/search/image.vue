@@ -23,7 +23,9 @@ const ImageSearch = defineComponent({
     useMeta({ title: `${props.searchTerm} | Openverse` })
 
     const results = computed(() => props.resultItems.image)
-    const { canLoadMore, onLoadMore } = useLoadMore(props)
+    const { canLoadMore, onLoadMore } = useLoadMore(
+      /** @type {SearchPageProps} */ (props)
+    )
     return { canLoadMore, onLoadMore, results }
   },
   head: {},

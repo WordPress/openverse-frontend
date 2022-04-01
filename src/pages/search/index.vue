@@ -17,7 +17,9 @@ const SearchIndex = defineComponent({
   setup(props) {
     useMeta({ title: `${props.searchTerm} | Openverse` })
 
-    const { canLoadMore, onLoadMore } = useLoadMore(props)
+    const { canLoadMore, onLoadMore } = useLoadMore(
+      /** @type {SearchPageProps} */ (props)
+    )
     return { canLoadMore, onLoadMore }
   },
   head: {
