@@ -25,7 +25,7 @@ specifiers:
   '@tailwindcss/line-clamp': ^0.3.1
   '@tailwindcss/typography': ^0.5.2
   '@testing-library/jest-dom': ^5.16.1
-  '@testing-library/user-event': ^13.2.1
+  '@testing-library/user-event': ^14.0.4
   '@testing-library/vue': ^6.5.1
   '@types/express-useragent': ^1.0.2
   '@types/jest': ^26.0.22
@@ -150,7 +150,7 @@ devDependencies:
   '@pinia/testing': 0.0.9_pinia@2.0.11
   '@playwright/test': 1.17.1
   '@testing-library/jest-dom': 5.16.1
-  '@testing-library/user-event': 13.5.0
+  '@testing-library/user-event': 14.0.4
   '@testing-library/vue': 6.5.1
   '@types/express-useragent': 1.0.2
   '@types/jest': 26.0.24
@@ -5061,13 +5061,11 @@ packages:
       redent: 3.0.0
     dev: true
 
-  /@testing-library/user-event/13.5.0:
-    resolution: {integrity: sha512-5Kwtbo3Y/NowpkbRuSepbyMFkZmHgD+vPzYB/RJ4oxt5Gj/avFFBYjhw27cqSVPVw/3a67NK1PbiIr9k4Gwmdg==}
-    engines: {node: '>=10', npm: '>=6'}
+  /@testing-library/user-event/14.0.4:
+    resolution: {integrity: sha512-VBZe5lcUsmrQyOwIFvqOxLBoaTw1/Qy4Ek+VgmFYs719bs2SxUp42vbsb7ATlQDkHdj4OIQlucfpwxe5WoG1jA==}
+    engines: {node: '>=12', npm: '>=6'}
     peerDependencies:
       '@testing-library/dom': '>=7.21.4'
-    dependencies:
-      '@babel/runtime': 7.17.2
     dev: true
 
   /@testing-library/vue/6.5.1:
