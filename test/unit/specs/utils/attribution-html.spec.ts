@@ -52,6 +52,13 @@ describe('getAttribution', () => {
     expect(document.getElementsByTagName('a').length === 0)
   })
 
+  it('renders the correct text in plain-text mode', () => {
+    const attrText = getAttribution(mediaItem, i18n, { isPlaintext: true })
+    const expectation =
+      '"Title" by Creator is marked with Public Domain Mark 1.0. To view the terms, visit https://license/url?ref=openverse.'
+    expect(attrText).toEqual(expectation)
+  })
+
   it('does not add license element icons in no-icons mode', () => {
     document.body.innerHTML = getAttribution(mediaItem, i18n)
     expect(document.getElementsByTagName('img').length !== 0)
