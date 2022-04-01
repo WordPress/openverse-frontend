@@ -19,7 +19,7 @@ specifiers:
   '@nuxtjs/style-resources': ^1.0.0
   '@nuxtjs/svg': ^0.3.0
   '@pinia/nuxt': ^0.1.8
-  '@pinia/testing': ^0.0.9
+  '@pinia/testing': 0.0.11
   '@playwright/test': ^1.16.2
   '@popperjs/core': ^2.11.2
   '@tailwindcss/line-clamp': ^0.3.1
@@ -147,7 +147,7 @@ devDependencies:
   '@nuxtjs/eslint-module': 3.0.2_eslint@8.12.0
   '@nuxtjs/storybook': 4.3.0_eslint@8.12.0+typescript@4.6.2
   '@nuxtjs/style-resources': 1.2.1
-  '@pinia/testing': 0.0.9_pinia@2.0.13
+  '@pinia/testing': 0.0.11_pinia@2.0.13
   '@playwright/test': 1.17.1
   '@testing-library/jest-dom': 5.16.1
   '@testing-library/user-event': 13.5.0
@@ -3164,13 +3164,13 @@ packages:
       - vue
     dev: false
 
-  /@pinia/testing/0.0.9_pinia@2.0.13:
-    resolution: {integrity: sha512-JG+th+BENR89/7vpRxafDApU56AECZ9m+THd8IKsgomyRXaiRRdwt0BLbjStTkksnoNZfZBCz5NszykyNxz/sQ==}
+  /@pinia/testing/0.0.11_pinia@2.0.13:
+    resolution: {integrity: sha512-iJxUHV0Uj1jS7zvN5oVtSZ2BRI4PlG1xbqPkMeJasPtbqsnoxBmkwputDzqX5Dd1I1z9gEfyYOeE2duK3xGWpQ==}
     peerDependencies:
-      pinia: ~2.0.7
+      pinia: '>=2.0.13'
     dependencies:
       pinia: 2.0.13_typescript@4.6.2
-      vue-demi: 0.12.1
+      vue-demi: 0.12.5
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
@@ -13715,6 +13715,7 @@ packages:
       '@vue/devtools-api': 6.1.4
       typescript: 4.6.2
       vue-demi: 0.12.1
+    dev: false
 
   /pirates/4.0.4:
     resolution: {integrity: sha512-ZIrVPH+A52Dw84R0L3/VS9Op04PuQ2SEoJL6bkshmiTic/HldyW9Tf7oH5mhJZBK7NmDx27vSMrYEXPXclpDKw==}
@@ -17797,6 +17798,20 @@ packages:
     peerDependenciesMeta:
       '@vue/composition-api':
         optional: true
+    dev: false
+
+  /vue-demi/0.12.5:
+    resolution: {integrity: sha512-BREuTgTYlUr0zw0EZn3hnhC3I6gPWv+Kwh4MCih6QcAeaTlaIX0DwOVN0wHej7hSvDPecz4jygy/idsgKfW58Q==}
+    engines: {node: '>=12'}
+    hasBin: true
+    requiresBuild: true
+    peerDependencies:
+      '@vue/composition-api': ^1.0.0-rc.1
+      vue: ^3.0.0-0 || ^2.6.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+    dev: true
 
   /vue-docgen-api/4.44.18:
     resolution: {integrity: sha512-zZLa2TqCid97tIk98A30GnP5N46SfAsJW5p3z1PDYME0UTZWl6nKLcgQLtGfzXYT4bz+dV11cc6FumdGW0QTlA==}
