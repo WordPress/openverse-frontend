@@ -39,7 +39,7 @@ import VLoadMore from '~/components/VLoadMore.vue'
 
 import VGridSkeleton from '~/components/VSkeleton/VGridSkeleton.vue'
 
-import { propTypes } from './search-page.types'
+import { propTypes } from './search-page'
 
 const AudioSearch = defineComponent({
   name: 'AudioSearch',

@@ -5,7 +5,7 @@
 <script>
 import { useMeta, defineComponent } from '@nuxtjs/composition-api'
 
-import { propTypes } from '~/pages/search/search-page.types'
+import { propTypes } from '~/pages/search/search-page'
 import { useLoadMore } from '~/composables/use-load-more'
 
 import VAllResultsGrid from '~/components/VAllResultsGrid/VAllResultsGrid.vue'

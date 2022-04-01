@@ -10,7 +10,7 @@
 <script>
 import { computed, defineComponent, useMeta } from '@nuxtjs/composition-api'
 
-import { propTypes } from '~/pages/search/search-page.types'
+import { propTypes } from '~/pages/search/search-page'
 import { useLoadMore } from '~/composables/use-load-more'
 
 import VImageGrid from '~/components/VImageGrid/VImageGrid.vue'
