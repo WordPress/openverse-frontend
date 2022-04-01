@@ -75,7 +75,7 @@ specifiers:
   node-html-parser: ^5.1.0
   npm-run-all: ^4.1.5
   nuxt: ^2.15.4
-  pinia: ^2.0.11
+  pinia: ^2.0.13
   postcss: ^8.4.5
   postcss-focus-visible: ^6.0.3
   prettier: ^2.2.1
@@ -105,7 +105,7 @@ dependencies:
   '@nuxtjs/sentry': 5.1.6
   '@nuxtjs/sitemap': 2.4.0
   '@nuxtjs/svg': 0.3.0
-  '@pinia/nuxt': 0.1.8_pinia@2.0.11
+  '@pinia/nuxt': 0.1.8_pinia@2.0.13
   '@popperjs/core': 2.11.2
   '@tailwindcss/line-clamp': 0.3.1_tailwindcss@3.0.9
   '@tailwindcss/typography': 0.5.2_tailwindcss@3.0.9
@@ -131,7 +131,7 @@ dependencies:
   lodash.throttle: 4.1.1
   node-html-parser: 5.1.0
   nuxt: 2.15.8_typescript@4.6.2
-  pinia: 2.0.11_typescript@4.6.2
+  pinia: 2.0.13_typescript@4.6.2
   postcss-focus-visible: 6.0.3_postcss@8.4.5
   reakit-utils: 0.15.2
   seeded-rand: 2.0.1
@@ -147,7 +147,7 @@ devDependencies:
   '@nuxtjs/eslint-module': 3.0.2_eslint@8.12.0
   '@nuxtjs/storybook': 4.3.0_eslint@8.12.0+typescript@4.6.2
   '@nuxtjs/style-resources': 1.2.1
-  '@pinia/testing': 0.0.9_pinia@2.0.11
+  '@pinia/testing': 0.0.9_pinia@2.0.13
   '@playwright/test': 1.17.1
   '@testing-library/jest-dom': 5.16.1
   '@testing-library/user-event': 13.5.0
@@ -3152,24 +3152,24 @@ packages:
       stack-trace: 0.0.10
     dev: false
 
-  /@pinia/nuxt/0.1.8_pinia@2.0.11:
+  /@pinia/nuxt/0.1.8_pinia@2.0.13:
     resolution: {integrity: sha512-+M1GH/4XQdooOulPL7aYzli6UE1R5rWJtgcPhx2/97yYRLhKZvuIT33OauUCjYZ+tQVs8lyKfzt6S2agqzcmWg==}
     peerDependencies:
       pinia: ~2.0.9
     dependencies:
-      pinia: 2.0.11_typescript@4.6.2
+      pinia: 2.0.13_typescript@4.6.2
       vue-demi: 0.12.1
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
     dev: false
 
-  /@pinia/testing/0.0.9_pinia@2.0.11:
+  /@pinia/testing/0.0.9_pinia@2.0.13:
     resolution: {integrity: sha512-JG+th+BENR89/7vpRxafDApU56AECZ9m+THd8IKsgomyRXaiRRdwt0BLbjStTkksnoNZfZBCz5NszykyNxz/sQ==}
     peerDependencies:
       pinia: ~2.0.7
     dependencies:
-      pinia: 2.0.11_typescript@4.6.2
+      pinia: 2.0.13_typescript@4.6.2
       vue-demi: 0.12.1
     transitivePeerDependencies:
       - '@vue/composition-api'
@@ -6067,7 +6067,7 @@ packages:
       source-map: 0.6.1
       vue-template-es2015-compiler: 1.9.1
     optionalDependencies:
-      prettier: 2.6.0
+      prettier: 2.6.1
 
   /@vue/composition-api/1.4.1:
     resolution: {integrity: sha512-ZTat9ru/rwecveRnFzlO2mduOBpGfnBdXn+WtBcFLV9UsL/D+6nX47RWuLiVdNxNDX0qphGZRC+JDjwt+YTnRA==}
@@ -6077,8 +6077,8 @@ packages:
       tslib: 2.3.1
     dev: false
 
-  /@vue/devtools-api/6.0.12:
-    resolution: {integrity: sha512-iO/4FIezHKXhiDBdKySCvJVh8/mZPxHpiQrTy+PXVqJZgpTPTdHy4q8GXulaY+UKEagdkBb0onxNQZ0LNiqVhw==}
+  /@vue/devtools-api/6.1.4:
+    resolution: {integrity: sha512-IiA0SvDrJEgXvVxjNkHPFfDx6SXw0b/TUkqMcDZWNg9fnCAHbTpoo59YfJ9QLFkwa3raau5vSlRVzMSLDnfdtQ==}
     dev: false
 
   /@vue/reactivity-transform/3.2.31:
@@ -12071,7 +12071,7 @@ packages:
   /jsonfile/4.0.0:
     resolution: {integrity: sha1-h3Gq4HmbZAdrdmQPygWPnBDjPss=}
     optionalDependencies:
-      graceful-fs: 4.2.9
+      graceful-fs: 4.2.8
     dev: false
 
   /jsonfile/6.1.0:
@@ -12079,7 +12079,7 @@ packages:
     dependencies:
       universalify: 2.0.0
     optionalDependencies:
-      graceful-fs: 4.2.9
+      graceful-fs: 4.2.8
 
   /jstransformer/1.0.0:
     resolution: {integrity: sha1-7Yvwkh4vPx7U1cGkT2hwntJHIsM=}
@@ -13700,8 +13700,8 @@ packages:
     engines: {node: '>=10'}
     dev: false
 
-  /pinia/2.0.11_typescript@4.6.2:
-    resolution: {integrity: sha512-JzcmnMqu28PNWOjDgEDK6fTrIzX8eQZKPPKvu/fpHdpXARUj1xeVdFi3YFIMOWswqaBd589cpmAMdSSTryI9iw==}
+  /pinia/2.0.13_typescript@4.6.2:
+    resolution: {integrity: sha512-B7rSqm1xNpwcPMnqns8/gVBfbbi7lWTByzS6aPZ4JOXSJD4Y531rZHDCoYWBwLyHY/8hWnXljgiXp6rRyrofcw==}
     peerDependencies:
       '@vue/composition-api': ^1.4.0
       typescript: '>=4.4.4'
@@ -13712,10 +13712,9 @@ packages:
       typescript:
         optional: true
     dependencies:
-      '@vue/devtools-api': 6.0.12
+      '@vue/devtools-api': 6.1.4
       typescript: 4.6.2
       vue-demi: 0.12.1
-    dev: false
 
   /pirates/4.0.4:
     resolution: {integrity: sha512-ZIrVPH+A52Dw84R0L3/VS9Op04PuQ2SEoJL6bkshmiTic/HldyW9Tf7oH5mhJZBK7NmDx27vSMrYEXPXclpDKw==}
@@ -14705,6 +14704,14 @@ packages:
     engines: {node: '>=10.13.0'}
     hasBin: true
     requiresBuild: true
+    dev: true
+
+  /prettier/2.6.1:
+    resolution: {integrity: sha512-8UVbTBYGwN37Bs9LERmxCPjdvPxlEowx2urIL6urHzdb3SDq4B/Z6xLFCblrSnE4iKWcS6ziJ3aOYrc1kz/E2A==}
+    engines: {node: '>=10.13.0'}
+    hasBin: true
+    requiresBuild: true
+    optional: true
 
   /pretty-bytes/5.6.0:
     resolution: {integrity: sha512-FFw039TmrBqFK8ma/7OL3sDz/VytdtJr044/QUJtH0wK9lb9jLq9tJyIxUwtQJHwar2BqtiA4iCWSwo9JLkzFg==}
