@@ -6,13 +6,13 @@ import {
   Story,
 } from '@storybook/addon-docs'
 
-import NoticeBar from '~/components/VNoticeBar/VNoticeBar'
+import VNoticeBar from '~/components/VNoticeBar/VNoticeBar'
 
-<Meta title="Components/Notice bar" component={NoticeBar} />
+<Meta title="Components/VNoticeBar" component={VNoticeBar} />
 
 export const Template = (args) => ({
-  template: `<NoticeBar>{{ args.text }}</NoticeBar>`,
-  components: { NoticeBar },
+  template: `<VNoticeBar>{{ args.text }}</VNoticeBar>`,
+  components: { VNoticeBar },
   setup() {
     return { args }
   },
@@ -20,9 +20,9 @@ export const Template = (args) => ({
 
 # Notice bar
 
-<Description of={NoticeBar} />
+<Description of={VNoticeBar} />
 
-<ArgsTable of={NoticeBar} />
+<ArgsTable of={VNoticeBar} />
 
 <Canvas>
   <Story
