@@ -19,13 +19,13 @@ specifiers:
   '@nuxtjs/style-resources': ^1.0.0
   '@nuxtjs/svg': ^0.3.0
   '@pinia/nuxt': ^0.1.8
-  '@pinia/testing': ^0.0.9
+  '@pinia/testing': ^0.0.11
   '@playwright/test': ^1.16.2
   '@popperjs/core': ^2.11.2
   '@tailwindcss/line-clamp': ^0.3.1
   '@tailwindcss/typography': ^0.5.2
   '@testing-library/jest-dom': ^5.16.1
-  '@testing-library/user-event': ^14.0.4
+  '@testing-library/user-event': ^13.5.0
   '@testing-library/vue': ^5.8.2
   '@types/express-useragent': ^1.0.2
   '@types/jest': ^26.0.22
@@ -147,10 +147,10 @@ devDependencies:
   '@nuxtjs/eslint-module': 3.0.2_eslint@8.12.0
   '@nuxtjs/storybook': 4.3.0_eslint@8.12.0+typescript@4.6.2
   '@nuxtjs/style-resources': 1.2.1
-  '@pinia/testing': 0.0.9_pinia@2.0.11
+  '@pinia/testing': 0.0.11_pinia@2.0.11
   '@playwright/test': 1.17.1
   '@testing-library/jest-dom': 5.16.1
-  '@testing-library/user-event': 14.0.4
+  '@testing-library/user-event': 13.5.0
   '@testing-library/vue': 5.8.2
   '@types/express-useragent': 1.0.2
   '@types/jest': 26.0.24
@@ -3016,10 +3016,10 @@ packages:
       - vue
     dev: false
 
-  /@pinia/testing/0.0.9_pinia@2.0.11:
-    resolution: {integrity: sha512-JG+th+BENR89/7vpRxafDApU56AECZ9m+THd8IKsgomyRXaiRRdwt0BLbjStTkksnoNZfZBCz5NszykyNxz/sQ==}
+  /@pinia/testing/0.0.11_pinia@2.0.11:
+    resolution: {integrity: sha512-iJxUHV0Uj1jS7zvN5oVtSZ2BRI4PlG1xbqPkMeJasPtbqsnoxBmkwputDzqX5Dd1I1z9gEfyYOeE2duK3xGWpQ==}
     peerDependencies:
-      pinia: ~2.0.7
+      pinia: '>=2.0.13'
     dependencies:
       pinia: 2.0.11_typescript@4.6.2
       vue-demi: 0.12.1
@@ -5061,11 +5061,13 @@ packages:
       redent: 3.0.0
     dev: true
 
-  /@testing-library/user-event/14.0.4:
-    resolution: {integrity: sha512-VBZe5lcUsmrQyOwIFvqOxLBoaTw1/Qy4Ek+VgmFYs719bs2SxUp42vbsb7ATlQDkHdj4OIQlucfpwxe5WoG1jA==}
-    engines: {node: '>=12', npm: '>=6'}
+  /@testing-library/user-event/13.5.0:
+    resolution: {integrity: sha512-5Kwtbo3Y/NowpkbRuSepbyMFkZmHgD+vPzYB/RJ4oxt5Gj/avFFBYjhw27cqSVPVw/3a67NK1PbiIr9k4Gwmdg==}
+    engines: {node: '>=10', npm: '>=6'}
     peerDependencies:
       '@testing-library/dom': '>=7.21.4'
+    dependencies:
+      '@babel/runtime': 7.17.2
     dev: true
 
   /@testing-library/vue/5.8.2:
