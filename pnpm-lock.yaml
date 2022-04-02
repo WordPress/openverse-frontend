@@ -34,7 +34,7 @@ specifiers:
   '@typescript-eslint/eslint-plugin': ^5.15.0
   '@typescript-eslint/parser': ^5.15.0
   '@vue/runtime-dom': ^3.2.31
-  '@vue/test-utils': ^1.1.3
+  '@vue/test-utils': 1.1.3
   '@wordpress/is-shallow-equal': ^4.3.1
   autoprefixer: ^10.4.0
   axios: ^0.26.1
@@ -159,7 +159,7 @@ devDependencies:
   '@typescript-eslint/eslint-plugin': 5.15.0_c8b324c35d270b9e6d84e3592e846620
   '@typescript-eslint/parser': 5.15.0_eslint@8.12.0+typescript@4.6.2
   '@vue/runtime-dom': 3.2.31
-  '@vue/test-utils': 1.3.0
+  '@vue/test-utils': 1.1.3
   autoprefixer: 10.4.0_postcss@8.4.5
   babel-jest: 26.6.3
   eslint: 8.12.0
@@ -5966,8 +5966,8 @@ packages:
     resolution: {integrity: sha512-ymN2pj6zEjiKJZbrf98UM2pfDd6F2H7ksKw7NDt/ZZ1fh5Ei39X5tABugtT03ZRlWd9imccoK0hE8hpjpU7irQ==}
     dev: true
 
-  /@vue/test-utils/1.3.0:
-    resolution: {integrity: sha512-Xk2Xiyj2k5dFb8eYUKkcN9PzqZSppTlx7LaQWBbdA8tqh3jHr/KHX2/YLhNFc/xwDrgeLybqd+4ZCPJSGPIqeA==}
+  /@vue/test-utils/1.1.3:
+    resolution: {integrity: sha512-BAY1Cwe9JpkJseimC295EW3YlAmgIJI9OPkg2FSP62+PHZooB0B+wceDi9TYyU57oqzL0yLbcP73JKFpKiLc9A==}
     peerDependencies:
       vue: 2.x
       vue-template-compiler: ^2.x
