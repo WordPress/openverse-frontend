@@ -9,9 +9,9 @@ import type { Plugin } from '@nuxt/types'
  * route change. However, it does not run on the initial render.
  * So, for the initial render this plugin runs when router is ready.
  */
-const urlChangePlugin: Plugin = ({ app }) => {
+const urlChangePlugin: Plugin = ({ app, $pinia }): void => {
   app.router?.onReady(() => {
-    const isEmbedded = useNavStore(app.$pinia).isEmbedded
+    const isEmbedded = useNavStore($pinia).isEmbedded
     if (process.client && isEmbedded && app.router) {
       sendWindowMessage({
         type: 'urlChange',
