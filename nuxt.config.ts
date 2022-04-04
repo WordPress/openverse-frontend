@@ -175,7 +175,7 @@ const config: NuxtConfig = {
     '@nuxtjs/sitemap',
   ],
   serverMiddleware: [
-    { path: '/healthcheck', handler: '~/server-middleware/healthcheck.js' },
+    { path: '/healthcheck', handler: '~/server-middleware/healthcheck' },
   ],
   i18n: {
     locales: [
