@@ -84,7 +84,7 @@ specifiers:
   sass: ^1.49.9
   sass-loader: ^10.2.1
   seeded-rand: ^2.0.1
-  tailwindcss: ^3.0.7
+  tailwindcss: ^3.0.23
   tailwindcss-rtl: ^0.9.0
   talkback: ^3.0.1
   ts-node: ^10.7.0
@@ -107,8 +107,8 @@ dependencies:
   '@nuxtjs/svg': 0.3.0
   '@pinia/nuxt': 0.1.8_pinia@2.0.11
   '@popperjs/core': 2.11.2
-  '@tailwindcss/line-clamp': 0.3.1_tailwindcss@3.0.9
-  '@tailwindcss/typography': 0.5.2_tailwindcss@3.0.9
+  '@tailwindcss/line-clamp': 0.3.1_tailwindcss@3.0.23
+  '@tailwindcss/typography': 0.5.2_tailwindcss@3.0.23
   '@wordpress/is-shallow-equal': 4.3.1
   axios: 0.26.1
   axios-mock-adapter: 1.20.0_axios@0.26.1
@@ -183,7 +183,7 @@ devDependencies:
   rimraf: 3.0.2
   sass: 1.49.9
   sass-loader: 10.2.1_sass@1.49.9
-  tailwindcss: 3.0.9_d2c8de327a2555118e3e6b1630bff678
+  tailwindcss: 3.0.23_cf30258013438338cbfd2cf01b956a45
   tailwindcss-rtl: 0.9.0
   talkback: 3.0.1
   ts-node: 10.7.0_typescript@4.6.2
@@ -5127,15 +5127,15 @@ packages:
       - webpack-command
     dev: true
 
-  /@tailwindcss/line-clamp/0.3.1_tailwindcss@3.0.9:
+  /@tailwindcss/line-clamp/0.3.1_tailwindcss@3.0.23:
     resolution: {integrity: sha512-pNr0T8LAc3TUx/gxCfQZRe9NB2dPEo/cedPHzUGIPxqDMhgjwNm6jYxww4W5l0zAsAddxr+XfZcqttGiFDgrGg==}
     peerDependencies:
       tailwindcss: '>=2.0.0 || >=3.0.0 || >=3.0.0-alpha.1'
     dependencies:
-      tailwindcss: 3.0.9_d2c8de327a2555118e3e6b1630bff678
+      tailwindcss: 3.0.23_cf30258013438338cbfd2cf01b956a45
     dev: false
 
-  /@tailwindcss/typography/0.5.2_tailwindcss@3.0.9:
+  /@tailwindcss/typography/0.5.2_tailwindcss@3.0.23:
     resolution: {integrity: sha512-coq8DBABRPFcVhVIk6IbKyyHUt7YTEC/C992tatFB+yEx5WGBQrCgsSFjxHUr8AWXphWckadVJbominEduYBqw==}
     peerDependencies:
       tailwindcss: '>=3.0.0 || >= 3.0.0-alpha.1 || insiders'
@@ -5143,7 +5143,7 @@ packages:
       lodash.castarray: 4.4.0
       lodash.isplainobject: 4.0.6
       lodash.merge: 4.6.2
-      tailwindcss: 3.0.9_d2c8de327a2555118e3e6b1630bff678
+      tailwindcss: 3.0.23_cf30258013438338cbfd2cf01b956a45
     dev: false
 
   /@testing-library/dom/7.31.2:
@@ -6033,7 +6033,7 @@ packages:
       source-map: 0.6.1
       vue-template-es2015-compiler: 1.9.1
     optionalDependencies:
-      prettier: 2.6.0
+      prettier: 2.6.2
 
   /@vue/composition-api/1.4.1:
     resolution: {integrity: sha512-ZTat9ru/rwecveRnFzlO2mduOBpGfnBdXn+WtBcFLV9UsL/D+6nX47RWuLiVdNxNDX0qphGZRC+JDjwt+YTnRA==}
@@ -12051,7 +12051,7 @@ packages:
   /jsonfile/4.0.0:
     resolution: {integrity: sha1-h3Gq4HmbZAdrdmQPygWPnBDjPss=}
     optionalDependencies:
-      graceful-fs: 4.2.9
+      graceful-fs: 4.2.8
     dev: false
 
   /jsonfile/6.1.0:
@@ -12059,7 +12059,7 @@ packages:
     dependencies:
       universalify: 2.0.0
     optionalDependencies:
-      graceful-fs: 4.2.9
+      graceful-fs: 4.2.8
 
   /jstransformer/1.0.0:
     resolution: {integrity: sha1-7Yvwkh4vPx7U1cGkT2hwntJHIsM=}
@@ -14036,9 +14036,11 @@ packages:
       postcss: 7.0.39
     dev: false
 
-  /postcss-js/3.0.3:
-    resolution: {integrity: sha512-gWnoWQXKFw65Hk/mi2+WTQTHdPD5UJdDXZmX073EY/B3BWnYjO4F4t0VneTCnCGQ5E5GsCdMkzPaTXwl3r5dJw==}
-    engines: {node: '>=10.0'}
+  /postcss-js/4.0.0_postcss@8.4.12:
+    resolution: {integrity: sha512-77QESFBwgX4irogGVPgQ5s07vLvFqWr228qZY+w6lW599cRlK/HmnlivnnVUxkjHnCu4J16PDMHcH+e+2HbvTQ==}
+    engines: {node: ^12 || ^14 || >= 16}
+    peerDependencies:
+      postcss: ^8.3.3
     dependencies:
       camelcase-css: 2.0.1
       postcss: 8.4.12
@@ -14674,6 +14676,14 @@ packages:
     engines: {node: '>=10.13.0'}
     hasBin: true
     requiresBuild: true
+    dev: true
+
+  /prettier/2.6.2:
+    resolution: {integrity: sha512-PkUpF+qoXTqhOeWL9fu7As8LXsIUZ1WYaJiY/a7McAQzxjk82OF0tibkFXVCDImZtWxbvojFjerkiLb0/q8mew==}
+    engines: {node: '>=10.13.0'}
+    hasBin: true
+    requiresBuild: true
+    optional: true
 
   /pretty-bytes/5.6.0:
     resolution: {integrity: sha512-FFw039TmrBqFK8ma/7OL3sDz/VytdtJr044/QUJtH0wK9lb9jLq9tJyIxUwtQJHwar2BqtiA4iCWSwo9JLkzFg==}
@@ -16765,13 +16775,12 @@ packages:
     resolution: {integrity: sha512-y7yC8QXjluDBEFMSX33tV6xMYrf0B3sa+tOB5JSQb6/G6laBU313a+Z+qxu55M1Qyn8tDMttjomsA8IsJD+k+w==}
     dev: true
 
-  /tailwindcss/3.0.9_d2c8de327a2555118e3e6b1630bff678:
-    resolution: {integrity: sha512-X8TVifxDWfiNXInOeBofTteXAtZ5f0HnLs/uV4jDQNShc33Jb7qjYbk4VwI365rWAzcqYTks+9kesf3xH7Y35A==}
+  /tailwindcss/3.0.23_cf30258013438338cbfd2cf01b956a45:
+    resolution: {integrity: sha512-+OZOV9ubyQ6oI2BXEhzw4HrqvgcARY38xv3zKcjnWtMIZstEsXdI9xftd1iB7+RbOnj2HOEzkA0OyB5BaSxPQA==}
     engines: {node: '>=12.13.0'}
     hasBin: true
     peerDependencies:
       autoprefixer: ^10.0.2
-      postcss: ^8.0.9
     dependencies:
       arg: 5.0.1
       autoprefixer: 10.4.0_postcss@8.4.12
@@ -16788,7 +16797,7 @@ packages:
       normalize-path: 3.0.0
       object-hash: 2.2.0
       postcss: 8.4.12
-      postcss-js: 3.0.3
+      postcss-js: 4.0.0_postcss@8.4.12
       postcss-load-config: 3.1.0_ts-node@10.7.0
       postcss-nested: 5.0.6_postcss@8.4.12
       postcss-selector-parser: 6.0.9
