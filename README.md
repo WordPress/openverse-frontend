@@ -93,21 +93,7 @@ The standalone mode which has a large header with logo and a footer, can be enab
 
 ### Running tests
 
-You can run the unit tests by executing:
-
-```bash
-pnpm test:unit
-```
-
-To run the e2e tests, run:
-
-```bash
-pnpm test:playwright
-```
-
-You might have to run `npx playwright install` to get the browsers installed if e2e tests fail.
-
-When writing e2e tests, you can also use `pnpm test:playwright:gen` to generate tests and test selectors.
+Refer to the [`TESTING_GUIDELINES.md` file](./TESTING_GUIDELINES.md) for instructions on how to run tests.
 
 ### localhost tunneling
 
