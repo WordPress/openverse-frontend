@@ -27,11 +27,8 @@ jobs:
 
       - uses: ./.github/actions/setup-node-env
 
-      - name: ESLint
+      - name: Lint with ESLint and Prettier
         run: pnpm lint
-
-      - name: Prettier
-        run: pnpm format
 
   i18n:
     name: Check translation files
