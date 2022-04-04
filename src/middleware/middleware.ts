@@ -2,6 +2,8 @@ import { sendWindowMessage } from '~/utils/send-message'
 
 import { useNavStore } from '~/stores/nav'
 
+import type { Context } from '@nuxt/types'
+
 /**
  * In embedded mode, the app sends its url
  * to the outer window to improve the user experience.
@@ -11,11 +13,11 @@ import { useNavStore } from '~/stores/nav'
  * add `?embedded=false` to the end of the URL.
  *
  * Messages sent to the outer window have the following format:
- * {type: <event type>, value: <event value>}.
+ * `{type: <event type>, value: <event value>}`.
  * Currently, one event type is used:
  * - `urlChange` sends the relative path of the URL on every URL change.
  */
-export default function ({ query, route, $pinia }) {
+export default function ({ query, route, $pinia }: Context) {
   const navStore = useNavStore($pinia)
 
   if ('embedded' in query) {
