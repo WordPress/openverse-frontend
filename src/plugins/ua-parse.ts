@@ -1,12 +1,6 @@
-import useragent, { Details } from 'express-useragent'
+import useragent from 'express-useragent'
 
 import type { Plugin } from '@nuxt/types'
-
-declare module '@nuxt/types' {
-  interface Context {
-    $ua: Details | null
-  }
-}
 
 const uaParsePlugin: Plugin = (context, inject) => {
   let userAgent
