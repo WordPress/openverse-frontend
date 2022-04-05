@@ -41,9 +41,9 @@ type SearchFunctions = {
 }
 
 /**
- * , which contains a display name, whether the
- * source supports use filters and a mapping of media type to a URL builder
- * function that leads to the search results for that media type.
+ * Describes an additional source builder, which contains a display name,
+ * whether the source supports use filters and a mapping of media type to a URL
+ * builder function that leads to the search results for that media type.
  */
 interface AdditionalSourceBuilder extends SearchFunctions {
   name: string
