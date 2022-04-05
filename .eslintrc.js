@@ -161,6 +161,20 @@ module.exports = {
       },
     ],
     'import/extensions': ['error', 'always', { js: 'never', ts: 'never' }],
+    '@intlify/vue-i18n/no-raw-text': [
+      'error',
+      {
+        ignoreText: [
+          // Brand names that should not be translated
+          'Common Crawl',
+          'Creative Commons',
+          'Europeana',
+          'Flickr',
+          'Openverse',
+          'WordPress',
+        ],
+      },
+    ],
   },
   overrides: [
     {
