@@ -22,18 +22,18 @@ export default defineComponent({
   props: {
     isFetching: {
       type: Boolean,
-      default: true,
+      required: true,
     },
   },
   setup(props, { emit }) {
     const { i18n } = useContext()
 
     const buttonLabel = computed(() => {
-      return i18n.t('browse-page.load')
+      return i18n.t('browse-page.load').toString()
     })
 
     const onLoadMore = () => {
-      emit('onLoadMore')
+      emit('load-more')
     }
 
     return {

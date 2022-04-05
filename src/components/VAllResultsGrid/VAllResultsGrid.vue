@@ -36,11 +36,11 @@
     </div>
 
     <VLoadMore
-      v-if="canLoadMore && !fetchState.isFinished"
+      v-if="canLoadMore"
       class="mt-4"
       :is-fetching="resultsLoading"
       data-testid="load-more"
-      @onLoadMore="onLoadMore"
+      @load-more="onLoadMore"
     />
   </div>
 </template>

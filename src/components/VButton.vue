@@ -94,6 +94,7 @@ const VButton = defineComponent({
           'action-menu-muted',
           'plain',
           'plain-dangerous',
+          'full',
         ].includes(v),
     },
     /**

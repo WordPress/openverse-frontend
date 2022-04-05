@@ -12,6 +12,7 @@ import { computed, defineComponent, useMeta } from '@nuxtjs/composition-api'
 
 import { propTypes } from '~/pages/search/search-page.types'
 import { useLoadMore } from '~/composables/use-load-more'
+import { IMAGE } from '~/constants/media'
 
 import VImageGrid from '~/components/VImageGrid/VImageGrid.vue'
 
@@ -23,7 +24,7 @@ const ImageSearch = defineComponent({
     useMeta({ title: `${props.searchTerm} | Openverse` })
 
     const results = computed(() => props.resultItems.image)
-    const { canLoadMore, onLoadMore } = useLoadMore(props)
+    const { canLoadMore, onLoadMore } = useLoadMore(props, IMAGE)
     return { canLoadMore, onLoadMore, results }
   },
   head: {},

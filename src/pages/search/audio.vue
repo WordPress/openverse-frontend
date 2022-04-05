@@ -13,10 +13,10 @@
       layout="row"
     />
     <VLoadMore
-      v-if="canLoadMore && !fetchState.isFinished"
+      v-if="canLoadMore"
       :is-fetching="fetchState.isFetching"
       data-testid="load-more"
-      @onLoadMore="onLoadMore"
+      @load-more="onLoadMore"
     />
   </section>
 </template>
@@ -33,10 +33,10 @@ import { useLoadMore } from '~/composables/use-load-more'
 import { isMinScreen } from '~/composables/use-media-query'
 import { useBrowserIsMobile } from '~/composables/use-browser-detection'
 
+import { AUDIO } from '~/constants/media'
+
 import VAudioTrack from '~/components/VAudioTrack/VAudioTrack.vue'
-
 import VLoadMore from '~/components/VLoadMore.vue'
-
 import VGridSkeleton from '~/components/VSkeleton/VGridSkeleton.vue'
 
 import { propTypes } from './search-page.types'
@@ -74,7 +74,7 @@ const AudioSearch = defineComponent({
       return i18n.t('browse-page.fetching-error', { type })
     })
 
-    const { canLoadMore, onLoadMore } = useLoadMore(props)
+    const { canLoadMore, onLoadMore } = useLoadMore(props, AUDIO)
 
     return {
       results,

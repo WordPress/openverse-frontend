@@ -12,10 +12,10 @@
     </h5>
     <footer class="pt-4">
       <VLoadMore
-        v-if="canLoadMore && !fetchState.isFinished"
+        v-if="canLoadMore"
         :is-fetching="fetchState.isFetching"
         data-testid="load-more"
-        @onLoadMore="onLoadMore"
+        @load-more="onLoadMore"
       />
     </footer>
   </section>
@@ -66,13 +66,13 @@ export default {
 </script>
 
 <style scoped>
-.image-grid:after {
-  /**
+/**
    * This keeps the last item in the results from expanding to fill
-   * all avaliable space, which can result in a final row with a
+   * all available space, which can result in a final row with a
    * single, 100% wide image.
    */
-  @screen md {
+@screen md {
+  .image-grid::after {
     content: '';
     flex-grow: 999999999;
   }
