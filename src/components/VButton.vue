@@ -22,18 +22,25 @@
   </Component>
 </template>
 
-<script>
+<script lang="ts">
 import {
   defineComponent,
   ref,
   watch,
   toRefs,
   computed,
+  PropType,
 } from '@nuxtjs/composition-api'
 
 import { warn } from '~/utils/console'
 
 import VLink from '~/components/VLink.vue'
+import {
+  ButtonType,
+  buttonTypes,
+  ButtonVariant,
+  buttonVariants,
+} from '~/components/Button.Types'
 
 /**
  * A button component that behaves just like a regular HTML `button` element
@@ -65,11 +72,9 @@ const VButton = defineComponent({
      * @default 'button'
      */
     as: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<'VLink' | 'button'>} */ (
-        String
-      ),
+      type: String as PropType<'VLink' | 'button'>,
       default: 'button',
-      validate: (v) => ['VLink', 'button'].includes(v),
+      validate: (v: string) => ['VLink', 'button'].includes(v),
     },
     /**
      * The variant of the button.
@@ -80,21 +85,9 @@ const VButton = defineComponent({
      * @default 'primary'
      */
     variant: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<'primary' | 'secondary' | 'tertiary' | 'action-menu' | 'action-menu-muted' | 'plain' | 'plain-dangerous'>} */ (
-        String
-      ),
+      type: String as PropType<ButtonVariant>,
       default: 'primary',
-      validate: (v) =>
-        [
-          'primary',
-          'secondary',
-          'tertiary',
-          'action-menu',
-          'action-menu-secondary',
-          'action-menu-muted',
-          'plain',
-          'plain-dangerous',
-        ].includes(v),
+      validate: (v: ButtonVariant) => buttonVariants.includes(v),
     },
     /**
      * Allows for programmatically setting the pressed state of a button,
@@ -113,11 +106,10 @@ const VButton = defineComponent({
      * @default 'medium'
      */
     size: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<'large' | 'medium' | 'small' | 'disabled'>} */ (
-        String
-      ),
+      type: String as PropType<'large' | 'medium' | 'small' | 'disabled'>,
       default: 'medium',
-      validate: (v) => ['large', 'medium', 'small', 'disabled'].includes(v),
+      validate: (v: string) =>
+        ['large', 'medium', 'small', 'disabled'].includes(v),
     },
     /**
      * Whether the button is disabled. Used alone this will only
@@ -149,23 +141,19 @@ const VButton = defineComponent({
      * @default 'button'
      */
     type: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<'buton' | 'submit' | 'reset'>} */ (
-        String
-      ),
+      type: String as PropType<ButtonType>,
       default: 'button',
-      validate: (v) => ['button', 'submit', 'reset'].includes(v),
+      validate: (v: ButtonType) => buttonTypes.includes(v),
     },
   },
-  /**
-   * @param {Props} props
-   * @param {import('@nuxtjs/composition-api').SetupContext}
-   */
   setup(props, { attrs }) {
     const propsRef = toRefs(props)
-    const disabledAttributeRef = ref(propsRef.disabled.value)
-    const ariaDisabledRef = ref()
-    const trulyDisabledRef = ref()
-    const typeRef = ref(propsRef.type.value)
+    const disabledAttributeRef = ref<boolean | undefined>(
+      propsRef.disabled.value
+    )
+    const ariaDisabledRef = ref<boolean>()
+    const trulyDisabledRef = ref<boolean>()
+    const typeRef = ref<ButtonType | undefined>(propsRef.type.value)
     const supportsDisabledAttributeRef = ref(true)
 
     const isActive = computed(() => {
