@@ -6,6 +6,7 @@ import cc0 from '~/assets/licenses/cc0.svg'
 import pdm from '~/assets/licenses/pdm.svg'
 import sampling from '~/assets/licenses/sampling.svg'
 import samplingPlus from '~/assets/licenses/sampling-plus.svg'
+import ccLogo from '~/assets/licenses/cc-logo.svg'
 
 export const CC_LICENSES = [
   'by',
@@ -34,6 +35,7 @@ export const LICENSE_VERSIONS = ['', '1.0', '2.0', '2.5', '3.0', '4.0'] as const
 export type LicenseVersion = typeof LICENSE_VERSIONS[number]
 
 export const licenseIcons = {
+  ccLogo,
   by,
   nc,
   nd,

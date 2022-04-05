@@ -24,14 +24,9 @@ import {
   useContext,
 } from '@nuxtjs/composition-api'
 
-import {
-  ALL_LICENSES,
-  License,
-  LicenseElement,
-  licenseIcons,
-} from '~/constants/license'
+import { ALL_LICENSES, License, licenseIcons } from '~/constants/license'
 
-import { isCc, getFullLicenseName } from '~/utils/license'
+import { isCc, getFullLicenseName, licenseToElements } from '~/utils/license'
 
 import VIcon from '~/components/VIcon/VIcon.vue'
 
@@ -75,11 +70,11 @@ export default defineComponent({
     const isCcLicense = computed(() => isCc(props.license))
 
     const icons = computed(() => {
-      let iconList: (LicenseElement | 'ccLogo')[] = props.license.split(
-        /[-\s]/
-      ) as LicenseElement[]
-      if (isCcLicense.value) iconList = ['ccLogo', ...iconList]
-      return iconList
+      if (isCcLicense.value) {
+        return ['ccLogo', ...licenseToElements(props.license)] as const
+      } else {
+        return [...licenseToElements(props.license)] as const
+      }
     })
 
     const licenseName = computed(() => {

@@ -18,12 +18,11 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
 
-import VIcon from '~/components/VIcon/VIcon.vue'
+import VIcon, { IconProps } from '~/components/VIcon/VIcon.vue'
 import VButton from '~/components/VButton.vue'
-import type { ButtonType } from '~/components/Button.Types'
-import type { IconProps } from '~/components/Icon.Types'
+import type { ButtonType } from '~/components/VButton.vue'
 
-const SIZE_MAP = {
+const SIZE_MAP = Object.freeze({
   tiny: { icon: ['w-6', 'h-6'], button: ['w-6', 'h-6'] },
   small: { icon: ['w-6', 'h-6'], button: ['w-10', 'h-10'] },
   'search-small': {
@@ -38,7 +37,7 @@ const SIZE_MAP = {
   },
   medium: { icon: ['w-8', 'h-8'], button: ['w-14', 'h-14'] },
   large: { icon: ['w-12', 'h-12'], button: ['w-20', 'h-20'] },
-} as const
+} as const)
 type Size = keyof typeof SIZE_MAP
 
 export default defineComponent({

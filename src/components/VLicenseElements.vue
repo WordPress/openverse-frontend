@@ -23,8 +23,9 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
 
-import type { License, LicenseElement } from '~/constants/license'
+import type { License } from '~/constants/license'
 import { licenseIcons } from '~/constants/license'
+import { licenseToElements } from '~/utils/license'
 
 import VIcon from '~/components/VIcon/VIcon.vue'
 
@@ -43,9 +44,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const elements = computed(() => {
-      return props.license.split('-') as LicenseElement[]
-    })
+    const elements = computed(() => licenseToElements(props.license))
 
     const isSmall = computed(() => props.size === 'small')
 

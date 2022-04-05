@@ -35,13 +35,21 @@ import {
 import { warn } from '~/utils/console'
 
 import VLink from '~/components/VLink.vue'
-import {
-  ButtonType,
-  buttonTypes,
-  ButtonVariant,
-  buttonVariants,
-} from '~/components/Button.Types'
 
+export const buttonVariants = [
+  'primary',
+  'secondary',
+  'tertiary',
+  'action-menu',
+  'action-menu-secondary',
+  'action-menu-muted',
+  'plain',
+  'plain-dangerous',
+  'full',
+] as const
+export type ButtonVariant = typeof buttonVariants[number]
+export const buttonTypes = ['button', 'submit', 'reset'] as const
+export type ButtonType = typeof buttonTypes[number]
 /**
  * A button component that behaves just like a regular HTML `button` element
  * aside from pre-applied styles based on the passed in variant.
