@@ -178,7 +178,7 @@ const VButton = defineComponent({
     })
 
     const isPlainDangerous = computed(() => {
-      return propsRef.variant === 'plain-dangerous'
+      return propsRef.variant.value === 'plain-dangerous'
     })
 
     watch(
@@ -305,7 +305,7 @@ a.button {
 }
 
 .full {
-  @apply w-full font-semibold bg-dark-charcoal-06 focus-visible:ring focus-visible:ring-pink hover:bg-dark-charcoal-40 hover:text-white;
+  @apply w-full font-semibold bg-dark-charcoal-06 hover:bg-dark-charcoal-40 hover:text-white;
 }
 
 .full-pressed {
