@@ -169,6 +169,12 @@ module.exports = {
         'tsdoc/syntax': 'warn',
       },
     },
+    {
+      files: ['*.spec.js'],
+      rules: {
+        '@intlify/vue-i18n/no-raw-text': ['off'],
+      },
+    },
   ],
   settings: {
     'vue-i18n': {
