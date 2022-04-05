@@ -1,6 +1,5 @@
 <template>
   <VButton
-    class="focus-visible:ring focus-visible:ring-pink focus-visible:ring-offset-0"
     size="large"
     variant="full"
     type="button"
