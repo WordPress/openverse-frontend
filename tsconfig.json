@@ -43,7 +43,7 @@
     "src/components/VLoadMore.vue",
     "src/components/VIcon/VIcon.vue",
     "src/components/VIconButton/VIconButton.vue",
-    "src/components/License/VLicense.vue",
+    "src/components/VLicense/VLicense.vue",
     "src/composables/types.js",
     "src/composables/use-event-listener-outside.js",
     "src/composables/use-active-audio.js",
