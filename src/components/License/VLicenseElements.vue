@@ -25,6 +25,8 @@ import { computed, defineComponent } from '@nuxtjs/composition-api'
 
 import { getElements } from '~/utils/license'
 
+import { ALL_LICENSES } from '~/constants/license'
+
 import VIcon from '~/components/VIcon/VIcon.vue'
 
 import by from '~/assets/licenses/by.svg'
@@ -41,12 +43,16 @@ export default defineComponent({
   props: {
     /**
      * the slug of the license
-     * @values
+     * @values ALL_LICENSES
      */
     license: {
       type: String,
       required: true,
+      validator: (val) => ALL_LICENSES.includes(val),
     },
+    /**
+     * the size of the icons and text
+     */
     size: {
       type: String,
       default: 'big',
