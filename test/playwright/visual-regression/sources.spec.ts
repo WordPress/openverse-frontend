@@ -11,7 +11,8 @@ test.describe('sources page snapshots', () => {
 
     breakpoints.describeEvery(({ expectSnapshot }) => {
       test('top', async ({ page }) => {
-        await expectSnapshot('sources-ltr', page)
+        await removeHiddenOverflow(page)
+        await expectSnapshot('sources-ltr', page, { fullPage: true })
       })
     })
   })
