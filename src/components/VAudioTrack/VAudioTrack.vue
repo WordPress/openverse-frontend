@@ -1,5 +1,6 @@
 <template>
-  <div
+  <Component
+    :is="isBoxed ? 'VLink' : 'div'"
     class="audio-track group"
     :aria-label="$t('audio-track.aria-label')"
     role="region"
@@ -34,7 +35,7 @@
         />
       </template>
     </Component>
-  </div>
+  </Component>
 </template>
 
 <script>
@@ -61,6 +62,7 @@ import VFullLayout from '~/components/VAudioTrack/layouts/VFullLayout.vue'
 import VRowLayout from '~/components/VAudioTrack/layouts/VRowLayout.vue'
 import VBoxLayout from '~/components/VAudioTrack/layouts/VBoxLayout.vue'
 import VGlobalLayout from '~/components/VAudioTrack/layouts/VGlobalLayout.vue'
+import VLink from '~/components/VLink.vue'
 
 const propTypes = {
   /**
@@ -111,6 +113,7 @@ export default defineComponent({
   components: {
     VPlayPause,
     VWaveform,
+    VLink,
 
     // Layouts
     VFullLayout,
@@ -385,7 +388,7 @@ export default defineComponent({
     const layoutBasedProps = computed(() => {
       if (!isBoxed.value) return {}
       return {
-        tabindex: isBoxed.value ? 0 : -1,
+        href: `/audio/${props.audio.id}`,
         class:
           'block focus:bg-white focus:border-tx focus:ring-[3px] focus:ring-pink focus:ring-offset-[3px] focus:outline-none rounded-sm overflow-hidden cursor-pointer',
       }
@@ -421,6 +424,7 @@ export default defineComponent({
       layoutComponent,
       _size,
 
+      isBoxed,
       layoutBasedProps,
       layoutBasedListeners,
 
