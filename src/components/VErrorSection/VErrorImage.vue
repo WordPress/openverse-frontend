@@ -1,67 +1,43 @@
 <template>
   <figure class="error-image">
-    <img
-      :src="image.src"
-      :alt="$t(image.alt).toString()"
-      :title="$t(image.alt).toString()"
-    />
+    <img :src="image.src" :alt="$t(image.alt)" :title="$t(image.alt)" />
     <!-- Disable reason: We control the attribution HTML generation so this is safe and will not lead to XSS attacks -->
     <!-- eslint-disable-next-line vue/no-v-html -->
     <figcaption class="attribution" v-html="image.attribution" />
   </figure>
 </template>
 
-<script lang="ts">
-import {
-  computed,
-  defineComponent,
-  PropType,
-  useContext,
-} from '@nuxtjs/composition-api'
+<script>
+import { computed } from '@nuxtjs/composition-api'
 
-import type { License, LicenseVersion } from '~/constants/license'
-import { ErrorCode, errorCodes } from '~/constants/errors'
-import { AttributableMedia, getAttribution } from '~/utils/attribution-html'
+import { errorCodes } from '~/constants/errors'
+import { getAttributionMarkup } from '~/utils/attribution-html'
 
 import imageInfo from '~/assets/error_images/image_info.json'
 
-interface ErrorImage extends AttributableMedia {
-  src: string
-  alt: string
-  attribution?: string
-}
-
 /**
- * Displays a sad image to convey the negative outcome such as absence of
- * results or a server error.
+ * Displays a sad image to convey the absence of results for a search term.
  */
-export default defineComponent({
+export default {
   name: 'VErrorImage',
   props: {
-    /**
-     * the code of the error, used to identify and render the appropriate image
-     */
     errorCode: {
-      type: String as PropType<ErrorCode>,
+      type: String,
       required: true,
-      validator: (val: ErrorCode) => errorCodes.includes(val),
+      validator: (val) => errorCodes.includes(val),
     },
   },
   setup(props) {
-    const { i18n } = useContext()
-
     const images = Object.fromEntries(
       imageInfo.errors.map((errorItem) => {
         let image = errorItem.image
-        const errorImage: ErrorImage = {
+        image = {
           ...image,
           src: require(`~/assets/error_images/${image.file}.jpg`),
           alt: `error-images.${image.id}`,
-          license: image.license as License,
-          license_version: image.license_version as LicenseVersion,
+          attribution: getAttributionMarkup(image),
         }
-        errorImage.attribution = getAttribution(errorImage, i18n)
-        return [errorItem.error, errorImage]
+        return [errorItem.error, image]
       })
     )
     const image = computed(() => images[props.errorCode])
@@ -70,7 +46,7 @@ export default defineComponent({
       image,
     }
   },
-})
+}
 </script>
 
 <style scoped>
@@ -79,8 +55,5 @@ export default defineComponent({
 }
 ::v-deep a {
   @apply text-current underline;
-}
-::v-deep img {
-  @apply opacity-70; /* to match the text color */
 }
 </style>
