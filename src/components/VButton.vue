@@ -8,6 +8,7 @@
       $style[variant],
       isActive && $style[`${variant}-pressed`],
       $style[`size-${size}`],
+      isPlainDangerous ? '' : 'focus-visible:ring focus-visible:ring-pink',
     ]"
     :aria-pressed="pressed"
     :aria-disabled="ariaDisabledRef"
@@ -36,7 +37,11 @@ import { warn } from '~/utils/console'
 
 import VLink from '~/components/VLink.vue'
 
-export const buttonVariants = [
+const buttonForms = ['VLink', 'button'] as const
+
+type ButtonForm = typeof buttonForms[number]
+
+const buttonVariants = [
   'primary',
   'secondary',
   'tertiary',
@@ -47,9 +52,17 @@ export const buttonVariants = [
   'plain-dangerous',
   'full',
 ] as const
-export type ButtonVariant = typeof buttonVariants[number]
-export const buttonTypes = ['button', 'submit', 'reset'] as const
+
+type ButtonVariant = typeof buttonVariants[number]
+
+const buttonSizes = ['large', 'medium', 'small', 'disabled'] as const
+
+type ButtonSize = typeof buttonSizes[number]
+
+const buttonTypes = ['button', 'submit', 'reset'] as const
+
 export type ButtonType = typeof buttonTypes[number]
+
 /**
  * A button component that behaves just like a regular HTML `button` element
  * aside from pre-applied styles based on the passed in variant.
@@ -80,9 +93,9 @@ const VButton = defineComponent({
      * @default 'button'
      */
     as: {
-      type: String as PropType<'VLink' | 'button'>,
+      type: String as PropType<ButtonForm>,
       default: 'button',
-      validate: (v: string) => ['VLink', 'button'].includes(v),
+      validate: (val: ButtonForm) => buttonForms.includes(val),
     },
     /**
      * The variant of the button.
@@ -114,10 +127,9 @@ const VButton = defineComponent({
      * @default 'medium'
      */
     size: {
-      type: String as PropType<'large' | 'medium' | 'small' | 'disabled'>,
+      type: String as PropType<ButtonSize>,
       default: 'medium',
-      validate: (v: string) =>
-        ['large', 'medium', 'small', 'disabled'].includes(v),
+      validate: (val: ButtonSize) => buttonSizes.includes(val),
     },
     /**
      * Whether the button is disabled. Used alone this will only
@@ -171,6 +183,11 @@ const VButton = defineComponent({
         attrs['aria-expanded']
       )
     })
+
+    const isPlainDangerous = computed(() => {
+      return propsRef.variant.value === 'plain-dangerous'
+    })
+
     watch(
       [propsRef.disabled, propsRef.focusableWhenDisabled],
       ([disabled, focusableWhenDisabled]) => {
@@ -216,6 +233,7 @@ const VButton = defineComponent({
       ariaDisabledRef,
       typeRef,
       isActive,
+      isPlainDangerous,
     }
   },
 })
@@ -224,12 +242,6 @@ export default VButton
 </script>
 
 <style module>
-/**
- * Classnames in this file are duplicated to increase specificity.
- * This is currently necessary due to a bug with the order of CSS files
- * that only appears in development.
- */
-
 .button[disabled='disabled'],
 .button[aria-disabled='true'] {
   @apply opacity-50;
@@ -252,7 +264,7 @@ a.button {
 }
 
 .primary {
-  @apply bg-pink text-white focus-visible:ring focus-visible:ring-pink hover:bg-dark-pink hover:text-white;
+  @apply bg-pink text-white  hover:bg-dark-pink hover:text-white;
 }
 
 .primary-pressed {
@@ -260,7 +272,7 @@ a.button {
 }
 
 .secondary {
-  @apply bg-dark-charcoal text-white font-bold focus-visible:ring focus-visible:ring-pink hover:bg-dark-charcoal-80 hover:text-white;
+  @apply bg-dark-charcoal text-white font-bold hover:bg-dark-charcoal-80 hover:text-white;
 }
 
 .secondary-pressed {
@@ -268,7 +280,7 @@ a.button {
 }
 
 .tertiary {
-  @apply bg-white text-dark-charcoal border border-dark-charcoal-20 focus-visible:border-tx focus-visible:ring focus-visible:ring-pink ring-offset-0;
+  @apply bg-white text-dark-charcoal border border-dark-charcoal-20 focus-visible:border-tx ring-offset-0;
 }
 
 .tertiary-pressed {
@@ -276,11 +288,11 @@ a.button {
 }
 
 .action-menu {
-  @apply bg-white text-dark-charcoal border border-tx hover:border-dark-charcoal-20 focus-visible:ring focus-visible:ring-pink;
+  @apply bg-white text-dark-charcoal border border-tx hover:border-dark-charcoal-20;
 }
 
 .action-menu-secondary {
-  @apply bg-white text-dark-charcoal border border-tx hover:border-dark-charcoal-20 focus-visible:ring focus-visible:ring-pink;
+  @apply bg-white text-dark-charcoal border border-tx hover:border-dark-charcoal-20;
 }
 
 .action-menu-secondary-pressed {
@@ -292,22 +304,18 @@ a.button {
 }
 
 .action-menu-muted {
-  @apply bg-dark-charcoal-10 text-dark-charcoal border border-tx hover:border-dark-charcoal-20 focus-visible:ring focus-visible:ring-pink;
+  @apply bg-dark-charcoal-10 text-dark-charcoal border border-tx hover:border-dark-charcoal-20;
 }
 
 .action-menu-muted-pressed {
-  @apply border border-tx bg-dark-charcoal text-white focus-visible:ring focus-visible:ring-pink;
+  @apply border border-tx bg-dark-charcoal text-white;
 }
 
 .full {
-  @apply w-full font-semibold bg-dark-charcoal-06 focus-visible:ring focus-visible:ring-pink hover:bg-dark-charcoal-40 hover:text-white;
+  @apply w-full font-semibold bg-dark-charcoal-06 hover:bg-dark-charcoal-40 hover:text-white;
 }
 
 .full-pressed {
   @apply w-full font-semibold bg-dark-charcoal-06 text-dark-charcoal;
-}
-
-.plain {
-  @apply focus-visible:ring focus-visible:ring-pink;
 }
 </style>

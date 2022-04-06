@@ -38,6 +38,7 @@
     "test/proxy.js",
     "src/components/VButton.vue",
     "src/components/VContentPage.vue",
+    "src/components/VMetaSearch/*.vue",
     "src/components/VLicenseElements.vue",
     "src/components/VLink.vue",
     "src/components/VLoadMore.vue",
