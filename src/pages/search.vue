@@ -63,9 +63,6 @@ const BrowsePage = {
     )
     const resultCount = computed(() => mediaStore.resultCount)
     const fetchState = computed(() => mediaStore.fetchState)
-    /**
-     * @type {ComputedRef<Record<SupportedMediaType, Media[]>>}
-     */
     const resultItems = computed(() => mediaStore.resultItems)
 
     return {

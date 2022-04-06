@@ -39,7 +39,7 @@ import VLoadMore from '~/components/VLoadMore.vue'
 
 import VGridSkeleton from '~/components/VSkeleton/VGridSkeleton.vue'
 
-import { propTypes } from './search-page'
+import { propTypes } from './search-page.types'
 
 const AudioSearch = defineComponent({
   name: 'AudioSearch',
@@ -74,9 +74,7 @@ const AudioSearch = defineComponent({
       return i18n.t('browse-page.fetching-error', { type })
     })
 
-    const { canLoadMore, onLoadMore } = useLoadMore(
-      /** @type {SearchPageProps} */ (props)
-    )
+    const { canLoadMore, onLoadMore } = useLoadMore(props)
 
     return {
       results,

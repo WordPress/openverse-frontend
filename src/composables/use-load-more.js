@@ -1,18 +1,16 @@
-import { computed, ComputedRef } from '@nuxtjs/composition-api'
+import { computed } from '@nuxtjs/composition-api'
 
 import { useMediaStore } from '~/stores/media'
-import type { SearchPageProps } from '~/pages/search/search-page'
 
-export interface UseLoadMore {
-  onLoadMore: () => Promise<void> | void
-  canLoadMore: ComputedRef<boolean>
-}
 /**
  * Fetches media on 'Load More' button click.
+ *
+ * @param {import('../pages/search/search-page.types').Props} props
+ * @returns {{ onLoadMore: ((function(): Promise<void>)|void), canLoadMore: import('@nuxtjs/composition-api').ComputedRef<boolean>}}
  */
-export const useLoadMore = (props: SearchPageProps): UseLoadMore => {
+export const useLoadMore = (props) => {
   const canLoadMore = computed(() => {
-    return props.searchTerm?.trim() !== ''
+    return props.searchTerm.trim() !== ''
   })
 
   const onLoadMore = async () => {
