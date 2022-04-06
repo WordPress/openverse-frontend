@@ -143,23 +143,29 @@ export const getAttribution = (
 
   let attribution: string
   if (i18n) {
-    let fillers: object = {
+    let fillers: Record<string, string> = {
       title: titleLink,
-      creator: i18n.t(`${i18nBase}.creator-text`, {
-        'creator-name': creatorLink,
-      }),
-      'marked-licensed': i18n.t(`${i18nBase}.${isPd ? 'marked' : 'licensed'}`),
+      creator: i18n
+        .t(`${i18nBase}.creator-text`, {
+          'creator-name': creatorLink,
+        })
+        .toString(),
+      'marked-licensed': i18n
+        .t(`${i18nBase}.${isPd ? 'marked' : 'licensed'}`)
+        .toString(),
       license: licenseLink,
     }
     if (isPlaintext) {
       fillers = {
         ...fillers,
-        'view-legal': i18n.t(`${i18nBase}.view-legal-text`, {
-          'terms-copy': i18n.t(
-            `${i18nBase}.${isPd ? 'terms-text' : 'copy-text'}`
-          ),
-          URL: `${mediaItem.license_url}?ref=openverse`,
-        }),
+        'view-legal': i18n
+          .t(`${i18nBase}.view-legal-text`, {
+            'terms-copy': i18n.t(
+              `${i18nBase}.${isPd ? 'terms-text' : 'copy-text'}`
+            ),
+            URL: `${mediaItem.license_url}?ref=openverse`,
+          })
+          .toString(),
       }
     }
     attribution = i18n.t(`${i18nBase}.text`, fillers).toString()
