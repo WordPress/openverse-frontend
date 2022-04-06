@@ -40,8 +40,6 @@
     "src/components/VIcon.vue",
     "src/components/VButton.vue",
     "src/components/VContentPage.vue",
-    "src/components/VErrorSection/VErrorImage.vue",
-    "src/components/VContentReport/VReportDescForm.vue",
     "src/components/VMetaSearch/*.vue",
     "src/composables/types.js",
     "src/composables/use-event-listener-outside.js",

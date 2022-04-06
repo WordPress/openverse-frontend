@@ -1,6 +1,6 @@
 <template>
   <div id="content-report-form" class="w-80 p-6">
-    <div v-if="status === SENT">
+    <div v-if="status === statuses.SENT">
       <p class="font-semibold text-2xl mb-4">
         {{ $t('media-details.content-report.success.title') }}
       </p>
@@ -17,7 +17,7 @@
       </i18n>
     </div>
 
-    <div v-else-if="status === FAILED">
+    <div v-else-if="status === statuses.FAILED">
       <p class="font-semibold text-2xl mb-4">
         {{ $t('media-details.content-report.failure.title') }}
       </p>
@@ -60,16 +60,16 @@
 
         <div class="mb-4 min-h-[7rem]">
           <VDmcaNotice
-            v-if="media.foreign_landing_url && selectedReason === DMCA"
+            v-if="media.foreign_landing_url && selectedReason === reasons.DMCA"
             :provider="providerName"
             :foreign-landing-url="media.foreign_landing_url"
           />
           <VReportDescForm
-            v-if="selectedReason !== DMCA"
+            v-if="selectedReason !== reasons.DMCA"
             key="other"
             v-model="description"
             :reason="selectedReason"
-            :is-required="selectedReason === OTHER"
+            :is-required="selectedReason === reasons.OTHER"
           />
         </div>
 
@@ -79,7 +79,7 @@
           </VButton>
 
           <VButton
-            v-if="selectedReason === DMCA"
+            v-if="selectedReason === reasons.DMCA"
             key="dmca"
             as="VLink"
             variant="secondary"
@@ -111,15 +111,7 @@ import { computed, defineComponent, ref } from '@nuxtjs/composition-api'
 
 import ReportService from '~/data/report-service'
 
-import {
-  reasons,
-  DMCA,
-  OTHER,
-  SENT,
-  FAILED,
-  WIP,
-  DMCA_FORM_URL,
-} from '~/constants/content-report'
+import { reasons, statuses, DMCA_FORM_URL } from '~/constants/content-report'
 
 import VButton from '~/components/VButton.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'
@@ -151,10 +143,10 @@ export default defineComponent({
     const description = ref('')
 
     /** @type {import('@nuxtjs/composition-api').Ref<string|null>} */
-    const status = ref(WIP)
+    const status = ref(statuses.WIP)
 
     /** @type {import('@nuxtjs/composition-api').Ref<string|null>} */
-    const selectedReason = ref(DMCA)
+    const selectedReason = ref(reasons.DMCA)
 
     /* Buttons */
     const handleCancel = () => {
@@ -164,10 +156,11 @@ export default defineComponent({
     }
 
     const isSubmitDisabled = computed(
-      () => selectedReason.value === OTHER && description.value.length < 20
+      () =>
+        selectedReason.value === reasons.OTHER && description.value.length < 20
     )
     const handleSubmit = async () => {
-      if (selectedReason.value === DMCA) return
+      if (selectedReason.value === reasons.DMCA) return
       // Submit report
       try {
         await service.sendReport({
@@ -175,9 +168,9 @@ export default defineComponent({
           reason: selectedReason.value,
           description: description.value,
         })
-        status.value = SENT
+        status.value = statuses.SENT
       } catch (error) {
-        status.value = FAILED
+        status.value = statuses.FAILED
       }
     }
 
@@ -186,10 +179,7 @@ export default defineComponent({
         externalLink: externalLinkIcon,
       },
       reasons,
-      DMCA,
-      OTHER,
-      SENT,
-      FAILED,
+      statuses,
       DMCA_FORM_URL,
 
       selectedReason,

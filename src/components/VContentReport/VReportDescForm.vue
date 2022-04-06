@@ -11,7 +11,7 @@
       v-model="text"
       class="h-20 w-full border border-dark-charcoal-20 placeholder-dark-charcoal-70 mt-2 p-2"
       :placeholder="
-        $t(`media-details.content-report.form.${reason}.placeholder`).toString()
+        $t(`media-details.content-report.form.${reason}.placeholder`)
       "
       :required="isRequired"
       :minlength="isRequired ? 20 : 0"
@@ -20,10 +20,10 @@
   </label>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
+<script>
+import { computed, defineComponent } from '@nuxtjs/composition-api'
 
-import { reasons, OTHER, ReportReason } from '~/constants/content-report'
+import { reasons } from '~/constants/content-report'
 
 export default defineComponent({
   name: 'VReportDescForm',
@@ -43,8 +43,8 @@ export default defineComponent({
      * the reason selected for reporting the content
      */
     reason: {
-      type: String as PropType<ReportReason>,
-      validator: (val: ReportReason) => reasons.includes(val),
+      type: String,
+      validator: (val) => Object.values(reasons).includes(val),
     },
   },
   setup(props, { emit }) {
@@ -53,7 +53,7 @@ export default defineComponent({
       set: (val) => emit('input', val),
     })
 
-    const isRequired = computed(() => props.reason === OTHER)
+    const isRequired = computed(() => props.reason === reasons.OTHER)
 
     return {
       isRequired,
