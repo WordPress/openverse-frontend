@@ -2,10 +2,10 @@
   <Component
     :is="isBoxed ? 'VLink' : 'div'"
     class="audio-track group"
-    :aria-label="$t('audio-track.aria-label')"
+    :aria-label="ariaLabel"
     role="region"
     v-bind="layoutBasedProps"
-    v-on="layoutBasedListeners"
+    @keydown.native="handleKeydown"
   >
     <Component
       :is="layoutComponent"
@@ -50,11 +50,13 @@ import {
 
 import { useActiveAudio } from '~/composables/use-active-audio'
 import { defaultRef } from '~/composables/default-ref'
+import { useI18n } from '~/composables/use-i18n'
 
 import { useActiveMediaStore } from '~/stores/active-media'
 import { useMediaStore } from '~/stores/media'
 
 import { AUDIO } from '~/constants/media'
+import { keycodes } from '~/constants/key-codes'
 
 import VPlayPause from '~/components/VAudioTrack/VPlayPause.vue'
 import VWaveform from '~/components/VAudioTrack/VWaveform.vue'
@@ -122,7 +124,7 @@ export default defineComponent({
     VGlobalLayout,
   },
   props: propTypes,
-  setup(props, { emit }) {
+  setup(props) {
     const activeMediaStore = useActiveMediaStore()
     const route = useRoute()
 
@@ -385,6 +387,7 @@ export default defineComponent({
      * boxed layout exclusively.
      */
     const isBoxed = computed(() => props.layout === 'box')
+    const i18n = useI18n()
     const layoutBasedProps = computed(() => {
       if (!isBoxed.value) return {}
       return {
@@ -393,30 +396,28 @@ export default defineComponent({
           'block focus:bg-white focus:border-tx focus:ring-[3px] focus:ring-pink focus:ring-offset-[3px] focus:outline-none rounded-sm overflow-hidden cursor-pointer',
       }
     })
-    const layoutBasedListeners = computed(() => {
-      if (!isBoxed.value) return {}
-      return {
-        click: (event) => {
-          // Emit an event when the boxed layout is clicked
-          // unless the click is on the play/pause button
-          if (event.target === playPauseRef?.value?.$el) return
-          emit('boxedAudioClick', props.audio)
-        },
-        keydown: (event) => {
-          // 32 is Spacebar
-          if (event.keyCode !== 32) return
-          event.preventDefault()
-          status.value = status.value === 'playing' ? 'paused' : 'playing'
-          handleToggle(status.value)
-        },
-      }
-    })
+    const ariaLabel = computed(() =>
+      isBoxed.value
+        ? i18n.t('audio-track.aria-label-interactive')
+        : i18n.t('audio-track.aria-label')
+    )
+    /**
+     * @param {KeyboardEvent} event
+     */
+    const handleKeydown = (event) => {
+      if (!isBoxed.value || event.key !== keycodes.Spacebar) return
+      event.preventDefault()
+      status.value = status.value === 'playing' ? 'paused' : 'playing'
+      handleToggle(status.value)
+    }
 
     return {
       status,
       message,
+      ariaLabel,
       handleToggle,
       handleSeeked,
+      handleKeydown,
 
       currentTime,
       duration,
@@ -426,7 +427,6 @@ export default defineComponent({
 
       isBoxed,
       layoutBasedProps,
-      layoutBasedListeners,
 
       playPauseRef,
     }
