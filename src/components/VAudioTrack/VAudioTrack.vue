@@ -398,8 +398,10 @@ export default defineComponent({
     })
     const ariaLabel = computed(() =>
       isBoxed.value
-        ? i18n.t('audio-track.aria-label-interactive')
-        : i18n.t('audio-track.aria-label')
+        ? i18n.t('audio-track.aria-label-interactive', {
+            title: props.audio.title,
+          })
+        : i18n.t('audio-track.aria-label', { title: props.audio.title })
     )
     /**
      * @param {KeyboardEvent} event
