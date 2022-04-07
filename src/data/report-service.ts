@@ -1,5 +1,5 @@
 import { IMAGE, MediaType } from '~/constants/media'
-import type { ReportReason } from '~/constants/content-report'
+import type { ReportReason } from '~/constants/content-report-ts'
 import { getResourceSlug, VersionedApiService } from '~/data/api-service'
 
 interface ReportParams {
