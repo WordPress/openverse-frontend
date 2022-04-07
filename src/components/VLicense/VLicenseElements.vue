@@ -20,22 +20,15 @@
   </ul>
 </template>
 
-<script>
-import { computed, defineComponent } from '@nuxtjs/composition-api'
+<script lang="ts">
+import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
+
+import type { License } from '~/constants/license'
+import { ALL_LICENSES, LICENSE_ICONS } from '~/constants/license'
 
 import { getElements } from '~/utils/license'
 
-import { ALL_LICENSES } from '~/constants/license'
-
 import VIcon from '~/components/VIcon/VIcon.vue'
-
-import by from '~/assets/licenses/by.svg'
-import zero from '~/assets/licenses/zero.svg'
-import nc from '~/assets/licenses/nc.svg'
-import nd from '~/assets/licenses/nd.svg'
-import pd from '~/assets/licenses/pd.svg'
-import sa from '~/assets/licenses/sa.svg'
-import samplingPlus from '~/assets/licenses/sampling.plus.svg'
 
 export default defineComponent({
   name: 'VLicenseElements',
@@ -46,17 +39,17 @@ export default defineComponent({
      * @values ALL_LICENSES
      */
     license: {
-      type: String,
+      type: String as PropType<License>,
       required: true,
-      validator: (val) => ALL_LICENSES.includes(val),
+      validator: (val: License) => ALL_LICENSES.includes(val),
     },
     /**
      * the size of the icons and text
      */
     size: {
-      type: String,
+      type: String as PropType<'big' | 'small'>,
       default: 'big',
-      validator: (val) => ['big', 'small'].includes(val),
+      validator: (val: 'big' | 'small') => ['big', 'small'].includes(val),
     },
   },
   setup(props) {
@@ -67,16 +60,7 @@ export default defineComponent({
     const isSmall = computed(() => props.size === 'small')
 
     return {
-      icons: {
-        by,
-        nc,
-        nd,
-        pd,
-        sa,
-        zero,
-        'sampling-plus': samplingPlus,
-      },
-
+      icons: LICENSE_ICONS,
       elementNames,
       isSmall,
     }

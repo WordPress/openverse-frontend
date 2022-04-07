@@ -16,29 +16,25 @@
   </div>
 </template>
 
-<script>
-import { computed, useContext } from '@nuxtjs/composition-api'
+<script lang="ts">
+import {
+  computed,
+  defineComponent,
+  PropType,
+  useContext,
+} from '@nuxtjs/composition-api'
 
-import { ALL_LICENSES } from '~/constants/license'
+import { ALL_LICENSES, License, LICENSE_ICONS } from '~/constants/license'
 
 import { getFullLicenseName, getElements } from '~/utils/license'
 
 import VIcon from '~/components/VIcon/VIcon.vue'
 
-import by from '~/assets/licenses/by.svg'
-import zero from '~/assets/licenses/zero.svg'
-import cc from '~/assets/licenses/cc.svg'
-import nc from '~/assets/licenses/nc.svg'
-import nd from '~/assets/licenses/nd.svg'
-import pd from '~/assets/licenses/pd.svg'
-import sa from '~/assets/licenses/sa.svg'
-import samplingPlus from '~/assets/licenses/sampling.plus.svg'
-
 /**
  * Displays the icons for the license along with a readable display name for the
  * license.
  */
-export default {
+export default defineComponent({
   name: 'VLicense',
   components: { VIcon },
   props: {
@@ -47,9 +43,9 @@ export default {
      * @values
      */
     license: {
-      type: String,
+      type: String as PropType<License>,
       required: true,
-      validator: (val) => ALL_LICENSES.includes(val),
+      validator: (val: License) => ALL_LICENSES.includes(val as License),
     },
     /**
      * Whether to display icons filled with a white background or leave them transparent.
@@ -72,28 +68,18 @@ export default {
     const iconNames = computed(() => getElements(props.license))
     const licenseName = computed(() => {
       return {
-        readable: i18n.t(`license-readable-names.${props.license}`),
+        readable: i18n.t(`license-readable-names.${props.license}`).toString(),
         full: getFullLicenseName(props.license, '', i18n),
       }
     })
 
     return {
-      icons: {
-        cc,
-        by,
-        nc,
-        nd,
-        pd,
-        sa,
-        zero,
-        'sampling-plus': samplingPlus,
-      },
-
+      icons: LICENSE_ICONS,
       iconNames,
       licenseName,
     }
   },
-}
+})
 </script>
 
 <style scoped>
