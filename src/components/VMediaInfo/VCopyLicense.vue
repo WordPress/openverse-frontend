@@ -38,6 +38,7 @@
         <!-- eslint-disable vue/no-v-html -->
         <div
           v-if="tab === 'rich'"
+          id="attribution-rich"
           v-html="getAttributionMarkup({ includeIcons: false })"
         />
         <!-- eslint-enable vue/no-v-html -->
@@ -51,7 +52,7 @@
           {{ getAttributionMarkup() }}
         </p>
 
-        <div v-if="tab === 'plain'">
+        <div v-if="tab === 'plain'" id="attribution-plain">
           {{ getAttributionMarkup({ isPlaintext: true }) }}
         </div>
       </div>
