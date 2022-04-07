@@ -42,10 +42,33 @@ const canFetchStatuses: Status[] = [statuses.IDLE, statuses.SUCCESS]
 
 /* Composable */
 
-export const useFetchState = (initialState = statuses.IDLE) => {
-  const fetchStatus: Ref<Status> = ref(initialState)
-  const fetchError: Ref<string | null> = ref(null)
-  const isFinished: Ref<boolean> = ref(false)
+export const useFetchState = (state?: FetchState | undefined) => {
+  const initialState: {
+    status: Status
+    fetchError: null | string
+    isFinished: boolean
+  } = {
+    status: statuses.IDLE,
+    fetchError: null,
+    isFinished: false,
+  }
+  if (state) {
+    if (state.isFetching) {
+      initialState.status = statuses.FETCHING
+    } else if (state.fetchingError) {
+      initialState.status = statuses.ERROR
+      initialState.fetchError = state.fetchingError
+    } else if (state.hasStarted) {
+      initialState.status = statuses.SUCCESS
+    }
+    if (state.isFinished) {
+      initialState.isFinished = true
+    }
+  }
+
+  const fetchStatus: Ref<Status> = ref(initialState.status)
+  const fetchError: Ref<string | null> = ref(initialState.fetchError)
+  const isFinished: Ref<boolean> = ref(initialState.isFinished)
 
   watch(fetchStatus, () => {
     if (nonErrorStatuses.includes(fetchStatus.value)) {

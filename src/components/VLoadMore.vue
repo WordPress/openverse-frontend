@@ -1,9 +1,10 @@
 <template>
   <VButton
+    v-show="canLoadMore"
     size="large"
     variant="full"
-    type="button"
     :disabled="isFetching"
+    data-testid="load-more"
     @click="onLoadMore"
   >
     {{ buttonLabel }}
@@ -12,6 +13,11 @@
 <script lang="ts">
 import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
 
+import { useMediaStore } from '~/stores/media'
+import { useSearchStore } from '~/stores/search'
+
+import { ALL_MEDIA } from '~/constants/media'
+
 import VButton from '~/components/VButton.vue'
 
 export default defineComponent({
@@ -19,26 +25,37 @@ export default defineComponent({
   components: {
     VButton,
   },
-  props: {
-    isFetching: {
-      type: Boolean,
-      default: true,
-    },
-  },
-  setup(_, { emit }) {
+  setup() {
     const { i18n } = useContext()
+    const mediaStore = useMediaStore()
+    const searchStore = useSearchStore()
 
-    const buttonLabel = computed(() => {
-      return i18n.t('browse-page.load')
+    const canLoadMore = computed(() => {
+      const canFetch =
+        searchStore.searchType !== ALL_MEDIA
+          ? mediaStore.state.fetchState[searchStore.searchType].canFetch
+          : mediaStore.fetchState.canFetch
+      return (
+        searchStore.searchTerm !== '' && canFetch && mediaStore.resultCount > 0
+      )
     })
 
-    const onLoadMore = () => {
-      emit('onLoadMore')
+    const onLoadMore = async () => {
+      if (!canLoadMore.value) return
+
+      await mediaStore.fetchMedia({
+        shouldPersistMedia: true,
+      })
     }
+    const isFetching = computed(() => mediaStore.fetchState.isFetching)
+
+    const buttonLabel = computed(() => i18n.t('browse-page.load'))
 
     return {
       buttonLabel,
+      isFetching,
       onLoadMore,
+      canLoadMore,
     }
   },
 })
