@@ -59,7 +59,7 @@ jobs:
         run: pnpm test:unit
 
   nuxt-playwright:
-    name: Nuxt playwright tests
+    name: Nuxt Playwright tests
     runs-on: ubuntu-latest
 
     steps:
