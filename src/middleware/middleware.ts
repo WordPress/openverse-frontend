@@ -16,7 +16,7 @@ import type { Context, Middleware } from '@nuxt/types'
  * Currently, one event type is used:
  * - `urlChange` sends the relative path of the URL on every URL change.
  */
-export const middleware: Middleware = ({ query, route, $pinia }: Context) => {
+const middleware: Middleware = ({ query, route, $pinia }: Context) => {
   const navStore = useNavStore($pinia)
 
   if ('embedded' in query) {
@@ -33,3 +33,4 @@ export const middleware: Middleware = ({ query, route, $pinia }: Context) => {
     navStore.setIsReferredFromCc(false)
   }
 }
+export default middleware
