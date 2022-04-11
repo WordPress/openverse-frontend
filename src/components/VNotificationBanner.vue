@@ -3,21 +3,24 @@
     v-if="shouldShow"
     class="px-4 md:px-7 py-2 md:flex md:items-center md:justify-between"
     :class="$style[variant]"
-    dir="ltr"
   >
     <p class="text-center md:text-left">
       <slot name="default" />
     </p>
     <div class="flex">
       <slot name="buttons">
-        <button
-          class="button is-text small dismiss-button"
-          type="button"
+        <VIconButton
+          :button-props="{
+            variant: 'plain',
+          }"
+          :class="variant === 'announcement' && 'text-white'"
+          :bordered="false"
           :aria-label="closeLabel"
+          :icon-props="{
+            iconPath: closeIcon,
+          }"
           @click="handleClose"
-        >
-          <VIcon :icon-path="closeIcon" />
-        </button>
+        />
       </slot>
     </div>
   </div>
@@ -29,14 +32,14 @@ import { defineComponent, PropType } from '@nuxtjs/composition-api'
 import { useI18n } from '~/composables/use-i18n'
 import { useStorage } from '~/composables/use-storage'
 
-import VIcon from '~/components/VIcon/VIcon.vue'
+import VIconButton from '~/components/VIconButton/VIconButton.vue'
 
 import closeIcon from '~/assets/icons/close.svg'
 
 export default defineComponent({
   name: 'VNotificationBanner',
   components: {
-    VIcon,
+    VIconButton,
   },
   props: {
     variant: {
