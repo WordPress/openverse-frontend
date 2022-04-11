@@ -1,17 +1,16 @@
 <template>
-  <div class="app grid h-screen overflow-hidden relative">
-    <div>
+  <div class="app grid relative">
+    <div class="sticky top-0 block z-40">
       <VTeleportTarget name="skip-to-content" :force-destroy="true" />
       <VMigrationNotice v-show="isReferredFromCc" />
       <VTranslationStatusBanner />
       <VHeader />
     </div>
-    <main
-      class="main embedded overflow-x-hidden"
-      :class="{ 'has-sidebar': isSidebarVisible }"
-    >
+    <main class="main embedded" :class="{ 'has-sidebar': isSidebarVisible }">
       <Nuxt ref="mainContentRef" class="min-w-0 main-page" />
-      <VSidebarTarget class="sidebar" />
+      <VSidebarTarget
+        class="sidebar fixed pb-20 right-0 [calc(100%-81px)] bg-dark-charcoal-06 border-s border-dark-charcoal-20 overflow-y-scroll"
+      />
     </main>
     <VModalTarget class="modal" />
     <VGlobalAudioSection />
@@ -120,13 +119,5 @@ export default embeddedPage
   .main.has-sidebar > *:first-child {
     grid-column: 1;
   }
-}
-
-.main {
-  overflow: hidden;
-}
-.main > *:not(:empty) {
-  overflow-y: scroll;
-  height: 100%;
 }
 </style>

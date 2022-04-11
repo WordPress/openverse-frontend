@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="filters py-8 px-10 min-h-full md:bg-dark-charcoal-06"
-    data-testid="filters-list"
-  >
+  <div class="filters py-8 px-10" data-testid="filters-list">
     <div class="flex items-center justify-between mt-2 mb-6">
       <h4 class="text-sr font-semibold py-2 uppercase">
         {{ $t('filter-list.filter-by') }}
@@ -108,14 +105,3 @@ export default {
   },
 }
 </script>
-<style scoped>
-.filters {
-  border-inline-start: 1px solid transparent;
-}
-@screen md {
-  .filters {
-    /* dark-charcoal-20*/
-    border-inline-start: 1px solid #d6d4d5;
-  }
-}
-</style>
