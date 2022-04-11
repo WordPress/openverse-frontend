@@ -85,7 +85,7 @@ jobs:
 
       - uses: ./.github/actions/setup-node-env
 
-      - name: Run storybook playwright tests
+      - name: Run Storybook Playwright tests
         run: pnpm test:storybook
 
       - uses: actions/upload-artifact@v3
