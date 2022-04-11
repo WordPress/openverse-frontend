@@ -1,11 +1,11 @@
 <template>
   <div
-    v-if="shouldShow"
-    class="px-4 md:px-7 py-2 md:flex md:items-center md:justify-between"
+    v-show="shouldShow"
+    class="px-4 md:px-7 py-2 flex items-center justify-between"
     :class="$style[variant]"
     :data-testid="`banner-${id}`"
   >
-    <p class="text-center md:text-left">
+    <p class="text-left">
       <slot name="default" />
     </p>
     <div class="flex">
@@ -14,6 +14,21 @@
           :button-props="{
             variant: 'plain',
           }"
+          class="flex md:hidden"
+          size="small"
+          :class="variant === 'announcement' && 'text-white'"
+          :bordered="false"
+          :aria-label="closeLabel"
+          :icon-props="{
+            iconPath: closeIcon,
+          }"
+          @click="handleClose"
+        />
+        <VIconButton
+          :button-props="{
+            variant: 'plain',
+          }"
+          class="hidden md:flex"
           :class="variant === 'announcement' && 'text-white'"
           :bordered="false"
           :aria-label="closeLabel"

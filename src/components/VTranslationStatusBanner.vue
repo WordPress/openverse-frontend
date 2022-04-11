@@ -1,6 +1,6 @@
 <template>
   <VNotificationBanner
-    v-if="needsTranslationBanner"
+    v-show="needsTranslationBanner"
     :id="bannerKey"
     variant="informational"
   >
