@@ -22,7 +22,7 @@ const talkback = require('talkback')
 /** @typedef {Required<typeof talkback['Options']['Default']>} TalkbackOptions */
 /** @typedef {ReturnType<TalkbackOptions['tapeDecorator']>} Tape */
 
-const port = 49152
+const port = 49153
 const host = 'https://api.openverse.engineering'
 
 const urlPatterns = {
@@ -152,7 +152,7 @@ const opts = /** @type {Partial<TalkbackOptions>} */ ({
   record: recordMode,
   fallbackMode: talkback.Options.FallbackMode.NOT_FOUND,
   ignoreBody: true,
-  ignoreHeaders: ['user-agent', 'origin', 'referrer', 'content-length', 'host'],
+  allowHeaders: ['connection'],
   name: 'Openverse e2e proxy',
   summary: false,
   tapeNameGenerator,

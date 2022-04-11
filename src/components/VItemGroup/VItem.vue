@@ -20,11 +20,7 @@
         selected && 'bg-dark-charcoal-10 ring-offset-dark-charcoal-10',
         as === 'VLink' && 'text-dark-charcoal',
       ]"
-      :variant="
-        contextProps.size === 'small' && !contextProps.bordered
-          ? 'plain-dangerous'
-          : 'plain'
-      "
+      variant="plain"
       size="disabled"
       :pressed="selected"
       :role="contextProps.type === 'radiogroup' ? 'radio' : 'menuitemcheckbox'"
@@ -40,12 +36,7 @@
     >
       <div
         class="flex-grow whitespace-nowrap my-0 rounded-sm px-2"
-        :class="[
-          contextProps.size === 'small' &&
-            !contextProps.bordered &&
-            'group-focus-visible:ring group-focus-visible:ring-pink',
-          $style[`${contextProps.direction}-content`],
-        ]"
+        :class="[$style[`${contextProps.direction}-content`]]"
       >
         <slot name="default" />
       </div>
