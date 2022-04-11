@@ -35,6 +35,8 @@ import {
 
 import { warn } from '~/utils/console'
 
+import type { ProperlyExtractPropTypes } from '~/types/prop-extraction'
+
 import VLink from '~/components/VLink.vue'
 
 const buttonForms = ['VLink', 'button'] as const
@@ -62,6 +64,10 @@ type ButtonSize = typeof buttonSizes[number]
 const buttonTypes = ['button', 'submit', 'reset'] as const
 
 export type ButtonType = typeof buttonTypes[number]
+
+export type ButtonProps = ProperlyExtractPropTypes<
+  NonNullable<typeof VButton['props']>
+>
 
 /**
  * A button component that behaves just like a regular HTML `button` element
@@ -95,7 +101,7 @@ const VButton = defineComponent({
     as: {
       type: String as PropType<ButtonForm>,
       default: 'button',
-      validate: (val: ButtonForm) => buttonForms.includes(val),
+      validate: (val: unknown) => buttonForms.includes(val as ButtonForm),
     },
     /**
      * The variant of the button.
@@ -108,7 +114,7 @@ const VButton = defineComponent({
     variant: {
       type: String as PropType<ButtonVariant>,
       default: 'primary',
-      validate: (v: ButtonVariant) => buttonVariants.includes(v),
+      validate: (v: unknown) => buttonVariants.includes(v as ButtonVariant),
     },
     /**
      * Allows for programmatically setting the pressed state of a button,
@@ -129,7 +135,7 @@ const VButton = defineComponent({
     size: {
       type: String as PropType<ButtonSize>,
       default: 'medium',
-      validate: (val: ButtonSize) => buttonSizes.includes(val),
+      validate: (val: unknown) => buttonSizes.includes(val as ButtonSize),
     },
     /**
      * Whether the button is disabled. Used alone this will only
@@ -163,7 +169,7 @@ const VButton = defineComponent({
     type: {
       type: String as PropType<ButtonType>,
       default: 'button',
-      validate: (v: ButtonType) => buttonTypes.includes(v),
+      validate: (v: unknown) => buttonTypes.includes(v as ButtonType),
     },
   },
   setup(props, { attrs }) {
