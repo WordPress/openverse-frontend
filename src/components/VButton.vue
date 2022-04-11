@@ -101,7 +101,7 @@ const VButton = defineComponent({
     as: {
       type: String as PropType<ButtonForm>,
       default: 'button',
-      validate: (val: unknown) => buttonForms.includes(val as ButtonForm),
+      validate: (val: ButtonForm) => buttonForms.includes(val),
     },
     /**
      * The variant of the button.
@@ -114,7 +114,7 @@ const VButton = defineComponent({
     variant: {
       type: String as PropType<ButtonVariant>,
       default: 'primary',
-      validate: (v: unknown) => buttonVariants.includes(v as ButtonVariant),
+      validate: (v: ButtonVariant) => buttonVariants.includes(v),
     },
     /**
      * Allows for programmatically setting the pressed state of a button,
@@ -135,7 +135,7 @@ const VButton = defineComponent({
     size: {
       type: String as PropType<ButtonSize>,
       default: 'medium',
-      validate: (val: unknown) => buttonSizes.includes(val as ButtonSize),
+      validate: (val: ButtonSize) => buttonSizes.includes(val),
     },
     /**
      * Whether the button is disabled. Used alone this will only
@@ -169,7 +169,7 @@ const VButton = defineComponent({
     type: {
       type: String as PropType<ButtonType>,
       default: 'button',
-      validate: (v: unknown) => buttonTypes.includes(v as ButtonType),
+      validate: (v: ButtonType) => buttonTypes.includes(v),
     },
   },
   setup(props, { attrs }) {
