@@ -77,7 +77,7 @@ jobs:
           path: test-results
 
   storybook-playwright:
-    name: Storybook playwright tests
+    name: Storybook Playwright tests
     runs-on: ubuntu-latest
 
     steps:
