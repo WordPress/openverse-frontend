@@ -11,3 +11,9 @@ export const removeHiddenOverflow = async (page: Page) => {
   await appElement?.evaluate((node) => node.classList.remove('overflow-hidden'))
   appElement?.dispose()
 }
+
+export const hideInputCursors = (page: Page) => {
+  return page.addStyleTag({
+    content: '* { caret-color: transparent !important; }',
+  })
+}
