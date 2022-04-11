@@ -67,7 +67,7 @@ jobs:
 
       - uses: ./.github/actions/setup-node-env
 
-      - name: Run nuxt playwright tests
+      - name: Run Nuxt Playwright tests
         run: pnpm test:playwright
 
       - uses: actions/upload-artifact@v3
