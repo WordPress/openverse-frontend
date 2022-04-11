@@ -3,9 +3,9 @@ import type { ReportReason } from '~/constants/content-report'
 import { getResourceSlug, VersionedApiService } from '~/data/api-service'
 
 interface ReportParams {
-  mediaType?: MediaType
+  mediaType: MediaType
   identifier: string
-  reason?: ReportReason
+  reason: ReportReason
   description?: string
 }
 const ReportService = {
