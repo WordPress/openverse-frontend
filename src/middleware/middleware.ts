@@ -1,8 +1,7 @@
 import { sendWindowMessage } from '~/utils/send-message'
-
 import { useNavStore } from '~/stores/nav'
 
-import type { Context } from '@nuxt/types'
+import type { Context, Middleware } from '@nuxt/types'
 
 /**
  * In embedded mode, the app sends its url
@@ -17,7 +16,7 @@ import type { Context } from '@nuxt/types'
  * Currently, one event type is used:
  * - `urlChange` sends the relative path of the URL on every URL change.
  */
-export default function ({ query, route, $pinia }: Context) {
+export const middleware: Middleware = ({ query, route, $pinia }: Context) => {
   const navStore = useNavStore($pinia)
 
   if ('embedded' in query) {

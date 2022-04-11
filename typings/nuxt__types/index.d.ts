@@ -8,7 +8,4 @@ declare module '@nuxt/types' {
   export interface NuxtAppOptions {
     $ua: UADetails | null
   }
-  export interface Plugin {
-    (context: Context, inject: Inject): void
-  }
 }
