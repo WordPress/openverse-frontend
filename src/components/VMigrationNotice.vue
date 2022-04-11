@@ -1,9 +1,5 @@
 <template>
-  <VNotificationBanner
-    id="cc-referral"
-    variant="announcement"
-    class="cc-ov-migration"
-  >
+  <VNotificationBanner id="cc-referral" variant="announcement">
     {{
       $t('migration-notice.intro', {
         'cc-search': 'CC Search',

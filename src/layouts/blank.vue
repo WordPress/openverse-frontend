@@ -1,6 +1,6 @@
 <template>
   <div>
-    <VMigrationNotice v-show="isReferredFromCc" />
+    <VMigrationNotice v-if="isReferredFromCc" />
     <VTranslationStatusBanner />
     <Nuxt />
   </div>

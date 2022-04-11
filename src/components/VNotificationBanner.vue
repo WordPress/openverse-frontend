@@ -3,6 +3,7 @@
     v-if="shouldShow"
     class="px-4 md:px-7 py-2 md:flex md:items-center md:justify-between"
     :class="$style[variant]"
+    :data-testid="`banner-${id}`"
   >
     <p class="text-center md:text-left">
       <slot name="default" />
