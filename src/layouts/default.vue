@@ -9,7 +9,7 @@
     <main class="main embedded" :class="{ 'has-sidebar': isSidebarVisible }">
       <Nuxt ref="mainContentRef" class="min-w-0 main-page" />
       <VSidebarTarget
-        class="sidebar fixed pb-20 right-0 [calc(100%-81px)] bg-dark-charcoal-06 border-s border-dark-charcoal-20 overflow-y-scroll"
+        class="sidebar fixed pb-20 right-0 h-[calc(100%-81px)] bg-dark-charcoal-06 border-s border-dark-charcoal-20 overflow-y-scroll"
       />
     </main>
     <VModalTarget class="modal" />
