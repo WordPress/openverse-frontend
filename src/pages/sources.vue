@@ -162,7 +162,7 @@ const SourcePage = {
   setup() {
     const getLocaleFormattedNumber = useGetLocaleFormattedNumber()
     const providerStore = useProviderStore()
-    const imageProviders = computed(() => providerStore.state.providers.image)
+    const imageProviders = computed(() => providerStore.providers.image)
 
     return { getLocaleFormattedNumber, externalLinkIcon, imageProviders }
   },

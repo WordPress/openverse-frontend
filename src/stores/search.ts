@@ -48,7 +48,7 @@ export const useSearchStore = defineStore('search', () => {
     filters: clonedeep(filterData),
   })
   const { filters, searchType, searchTerm } = toRefs(state)
-  const providersData = computed(() => useProviderStore().state.providers)
+  const providersData = computed(() => useProviderStore().providers)
 
   watch(
     providersData,

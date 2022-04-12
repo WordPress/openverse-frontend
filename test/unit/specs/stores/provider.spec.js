@@ -71,7 +71,8 @@ describe('Provider Store', () => {
     })
   })
   it('sets the default state', () => {
-    expect(providerStore.state).toEqual(initialProviderState)
+    expect(providerStore.providers).toEqual(initialProviderState.providers)
+    expect(providerStore.fetchState).toEqual(initialProviderState.fetchState)
   })
 
   it.each`
@@ -111,11 +112,11 @@ describe('Provider Store', () => {
       },
     ]
     await providerStore.fetchMediaProviders()
-    expect(providerStore.state.fetchState[IMAGE]).toEqual({
+    expect(providerStore.fetchState[IMAGE]).toEqual({
       ...initialFetchState,
       hasStarted: true,
     })
-    expect(providerStore.state.providers[IMAGE]).toEqual(mockData)
+    expect(providerStore.providers[IMAGE]).toEqual(mockData)
 
     expect(searchStore.filters[`${IMAGE}Providers`]).toEqual(expectedFilters)
   })
@@ -129,10 +130,10 @@ describe('Provider Store', () => {
     const searchStore = useSearchStore()
     await providerStore.fetchMediaProviders()
     for (const mediaType of supportedMediaTypes) {
-      expect(providerStore.state.fetchState[mediaType].fetchingError).toEqual(
+      expect(providerStore.fetchState[mediaType].fetchingError).toEqual(
         `There was an error fetching media providers for ${mediaType}: Not found`
       )
-      expect(providerStore.state.providers[mediaType]).toEqual([])
+      expect(providerStore.providers[mediaType]).toEqual([])
       expect(searchStore.filters[`${mediaType}Providers`]).toEqual([])
     }
   })

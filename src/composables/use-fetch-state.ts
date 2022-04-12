@@ -7,13 +7,14 @@ export interface FetchState {
   hasStarted?: boolean
   isFinished?: boolean
 }
-export const initialFetchState = {
-  isFetching: false,
-  fetchingError: null,
-  canFetch: true,
+export const initialFetchState: FetchState = {
   hasStarted: false,
+  isFetching: false,
+  canFetch: true,
   isFinished: false,
-}
+  fetchingError: null,
+} as const
+
 /* Constants */
 
 /**
@@ -47,17 +48,16 @@ const nonErrorStatuses: Status[] = [
 const canFetchStatuses: Status[] = [statuses.IDLE, statuses.SUCCESS]
 
 /* Composable */
-const initialFetchStateValue: {
-  status: Status
-  fetchError: null | string
-  isFinished: boolean
-} = {
-  status: statuses.IDLE,
-  fetchError: null,
-  isFinished: false,
-}
 export const useFetchState = (state: FetchState = initialFetchState) => {
-  const initialState = { ...initialFetchStateValue }
+  const initialState: {
+    status: Status
+    fetchError: null | string
+    isFinished: boolean
+  } = {
+    status: statuses.IDLE,
+    fetchError: null,
+    isFinished: false,
+  }
   if (state) {
     if (state.isFetching) {
       initialState.status = statuses.FETCHING
@@ -140,4 +140,24 @@ export const useFetchState = (state: FetchState = initialFetchState) => {
     setFinished,
     reset,
   }
+}
+
+export const updateFetchState = (
+  initial: FetchState,
+  action: 'end' | 'finish' | 'start',
+  option?: string
+) => {
+  const fetchState = useFetchState(initial)
+  switch (action) {
+    case 'end':
+      fetchState.endFetching(option)
+      break
+    case 'start':
+      fetchState.startFetching()
+      break
+    case 'finish':
+      fetchState.setFinished()
+      break
+  }
+  return fetchState.fetchState
 }
