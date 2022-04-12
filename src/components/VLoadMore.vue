@@ -16,8 +16,6 @@ import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
 import { useMediaStore } from '~/stores/media'
 import { useSearchStore } from '~/stores/search'
 
-import { ALL_MEDIA } from '~/constants/media'
-
 import VButton from '~/components/VButton.vue'
 
 export default defineComponent({
@@ -30,15 +28,12 @@ export default defineComponent({
     const mediaStore = useMediaStore()
     const searchStore = useSearchStore()
 
-    const canLoadMore = computed(() => {
-      const canFetch =
-        searchStore.searchType !== ALL_MEDIA
-          ? mediaStore.state.fetchState[searchStore.searchType].canFetch
-          : mediaStore.fetchState.canFetch
-      return (
-        searchStore.searchTerm !== '' && canFetch && mediaStore.resultCount > 0
-      )
-    })
+    const canLoadMore = computed(
+      () =>
+        searchStore.searchTerm !== '' &&
+        mediaStore.fetchState.canFetch &&
+        mediaStore.resultCount > 0
+    )
 
     const onLoadMore = async () => {
       if (!canLoadMore.value) return

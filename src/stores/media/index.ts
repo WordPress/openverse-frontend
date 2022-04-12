@@ -15,7 +15,6 @@ import { hash, rand as prng } from '~/utils/prng'
 import { services } from '~/stores/media/services'
 import { useSearchStore } from '~/stores/search'
 import { FetchState, useFetchState } from '~/composables/use-fetch-state'
-import { isClient } from '~/composables/window'
 
 export type MediaStoreResult = {
   count: number
@@ -46,7 +45,7 @@ export const useMediaStore = defineStore('media', () => {
     [AUDIO]: useFetchState(),
     [IMAGE]: useFetchState(),
   }
-  const initialState: MediaState = {
+  const state: MediaState = reactive({
     results: {
       [IMAGE]: {
         count: 0,
@@ -63,34 +62,11 @@ export const useMediaStore = defineStore('media', () => {
     },
     fetchState: {
       audio: fetchStates[AUDIO].fetchState,
-      image: fetchStates[IMAGE].fetchState,
+      image: fetchStates[AUDIO].fetchState,
     },
     audio: null,
     image: null,
-  }
-
-  const initializeState = () => {
-    if (!isClient) {
-      return reactive(initialState)
-    }
-    const existingMediaState =
-      window?.$nuxt?.context?.$pinia?.state?.value?.media?.state
-    if (existingMediaState) {
-      const stateObject = JSON.parse(
-        JSON.stringify(existingMediaState)
-      ) as MediaState
-      const hydratedState = reactive(stateObject)
-      fetchStates.audio = useFetchState(stateObject.fetchState.audio)
-      fetchStates.image = useFetchState(stateObject.fetchState.image)
-
-      hydratedState.fetchState.audio = fetchStates.audio.fetchState
-      hydratedState.fetchState.image = fetchStates.image.fetchState
-
-      return reactive(hydratedState)
-    }
-    return reactive(initialState)
-  }
-  const state: MediaState = initializeState()
+  })
 
   /* Getters */
 

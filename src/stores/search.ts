@@ -36,36 +36,17 @@ import type {
   FilterItem,
   Filters,
 } from '~/store/types'
-import { isClient } from '~/composables/window'
-
-interface SearchState {
-  searchType: SupportedSearchType
-  searchTerm: string
-  filters: Filters
-}
-const initialState: SearchState = {
-  searchType: ALL_MEDIA,
-  searchTerm: '',
-  filters: clonedeep(filterData),
-}
 
 export const useSearchStore = defineStore('search', () => {
-  const initializeState = () => {
-    if (!isClient) {
-      return reactive(initialState)
-    }
-    const existingSearchState =
-      window?.$nuxt?.context?.$pinia?.state?.value?.search
-    console.log('Existing state: ', existingSearchState)
-    if (existingSearchState) {
-      return reactive(
-        JSON.parse(JSON.stringify(existingSearchState)) as SearchState
-      )
-    }
-    return reactive(initialState)
-  }
-  const state = initializeState()
-  console.log('initialized state to: ', JSON.stringify(state))
+  const state: {
+    searchType: SupportedSearchType
+    searchTerm: string
+    filters: Filters
+  } = reactive({
+    searchType: ALL_MEDIA,
+    searchTerm: '',
+    filters: clonedeep(filterData),
+  })
   const { filters, searchType, searchTerm } = toRefs(state)
 
   // Setters
