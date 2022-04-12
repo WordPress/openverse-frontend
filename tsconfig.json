@@ -25,7 +25,7 @@
     /* Module Resolution Options */
     "moduleResolution": "Node",
     "resolveJsonModule": true,
-    "types": ["@types/jest", "@nuxt/types", "@nuxtjs/i18n"],
+    "types": ["@types/jest", "@nuxt/types", "@nuxtjs/i18n", "@pinia/nuxt"],
     "typeRoots": ["./typings", "./node_modules/@types"],
     "paths": {
       "~/*": ["./src/*"],
@@ -36,8 +36,17 @@
   "include": [
     "**/*.ts",
     "test/proxy.js",
-    "src/components/VLink.vue",
+    "src/components/VButton.vue",
     "src/components/VContentPage.vue",
+    "src/components/VMetaSearch/*.vue",
+    "src/components/VLicenseElements.vue",
+    "src/components/VLink.vue",
+    "src/components/VLoadMore.vue",
+    "src/components/VIcon/VIcon.vue",
+    "src/components/VIconButton/VIconButton.vue",
+    "src/components/VLicense/VLicense.vue",
+    "src/components/VContentReport/VReportDescForm.vue",
+    "src/components/VErrorSection/VErrorImage.vue",
     "src/composables/types.js",
     "src/composables/use-event-listener-outside.js",
     "src/composables/use-active-audio.js",
