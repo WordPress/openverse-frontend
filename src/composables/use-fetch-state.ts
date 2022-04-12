@@ -144,7 +144,7 @@ export const useFetchState = (state: FetchState = initialFetchState) => {
 
 export const updateFetchState = (
   initial: FetchState,
-  action: 'end' | 'finish' | 'start',
+  action: 'end' | 'finish' | 'start' | 'reset',
   option?: string
 ) => {
   const fetchState = useFetchState(initial)
@@ -157,6 +157,9 @@ export const updateFetchState = (
       break
     case 'finish':
       fetchState.setFinished()
+      break
+    case 'reset':
+      fetchState.reset()
       break
   }
   return fetchState.fetchState

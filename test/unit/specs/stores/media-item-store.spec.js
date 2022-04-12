@@ -60,7 +60,7 @@ describe('Media Item Store', () => {
       async (type) => {
         const mediaItemStore = useMediaItemStore()
         const mediaStore = useMediaStore()
-        mediaStore.state.results[type].items = {
+        mediaStore.results[type].items = {
           [`${type}1`]: detailData[type],
         }
         const params = { id: `${type}1`, type }

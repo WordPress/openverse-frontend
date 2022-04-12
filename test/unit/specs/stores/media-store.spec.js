@@ -1,6 +1,6 @@
 import { createPinia, setActivePinia } from 'pinia'
 
-import { useMediaStore } from '~/stores/media'
+import { initialResults, useMediaStore } from '~/stores/media'
 import { useSearchStore } from '~/stores/search'
 import { ALL_MEDIA, AUDIO, IMAGE, supportedMediaTypes } from '~/constants/media'
 import { services } from '~/stores/media/services'
@@ -10,12 +10,6 @@ jest.mock('axios', () => ({
   ...jest.requireActual('axios'),
   isAxiosError: jest.fn((obj) => 'response' in obj),
 }))
-const initialResults = {
-  count: 0,
-  items: {},
-  page: undefined,
-  pageCount: 0,
-}
 
 const uuids = [
   '0dea3af1-27a4-4635-bab6-4b9fb76a59f5',
@@ -77,11 +71,11 @@ describe('Media Store', () => {
       setActivePinia(createPinia())
       const mediaStore = useMediaStore()
 
-      expect(mediaStore.state.results).toEqual({
-        image: initialResults,
-        audio: initialResults,
+      expect(mediaStore.results).toEqual({
+        image: { ...initialResults },
+        audio: { ...initialResults },
       })
-      expect(mediaStore.state.fetchState).toEqual({
+      expect(mediaStore.mediaFetchState).toEqual({
         audio: initialFetchState,
         image: initialFetchState,
       })
@@ -99,23 +93,15 @@ describe('Media Store', () => {
     it('getItemById returns correct item', () => {
       const mediaStore = useMediaStore()
       const expectedItem = { id: 'foo', title: 'ImageFoo' }
-      mediaStore.$patch({
-        state: {
-          results: {
-            image: { items: { foo: expectedItem } },
-          },
-        },
-      })
-      expect(mediaStore.getItemById(IMAGE, 'foo')).toBe(expectedItem)
+      mediaStore.results.image.items = { foo: expectedItem }
+      expect(mediaStore.getItemById(IMAGE, 'foo')).toEqual(expectedItem)
     })
 
     it('resultItems returns correct items', () => {
       const mediaStore = useMediaStore()
-      mediaStore.$patch({
-        state: {
-          results: { [AUDIO]: testResult(AUDIO), [IMAGE]: testResult(IMAGE) },
-        },
-      })
+      mediaStore.results.audio = testResult(AUDIO)
+      mediaStore.results.image = testResult(IMAGE)
+
       expect(mediaStore.resultItems).toEqual({
         [AUDIO]: audioItems,
         [IMAGE]: imageItems,
@@ -123,11 +109,9 @@ describe('Media Store', () => {
     })
     it('allMedia returns correct items', () => {
       const mediaStore = useMediaStore()
-      mediaStore.$patch({
-        state: {
-          results: { [AUDIO]: testResult(AUDIO), image: testResult(IMAGE) },
-        },
-      })
+      mediaStore.results.audio = testResult(AUDIO)
+      mediaStore.results.image = testResult(IMAGE)
+
       expect(mediaStore.allMedia).toEqual([
         imageItems[0],
         audioItems[0],
@@ -147,11 +131,8 @@ describe('Media Store', () => {
      */
     it('allMedia returns items even if there are no images', () => {
       const mediaStore = useMediaStore()
-      mediaStore.$patch({
-        state: {
-          results: { [AUDIO]: testResult(AUDIO) },
-        },
-      })
+      mediaStore.results.audio = testResult(AUDIO)
+
       expect(mediaStore.allMedia).toEqual([
         audioItems[0],
         audioItems[1],
@@ -160,11 +141,8 @@ describe('Media Store', () => {
     })
     it('resultCountsPerMediaType returns correct items for %s', () => {
       const mediaStore = useMediaStore()
-      mediaStore.$patch({
-        state: {
-          results: { [IMAGE]: testResult(IMAGE) },
-        },
-      })
+      mediaStore.results.image = testResult(IMAGE)
+
       // image is first in the returned list
       expect(mediaStore.resultCountsPerMediaType).toEqual([
         [IMAGE, testResult(IMAGE).count],
@@ -181,17 +159,14 @@ describe('Media Store', () => {
       const mediaStore = useMediaStore()
       const searchStore = useSearchStore()
       searchStore.setSearchType(searchType)
-      mediaStore.$patch({
-        state: {
-          results: { [IMAGE]: testResult(IMAGE) },
-        },
-      })
+      mediaStore.results.image = testResult(IMAGE)
+
       expect(mediaStore.resultCount).toEqual(count)
     })
 
     it.each`
       searchType   | fetchState
-      ${ALL_MEDIA} | ${{ canFetch: false, hasStarted: true, fetchingError: 'Error', isFetching: true, isFinished: false }}
+      ${ALL_MEDIA} | ${{ canFetch: false, fetchingError: 'Error', hasStarted: true, isFetching: true, isFinished: false }}
       ${AUDIO}     | ${{ canFetch: false, fetchingError: 'Error', hasStarted: true, isFetching: false, isFinished: true }}
       ${IMAGE}     | ${{ canFetch: false, fetchingError: null, hasStarted: true, isFetching: true, isFinished: false }}
     `(
@@ -200,8 +175,8 @@ describe('Media Store', () => {
         const mediaStore = useMediaStore()
         const searchStore = useSearchStore()
         searchStore.setSearchType(searchType)
-        mediaStore.test.fetchStates.audio.endFetching('Error')
-        mediaStore.test.fetchStates.image.startFetching()
+        mediaStore._updateFetchState(AUDIO, 'end', 'Error')
+        mediaStore._updateFetchState(IMAGE, 'start')
 
         expect(mediaStore.fetchState).toEqual(fetchState)
       }
@@ -236,7 +211,7 @@ describe('Media Store', () => {
         creator: 'bar',
         tags: [],
       }
-      mediaStore.state.results.image.items = { [img1.id]: img1 }
+      mediaStore.results.image.items = { [img1.id]: img1 }
       const params = {
         media: { [img2.id]: img2 },
         mediaCount: 2,
@@ -244,20 +219,20 @@ describe('Media Store', () => {
         shouldPersistMedia: true,
         mediaType: IMAGE,
       }
-      mediaStore.test.setMedia(params)
+      mediaStore.setMedia(params)
 
-      expect(mediaStore.state.results.image.items).toEqual({
+      expect(mediaStore.results.image.items).toEqual({
         [img1.id]: img1,
         [img2.id]: img2,
       })
-      expect(mediaStore.state.results.image.count).toBe(params.mediaCount)
-      expect(mediaStore.state.results.image.page).toBe(params.page)
+      expect(mediaStore.results.image.count).toBe(params.mediaCount)
+      expect(mediaStore.results.image.page).toBe(params.page)
     })
 
     it('setMedia updates state not persisting images', () => {
       const mediaStore = useMediaStore()
       const img = { title: 'Foo', creator: 'bar', tags: [] }
-      mediaStore.state.results.image.items = ['img1']
+      mediaStore.results.image.items = ['img1']
       const params = {
         media: [img],
         mediaCount: 2,
@@ -265,9 +240,9 @@ describe('Media Store', () => {
         shouldPersistMedia: false,
         mediaType: IMAGE,
       }
-      mediaStore.test.setMedia(params)
+      mediaStore.setMedia(params)
 
-      expect(mediaStore.state.results.image).toEqual({
+      expect(mediaStore.results.image).toEqual({
         items: [img],
         count: params.mediaCount,
         page: params.page,
@@ -278,19 +253,19 @@ describe('Media Store', () => {
       const mediaStore = useMediaStore()
 
       const img = { title: 'Foo', creator: 'bar', tags: [] }
-      mediaStore.state.results.image.items = ['img1']
+      mediaStore.results.image.items = ['img1']
       const params = { media: [img], mediaType: IMAGE }
 
-      mediaStore.test.setMedia(params)
+      mediaStore.setMedia(params)
 
-      expect(mediaStore.state.results.image.count).toBe(0)
-      expect(mediaStore.state.results.image.page).toBe(1)
+      expect(mediaStore.results.image.count).toBe(0)
+      expect(mediaStore.results.image.page).toBe(1)
     })
 
     it('mediaNotFound throws an error', () => {
       const mediaStore = useMediaStore()
 
-      expect(() => mediaStore.test.mediaNotFound(AUDIO)).toThrow(
+      expect(() => mediaStore.mediaNotFound(AUDIO)).toThrow(
         'Media of type audio not found'
       )
     })
@@ -314,7 +289,7 @@ describe('Media Store', () => {
           page: 1,
           pageCount: expectedApiResult.page_count,
         }
-        const actualResult = mediaStore.state.results[mediaType]
+        const actualResult = mediaStore.results[mediaType]
         expect(actualResult).toEqual(expectedResult)
       }
     )
@@ -339,7 +314,7 @@ describe('Media Store', () => {
       }
       await mediaStore.fetchSingleMediaType(params)
 
-      expect(mediaStore.state.results[mediaType]).toEqual(initialResults)
+      expect(mediaStore.results[mediaType]).toEqual(initialResults)
       expect(mediaStore.fetchState).toEqual({
         isFetching: false,
         canFetch: true,
@@ -359,7 +334,7 @@ describe('Media Store', () => {
       }
       const expectedResult = searchResults(mediaType)
       await mediaStore.fetchSingleMediaType(params)
-      expect(mediaStore.state.results[mediaType]).toEqual({
+      expect(mediaStore.results[mediaType]).toEqual({
         count: expectedResult.result_count,
         items: expectedResult.results,
         page: 1,
@@ -387,7 +362,7 @@ describe('Media Store', () => {
       mediaStore.fetchMedia()
       mediaStore.clearMedia()
       supportedMediaTypes.forEach((mediaType) => {
-        expect(mediaStore.state.results[mediaType]).toEqual(initialResults)
+        expect(mediaStore.results[mediaType]).toEqual(initialResults)
       })
     })
 
@@ -395,8 +370,8 @@ describe('Media Store', () => {
       const mediaType = AUDIO
       const error = { response: { status: 500, message: 'Server error' } }
       const mediaStore = useMediaStore()
-      mediaStore.test.handleMediaError({ mediaType, error })
-      expect(mediaStore.state.fetchState[mediaType].fetchingError).toEqual(
+      mediaStore.handleMediaError({ mediaType, error })
+      expect(mediaStore.mediaFetchState[mediaType].fetchingError).toEqual(
         'There was a problem with our servers'
       )
     })
@@ -405,8 +380,8 @@ describe('Media Store', () => {
       const mediaType = AUDIO
       const error = { response: { status: 403 } }
       const mediaStore = useMediaStore()
-      mediaStore.test.handleMediaError({ mediaType, error })
-      expect(mediaStore.state.fetchState[mediaType].fetchingError).toEqual(
+      mediaStore.handleMediaError({ mediaType, error })
+      expect(mediaStore.mediaFetchState[mediaType].fetchingError).toEqual(
         'Request failed with status 403'
       )
     })
@@ -416,7 +391,7 @@ describe('Media Store', () => {
 
       const error = new Error('Server did not respond')
       await expect(
-        mediaStore.test.handleMediaError({ mediaType: AUDIO, error })
+        mediaStore.handleMediaError({ mediaType: AUDIO, error })
       ).rejects.toThrow(error.message)
     })
   })
