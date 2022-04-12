@@ -69,17 +69,15 @@
       :image-height="imageHeight"
       :image-type="imageType"
     />
-    <VRelatedImages :image-id="imageId" />
+    <VRelatedImages :image-id="image.id" />
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 
-import { computed } from '@nuxtjs/composition-api'
-
 import { IMAGE } from '~/constants/media'
-import { useMediaStore } from '~/stores/media'
+import { useMediaItemStore } from '~/stores/media/media-item'
 
 import VButton from '~/components/VButton.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'
@@ -112,11 +110,6 @@ const VImageDetailsPage = {
       sketchFabfailure: false,
     }
   },
-  setup() {
-    const mediaStore = useMediaStore()
-    const image = computed(() => mediaStore.state.image)
-    return { image }
-  },
   computed: {
     sketchFabUid() {
       if (this.image?.source !== 'sketchfab' || this.sketchFabfailure) {
@@ -129,14 +122,17 @@ const VImageDetailsPage = {
   },
   async asyncData({ app, error, route, $pinia }) {
     const imageId = route.params.id
-    const mediaStore = useMediaStore($pinia)
+    const mediaItemStore = useMediaItemStore($pinia)
     try {
-      await mediaStore.fetchMediaItem({
+      await mediaItemStore.fetchMediaItem({
         id: imageId,
-        mediaType: IMAGE,
+        type: IMAGE,
       })
+      /** @type {import('~/models/media').ImageDetail} */
+      const image = mediaItemStore.mediaItem
+      console.log('image:', image)
       return {
-        imageId: imageId,
+        image,
       }
     } catch (err) {
       const errorMessage = app.i18n.t('error.image-not-found', {

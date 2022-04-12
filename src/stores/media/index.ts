@@ -32,8 +32,6 @@ export interface MediaState {
     audio: FetchState
     image: FetchState
   }
-  audio: DetailFromMediaType<'audio'> | null
-  image: DetailFromMediaType<'image'> | null
 }
 
 export const useMediaStore = defineStore('media', () => {
@@ -64,8 +62,6 @@ export const useMediaStore = defineStore('media', () => {
       audio: fetchStates[AUDIO].fetchState,
       image: fetchStates[AUDIO].fetchState,
     },
-    audio: null,
-    image: null,
   })
 
   /* Getters */
@@ -328,31 +324,7 @@ export const useMediaStore = defineStore('media', () => {
       await handleMediaError({ mediaType, error })
     }
   }
-  /**
-   *
-   */
-  const fetchMediaItem = async (params: {
-    mediaType: SupportedMediaType
-    id: string
-  }) => {
-    const { mediaType } = params
-    try {
-      // TODO: Fix this!
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      state[mediaType] = await services[mediaType].getMediaDetail(params.id)
-    } catch (error: unknown) {
-      state[mediaType] = null
-      if (axios.isAxiosError(error) && error.response?.status === 404) {
-        mediaNotFound(mediaType)
-      } else {
-        await handleMediaError({ mediaType, error })
-      }
-    }
-  }
-  /**
-   *
-   */
+
   const handleMediaError = async ({
     mediaType,
     error,
@@ -387,7 +359,6 @@ export const useMediaStore = defineStore('media', () => {
     allMedia,
 
     fetchSingleMediaType,
-    fetchMediaItem,
     fetchMedia,
     clearMedia,
 

@@ -1,10 +1,10 @@
 import { createPinia, setActivePinia } from 'pinia'
 
 import { useMediaStore } from '~/stores/media'
-import { ALL_MEDIA, AUDIO, IMAGE, supportedMediaTypes } from '~/constants/media'
-
 import { useSearchStore } from '~/stores/search'
+import { ALL_MEDIA, AUDIO, IMAGE, supportedMediaTypes } from '~/constants/media'
 import { services } from '~/stores/media/services'
+import { initialFetchState } from '~/composables/use-fetch-state'
 
 jest.mock('axios', () => ({
   ...jest.requireActual('axios'),
@@ -15,13 +15,6 @@ const initialResults = {
   items: {},
   page: undefined,
   pageCount: 0,
-}
-const initialFetchState = {
-  canFetch: true,
-  fetchingError: null,
-  hasStarted: false,
-  isFetching: false,
-  isFinished: false,
 }
 
 const uuids = [
@@ -53,7 +46,6 @@ const testResult = (mediaType) => ({
   pageCount: 20,
 })
 
-const detailData = { [AUDIO]: 'audioDetails', [IMAGE]: 'imageDetails' }
 const searchResults = (mediaType) => ({
   results: testResultItems(mediaType),
   result_count: 22,
@@ -77,9 +69,6 @@ for (const mediaType of [AUDIO, IMAGE]) {
   services[mediaType].search.mockImplementation(() =>
     Promise.resolve({ ...searchResults(mediaType) })
   )
-  services[mediaType].getMediaDetail.mockImplementation(() =>
-    Promise.resolve(detailData[mediaType])
-  )
 }
 
 describe('Media Store', () => {
@@ -96,8 +85,6 @@ describe('Media Store', () => {
         audio: initialFetchState,
         image: initialFetchState,
       })
-      expect(mediaStore.state.audio).toEqual(null)
-      expect(mediaStore.state.image).toEqual(null)
     })
   })
 
@@ -403,50 +390,6 @@ describe('Media Store', () => {
         expect(mediaStore.state.results[mediaType]).toEqual(initialResults)
       })
     })
-
-    it.each(supportedMediaTypes)(
-      'fetchMediaItem (%s) on success',
-      async (mediaType) => {
-        const mediaStore = useMediaStore()
-
-        const params = { id: 'foo', mediaType }
-        await mediaStore.fetchMediaItem(params)
-        expect(mediaStore.state[mediaType]).toEqual(detailData[mediaType])
-      }
-    )
-
-    it.each(supportedMediaTypes)(
-      'fetchMediaItem throws not found error on request error',
-      async (mediaType) => {
-        const expectedErrorMessage = 'error'
-
-        services[mediaType].getMediaDetail.mockImplementationOnce(() =>
-          Promise.reject(new Error(expectedErrorMessage))
-        )
-
-        const mediaStore = useMediaStore()
-
-        const params = { id: 'foo', mediaType }
-        await expect(() => mediaStore.fetchMediaItem(params)).rejects.toThrow(
-          expectedErrorMessage
-        )
-      }
-    )
-
-    it.each(supportedMediaTypes)(
-      'fetchMediaItem on 404 sets fetchingError and throws a new error',
-      async (mediaType) => {
-        services[mediaType].getMediaDetail.mockImplementationOnce(() =>
-          Promise.reject({ response: { status: 404 } })
-        )
-
-        const mediaStore = useMediaStore()
-        const params = { id: 'foo', mediaType }
-        await expect(() => mediaStore.fetchMediaItem(params)).rejects.toThrow(
-          `Media of type ${mediaType} not found`
-        )
-      }
-    )
 
     it('handleMediaError handles 500 error', () => {
       const mediaType = AUDIO
