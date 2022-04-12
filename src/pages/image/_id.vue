@@ -130,7 +130,6 @@ const VImageDetailsPage = {
       })
       /** @type {import('~/models/media').ImageDetail} */
       const image = mediaItemStore.mediaItem
-      console.log('image:', image)
       return {
         image,
       }
