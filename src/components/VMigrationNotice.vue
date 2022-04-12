@@ -1,7 +1,7 @@
 <template>
   <VNotificationBanner
-    v-show="isReferredFromCc"
     id="cc-referral"
+    :enabled="isReferredFromCc"
     variant="announcement"
   >
     {{

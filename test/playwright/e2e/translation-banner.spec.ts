@@ -23,7 +23,7 @@ test.describe('translation banner', () => {
   test('Can close the translation banner', async ({ page }) => {
     await page.goto('/ru/search/')
     await page.click(
-      '[data-testid="banner-translation-ru"] [aria-label="Закрыть"]',
+      '[data-testid="banner-translation-ru"] [aria-label="Закрыть"]:visible',
       { timeout: 100 }
     )
 

@@ -1,7 +1,7 @@
 <template>
   <VNotificationBanner
-    v-show="needsTranslationBanner"
     :id="bannerKey"
+    :enabled="needsTranslationBanner"
     variant="informational"
   >
     {{

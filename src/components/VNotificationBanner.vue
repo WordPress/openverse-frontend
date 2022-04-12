@@ -1,6 +1,6 @@
 <template>
   <div
-    v-show="shouldShow"
+    v-show="enabled && shouldShow"
     class="px-4 md:px-7 py-2 flex items-center justify-between"
     :class="$style[variant]"
     :data-testid="`banner-${id}`"
@@ -64,6 +64,10 @@ export default defineComponent({
     },
     id: {
       type: String,
+      required: true,
+    },
+    enabled: {
+      type: Boolean,
       required: true,
     },
   },

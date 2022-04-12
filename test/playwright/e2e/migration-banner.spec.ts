@@ -24,4 +24,21 @@ test.describe('migration banner', () => {
     ])
     await expect(migrationNotice).toBeHidden()
   })
+
+  test('migration banner is dismissable and stays dismissed', async ({
+    page,
+  }) => {
+    await page.goto('/?referrer=creativecommons.org')
+
+    const migrationNotice = page.locator('[data-testid="banner-cc-referral"]')
+    await expect(migrationNotice).toBeVisible({ timeout: 100 })
+
+    await migrationNotice
+      .locator('[aria-label="Close"]:visible')
+      .click({ timeout: 100 })
+    await expect(migrationNotice).not.toBeVisible({ timeout: 100 })
+
+    await page.reload()
+    await expect(migrationNotice).not.toBeVisible({ timeout: 100 })
+  })
 })
