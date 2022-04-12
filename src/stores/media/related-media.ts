@@ -1,50 +1,48 @@
 import { defineStore } from 'pinia'
-import { reactive, Ref, ref, toRefs } from '@nuxtjs/composition-api'
 
-import { FetchState, useFetchState } from '~/composables/use-fetch-state'
+import {
+  FetchState,
+  initialFetchState,
+  updateFetchState,
+} from '~/composables/use-fetch-state'
 import { services } from '~/stores/media/services'
 import type { DetailFromMediaType, Media } from '~/models/media'
 import type { SupportedMediaType } from '~/constants/media'
 
 interface RelatedMediaState {
+  mainMediaId: null | string
   media: Media[]
   fetchState: FetchState
 }
-export const useRelatedMediaStore = defineStore('related-media', () => {
-  /* State */
-  const mainMediaId: Ref<string | null> = ref(null)
-  const relatedFetchState = useFetchState()
-  const state: RelatedMediaState = reactive({
+export const useRelatedMediaStore = defineStore('related-media', {
+  state: (): RelatedMediaState => ({
+    mainMediaId: null,
+    fetchState: { ...initialFetchState },
     media: [],
-    fetchState: relatedFetchState.fetchState,
-  })
-  const { media, fetchState } = toRefs(state)
-
-  /* Getters */
-  const getItemById = (id: string) => state.media.find((item) => item.id === id)
-
-  /* Actions */
-  const fetchMedia = async (mediaType: SupportedMediaType, id: string) => {
-    mainMediaId.value = id
-    relatedFetchState.startFetching()
-    let media: DetailFromMediaType<typeof mediaType>[] = []
-    try {
-      media = (await services[mediaType].getRelatedMedia<typeof mediaType>(id))
-        .results
-      relatedFetchState.endFetching()
-    } catch (error) {
-      relatedFetchState.endFetching(
-        `Could not fetch related ${mediaType} for id ${id}`
-      )
-    } finally {
-      state.media = media
-    }
-  }
-  return {
-    media,
-    fetchState,
-
-    getItemById,
-    fetchMedia,
-  }
+  }),
+  getters: {
+    getItemById: (state) => (id: string) =>
+      state.media.find((item) => item.id === id),
+  },
+  actions: {
+    async fetchMedia(mediaType: SupportedMediaType, id: string) {
+      this.mainMediaId = id
+      this.fetchState = updateFetchState(this.fetchState, 'start')
+      let media: DetailFromMediaType<typeof mediaType>[] = []
+      try {
+        media = (
+          await services[mediaType].getRelatedMedia<typeof mediaType>(id)
+        ).results
+        this.fetchState = updateFetchState(this.fetchState, 'end')
+      } catch (error) {
+        this.fetchState = updateFetchState(
+          this.fetchState,
+          'end',
+          `Could not fetch related ${mediaType} for id ${id}`
+        )
+      } finally {
+        this.media = media
+      }
+    },
+  },
 })
