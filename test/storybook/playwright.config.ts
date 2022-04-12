@@ -12,7 +12,7 @@ addAliases({
 const config: PlaywrightTestConfig = {
   webServer: {
     command: 'pnpm storybook',
-    timeout: 2 * 60_000 * 5, // 5 minutes
+    timeout: 60_000 * 5, // 5 minutes
     port: 54000,
     reuseExistingServer: !process.env.CI || process.env.PWDEBUG === '1',
   },
