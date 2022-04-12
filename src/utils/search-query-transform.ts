@@ -17,7 +17,7 @@ import type {
   ApiQueryFilters,
   ApiQueryKeys,
   ApiQueryParams,
-} from '~/stores/types'
+} from '~/store/types'
 
 const filterPropertyMappings: Record<FilterCategory, ApiQueryKeys> = {
   licenses: 'license',

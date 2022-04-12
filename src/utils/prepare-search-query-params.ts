@@ -1,4 +1,4 @@
-import type { ApiQueryParams } from '~/stores/types'
+import type { ApiQueryParams } from '~/store/types'
 
 const NON_API_PARAMS = ['shouldPersistMedia']
 

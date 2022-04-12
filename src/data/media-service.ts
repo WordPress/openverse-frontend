@@ -1,8 +1,7 @@
 import { decodeMediaData } from '~/utils/decode-media-data'
 import { VersionedApiService } from '~/data/api-service'
 
-import type { ApiQueryParams } from '~/stores/types'
-
+import type { ApiQueryParams } from '~/store/types'
 import type { Media } from '~/models/media'
 
 import type { AxiosResponse } from 'axios'

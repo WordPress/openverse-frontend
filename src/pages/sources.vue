@@ -137,8 +137,8 @@
 import sortBy from 'lodash.sortby'
 import { computed } from '@nuxtjs/composition-api'
 
-import { useGetLocaleFormattedNumber } from '~/composables/use-get-locale-formatted-number'
 import { useProviderStore } from '~/stores/provider'
+import { useGetLocaleFormattedNumber } from '~/composables/use-get-locale-formatted-number'
 
 import VButton from '~/components/VButton.vue'
 import VLink from '~/components/VLink.vue'

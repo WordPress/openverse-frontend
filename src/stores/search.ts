@@ -34,7 +34,7 @@ import {
   mediaUniqueFilterKeys,
 } from '~/constants/filters'
 import type { SupportedSearchType } from '~/constants/media'
-import type { ApiQueryParams } from '~/stores/types'
+import type { ApiQueryParams } from '~/store/types'
 import { useProviderStore } from '~/stores/provider'
 
 export const useSearchStore = defineStore('search', () => {
