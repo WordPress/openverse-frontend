@@ -34,7 +34,6 @@ export default defineComponent({
         mediaStore.fetchState.canFetch &&
         mediaStore.resultCount > 0
     )
-
     const onLoadMore = async () => {
       if (!canLoadMore.value) return
 
