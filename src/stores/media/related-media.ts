@@ -14,16 +14,19 @@ interface RelatedMediaState {
   media: Media[]
   fetchState: FetchState
 }
+
 export const useRelatedMediaStore = defineStore('related-media', {
   state: (): RelatedMediaState => ({
     mainMediaId: null,
     fetchState: { ...initialFetchState },
     media: [],
   }),
+
   getters: {
     getItemById: (state) => (id: string) =>
       state.media.find((item) => item.id === id),
   },
+
   actions: {
     async fetchMedia(mediaType: SupportedMediaType, id: string) {
       this.mainMediaId = id
