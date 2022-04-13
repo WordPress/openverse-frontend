@@ -14,6 +14,7 @@ export const keycodes = Object.freeze({
   Spacebar: ' ',
   Home: 'Home',
   End: 'End',
+  Enter: 'Enter',
   ArrowUp: 'ArrowUp',
   ArrowDown: 'ArrowDown',
   ArrowLeft: 'ArrowLeft',

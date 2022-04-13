@@ -1,0 +1,44 @@
+import {
+  ArgsTable,
+  Canvas,
+  Description,
+  Meta,
+  Story,
+} from '@storybook/addon-docs'
+
+import VTabs from '~/components/VTabs/VTabs.vue'
+
+<Meta title="Components/VTabs" component={VTabs} />
+
+export const Template = (args) => ({
+  template: `<VTabs>
+<template #tabs>
+<VTab>Tab1</VTab><VTab>Tab2</VTab>
+</template>
+<template #default>
+<VTabPanel>Page 1 content</VTabPanel>
+<VTabPanel>Page 2 content</VTabPanel>
+</template>
+</VTabs>`,
+  components: { VTabs },
+  setup() {
+    return { args }
+  },
+})
+
+# Tabs
+
+<Description of={VTabs} />
+
+<ArgsTable of={VTabs} />
+
+<Canvas>
+  <Story
+    name="Default"
+    args={{
+      selectedIndex: 1,
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
