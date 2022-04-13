@@ -32,7 +32,7 @@ export interface MediaState {
     audio: MediaStoreResult
     image: MediaStoreResult
   }
-  fetchState: {
+  mediaFetchState: {
     audio: FetchState
     image: FetchState
   }
@@ -46,7 +46,7 @@ export const initialResults = Object.freeze({
 }) as MediaStoreResult
 
 export const useMediaStore = defineStore('media', {
-  state: () => ({
+  state: (): MediaState => ({
     results: {
       [AUDIO]: { ...initialResults },
       [IMAGE]: { ...initialResults },

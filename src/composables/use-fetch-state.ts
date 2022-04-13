@@ -83,6 +83,8 @@ export const useFetchState = (state: FetchState = initialFetchState) => {
   })
   const reset = () => {
     fetchStatus.value = statuses.IDLE
+    fetchError.value = null
+    isFinished.value = false
   }
   const startFetching = () => {
     fetchStatus.value = statuses.FETCHING
