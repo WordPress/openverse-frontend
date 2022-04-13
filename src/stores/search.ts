@@ -17,7 +17,6 @@ import {
   AUDIO,
   IMAGE,
   SupportedMediaType,
-  supportedMediaTypes,
   supportedSearchTypes,
 } from '~/constants/media'
 import {
@@ -35,7 +34,6 @@ import {
 } from '~/constants/filters'
 import type { SupportedSearchType } from '~/constants/media'
 import type { ApiQueryParams } from '~/store/types'
-import { useProviderStore } from '~/stores/provider'
 
 export const useSearchStore = defineStore('search', () => {
   const state: {
@@ -48,20 +46,6 @@ export const useSearchStore = defineStore('search', () => {
     filters: clonedeep(filterData),
   })
   const { filters, searchType, searchTerm } = toRefs(state)
-  const providersData = computed(() => useProviderStore().providers)
-
-  watch(
-    providersData,
-    (newProvidersData) => {
-      supportedMediaTypes.forEach((mediaType) => {
-        initProviderFilters({
-          mediaType,
-          providers: newProvidersData[mediaType],
-        })
-      })
-    },
-    { deep: true, immediate: true }
-  )
 
   // Setters
   const setSearchType = (type: SupportedSearchType) => {

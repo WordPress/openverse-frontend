@@ -18,6 +18,7 @@ import {
   initialFetchState,
   updateFetchState,
 } from '~/composables/use-fetch-state'
+import { useSearchStore } from '~/stores/search'
 
 export interface ProviderState {
   providers: {
@@ -123,6 +124,11 @@ export const useProviderStore = defineStore('provider', {
       try {
         const res = await providerServices[mediaType].getProviderStats()
         sortedProviders = sortProviders(res.data)
+        const searchStore = useSearchStore()
+        searchStore.initProviderFilters({
+          mediaType,
+          providers: sortedProviders,
+        })
         this._updateFetchState(mediaType, 'end')
       } catch (error: unknown) {
         let errorMessage = `There was an error fetching media providers for ${mediaType}`
