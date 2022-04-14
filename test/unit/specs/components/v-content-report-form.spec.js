@@ -128,6 +128,7 @@ describe('VContentReportForm', () => {
     expect(serviceMock.sendReport).toHaveBeenCalledWith({
       identifier: props.media.id,
       reason: 'mature',
+      mediaType: props.media.frontendMediaType,
       description: '',
     })
   })
@@ -146,6 +147,7 @@ describe('VContentReportForm', () => {
     expect(serviceMock.sendReport).toHaveBeenCalledWith({
       identifier: props.media.id,
       reason: 'other',
+      mediaType: 'image',
       description,
     })
   })
