@@ -34,10 +34,8 @@
     <pre><code>{{ flags }}</code></pre>
 
     <h2>{{ $t('pref-page.content-filtering') }}</h2>
-    <template
-      v-for="featName in ['feat_enabled', 'feat_disabled', 'feat_switchable']"
-    >
-      <template v-for="featState in [ON, OFF]">
+    <template v-for="(_, featName) in flags">
+      <template v-for="featState in FEATURE_STATES">
         <i18n
           v-if="featureState(featName) === featState"
           :key="`${featName}-${featState}`"
@@ -60,7 +58,7 @@
 import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
 
 import { useFeatureFlagStore } from '~/stores/feature-flag'
-import { SWITCHABLE, ON, OFF } from '~/constants/feature-flag'
+import { SWITCHABLE, ON, OFF, FEATURE_STATES } from '~/constants/feature-flag'
 
 import VContentPage from '~/components/VContentPage.vue'
 import VButton from '~/components/VButton.vue'
@@ -104,6 +102,7 @@ export default defineComponent({
       ON,
       OFF,
       SWITCHABLE,
+      FEATURE_STATES,
 
       flags,
       featureState: featureFlagStore.featureState,
