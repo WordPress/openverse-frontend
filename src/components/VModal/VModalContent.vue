@@ -56,13 +56,7 @@
 </template>
 
 <script>
-import {
-  defineComponent,
-  toRefs,
-  ref,
-  computed,
-  watch,
-} from '@nuxtjs/composition-api'
+import { defineComponent, toRefs, ref, computed } from '@nuxtjs/composition-api'
 import { FocusTrap } from 'focus-trap-vue'
 
 import { useDialogContent } from '~/composables/use-dialog-content'
