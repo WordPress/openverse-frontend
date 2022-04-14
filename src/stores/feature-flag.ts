@@ -9,22 +9,23 @@ import type { FeatureState } from '~/constants/feature-flag'
 import { ENABLED, SWITCHABLE, ON, OFF } from '~/constants/feature-flag'
 
 export interface FeatureFlagState {
-  flags: Record<string, FeatureFlag>
+  flags: Record<keyof typeof featureData['features'], FeatureFlag>
 }
 
 const FEATURE_FLAG = 'feature_flag'
 
 export const useFeatureFlagStore = defineStore(FEATURE_FLAG, {
-  state: () => ({
-    flags: featureData.features as Record<string, FeatureFlag>,
-  }),
+  state: () =>
+    ({
+      flags: featureData.features,
+    } as FeatureFlagState),
   getters: {
     /**
      * Get the state of the named feature, based on config and cookie.
      */
     featureState:
       (state: FeatureFlagState) =>
-      (name: string): FeatureState => {
+      (name: keyof typeof featureData['features']): FeatureState => {
         if (name in state.flags) {
           const flag = state.flags[name]
           if (flag.status === SWITCHABLE)
@@ -66,7 +67,10 @@ export const useFeatureFlagStore = defineStore(FEATURE_FLAG, {
      * @param name - the name of the flag to toggle
      * @param targetState - the desired state of the feature flag
      */
-    toggleFeature(name: string, targetState: FeatureState) {
+    toggleFeature(
+      name: keyof typeof featureData['features'],
+      targetState: FeatureState
+    ) {
       const flag = this.flags[name]
       if (flag.status === SWITCHABLE) flag.preferredState = targetState
       else warn(`Cannot set preferred state for non-switchable flag: ${name}`)
