@@ -13,6 +13,7 @@ import { services } from '~/stores/media/services'
 import { useMediaStore } from '~/stores/media/index'
 import { IMAGE } from '~/constants/media'
 import { useRelatedMediaStore } from '~/stores/media/related-media'
+import { useProviderStore } from '~/stores/provider'
 
 export interface MediaItemState {
   mediaItem: Media | null
@@ -45,6 +46,17 @@ export const useMediaItemStore = defineStore('media-item', {
           this._updateFetchState('start')
           this.mediaItem = await services[type].getMediaDetail(id)
           this.mediaType = type
+          const providerStore = useProviderStore()
+          this.mediaItem.providerName = providerStore.getProviderName(
+            this.mediaItem.provider,
+            this.mediaType
+          )
+          if (this.mediaItem.source) {
+            this.mediaItem.sourceName = providerStore.getProviderName(
+              this.mediaItem.source,
+              this.mediaType
+            )
+          }
           this._updateFetchState('end')
         } catch (error: unknown) {
           this.mediaItem = null
