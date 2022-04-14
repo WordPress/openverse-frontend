@@ -3,7 +3,7 @@ import { createPinia, setActivePinia } from 'pinia'
 import { initialFetchState } from '~/composables/use-fetch-state'
 import { AUDIO, IMAGE, supportedMediaTypes } from '~/constants/media'
 import { useMediaStore } from '~/stores/media'
-import { useMediaItemStore } from '~/stores/media/media-item'
+import { useSingleResultStore } from '~/stores/media/single-result'
 import { services } from '~/stores/media/services'
 
 const detailData = {
@@ -33,10 +33,10 @@ describe('Media Item Store', () => {
   describe('state', () => {
     it('sets default state', () => {
       setActivePinia(createPinia())
-      const mediaItemStore = useMediaItemStore()
-      expect(mediaItemStore.fetchState).toEqual(initialFetchState)
-      expect(mediaItemStore.mediaItem).toEqual(null)
-      expect(mediaItemStore.mediaType).toEqual(IMAGE)
+      const singleResultStore = useSingleResultStore()
+      expect(singleResultStore.fetchState).toEqual(initialFetchState)
+      expect(singleResultStore.mediaItem).toEqual(null)
+      expect(singleResultStore.mediaType).toEqual(IMAGE)
     })
   })
 
@@ -49,22 +49,22 @@ describe('Media Item Store', () => {
     it.each(supportedMediaTypes)(
       'fetchMediaItem (%s) fetches a new media if none is found in the store',
       async (type) => {
-        const mediaItemStore = useMediaItemStore()
+        const singleResultStore = useSingleResultStore()
 
-        await mediaItemStore.fetchMediaItem(type, 'foo')
-        expect(mediaItemStore.mediaItem).toEqual(detailData[type])
+        await singleResultStore.fetchMediaItem(type, 'foo')
+        expect(singleResultStore.mediaItem).toEqual(detailData[type])
       }
     )
     it.each(supportedMediaTypes)(
       'fetchMediaItem (%s) re-uses existing media from the store',
       async (type) => {
-        const mediaItemStore = useMediaItemStore()
+        const singleResultStore = useSingleResultStore()
         const mediaStore = useMediaStore()
         mediaStore.results[type].items = {
           [`${type}1`]: detailData[type],
         }
-        await mediaItemStore.fetchMediaItem(type, `${type}1`)
-        expect(mediaItemStore.mediaItem).toEqual(detailData[type])
+        await singleResultStore.fetchMediaItem(type, `${type}1`)
+        expect(singleResultStore.mediaItem).toEqual(detailData[type])
       }
     )
 
@@ -77,10 +77,10 @@ describe('Media Item Store', () => {
           Promise.reject(new Error(expectedErrorMessage))
         )
 
-        const mediaItemStore = useMediaItemStore()
+        const singleResultStore = useSingleResultStore()
 
         await expect(() =>
-          mediaItemStore.fetchMediaItem(type, 'foo')
+          singleResultStore.fetchMediaItem(type, 'foo')
         ).rejects.toThrow(expectedErrorMessage)
       }
     )
@@ -91,10 +91,10 @@ describe('Media Item Store', () => {
         services[type].getMediaDetail.mockImplementationOnce(() =>
           Promise.reject({ response: { status: 404 } })
         )
-        const mediaItemStore = useMediaItemStore()
+        const singleResultStore = useSingleResultStore()
         const id = 'foo'
         await expect(() =>
-          mediaItemStore.fetchMediaItem(type, id)
+          singleResultStore.fetchMediaItem(type, id)
         ).rejects.toThrow(`Media of type ${type} with id ${id} not found`)
       }
     )

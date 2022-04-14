@@ -24,7 +24,7 @@ import { computed } from '@nuxtjs/composition-api'
 import { AUDIO } from '~/constants/media'
 
 import { useRelatedMediaStore } from '~/stores/media/related-media'
-import { useMediaItemStore } from '~/stores/media/media-item'
+import { useSingleResultStore } from '~/stores/media/single-result'
 
 import VAudioDetails from '~/components/VAudioDetails/VAudioDetails.vue'
 import VAudioTrack from '~/components/VAudioTrack/VAudioTrack.vue'
@@ -56,11 +56,11 @@ const AudioDetailPage = {
   },
   async asyncData({ route, error, app, $pinia }) {
     const audioId = route.params.id
-    const mediaItemStore = useMediaItemStore($pinia)
+    const singleResultStore = useSingleResultStore($pinia)
 
     try {
-      await mediaItemStore.fetchMediaItem(AUDIO, audioId)
-      const audio = mediaItemStore.mediaItem
+      await singleResultStore.fetchMediaItem(AUDIO, audioId)
+      const audio = singleResultStore.mediaItem
 
       return {
         audio,

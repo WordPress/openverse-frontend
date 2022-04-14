@@ -17,7 +17,7 @@ import { AUDIO } from '~/constants/media'
 import { useActiveAudio } from '~/composables/use-active-audio'
 import { useActiveMediaStore } from '~/stores/active-media'
 import { useMediaStore } from '~/stores/media'
-import { useMediaItemStore } from '~/stores/media/media-item'
+import { useSingleResultStore } from '~/stores/media/single-result'
 
 import VIconButton from '~/components/VIconButton/VIconButton.vue'
 import VGlobalAudioTrack from '~/components/VAudioTrack/VGlobalAudioTrack.vue'
@@ -43,9 +43,9 @@ export default {
       if (audioFromMediaStore) {
         return audioFromMediaStore
       }
-      const mediaItemStore = useMediaItemStore()
-      if (mediaItemStore.mediaItem?.id === trackId) {
-        return mediaItemStore.mediaItem
+      const singleResultStore = useSingleResultStore()
+      if (singleResultStore.mediaItem?.id === trackId) {
+        return singleResultStore.mediaItem
       }
     }
     const audio = computed(() => {

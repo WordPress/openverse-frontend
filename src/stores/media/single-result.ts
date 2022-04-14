@@ -21,7 +21,7 @@ export interface MediaItemState {
   fetchState: FetchState
 }
 
-export const useMediaItemStore = defineStore('media-item', {
+export const useSingleResultStore = defineStore('single-result', {
   state: (): MediaItemState => ({
     mediaItem: null,
     mediaType: IMAGE,

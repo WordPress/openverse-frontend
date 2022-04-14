@@ -79,7 +79,7 @@ import axios from 'axios'
 import { computed } from '@nuxtjs/composition-api'
 
 import { IMAGE } from '~/constants/media'
-import { useMediaItemStore } from '~/stores/media/media-item'
+import { useSingleResultStore } from '~/stores/media/single-result'
 import { useRelatedMediaStore } from '~/stores/media/related-media'
 
 import VButton from '~/components/VButton.vue'
@@ -133,10 +133,10 @@ const VImageDetailsPage = {
   },
   async asyncData({ app, error, route, $pinia }) {
     const imageId = route.params.id
-    const mediaItemStore = useMediaItemStore($pinia)
+    const singleResultStore = useSingleResultStore($pinia)
     try {
-      await mediaItemStore.fetchMediaItem(IMAGE, imageId)
-      const image = mediaItemStore.mediaItem
+      await singleResultStore.fetchMediaItem(IMAGE, imageId)
+      const image = singleResultStore.mediaItem
       return {
         image,
       }
