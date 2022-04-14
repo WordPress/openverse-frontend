@@ -1,6 +1,6 @@
 <template>
   <div class="app grid relative">
-    <div class="sticky top-0 block z-40">
+    <div ref="headerRef" class="sticky top-0 block z-40">
       <VTeleportTarget name="skip-to-content" :force-destroy="true" />
       <VMigrationNotice v-show="isReferredFromCc" />
       <VTranslationStatusBanner />
@@ -9,7 +9,7 @@
     <main class="main embedded" :class="{ 'has-sidebar': isSidebarVisible }">
       <Nuxt ref="mainContentRef" class="min-w-0 main-page" />
       <VSidebarTarget
-        class="sidebar fixed pb-20 right-0 h-[calc(100%-81px)] bg-dark-charcoal-06 border-s border-dark-charcoal-20 overflow-y-scroll"
+        class="sidebar fixed pb-20 end-0 bg-dark-charcoal-06 border-s border-dark-charcoal-20 overflow-y-auto"
       />
     </main>
     <VModalTarget class="modal" />
@@ -52,6 +52,10 @@ const embeddedPage = {
   setup() {
     const mainContentRef = ref(null)
     const mainRef = ref(null)
+    /**
+     * A ref used to calculate the height of the app header (including banners)
+     */
+    const headerRef = ref(null)
 
     const navStore = useNavStore()
     const isReferredFromCc = computed(() => navStore.isReferredFromCc)
@@ -73,6 +77,9 @@ const embeddedPage = {
     })
     watch([mainContentY], ([mainContentY]) => {
       scrollY.value = mainContentY
+      document
+        .querySelector(':root')
+        .style.setProperty('--header-height', headerRef.value.outerHeight)
     })
     const showScrollButton = computed(() => scrollY.value > 70)
 
@@ -93,12 +100,21 @@ const embeddedPage = {
       headerHasTwoRows,
       mainContentRef,
       mainRef,
+      headerRef,
     }
   },
 }
 export default embeddedPage
 </script>
+
 <style scoped>
+.sidebar {
+  height: calc(100vh - var(--header-height, 81px));
+}
+.has-sidebar .sidebar {
+  width: 325px;
+}
+
 .app {
   grid-template-rows: auto 1fr;
 }
@@ -110,7 +126,6 @@ export default embeddedPage
     display: grid;
     grid-template-columns: 1fr 336px;
   }
-
   /** Make the main content area span both grid columns when the sidebar is closed... **/
   .main > *:first-child {
     grid-column: span 2;
