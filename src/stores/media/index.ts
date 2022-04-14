@@ -20,6 +20,7 @@ import {
 import { services } from '~/stores/media/services'
 import { useSearchStore } from '~/stores/search'
 import { useRelatedMediaStore } from '~/stores/media/related-media'
+import { deepFreeze } from '~/utils/deep-freeze'
 
 export type MediaStoreResult = {
   count: number
@@ -39,7 +40,7 @@ export interface MediaState {
   }
 }
 
-export const initialResults = Object.freeze({
+export const initialResults = deepFreeze({
   count: 0,
   page: undefined,
   pageCount: 0,
