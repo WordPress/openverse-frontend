@@ -19,6 +19,7 @@ import {
 } from '~/constants/media'
 import { services } from '~/stores/media/services'
 import { useSearchStore } from '~/stores/search'
+import { useRelatedMediaStore } from '~/stores/media/related-media'
 
 export type MediaStoreResult = {
   count: number
@@ -62,8 +63,10 @@ export const useMediaStore = defineStore('media', {
       return useSearchStore().searchType
     },
     getItemById: (state) => {
-      return (mediaType: SupportedMediaType, id: string) => {
-        return state.results[mediaType].items[id]
+      return (mediaType: SupportedMediaType, id: string): Media | undefined => {
+        const itemFromSearchResults = state.results[mediaType].items[id]
+        if (itemFromSearchResults) return itemFromSearchResults
+        return useRelatedMediaStore().getItemById(id)
       }
     },
 

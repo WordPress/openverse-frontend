@@ -33,30 +33,39 @@ export const useMediaItemStore = defineStore('media-item', {
       this.fetchState = updateFetchState(this.fetchState, action, option)
     },
 
+    _addProviderName(mediaItem: Media) {
+      const providerStore = useProviderStore()
+
+      mediaItem.providerName = providerStore.getProviderName(
+        mediaItem.provider,
+        mediaItem.frontendMediaType
+      )
+      if (mediaItem.source) {
+        mediaItem.sourceName = providerStore.getProviderName(
+          mediaItem.source,
+          mediaItem.frontendMediaType
+        )
+      }
+      return mediaItem
+    },
+
     async fetchMediaItem(type: SupportedMediaType, id: string) {
       const mediaStore = useMediaStore()
-      const relatedMediaStore = useRelatedMediaStore()
-      const existingItem =
-        mediaStore.getItemById(type, id) || relatedMediaStore.getItemById(id)
+      const existingItem = mediaStore.getItemById(type, id)
       if (existingItem) {
         this.mediaType = existingItem.frontendMediaType
-        this.mediaItem = existingItem
+        this.mediaItem = this._addProviderName(existingItem)
+        useRelatedMediaStore().fetchMedia(this.mediaType, this.mediaItem.id)
       } else {
         try {
           this._updateFetchState('start')
-          this.mediaItem = await services[type].getMediaDetail(id)
-          this.mediaType = type
-          const providerStore = useProviderStore()
-          this.mediaItem.providerName = providerStore.getProviderName(
-            this.mediaItem.provider,
-            this.mediaType
+          this.mediaItem = this._addProviderName(
+            await services[type].getMediaDetail(id)
           )
-          if (this.mediaItem.source) {
-            this.mediaItem.sourceName = providerStore.getProviderName(
-              this.mediaItem.source,
-              this.mediaType
-            )
-          }
+          this.mediaType = type
+
+          // Not awaiting to make this call non-blocking
+          useRelatedMediaStore().fetchMedia(this.mediaType, this.mediaItem.id)
           this._updateFetchState('end')
         } catch (error: unknown) {
           this.mediaItem = null

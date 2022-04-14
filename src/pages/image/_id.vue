@@ -118,6 +118,7 @@ const VImageDetailsPage = {
 
     const relatedMedia = computed(() => relatedMediaStore.media)
     const relatedFetchState = computed(() => relatedMediaStore.fetchState)
+
     return { relatedMedia, relatedFetchState }
   },
   computed: {
@@ -133,13 +134,9 @@ const VImageDetailsPage = {
   async asyncData({ app, error, route, $pinia }) {
     const imageId = route.params.id
     const mediaItemStore = useMediaItemStore($pinia)
-    const relatedMediaStore = useRelatedMediaStore($pinia)
     try {
       await mediaItemStore.fetchMediaItem(IMAGE, imageId)
-      const image = /** @type {import('~/models/media').ImageDetail} */ (
-        mediaItemStore.mediaItem
-      )
-      await relatedMediaStore.fetchMedia(IMAGE, imageId)
+      const image = mediaItemStore.mediaItem
       return {
         image,
       }
