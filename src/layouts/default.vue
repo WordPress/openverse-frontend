@@ -1,13 +1,13 @@
 <template>
   <div class="app grid relative">
-    <div ref="headerRef" class="sticky top-0 block z-40">
+    <div class="sticky top-0 block z-40">
       <VTeleportTarget name="skip-to-content" :force-destroy="true" />
       <VMigrationNotice v-show="isReferredFromCc" />
       <VTranslationStatusBanner />
       <VHeader />
     </div>
     <main class="main embedded" :class="{ 'has-sidebar': isSidebarVisible }">
-      <Nuxt ref="mainContentRef" class="min-w-0 main-page" />
+      <Nuxt class="min-w-0 main-page" />
       <VSidebarTarget
         class="sidebar fixed pb-20 end-0 bg-dark-charcoal-06 border-s border-dark-charcoal-20 overflow-y-auto"
       />
@@ -19,7 +19,7 @@
 <script>
 import { computed, provide, ref, watch } from '@nuxtjs/composition-api'
 
-import { useScroll } from '~/composables/use-scroll'
+import { useWindowScroll } from '~/composables/use-window-scroll'
 import { useMatchSearchRoutes } from '~/composables/use-match-routes'
 import { isMinScreen } from '~/composables/use-media-query'
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
@@ -50,13 +50,6 @@ const embeddedPage = {
     return this.$nuxtI18nHead({ addSeoAttributes: true, addDirAttribute: true })
   },
   setup() {
-    const mainContentRef = ref(null)
-    const mainRef = ref(null)
-    /**
-     * A ref used to calculate the height of the app header (including banners)
-     */
-    const headerRef = ref(null)
-
     const navStore = useNavStore()
     const isReferredFromCc = computed(() => navStore.isReferredFromCc)
 
@@ -70,16 +63,12 @@ const embeddedPage = {
 
     const isHeaderScrolled = ref(false)
     const scrollY = ref(0)
-    const { isScrolled: isMainContentScrolled, y: mainContentY } =
-      useScroll(mainContentRef)
+    const { isScrolled: isMainContentScrolled, y: windowY } = useWindowScroll()
     watch([isMainContentScrolled], ([isMainContentScrolled]) => {
       isHeaderScrolled.value = isMainContentScrolled
     })
-    watch([mainContentY], ([mainContentY]) => {
-      scrollY.value = mainContentY
-      document
-        .querySelector(':root')
-        .style.setProperty('--header-height', headerRef.value.outerHeight)
+    watch([windowY], ([windowY]) => {
+      scrollY.value = windowY
     })
     const showScrollButton = computed(() => scrollY.value > 70)
 
@@ -98,9 +87,6 @@ const embeddedPage = {
       isSidebarVisible,
       isSearchRoute,
       headerHasTwoRows,
-      mainContentRef,
-      mainRef,
-      headerRef,
     }
   },
 }
