@@ -16,10 +16,10 @@ jest.mock('axios', () => ({
 }))
 jest.mock('~/stores/media/services', () => ({
   services: {
-    audio: /** @type {typeof import('~/data/services').MediaService} */ ({
+    audio: /** @type {import('~/data/services').MediaService} */ ({
       getMediaDetail: jest.fn(),
     }),
-    image: /** @type {typeof import('~/data/services').MediaService} */ ({
+    image: /** @type {import('~/data/services').MediaService} */ ({
       getMediaDetail: jest.fn(),
     }),
   },
@@ -50,8 +50,8 @@ describe('Media Item Store', () => {
       'fetchMediaItem (%s) fetches a new media if none is found in the store',
       async (type) => {
         const mediaItemStore = useMediaItemStore()
-        const params = { id: 'foo', type }
-        await mediaItemStore.fetchMediaItem(params)
+
+        await mediaItemStore.fetchMediaItem('foo', type)
         expect(mediaItemStore.mediaItem).toEqual(detailData[type])
       }
     )
@@ -63,8 +63,7 @@ describe('Media Item Store', () => {
         mediaStore.results[type].items = {
           [`${type}1`]: detailData[type],
         }
-        const params = { id: `${type}1`, type }
-        await mediaItemStore.fetchMediaItem(params)
+        await mediaItemStore.fetchMediaItem(`${type}1`, type)
         expect(mediaItemStore.mediaItem).toEqual(detailData[type])
       }
     )
@@ -80,9 +79,8 @@ describe('Media Item Store', () => {
 
         const mediaItemStore = useMediaItemStore()
 
-        const params = { id: 'foo', type }
         await expect(() =>
-          mediaItemStore.fetchMediaItem(params)
+          mediaItemStore.fetchMediaItem('foo', type)
         ).rejects.toThrow(expectedErrorMessage)
       }
     )
@@ -94,12 +92,10 @@ describe('Media Item Store', () => {
           Promise.reject({ response: { status: 404 } })
         )
         const mediaItemStore = useMediaItemStore()
-        const params = { id: 'foo', type }
+        const id = 'foo'
         await expect(() =>
-          mediaItemStore.fetchMediaItem(params)
-        ).rejects.toThrow(
-          `Media of type ${type} with id ${params.id} not found`
-        )
+          mediaItemStore.fetchMediaItem(id, type)
+        ).rejects.toThrow(`Media of type ${type} with id ${id} not found`)
       }
     )
   })

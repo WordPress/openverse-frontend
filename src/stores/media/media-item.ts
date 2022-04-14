@@ -12,6 +12,7 @@ import {
 import { services } from '~/stores/media/services'
 import { useMediaStore } from '~/stores/media/index'
 import { IMAGE } from '~/constants/media'
+import { useRelatedMediaStore } from '~/stores/media/related-media'
 
 export interface MediaItemState {
   mediaItem: Media | null
@@ -25,14 +26,42 @@ export const useMediaItemStore = defineStore('media-item', {
     mediaType: IMAGE,
     fetchState: initialFetchState,
   }),
+
   actions: {
     _updateFetchState(action: 'end' | 'start', option?: string) {
       this.fetchState = updateFetchState(this.fetchState, action, option)
     },
+
+    async fetchMediaItem(type: SupportedMediaType, id: string) {
+      const mediaStore = useMediaStore()
+      const relatedMediaStore = useRelatedMediaStore()
+      const existingItem =
+        mediaStore.getItemById(type, id) || relatedMediaStore.getItemById(id)
+      if (existingItem) {
+        this.mediaType = existingItem.frontendMediaType
+        this.mediaItem = existingItem
+      } else {
+        try {
+          this._updateFetchState('start')
+          this.mediaItem = await services[type].getMediaDetail(id)
+          this.mediaType = type
+          this._updateFetchState('end')
+        } catch (error: unknown) {
+          this.mediaItem = null
+          this.mediaType = type
+          if (axios.isAxiosError(error) && error.response?.status === 404) {
+            throw new Error(`Media of type ${type} with id ${id} not found`)
+          } else {
+            this.handleMediaError(error)
+          }
+        }
+      }
+    },
+
     /**
      * Throws a new error with a new error message.
      */
-    handleMediaError({ error }: { error: unknown }) {
+    handleMediaError(error: unknown) {
       let errorMessage
       if (axios.isAxiosError(error)) {
         errorMessage =
@@ -48,34 +77,6 @@ export const useMediaItemStore = defineStore('media-item', {
 
       this._updateFetchState('end', errorMessage)
       throw new Error(errorMessage)
-    },
-
-    async fetchMediaItem(params: { type: SupportedMediaType; id: string }) {
-      const { type, id } = params
-      const mediaStore = useMediaStore()
-      // TODO: add check in the related-media store
-      const existingItem = mediaStore.getItemById(type, id)
-      if (existingItem) {
-        this.mediaType = existingItem.frontendMediaType
-        this.mediaItem = existingItem
-      } else {
-        try {
-          this._updateFetchState('start')
-          this.mediaItem = await services[type].getMediaDetail(id)
-          this.mediaType = type
-          this._updateFetchState('end')
-        } catch (error: unknown) {
-          this.mediaItem = null
-          this.mediaType = type
-          if (axios.isAxiosError(error) && error.response?.status === 404) {
-            throw new Error(
-              `Media of type ${type} with id ${params.id} not found`
-            )
-          } else {
-            this.handleMediaError({ error })
-          }
-        }
-      }
     },
   },
 })

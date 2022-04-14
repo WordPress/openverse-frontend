@@ -57,10 +57,7 @@ const AudioDetailPage = {
   async asyncData({ route, error, app, $pinia }) {
     try {
       const mediaItemStore = useMediaItemStore($pinia)
-      await mediaItemStore.fetchMediaItem({
-        id: route.params.id,
-        type: AUDIO,
-      })
+      await mediaItemStore.fetchMediaItem(route.params.id, AUDIO)
       const audio = mediaItemStore.mediaItem
       const relatedMediaStore = useRelatedMediaStore($pinia)
       relatedMediaStore.fetchMedia(AUDIO, route.params.id)

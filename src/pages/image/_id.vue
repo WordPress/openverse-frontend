@@ -135,12 +135,10 @@ const VImageDetailsPage = {
     const mediaItemStore = useMediaItemStore($pinia)
     const relatedMediaStore = useRelatedMediaStore($pinia)
     try {
-      await mediaItemStore.fetchMediaItem({
-        id: imageId,
-        type: IMAGE,
-      })
-      /** @type {import('~/models/media').ImageDetail} */
-      const image = mediaItemStore.mediaItem
+      await mediaItemStore.fetchMediaItem(imageId, IMAGE)
+      const image = /** @type {import('~/models/media').ImageDetail} */ (
+        mediaItemStore.mediaItem
+      )
       relatedMediaStore.fetchMedia(IMAGE, imageId)
       return {
         image,
