@@ -5,6 +5,7 @@ import { mockProviderApis } from '~~/test/playwright/utils/route'
 /**
  * Some helpers for repeated actions.
  */
+
 const reportingEndpoint =
   /https:\/\/api.openverse.engineering\/v1\/\w+\/+[^/]+\/report\//
 
@@ -12,6 +13,10 @@ export const visitFirstResult = (page: Page) =>
   page.click('[data-testid="search-results"] a:first-child')
 export const openReportModal = (page: Page) =>
   page.click('text="Report this content"')
+
+/**
+ * Reports
+ */
 
 const submitDmcaReport = async (page: Page, context: BrowserContext) => {
   // Mock the Google Form to return a successful html document
