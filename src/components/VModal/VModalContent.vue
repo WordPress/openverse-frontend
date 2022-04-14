@@ -16,6 +16,12 @@
           @blur="onBlur"
         >
           <slot name="top-bar" :close="hide">
+            <!--
+              These specific padding and margin values serve to
+              visually align the Openverse logo button in the modal
+              with the header logo button so that there isn't a
+              jarring "shifting" effect when opening the mobile modal.
+            -->
             <div
               class="w-full flex justify-between md:justify-end bg-white md:bg-tx ps-4 pe-3 md:px-0 py-4 md:py-3 shrink-0"
             >
