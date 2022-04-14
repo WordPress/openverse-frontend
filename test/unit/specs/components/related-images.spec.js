@@ -1,4 +1,3 @@
-import Vuex from 'vuex'
 import VueI18n from 'vue-i18n'
 import { createLocalVue } from '@vue/test-utils'
 import { render, screen } from '@testing-library/vue'
@@ -23,7 +22,6 @@ const i18n = new VueI18n({
   messages: { en: messages },
 })
 const localVue = createLocalVue()
-localVue.use(Vuex)
 localVue.use(VueI18n)
 localVue.use(PiniaVuePlugin)
 // without nbFetching property on $nuxt, Nuxt's `fetch` hook throws an error:

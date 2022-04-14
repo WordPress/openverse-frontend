@@ -7,6 +7,13 @@ export interface FetchState {
   hasStarted?: boolean
   isFinished?: boolean
 }
+export const initialFetchState: FetchState = {
+  hasStarted: false,
+  isFetching: false,
+  canFetch: true,
+  isFinished: false,
+  fetchingError: null,
+} as const
 
 /* Constants */
 
@@ -41,8 +48,7 @@ const nonErrorStatuses: Status[] = [
 const canFetchStatuses: Status[] = [statuses.IDLE, statuses.SUCCESS]
 
 /* Composable */
-
-export const useFetchState = (state?: FetchState | undefined) => {
+export const useFetchState = (state: FetchState = initialFetchState) => {
   const initialState: {
     status: Status
     fetchError: null | string
@@ -77,6 +83,8 @@ export const useFetchState = (state?: FetchState | undefined) => {
   })
   const reset = () => {
     fetchStatus.value = statuses.IDLE
+    fetchError.value = null
+    isFinished.value = false
   }
   const startFetching = () => {
     fetchStatus.value = statuses.FETCHING
@@ -134,4 +142,27 @@ export const useFetchState = (state?: FetchState | undefined) => {
     setFinished,
     reset,
   }
+}
+
+export const updateFetchState = (
+  initial: FetchState,
+  action: 'end' | 'finish' | 'start' | 'reset',
+  option?: string
+) => {
+  const fetchState = useFetchState(initial)
+  switch (action) {
+    case 'end':
+      fetchState.endFetching(option)
+      break
+    case 'start':
+      fetchState.startFetching()
+      break
+    case 'finish':
+      fetchState.setFinished()
+      break
+    case 'reset':
+      fetchState.reset()
+      break
+  }
+  return fetchState.fetchState
 }
