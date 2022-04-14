@@ -17,8 +17,8 @@ import {
   SupportedMediaType,
   supportedMediaTypes,
 } from '~/constants/media'
-import { useSearchStore } from '~/stores/search'
 import { services } from '~/stores/media/services'
+import { useSearchStore } from '~/stores/search'
 
 export type MediaStoreResult = {
   count: number
