@@ -629,8 +629,6 @@
   "pref-page": {
     "title": "Preferences",
     "toggle": "Toggle features",
-    "save-desc": "Don't forget to click Save to set your preferences.",
-    "save": "Save",
     "store-state": "Store state",
     "content-filtering": "Content filtering",
     "explanation": "Shown because {feat-name} is {feat-state}"

@@ -25,11 +25,6 @@
       </li>
     </ul>
 
-    <p>{{ $t('pref-page.save-desc') }}</p>
-    <VButton variant="primary" @click="handleSave">{{
-      $t('pref-page.save')
-    }}</VButton>
-
     <h2>{{ $t('pref-page.store-state') }}</h2>
     <pre><code>{{ flags }}</code></pre>
 
@@ -61,13 +56,11 @@ import { useFeatureFlagStore } from '~/stores/feature-flag'
 import { SWITCHABLE, ON, OFF, FEATURE_STATES } from '~/constants/feature-flag'
 
 import VContentPage from '~/components/VContentPage.vue'
-import VButton from '~/components/VButton.vue'
 import VCheckbox from '~/components/VCheckbox/VCheckbox.vue'
 
 export default defineComponent({
   name: 'VPreferences',
   components: {
-    VButton,
     VContentPage,
     VCheckbox,
   },
@@ -90,11 +83,6 @@ export default defineComponent({
       checked: boolean
     }) => {
       featureFlagStore.toggleFeature(name, checked ? ON : OFF)
-    }
-    /**
-     * Write the preferred state of switchable flags to the cookie.
-     */
-    const handleSave = () => {
       app.$cookies.set('features', featureFlagStore.flagStateMap)
     }
 
@@ -108,7 +96,6 @@ export default defineComponent({
       featureState: featureFlagStore.featureState,
 
       handleChange,
-      handleSave,
     }
   },
 })
