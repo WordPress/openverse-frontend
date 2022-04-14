@@ -29,23 +29,37 @@
     <pre><code>{{ flags }}</code></pre>
 
     <h2>{{ $t('pref-page.content-filtering') }}</h2>
-    <template v-for="(_, featName) in flags">
-      <template v-for="featState in FEATURE_STATES">
-        <i18n
-          v-if="featureState(featName) === featState"
-          :key="`${featName}-${featState}`"
-          path="pref-page.explanation"
-          tag="p"
-        >
-          <template #feat-name
-            ><code>{{ featName }}</code></template
+    <ul>
+      <template v-for="(_, featName) in flags">
+        <template v-for="featState in FEATURE_STATES">
+          <i18n
+            v-if="featureState(featName) === featState"
+            :key="`${featName}-${featState}`"
+            path="pref-page.explanation"
+            tag="li"
           >
-          <template #feat-state
-            ><code>{{ featState }}</code></template
-          >
-        </i18n>
+            <template #feat-name
+              ><code>{{ featName }}</code></template
+            >
+            <template #feat-state
+              ><code>{{ featState }}</code></template
+            >
+          </i18n>
+        </template>
       </template>
-    </template>
+      <i18n
+        v-if="featureState('feat_nonexistent') === ON"
+        path="pref-page.explanation"
+        tag="li"
+      >
+        <template #feat-name
+          ><code>{{ $t('feat_nonexistent') }}</code></template
+        >
+        <template #feat-state
+          ><code>{{ $t(ON) }}</code></template
+        >
+      </i18n>
+    </ul>
   </VContentPage>
 </template>
 
