@@ -17,7 +17,7 @@
         >
           <slot name="top-bar" :close="hide">
             <div
-              class="w-full flex justify-between md:justify-end bg-white md:bg-tx px-3 md:px-0 py-3 shrink-0"
+              class="w-full flex justify-between md:justify-end bg-white md:bg-tx ps-4 pe-3 md:px-0 py-4 md:py-3 shrink-0"
             >
               <VLogoButton
                 class="md:hidden"
@@ -28,11 +28,11 @@
               <VButton
                 size="disabled"
                 variant="plain"
-                class="md:text-white"
+                class="md:text-white text-sr md:text-base"
                 @click="hide()"
               >
                 {{ $t('modal.close') }}
-                <VIcon :icon-path="closeIcon" />
+                <VIcon :icon-path="closeIcon" class="ms-2" :size="5" />
               </VButton>
             </div>
           </slot>
