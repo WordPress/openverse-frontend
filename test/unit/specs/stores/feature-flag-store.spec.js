@@ -1,7 +1,7 @@
 import { setActivePinia, createPinia } from 'pinia'
 
 import { useFeatureFlagStore } from '~/stores/feature-flag'
-import { FeatureState, OFF, ON } from '~/constants/feature-flag'
+import { OFF, ON } from '~/constants/feature-flag'
 
 jest.mock(
   '~~/feat/feature-flags.json',
@@ -46,13 +46,7 @@ describe('Feature flag store', () => {
     ${'feat_disabled'} | ${'off'}
   `(
     'does not allow modification of fixed flags',
-    ({
-      flagName,
-      featureState,
-    }: {
-      flagName: string
-      featureState: FeatureState
-    }) => {
+    ({ flagName, featureState }) => {
       const featureFlagStore = useFeatureFlagStore()
       expect(featureFlagStore.featureState(flagName)).toEqual(featureState)
     }
@@ -66,15 +60,7 @@ describe('Feature flag store', () => {
     ${'feat_switchable_optin'}  | ${true}      | ${'on'}
   `(
     'cascades flag $flagName from cookies',
-    ({
-      flagName,
-      doCookieInit,
-      featureState,
-    }: {
-      flagName: string
-      doCookieInit: boolean
-      featureState: FeatureState
-    }) => {
+    ({ flagName, doCookieInit, featureState }) => {
       const featureFlagStore = useFeatureFlagStore()
       if (doCookieInit)
         featureFlagStore.initFromCookies({
