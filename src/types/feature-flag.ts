@@ -3,7 +3,7 @@ import type { FeatureState, FlagStatus } from '~/constants/feature-flag'
 interface BaseFeatureFlag {
   status: FlagStatus
   description?: string
-  data?: object
+  data?: unknown
 }
 
 export type FeatureFlag = BaseFeatureFlag &
