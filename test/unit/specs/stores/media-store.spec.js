@@ -110,7 +110,7 @@ describe('Media Store', () => {
     })
     it('getItemById returns undefined if there are no items', () => {
       const mediaStore = useMediaStore()
-      expect(mediaStore.getItemById(IMAGE, 'foo')).toBe(undefined)
+      expect(mediaStore.getItemById('foo', IMAGE)).toBe(undefined)
     })
     it('getItemById returns correct item', () => {
       const mediaStore = useMediaStore()
@@ -122,7 +122,7 @@ describe('Media Store', () => {
           },
         },
       })
-      expect(mediaStore.getItemById(IMAGE, 'foo')).toBe(expectedItem)
+      expect(mediaStore.getItemById('foo', IMAGE)).toBe(expectedItem)
     })
 
     it('resultItems returns correct items', () => {
