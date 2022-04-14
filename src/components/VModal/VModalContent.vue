@@ -8,26 +8,37 @@
         <div
           ref="dialogRef"
           v-bind="$attrs"
-          class="w-4/5 flex flex-col"
+          class="w-full md:w-4/5 lg:max-w-[1024px] md:max-w-[768px] flex flex-col"
           role="dialog"
           aria-modal="true"
           v-on="$listeners"
           @keydown="onKeyDown"
           @blur="onBlur"
         >
-          <div class="w-full flex justify-end">
-            <VButton
-              size="disabled"
-              variant="plain"
-              class="text-white py-2"
-              @click="hide()"
+          <slot name="top-bar" :close="hide">
+            <div
+              class="w-full flex justify-between md:justify-end bg-white md:bg-tx px-3 md:px-0 py-3 shrink-0"
             >
-              {{ $t('modal.close') }} <VIcon :icon-path="closeIcon" />
-            </VButton>
-          </div>
+              <VLogoButton
+                class="md:hidden"
+                :is-fetching="false"
+                :is-header-scrolled="false"
+                :is-search-route="true"
+              />
+              <VButton
+                size="disabled"
+                variant="plain"
+                class="md:text-white"
+                @click="hide()"
+              >
+                {{ $t('modal.close') }}
+                <VIcon :icon-path="closeIcon" />
+              </VButton>
+            </div>
+          </slot>
 
           <div
-            class="w-full flex-grow align-bottom bg-white rounded-t-sm text-left overflow-y-auto"
+            class="w-full flex-grow align-bottom bg-white md:rounded-t-md text-left overflow-y-auto"
           >
             <slot />
           </div>
@@ -47,6 +58,7 @@ import { warn } from '~/utils/console'
 import VTeleport from '~/components/VTeleport/VTeleport.vue'
 import VButton from '~/components/VButton.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'
+import VLogoButton from '~/components/VHeader/VLogoButton.vue'
 
 import closeIcon from '~/assets/icons/close.svg'
 
@@ -55,7 +67,7 @@ import closeIcon from '~/assets/icons/close.svg'
  */
 const VModalContent = defineComponent({
   name: 'VModalContent',
-  components: { VTeleport, VButton, VIcon, FocusTrap },
+  components: { VTeleport, VButton, VIcon, FocusTrap, VLogoButton },
   props: {
     visible: {
       type: Boolean,
