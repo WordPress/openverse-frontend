@@ -30,7 +30,7 @@
     >
       <span
         v-show="searchStatus"
-        class="hidden lg:block info font-semibold text-xs text-dark-charcoal-70 group-hover:text-dark-charcoal group-focus:text-dark-charcoal mx-4"
+        class="hidden lg:block info font-semibold text-xs text-dark-charcoal-70 group-hover:text-dark-charcoal group-focus:text-dark-charcoal mx-4 whitespace-nowrap"
       >
         {{ searchStatus }}
       </span>
