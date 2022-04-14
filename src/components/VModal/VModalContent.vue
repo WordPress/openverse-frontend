@@ -26,6 +26,7 @@
                 :is-search-route="true"
               />
               <VButton
+                ref="closeButton"
                 size="disabled"
                 variant="plain"
                 class="md:text-white text-sr md:text-base"
@@ -49,7 +50,13 @@
 </template>
 
 <script>
-import { defineComponent, toRefs, ref } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  toRefs,
+  ref,
+  computed,
+  watch,
+} from '@nuxtjs/composition-api'
 import { FocusTrap } from 'focus-trap-vue'
 
 import { useDialogContent } from '~/composables/use-dialog-content'
@@ -113,6 +120,10 @@ const VModalContent = defineComponent({
     }
 
     const propsRefs = toRefs(props)
+    const closeButton = ref()
+    const initialFocusElement = computed(
+      () => props.initialFocusElement || closeButton.value?.$el
+    )
     const dialogRef = ref()
     const { onKeyDown, onBlur } = useDialogContent({
       dialogRef,
@@ -123,11 +134,17 @@ const VModalContent = defineComponent({
       hideOnClickOutsideRef: propsRefs.hideOnClickOutside,
       hideRef: propsRefs.hide,
       hideOnEscRef: propsRefs.hideOnEsc,
-      initialFocusElementRef: propsRefs.initialFocusElement,
+      initialFocusElementRef: initialFocusElement,
       emit,
     })
 
-    return { dialogRef, onKeyDown, onBlur, closeIcon }
+    return {
+      dialogRef,
+      onKeyDown,
+      onBlur,
+      closeIcon,
+      closeButton,
+    }
   },
 })
 
