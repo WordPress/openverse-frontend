@@ -1,8 +1,8 @@
 import { createPinia, setActivePinia } from 'pinia'
 
-import { IMAGE, supportedMediaTypes } from '~/constants/media'
+import { AUDIO, IMAGE, supportedMediaTypes } from '~/constants/media'
 import { useSearchStore } from '~/stores/search'
-import { initialProviderState, useProviderStore } from '~/stores/provider'
+import { useProviderStore } from '~/stores/provider'
 import { providerServices } from '~/data/media-provider-service'
 import { initialFetchState } from '~/composables/use-fetch-state'
 
@@ -65,14 +65,18 @@ describe('Provider Store', () => {
     providerStore = useProviderStore()
   })
   afterEach(() => {
-    afterEach(() => {
-      providerServices.audio.getProviderStats.mockClear()
-      providerServices.image.getProviderStats.mockClear()
-    })
+    providerServices.audio.getProviderStats.mockClear()
+    providerServices.image.getProviderStats.mockClear()
   })
   it('sets the default state', () => {
-    expect(providerStore.providers).toEqual(initialProviderState.providers)
-    expect(providerStore.fetchState).toEqual(initialProviderState.fetchState)
+    expect(providerStore.providers).toEqual({
+      [AUDIO]: [],
+      [IMAGE]: [],
+    })
+    expect(providerStore.fetchState).toEqual({
+      [AUDIO]: initialFetchState,
+      [IMAGE]: initialFetchState,
+    })
   })
 
   it.each`

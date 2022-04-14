@@ -31,17 +31,6 @@ export interface ProviderState {
   }
 }
 
-export const initialProviderState: ProviderState = Object.freeze({
-  providers: {
-    [AUDIO]: [],
-    [IMAGE]: [],
-  },
-  fetchState: {
-    [AUDIO]: { ...initialFetchState },
-    [IMAGE]: { ...initialFetchState },
-  },
-})
-
 /**
  * Sorts providers by their source_name property.
  * @param data - initial unordered list of providers
@@ -71,6 +60,7 @@ export const useProviderStore = defineStore('provider', {
       [IMAGE]: { ...initialFetchState },
     },
   }),
+
   actions: {
     _updateFetchState(
       mediaType: SupportedMediaType,
@@ -83,6 +73,7 @@ export const useProviderStore = defineStore('provider', {
         option
       )
     },
+
     /**
      * Returns the display name for provider if available, or capitalizes the given providerCode.
      *
@@ -95,6 +86,7 @@ export const useProviderStore = defineStore('provider', {
       )
       return provider?.display_name || capital(providerCode)
     },
+
     /**
      * Fetches provider data if no data is available, or if the data is too old.
      * On successful fetch updates lastUpdated value.
@@ -109,9 +101,7 @@ export const useProviderStore = defineStore('provider', {
         lastUpdated.value = new Date()
       }
     },
-    clearProviderData() {
-      this.providers = initialProviderState.providers
-    },
+
     /**
      * Fetches providers for a set media type, and initializes the provider filters
      * by calling the search store `initProviderFilters` method.
@@ -145,6 +135,7 @@ export const useProviderStore = defineStore('provider', {
       }
     },
   },
+
   getters: {
     /**
      * Fetch providers only if there is no data, or if the last update for current request
