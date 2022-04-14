@@ -1,6 +1,6 @@
 <template>
   <Component
-    :is="isBoxed ? 'VLink' : 'div'"
+    :is="isBoxed ? 'VLink' : 'VWarningSuppressor'"
     class="audio-track group"
     :aria-label="ariaLabel"
     role="region"
@@ -65,6 +65,7 @@ import VRowLayout from '~/components/VAudioTrack/layouts/VRowLayout.vue'
 import VBoxLayout from '~/components/VAudioTrack/layouts/VBoxLayout.vue'
 import VGlobalLayout from '~/components/VAudioTrack/layouts/VGlobalLayout.vue'
 import VLink from '~/components/VLink.vue'
+import VWarningSuppressor from '~/components/VWarningSuppressor.vue'
 
 const propTypes = {
   /**
@@ -116,6 +117,7 @@ export default defineComponent({
     VPlayPause,
     VWaveform,
     VLink,
+    VWarningSuppressor,
 
     // Layouts
     VFullLayout,
