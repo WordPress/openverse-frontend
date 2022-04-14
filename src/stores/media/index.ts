@@ -56,8 +56,9 @@ export const useMediaStore = defineStore('media', {
       [IMAGE]: { ...initialFetchState },
     },
   }),
+
   getters: {
-    searchType() {
+    _searchType() {
       return useSearchStore().searchType
     },
     getItemById: (state) => {
@@ -65,6 +66,7 @@ export const useMediaStore = defineStore('media', {
         return state.results[mediaType].items[id]
       }
     },
+
     /**
      * Returns object with a key for each supported media type and arrays of media items for each.
      */
@@ -77,19 +79,23 @@ export const useMediaStore = defineStore('media', {
         {} as Record<SupportedMediaType, Media[]>
       )
     },
+
     /**
      * Returns result item counts for each supported media type.
      */
     resultCountsPerMediaType(): [SupportedMediaType, number][] {
       return supportedMediaTypes.map((type) => [type, this.results[type].count])
     },
+
     /**
      * Returns the total count of results for selected search type, sums all media results for ALL_MEDIA.
      * If the count is more than 10000, returns 10000 to match the API result.
      */
     resultCount(state) {
       const types = (
-        this.searchType === ALL_MEDIA ? supportedMediaTypes : [this.searchType]
+        this._searchType === ALL_MEDIA
+          ? supportedMediaTypes
+          : [this._searchType]
       ) as SupportedMediaType[]
       const count = types.reduce(
         (sum, mediaType) => sum + state.results[mediaType].count,
@@ -97,12 +103,13 @@ export const useMediaStore = defineStore('media', {
       )
       return Math.min(count, 10000)
     },
+
     /**
      * Search fetching state for selected search type. For 'All content', aggregates
      * the values for supported media types.
      */
     fetchState(): FetchState {
-      if (this.searchType === ALL_MEDIA) {
+      if (this._searchType === ALL_MEDIA) {
         /**
          * For all_media, we return the error for the first media type that has an error.
          */
@@ -129,7 +136,7 @@ export const useMediaStore = defineStore('media', {
           ),
         }
       } else {
-        return this.mediaFetchState[this.searchType]
+        return this.mediaFetchState[this._searchType]
       }
     },
 
@@ -184,6 +191,7 @@ export const useMediaStore = defineStore('media', {
       return newResults
     },
   },
+
   actions: {
     _updateFetchState(
       mediaType: SupportedMediaType,
@@ -196,6 +204,7 @@ export const useMediaStore = defineStore('media', {
         option
       )
     },
+
     setMedia<T extends SupportedMediaType>(params: {
       mediaType: T
       media: Record<string, DetailFromMediaType<T>>
@@ -230,9 +239,11 @@ export const useMediaStore = defineStore('media', {
         this._updateFetchState(mediaType, 'finish')
       }
     },
+
     mediaNotFound(mediaType: SupportedMediaType) {
       throw new Error(`Media of type ${mediaType} not found`)
     },
+
     /**
      * Clears the items for all passed media types, and resets fetch state.
      */
@@ -242,6 +253,7 @@ export const useMediaStore = defineStore('media', {
       this.results[mediaType].page = undefined
       this.results[mediaType].pageCount = 0
     },
+
     resetFetchState() {
       for (const mediaType of supportedMediaTypes) {
         this._updateFetchState(mediaType, 'reset')
@@ -255,17 +267,15 @@ export const useMediaStore = defineStore('media', {
      * fetchState.isFinished is not true are fetched.
      */
     async fetchMedia(payload: { shouldPersistMedia?: boolean } = {}) {
-      const mediaType = this.searchType
+      const mediaType = this._searchType
       if (!payload.shouldPersistMedia) {
         this.resetFetchState()
       }
-      const types = (
-        mediaType !== ALL_MEDIA ? [mediaType] : [IMAGE, AUDIO]
-      ) as SupportedMediaType[]
-      const mediaToFetch = types.filter(
-        (type) => this.mediaFetchState[type].canFetch
-      )
-
+      const mediaToFetch = (
+        (mediaType !== ALL_MEDIA
+          ? [mediaType]
+          : [IMAGE, AUDIO]) as SupportedMediaType[]
+      ).filter((type) => this.mediaFetchState[type].canFetch)
       await Promise.all(
         mediaToFetch.map((type) =>
           this.fetchSingleMediaType({
@@ -281,6 +291,7 @@ export const useMediaStore = defineStore('media', {
         this.resetMedia(mediaType)
       })
     },
+
     /**
      * @param mediaType - the mediaType to fetch (do not use 'All_media' here)
      * @param shouldPersistMedia - whether the existing media should be added to or replaced.
