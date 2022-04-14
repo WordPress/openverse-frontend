@@ -18,7 +18,6 @@
           class="relative hidden lg:block -left-[6.25rem] rtl:-right-[6.25rem]"
         >
           <h1>
-            <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
             <span class="sr-only">Openverse</span>
             <!-- width and height chosen w.r.t. viewBox "0 0 280 42" -->
             <span
@@ -66,7 +65,6 @@
           tag="p"
           class="hidden lg:block text-sr mt-4"
         >
-          <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
           <template #openverse>Openverse</template>
           <template #license>
             <VLink
@@ -121,7 +119,6 @@
       tag="p"
       class="lg:hidden text-sr p-6 mt-auto"
     >
-      <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
       <template #openverse>Openverse</template>
       <template #license>
         <VLink
@@ -135,7 +132,7 @@
 </template>
 
 <script>
-import { ref, useContext, useRouter } from '@nuxtjs/composition-api'
+import { onMounted, ref, useContext, useRouter } from '@nuxtjs/composition-api'
 
 import { ALL_MEDIA, supportedSearchTypes } from '~/constants/media'
 import { isMinScreen } from '~/composables/use-media-query'
@@ -179,6 +176,14 @@ const HomePage = {
     const router = useRouter()
     const mediaStore = useMediaStore()
     const searchStore = useSearchStore()
+
+    /**
+     * Reset the search type, search term and filters when the user navigates [back] to the homepage.
+     */
+    onMounted(() => {
+      searchStore.$reset()
+      mediaStore.$reset()
+    })
 
     const featuredSearches = imageInfo.sets.map((setItem) => ({
       ...setItem,

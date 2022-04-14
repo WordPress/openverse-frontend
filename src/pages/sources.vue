@@ -12,7 +12,6 @@
     </p>
     <i18n path="sources.cc-content.provider" tag="p">
       <template #flickr>
-        <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
         <VLink href="https://www.flickr.com/">Flickr</VLink>
       </template>
       <template #smithsonian>
@@ -22,10 +21,8 @@
       </template>
     </i18n>
     <i18n path="sources.cc-content.europeana" tag="p">
-      <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
       <template #openverse>Openverse</template>
       <template #link>
-        <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
         <VLink href="https://www.europeana.eu/en">Europeana</VLink>
       </template>
       <template #link-api>
@@ -138,9 +135,9 @@
 
 <script>
 import sortBy from 'lodash.sortby'
-import { mapState } from 'vuex'
+import { computed } from '@nuxtjs/composition-api'
 
-import { PROVIDER } from '~/constants/store-modules'
+import { useProviderStore } from '~/stores/provider'
 import { useGetLocaleFormattedNumber } from '~/composables/use-get-locale-formatted-number'
 
 import VButton from '~/components/VButton.vue'
@@ -164,11 +161,12 @@ const SourcePage = {
   },
   setup() {
     const getLocaleFormattedNumber = useGetLocaleFormattedNumber()
+    const providerStore = useProviderStore()
+    const imageProviders = computed(() => providerStore.providers.image)
 
-    return { getLocaleFormattedNumber, externalLinkIcon }
+    return { getLocaleFormattedNumber, externalLinkIcon, imageProviders }
   },
   computed: {
-    ...mapState(PROVIDER, ['imageProviders']),
     sortedProviders() {
       const sorted = sortBy(this.imageProviders, [this.sort.field])
       return this.sort.direction === 'asc' ? sorted : sorted.reverse()
