@@ -5,6 +5,8 @@ import { mockProviderApis } from '~~/test/playwright/utils/route'
 /**
  * Some helpers for repeated actions.
  */
+const reportingEndpoint =
+  /https:\/\/api.openverse.engineering\/v1\/\w+\/+[^/]+\/report\//
 
 export const visitFirstResult = (page: Page) =>
   page.click('[data-testid="search-results"] a:first-child')
@@ -34,7 +36,6 @@ const submitMatureContentReport = async (
   page: Page,
   context: BrowserContext
 ) => {
-  const reportingEndpoint = /https:\/\/api.openverse.engineering\/\w+\/\w+/
   await context.route(reportingEndpoint, (route) => {
     route.fulfill({
       status: 200,
@@ -51,7 +52,6 @@ const submitMatureContentReport = async (
 }
 
 const submitOtherReport = async (page: Page, context: BrowserContext) => {
-  const reportingEndpoint = /https:\/\/api.openverse.engineering\/\w+\/\w+/
   await context.route(reportingEndpoint, (route) => {
     route.fulfill({
       status: 200,
