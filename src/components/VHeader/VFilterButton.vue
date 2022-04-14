@@ -13,7 +13,12 @@
     @click="toggleFilters"
   >
     <VIcon v-show="showIcon" :icon-path="filterIcon" />
-    <span v-show="showLabel" data-testid="filterbutton-label">{{ label }}</span>
+    <span
+      class="hidden"
+      :class="!filtersAreApplied && 'md:block'"
+      data-testid="filterbutton-label"
+      >{{ label }}</span
+    >
   </VButton>
 </template>
 
@@ -119,7 +124,6 @@ const VFilterButton = defineComponent({
       filterIcon,
       label,
       showIcon,
-      showLabel,
       toggleFilters: () => {
         emit('toggle')
       },
@@ -127,6 +131,7 @@ const VFilterButton = defineComponent({
       isMinScreenMd,
       isHeaderScrolled,
       isIconButton,
+      filtersAreApplied,
     }
   },
 })

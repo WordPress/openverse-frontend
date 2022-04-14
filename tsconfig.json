@@ -57,12 +57,9 @@
     "src/components/VAudioTrack/VPlayPause.vue",
     "src/composables/types.js",
     "src/composables/use-event-listener-outside.js",
-    "src/composables/use-active-audio.js",
-    "src/composables/use-browser-detection.js",
-    "src/composables/use-media-query.js",
-    "src/composables/window.js",
-    "src/constants/screens.js",
-    "src/utils/deep-freeze.js"
+
+    // This section cannot be converted to TypeScript because it's used in non-TS contexts (like Tailwind configuration)
+    "src/constants/screens.js"
   ],
   "exclude": ["node_modules"],
   "vueCompilerOptions": {
