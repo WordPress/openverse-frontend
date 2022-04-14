@@ -7,8 +7,8 @@ import { useMediaItemStore } from '~/stores/media/media-item'
 import { services } from '~/stores/media/services'
 
 const detailData = {
-  [AUDIO]: { title: 'audioDetails', id: 'audio1' },
-  [IMAGE]: { title: 'imageDetails', id: 'image1' },
+  [AUDIO]: { title: 'audioDetails', id: 'audio1', frontendMediaType: AUDIO },
+  [IMAGE]: { title: 'imageDetails', id: 'image1', frontendMediaType: IMAGE },
 }
 jest.mock('axios', () => ({
   ...jest.requireActual('axios'),
@@ -51,7 +51,7 @@ describe('Media Item Store', () => {
       async (type) => {
         const mediaItemStore = useMediaItemStore()
 
-        await mediaItemStore.fetchMediaItem('foo', type)
+        await mediaItemStore.fetchMediaItem(type, 'foo')
         expect(mediaItemStore.mediaItem).toEqual(detailData[type])
       }
     )
@@ -63,7 +63,7 @@ describe('Media Item Store', () => {
         mediaStore.results[type].items = {
           [`${type}1`]: detailData[type],
         }
-        await mediaItemStore.fetchMediaItem(`${type}1`, type)
+        await mediaItemStore.fetchMediaItem(type, `${type}1`)
         expect(mediaItemStore.mediaItem).toEqual(detailData[type])
       }
     )
@@ -80,7 +80,7 @@ describe('Media Item Store', () => {
         const mediaItemStore = useMediaItemStore()
 
         await expect(() =>
-          mediaItemStore.fetchMediaItem('foo', type)
+          mediaItemStore.fetchMediaItem(type, 'foo')
         ).rejects.toThrow(expectedErrorMessage)
       }
     )
@@ -94,7 +94,7 @@ describe('Media Item Store', () => {
         const mediaItemStore = useMediaItemStore()
         const id = 'foo'
         await expect(() =>
-          mediaItemStore.fetchMediaItem(id, type)
+          mediaItemStore.fetchMediaItem(type, id)
         ).rejects.toThrow(`Media of type ${type} with id ${id} not found`)
       }
     )

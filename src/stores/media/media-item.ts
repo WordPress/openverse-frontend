@@ -52,10 +52,12 @@ export const useMediaItemStore = defineStore('media-item', {
     async fetchMediaItem(type: SupportedMediaType, id: string) {
       const mediaStore = useMediaStore()
       const existingItem = mediaStore.getItemById(type, id)
+
+      // Not awaiting to make this call non-blocking
+      useRelatedMediaStore().fetchMedia(type, id)
       if (existingItem) {
         this.mediaType = existingItem.frontendMediaType
         this.mediaItem = this._addProviderName(existingItem)
-        useRelatedMediaStore().fetchMedia(this.mediaType, this.mediaItem.id)
       } else {
         try {
           this._updateFetchState('start')
@@ -64,8 +66,6 @@ export const useMediaItemStore = defineStore('media-item', {
           )
           this.mediaType = type
 
-          // Not awaiting to make this call non-blocking
-          useRelatedMediaStore().fetchMedia(this.mediaType, this.mediaItem.id)
           this._updateFetchState('end')
         } catch (error: unknown) {
           this.mediaItem = null
