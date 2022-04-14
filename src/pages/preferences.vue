@@ -1,0 +1,116 @@
+<template>
+  <VContentPage>
+    <h1>{{ $t('pref-page.title') }}</h1>
+
+    <h2>{{ $t('pref-page.toggle') }}</h2>
+    <ul class="!ps-0">
+      <li
+        v-for="(feature, name) in flags"
+        :key="name"
+        class="flex flex-row items-center"
+      >
+        <VCheckbox
+          :id="name"
+          class="flex-row items-center"
+          :checked="featureState(name) === ON"
+          :disabled="feature.status !== SWITCHABLE"
+          @change="handleChange"
+        >
+          <div>
+            <strong>{{ name }}</strong>
+            <br />
+            {{ feature.description }}
+          </div>
+        </VCheckbox>
+      </li>
+    </ul>
+
+    <p>{{ $t('pref-page.save-desc') }}</p>
+    <VButton variant="primary" @click="handleSave">{{
+      $t('pref-page.save')
+    }}</VButton>
+
+    <h2>{{ $t('pref-page.store-state') }}</h2>
+    <pre><code>{{ flags }}</code></pre>
+
+    <h2>{{ $t('pref-page.content-filtering') }}</h2>
+    <template
+      v-for="featName in ['feat_enabled', 'feat_disabled', 'feat_switchable']"
+    >
+      <template v-for="featState in [ON, OFF]">
+        <i18n
+          v-if="featureState(featName) === featState"
+          :key="`${featName}-${featState}`"
+          path="pref-page.explanation"
+          tag="p"
+        >
+          <template #feat-name
+            ><code>{{ featName }}</code></template
+          >
+          <template #feat-state
+            ><code>{{ featState }}</code></template
+          >
+        </i18n>
+      </template>
+    </template>
+  </VContentPage>
+</template>
+
+<script lang="ts">
+import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
+
+import { useFeatureFlagStore } from '~/stores/feature-flag'
+import { SWITCHABLE, ON, OFF } from '~/constants/feature-flag'
+
+import VContentPage from '~/components/VContentPage.vue'
+import VButton from '~/components/VButton.vue'
+import VCheckbox from '~/components/VCheckbox/VCheckbox.vue'
+
+export default defineComponent({
+  name: 'VPreferences',
+  components: {
+    VButton,
+    VContentPage,
+    VCheckbox,
+  },
+  setup() {
+    const { app } = useContext()
+    const featureFlagStore = useFeatureFlagStore()
+
+    const flags = computed(() => featureFlagStore.flags)
+
+    /**
+     * Toggle the state of the switchable flag to the preferred value.
+     * @param name
+     * @param checked
+     */
+    const handleChange = ({
+      name,
+      checked,
+    }: {
+      name: string
+      checked: boolean
+    }) => {
+      featureFlagStore.toggleFeature(name, checked ? ON : OFF)
+    }
+    /**
+     * Write the preferred state of switchable flags to the cookie.
+     */
+    const handleSave = () => {
+      app.$cookies.set('features', featureFlagStore.flagStateMap)
+    }
+
+    return {
+      ON,
+      OFF,
+      SWITCHABLE,
+
+      flags,
+      featureState: featureFlagStore.featureState,
+
+      handleChange,
+      handleSave,
+    }
+  },
+})
+</script>

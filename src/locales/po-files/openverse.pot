@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-04-12T10:22:32+00:00\n"
+"POT-Creation-Date: 2022-04-14T08:21:51+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -21,6 +21,42 @@ msgstr ""
 #: src/components/VSkipToContentContainer.vue:9
 msgctxt "skip-to-content"
 msgid "Skip to content"
+msgstr ""
+
+#: src/pages/preferences.vue:3
+msgctxt "pref-page.title"
+msgid "Preferences"
+msgstr ""
+
+#: src/pages/preferences.vue:5
+msgctxt "pref-page.toggle"
+msgid "Toggle features"
+msgstr ""
+
+#: src/pages/preferences.vue:28
+msgctxt "pref-page.save-desc"
+msgid "Don't forget to click Save to set your preferences."
+msgstr ""
+
+#: src/pages/preferences.vue:30
+msgctxt "pref-page.save"
+msgid "Save"
+msgstr ""
+
+#: src/pages/preferences.vue:33
+msgctxt "pref-page.store-state"
+msgid "Store state"
+msgstr ""
+
+#: src/pages/preferences.vue:36
+msgctxt "pref-page.content-filtering"
+msgid "Content filtering"
+msgstr ""
+
+#. Do not translate words between ### ###.
+#: src/pages/preferences.vue:41
+msgctxt "pref-page.explanation"
+msgid "Shown because ###feat-name### is ###feat-state###"
 msgstr ""
 
 msgctxt "search-type.image"

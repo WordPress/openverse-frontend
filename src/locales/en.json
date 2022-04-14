@@ -625,5 +625,14 @@
     "see-image": "See all images",
     "see-audio": "See all audio"
   },
-  "skip-to-content": "Skip to content"
+  "skip-to-content": "Skip to content",
+  "pref-page": {
+    "title": "Preferences",
+    "toggle": "Toggle features",
+    "save-desc": "Don't forget to click Save to set your preferences.",
+    "save": "Save",
+    "store-state": "Store state",
+    "content-filtering": "Content filtering",
+    "explanation": "Shown because {feat-name} is {feat-state}"
+  }
 }

@@ -1,6 +1,7 @@
 import { sendWindowMessage } from '~/utils/send-message'
 import { useNavStore } from '~/stores/nav'
 import { useProviderStore } from '~/stores/provider'
+import { useFeatureFlagStore } from '~/stores/feature-flag'
 
 import type { Middleware } from '@nuxt/types'
 
@@ -17,7 +18,9 @@ import type { Middleware } from '@nuxt/types'
  * Currently, one event type is used:
  * - `urlChange` sends the relative path of the URL on every URL change.
  */
-const middleware: Middleware = async ({ query, route, $pinia }) => {
+const middleware: Middleware = async ({ app, query, route, $pinia }) => {
+  /* Nav store */
+
   const navStore = useNavStore($pinia)
 
   if ('embedded' in query) {
@@ -33,7 +36,15 @@ const middleware: Middleware = async ({ query, route, $pinia }) => {
   if (process.client && navStore.isReferredFromCc) {
     navStore.setIsReferredFromCc(false)
   }
+
+  /* Provider store */
+
   const providerStore = useProviderStore($pinia)
   await providerStore.fetchMediaProviders()
+
+  /* Feature flag store */
+
+  const featureFlagStore = useFeatureFlagStore($pinia)
+  featureFlagStore.initFromCookies(app.$cookies.get('features') ?? {})
 }
 export default middleware
