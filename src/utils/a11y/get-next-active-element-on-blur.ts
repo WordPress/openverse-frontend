@@ -1,6 +1,6 @@
 import { getActiveElement } from '~/utils/a11y/dom'
 
-const isIE11 = 'msCrypto' in window
+const isIE11 = process.client && 'msCrypto' in window
 
 /**
  * Cross-browser method that returns the next active element (the element that
