@@ -104,13 +104,8 @@ dependencies:
   '@nuxtjs/redirect-module': 0.3.1
   '@nuxtjs/sentry': 5.1.6
   '@nuxtjs/sitemap': 2.4.0
-<<<<<<< HEAD
-  '@nuxtjs/svg': 0.3.0
-  '@pinia/nuxt': 0.1.8_pinia@2.0.13
-=======
   '@nuxtjs/svg': 0.4.0
-  '@pinia/nuxt': 0.1.8_pinia@2.0.11
->>>>>>> updated @nuxtjs/svg @nuxtjs/composition-api vue-i18n
+  '@pinia/nuxt': 0.1.8_pinia@2.0.13
   '@popperjs/core': 2.11.2
   '@tailwindcss/line-clamp': 0.3.1_tailwindcss@3.0.23
   '@tailwindcss/typography': 0.5.2_tailwindcss@3.0.23
