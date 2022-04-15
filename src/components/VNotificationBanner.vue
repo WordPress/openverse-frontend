@@ -10,31 +10,24 @@
     </p>
     <div class="flex">
       <slot name="buttons">
-        <VIconButton
-          :button-props="{
-            variant: 'plain',
-          }"
-          class="flex md:hidden"
-          size="small"
+        <VVariations
+          base="VIconButton"
+          :button-props="{ variant: 'plain' }"
           :class="variant === 'announcement' && 'text-white'"
-          :bordered="false"
           :aria-label="closeLabel"
           :icon-props="{
             iconPath: closeIcon,
           }"
-          @click="handleClose"
-        />
-        <VIconButton
-          :button-props="{
-            variant: 'plain',
-          }"
-          class="hidden md:flex"
-          :class="variant === 'announcement' && 'text-white'"
-          :bordered="false"
-          :aria-label="closeLabel"
-          :icon-props="{
-            iconPath: closeIcon,
-          }"
+          :variations="[
+            {
+              key: 'small',
+              props: { size: 'small', class: 'flex md:hidden border-none' },
+            },
+            {
+              key: 'medium',
+              props: { class: 'hidden md:flex border-none' },
+            },
+          ]"
           @click="handleClose"
         />
       </slot>
@@ -48,14 +41,14 @@ import { defineComponent, PropType } from '@nuxtjs/composition-api'
 import { useI18n } from '~/composables/use-i18n'
 import { useStorage } from '~/composables/use-storage'
 
-import VIconButton from '~/components/VIconButton/VIconButton.vue'
+import VVariations from '~/components/VVariations.vue'
 
 import closeIcon from '~/assets/icons/close.svg'
 
 export default defineComponent({
   name: 'VNotificationBanner',
   components: {
-    VIconButton,
+    VVariations,
   },
   props: {
     variant: {

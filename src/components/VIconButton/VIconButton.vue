@@ -2,8 +2,8 @@
   <VButton
     v-bind="buttonProps"
     size="disabled"
-    class="icon-button flex flex-shrink-0 items-center justify-center active:shadow-ring"
-    :class="[...buttonSizeClasses, bordered && 'border-1.5']"
+    class="icon-button flex flex-shrink-0 items-center justify-center active:shadow-ring border-1.5"
+    :class="buttonSizeClasses"
     :type="type"
     v-on="$listeners"
   >
@@ -66,13 +66,6 @@ export default defineComponent({
      * See documentation on `VButton`.
      */
     buttonProps: {},
-    /**
-     * Whether to render a border.
-     */
-    bordered: {
-      type: Boolean,
-      default: true,
-    },
   },
   setup(props, { attrs }) {
     const type = (attrs['type'] ?? 'button') as ButtonType
