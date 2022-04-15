@@ -26,7 +26,7 @@
 <script lang="ts">
 import { defineComponent, computed } from '@nuxtjs/composition-api'
 
-import { useNavStore } from '~/stores/nav'
+import { useNavigationStore } from '~/stores/navigation'
 
 import VNotificationBanner from '~/components/VNotificationBanner.vue'
 import VLink from '~/components/VLink.vue'
@@ -35,8 +35,8 @@ export default defineComponent({
   name: 'VMigrationNotice',
   components: { VLink, VNotificationBanner },
   setup() {
-    const navStore = useNavStore()
-    const isReferredFromCc = computed(() => navStore.isReferredFromCc)
+    const navigationStore = useNavigationStore()
+    const isReferredFromCc = computed(() => navigationStore.isReferredFromCc)
     return { isReferredFromCc }
   },
 })

@@ -9,7 +9,7 @@ test.describe('translation banner', () => {
       page.locator(
         'text=The translation for Russian locale is incomplete. Help us get to 100 percent by'
       )
-    ).toBeVisible({ timeout: 100 })
+    ).toBeVisible({ timeout: 500 })
 
     const [page1] = await Promise.all([
       page.waitForEvent('popup'),
@@ -24,17 +24,17 @@ test.describe('translation banner', () => {
     await page.goto('/ru/search/')
     await page.click(
       '[data-testid="banner-translation-ru"] [aria-label="Закрыть"]:visible',
-      { timeout: 100 }
+      { timeout: 500 }
     )
 
     const banner = page.locator('.span:has-text("Help us get to 100 percent")')
-    await expect(banner).not.toBeVisible({ timeout: 100 })
+    await expect(banner).not.toBeVisible({ timeout: 500 })
     // Test that the banner does not re-appear when navigating to the 'About us' page
     await page.click('[aria-label="меню"]')
     await page.click('a[role="menuitemcheckbox"]:has-text("Наша история")')
-    await expect(banner).not.toBeVisible({ timeout: 100 })
+    await expect(banner).not.toBeVisible({ timeout: 500 })
 
     await page.goto('/ru/search/')
-    await expect(banner).not.toBeVisible({ timeout: 100 })
+    await expect(banner).not.toBeVisible({ timeout: 500 })
   })
 })

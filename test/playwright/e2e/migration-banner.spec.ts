@@ -31,14 +31,14 @@ test.describe('migration banner', () => {
     await page.goto('/?referrer=creativecommons.org')
 
     const migrationNotice = page.locator('[data-testid="banner-cc-referral"]')
-    await expect(migrationNotice).toBeVisible({ timeout: 100 })
+    await expect(migrationNotice).toBeVisible({ timeout: 500 })
 
     await migrationNotice
       .locator('[aria-label="Close"]:visible')
-      .click({ timeout: 100 })
-    await expect(migrationNotice).not.toBeVisible({ timeout: 100 })
+      .click({ timeout: 500 })
+    await expect(migrationNotice).not.toBeVisible({ timeout: 500 })
 
     await page.reload()
-    await expect(migrationNotice).not.toBeVisible({ timeout: 100 })
+    await expect(migrationNotice).not.toBeVisible({ timeout: 500 })
   })
 })
