@@ -1,43 +1,32 @@
-import { watch, ref } from '@nuxtjs/composition-api'
-import { getDocument } from 'reakit-utils/getDocument'
-import { contains } from 'reakit-utils/contains'
+import { watch, ref, Ref } from '@nuxtjs/composition-api'
 
-/**
- * @param {Element} target
- */
-function isInDocument(target) {
+import { getDocument, contains } from '~/utils/a11y/dom'
+
+function isInDocument(target: Element) {
   const document = getDocument(target)
   if (target.tagName === 'HTML') return true
   return contains(document.body, target)
 }
 
-/**
- * @typedef Props
- * @property {import('./types').Ref<HTMLElement>} containerRef
- * @property {import('./types').Ref<HTMLElement>} triggerRef
- * @property {string} eventType
- * @property {(e: Event) => void} listener
- * @property {import('./types').Ref<boolean>} [shouldListenRef]
- */
+interface Props {
+  containerRef: Ref<HTMLElement>
+  triggerRef: Ref<HTMLElement>
+  eventType: string
+  listener: (e: Event) => void
+  shouldListenRef?: Ref<boolean>
+}
 
-/**
- * @param {Props} props
- */
 export const useEventListenerOutside = ({
   containerRef,
   triggerRef,
   eventType,
   listener,
   shouldListenRef,
-}) => {
+}: Props) => {
   const boundEventRef = ref()
 
   watch(
-    /** @type {const} */ ([
-      containerRef,
-      triggerRef,
-      shouldListenRef || ref(false),
-    ]),
+    [containerRef, triggerRef, shouldListenRef || ref(false)] as const,
     ([container, trigger, shouldListen], _, onInvalidate) => {
       if (boundEventRef.value && !shouldListen) {
         const document = getDocument(container)
@@ -46,10 +35,7 @@ export const useEventListenerOutside = ({
 
       if (!shouldListen) return
 
-      /**
-       * @param {Event} event
-       */
-      const onEvent = (event) => {
+      const onEvent = (event: Event) => {
         if (!listener || !container || !(event.target instanceof Element))
           return
         const target = event.target
