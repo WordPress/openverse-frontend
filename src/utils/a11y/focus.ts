@@ -42,7 +42,7 @@ export function isFocusable(element: Element): element is HTMLElement {
  * isTabbable(document.querySelector("input[hidden]")); // false
  * isTabbable(document.querySelector("input:disabled")); // false
  */
-export function isTabbable(element: Element): element is HTMLElement {
+export function isTabbable(element: Element) {
   return isFocusable(element) && !hasNegativeTabIndex(element)
 }
 
