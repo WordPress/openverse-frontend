@@ -46,7 +46,7 @@ interface Options {
   /**
    * Whether to mock the UA for mobile browsers.
    *
-   * @default true
+   * @defaultValue true
    */
   uaMocking: boolean
 }
