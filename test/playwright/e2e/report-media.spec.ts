@@ -89,7 +89,7 @@ const reports = {
  * Iterate through all the media types and supported reports
  * to make sure every permutation works correctly.
  */
-mediaTypes.map((mediaType) => {
+mediaTypes.forEach((mediaType) => {
   Object.entries(reports).forEach(([reportName, reportAssertion]) => {
     test(`Files ${reportName} report for ${mediaType.toLowerCase()}`, async ({
       page,
