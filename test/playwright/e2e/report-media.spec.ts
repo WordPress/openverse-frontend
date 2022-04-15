@@ -6,13 +6,29 @@ import { mockProviderApis } from '~~/test/playwright/utils/route'
  * Some helpers for repeated actions.
  */
 
-const reportingEndpoint =
-  /https:\/\/api.openverse.engineering\/v1\/\w+\/+[^/]+\/report\//
+const reportingEndpoint = '**/report/'
 
 export const visitFirstResult = (page: Page) =>
   page.click('[data-testid="search-results"] a:first-child')
 export const openReportModal = (page: Page) =>
   page.click('text="Report this content"')
+
+// Mock a successful reporting response
+export const mockReportingEndpoint = (context: BrowserContext) =>
+  context.route(reportingEndpoint, (route) => {
+    route.fulfill({
+      status: 200,
+      contentType: 'text/json',
+      headers: { 'access-control-allow-origin': '*' },
+    })
+  })
+
+// Submit the content form and return the network response
+export const submitApiReport = (page: Page) =>
+  Promise.all([
+    page.waitForResponse(reportingEndpoint),
+    page.locator('button[type="submit"]:has-text("Report")').click(),
+  ]).then((res) => res[0])
 
 /**
  * Reports
@@ -41,40 +57,22 @@ const submitMatureContentReport = async (
   page: Page,
   context: BrowserContext
 ) => {
-  await context.route(reportingEndpoint, (route) => {
-    route.fulfill({
-      status: 200,
-      contentType: 'text/json',
-      headers: { 'access-control-allow-origin': '*' },
-    })
-  })
+  await mockReportingEndpoint(context)
   await page.click('text="Contains mature content"')
-  const [response] = await Promise.all([
-    page.waitForResponse(reportingEndpoint),
-    page.locator('button[type="submit"]:has-text("Report")').click(),
-  ])
-  return expect(response.url()).toMatch(reportingEndpoint)
+  const response = await submitApiReport(page)
+  return expect(response.status()).toBe(200)
 }
 
 const submitOtherReport = async (page: Page, context: BrowserContext) => {
-  await context.route(reportingEndpoint, (route) => {
-    route.fulfill({
-      status: 200,
-      contentType: 'text/json',
-      headers: { 'access-control-allow-origin': '*' },
-    })
-  })
+  await mockReportingEndpoint(context)
   await page.click('text="Other"')
   // Input through label
   await page.fill(
     'text=Describe the issue',
     'This is an example "Other" report submit by Playwright, our automated e2e test tool.'
   )
-  const [response] = await Promise.all([
-    page.waitForResponse(reportingEndpoint),
-    page.locator('button[type="submit"]:has-text("Report")').click(),
-  ])
-  return expect(response.url()).toMatch(reportingEndpoint)
+  const response = await submitApiReport(page)
+  return expect(response.status()).toBe(200)
 }
 
 test.beforeEach(async ({ context }) => {
