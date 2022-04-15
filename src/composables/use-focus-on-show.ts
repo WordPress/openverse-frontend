@@ -1,7 +1,10 @@
 import { ref, watch, Ref } from '@nuxtjs/composition-api'
-import { getFirstTabbableIn } from 'reakit-utils/tabbable'
-import { hasFocusWithin } from 'reakit-utils/hasFocusWithin'
-import { ensureFocus } from 'reakit-utils/ensureFocus'
+
+import {
+  getFirstTabbableIn,
+  hasFocusWithin,
+  ensureFocus,
+} from '~/utils/a11y/focus'
 
 import { warn } from '~/utils/console'
 
