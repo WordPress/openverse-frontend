@@ -11,10 +11,10 @@
     <div class="flex">
       <slot name="buttons">
         <VIconButton
-          v-for="variation in iconButtonVariations"
-          v-bind="variation.props"
-          :key="variation.key"
+          :class="variant === 'announcement' && 'text-white'"
+          class="border-none"
           :button-props="{ variant: 'plain' }"
+          size="small"
           :aria-label="closeLabel"
           :icon-props="{
             iconPath: closeIcon,
@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
+import { defineComponent, PropType } from '@nuxtjs/composition-api'
 
 import { useI18n } from '~/composables/use-i18n'
 import { useStorage } from '~/composables/use-storage'
@@ -65,28 +65,11 @@ export default defineComponent({
       emit('close')
     }
     const closeLabel = i18n.t('modal.close') as string
-    const baseClasses = computed(
-      () => props.variant === 'announcement' && 'text-white'
-    )
-    const iconButtonVariations = computed(() => [
-      {
-        key: 'small',
-        props: {
-          size: 'small' as const,
-          class: `${baseClasses.value} flex md:hidden border-none`,
-        },
-      },
-      {
-        key: 'medium',
-        props: { class: `${baseClasses.value} hidden md:flex border-none` },
-      },
-    ])
     return {
       closeIcon,
       closeLabel,
       handleClose,
       shouldShow,
-      iconButtonVariations,
     }
   },
 })
