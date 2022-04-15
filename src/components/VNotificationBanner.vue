@@ -15,7 +15,6 @@
           v-bind="variation.props"
           :key="variation.key"
           :button-props="{ variant: 'plain' }"
-          :class="variant === 'announcement' && 'text-white'"
           :aria-label="closeLabel"
           :icon-props="{
             iconPath: closeIcon,
@@ -28,7 +27,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from '@nuxtjs/composition-api'
+import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
 
 import { useI18n } from '~/composables/use-i18n'
 import { useStorage } from '~/composables/use-storage'
@@ -66,16 +65,22 @@ export default defineComponent({
       emit('close')
     }
     const closeLabel = i18n.t('modal.close') as string
-    const iconButtonVariations = [
+    const baseClasses = computed(
+      () => props.variant === 'announcement' && 'text-white'
+    )
+    const iconButtonVariations = computed(() => [
       {
         key: 'small',
-        props: { size: 'small' as const, class: 'flex md:hidden border-none' },
+        props: {
+          size: 'small' as const,
+          class: `${baseClasses.value} flex md:hidden border-none`,
+        },
       },
       {
         key: 'medium',
-        props: { class: 'hidden md:flex border-none' },
+        props: { class: `${baseClasses.value} hidden md:flex border-none` },
       },
-    ]
+    ])
     return {
       closeIcon,
       closeLabel,
