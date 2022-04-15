@@ -1,11 +1,9 @@
-name: Storybook GitHub Pages
+name: GitHub Pages
 
-# Temporarily commented out for testing
 on:
   push:
     branches:
       - main
-      - add/tailwind-config-viewer
 
 jobs:
   deploy:
