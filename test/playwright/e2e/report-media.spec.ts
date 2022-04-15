@@ -66,7 +66,6 @@ const submitMatureContentReport = async (
 const submitOtherReport = async (page: Page, context: BrowserContext) => {
   await mockReportingEndpoint(context)
   await page.click('text="Other"')
-  // Input through label
   await page.fill(
     'text=Describe the issue',
     'This is an example "Other" report submit by Playwright, our automated e2e test tool.'
