@@ -109,8 +109,10 @@ export function matches(element: Element, selectors: string): boolean {
     return element.matches(selectors)
   }
   if ('msMatchesSelector' in element) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return (element as any).msMatchesSelector(selectors)
   }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (element as any).webkitMatchesSelector(selectors)
 }
 
@@ -149,6 +151,7 @@ export function closest(element: Element, selectors: string) {
   if ('closest' in element) return element.closest(selectors)
   do {
     if (matches(element, selectors)) return element
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     element = (element.parentElement || element.parentNode) as any
   } while (element !== null && element.nodeType === 1)
   return null
