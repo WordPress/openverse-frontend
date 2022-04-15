@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-export interface NavState {
+export interface NavigationState {
   isEmbedded: boolean
   isReferredFromCc: boolean
 }
@@ -8,8 +8,8 @@ export interface NavState {
 /**
  * Store information about navigation.
  */
-export const useNavStore = defineStore('nav', {
-  state: (): NavState => ({
+export const useNavigationStore = defineStore('navigation', {
+  state: (): NavigationState => ({
     isEmbedded: true,
     isReferredFromCc: false,
   }),
