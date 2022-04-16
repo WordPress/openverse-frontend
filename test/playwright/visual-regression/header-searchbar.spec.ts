@@ -26,6 +26,15 @@ test.describe('header search bar snapshots', () => {
             page.locator('form:has(input)')
           )
         })
+
+        test('hovered', async ({ page }) => {
+          await page.hover('input')
+          await hideInputCursors(page)
+          await expectSnapshot(
+            'hovered-search-ltr',
+            page.locator('form:has(input)')
+          )
+        })
       })
     })
   })
@@ -49,6 +58,15 @@ test.describe('header search bar snapshots', () => {
           await hideInputCursors(page)
           await expectSnapshot(
             'focused-search-rtl',
+            page.locator('form:has(input)')
+          )
+        })
+
+        test('hovered', async ({ page }) => {
+          await page.hover('input')
+          await hideInputCursors(page)
+          await expectSnapshot(
+            'hovered-search-rtl',
             page.locator('form:has(input)')
           )
         })
