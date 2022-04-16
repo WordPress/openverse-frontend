@@ -1,5 +1,7 @@
 /* Media types */
 
+import { isDev } from '~/utils/node-env'
+
 export const IMAGE = 'image'
 export const AUDIO = 'audio'
 export const VIDEO = 'video'
@@ -37,13 +39,26 @@ export type SupportedSearchType = typeof supportedSearchTypes[number]
 
 /* Media support */
 
-const SUPPORTED = 'supported' // Native search
-const BETA = 'beta' // Native but incomplete search
-const ADDITIONAL = 'additional' // Meta search
+export const SUPPORTED = 'supported' // Native search
+export const BETA = 'beta' // Native but incomplete search
+export const ADDITIONAL = 'additional' // Meta search
 
-export const contentStatus = Object.freeze({
-  [ALL_MEDIA]: SUPPORTED,
-  [IMAGE]: SUPPORTED,
-  [AUDIO]: BETA,
-  [VIDEO]: ADDITIONAL,
-} as const)
+/**
+ * TODO: This is for testing purposes only! We may want a different abstraction here;
+ */
+const _statuses = isDev
+  ? ({
+      [ALL_MEDIA]: SUPPORTED,
+      [IMAGE]: SUPPORTED,
+      [AUDIO]: BETA,
+      [VIDEO]: ADDITIONAL,
+      [MODEL_3D]: ADDITIONAL,
+    } as const)
+  : ({
+      [ALL_MEDIA]: SUPPORTED,
+      [IMAGE]: SUPPORTED,
+      [AUDIO]: BETA,
+      [VIDEO]: ADDITIONAL,
+    } as const)
+
+export const contentStatus = Object.freeze(_statuses)

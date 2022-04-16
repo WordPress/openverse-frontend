@@ -1,4 +1,9 @@
-import { SupportedSearchType, supportedSearchTypes } from '~/constants/media'
+import {
+  SearchType,
+  searchTypes,
+  SupportedSearchType,
+  supportedSearchTypes,
+} from '~/constants/media'
 
 /**
  * Validates the search types that have supported API endpoints.
@@ -7,8 +12,15 @@ import { SupportedSearchType, supportedSearchTypes } from '~/constants/media'
  * Any future search type that is not fully supported (video, 3d)
  * will also be invalid.
  */
-export const isValidSearchType = (
+export const isSupportedSearchType = (
   value: string
 ): value is SupportedSearchType => {
   return supportedSearchTypes.includes(value as SupportedSearchType)
+}
+/**
+ * Validates strings that are search types. It includes all the search types in support
+ * @param value - string value to be validated.
+ */
+export const isValidSearchType = (value: string): value is SearchType => {
+  return searchTypes.includes(value as SearchType)
 }

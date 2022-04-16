@@ -63,7 +63,9 @@ export default {
       const shouldFetchMedia =
         type === ALL_MEDIA
           ? supportedMediaTypes.every((type) => typeWithoutMedia(type))
-          : typeWithoutMedia(type)
+          : supportedMediaTypes.includes(type)
+          ? typeWithoutMedia(type)
+          : false
 
       if (shouldFetchMedia) {
         await mediaStore.fetchMedia()

@@ -61,7 +61,7 @@ import {
   watch,
 } from '@nuxtjs/composition-api'
 
-import { ALL_MEDIA } from '~/constants/media'
+import { ALL_MEDIA, supportedSearchTypes } from '~/constants/media'
 import { isMinScreen } from '~/composables/use-media-query'
 import { useMatchSearchRoutes } from '~/composables/use-match-routes'
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
@@ -133,9 +133,15 @@ const VHeader = defineComponent({
       openMenu.value = null
     }
 
-    /**  @type {import('@nuxtjs/composition-api').ComputedRef<boolean>} */
+    const isSearchTypeSupported = computed(() =>
+      supportedSearchTypes.includes(searchStore.searchType)
+    )
+
+    /**
+     * isFetching is always false for `additional`, non-supported search types.
+     * @type {import('@nuxtjs/composition-api').ComputedRef<boolean>} */
     const isFetching = computed(() => {
-      return mediaStore.fetchState.isFetching
+      return isSearchTypeSupported.value && mediaStore.fetchState.isFetching
     })
 
     /** @type {import('@nuxtjs/composition-api').ComputedRef<number>} */
@@ -184,6 +190,15 @@ const VHeader = defineComponent({
     const handleSearch = async () => {
       const mediaStore = useMediaStore()
       const searchStore = useSearchStore()
+      // TODO: Decide on the best option for when user tries to search from additional search type (e.g., video):
+      // - automatically search for All Content
+      // - update path and set the search term in the store so that the user can change the search type using
+      // content switcher, and be redirected to the same query for other search types?
+      // - do nothing (maybe with some kind of indication like a toast saying that search is not available for 'video'
+
+      if (isSearchRoute.value && !isSearchTypeSupported.value) {
+        return
+      }
       const searchType = isSearchRoute.value
         ? searchStore.searchType
         : ALL_MEDIA

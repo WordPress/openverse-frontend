@@ -1,11 +1,5 @@
 <template>
-  <section
-    v-if="
-      !fetchState.hasStarted ||
-      fetchState.isFetching ||
-      (!fetchState.isFetching && resultsCount)
-    "
-  >
+  <section v-if="showResultsHeader">
     <header
       v-if="query.q && supported"
       class="mt-4"
@@ -22,7 +16,7 @@
     <slot name="media" />
 
     <VMetaSearchForm
-      v-if="!fetchState.isFetching"
+      v-if="!supported || !fetchState.isFetching"
       :type="metaSearchFormType"
       :has-no-results="hasNoResults"
       :query="query"
@@ -74,7 +68,10 @@ export default {
       required: true,
     },
     fetchState: {
-      required: true,
+      type: /** @type {import('@nuxtjs/composition-api').PropType<import('~/composables/use-fetch-state').FetchState>} */ (
+        Object
+      ),
+      required: false,
     },
     resultsCount: {
       type: Number,
@@ -96,11 +93,20 @@ export default {
       return props.searchType === ALL_MEDIA
     })
 
+    const showResultsHeader = computed(
+      () =>
+        !props.supported ||
+        !props.fetchState.hasStarted ||
+        props.fetchState.isFetching ||
+        (!props.fetchState.isFetching && props.resultsCount)
+    )
+
     return {
       hasNoResults,
       metaSearchFormType,
       isAllView,
       NO_RESULT,
+      showResultsHeader,
     }
   },
 }

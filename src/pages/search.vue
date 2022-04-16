@@ -13,8 +13,7 @@
       <template #media>
         <NuxtChild
           :key="$route.path"
-          :result-items="resultItems"
-          :fetch-state="fetchState"
+          v-bind="childPageProperties"
           :is-filter-visible="isVisible"
           :search-term="query.q"
           :supported="supported"
@@ -36,6 +35,8 @@ import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-vis
 
 import { useMediaStore } from '~/stores/media'
 import { useSearchStore } from '~/stores/search'
+
+import { initialFetchState } from '~/composables/use-fetch-state'
 
 import VSearchGrid from '~/components/VSearchGrid.vue'
 import VSkipToContentContainer from '~/components/VSkipToContentContainer.vue'
@@ -65,6 +66,19 @@ const BrowsePage = {
     const fetchState = computed(() => mediaStore.fetchState)
     const resultItems = computed(() => mediaStore.resultItems)
 
+    const childPageProperties = computed(() => {
+      if (supportedSearchTypes.includes(searchType.value)) {
+        return {
+          resultItems: resultItems.value,
+          fetchState: fetchState.value,
+        }
+      } else {
+        return {
+          'fetch-state': { ...initialFetchState },
+        }
+      }
+    })
+
     return {
       isMinScreenMd,
       isVisible,
@@ -79,6 +93,7 @@ const BrowsePage = {
       resultItems,
       fetchMedia: mediaStore.fetchMedia,
       setSearchStateFromUrl: searchStore.setSearchStateFromUrl,
+      childPageProperties,
     }
   },
   scrollToTop: false,
@@ -118,7 +133,9 @@ const BrowsePage = {
       ) {
         const { query, path } = newRoute
         await this.setSearchStateFromUrl({ urlQuery: query, path })
-        this.fetchMedia()
+        if (this.supported) {
+          this.fetchMedia()
+        }
       }
     },
   },

@@ -38,9 +38,13 @@
 <script>
 import { computed, defineComponent } from '@nuxtjs/composition-api'
 
-import { isDev } from '~/utils/node-env'
-
-import { supportedSearchTypes } from '~/constants/media'
+import {
+  ADDITIONAL,
+  BETA,
+  contentStatus,
+  searchTypes,
+  SUPPORTED,
+} from '~/constants/media'
 import useSearchType from '~/composables/use-search-type'
 
 import VItemGroup from '~/components/VItemGroup/VItemGroup.vue'
@@ -62,7 +66,7 @@ export default defineComponent({
     activeItem: {
       type: String,
       required: true,
-      validator: (val) => supportedSearchTypes.includes(val),
+      validator: (val) => searchTypes.includes(val),
     },
     useLinks: {
       type: Boolean,
@@ -75,22 +79,20 @@ export default defineComponent({
     const contentTypeGroups = [
       {
         heading: 'heading',
-        items: content.types,
+        items: content.types.filter((type) =>
+          [SUPPORTED, BETA].includes(contentStatus[type])
+        ),
       },
     ]
 
     /**
-     * @todo This is for testing purposes only! We may want a different abstraction here;
-     * For example having all content types under `content.types` and making them filterable,
-     * like `const additional = [...content.types.filter(i => i.status === ADDITIONAL)]`.
+     * To edit the list of additional types, use the
+     * `contentStatus` object in `constants/media`
      */
-    if (isDev) {
-      content.additionalTypes = ['model_3d']
-      contentTypeGroups.push({
-        heading: 'additional',
-        items: content.additionalTypes,
-      })
-    }
+    contentTypeGroups.push({
+      heading: 'additional',
+      items: content.types.filter((type) => contentStatus[type] === ADDITIONAL),
+    })
 
     const bordered = computed(() => props.size === 'small')
     const handleClick = (item) => {

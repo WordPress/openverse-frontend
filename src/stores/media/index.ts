@@ -16,6 +16,7 @@ import {
   IMAGE,
   SupportedMediaType,
   supportedMediaTypes,
+  supportedSearchTypes,
 } from '~/constants/media'
 import { services } from '~/stores/media/services'
 import { useSearchStore } from '~/stores/search'
@@ -95,14 +96,17 @@ export const useMediaStore = defineStore('media', {
      * Returns the total count of results for selected search type, sums all media results for ALL_MEDIA.
      * If the count is more than 10000, returns 10000 to match the API result.
      */
-    resultCount(state) {
+    resultCount(): number {
+      if (!supportedSearchTypes.includes(this._searchType)) {
+        return 0
+      }
       const types = (
         this._searchType === ALL_MEDIA
           ? supportedMediaTypes
           : [this._searchType]
       ) as SupportedMediaType[]
       const count = types.reduce(
-        (sum, mediaType) => sum + state.results[mediaType].count,
+        (sum, mediaType) => sum + this.results[mediaType].count,
         0
       )
       return Math.min(count, 10000)
