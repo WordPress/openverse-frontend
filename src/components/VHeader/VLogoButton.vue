@@ -12,8 +12,10 @@
     />
     <OpenverseLogoText
       v-show="!isHeaderScrolled"
-      class="hidden sm:block -ml-1 mt-1 me-3"
-      :class="{ 'md:hidden': isSearchRoute }"
+      class="-ml-1 mt-1 me-3"
+      :class="{
+        'hidden sm:block md:hidden': isSearchRoute,
+      }"
       width="95"
       height="15"
     />
