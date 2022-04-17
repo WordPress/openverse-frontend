@@ -11,8 +11,8 @@
       :auto-resize="autoResizeLogo"
     />
     <OpenverseLogoText
-      v-if="!isHeaderScrolled"
-      class="-ml-1 mt-1 me-3"
+      v-show="!isHeaderScrolled"
+      class="hidden sm:block -ml-1 mt-1 me-3"
       :class="{ 'md:hidden': isSearchRoute }"
       width="95"
       height="15"
