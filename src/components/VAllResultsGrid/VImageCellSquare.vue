@@ -4,6 +4,7 @@
     :title="image.title"
     :href="'/image/' + image.id"
     class="group block focus:ring-[3px] focus:ring-pink focus:ring-offset-[3px] focus:outline-none rounded-sm"
+    :data-resultid="image.id"
   >
     <figure
       itemprop="image"

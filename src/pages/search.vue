@@ -23,12 +23,29 @@
       </template>
     </VSearchGrid>
     <VScrollButton v-show="showScrollButton" data-testid="scroll-button" />
+    <VModal
+      v-if="selectedResult !== null && modalIsOpen"
+      :displaced-disclosure="modalDisclosure"
+      :visible="true"
+      @close="handleModalClose"
+    >
+      <VImageResult v-if="selectedResultType === 'image'" />
+    </VModal>
   </VSkipToContentContainer>
 </template>
 
 <script>
 import { isShallowEqualObjects } from '@wordpress/is-shallow-equal'
-import { computed, inject } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  computed,
+  inject,
+  useRouter,
+  useRoute,
+  watch,
+  ref,
+  onMounted,
+} from '@nuxtjs/composition-api'
 
 import { supportedSearchTypes } from '~/constants/media'
 import { isMinScreen } from '~/composables/use-media-query'
@@ -36,25 +53,55 @@ import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-vis
 
 import { useMediaStore } from '~/stores/media'
 import { useSearchStore } from '~/stores/search'
+import { useSingleResultStore } from '~/stores/media/single-result'
 
 import VSearchGrid from '~/components/VSearchGrid.vue'
 import VSkipToContentContainer from '~/components/VSkipToContentContainer.vue'
 import VScrollButton from '~/components/VScrollButton.vue'
+import VModal from '~/components/VModal/VModal.vue'
 
-const BrowsePage = {
-  name: 'browse-page',
+const BrowsePage = defineComponent({
+  name: 'BrowsePage',
   components: {
     VScrollButton,
     VSearchGrid,
     VSkipToContentContainer,
+    VModal,
   },
+  beforeRouteLeave(to, from, next) {
+    const resultRoute = /^(image|audio)-id___\w{2}$/
+    const match = to.name.match(resultRoute)
+    if (match) {
+      if (!this.searchHomeRoute) {
+        this.searchHomeRoute = from.fullPath
+      }
+
+      const singleResultStore = useSingleResultStore(this.$pinia)
+      singleResultStore.fetchMediaItem(match[1], to.params.id).then(() => {
+        this.modalDisclosure = this.$el.querySelector(
+          `[data-resultid="${to.params.id}"`
+        )
+        this.modalIsOpen = true
+        window.history.pushState({ prev: from.path }, '', to.path)
+      })
+      return false
+    }
+
+    console.log('ELSE:', to)
+  },
+  scrollToTop: false,
   setup() {
+    const router = useRouter()
+    const route = useRoute()
     const isMinScreenMd = isMinScreen('md')
     const { isVisible } = useFilterSidebarVisibility()
     const showScrollButton = inject('showScrollButton')
     const mediaStore = useMediaStore()
     const searchStore = useSearchStore()
+    const singleResultStore = useSingleResultStore()
 
+    const selectedResult = computed(() => singleResultStore.mediaItem)
+    const selectedResultType = computed(() => singleResultStore.mediaType)
     const searchTerm = computed(() => searchStore.searchTerm)
     const searchType = computed(() => searchStore.searchType)
     const query = computed(() => searchStore.searchQueryParams)
@@ -65,6 +112,33 @@ const BrowsePage = {
     const fetchState = computed(() => mediaStore.fetchState)
     const resultItems = computed(() => mediaStore.resultItems)
 
+    const searchHomeRoute = ref()
+    const modalIsOpen = ref(false)
+    const popstateHandler = ref()
+
+    const handleModalClose = () => {
+      router.push(searchHomeRoute.value)
+      modalIsOpen.value = false
+      modalDisclosure.value = null
+    }
+
+    watch([route], () => {
+      if (route.value.name.startsWith('search')) {
+        handleModalClose()
+      }
+    })
+
+    onMounted(() => {
+      window.addEventListener('popstate', () => {
+        console.log('popstate', window.location.toString())
+        if (window.location.pathname.includes('search')) {
+          handleModalClose()
+        }
+      })
+    })
+
+    const modalDisclosure = ref()
+
     return {
       isMinScreenMd,
       isVisible,
@@ -74,17 +148,19 @@ const BrowsePage = {
       supported,
       query,
 
+      selectedResult,
+      selectedResultType,
       resultCount,
       fetchState,
       resultItems,
       fetchMedia: mediaStore.fetchMedia,
       setSearchStateFromUrl: searchStore.setSearchStateFromUrl,
-    }
-  },
-  scrollToTop: false,
-  async fetch() {
-    if (this.supported && !this.resultCount && this.searchTerm.trim() !== '') {
-      await this.fetchMedia()
+
+      searchHomeRoute,
+      handleModalClose,
+      modalDisclosure,
+      modalIsOpen,
+      popstateHandler,
     }
   },
   asyncData({ route, $pinia }) {
@@ -94,6 +170,11 @@ const BrowsePage = {
         path: route.path,
         urlQuery: route.query,
       })
+    }
+  },
+  async fetch() {
+    if (this.supported && !this.resultCount && this.searchTerm.trim() !== '') {
+      await this.fetchMedia()
     }
   },
   computed: {
@@ -122,7 +203,7 @@ const BrowsePage = {
       }
     },
   },
-}
+})
 
 export default BrowsePage
 </script>

@@ -28,6 +28,7 @@ export default {
       required: true,
     },
   },
+  emits: ['failure'],
   data() {
     return {
       client: null,
