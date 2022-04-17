@@ -30,23 +30,9 @@ const viewportEntries = [
 })
 
 const VIEWPORTS =
-  /** @type {Record<Breakpoint | 'xs', typeof viewportEntries[number][1]>} */ (
+  /** @type {Record<Breakpoint, typeof viewportEntries[number][1]>} */ (
     Object.fromEntries(viewportEntries)
   )
-
-/**
- * Get the breakpoint in which the screen with the given width lies.
- * @param {number} screenWidth - the width of the screen
- * @returns {Breakpoint} the breakpoint in which the screen lies
- */
-const getBreakpointName = (screenWidth) => {
-  for (const [breakpointName, lowerLimit] of SCREEN_SIZES) {
-    if (screenWidth >= lowerLimit) {
-      return breakpointName
-    }
-  }
-  return 'sm' // smallest breakpoint
-}
 
 /**
  * This module is consumed by Nuxt and Tailwind config so it needs to use CJS modules
@@ -54,5 +40,4 @@ const getBreakpointName = (screenWidth) => {
 module.exports = {
   SCREEN_SIZES,
   VIEWPORTS,
-  getBreakpointName,
 }
