@@ -17,7 +17,9 @@
               hide-name
               :license="audio.license"
             />
-            <div>{{ $t(`filters.audio-categories.${audio.category}`) }}</div>
+            <div v-if="audio.category">
+              {{ $t(`filters.audio-categories.${audio.category}`) }}
+            </div>
           </div>
         </div>
 
