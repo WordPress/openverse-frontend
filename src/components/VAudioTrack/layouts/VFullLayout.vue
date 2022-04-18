@@ -79,7 +79,24 @@ import VLink from '~/components/VLink.vue'
 export default defineComponent({
   name: 'VFullLayout',
   components: { VButton, VLink },
-  props: ['audio', 'size', 'status', 'currentTime'],
+  props: {
+    audio: {
+      type: Object,
+      required: true,
+    },
+    size: {
+      type: String,
+      validation: (v) => ['s', 'm', 'l'].includes(v),
+    },
+    status: {
+      type: String,
+      validation: (v) => ['playing', 'played', 'ejected'].includes(v),
+    },
+    currentTime: {
+      type: Number,
+      required: true,
+    },
+  },
   setup(props) {
     /**
      * Format the time as hh:mm:ss, dropping the hour part if it is zero.
