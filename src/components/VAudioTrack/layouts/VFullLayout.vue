@@ -95,53 +95,10 @@ export default defineComponent({
       return '--:--'
     }
 
-    /**
-     * Returns specific display name for file format if there is a mapping for
-     * provider's format display names (like Jamendo's `mp32` -> `MP3 V0`).
-     * Otherwise, returns UpperCase format or ''
-     * @param {string} provider
-     * @param {string} [format]
-     */
-    const displayFormat = (provider, format) => {
-      const filetypeMappings = {
-        jamendo: { mp31: 'MP3 96kbs', mp32: 'MP3 V0' },
-      }
-      if (filetypeMappings[provider] && filetypeMappings[provider][format]) {
-        return filetypeMappings[provider][format]
-      }
-      return format ? format.toUpperCase() : ''
-    }
-
-    /**
-     * Creates a list of { extension_name, download_url } objects
-     * for VDownloadButton.
-     *
-     * If there are `alt_files` then just use that list. Otherwise,
-     * create one using the preview URL.
-     *
-     * @param {AudioDetail} audio
-     */
-    const getFormats = (audio) => {
-      if (audio.alt_files?.length) {
-        return audio.alt_files.map((altFile) => ({
-          extension_name: displayFormat(audio.provider, altFile.filetype),
-          download_url: altFile.url,
-        }))
-      }
-
-      return [
-        {
-          extension_name: displayFormat(audio.provider, audio.filetype),
-          download_url: audio.url,
-        },
-      ]
-    }
-
     const isSmall = computed(() => props.size === 's')
 
     return {
       timeFmt,
-      getFormats,
 
       isSmall,
     }
