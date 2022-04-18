@@ -190,35 +190,33 @@ const VHeader = defineComponent({
     const handleSearch = async () => {
       const mediaStore = useMediaStore()
       const searchStore = useSearchStore()
-      // TODO: Decide on the best option for when user tries to search from additional search type (e.g., video):
-      // - automatically search for All Content
-      // - update path and set the search term in the store so that the user can change the search type using
-      // content switcher, and be redirected to the same query for other search types?
-      // - do nothing (maybe with some kind of indication like a toast saying that search is not available for 'video'
-
-      if (isSearchRoute.value && !isSearchTypeSupported.value) {
-        return
-      }
-      const searchType = isSearchRoute.value
-        ? searchStore.searchType
-        : ALL_MEDIA
+      /**
+       * When user tries to search from additional search type (e.g., video):
+       * - update path and set the search term in the store so that the user can change the search type using
+       * content switcher, and be redirected to the same query for other search types
+       */
       if (
         isSearchRoute.value &&
         (!searchTermChanged.value || searchTerm.value === '')
       )
         return
       if (searchTermChanged.value) {
-        await mediaStore.clearMedia()
+        mediaStore.clearMedia()
 
         searchStore.setSearchTerm(searchTerm.value)
-        searchStore.setSearchType(searchType)
       }
+      if (!isSearchRoute.value) {
+        searchStore.setSearchType(ALL_MEDIA)
+      }
+      const searchType = searchStore.searchType
       const newPath = app.localePath({
         path: `/search/${searchType === 'all' ? '' : searchType}`,
         query: searchStore.searchQueryParams,
       })
       router.push(newPath)
-      await mediaStore.fetchMedia()
+      if (isSearchTypeSupported.value) {
+        await mediaStore.fetchMedia()
+      }
     }
 
     return {

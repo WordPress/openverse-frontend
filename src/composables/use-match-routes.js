@@ -29,6 +29,12 @@ export const useMatchRoute = (routes = []) => {
  * Homepage, single image result and other content pages return `false`
  */
 export const useMatchSearchRoutes = () =>
-  useMatchRoute(['search', 'search-image', 'search-audio', 'search-video'])
+  useMatchRoute([
+    'search',
+    'search-image',
+    'search-audio',
+    'search-video',
+    'search-model-3d',
+  ])
 
 export const useMatchHomeRoute = () => useMatchRoute(['index'])
