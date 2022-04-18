@@ -113,7 +113,7 @@ export const filtersToQueryData = (
 export const queryStringToSearchType = (
   queryString: string
 ): SupportedSearchType => {
-  const searchTypePattern = /\/search\/(image|audio|video)\?*/
+  const searchTypePattern = /\/search\/(image|audio|video|model-3d)\?*/
   const matchedType = queryString.match(searchTypePattern)
   return matchedType === null
     ? ALL_MEDIA

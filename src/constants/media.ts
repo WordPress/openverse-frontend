@@ -5,7 +5,7 @@ import { isDev } from '~/utils/node-env'
 export const IMAGE = 'image'
 export const AUDIO = 'audio'
 export const VIDEO = 'video'
-export const MODEL_3D = 'model_3d'
+export const MODEL_3D = 'model-3d'
 export const ALL_MEDIA = 'all'
 
 /**
