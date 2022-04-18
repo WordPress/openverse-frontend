@@ -1,5 +1,5 @@
 import { sendWindowMessage } from '~/utils/send-message'
-import { useNavStore } from '~/stores/nav'
+import { useNavigationStore } from '~/stores/navigation'
 import { useProviderStore } from '~/stores/provider'
 import { useFeatureFlagStore } from '~/stores/feature-flag'
 
@@ -21,10 +21,10 @@ import type { Middleware } from '@nuxt/types'
 const middleware: Middleware = async ({ app, query, route, $pinia }) => {
   /* Nav store */
 
-  const navStore = useNavStore($pinia)
+  const navigationStore = useNavigationStore($pinia)
 
   if ('embedded' in query) {
-    navStore.setIsEmbedded(query.embedded === 'true')
+    navigationStore.setIsEmbedded(query.embedded === 'true')
   }
   if (process.client) {
     sendWindowMessage({
@@ -33,8 +33,8 @@ const middleware: Middleware = async ({ app, query, route, $pinia }) => {
     })
   }
 
-  if (process.client && navStore.isReferredFromCc) {
-    navStore.setIsReferredFromCc(false)
+  if (process.client && navigationStore.isReferredFromCc) {
+    navigationStore.setIsReferredFromCc(false)
   }
 
   /* Provider store */
