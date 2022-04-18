@@ -55,7 +55,6 @@ const configureVue = (vue) => {
 }
 
 const stubs = {
-  VDownloadButton: true,
   VPlayPause: true,
   NuxtLink: true,
   VLicense: true,

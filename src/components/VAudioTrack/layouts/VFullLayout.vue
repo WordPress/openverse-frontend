@@ -58,11 +58,14 @@
         </div>
       </div>
 
-      <VDownloadButton
-        class="ms-auto order-1 lg:order-2"
-        :formats="getFormats(audio)"
+      <VButton
+        as="VLink"
+        :href="audio.foreign_landing_url"
         :size="isSmall ? 'small' : 'medium'"
-      />
+        class="ms-auto order-1 lg:order-2 font-bold"
+      >
+        {{ $t('download-button.download') }}
+      </VButton>
     </div>
   </div>
 </template>
@@ -70,12 +73,12 @@
 <script>
 import { computed, defineComponent } from '@nuxtjs/composition-api'
 
-import VDownloadButton from '~/components/VDownloadButton.vue'
+import VButton from '~/components/VButton.vue'
 import VLink from '~/components/VLink.vue'
 
 export default defineComponent({
   name: 'VFullLayout',
-  components: { VDownloadButton, VLink },
+  components: { VButton, VLink },
   props: ['audio', 'size', 'status', 'currentTime'],
   setup(props) {
     /**
