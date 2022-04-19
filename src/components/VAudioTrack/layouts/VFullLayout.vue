@@ -90,7 +90,7 @@ export default defineComponent({
     },
     status: {
       type: String,
-      validation: (v) => ['playing', 'played', 'ejected'].includes(v),
+      validation: (v) => ['playing', 'played', 'paused'].includes(v),
     },
     currentTime: {
       type: Number,
