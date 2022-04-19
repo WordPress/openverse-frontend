@@ -59,7 +59,7 @@ specifiers:
   focus-trap: ^6.7.1
   focus-trap-vue: 1.1.1
   focus-visible: ^5.2.0
-  glob: ^7.1.6
+  glob: ^8.0.1
   husky: ^7.0.1
   jest: ^26.6.3
   jest-transform-stub: ^2.0.0
@@ -121,7 +121,7 @@ dependencies:
   focus-trap: 6.7.1
   focus-trap-vue: 1.1.1_focus-trap@6.7.1
   focus-visible: 5.2.0
-  glob: 7.2.0
+  glob: 8.0.1
   lodash.clonedeep: 4.5.0
   lodash.debounce: 4.0.8
   lodash.isempty: 4.4.0
@@ -7361,6 +7361,12 @@ packages:
       balanced-match: 1.0.2
       concat-map: 0.0.1
 
+  /brace-expansion/2.0.1:
+    resolution: {integrity: sha512-XnAIvQ8eM+kC6aULx6wuQiwVsnzsi9d3WxzV3FpWTGA19F621kwdbsAcFKXgKUHZWsy+mY6iL1sHTxWEFCytDA==}
+    dependencies:
+      balanced-match: 1.0.2
+    dev: false
+
   /braces/2.3.2:
     resolution: {integrity: sha512-aNdbnj9P8PjdXU4ybaWLK2IF3jc/EoDYbC7AazW6to3TRsfXxscC9UXOB5iDiEQrkyIbWp2SLQda4+QAa7nc3w==}
     engines: {node: '>=0.10.0'}
@@ -10137,7 +10143,7 @@ packages:
       fs-extra: 9.1.0
       glob: 7.2.0
       memfs: 3.4.0
-      minimatch: 3.0.4
+      minimatch: 3.1.2
       schema-utils: 2.7.0
       semver: 7.3.5
       tapable: 1.1.3
@@ -10169,7 +10175,7 @@ packages:
       fs-extra: 9.1.0
       glob: 7.2.0
       memfs: 3.4.0
-      minimatch: 3.0.4
+      minimatch: 3.1.2
       schema-utils: 2.7.0
       semver: 7.3.5
       tapable: 1.1.3
@@ -10470,6 +10476,18 @@ packages:
       minimatch: 3.1.2
       once: 1.4.0
       path-is-absolute: 1.0.1
+
+  /glob/8.0.1:
+    resolution: {integrity: sha512-cF7FYZZ47YzmCu7dDy50xSRRfO3ErRfrXuLZcNIuyiJEco0XSrGtuilG19L5xp3NcwTx7Gn+X6Tv3fmsUPTbow==}
+    engines: {node: '>=12'}
+    dependencies:
+      fs.realpath: 1.0.0
+      inflight: 1.0.6
+      inherits: 2.0.4
+      minimatch: 5.0.1
+      once: 1.4.0
+      path-is-absolute: 1.0.1
+    dev: false
 
   /global/4.4.0:
     resolution: {integrity: sha512-wv/LAoHdRE3BeTGz53FAamhGlPLhlssK45usmGFThIi4XqnBmjKQ16u+RNbP7WvigRZDxUsM0J3gcQ5yicaL0w==}
@@ -13095,6 +13113,13 @@ packages:
     resolution: {integrity: sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==}
     dependencies:
       brace-expansion: 1.1.11
+
+  /minimatch/5.0.1:
+    resolution: {integrity: sha512-nLDxIFRyhDblz3qMuq+SoRZED4+miJ/G+tdDrjkkkRnjAsBexeGpgjLEQ0blJy7rHhR2b93rhQY4SvyWu9v03g==}
+    engines: {node: '>=10'}
+    dependencies:
+      brace-expansion: 2.0.1
+    dev: false
 
   /minimist/1.2.5:
     resolution: {integrity: sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==}
