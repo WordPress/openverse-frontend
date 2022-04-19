@@ -51,7 +51,7 @@ specifiers:
   eslint-plugin-eslint-comments: ^3.2.0
   eslint-plugin-import: ^2.26.0
   eslint-plugin-prettier: ^4.0.0
-  eslint-plugin-tsdoc: ^0.2.15
+  eslint-plugin-tsdoc: ^0.2.16
   eslint-plugin-unicorn: ^42.0.0
   eslint-plugin-vue: ^8.6.0
   eslint-plugin-vuejs-accessibility: ^1.1.1
@@ -167,7 +167,7 @@ devDependencies:
   eslint-plugin-eslint-comments: 3.2.0_eslint@8.12.0
   eslint-plugin-import: 2.26.0_eslint@8.12.0
   eslint-plugin-prettier: 4.0.0_d31a386daced1db91f33c91b25a43736
-  eslint-plugin-tsdoc: 0.2.15
+  eslint-plugin-tsdoc: 0.2.16
   eslint-plugin-unicorn: 42.0.0_eslint@8.12.0
   eslint-plugin-vue: 8.6.0_eslint@8.12.0
   eslint-plugin-vuejs-accessibility: 1.1.1_eslint@8.12.0
@@ -2733,17 +2733,17 @@ packages:
     resolution: {integrity: sha512-H1rQc1ZOHANWBvPcW+JpGwr+juXSxM8Q8YCkm3GhZd8REu1fHR3z99CErO1p9pkcfcxZnMdIZdIsXkOHY0NilA==}
     dev: true
 
-  /@microsoft/tsdoc-config/0.16.0:
-    resolution: {integrity: sha512-Xvoh97qbYMsDK5TETcIu+uLeiwU5vtqXhyIkhCQ4GWooEt08qsXGu5F5SPdcwA0ox2EVukYnY5flF26wpFnMjw==}
+  /@microsoft/tsdoc-config/0.16.1:
+    resolution: {integrity: sha512-2RqkwiD4uN6MLnHFljqBlZIXlt/SaUT6cuogU1w2ARw4nKuuppSmR0+s+NC+7kXBQykd9zzu0P4HtBpZT5zBpQ==}
     dependencies:
-      '@microsoft/tsdoc': 0.14.0
+      '@microsoft/tsdoc': 0.14.1
       ajv: 6.12.6
       jju: 1.4.0
       resolve: 1.19.0
     dev: true
 
-  /@microsoft/tsdoc/0.14.0:
-    resolution: {integrity: sha512-AXrYOAL5I2sZlYO/1JOGa5hCUemJ396OgMYR40t7gEjQtMJdJ28kbwJuQdRTKo/bmGFZuq4RsmG13I4L74xNbw==}
+  /@microsoft/tsdoc/0.14.1:
+    resolution: {integrity: sha512-6Wci+Tp3CgPt/B9B0a3J4s3yMgLNSku6w5TV6mN+61C71UqsRBv2FUibBf3tPGlNxebgPHMEUzKpb1ggE8KCKw==}
     dev: true
 
   /@mrmlnc/readdir-enhanced/2.2.1:
@@ -9416,11 +9416,11 @@ packages:
       prettier-linter-helpers: 1.0.0
     dev: true
 
-  /eslint-plugin-tsdoc/0.2.15:
-    resolution: {integrity: sha512-CVBX/uyfKTCD5Uho5tJGbrTfdNv+JxoCkz5tWsKp63pEEMWBIo9OGHcx0+kE8NJTv45Kx/zYl6AfbSOM9tp7DA==}
+  /eslint-plugin-tsdoc/0.2.16:
+    resolution: {integrity: sha512-F/RWMnyDQuGlg82vQEFHQtGyWi7++XJKdYNn0ulIbyMOFqYIjoJOUdE6olORxgwgLkpJxsCJpJbTHgxJ/ggfXw==}
     dependencies:
-      '@microsoft/tsdoc': 0.14.0
-      '@microsoft/tsdoc-config': 0.16.0
+      '@microsoft/tsdoc': 0.14.1
+      '@microsoft/tsdoc-config': 0.16.1
     dev: true
 
   /eslint-plugin-unicorn/42.0.0_eslint@8.12.0:
@@ -11264,12 +11264,6 @@ packages:
       rgb-regex: 1.0.1
       rgba-regex: 1.0.0
     dev: false
-
-  /is-core-module/2.8.0:
-    resolution: {integrity: sha512-vd15qHsaqrRL7dtH6QNuy0ndJmRDrS9HAM1CAiSifNUFv4x1a0CCVsj18hJ1mShxIG6T2i1sO78MkP56r0nYRw==}
-    dependencies:
-      has: 1.0.3
-    dev: true
 
   /is-core-module/2.8.1:
     resolution: {integrity: sha512-SdNCUs284hr40hFTFP6l0IfZ/RSrMXF3qgoRHd3/79unUTvrFO/JoXwkGm+5J/Oe3E/b5GsnG330uUNgRpu1PA==}
@@ -16089,7 +16083,7 @@ packages:
   /resolve/1.20.0:
     resolution: {integrity: sha512-wENBPt4ySzg4ybFQW2TT1zMQucPK95HSh/nq2CFTZVOGut2+pQvSsgtda4d26YrYcr067wjbmzOG8byDPBX63A==}
     dependencies:
-      is-core-module: 2.8.0
+      is-core-module: 2.8.1
       path-parse: 1.0.7
     dev: true
 
