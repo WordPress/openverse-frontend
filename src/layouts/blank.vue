@@ -7,8 +7,6 @@
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
-
 import VTranslationStatusBanner from '~/components/VTranslationStatusBanner.vue'
 import VMigrationNotice from '~/components/VMigrationNotice.vue'
 

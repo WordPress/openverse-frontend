@@ -18,19 +18,6 @@
 </template>
 
 <script>
-import {
-  ref,
-  watch,
-  reactive,
-  computed,
-  onMounted,
-  useContext,
-  inject,
-} from '@nuxtjs/composition-api'
-
-import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
-import { useBodyScrollLock } from '~/composables/use-body-scroll-lock'
-
 import VTeleport from '~/components/VTeleport/VTeleport.vue'
 import VFilterButton from '~/components/VHeader/VFilterButton.vue'
 import VSearchGridFilter from '~/components/VFilters/VSearchGridFilter.vue'
@@ -65,7 +52,7 @@ export default {
     /** @type { import('@nuxtjs/composition-api').Ref<HTMLElement | undefined> } */
     const buttonRef = ref()
     const filterSidebar = useFilterSidebarVisibility()
-    const { i18n } = useContext()
+    const i18n = useI18n()
     /** @type { import('@nuxtjs/composition-api').Ref<boolean> } */
     const isMinScreenMd = inject('isMinScreenMd')
     /** @type { import('@nuxtjs/composition-api').Ref<boolean> } */

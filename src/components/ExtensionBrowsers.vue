@@ -19,8 +19,6 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
-
 import VButton from '~/components/VButton.vue'
 
 import chromeLogo from '~/assets/browsers/chrome.svg'

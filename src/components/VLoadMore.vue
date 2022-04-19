@@ -10,9 +10,8 @@
     {{ buttonLabel }}
   </VButton>
 </template>
-<script lang="ts">
-import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
 
+<script lang="ts">
 import { useMediaStore } from '~/stores/media'
 import { useSearchStore } from '~/stores/search'
 
@@ -24,10 +23,9 @@ export default defineComponent({
     VButton,
   },
   setup() {
-    const { i18n } = useContext()
+    const i18n = useI18n()
     const mediaStore = useMediaStore()
     const searchStore = useSearchStore()
-
     const canLoadMore = computed(
       () =>
         searchStore.searchTerm !== '' &&
@@ -36,15 +34,12 @@ export default defineComponent({
     )
     const onLoadMore = async () => {
       if (!canLoadMore.value) return
-
       await mediaStore.fetchMedia({
         shouldPersistMedia: true,
       })
     }
     const isFetching = computed(() => mediaStore.fetchState.isFetching)
-
     const buttonLabel = computed(() => i18n.t('browse-page.load'))
-
     return {
       buttonLabel,
       isFetching,

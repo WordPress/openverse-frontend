@@ -108,8 +108,6 @@
 </template>
 
 <script>
-import { computed, defineComponent, ref } from '@nuxtjs/composition-api'
-
 import ReportService from '~/data/report-service'
 
 import {

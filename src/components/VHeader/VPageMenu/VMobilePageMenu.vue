@@ -23,10 +23,6 @@
 </template>
 
 <script>
-import { computed, reactive, ref, watch } from '@nuxtjs/composition-api'
-
-import { useBodyScrollLock } from '~/composables/use-body-scroll-lock'
-
 import VModalContent from '~/components/VModal/VModalContent.vue'
 import VPageMenuButton from '~/components/VHeader/VPageMenu/VPageMenuButton.vue'
 import VPageList from '~/components/VHeader/VPageMenu/VPageList.vue'

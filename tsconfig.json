@@ -1,4 +1,5 @@
 {
+  "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
     "allowJs": true,
     "checkJs": true,
@@ -27,10 +28,6 @@
     "resolveJsonModule": true,
     "types": ["@types/jest", "@nuxt/types", "@nuxtjs/i18n", "@pinia/nuxt"],
     "typeRoots": ["./typings", "./node_modules/@types"],
-    "paths": {
-      "~/*": ["./src/*"],
-      "~~/*": ["./*"]
-    },
     "baseUrl": "."
   },
   "include": [

@@ -36,12 +36,9 @@
   </VItemGroup>
 </template>
 <script>
-import { computed, defineComponent } from '@nuxtjs/composition-api'
-
 import { isDev } from '~/utils/node-env'
 
 import { supportedSearchTypes } from '~/constants/media'
-import useSearchType from '~/composables/use-search-type'
 
 import VItemGroup from '~/components/VItemGroup/VItemGroup.vue'
 import VSearchTypeItem from '~/components/VContentSwitcher/VSearchTypeItem.vue'

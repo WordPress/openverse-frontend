@@ -1,4 +1,4 @@
-import { Ref, ref } from '@nuxtjs/composition-api'
+import type { Ref } from '#app'
 
 import { getDocument } from '~/utils/dom/get-document'
 

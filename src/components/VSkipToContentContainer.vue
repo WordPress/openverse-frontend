@@ -13,8 +13,6 @@
 </template>
 
 <script>
-import { defineComponent, ref } from '@nuxtjs/composition-api'
-
 import { getFirstTabbableIn } from 'reakit-utils/tabbable'
 import { ensureFocus } from 'reakit-utils/ensureFocus'
 

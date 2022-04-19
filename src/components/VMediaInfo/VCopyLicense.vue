@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, useContext } from '@nuxtjs/composition-api'
+import type { PropType } from '#app'
 
 import { AttributionOptions, getAttribution } from '~/utils/attribution-html'
 
@@ -54,7 +54,8 @@ const VCopyLicense = defineComponent({
     },
   },
   setup(props) {
-    const { i18n } = useContext()
+    const i18n = useI18n()
+
     const getAttributionMarkup = (options?: AttributionOptions) =>
       getAttribution(props.media, i18n, options)
     return {

@@ -19,15 +19,6 @@
 </template>
 
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  inject,
-  onMounted,
-  onUnmounted,
-  ref,
-} from '@nuxtjs/composition-api'
-
 import { tabsContextKey } from '~/models/tabs'
 import { keycodes } from '~/constants/key-codes'
 import { getDomElement } from '~/utils/dom'

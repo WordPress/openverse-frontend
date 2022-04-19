@@ -1,4 +1,4 @@
-import { ref } from '@nuxtjs/composition-api'
+import { ref } from '#app'
 
 import VItemGroup from '~/components/VItemGroup/VItemGroup.vue'
 import VItem from '~/components/VItemGroup/VItem.vue'

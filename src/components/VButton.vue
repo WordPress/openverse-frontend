@@ -24,14 +24,7 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  ref,
-  watch,
-  toRefs,
-  computed,
-  PropType,
-} from '@nuxtjs/composition-api'
+import type { PropType } from '#app'
 
 import { warn } from '~/utils/console'
 

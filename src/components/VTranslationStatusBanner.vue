@@ -22,10 +22,6 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from '@nuxtjs/composition-api'
-
-import { useI18nSync } from '~/composables/use-i18n-sync'
-
 import VLink from '~/components/VLink.vue'
 import VNotificationBanner from '~/components/VNotificationBanner.vue'
 

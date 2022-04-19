@@ -17,17 +17,6 @@
 </template>
 
 <script>
-import {
-  computed,
-  defineComponent,
-  useContext,
-  useMeta,
-} from '@nuxtjs/composition-api'
-
-import { useLoadMore } from '~/composables/use-load-more'
-import { isMinScreen } from '~/composables/use-media-query'
-import { useBrowserIsMobile } from '~/composables/use-browser-detection'
-
 import VAudioTrack from '~/components/VAudioTrack/VAudioTrack.vue'
 
 import VLoadMore from '~/components/VLoadMore.vue'
@@ -45,7 +34,7 @@ const AudioSearch = defineComponent({
   },
   props: propTypes,
   setup(props) {
-    const { i18n } = useContext()
+    const i18n = useI18n()
 
     useMeta({ title: `${props.searchTerm} | Openverse` })
 

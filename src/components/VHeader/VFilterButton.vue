@@ -25,15 +25,6 @@
 </template>
 
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  inject,
-  toRefs,
-  useContext,
-  ref,
-} from '@nuxtjs/composition-api'
-
 import { useSearchStore } from '~/stores/search'
 
 import VButton from '~/components/VButton.vue'
@@ -55,7 +46,7 @@ const VFilterButton = defineComponent({
   },
   emits: ['toggle'],
   setup(props) {
-    const { i18n } = useContext()
+    const i18n = useI18n()
     const searchStore = useSearchStore()
     const { pressed } = toRefs(props)
     const isMinScreenMd = inject('isMinScreenMd', ref(false))

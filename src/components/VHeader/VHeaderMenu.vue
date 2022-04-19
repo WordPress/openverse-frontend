@@ -1,14 +1,5 @@
 <script>
-import {
-  inject,
-  onMounted,
-  ref,
-  useContext,
-  useRouter,
-} from '@nuxtjs/composition-api'
-
 import { ALL_MEDIA, supportedMediaTypes } from '~/constants/media'
-import useSearchType from '~/composables/use-search-type'
 import { useMediaStore } from '~/stores/media'
 import { useSearchStore } from '~/stores/search'
 
@@ -37,7 +28,7 @@ export default {
     /** @type {import('@nuxtjs/composition-api').Ref<null|HTMLElement>} */
     const menuModalRef = ref(null)
     const content = useSearchType()
-    const { app } = useContext()
+    const localePath = useLocalePath()
     const mediaStore = useMediaStore()
     const searchStore = useSearchStore()
     const router = useRouter()
@@ -50,7 +41,7 @@ export default {
       menuModalRef.value?.closeMenu()
       content.setActiveType(type)
 
-      const newPath = app.localePath({
+      const newPath = localePath({
         path: `/search/${type === ALL_MEDIA ? '' : type}`,
         query: searchStore.searchQueryParams,
       })

@@ -8,8 +8,6 @@
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
-
 const sizes = {
   DEFAULT: 'default',
   LARGE: 'large',

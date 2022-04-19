@@ -82,8 +82,6 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
-
 import { supportedMediaTypes } from '~/constants/media'
 
 import VButton from '~/components/VButton.vue'

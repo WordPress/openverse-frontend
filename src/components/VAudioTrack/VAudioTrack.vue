@@ -39,19 +39,7 @@
 </template>
 
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  ref,
-  watch,
-  onUnmounted,
-  useRoute,
-  PropType,
-} from '@nuxtjs/composition-api'
-
-import { useActiveAudio } from '~/composables/use-active-audio'
-import { defaultRef } from '~/composables/default-ref'
-import { useI18n } from '~/composables/use-i18n'
+import type { PropType } from '#app'
 
 import { useActiveMediaStore } from '~/stores/active-media'
 import { useMediaStore } from '~/stores/media'
@@ -253,7 +241,7 @@ export default defineComponent({
       localAudio.removeEventListener('durationchange', setDuration)
       const mediaStore = useMediaStore()
       if (
-        route.value.params.id === props.audio.id ||
+        route.params.id === props.audio.id ||
         mediaStore.getItemById(AUDIO, props.audio.id)
       ) {
         /**

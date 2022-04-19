@@ -41,14 +41,6 @@
 </template>
 
 <script>
-import {
-  defineComponent,
-  ref,
-  watch,
-  reactive,
-  computed,
-} from '@nuxtjs/composition-api'
-
 import VPopoverContent from '~/components/VPopover/VPopoverContent.vue'
 
 export default defineComponent({

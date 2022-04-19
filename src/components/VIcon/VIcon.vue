@@ -12,8 +12,6 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
-
 import { isTest } from '~/utils/node-env'
 
 export type IconPath = string

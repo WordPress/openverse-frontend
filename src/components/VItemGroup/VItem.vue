@@ -50,14 +50,6 @@
 </template>
 
 <script>
-import {
-  defineComponent,
-  inject,
-  ref,
-  computed,
-  watch,
-} from '@nuxtjs/composition-api'
-
 import { warn } from '~/utils/console'
 
 import VButton from '~/components/VButton.vue'

@@ -10,10 +10,7 @@ jest.mock('axios', () => ({
   ...jest.requireActual('axios'),
   isAxiosError: jest.fn((obj) => 'response' in obj),
 }))
-jest.mock('@nuxtjs/composition-api', () => ({
-  ...jest.requireActual('@nuxtjs/composition-api'),
-  ssrRef: (v) => jest.fn(v),
-}))
+
 process.env.providerUpdateFrequency = '0'
 
 const mockData = [

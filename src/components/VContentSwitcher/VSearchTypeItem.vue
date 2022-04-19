@@ -17,9 +17,6 @@
 </template>
 
 <script>
-import { computed, useContext } from '@nuxtjs/composition-api'
-import { defineComponent } from '@vue/composition-api'
-
 import { ALL_MEDIA, contentStatus } from '~/constants/media'
 import { useSearchStore } from '~/stores/search'
 
@@ -40,7 +37,7 @@ export default defineComponent({
   components: { VIcon, VItem, VPill },
   props: propTypes,
   setup(props) {
-    const { app } = useContext()
+    const localePath = useLocalePath()
     const searchStore = useSearchStore()
 
     const status = computed(() => {
@@ -56,7 +53,7 @@ export default defineComponent({
       }
       return {
         as: 'VLink',
-        href: app.localePath({
+        href: localePath({
           path: `/search/${props.item === ALL_MEDIA ? '' : props.item}`,
           query: searchStore.computeQueryParams(props.item),
         }),

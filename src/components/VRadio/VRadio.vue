@@ -22,8 +22,6 @@
 </template>
 
 <script>
-import { computed } from '@nuxtjs/composition-api'
-
 import Radiomark from '~/assets/icons/radiomark.svg?inline'
 
 /**

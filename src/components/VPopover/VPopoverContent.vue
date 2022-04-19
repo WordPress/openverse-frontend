@@ -19,9 +19,6 @@
 </template>
 
 <script>
-import { defineComponent, toRefs, ref, provide } from '@nuxtjs/composition-api'
-
-import { usePopoverContent } from '~/composables/use-popover-content'
 import { warn } from '~/utils/console'
 
 import { propTypes } from './VPopoverContent.types'

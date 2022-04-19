@@ -14,8 +14,6 @@
  * Internal links use `NuxtLink` component with `to` attribute set to `localePath(href)`
  * External links use `a` element set to open in a new tab and not raise an error with the current iframe setup.
  */
-import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
-
 const defaultProps = Object.freeze({
   target: '_blank',
   rel: 'noopener noreferrer',
@@ -32,7 +30,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { app } = useContext()
+    const localePath = useLocalePath()
     function checkHref(p: typeof props): p is { href: string } {
       return typeof p.href === 'string' && !['', '#'].includes(p.href)
     }
@@ -48,7 +46,7 @@ export default defineComponent({
     let linkProperties = computed(() =>
       checkHref(props)
         ? isInternal.value
-          ? { to: app?.localePath(props.href) ?? props.href }
+          ? { to: localePath(props.href) ?? props.href }
           : { ...defaultProps, href: props.href }
         : null
     )

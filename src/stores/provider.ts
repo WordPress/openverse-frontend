@@ -1,6 +1,6 @@
+import { Ref, useState } from '#app'
 import { capital } from 'case'
 import { defineStore } from 'pinia'
-import { Ref, ssrRef } from '@nuxtjs/composition-api'
 import axios from 'axios'
 
 import { env } from '~/utils/env'
@@ -45,7 +45,10 @@ const sortProviders = (data: MediaProvider[]): MediaProvider[] => {
 /**
  * Timestamp is used to limit the update frequency to one every 60 minutes per request.
  */
-const lastUpdated: Ref<Date | null> = ssrRef(null)
+const lastUpdated: Ref<Date | null> = useState(
+  'providers-last-updated',
+  () => null
+)
 
 const updateFrequency = parseInt(env.providerUpdateFrequency, 10)
 

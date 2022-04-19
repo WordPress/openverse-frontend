@@ -39,3 +39,4 @@ test/Default
 
 # Ignore local certificates
 *.pem
+.output

@@ -44,6 +44,7 @@ module.exports = {
     'vue/html-closing-bracket-newline': 'off',
     'vue/html-indent': 'off',
     'vue/singleline-html-element-content-newline': 'off',
+    'vue/no-v-for-template-key': 'off',
     'vue/block-lang': [
       'error',
       {
@@ -121,8 +122,14 @@ module.exports = {
         ],
         pathGroups: [
           {
-            // Treate vue and composition-api as "builtin"
-            pattern: '(vue|@nuxtjs/composition-api)',
+            // Treat vue as "builtin"
+            pattern: 'vue',
+            group: 'builtin',
+            position: 'before',
+          },
+          {
+            // Treat nuxt's #app as "builtin"
+            pattern: '#app',
             group: 'builtin',
             position: 'before',
           },
@@ -199,6 +206,7 @@ module.exports = {
         alias: {
           '~': './src',
           '~~': '.',
+          '#app': './node_modules/@nuxt/bridge',
         },
         /**
          * SVG imports are excluded for the import/no-unresolved

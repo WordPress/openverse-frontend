@@ -83,14 +83,7 @@
 </template>
 
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  PropType,
-  useContext,
-} from '@nuxtjs/composition-api'
-
-import { useBrowserIsBlink } from '~/composables/use-browser-detection'
+import type { PropType } from '#app'
 
 import type { AudioDetail } from '~/models/media'
 
@@ -120,7 +113,7 @@ export default defineComponent({
   setup(props) {
     /* Utils */
     const browserIsBlink = useBrowserIsBlink()
-    const { i18n } = useContext()
+    const i18n = useI18n()
 
     const featureNotices: {
       timestamps?: string

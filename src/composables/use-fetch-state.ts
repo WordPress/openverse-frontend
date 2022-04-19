@@ -1,4 +1,4 @@
-import { computed, reactive, Ref, ref, watch } from '@nuxtjs/composition-api'
+import { computed, reactive, Ref, ref, watch } from '#app'
 
 export interface FetchState {
   isFetching: boolean

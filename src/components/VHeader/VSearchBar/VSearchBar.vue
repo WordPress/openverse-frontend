@@ -25,9 +25,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
-
-import { useMatchHomeRoute } from '~/composables/use-match-routes'
+import type { PropType } from '#app'
 
 import { defineEvent } from '~/types/emits'
 

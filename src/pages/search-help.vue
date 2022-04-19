@@ -223,8 +223,6 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, useContext } from '@nuxtjs/composition-api'
-
 import VLink from '~/components/VLink.vue'
 import VContentPage from '~/components/VContentPage.vue'
 

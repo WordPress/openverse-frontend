@@ -1,4 +1,4 @@
-import { onMounted, ref } from '@nuxtjs/composition-api'
+import { onMounted, ref } from '#app'
 
 import local from '~/utils/local'
 import { isMinScreen } from '~/composables/use-media-query'

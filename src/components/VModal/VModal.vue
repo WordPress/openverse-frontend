@@ -31,16 +31,6 @@
 </template>
 
 <script>
-import {
-  defineComponent,
-  ref,
-  watch,
-  reactive,
-  computed,
-} from '@nuxtjs/composition-api'
-
-import { useBodyScrollLock } from '~/composables/use-body-scroll-lock'
-
 import VModalContent from '~/components/VModal/VModalContent.vue'
 
 export default defineComponent({

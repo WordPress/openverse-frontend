@@ -3,9 +3,6 @@
 </template>
 
 <script>
-import { useMeta, defineComponent } from '@nuxtjs/composition-api'
-
-import { useLoadMore } from '~/composables/use-load-more'
 import { propTypes } from '~/pages/search/search-page.types'
 
 import VAllResultsGrid from '~/components/VAllResultsGrid/VAllResultsGrid.vue'
@@ -15,7 +12,7 @@ const SearchIndex = defineComponent({
   components: { VAllResultsGrid },
   props: propTypes,
   setup(props) {
-    useMeta({ title: `${props.searchTerm} | Openverse` })
+    useHead({ title: `${props.searchTerm} | Openverse` })
 
     const { canLoadMore, onLoadMore } = useLoadMore(props)
     return { canLoadMore, onLoadMore }

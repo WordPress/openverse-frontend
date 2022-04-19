@@ -24,8 +24,6 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from '@nuxtjs/composition-api'
-
 import { useNavigationStore } from '~/stores/navigation'
 
 import VNotificationBanner from '~/components/VNotificationBanner.vue'

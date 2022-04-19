@@ -31,8 +31,6 @@
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
-
 import VIconButton from '~/components/VIconButton/VIconButton.vue'
 import VPopover from '~/components/VPopover/VPopover.vue'
 import VContentReportButton from '~/components/VContentReport/VContentReportButton.vue'

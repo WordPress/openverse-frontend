@@ -17,7 +17,6 @@ const uaParsePlugin: Plugin = (context, inject) => {
     ua = null
   }
 
-  context.$ua = ua
   inject('ua', ua)
 }
 

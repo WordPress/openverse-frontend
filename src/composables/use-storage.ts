@@ -1,4 +1,4 @@
-import { ref, watch, Ref } from '@nuxtjs/composition-api'
+import { ref, watch, Ref } from '#app'
 
 import local from '~/utils/local'
 

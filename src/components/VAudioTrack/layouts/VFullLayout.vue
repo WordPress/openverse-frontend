@@ -66,8 +66,8 @@
   </div>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
+<script>
+import type { PropType } from '#app'
 
 import type { AudioDetail } from '~/models/media'
 import { AudioSize, AudioStatus, audioFeatures } from '~/constants/audio'

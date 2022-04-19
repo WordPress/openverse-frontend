@@ -40,8 +40,6 @@
 </template>
 
 <script>
-import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
-
 import { useMediaStore } from '~/stores/media'
 
 import VImageCellSquare from '~/components/VAllResultsGrid/VImageCellSquare.vue'
@@ -61,7 +59,7 @@ export default defineComponent({
   },
   props: ['canLoadMore'],
   setup(_, { emit }) {
-    const { i18n } = useContext()
+    const i18n = useI18n()
     const mediaStore = useMediaStore()
 
     const onLoadMore = () => {

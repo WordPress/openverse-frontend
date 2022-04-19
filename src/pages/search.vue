@@ -28,11 +28,8 @@
 
 <script>
 import { isShallowEqualObjects } from '@wordpress/is-shallow-equal'
-import { computed, inject } from '@nuxtjs/composition-api'
 
 import { supportedSearchTypes } from '~/constants/media'
-import { isMinScreen } from '~/composables/use-media-query'
-import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
 
 import { useMediaStore } from '~/stores/media'
 import { useSearchStore } from '~/stores/search'

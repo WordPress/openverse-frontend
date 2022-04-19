@@ -20,10 +20,6 @@
 </template>
 
 <script>
-import { computed } from '@nuxtjs/composition-api'
-
-import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
-
 const positionWithoutSidebar = 'ltr:right-4 rtl:left-4'
 const positionWithSidebar = 'ltr:right-[21rem] rtl:left-[21rem]'
 export default {

@@ -28,13 +28,7 @@
 </template>
 
 <script lang="ts">
-import {
-  ref,
-  onMounted,
-  useContext,
-  defineComponent,
-  PropType,
-} from '@nuxtjs/composition-api'
+import type { PropType } from '#app'
 
 import { rand, hash } from '~/utils/prng'
 import { lerp, dist, bezier, Point } from '~/utils/math'
@@ -56,7 +50,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { i18n } = useContext()
+    const i18n = useI18n()
     const helpText = i18n
       .t('audio-thumbnail.alt', {
         title: props.audio.title,

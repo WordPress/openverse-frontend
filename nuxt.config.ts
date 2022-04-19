@@ -1,5 +1,4 @@
-import path from 'path'
-import fs from 'fs'
+import { defineNuxtConfig, NuxtConfig } from '@nuxt/bridge'
 
 import pkg from './package.json'
 import locales from './src/locales/scripts/valid-locales.json'
@@ -10,7 +9,6 @@ import { isProd } from './src/utils/node-env'
 import { sentryConfig } from './src/utils/sentry-config'
 import { env } from './src/utils/env'
 
-import type { NuxtConfig } from '@nuxt/types'
 import type { LocaleObject } from '@nuxtjs/i18n'
 
 /**
@@ -110,27 +108,41 @@ const head = {
 
 const baseProdName = process.env.CI ? '[name]' : '[contenthash:7]'
 
+interface FilenameOptions {
+  isDev: boolean
+  isModern: boolean
+}
+
 const filenames: NonNullable<NuxtConfig['build']>['filenames'] = {
-  app: ({ isDev, isModern }) =>
+  app: ({ isDev, isModern }: FilenameOptions) =>
     isDev
       ? `[name]${isModern ? '.modern' : ''}.js`
       : `${baseProdName}${isModern ? '.modern' : ''}.js`,
-  chunk: ({ isDev, isModern }) =>
+  chunk: ({ isDev, isModern }: FilenameOptions) =>
     isDev
       ? `[name]${isModern ? '.modern' : ''}.js`
       : `${baseProdName}${isModern ? '.modern' : ''}.js`,
-  css: ({ isDev }) => (isDev ? '[name].css' : `css/${baseProdName}.css`),
-  img: ({ isDev }) =>
+  css: ({ isDev }: FilenameOptions) =>
+    isDev ? '[name].css' : `css/${baseProdName}.css`,
+  img: ({ isDev }: FilenameOptions) =>
     isDev ? '[path][name].[ext]' : `img/${baseProdName}.[ext]`,
-  font: ({ isDev }) =>
+  font: ({ isDev }: FilenameOptions) =>
     isDev ? '[path][name].[ext]' : `fonts/${baseProdName}.[ext]`,
-  video: ({ isDev }) =>
+  video: ({ isDev }: FilenameOptions) =>
     isDev ? '[path][name].[ext]' : `videos/${baseProdName}.[ext]`,
 }
 
-const config: NuxtConfig = {
+let port = parseFloat(process.env.PORT ?? '')
+if (!isFinite(port)) {
+  port = 8443
+}
+
+const config = defineNuxtConfig({
   // eslint-disable-next-line no-undef
   version: pkg.version, // used to purge cache :)
+  bridge: {
+    meta: true,
+  },
   cache: {
     pages: ['/'],
     store: {
@@ -142,16 +154,10 @@ const config: NuxtConfig = {
   srcDir: 'src/',
   modern: 'client',
   server: {
-    port: process.env.PORT || 8443,
-    https: process.env.LOCAL_SSL
-      ? {
-          key: fs.readFileSync(path.resolve(__dirname, 'localhost+1-key.pem')),
-          cert: fs.readFileSync(path.resolve(__dirname, 'localhost+1.pem')),
-        }
-      : undefined,
+    port,
   },
   router: {
-    middleware: 'middleware',
+    middleware: ['middleware'],
   },
   components: [
     { path: '~/components', extensions: ['vue'], pathPrefix: false },
@@ -167,8 +173,6 @@ const config: NuxtConfig = {
   env,
   dev: !isProd,
   buildModules: [
-    '@nuxt/typescript-build',
-    '@nuxtjs/composition-api/module',
     '@nuxt/postcss8',
     '@nuxtjs/style-resources',
     '@nuxtjs/svg',
@@ -236,23 +240,17 @@ const config: NuxtConfig = {
     ],
     filenames,
     friendlyErrors: false,
-    postcss: {
-      plugins: {
-        tailwindcss: {},
-        autoprefixer: {},
-        'postcss-focus-visible': {},
-      },
+  },
+  postcss: {
+    plugins: {
+      tailwindcss: {},
+      autoprefixer: {},
+      'postcss-focus-visible': {},
     },
-    extend(config, ctx) {
-      // Enables use of IDE debuggers
-      config.devtool = ctx.isClient ? 'source-map' : 'inline-source-map'
-
-      // Mitigates import errors for Pinia
-      config.module?.rules.push({
-        test: /\.mjs$/,
-        include: /node_modules/,
-        type: 'javascript/auto',
-      })
+  },
+  vite: {
+    esbuild: {
+      sourcemap: true,
     },
   },
   storybook: {
@@ -279,6 +277,6 @@ const config: NuxtConfig = {
       },
     },
   },
-}
+})
 
 export default config

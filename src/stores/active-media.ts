@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { reactive, readonly, toRefs } from '@nuxtjs/composition-api'
+import { reactive, readonly, toRefs } from '#app'
 
 import type { SupportedMediaType } from '~/constants/media'
 import type { Media } from '~/models/media'

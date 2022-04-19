@@ -28,18 +28,8 @@
   </div>
 </template>
 
-<script lang="ts">
-import {
-  computed,
-  defineComponent,
-  PropType,
-  ref,
-  watch,
-} from '@nuxtjs/composition-api'
-
-import { useActiveAudio } from '~/composables/use-active-audio'
-import { defaultRef } from '~/composables/default-ref'
-import { useI18n } from '~/composables/use-i18n'
+<script>
+import type { PropType } from '#app'
 
 import { useActiveMediaStore } from '~/stores/active-media'
 

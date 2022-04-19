@@ -20,15 +20,7 @@
 </template>
 
 <script>
-import {
-  defineComponent,
-  provide,
-  ref,
-  readonly,
-} from '@nuxtjs/composition-api'
 import { ensureFocus } from 'reakit-utils/ensureFocus'
-
-import { useI18n } from '~/composables/use-i18n'
 
 import { keycodes } from '~/constants/key-codes'
 

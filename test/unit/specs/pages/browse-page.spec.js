@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/vue'
 import { createLocalVue } from '@vue/test-utils'
-import { ref } from '@nuxtjs/composition-api'
+import { ref } from '#app'
 import { createPinia, PiniaVuePlugin } from 'pinia'
 
 import SearchIndex from '~/pages/search.vue'

@@ -57,15 +57,9 @@
 </template>
 
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  PropType,
-  reactive,
-} from '@nuxtjs/composition-api'
+import type { PropType } from '#app'
 
 import { useProviderStore } from '~/stores/provider'
-import { useGetLocaleFormattedNumber } from '~/composables/use-get-locale-formatted-number'
 
 import type { SupportedMediaType } from '~/constants/media'
 import type { MediaProvider } from '~/models/media-provider'

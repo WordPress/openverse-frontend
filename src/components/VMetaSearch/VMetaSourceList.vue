@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
+import type { PropType } from '#app'
 
 import { getAdditionalSources } from '~/utils/get-additional-sources'
 import type { ApiQueryParams } from '~/utils/search-query-transform'

@@ -26,8 +26,6 @@
   </VItemGroup>
 </template>
 <script>
-import usePages from '~/composables/use-pages'
-
 import VIcon from '~/components/VIcon/VIcon.vue'
 import VItem from '~/components/VItemGroup/VItem.vue'
 import VItemGroup from '~/components/VItemGroup/VItemGroup.vue'

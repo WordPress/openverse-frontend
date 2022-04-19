@@ -76,8 +76,6 @@
 <script lang="ts">
 import axios from 'axios'
 
-import { computed, defineComponent, ref } from '@nuxtjs/composition-api'
-
 import { IMAGE } from '~/constants/media'
 import { useSingleResultStore } from '~/stores/media/single-result'
 import { useRelatedMediaStore } from '~/stores/media/related-media'

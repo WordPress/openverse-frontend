@@ -41,13 +41,6 @@
 </template>
 
 <script>
-import {
-  computed,
-  useContext,
-  useRoute,
-  useRouter,
-  watch,
-} from '@nuxtjs/composition-api'
 import { kebab } from 'case'
 
 import { useSearchStore } from '~/stores/search'
@@ -63,7 +56,8 @@ export default {
   setup() {
     const searchStore = useSearchStore()
 
-    const { app, i18n } = useContext()
+    const i18n = useI18n()
+    const localePath = useLocalePath()
     const route = useRoute()
     const router = useRouter()
 
@@ -89,8 +83,8 @@ export default {
        */
       (newQuery, oldQuery) => {
         if (!areQueriesEqual(newQuery, oldQuery)) {
-          const newPath = app.localePath({
-            path: route.value.path,
+          const newPath = localePath({
+            path: route.path,
             query: searchStore.searchQueryParams,
           })
           router.push(newPath)

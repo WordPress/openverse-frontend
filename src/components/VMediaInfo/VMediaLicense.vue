@@ -39,10 +39,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
-
 import { isLicense as isLicenseFn } from '~/utils/license'
-import { useI18n } from '~/composables/use-i18n'
 
 import type { License } from '~/constants/license'
 

@@ -25,9 +25,8 @@
     <div
       class="features md:max-w-3xl lg:max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-30 py-30 md:px-6 mx-auto"
     >
-      <template v-for="(feature, index) in features">
+      <template v-for="(feature, index) in features" :key="`figure-${index}`">
         <figure
-          :key="`figure-${index}`"
           :data-index="index"
           class="flex flex-col justify-center items-center"
           :style="{ '--cell-idx': index * 2 }"
@@ -39,7 +38,6 @@
           />
         </figure>
         <div
-          :key="`description-${index}`"
           :data-index="index"
           class="description flex flex-col justify-center items-center text-left"
           :style="{ '--cell-idx': index * 2 + 1 }"
@@ -63,8 +61,6 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@nuxtjs/composition-api'
-
 import ExtensionBrowsers from '~/components/ExtensionBrowsers.vue'
 
 import feature1 from '~/assets/screenshots/extension_feat_1.png'

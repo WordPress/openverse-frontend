@@ -1,10 +1,4 @@
-import {
-  useContext,
-  ref,
-  useRoute,
-  useRouter,
-  Ref,
-} from '@nuxtjs/composition-api'
+import { useLocaleRoute } from '~/composables/use-i18n'
 
 /**
  * Reactive property that returns true only on the matching routes.
@@ -14,17 +8,15 @@ import {
  * 'search__en', for example.
  *
  */
-export const useMatchRoute = (
-  routes: string[] = []
-): { matches: Ref<boolean> } => {
-  const { app } = useContext()
+export const useMatchRoute = (routes = []) => {
+  const localeRoute = useLocaleRoute()
   const route = useRoute()
   const router = useRouter()
   const localizedRoutes = routes.map(
-    (route) => app.localeRoute({ name: route })?.name
+    (route) => localeRoute({ name: route }).name
   )
-  const matches = ref(localizedRoutes.includes(route.value.name))
-  router.beforeEach((to, _from, next) => {
+  const matches = ref(localizedRoutes.includes(route.name))
+  router.beforeEach((to, from, next) => {
     matches.value = localizedRoutes.includes(to.name)
     next()
   })

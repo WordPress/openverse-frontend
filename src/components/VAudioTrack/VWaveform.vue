@@ -158,14 +158,7 @@
 </template>
 
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  onBeforeUnmount,
-  onMounted,
-  PropType,
-  ref,
-} from '@nuxtjs/composition-api'
+import type { PropType } from '#app'
 
 import { downsampleArray, upsampleArray } from '~/utils/resampling'
 import { keycodes } from '~/constants/key-codes'

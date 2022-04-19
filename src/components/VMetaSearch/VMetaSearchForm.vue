@@ -51,7 +51,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
+import type { PropType } from '#app'
 
 import type { MediaType } from '~/constants/media'
 import type { ApiQueryParams } from '~/utils/search-query-transform'

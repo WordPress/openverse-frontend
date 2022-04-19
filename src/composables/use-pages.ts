@@ -1,18 +1,20 @@
-import { computed, useContext, useRoute } from '@nuxtjs/composition-api'
+import { computed, useRoute } from '#app'
+
+import { useLocalePath } from '~/composables/use-i18n'
 
 export default function usePages() {
-  const { app } = useContext()
+  const localePath = useLocalePath()
 
   const pages = [
     {
       id: 'about',
       name: 'header.about-nav-item',
-      link: app.localePath('/about'),
+      link: localePath('/about'),
     },
     {
       id: 'sources',
       name: 'header.source-nav-item',
-      link: app.localePath('/sources'),
+      link: localePath('/sources'),
     },
     {
       id: 'licenses',
@@ -22,17 +24,17 @@ export default function usePages() {
     {
       id: 'search-help',
       name: 'header.search-guide-nav-item',
-      link: app.localePath('/search-help'),
+      link: localePath('/search-help'),
     },
     {
       id: 'meta-search',
       name: 'header.meta-search-nav-item',
-      link: app.localePath('/meta-search'),
+      link: localePath('/meta-search'),
     },
     {
       id: 'feedback',
       name: 'header.feedback-nav-item',
-      link: app.localePath('/feedback'),
+      link: localePath('/feedback'),
     },
     {
       id: 'api',
@@ -42,7 +44,7 @@ export default function usePages() {
     {
       id: 'extension',
       name: 'header.extension-nav-item',
-      link: app.localePath('/extension'),
+      link: localePath('/extension'),
     },
     {
       id: 'privacy',
@@ -52,7 +54,7 @@ export default function usePages() {
   ]
 
   const route = useRoute()
-  const currentPageId = computed(() => route.value.name)
+  const currentPageId = computed(() => route.name)
 
   return { all: pages, current: currentPageId }
 }

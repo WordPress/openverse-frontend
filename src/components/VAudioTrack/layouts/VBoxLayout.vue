@@ -33,12 +33,7 @@
 </template>
 
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  PropType,
-  useContext,
-} from '@nuxtjs/composition-api'
+import type { PropType } from '#app'
 
 import type { AudioDetail } from '~/models/media'
 import type { AudioSize } from '~/constants/audio'

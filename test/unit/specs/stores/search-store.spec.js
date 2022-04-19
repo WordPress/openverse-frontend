@@ -1,6 +1,6 @@
 import { setActivePinia, createPinia } from 'pinia'
 
-import { nextTick } from '@nuxtjs/composition-api'
+import { nextTick } from '#app'
 
 import { filterData, mediaFilterKeys } from '~/constants/filters'
 import {

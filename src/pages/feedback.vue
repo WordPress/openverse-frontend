@@ -39,8 +39,6 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
-
 import VLink from '~/components/VLink.vue'
 import VContentPage from '~/components/VContentPage.vue'
 import VTabs from '~/components/VTabs/VTabs.vue'

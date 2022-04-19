@@ -1,6 +1,5 @@
 // code taken from Vueuse
 import { throttle } from 'throttle-debounce'
-import { ref } from '@nuxtjs/composition-api'
 
 import { defaultWindow } from '~/constants/window'
 import { useEventListener } from '~/composables/use-event-listener'

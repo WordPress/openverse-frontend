@@ -10,8 +10,6 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
-
 import VIcon from '~/components/VIcon/VIcon.vue'
 import VLink from '~/components/VLink.vue'
 

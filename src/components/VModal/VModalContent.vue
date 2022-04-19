@@ -56,10 +56,8 @@
 </template>
 
 <script>
-import { defineComponent, toRefs, ref, computed } from '@nuxtjs/composition-api'
 import { FocusTrap } from 'focus-trap-vue'
 
-import { useDialogContent } from '~/composables/use-dialog-content'
 import { warn } from '~/utils/console'
 
 import VTeleport from '~/components/VTeleport/VTeleport.vue'

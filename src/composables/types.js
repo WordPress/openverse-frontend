@@ -1,16 +1,16 @@
 /**
  * @template T
- * @typedef {import('@nuxtjs/composition-api').Ref<T>} Ref
+ * @typedef {import('#app').Ref<T>} Ref
  */
 
 /**
  * @template T
- * @typedef {import('@nuxtjs/composition-api').ToRefs<T>} ToRefs
+ * @typedef {import('#app').ToRefs<T>} ToRefs
  */
 
 /**
  * @template T
- * @typedef {import('@nuxtjs/composition-api').Ref<T> | T} MaybeRef
+ * @typedef {import('#app').Ref<T> | T} MaybeRef
  */
 
 export default {}

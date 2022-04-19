@@ -1,8 +1,7 @@
-import { useContext } from '@nuxtjs/composition-api'
+import { useNuxtApp } from '#app'
 
 export const useBrowserDetection = () => {
-  const { app } = useContext()
-  return app.$ua
+  return useNuxtApp().nuxt2Context.$ua
 }
 
 export const useBrowserIsBlink = () => {

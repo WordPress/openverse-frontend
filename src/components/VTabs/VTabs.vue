@@ -8,13 +8,7 @@
 </template>
 
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  PropType,
-  provide,
-  ref,
-} from '@nuxtjs/composition-api'
+import type { PropType } from '#app'
 
 import { tabsContextKey, TabsState } from '~/models/tabs'
 

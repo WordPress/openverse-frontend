@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { ref, computed } from '@nuxtjs/composition-api'
+import { ref, computed } from '#app'
 import { render, screen } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
 

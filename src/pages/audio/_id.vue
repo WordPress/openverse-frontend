@@ -19,8 +19,6 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from '@nuxtjs/composition-api'
-
 import { AUDIO } from '~/constants/media'
 import type { AudioDetail } from '~/models/media'
 import { useRelatedMediaStore } from '~/stores/media/related-media'

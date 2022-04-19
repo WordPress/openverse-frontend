@@ -1,4 +1,4 @@
-import { computed } from '@nuxtjs/composition-api'
+import { computed } from '#app'
 
 import { useMediaStore } from '~/stores/media'
 

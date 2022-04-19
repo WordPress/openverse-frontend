@@ -12,15 +12,6 @@
   </div>
 </template>
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  inject,
-  onMounted,
-  onUnmounted,
-  ref,
-} from '@nuxtjs/composition-api'
-
 import { tabsContextKey } from '~/models/tabs'
 
 export default defineComponent({

@@ -20,10 +20,6 @@
 </template>
 
 <script>
-import { computed } from '@nuxtjs/composition-api'
-
-import { isMinScreen } from '~/composables/use-media-query'
-
 import LoadingIcon from '~/components/LoadingIcon.vue'
 import VAudioTrack from '~/components/VAudioTrack/VAudioTrack.vue'
 

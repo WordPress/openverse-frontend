@@ -26,11 +26,6 @@
 </template>
 
 <script>
-import { defineComponent, computed } from '@nuxtjs/composition-api'
-
-import { isMinScreen } from '~/composables/use-media-query'
-import { useBrowserIsMobile } from '~/composables/use-browser-detection'
-
 import VIcon from '~/components/VIcon/VIcon.vue'
 import VButton from '~/components/VButton.vue'
 
