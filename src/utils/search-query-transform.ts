@@ -13,17 +13,35 @@ import {
 import { ALL_MEDIA, SupportedSearchType } from '~/constants/media'
 
 import { getParameterByName } from '~/utils/url-params'
-import type {
-  ApiQueryFilters,
-  ApiQueryKeys,
-  ApiQueryParams,
-} from '~/store/types'
 
+export interface ApiQueryParams {
+  q?: string
+  license?: string
+  license_type?: string
+  extension?: string
+  size?: string
+  aspect_ratio?: string
+  searchBy?: string
+  category?: string
+  source?: string
+  duration?: string
+  mature?: string
+  page?: string
+}
+
+export type ApiQueryFilters = Omit<ApiQueryParams, 'q'>
+export type ApiQueryKeys = keyof ApiQueryFilters
+
+/**
+ * This maps properties in the search store state to the corresponding API query
+ * parameters. The convention is that filter property names are plural, and API query
+ * parameters are singular.
+ */
 const filterPropertyMappings: Record<FilterCategory, ApiQueryKeys> = {
   licenses: 'license',
   licenseTypes: 'license_type',
-  audioCategories: 'categories',
-  imageCategories: 'categories',
+  audioCategories: 'category',
+  imageCategories: 'category',
   audioExtensions: 'extension',
   imageExtensions: 'extension',
   durations: 'duration',
@@ -103,11 +121,11 @@ export const queryStringToSearchType = (
 }
 
 /**
- * `source`, `extensions` and `categories` API parameters correspond
+ * `source`, `extension` and `category` API parameters correspond
  * to different filters in different media types:
  * `source` - audioProviders/imageProviders
- * `extensions` - audioExtensions/imageExtensions
- * `categories` - audioCategories/imageCategories
+ * `extension` - audioExtensions/imageExtensions
+ * `category` - audioCategories/imageCategories
  *
  * This function sets only filters that are possible for current
  * media type. E.g., for queryString `search/audio?extensions=ogg`

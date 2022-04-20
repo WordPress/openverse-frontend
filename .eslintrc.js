@@ -1,7 +1,7 @@
 // WebStorm fix for `~` alias not working:
 // https://intellij-support.jetbrains.com/hc/en-us/community/posts/115000771544-ESLint-does-not-work-with-webpack-import-resolver-in-2017-3
 process.chdir(__dirname)
-// [id.properties:has([key.name="${methodName}"])]
+
 const i18nDestructureRules = ['t', 'tc', 'te', 'td', 'd', 'n'].map(
   (methodName) => ({
     selector: `VariableDeclarator[id.type="ObjectPattern"]:has(Property[key.name="${methodName}"])[init.callee.name="useI18n"]`,
@@ -69,9 +69,9 @@ module.exports = {
         math: 'always',
       },
     ],
-    'vuejs-accessibility/aria-role': 'warn',
+    'vuejs-accessibility/aria-role': 'error',
     'vuejs-accessibility/label-has-for': [
-      'warn',
+      'error',
       { required: { some: ['nesting', 'id'] } },
     ],
     /**
@@ -96,7 +96,6 @@ module.exports = {
     ],
     'no-restricted-syntax': ['error', ...i18nDestructureRules],
     'unicorn/filename-case': ['error', { case: 'kebabCase' }],
-    '@typescript-eslint/ban-ts-comment': ['warn'],
     '@typescript-eslint/no-var-requires': ['off'],
     'import/no-unresolved': [
       'error',
@@ -180,7 +179,7 @@ module.exports = {
     {
       files: ['*.ts'],
       rules: {
-        'tsdoc/syntax': 'warn',
+        'tsdoc/syntax': 'error',
       },
     },
     {
