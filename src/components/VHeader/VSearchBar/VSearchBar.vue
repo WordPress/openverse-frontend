@@ -32,6 +32,7 @@ import { useMatchHomeRoute } from '~/composables/use-match-routes'
 import VInputField from '~/components/VInputField/VInputField.vue'
 import VSearchButton from '~/components/VHeader/VSearchBar/VSearchButton.vue'
 
+const SIZES = ['small', 'medium', 'large', 'standalone']
 /**
  * Displays a text field for a search query and is attached to an action button
  * that fires a search request. The loading state and number of hits are also
@@ -52,7 +53,11 @@ const VSearchBar = defineComponent({
     size: {
       type: String,
       required: true,
-      validator: (v) => ['small', 'medium', 'large', 'standalone'].includes(v),
+      /**
+       * @param {string} v
+       * @returns {boolean}
+       */
+      validator: (v) => SIZES.includes(v),
     },
     placeholder: {
       type: String,
@@ -64,6 +69,9 @@ const VSearchBar = defineComponent({
     const { matches: isHomeRoute } = useMatchHomeRoute()
 
     const searchText = computed(() => props.value)
+    /**
+     * @param {string} val
+     */
     const updateSearchText = (val) => {
       emit('input', val)
     }
