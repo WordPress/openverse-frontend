@@ -30,8 +30,10 @@
   </div>
 </template>
 
-<script>
-import { computed, defineComponent } from '@nuxtjs/composition-api'
+<script lang="ts">
+import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
+
+import type { AudioDetail } from '~/models/media'
 
 import VLicense from '~/components/VLicense/VLicense.vue'
 
@@ -40,18 +42,27 @@ export default defineComponent({
   components: {
     VLicense,
   },
-  props: ['audio', 'size'],
+  props: {
+    audio: {
+      type: Object as PropType<AudioDetail>,
+      required: true,
+    },
+    size: {
+      type: String as PropType<'s' | 'm' | 'l'>,
+      required: false,
+    },
+  },
   setup(props) {
     const isSmall = computed(() => props.size === 's')
 
     const width = computed(() => {
-      const magnitude = {
+      const magnitudes = {
         l: 13.25,
         m: 12.25,
         s: 9.75,
-      }[props.size]
+      }
 
-      return props.size ? `${magnitude}rem` : null
+      return props.size ? `${magnitudes[props.size]}rem` : undefined
     })
 
     return {
