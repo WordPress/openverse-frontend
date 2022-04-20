@@ -24,8 +24,8 @@
   </form>
 </template>
 
-<script>
-import { computed, defineComponent } from '@nuxtjs/composition-api'
+<script lang="ts">
+import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
 
 import { useMatchHomeRoute } from '~/composables/use-match-routes'
 
@@ -51,13 +51,9 @@ const VSearchBar = defineComponent({
       default: '',
     },
     size: {
-      type: String,
+      type: String as PropType<keyof typeof String>,
       required: true,
-      /**
-       * @param {string} v
-       * @returns {boolean}
-       */
-      validator: (v) => SIZES.includes(v),
+      validator: (v: string) => SIZES.includes(v),
     },
     placeholder: {
       type: String,
@@ -69,10 +65,8 @@ const VSearchBar = defineComponent({
     const { matches: isHomeRoute } = useMatchHomeRoute()
 
     const searchText = computed(() => props.value)
-    /**
-     * @param {string} val
-     */
-    const updateSearchText = (val) => {
+
+    const updateSearchText = (val: string) => {
       emit('input', val)
     }
 
