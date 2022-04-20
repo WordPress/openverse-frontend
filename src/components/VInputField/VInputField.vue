@@ -29,7 +29,7 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
 
-const FIELD_SIZES = {
+export const FIELD_SIZES = {
   small: 'h-10 text-md',
   medium: 'h-12',
   large: 'h-14',

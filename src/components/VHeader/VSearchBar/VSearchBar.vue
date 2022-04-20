@@ -29,10 +29,11 @@ import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
 
 import { useMatchHomeRoute } from '~/composables/use-match-routes'
 
-import VInputField from '~/components/VInputField/VInputField.vue'
+import VInputField, {
+  FIELD_SIZES,
+} from '~/components/VInputField/VInputField.vue'
 import VSearchButton from '~/components/VHeader/VSearchBar/VSearchButton.vue'
 
-const SIZES = ['small', 'medium', 'large', 'standalone']
 /**
  * Displays a text field for a search query and is attached to an action button
  * that fires a search request. The loading state and number of hits are also
@@ -51,9 +52,9 @@ const VSearchBar = defineComponent({
       default: '',
     },
     size: {
-      type: String as PropType<keyof typeof String>,
+      type: String as PropType<keyof typeof FIELD_SIZES>,
       required: true,
-      validator: (v: string) => SIZES.includes(v),
+      validator: (v: string) => Object.keys(FIELD_SIZES).includes(v),
     },
     placeholder: {
       type: String,
