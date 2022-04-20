@@ -105,7 +105,7 @@ export default defineComponent({
     const { i18n } = useContext()
 
     const featureNotices = {}
-    const features = ['timestamps', 'duration', 'seek']
+    const features = ['timestamp', 'duration', 'seek']
     if (browserIsBlink && props.audio.source === 'jamendo') {
       features.pop()
       featureNotices.seek = i18n.t('audio-track.messages.blink_seek_disabled')

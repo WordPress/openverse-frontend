@@ -14,7 +14,7 @@
       <div class="md:mx-4 lg:mx-10">
         <slot
           name="controller"
-          :features="['timestamps', 'duration', 'seek']"
+          :features="['timestamp', 'duration', 'seek']"
           :usable-frac="0.8"
         />
       </div>
