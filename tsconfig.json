@@ -53,6 +53,7 @@
     "src/components/VMigrationNotice.vue",
     "src/components/VVariations.vue",
     "src/components/VAudioTrack/VWaveform.vue",
+    "src/components/VAudioTrack/layouts/VFullLayout.vue",
     "src/composables/types.js",
     "src/composables/use-event-listener-outside.js",
     "src/composables/use-active-audio.js",
