@@ -77,7 +77,7 @@ export default defineComponent({
     }
     onMounted(() => {
       isOk.value =
-        Boolean(imgEl.value?.complete) && Boolean(imgEl.value?.naturalWidth)
+        Boolean(imgEl.value?.complete && imgEl.value?.naturalWidth)
     })
 
     /* Artwork */
