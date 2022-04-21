@@ -236,7 +236,7 @@ export default defineComponent({
       type: Object as PropType<Record<AudioFeature, boolean>>,
       default: () => ({}),
     },
-  } as const,
+  },
   emits: [
     /**
      * Emitted when the waveform receives mouse events for seeking,
@@ -536,24 +536,18 @@ export default defineComponent({
       }
     })
 
-    const heightProperties = computed(
-      () =>
-        ({
-          '--usable-height': `${Math.floor(props.usableFrac * 100)}%`,
-          '--unusable-height': `${Math.floor((1 - props.usableFrac) * 100)}%`,
-        } as CSSProperties)
-    )
+    const heightProperties = computed<CSSProperties>(() => ({
+      '--usable-height': `${Math.floor(props.usableFrac * 100)}%`,
+      '--unusable-height': `${Math.floor((1 - props.usableFrac) * 100)}%`,
+    }))
 
-    const progressTimeLeft = computed(
-      () =>
-        ({
-          '--progress-time-left': `${progressBarWidth.value}px`,
-        } as CSSProperties)
-    )
+    const progressTimeLeft = computed<CSSProperties>(() => ({
+      '--progress-time-left': `${progressBarWidth.value}px`,
+    }))
 
-    const seekTimeLeft = computed(
-      () => ({ '--seek-time-left': `${seekBarWidth}px` } as CSSProperties)
-    )
+    const seekTimeLeft = computed<CSSProperties>(() => ({
+      '--seek-time-left': `${seekBarWidth}px`,
+    }))
 
     return {
       timeFmt,

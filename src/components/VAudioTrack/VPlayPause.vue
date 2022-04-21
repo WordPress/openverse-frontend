@@ -13,7 +13,12 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
 
-import { AudioLayout, audioLayouts } from '~/constants/audio'
+import {
+  AudioLayout,
+  audioLayouts,
+  AudioStatus,
+  audioStatuses,
+} from '~/constants/audio'
 
 import VIconButton from '~/components/VIconButton/VIconButton.vue'
 
@@ -31,8 +36,6 @@ const statusIconMap = {
   paused: playIcon,
   played: replayIcon,
 }
-const statuses = ['playing', 'paused', 'played'] as const
-
 /**
  * Displays the control for switching between the playing and paused states of
  * a media file.
@@ -50,10 +53,9 @@ export default defineComponent({
      * the current play status of the audio
      */
     status: {
-      type: String as PropType<typeof statuses[number]>,
+      type: String as PropType<AudioStatus>,
       required: true,
-      validator: (val: string) =>
-        statuses.includes(val as typeof statuses[number]),
+      validator: (val: string) => audioStatuses.includes(val as AudioStatus),
     },
     /**
      * The parent audio layout currently in use
