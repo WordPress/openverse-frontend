@@ -34,6 +34,7 @@
 import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
 
 import type { AudioDetail } from '~/models/media'
+import type { AudioSize } from '~/constants/audio'
 
 import VLicense from '~/components/VLicense/VLicense.vue'
 
@@ -48,7 +49,7 @@ export default defineComponent({
       required: true,
     },
     size: {
-      type: String as PropType<'s' | 'm' | 'l'>,
+      type: String as PropType<AudioSize>,
       required: false,
     },
   },

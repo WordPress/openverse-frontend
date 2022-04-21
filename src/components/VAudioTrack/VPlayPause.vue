@@ -10,14 +10,29 @@
   />
 </template>
 
-<script>
-import { defineComponent } from '@nuxtjs/composition-api'
+<script lang="ts">
+import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
+
+import type { AudioLayout } from '~/constants/audio'
+import { audioLayouts } from '~/constants/audio'
 
 import VIconButton from '~/components/VIconButton/VIconButton.vue'
 
 import playIcon from '~/assets/icons/play.svg'
 import pauseIcon from '~/assets/icons/pause.svg'
 import replayIcon from '~/assets/icons/replay.svg'
+
+const statusVerbMap = {
+  playing: 'pause',
+  paused: 'play',
+  played: 'replay',
+}
+const statusIconMap = {
+  playing: pauseIcon,
+  paused: playIcon,
+  played: replayIcon,
+}
+const statuses = ['playing', 'paused', 'played'] as const
 
 /**
  * Displays the control for switching between the playing and paused states of
@@ -36,59 +51,40 @@ export default defineComponent({
      * the current play status of the audio
      */
     status: {
-      type: String,
-      validator: (val) => ['playing', 'paused', 'played'].includes(val),
+      type: String as PropType<typeof statuses[number]>,
+      required: true,
+      validator: (val: string) =>
+        statuses.includes(val as typeof statuses[number]),
     },
     /**
      * The parent audio layout currently in use
      * @todo This type def should be extracted for reuse across components
      */
     layout: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<'full' | 'box' | 'row' | 'global'>} */ (
-        String
-      ),
+      type: String as PropType<AudioLayout>,
       default: 'full',
-      /**
-       * @param {string} val
-       */
-      validator: (val) => ['full', 'box', 'row', 'global'].includes(val),
+      validator: (val: string) => audioLayouts.includes(val as AudioLayout),
     },
   },
-  data() {
-    return {
-      statusVerbMap: {
-        playing: 'pause',
-        paused: 'play',
-        played: 'replay',
-      },
-      statusIconMap: {
-        playing: pauseIcon,
-        paused: playIcon,
-        played: replayIcon,
-      },
-    }
-  },
-  computed: {
-    isPlaying() {
-      return this.status === 'playing'
-    },
+  setup(props, { emit }) {
+    const isPlaying = computed(() => props.status === 'playing')
     /**
      * Get the button label based on the current status of the player.
      */
-    label() {
-      return `play-pause.${this.statusVerbMap[this.status]}`
-    },
+    const label = computed(() => `play-pause.${statusVerbMap[props.status]}`)
     /**
      * Get the button icon based on the current status of the player.
      */
-    icon() {
-      return this.statusIconMap[this.status]
-    },
-  },
-  methods: {
-    handleClick() {
-      this.$emit('toggle', this.isPlaying ? 'paused' : 'playing')
-    },
+    const icon = computed(() => statusIconMap[props.status])
+    const handleClick = () => {
+      emit('toggle', isPlaying.value ? 'paused' : 'playing')
+    }
+    return {
+      label,
+      icon,
+
+      handleClick,
+    }
   },
 })
 </script>

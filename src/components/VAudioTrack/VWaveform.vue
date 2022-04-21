@@ -170,9 +170,9 @@ import {
 import { downsampleArray, upsampleArray } from '~/utils/resampling'
 import { keycodes } from '~/constants/key-codes'
 
-import type { CSSProperties } from '@vue/runtime-dom'
+import type { AudioFeature } from '~/constants/audio'
 
-const waveformFeatures = ['timestamp', 'duration', 'seek'] as const
+import type { CSSProperties } from '@vue/runtime-dom'
 
 /**
  * Renders an SVG representation of the waveform given a list of heights for the
@@ -186,7 +186,7 @@ export default defineComponent({
      * bars of random length if the prop is not provided.
      */
     peaks: {
-      type: Array as PropType<undefined | number[]>,
+      type: Array as PropType<number[]>,
       required: false,
       validator: (val: unknown[]) =>
         val.every((item) => typeof item === 'number'),
@@ -225,7 +225,7 @@ export default defineComponent({
      * `'timestamp'`, `'duration'`, `'seek'`.
      */
     features: {
-      type: Array as PropType<typeof waveformFeatures[number][]>,
+      type: Array as PropType<AudioFeature[]>,
       default: () => ['timestamp', 'seek'],
     },
     /**
@@ -233,7 +233,7 @@ export default defineComponent({
      * `'timestamp'`, `'duration'`, `'seek'`.
      */
     featureNotices: {
-      type: Object,
+      type: Object as PropType<Record<AudioFeature, boolean>>,
       default: () => ({}),
     },
   } as const,

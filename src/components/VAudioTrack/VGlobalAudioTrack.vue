@@ -1,7 +1,7 @@
 <template>
   <div
     class="audio-track"
-    :aria-label="$t('audio-track.aria-label')"
+    :aria-label="$t('audio-track.aria-label').toString()"
     role="region"
   >
     <Component :is="layoutComponent" :audio="audio" :size="size">
@@ -28,13 +28,23 @@
   </div>
 </template>
 
-<script>
-import { computed, defineComponent, ref, watch } from '@nuxtjs/composition-api'
+<script lang="ts">
+import {
+  computed,
+  defineComponent,
+  PropType,
+  ref,
+  watch,
+} from '@nuxtjs/composition-api'
 
 import { useActiveAudio } from '~/composables/use-active-audio'
 import { defaultRef } from '~/composables/default-ref'
 
 import { useActiveMediaStore } from '~/stores/active-media'
+
+import type { AudioLayout, AudioSize } from '~/constants/audio'
+
+import { audioLayouts, audioSizes } from '~/constants/audio'
 
 import VPlayPause from '~/components/VAudioTrack/VPlayPause.vue'
 import VWaveform from '~/components/VAudioTrack/VWaveform.vue'
@@ -42,45 +52,6 @@ import VFullLayout from '~/components/VAudioTrack/layouts/VFullLayout.vue'
 import VRowLayout from '~/components/VAudioTrack/layouts/VRowLayout.vue'
 import VBoxLayout from '~/components/VAudioTrack/layouts/VBoxLayout.vue'
 import VGlobalLayout from '~/components/VAudioTrack/layouts/VGlobalLayout.vue'
-
-const propTypes = {
-  /**
-   * the information about the track, typically from a track's detail endpoint
-   */
-  audio: {
-    type: Object,
-    required: true,
-  },
-  /**
-   * the arrangement of the contents on the canvas; This determines the
-   * overall L&F of the audio component.
-   * @todo This type def should be extracted for reuse across components
-   */
-  layout: {
-    type: /** @type {import('@nuxtjs/composition-api').PropType<'full' | 'box' | 'row' | 'global'>} */ (
-      String
-    ),
-    default: 'full',
-    /**
-     * @param {string} val
-     */
-    validator: (val) => ['full', 'box', 'row', 'global'].includes(val),
-  },
-  /**
-   * the size of the component; Both 'box' and 'row' layouts offer multiple
-   * sizes to choose from.
-   */
-  size: {
-    type: /** @type {import('@nuxtjs/composition-api').PropType<'s' | 'm' | 'l'>} */ (
-      String
-    ),
-    default: 'm',
-    /**
-     * @param {string} val
-     */
-    validator: (val) => ['s', 'm', 'l'].includes(val),
-  },
-}
 
 /**
  * Displays the waveform and basic information about the track, along with
@@ -98,10 +69,33 @@ export default defineComponent({
     VBoxLayout,
     VGlobalLayout,
   },
-  props: propTypes,
-  /**
-   * @param {import('@nuxtjs/composition-api').ExtractPropTypes<typeof propTypes>} props
-   */
+  props: {
+    /**
+     * the information about the track, typically from a track's detail endpoint
+     */
+    audio: {
+      type: Object,
+      required: true,
+    },
+    /**
+     * the arrangement of the contents on the canvas; This determines the
+     * overall L&F of the audio component.
+     */
+    layout: {
+      type: String as PropType<AudioLayout>,
+      default: 'full',
+      validator: (val: string) => audioLayouts.includes(val as AudioLayout),
+    },
+    /**
+     * the size of the component; Both 'box' and 'row' layouts offer multiple
+     * sizes to choose from.
+     */
+    size: {
+      type: String as PropType<AudioSize>,
+      default: 'm',
+      validator: (val: string) => audioSizes.includes(val as AudioSize),
+    },
+  },
   setup(props) {
     const activeMediaStore = useActiveMediaStore()
     const activeAudio = useActiveAudio()
@@ -120,13 +114,10 @@ export default defineComponent({
     }
     const setPaused = () => (status.value = 'paused')
     const setPlayed = () => (status.value = 'played')
-    /**
-     * @param {Event} event
-     */
-    const setTimeWhenPaused = (event) => {
+
+    const setTimeWhenPaused = (event: Event) => {
       if (status.value !== 'playing' && event.target) {
-        currentTime.value =
-          /** @type {HTMLAudioElement} */ (event.target).currentTime ?? 0
+        currentTime.value = (event.target as HTMLAudioElement).currentTime ?? 0
         if (status.value === 'played') {
           // Set to pause to remove replay icon
           status.value = 'paused'
@@ -198,10 +189,7 @@ export default defineComponent({
 
     /* Interface with VPlayPause */
 
-    /**
-     * @param {'playing' | 'paused'} [state]
-     */
-    const handleToggle = (state) => {
+    const handleToggle = (state: 'playing' | 'paused') => {
       if (!state) {
         switch (status.value) {
           case 'playing':
@@ -226,10 +214,7 @@ export default defineComponent({
 
     /* Interface with VWaveform */
 
-    /**
-     * @param {number} frac
-     */
-    const handleSeeked = (frac) => {
+    const handleSeeked = (frac: number) => {
       if (activeAudio.obj.value) {
         activeAudio.obj.value.currentTime = frac * duration.value
       }

@@ -50,7 +50,7 @@
             <span v-show="isSmall">
               <span
                 class="inline-block text-dark-charcoal font-semibold bg-dark-charcoal-06 p-1 rounded-sm"
-                >{{ timeFmt(audio.duration ?? 0) }}</span
+                >{{ timeFmt(audio.duration || 0) }}</span
               ><span class="mx-2">{{ $t('interpunct') }}</span>
             </span>
 
@@ -94,6 +94,8 @@ import { useBrowserIsBlink } from '~/composables/use-browser-detection'
 
 import type { AudioDetail } from '~/models/media'
 
+import type { AudioSize } from '~/constants/audio'
+
 import VAudioThumbnail from '~/components/VAudioThumbnail/VAudioThumbnail.vue'
 import VLicense from '~/components/VLicense/VLicense.vue'
 import VLink from '~/components/VLink.vue'
@@ -111,7 +113,7 @@ export default defineComponent({
       required: true,
     },
     size: {
-      type: String as PropType<'s' | 'm' | 'l'>,
+      type: String as PropType<AudioSize>,
       required: false,
     },
   },

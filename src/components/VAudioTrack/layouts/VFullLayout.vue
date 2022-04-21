@@ -12,11 +12,7 @@
         aria-hidden
       />
       <div class="md:mx-4 lg:mx-10">
-        <slot
-          name="controller"
-          :features="['timestamp', 'duration', 'seek']"
-          :usable-frac="0.8"
-        />
+        <slot name="controller" :features="audioFeatures" :usable-frac="0.8" />
       </div>
     </div>
     <div
@@ -74,6 +70,13 @@
 import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
 
 import type { AudioDetail } from '~/models/media'
+import {
+  audioSizes,
+  AudioSize,
+  AudioStatus,
+  audioStatuses,
+  audioFeatures,
+} from '~/constants/audio'
 
 import VButton from '~/components/VButton.vue'
 import VLink from '~/components/VLink.vue'
@@ -87,18 +90,18 @@ export default defineComponent({
       required: true,
     },
     size: {
-      type: String as PropType<'s' | 'm' | 'l'>,
-      validation: (v: string) => ['s', 'm', 'l'].includes(v),
+      type: String as PropType<AudioSize>,
+      validation: (v: string) => audioSizes.includes(v as AudioSize),
     },
     status: {
-      type: String as PropType<'playing' | 'played' | 'paused'>,
-      validation: (v: string) => ['playing', 'played', 'paused'].includes(v),
+      type: String as PropType<AudioStatus>,
+      validation: (v: string) => audioStatuses.includes(v as AudioStatus),
     },
     currentTime: {
       type: Number,
       required: true,
     },
-  } as const,
+  },
   setup(props) {
     /**
      * Format the time as hh:mm:ss, dropping the hour part if it is zero.
@@ -120,6 +123,7 @@ export default defineComponent({
       timeFmt,
 
       isSmall,
+      audioFeatures,
     }
   },
 })

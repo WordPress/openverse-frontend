@@ -38,7 +38,7 @@
   </Component>
 </template>
 
-<script>
+<script lang="ts">
 import {
   computed,
   defineComponent,
@@ -46,6 +46,7 @@ import {
   watch,
   onUnmounted,
   useRoute,
+  PropType,
 } from '@nuxtjs/composition-api'
 
 import { useActiveAudio } from '~/composables/use-active-audio'
@@ -58,6 +59,16 @@ import { useMediaStore } from '~/stores/media'
 import { AUDIO } from '~/constants/media'
 import { keycodes } from '~/constants/key-codes'
 
+import type { AudioDetail } from '~/models/media'
+import {
+  AudioLayout,
+  audioLayouts,
+  AudioSize,
+  audioSizes,
+  AudioStatus,
+  layoutMappings,
+} from '~/constants/audio'
+
 import VPlayPause from '~/components/VAudioTrack/VPlayPause.vue'
 import VWaveform from '~/components/VAudioTrack/VWaveform.vue'
 import VFullLayout from '~/components/VAudioTrack/layouts/VFullLayout.vue'
@@ -66,46 +77,6 @@ import VBoxLayout from '~/components/VAudioTrack/layouts/VBoxLayout.vue'
 import VGlobalLayout from '~/components/VAudioTrack/layouts/VGlobalLayout.vue'
 import VLink from '~/components/VLink.vue'
 import VWarningSuppressor from '~/components/VWarningSuppressor.vue'
-
-const propTypes = {
-  /**
-   * the information about the track, typically from a track's detail endpoint
-   */
-  audio: {
-    type: /** @type {import('@nuxtjs/composition-api').PropType<import('~/models/media').AudioDetail>} */ (
-      Object
-    ),
-    required: /** @type {true} */ (true),
-  },
-  /**
-   * the arrangement of the contents on the canvas; This determines the
-   * overall L&F of the audio component.
-   * @todo This type def should be extracted for reuse across components
-   */
-  layout: {
-    type: /** @type {import('@nuxtjs/composition-api').PropType<'full' | 'box' | 'row' | 'global'>} */ (
-      String
-    ),
-    default: 'full',
-    /**
-     * @param {string} val
-     */
-    validator: (val) => ['full', 'box', 'row', 'global'].includes(val),
-  },
-  /**
-   * the size of the component; Both 'box' and 'row' layouts offer multiple
-   * sizes to choose from.
-   */
-  size: {
-    type: /** @type {import('@nuxtjs/composition-api').PropType<'s' | 'm' | 'l'>} */ (
-      String
-    ),
-    /**
-     * @param {string} val
-     */
-    validator: (val) => ['s', 'm', 'l'].includes(val),
-  },
-}
 
 /**
  * Displays the waveform and basic information about the track, along with
@@ -125,14 +96,39 @@ export default defineComponent({
     VBoxLayout,
     VGlobalLayout,
   },
-  props: propTypes,
+  props: {
+    /**
+     * the information about the track, typically from a track's detail endpoint
+     */
+    audio: {
+      type: Object as PropType<AudioDetail>,
+      required: true,
+    },
+    /**
+     * the arrangement of the contents on the canvas; This determines the
+     * overall L&F of the audio component.
+     */
+    layout: {
+      type: String as PropType<AudioLayout>,
+      default: 'full',
+      validator: (val: string) => audioLayouts.includes(val as AudioLayout),
+    },
+    /**
+     * the size of the component; Both 'box' and 'row' layouts offer multiple
+     * sizes to choose from.
+     */
+    size: {
+      type: String as PropType<AudioSize>,
+      validator: (val: string) => audioSizes.includes(val as AudioSize),
+    },
+  },
   setup(props) {
     const activeMediaStore = useActiveMediaStore()
     const route = useRoute()
 
     const activeAudio = useActiveAudio()
 
-    const status = ref('paused')
+    const status = ref<AudioStatus>('paused')
     const currentTime = ref(0)
 
     const initLocalAudio = () => {
@@ -189,10 +185,8 @@ export default defineComponent({
      * the globally active audio already matches the result
      * that was clicked on, hijack that object instead and
      * treat it as the local audio for this instance.
-     *
-     * @type {HTMLAudioElement | undefined}
-     * */
-    let localAudio =
+     */
+    let localAudio: HTMLAudioElement | undefined =
       activeAudio.obj.value?.src === props.audio.url
         ? activeAudio.obj.value
         : undefined
@@ -312,10 +306,7 @@ export default defineComponent({
 
     /* Interface with VPlayPause */
 
-    /**
-     * @param {'playing' | 'paused'} [state]
-     */
-    const handleToggle = (state) => {
+    const handleToggle = (state?: 'playing' | 'paused') => {
       if (!state) {
         switch (status.value) {
           case 'playing':
@@ -340,10 +331,7 @@ export default defineComponent({
 
     /* Interface with VWaveform */
 
-    /**
-     * @param {number} frac
-     */
-    const handleSeeked = (frac) => {
+    const handleSeeked = (frac: number) => {
       if (!localAudio) initLocalAudio()
       /**
        * Calling initLocalAudio will guarantee localAudio
@@ -352,17 +340,12 @@ export default defineComponent({
        * hoops (using `assert`) or adding unnecessary
        * runtime checks.
        */
-      localAudio.currentTime = frac * duration.value
+      if (localAudio) {
+        localAudio.currentTime = frac * duration.value
+      }
     }
 
     /* Layout */
-
-    const layoutMappings = {
-      full: 'VFullLayout',
-      row: 'VRowLayout',
-      box: 'VBoxLayout',
-      global: 'VGlobalLayout',
-    }
     const layoutComponent = computed(() => layoutMappings[props.layout])
 
     /**
@@ -370,7 +353,7 @@ export default defineComponent({
      */
     const _size = computed(() => {
       if (isBoxed && !props.size) {
-        return null
+        return undefined
       }
       return props.size ?? 'm'
     })
@@ -380,7 +363,7 @@ export default defineComponent({
      * so we can capture clicks and skip
      * sending an event to the boxed layout.
      */
-    const playPauseRef = ref(null)
+    const playPauseRef = ref<HTMLElement | null>(null)
 
     /**
      * These layout-conditional props and listeners allow us
@@ -405,10 +388,8 @@ export default defineComponent({
           })
         : i18n.t('audio-track.aria-label', { title: props.audio.title })
     )
-    /**
-     * @param {KeyboardEvent} event
-     */
-    const handleKeydown = (event) => {
+
+    const handleKeydown = (event: KeyboardEvent) => {
       if (!isBoxed.value || event.key !== keycodes.Spacebar) return
       event.preventDefault()
       status.value = status.value === 'playing' ? 'paused' : 'playing'
