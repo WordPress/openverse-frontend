@@ -50,6 +50,8 @@ export const useSingleResultStore = defineStore('single-result', {
     },
 
     async fetchMediaItem(type: SupportedMediaType, id: string) {
+      if (this.mediaItem?.id === id) return
+
       const mediaStore = useMediaStore()
       const existingItem = mediaStore.getItemById(type, id)
 

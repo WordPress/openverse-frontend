@@ -104,6 +104,20 @@ export default defineComponent({
       ),
       default: undefined,
     },
+    visible: {
+      type: Boolean,
+      default: undefined,
+    },
+    /**
+     * Allow passing a specific disclosure element to focus when for some
+     * reason the modal can't have a populated `trigger` slot.
+     */
+    displacedDisclosure: {
+      type: /** @type {import('@nuxtjs/composition-api').PropType<HTMLElement>} */ (
+        process.server ? Object : HTMLElement
+      ),
+      default: undefined,
+    },
   },
   emits: [
     /**
@@ -115,8 +129,24 @@ export default defineComponent({
      */
     'close',
   ],
-  setup(_, { emit }) {
-    const visibleRef = ref(false)
+  setup(props, { emit }) {
+    const visibleRef = ref(props.visible || false)
+    watch(
+      () => props.visible,
+      (visible) => {
+        switch (visible) {
+          case true: {
+            return open()
+          }
+          case false: {
+            return close()
+          }
+          default: {
+            return undefined
+          }
+        }
+      }
+    )
     const nodeRef = ref()
 
     /** @type {import('@nuxtjs/composition-api').Ref<HTMLElement | undefined>} */
@@ -127,7 +157,9 @@ export default defineComponent({
       'aria-haspopup': 'dialog',
     })
 
-    const triggerRef = computed(() => triggerContainerRef.value?.firstChild)
+    const triggerRef = computed(
+      () => props.displacedDisclosure ?? triggerContainerRef.value?.firstChild
+    )
 
     watch([visibleRef], ([visible]) => {
       if (visible) {

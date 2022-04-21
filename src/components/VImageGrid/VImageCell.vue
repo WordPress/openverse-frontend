@@ -6,6 +6,7 @@
     :style="`width: ${containerAspect * widthBasis}px;flex-grow: ${
       containerAspect * widthBasis
     }`"
+    :data-resultid="image.id"
     @click="onGotoDetailPage($event, image)"
   >
     <figure
