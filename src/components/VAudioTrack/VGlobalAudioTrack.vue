@@ -74,7 +74,7 @@ export default defineComponent({
      * the information about the track, typically from a track's detail endpoint
      */
     audio: {
-      type: Object,
+      type: Object as PropType<AudioDetail>,
       required: true,
     },
     /**
