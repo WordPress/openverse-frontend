@@ -123,11 +123,11 @@ export default defineComponent({
     const { i18n } = useContext()
 
     const featureNotices: {
-      timestamp?: string
+      timestamps?: string
       duration?: string
       seek?: string
     } = {}
-    const features = ['timestamp', 'duration', 'seek']
+    const features = ['timestamps', 'duration', 'seek']
     if (browserIsBlink && props.audio.source === 'jamendo') {
       features.pop()
       featureNotices.seek = i18n

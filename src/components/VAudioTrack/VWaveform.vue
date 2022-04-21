@@ -222,15 +222,15 @@ export default defineComponent({
     },
     /**
      * selectively enable features in the waveform; Available features are
-     * `'timestamp'`, `'duration'`, `'seek'`.
+     * `'timestamps'`, `'duration'`, `'seek'`.
      */
     features: {
       type: Array as PropType<AudioFeature[]>,
-      default: () => ['timestamp', 'seek'],
+      default: () => ['timestamps', 'seek'],
     },
     /**
      * An object of notices to display when a feature is disabled.
-     * `'timestamp'`, `'duration'`, `'seek'`.
+     * `'timestamps'`, `'duration'`, `'seek'`.
      */
     featureNotices: {
       type: Object as PropType<Record<AudioFeature, boolean>>,
@@ -318,7 +318,7 @@ export default defineComponent({
     /* Features */
 
     const showDuration = computed(() => props.features.includes('duration'))
-    const showTimestamps = computed(() => props.features.includes('timestamp'))
+    const showTimestamps = computed(() => props.features.includes('timestamps'))
     const isSeekable = computed(() => props.features.includes('seek'))
 
     /* Feature notices */

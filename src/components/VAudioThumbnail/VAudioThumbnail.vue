@@ -58,13 +58,14 @@ export default defineComponent({
   } as const,
   setup(props) {
     const { i18n } = useContext()
-    const helpText = computed(() =>
-      i18n
-        .t('audio-thumbnail.alt', {
-          title: props.audio.title,
-          creator: props.audio.creator,
-        })
-        .toString()
+    const helpText = computed(
+      () =>
+        i18n
+          .t('audio-thumbnail.alt', {
+            title: props.audio.title,
+            creator: props.audio.creator,
+          })
+          ?.toString() || ''
     )
 
     /* Switching */
