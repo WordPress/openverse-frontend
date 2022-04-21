@@ -186,7 +186,7 @@ export default defineComponent({
      * that was clicked on, hijack that object instead and
      * treat it as the local audio for this instance.
      */
-    let localAudio: HTMLAudioElement | undefined =
+    let localAudio =
       activeAudio.obj.value?.src === props.audio.url
         ? activeAudio.obj.value
         : undefined

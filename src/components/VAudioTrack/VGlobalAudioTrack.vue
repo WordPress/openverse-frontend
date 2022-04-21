@@ -42,9 +42,13 @@ import { defaultRef } from '~/composables/default-ref'
 
 import { useActiveMediaStore } from '~/stores/active-media'
 
-import type { AudioLayout, AudioSize } from '~/constants/audio'
-
-import { audioLayouts, audioSizes } from '~/constants/audio'
+import {
+  AudioLayout,
+  AudioSize,
+  audioLayouts,
+  audioSizes,
+} from '~/constants/audio'
+import type { AudioDetail } from '~/models/media'
 
 import VPlayPause from '~/components/VAudioTrack/VPlayPause.vue'
 import VWaveform from '~/components/VAudioTrack/VWaveform.vue'

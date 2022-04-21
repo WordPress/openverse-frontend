@@ -13,8 +13,7 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
 
-import type { AudioLayout } from '~/constants/audio'
-import { audioLayouts } from '~/constants/audio'
+import { AudioLayout, audioLayouts } from '~/constants/audio'
 
 import VIconButton from '~/components/VIconButton/VIconButton.vue'
 

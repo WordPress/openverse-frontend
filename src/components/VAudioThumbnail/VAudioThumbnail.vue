@@ -32,7 +32,6 @@ import {
   ref,
   onMounted,
   useContext,
-  computed,
   defineComponent,
   PropType,
 } from '@nuxtjs/composition-api'
@@ -55,18 +54,15 @@ export default defineComponent({
       type: Object as PropType<AudioDetail>,
       required: true,
     },
-  } as const,
+  },
   setup(props) {
     const { i18n } = useContext()
-    const helpText = computed(
-      () =>
-        i18n
-          .t('audio-thumbnail.alt', {
-            title: props.audio.title,
-            creator: props.audio.creator,
-          })
-          ?.toString() || ''
-    )
+    const helpText = i18n
+      .t('audio-thumbnail.alt', {
+        title: props.audio.title,
+        creator: props.audio.creator,
+      })
+      ?.toString()
 
     /* Switching */
 
@@ -76,8 +72,7 @@ export default defineComponent({
       isOk.value = true
     }
     onMounted(() => {
-      isOk.value =
-        Boolean(imgEl.value?.complete && imgEl.value?.naturalWidth)
+      isOk.value = Boolean(imgEl.value?.complete && imgEl.value?.naturalWidth)
     })
 
     /* Artwork */
@@ -88,10 +83,10 @@ export default defineComponent({
     const maxRadius = 27
 
     const random = rand(hash(props.audio.title ?? ''))
-    const ctrlPts = Array.from({ length: 4 }, (_, idx) => [
-      random() * canvasSize,
-      (idx / 3) * canvasSize,
-    ]) as Point[]
+    const ctrlPts = Array.from(
+      { length: 4 },
+      (_, idx) => [random() * canvasSize, (idx / 3) * canvasSize] as Point
+    )
 
     const pointCount = dotCount + 1
     const bezierPoints = bezier(ctrlPts, pointCount)
