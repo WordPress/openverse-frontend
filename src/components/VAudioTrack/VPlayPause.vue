@@ -13,12 +13,7 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
 
-import {
-  AudioLayout,
-  audioLayouts,
-  AudioStatus,
-  audioStatuses,
-} from '~/constants/audio'
+import type { AudioLayout, AudioStatus } from '~/constants/audio'
 
 import VIconButton from '~/components/VIconButton/VIconButton.vue'
 
@@ -55,16 +50,13 @@ export default defineComponent({
     status: {
       type: String as PropType<AudioStatus>,
       required: true,
-      validator: (val: string) => audioStatuses.includes(val as AudioStatus),
     },
     /**
      * The parent audio layout currently in use
-     * @todo This type def should be extracted for reuse across components
      */
     layout: {
       type: String as PropType<AudioLayout>,
       default: 'full',
-      validator: (val: string) => audioLayouts.includes(val as AudioLayout),
     },
   },
   setup(props, { emit }) {

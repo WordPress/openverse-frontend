@@ -42,12 +42,7 @@ import { defaultRef } from '~/composables/default-ref'
 
 import { useActiveMediaStore } from '~/stores/active-media'
 
-import {
-  AudioLayout,
-  AudioSize,
-  audioLayouts,
-  audioSizes,
-} from '~/constants/audio'
+import type { AudioLayout, AudioSize } from '~/constants/audio'
 import type { AudioDetail } from '~/models/media'
 
 import VPlayPause from '~/components/VAudioTrack/VPlayPause.vue'
@@ -88,7 +83,6 @@ export default defineComponent({
     layout: {
       type: String as PropType<AudioLayout>,
       default: 'full',
-      validator: (val: string) => audioLayouts.includes(val as AudioLayout),
     },
     /**
      * the size of the component; Both 'box' and 'row' layouts offer multiple
@@ -97,7 +91,6 @@ export default defineComponent({
     size: {
       type: String as PropType<AudioSize>,
       default: 'm',
-      validator: (val: string) => audioSizes.includes(val as AudioSize),
     },
   },
   setup(props) {

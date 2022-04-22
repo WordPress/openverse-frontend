@@ -62,9 +62,7 @@ import { keycodes } from '~/constants/key-codes'
 import type { AudioDetail } from '~/models/media'
 import {
   AudioLayout,
-  audioLayouts,
   AudioSize,
-  audioSizes,
   AudioStatus,
   layoutMappings,
 } from '~/constants/audio'
@@ -111,7 +109,6 @@ export default defineComponent({
     layout: {
       type: String as PropType<AudioLayout>,
       default: 'full',
-      validator: (val: string) => audioLayouts.includes(val as AudioLayout),
     },
     /**
      * the size of the component; Both 'box' and 'row' layouts offer multiple
@@ -119,7 +116,6 @@ export default defineComponent({
      */
     size: {
       type: String as PropType<AudioSize>,
-      validator: (val: string) => audioSizes.includes(val as AudioSize),
     },
   },
   setup(props) {

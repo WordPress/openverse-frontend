@@ -70,13 +70,7 @@
 import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
 
 import type { AudioDetail } from '~/models/media'
-import {
-  audioSizes,
-  AudioSize,
-  AudioStatus,
-  audioStatuses,
-  audioFeatures,
-} from '~/constants/audio'
+import { AudioSize, AudioStatus, audioFeatures } from '~/constants/audio'
 
 import VButton from '~/components/VButton.vue'
 import VLink from '~/components/VLink.vue'
@@ -91,11 +85,9 @@ export default defineComponent({
     },
     size: {
       type: String as PropType<AudioSize>,
-      validation: (v: string) => audioSizes.includes(v as AudioSize),
     },
     status: {
       type: String as PropType<AudioStatus>,
-      validation: (v: string) => audioStatuses.includes(v as AudioStatus),
     },
     currentTime: {
       type: Number,
