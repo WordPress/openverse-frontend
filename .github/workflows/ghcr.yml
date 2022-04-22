@@ -25,6 +25,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: docker/metadata-action@v3
+        id: metadata
         with:
           images: wordpress/openverse-frontend
           tags: |
@@ -34,6 +35,6 @@ jobs:
       - uses: docker/build-push-action@v2
         with:
           context: .
-          tags: ${{ steps.metadata_staging.outputs.tags }}
-          labels: ${{ steps.metadata_staging.outputs.labels }}
+          tags: ${{ steps.metadata.outputs.tags }}
+          labels: ${{ steps.metadata.outputs.labels }}
           push: true
