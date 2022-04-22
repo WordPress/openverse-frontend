@@ -56,9 +56,6 @@ export enum Focus {
 
   /** Wrap tab around */
   WrapAround = 1 << 4,
-
-  /** Prevent scrolling the focusable elements into view */
-  NoScroll = 1 << 5,
 }
 
 export enum FocusResult {
@@ -80,36 +77,13 @@ export function getFocusableElements(
   return Array.from(container.querySelectorAll<HTMLElement>(focusableSelector))
 }
 
-export enum FocusableMode {
-  /** The element itself must be focusable. */
-  Strict,
-
-  /** The element should be inside a focusable element. */
-  Loose,
-}
-
-export function isFocusableElement(
-  element: HTMLElement,
-  mode: FocusableMode = FocusableMode.Strict
-) {
+export function isFocusableElement(element: HTMLElement) {
   if (element === getOwnerDocument(element)?.body) return false
-
-  switch (mode) {
-    case FocusableMode.Strict:
-      return element.matches(focusableSelector)
-    case FocusableMode.Loose: {
-      let next: HTMLElement | null = element
-      while (next !== null) {
-        if (next.matches(focusableSelector)) return true
-        next = next.parentElement
-      }
-      return false
-    }
-  }
+  return element.matches(focusableSelector)
 }
 
 export function focusElement(element: HTMLElement | null) {
-  element?.focus({ preventScroll: true })
+  element?.focus()
 }
 
 // https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/select
@@ -172,8 +146,6 @@ export function focusIn(container: HTMLElement | HTMLElement[], focus: Focus) {
     )
   })()
 
-  const focusOptions = focus & Focus.NoScroll ? { preventScroll: true } : {}
-
   let offset = 0
   const total = elements.length
   let next = undefined
@@ -191,10 +163,8 @@ export function focusIn(container: HTMLElement | HTMLElement[], focus: Focus) {
     }
 
     next = elements[nextIdx]
-    console.log('next to focus: ', next, elements, nextIdx, focusOptions)
     // Try the focus the next element, might not work if it is "hidden" to the user.
-    next?.focus(focusOptions)
-    console.log(document.activeElement)
+    next?.focus()
 
     // Try the next one in line
     offset += direction

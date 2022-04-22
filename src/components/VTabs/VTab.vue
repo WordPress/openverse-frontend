@@ -2,13 +2,12 @@
   <Component
     :is="as"
     ref="internalTabRef"
-    class="border border-tx rounded-sm px-6 py-2 -mb-0.5 text-base font-semibold focus-visible:ring focus-visible:ring-pink"
+    class="px-6 py-2 text-base font-semibold focus-visible:ring focus-visible:ring-pink"
     size="disabled"
-    variant="plain"
-    role="tab"
+    variant="plain-dangerous"
     v-bind="ourProps"
     :class="{
-      'border-x-dark-charcoal-20 border-t-dark-charcoal-20 border-b-white bg-white focus-visible:border-white':
+      '-mb-[1px] rounded-sm  border border-x-dark-charcoal-20 border-t-dark-charcoal-20 border-b-white bg-white focus-visible:border-t-pink focus-visible:ring-tx rounded-bl-none rounded-br-none':
         selected,
     }"
     @click="handleSelection"
@@ -23,6 +22,7 @@
 <script lang="ts">
 import {
   computed,
+  defineComponent,
   inject,
   onMounted,
   onUnmounted,
@@ -34,7 +34,7 @@ import { keycodes } from '~/constants/key-codes'
 import { dom } from '~/utils/dom'
 import { Focus, focusIn } from '~/utils/focus-management'
 
-export default {
+export default defineComponent({
   name: 'VTab',
   props: {
     as: {
@@ -45,24 +45,27 @@ export default {
       type: [Boolean],
       default: false,
     },
+    id: {
+      type: String,
+      required: true,
+    },
   },
   setup(props) {
     const tabContext = inject(tabsContextKey)
-
-    let random =
-      Math.floor(Math.random() * 1000) +
-      Math.floor(Math.random() * 100) +
-      Math.floor(Math.random() * 10)
-    let id = `v-tabs-tab-${random}`
+    if (!tabContext) {
+      throw new Error(`Could not resolve tabContext in VTab`)
+    }
 
     const internalTabRef = ref<HTMLElement | null>(null)
 
     onMounted(() => tabContext.registerTab(internalTabRef))
     onUnmounted(() => tabContext.unregisterTab(internalTabRef))
 
-    let myIndex = computed(() => tabContext.tabs.value.indexOf(internalTabRef))
+    const myIndex = computed(() =>
+      tabContext.tabs.value.indexOf(internalTabRef)
+    )
 
-    let selected = computed(
+    const selected = computed(
       () => myIndex.value === tabContext.selectedIndex.value
     )
 
@@ -73,7 +76,7 @@ export default {
     function handleSelection() {
       if (props.disabled) return
       dom(internalTabRef)?.focus()
-      tabContext.setSelectedIndex(myIndex.value)
+      tabContext?.setSelectedIndex(myIndex.value)
     }
     // This is important because we want to only focus the tab when it gets focus
     // OR it finished the click event (mouseup). However, if you perform a `click`,
@@ -82,7 +85,7 @@ export default {
       event.preventDefault()
     }
     function handleKeyDown(event: KeyboardEvent) {
-      let list = tabContext.tabs.value
+      let list = tabContext?.tabs.value
         .map((tab) => dom(tab))
         .filter(Boolean) as HTMLElement[]
 
@@ -90,7 +93,7 @@ export default {
         event.preventDefault()
         event.stopPropagation()
 
-        tabContext.setSelectedIndex(myIndex.value)
+        tabContext?.setSelectedIndex(myIndex.value)
         return
       }
 
@@ -111,11 +114,9 @@ export default {
       }
 
       if (event.key === keycodes.ArrowLeft) {
-        console.log('left clicked, will focus previous and wrap around')
         return focusIn(list, Focus.Previous | Focus.WrapAround)
       }
       if (event.key === keycodes.ArrowRight) {
-        console.log('right clicked, will focus next and wrap around', list)
         return focusIn(list, Focus.Next | Focus.WrapAround)
       }
       return
@@ -123,14 +124,14 @@ export default {
     const controlledPanel = computed(
       () => tabContext.panels.value[myIndex.value]?.value?.id
     )
-    let ourProps = {
-      id,
+    const ourProps = computed(() => ({
+      id: `tab-${props.id}`,
       role: 'tab',
       'aria-controls': controlledPanel.value,
       'aria-selected': selected.value,
       tabIndex: selected.value ? 0 : -1,
       disabled: props.disabled ? true : undefined,
-    }
+    }))
 
     return {
       ourProps,
@@ -142,7 +143,7 @@ export default {
       handleMouseDown,
     }
   },
-}
+})
 </script>
 
 <style scoped></style>

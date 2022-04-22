@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div role="tablist" :aria-label="label">
     <div class="flex flex-row">
       <slot name="tabs" />
     </div>
@@ -10,6 +10,7 @@
 <script lang="ts">
 import {
   defineComponent,
+  PropType,
   provide,
   ref,
   watchEffect,
@@ -17,13 +18,17 @@ import {
 
 import { dom } from '~/utils/dom'
 
-import { tabsContextKey, TabsState } from '../../models/tabs'
+import { tabsContextKey, TabsState } from '~/models/tabs'
 
 export default defineComponent({
   name: 'VTabs',
   props: {
+    label: {
+      type: String,
+      required: true,
+    },
     selectedIndex: {
-      type: [Number],
+      type: Number as PropType<number | null>,
       default: null,
     },
     defaultIndex: {
@@ -32,10 +37,10 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
-    let selectedIndex = ref<TabsState['selectedIndex']['value']>(null)
-    let tabs = ref<TabsState['tabs']['value']>([])
-    let panels = ref<TabsState['panels']['value']>([])
-    let tabGroupContext = {
+    const selectedIndex = ref<TabsState['selectedIndex']['value']>(null)
+    const tabs = ref<TabsState['tabs']['value']>([])
+    const panels = ref<TabsState['panels']['value']>([])
+    const tabGroupContext = {
       selectedIndex,
       tabs,
       panels,
@@ -62,22 +67,14 @@ export default defineComponent({
     provide(tabsContextKey, tabGroupContext)
 
     watchEffect(() => {
-      console.log(
-        'something changed',
-        tabGroupContext.tabs.value,
-        props.selectedIndex,
-        selectedIndex.value
-      )
       if (tabGroupContext.tabs.value.length <= 0) return
       if (props.selectedIndex === null && selectedIndex.value !== null) return
-      console.log('did not return')
       let tabs = tabGroupContext.tabs.value
         .map((tab) => dom(tab))
         .filter(Boolean) as HTMLElement[]
       let focusableTabs = tabs.filter((tab) => !tab.hasAttribute('disabled'))
 
       let indexToSet = props.selectedIndex ?? props.defaultIndex
-      console.log('indexToSet', indexToSet)
       // Underflow
       if (indexToSet < 0) {
         selectedIndex.value = tabs.indexOf(focusableTabs[0])

@@ -3,7 +3,7 @@
     :is="as"
     ref="internalPanelRef"
     class="border border-dark-charcoal-20 rounded-sm p-6"
-    :class="{ hidden: !selected }"
+    :class="{ hidden: !selected, 'rounded-tl-none': panelIndex === 0 }"
     v-bind="ourProps"
   >
     <slot />
@@ -11,12 +11,12 @@
 </template>
 <script>
 import {
+  computed,
+  defineComponent,
   inject,
   onMounted,
   onUnmounted,
   ref,
-  defineComponent,
-  computed,
 } from '@nuxtjs/composition-api'
 
 import { tabsContextKey } from '~/models/tabs'
@@ -25,38 +25,42 @@ export default defineComponent({
   name: 'VTabPanel',
   props: {
     as: { type: String, default: 'div' },
+    for: { type: String, required: true },
   },
-  setup() {
+  setup(props) {
     const tabContext = inject(tabsContextKey)
-
+    if (!tabContext) {
+      throw new Error(`Could not resolve tabContext in VTabPanel`)
+    }
     const internalPanelRef = ref(null)
-    let random =
-      Math.floor(Math.random() * 1000) +
-      Math.floor(Math.random() * 100) +
-      Math.floor(Math.random() * 10)
-    let id = `v-tab-panel${random}`
 
     onMounted(() => {
       tabContext.registerPanel(internalPanelRef)
     })
     onUnmounted(() => tabContext.unregisterPanel(internalPanelRef))
-    let myIndex = computed(() =>
+    const panelIndex = computed(() =>
       tabContext.panels.value.indexOf(internalPanelRef)
     )
-    let selected = computed(
-      () => myIndex.value === tabContext.selectedIndex.value
-    )
-    let ourProps = {
-      ref: internalPanelRef,
-      id,
-      role: 'tabpanel',
-      'aria-labelledby': tabContext.tabs.value[myIndex.value]?.value?.id,
-      tabIndex: selected.value ? 0 : -1,
-    }
+    const selected = computed(() => {
+      return panelIndex.value === tabContext.selectedIndex.value
+    })
+    const ourProps = computed(() => {
+      const tab = tabContext.tabs.value[panelIndex.value]?.value
+      const labelledBy = tab && '$el' in tab ? tab.$el.id : tab?.id
+
+      return {
+        ref: internalPanelRef,
+        id: `panel-${props.for}`,
+        role: 'tabpanel',
+        'aria-labelledby': labelledBy,
+        tabIndex: selected.value ? 0 : -1,
+      }
+    })
     return {
       internalPanelRef,
       selected,
       ourProps,
+      panelIndex,
     }
   },
 })

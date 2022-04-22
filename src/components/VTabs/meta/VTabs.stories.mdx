@@ -11,13 +11,13 @@ import VTabs from '~/components/VTabs/VTabs.vue'
 <Meta title="Components/VTabs" component={VTabs} />
 
 export const Template = (args) => ({
-  template: `<VTabs>
-<template #tabs>
-<VTab>Tab1</VTab><VTab>Tab2</VTab>
+  template: `<VTabs label="Tabs"><template #tabs>
+<VTab id='1'>Tab1</VTab><VTab id='2'>Tab2</VTab><VTab id='3'>Tab3</VTab>
 </template>
 <template #default>
-<VTabPanel>Page 1 content</VTabPanel>
-<VTabPanel>Page 2 content</VTabPanel>
+<VTabPanel for='1'>Page 1 content</VTabPanel>
+<VTabPanel for='2'>Page 2 content</VTabPanel>
+<VTabPanel for='3'>Page 3 content</VTabPanel>
 </template>
 </VTabs>`,
   components: { VTabs },
