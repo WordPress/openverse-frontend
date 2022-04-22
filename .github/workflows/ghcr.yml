@@ -30,7 +30,7 @@ jobs:
       - uses: docker/metadata-action@v3
         id: metadata
         with:
-          images: wordpress/openverse-frontend
+          images: ghcr.io/wordpress/openverse-frontend
           tags: |
             type=sha
             type=ref,event=tag
