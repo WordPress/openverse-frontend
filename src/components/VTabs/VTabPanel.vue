@@ -1,15 +1,18 @@
 <template>
   <Component
     :is="as"
+    :id="`panel-${id}`"
     ref="internalPanelRef"
     class="border border-dark-charcoal-20 rounded-sm p-6"
     :class="{ hidden: !selected, 'rounded-tl-none': panelIndex === 0 }"
-    v-bind="ourProps"
+    role="tabpanel"
+    :tabindex="selected ? 0 : -1"
+    :aria-labelledby="`tab-${id}`"
   >
     <slot />
   </Component>
 </template>
-<script>
+<script lang="ts">
 import {
   computed,
   defineComponent,
@@ -25,9 +28,9 @@ export default defineComponent({
   name: 'VTabPanel',
   props: {
     as: { type: String, default: 'div' },
-    for: { type: String, required: true },
+    id: { type: String, required: true },
   },
-  setup(props) {
+  setup() {
     const tabContext = inject(tabsContextKey)
     if (!tabContext) {
       throw new Error(`Could not resolve tabContext in VTabPanel`)
@@ -44,22 +47,10 @@ export default defineComponent({
     const selected = computed(() => {
       return panelIndex.value === tabContext.selectedIndex.value
     })
-    const ourProps = computed(() => {
-      const tab = tabContext.tabs.value[panelIndex.value]?.value
-      const labelledBy = tab && '$el' in tab ? tab.$el.id : tab?.id
 
-      return {
-        ref: internalPanelRef,
-        id: `panel-${props.for}`,
-        role: 'tabpanel',
-        'aria-labelledby': labelledBy,
-        tabIndex: selected.value ? 0 : -1,
-      }
-    })
     return {
       internalPanelRef,
       selected,
-      ourProps,
       panelIndex,
     }
   },

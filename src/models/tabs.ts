@@ -5,6 +5,8 @@ export type TabsState = {
   // State
   selectedIndex: Ref<number | null>
 
+  activation: Ref<'manual' | 'auto'>
+
   tabs: Ref<Ref<HTMLElement | ComponentPublicInstance | null>[]>
   panels: Ref<Ref<HTMLElement | null>[]>
 

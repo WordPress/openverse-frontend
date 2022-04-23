@@ -1,13 +1,16 @@
 <template>
   <Component
     :is="as"
+    :id="`tab-${id}`"
     ref="internalTabRef"
-    class="px-6 py-2 text-base font-semibold focus-visible:ring focus-visible:ring-pink"
+    role="tab"
+    :tabindex="selected ? 0 : -1"
     size="disabled"
     variant="plain-dangerous"
-    v-bind="ourProps"
+    v-bind="tabProps"
+    class="py-3 md:py-4 px-4 md:px-6 border-t border-x border-tx rounded-t-sm bg-white text-base font-semibold focus:shadow-[0_0_0_1.5px_#c52b9b_inset]"
     :class="{
-      '-mb-[1px] rounded-sm  border border-x-dark-charcoal-20 border-t-dark-charcoal-20 border-b-white bg-white focus-visible:border-t-pink focus-visible:ring-tx rounded-bl-none rounded-br-none':
+      '-mb-[1px] border border-x-dark-charcoal-20 border-t-dark-charcoal-20 border-b-white bg-white':
         selected,
     }"
     @click="handleSelection"
@@ -61,89 +64,106 @@ export default defineComponent({
     onMounted(() => tabContext.registerTab(internalTabRef))
     onUnmounted(() => tabContext.unregisterTab(internalTabRef))
 
-    const myIndex = computed(() =>
+    const tabIndex = computed(() =>
       tabContext.tabs.value.indexOf(internalTabRef)
     )
 
     const selected = computed(
-      () => myIndex.value === tabContext.selectedIndex.value
+      () => tabIndex.value === tabContext.selectedIndex.value
     )
 
     function handleFocus() {
+      if (!tabContext) {
+        throw Error('Cannot handle tab focus without tabContext')
+      }
+      if (props.disabled) return
+      if (tabContext.activation.value === 'auto') {
+        tabContext.setSelectedIndex(tabIndex.value)
+      }
       dom(internalTabRef)?.focus()
     }
 
     function handleSelection() {
       if (props.disabled) return
       dom(internalTabRef)?.focus()
-      tabContext?.setSelectedIndex(myIndex.value)
+      tabContext?.setSelectedIndex(tabIndex.value)
     }
-    // This is important because we want to only focus the tab when it gets focus
-    // OR it finished the click event (mouseup). However, if you perform a `click`,
-    // then you will first get the `focus` and then get the `click` event.
+
+    /**
+     * On click, you get a `focus` and then a `click` event. We want to only focus
+     * _after_ the click event is finished(mouseup), or when the tab gets focus.
+
+     * @param event - we want to preventDefault for this mouse event
+     */
     function handleMouseDown(event: MouseEvent) {
       event.preventDefault()
     }
+
     function handleKeyDown(event: KeyboardEvent) {
       let list = tabContext?.tabs.value
         .map((tab) => dom(tab))
         .filter(Boolean) as HTMLElement[]
+      const tabControlKeys = [
+        keycodes.Spacebar,
+        keycodes.Enter,
+        keycodes.Home,
+        keycodes.PageUp,
+        keycodes.End,
+        keycodes.PageDown,
+        keycodes.ArrowLeft,
+        keycodes.ArrowRight,
+      ] as string[]
 
-      if (event.key === keycodes.Spacebar || event.key === keycodes.Enter) {
-        event.preventDefault()
-        event.stopPropagation()
-
-        tabContext?.setSelectedIndex(myIndex.value)
+      if (!tabControlKeys.includes(event.key)) {
         return
       }
+      event.preventDefault()
+      event.stopPropagation()
 
       switch (event.key) {
+        case keycodes.Spacebar:
+        case keycodes.Enter:
+          tabContext?.setSelectedIndex(tabIndex.value)
+          break
         case keycodes.Home:
         case keycodes.PageUp:
-          event.preventDefault()
-          event.stopPropagation()
-
-          return focusIn(list, Focus.First)
+          focusIn(list, Focus.First)
+          break
 
         case keycodes.End:
         case keycodes.PageDown:
-          event.preventDefault()
-          event.stopPropagation()
+          focusIn(list, Focus.Last)
+          break
+        case keycodes.ArrowLeft:
+          focusIn(list, Focus.Previous | Focus.WrapAround)
+          break
 
-          return focusIn(list, Focus.Last)
+        case keycodes.ArrowRight:
+          focusIn(list, Focus.Next | Focus.WrapAround)
+          break
       }
-
-      if (event.key === keycodes.ArrowLeft) {
-        return focusIn(list, Focus.Previous | Focus.WrapAround)
-      }
-      if (event.key === keycodes.ArrowRight) {
-        return focusIn(list, Focus.Next | Focus.WrapAround)
-      }
-      return
     }
     const controlledPanel = computed(
-      () => tabContext.panels.value[myIndex.value]?.value?.id
+      () => tabContext.panels.value[tabIndex.value]?.value?.id
     )
-    const ourProps = computed(() => ({
-      id: `tab-${props.id}`,
-      role: 'tab',
+    const tabProps = computed(() => ({
       'aria-controls': controlledPanel.value,
       'aria-selected': selected.value,
-      tabIndex: selected.value ? 0 : -1,
       disabled: props.disabled ? true : undefined,
     }))
+    const isManual = computed(() => tabContext?.activation.value === 'manual')
 
     return {
-      ourProps,
       internalTabRef,
+      tabProps,
       selected,
-      handleSelection,
+      isManual,
+
       handleKeyDown,
       handleFocus,
       handleMouseDown,
+      handleSelection,
     }
   },
 })
 </script>
-
-<style scoped></style>

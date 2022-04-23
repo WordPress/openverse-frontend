@@ -1,5 +1,5 @@
 <template>
-  <section :aria-label="$t('media-details.reuse.title')">
+  <section :aria-label="$t('media-details.reuse.title')" class="media-reuse">
     <h3 class="text-2xl md:text-3xl mb-6">
       {{ $t('media-details.reuse.title') }}
     </h3>
@@ -27,7 +27,9 @@ const VMediaReuse = defineComponent({
   components: { VCopyLicense, VMediaLicense },
   props: {
     media: {
-      type: Object,
+      type: /** @type import('@nuxtjs/composition-api').PropType<import('~/models/media).Media>*/ (
+        Object
+      ),
       required: true,
     },
   },

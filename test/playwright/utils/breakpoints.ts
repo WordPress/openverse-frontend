@@ -133,6 +133,7 @@ const describeEachBreakpoint =
   }
 
 const describeEvery = describeEachBreakpoint(Array.from(SCREEN_SIZES.keys()))
+const describeDesktopMobile = describeEachBreakpoint(['lg', 'sm'])
 const describeEachDesktop = describeEachBreakpoint(desktopBreakpoints)
 const describeEachMobile = describeEachBreakpoint(mobileBreakpoints)
 
@@ -140,6 +141,7 @@ export default {
   ...breakpointTests,
   describeEachBreakpoint,
   describeEvery,
+  describeDesktopMobile,
   describeEachDesktop,
   describeEachMobile,
 }

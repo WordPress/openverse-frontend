@@ -1,4 +1,4 @@
-// From https://github.com/tailwindlabs/headlessui/blob/main/packages/%40headlessui-vue/src/utils/focus-management.ts
+// Credit: https://github.com/tailwindlabs/headlessui/blob/main/packages/%40headlessui-vue/src/utils/focus-management.ts
 import { dom } from '~/utils/dom'
 
 import type { Ref } from '@nuxtjs/composition-api'
@@ -165,28 +165,16 @@ export function focusIn(container: HTMLElement | HTMLElement[], focus: Focus) {
     next = elements[nextIdx]
     // Try the focus the next element, might not work if it is "hidden" to the user.
     next?.focus()
-
     // Try the next one in line
     offset += direction
   } while (next !== ownerDocument.activeElement)
+  if (
+    !next.hasAttribute('tabindex') ||
+    next.getAttribute('tabindex') === '-1'
+  ) {
+    next.setAttribute('tabindex', '0')
+  }
 
-  // This is a little weird, but let me try and explain: There are a few scenario's
-  // in chrome for example where a focused `<a>` tag does not get the default focus
-  // styles, and sometimes they do. This highly depends on whether you started by
-  // clicking or by using your keyboard. When you programmatically add focus `anchor.focus()`
-  // then the active element (document.activeElement) is this anchor, which is expected.
-  // However, in that case the default focus styles are not applied *unless* you
-  // also add this tabindex.
-  if (!next.hasAttribute('tabindex')) next.setAttribute('tabindex', '0')
-
-  // By default, if you <Tab> to a text input or a textarea, the browser will
-  // select all the text once the focus is inside these DOM Nodes. However,
-  // since we are manually moving focus this behaviour is not happening. This
-  // code will make sure that the text gets selected as-if you did it manually.
-  // Note: We only do this when going forward / backward. Not for the
-  // Focus.First or Focus.Last actions. This is similar to the `autoFocus`
-  // behaviour on an input where the input will get focus but won't be
-  // selected.
   if (focus & (Focus.Next | Focus.Previous) && isSelectableElement(next)) {
     next.select()
   }
