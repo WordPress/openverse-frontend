@@ -6,7 +6,7 @@
 
     <VTabs :label="$t('media-details.reuse.copy-license.title').toString()">
       <template #tabs>
-        <VTab v-for="(tab, idx) in tabs" :id="tab" :key="idx">
+        <VTab v-for="tab in tabs" :id="tab" :key="tab">
           {{ $t(`media-details.reuse.copy-license.${tab}`) }}
         </VTab>
       </template>
@@ -39,6 +39,8 @@ import VTabs from '~/components/VTabs/VTabs.vue'
 import VTab from '~/components/VTabs/VTab.vue'
 import VLicenseTabPanel from '~/components/VMediaInfo/VLicenseTabPanel.vue'
 
+const tabs = ['rich', 'html', 'plain']
+
 const VCopyLicense = defineComponent({
   name: 'VCopyLicense',
   components: { VTabs, VTab, VLicenseTabPanel },
@@ -50,12 +52,8 @@ const VCopyLicense = defineComponent({
   },
   setup(props) {
     const { i18n } = useContext()
-
-    const tabs = ['rich', 'html', 'plain']
-
     const getAttributionMarkup = (options?: AttributionOptions) =>
       getAttribution(props.media, i18n, options)
-
     return {
       tabs,
 

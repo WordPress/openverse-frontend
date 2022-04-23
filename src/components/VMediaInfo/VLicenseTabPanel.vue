@@ -1,6 +1,6 @@
 <template>
   <VTabPanel
-    :id="`panel-${tab}`"
+    :id="tab"
     class="h-[190px] flex flex-col justify-between items-start text-sm md:text-base"
   >
     <div class="overflow-y-auto">
