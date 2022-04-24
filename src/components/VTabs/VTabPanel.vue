@@ -1,16 +1,15 @@
 <template>
-  <Component
-    :is="as"
+  <div
     :id="`panel-${id}`"
     ref="internalPanelRef"
-    class="border border-dark-charcoal-20 rounded-sm p-6"
-    :class="{ hidden: !selected, 'rounded-tl-none': panelIndex === 0 }"
-    role="tabpanel"
-    :tabindex="selected ? 0 : -1"
     :aria-labelledby="`tab-${id}`"
+    role="tabpanel"
+    :tabindex="isSelected ? 0 : -1"
+    class="p-6 border-dark-charcoal-20"
+    :class="[panelVariantStyle, { hidden: !isSelected }]"
   >
     <slot />
-  </Component>
+  </div>
 </template>
 <script lang="ts">
 import {
@@ -27,8 +26,14 @@ import { tabsContextKey } from '~/models/tabs'
 export default defineComponent({
   name: 'VTabPanel',
   props: {
-    as: { type: String, default: 'div' },
-    id: { type: String, required: true },
+    /**
+     * Tabpanel id should be the same as the controlling tab id.
+     * The id of the HTML element will be `panel-${id}`
+     */
+    id: {
+      type: String,
+      required: true,
+    },
   },
   setup() {
     const tabContext = inject(tabsContextKey)
@@ -41,16 +46,23 @@ export default defineComponent({
       tabContext.registerPanel(internalPanelRef)
     })
     onUnmounted(() => tabContext.unregisterPanel(internalPanelRef))
+
     const panelIndex = computed(() =>
       tabContext.panels.value.indexOf(internalPanelRef)
     )
-    const selected = computed(() => {
-      return panelIndex.value === tabContext.selectedIndex.value
-    })
+    const isSelected = computed(
+      () => panelIndex.value === tabContext.selectedIndex.value
+    )
+    const panelVariantStyle = computed(() =>
+      tabContext.variant.value === 'bordered'
+        ? 'border rounded-sm first:rounded-tl-none'
+        : 'border-t'
+    )
 
     return {
       internalPanelRef,
-      selected,
+      isSelected,
+      panelVariantStyle,
       panelIndex,
     }
   },

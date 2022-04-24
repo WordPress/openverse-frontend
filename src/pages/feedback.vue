@@ -25,10 +25,10 @@
         </template>
         <VTabPanel v-for="tab in tabs" :id="tab" :key="tab">
           <iframe
-            class="form-iframe"
-            :aria-label="$t(`feedback.aria.${tab}`).toString()"
+            class="w-full h-[1200px] border-0"
             :src="forms[tab]"
-            :title="`${tab} form`"
+            :aria-label="$t(`feedback.aria.${tab}`).toString()"
+            :title="$t(`feedback.aria.${tab}`).toString()"
           >
             {{ $t('feedback.loading') }}
           </iframe>
@@ -55,16 +55,16 @@ const suggestionForm =
 const forms = {
   report: `${bugForm}?embedded=true`,
   improve: `${suggestionForm}?embedded=true`,
-}
-const tabs = ['improve', 'report'] as (keyof typeof forms)[]
+} as const
+const tabs = Object.keys(forms) as (keyof typeof forms)[]
 
 export default defineComponent({
   name: 'FeedbackPage',
   components: { VLink, VContentPage, VTabs, VTab, VTabPanel },
   setup() {
     return {
-      tabs,
       forms,
+      tabs,
     }
   },
   head() {
@@ -74,11 +74,3 @@ export default defineComponent({
   },
 })
 </script>
-
-<style scoped>
-.form-iframe {
-  width: 100%;
-  height: 1200px;
-  border: none;
-}
-</style>

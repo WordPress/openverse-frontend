@@ -11,22 +11,54 @@
 import {
   computed,
   defineComponent,
+  PropType,
   provide,
   ref,
 } from '@nuxtjs/composition-api'
 
 import { tabsContextKey, TabsState } from '~/models/tabs'
 
+/**
+ * VTabs is an accessible implementation of tabs component that displays one panel at a time.
+ * @see { https://www.w3.org/TR/wai-aria-practices/#tabpanel }
+ * Use the default automatic activation of tabs when the tab button receives focus for panels
+ * that can be displayed instantly, without fetching any data. For tab panels that fetch data
+ * from the internet or require expensive computation, set `manual` to true to activate the tabs
+ * by clicking `Enter` or `Space` after focusing on them using `Tab`.
+ */
 export default defineComponent({
   name: 'VTabs',
   props: {
+    /**
+     * Accessible name label to use for the tablist.
+     *
+     * Re-use an existing element as a label by passing its `id` starting with `#`.
+     * The tablist's `aria-labelledby` will be set to this element.
+     *
+     * If there are no existing elements that can be used as a label, pass a translated
+     * string to be used as `aria-label`.
+     */
     label: {
       type: String,
       required: true,
     },
+    /**
+     * By default, the tab panels are activated when the corresponding tabs are focused on.
+     * If the tabs require expensive calculations or fetch data from the network, set manual
+     * to true to only activate the tab panels after user clicks `Enter` or `Space` on the focused
+     * tab.
+     */
     manual: {
       type: Boolean,
       default: false,
+    },
+    /**
+     * `bordered` tabs have a border around the tab panel, and around the selected tab.
+     * `plain` tabs only have a line under the tabs, and a thicker line under the selected tab.
+     */
+    variant: {
+      type: String as PropType<TabsState['variant']['value'][number]>,
+      default: 'bordered',
     },
   },
   setup(props, { emit }) {
@@ -36,6 +68,9 @@ export default defineComponent({
     const tabGroupContext = {
       selectedIndex,
       activation: computed(() => (props.manual ? 'manual' : 'auto')),
+      variant: computed<TabsState['variant']['value'][number]>(
+        () => props.variant
+      ),
       tabs,
       panels,
       setSelectedIndex(index: number) {

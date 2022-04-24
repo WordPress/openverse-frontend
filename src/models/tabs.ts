@@ -1,11 +1,12 @@
-import type { InjectionKey, Ref } from '@nuxtjs/composition-api'
+import type { ComputedRef, InjectionKey, Ref } from '@nuxtjs/composition-api'
 import type { ComponentPublicInstance } from '@vue/runtime-dom'
 
 export type TabsState = {
   // State
   selectedIndex: Ref<number | null>
 
-  activation: Ref<'manual' | 'auto'>
+  activation: ComputedRef<'manual' | 'auto'>
+  variant: ComputedRef<'bordered' | 'plain'>
 
   tabs: Ref<Ref<HTMLElement | ComponentPublicInstance | null>[]>
   panels: Ref<Ref<HTMLElement | null>[]>

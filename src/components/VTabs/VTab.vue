@@ -39,10 +39,17 @@ export default defineComponent({
   name: 'VTab',
   components: { VButton },
   props: {
+    /**
+     * Whether the tab is disabled. TODO: do we really need disabled tabs?
+     */
     disabled: {
       type: Boolean,
       default: false,
     },
+    /**
+     * Tab id should be the same as the id of the tabpanel it controls.
+     * The id of the HTML element will be `tab-${id}`
+     */
     id: {
       type: String,
       required: true,
