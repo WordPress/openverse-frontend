@@ -3,15 +3,12 @@
     :id="`tab-${id}`"
     ref="internalTabRef"
     role="tab"
-    :tabindex="selected ? 0 : -1"
+    :tabindex="isSelected ? 0 : -1"
     size="disabled"
     variant="plain-dangerous"
     v-bind="tabProps"
-    class="py-3 md:py-4 px-4 md:px-6 border-t border-x border-tx rounded-t-sm bg-white text-base font-semibold focus:shadow-[0_0_0_1.5px_#c52b9b_inset]"
-    :class="{
-      '-mb-[1px] border border-x-dark-charcoal-20 border-t-dark-charcoal-20 border-b-white bg-white':
-        selected,
-    }"
+    class="py-3 px-4 md:px-6 bg-white text-base font-semibold focus-visible:shadow-[0_0_0_1.5px_#c52b9b_inset] border-0 rounded-none"
+    :class="[$style[variant], isSelected && $style[`${variant}-selected`]]"
     @click="handleSelection"
     @focus="handleFocus"
     @mousedown="handleMouseDown"
@@ -43,7 +40,7 @@ export default defineComponent({
   components: { VButton },
   props: {
     disabled: {
-      type: [Boolean],
+      type: Boolean,
       default: false,
     },
     id: {
@@ -66,7 +63,7 @@ export default defineComponent({
       tabContext.tabs.value.indexOf(internalTabRef)
     )
 
-    const selected = computed(
+    const isSelected = computed(
       () => tabIndex.value === tabContext.selectedIndex.value
     )
 
@@ -95,6 +92,23 @@ export default defineComponent({
      */
     function handleMouseDown(event: MouseEvent) {
       event.preventDefault()
+    }
+
+    /**
+     * Sets the direction where to move focus considering the document direction (ltr or rtl).
+     * The directions for LTR are the opposite of RTL directions.
+     * @param arrowKeyCode - the code of key pressed, right or left arrow
+     * @param documentDir - the dir attribute of the current document.
+     */
+    function getFocusDirection(
+      arrowKeyCode: typeof keycodes.ArrowRight | typeof keycodes.ArrowLeft,
+      documentDir?: string
+    ) {
+      let forward = arrowKeyCode === keycodes.ArrowRight
+      if (documentDir === 'rtl') {
+        forward = !forward
+      }
+      return forward ? Focus.Next : Focus.Previous
     }
 
     function handleKeyDown(event: KeyboardEvent) {
@@ -133,11 +147,19 @@ export default defineComponent({
           focusIn(list, Focus.Last)
           break
         case keycodes.ArrowLeft:
-          focusIn(list, Focus.Previous | Focus.WrapAround)
+          focusIn(
+            list,
+            getFocusDirection(keycodes.ArrowLeft, document.dir) |
+              Focus.WrapAround
+          )
           break
 
         case keycodes.ArrowRight:
-          focusIn(list, Focus.Next | Focus.WrapAround)
+          focusIn(
+            list,
+            getFocusDirection(keycodes.ArrowRight, document.dir) |
+              Focus.WrapAround
+          )
           break
       }
     }
@@ -146,7 +168,7 @@ export default defineComponent({
     )
     const tabProps = computed(() => ({
       'aria-controls': controlledPanel.value,
-      'aria-selected': selected.value,
+      'aria-selected': isSelected.value,
       disabled: props.disabled ? true : undefined,
     }))
     const isManual = computed(() => tabContext?.activation.value === 'manual')
@@ -154,8 +176,9 @@ export default defineComponent({
     return {
       internalTabRef,
       tabProps,
-      selected,
+      isSelected,
       isManual,
+      variant: tabContext?.variant,
 
       handleKeyDown,
       handleFocus,
@@ -165,3 +188,18 @@ export default defineComponent({
   },
 })
 </script>
+
+<style module>
+.bordered {
+  @apply border-t border-x border-tx rounded-t-sm;
+}
+.plain {
+  @apply border-tx border-b-3;
+}
+.bordered-selected {
+  @apply border border-x-dark-charcoal-20 border-t-dark-charcoal-20 border-b-white -mb-[1px] bg-white;
+}
+.plain-selected {
+  @apply border-dark-charcoal rounded-none;
+}
+</style>
