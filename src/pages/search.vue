@@ -1,7 +1,6 @@
 <template>
   <VSkipToContentContainer
-    class="browse-page flex flex-col px-4 md:px-10"
-    :class="[isFilterSidebarVisible ? 'w-full' : 'w-screen']"
+    class="browse-page flex flex-col px-4 md:px-10 w-full"
   >
     <VSearchGrid
       :fetch-state="fetchState"

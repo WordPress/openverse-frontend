@@ -9,7 +9,8 @@
     <main class="main embedded" :class="{ 'has-sidebar': isSidebarVisible }">
       <Nuxt class="min-w-0 main-page" />
       <VSidebarTarget
-        class="sidebar fixed pb-20 end-0 bg-dark-charcoal-06 border-s border-dark-charcoal-20 overflow-y-auto"
+        class="sidebar fixed pb-20 end-0 bg-dark-charcoal-06"
+        :class="{ 'border-s border-dark-charcoal-20': isSidebarVisible }"
       />
     </main>
     <VModalTarget class="modal" />
@@ -94,7 +95,7 @@ export default embeddedPage
   height: calc(100vh - var(--header-height, 81px));
 }
 .has-sidebar .sidebar {
-  width: 325px;
+  width: var(--filter-sidebar-width);
 }
 
 .app {
@@ -106,7 +107,7 @@ export default embeddedPage
   .main {
     height: 100%;
     display: grid;
-    grid-template-columns: 1fr 336px;
+    grid-template-columns: 1fr var(--filter-sidebar-width);
   }
   /** Make the main content area span both grid columns when the sidebar is closed... **/
   .main > *:first-child {
