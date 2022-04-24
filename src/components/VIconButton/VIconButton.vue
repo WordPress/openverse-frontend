@@ -2,8 +2,8 @@
   <VButton
     v-bind="buttonProps"
     size="disabled"
-    class="icon-button flex flex-shrink-0 items-center justify-center border-1.5 active:shadow-ring"
-    :class="[...buttonSizeClasses]"
+    class="icon-button flex flex-shrink-0 items-center justify-center active:shadow-ring border-1.5"
+    :class="buttonSizeClasses"
     :type="type"
     v-on="$listeners"
   >
@@ -19,7 +19,7 @@
 import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
 
 import VIcon, { IconProps } from '~/components/VIcon/VIcon.vue'
-import VButton from '~/components/VButton.vue'
+import VButton, { ButtonProps } from '~/components/VButton.vue'
 import type { ButtonType } from '~/components/VButton.vue'
 
 const SIZE_MAP = Object.freeze({
@@ -65,7 +65,10 @@ export default defineComponent({
      * props to pass down to the `VButton` component nested inside the button;
      * See documentation on `VButton`.
      */
-    buttonProps: {},
+    buttonProps: {
+      type: Object as PropType<ButtonProps>,
+      default: () => ({ variant: 'plain' }),
+    },
   },
   setup(props, { attrs }) {
     const type = (attrs['type'] ?? 'button') as ButtonType

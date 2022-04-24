@@ -2,7 +2,7 @@
   <div class="app grid relative">
     <div class="sticky top-0 block z-40">
       <VTeleportTarget name="skip-to-content" :force-destroy="true" />
-      <VMigrationNotice v-show="isReferredFromCc" />
+      <VMigrationNotice />
       <VTranslationStatusBanner />
       <VHeader />
     </div>
@@ -24,8 +24,6 @@ import { useWindowScroll } from '~/composables/use-window-scroll'
 import { useMatchSearchRoutes } from '~/composables/use-match-routes'
 import { isMinScreen } from '~/composables/use-media-query'
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
-
-import { useNavStore } from '~/stores/nav'
 
 import VMigrationNotice from '~/components/VMigrationNotice.vue'
 import VTranslationStatusBanner from '~/components/VTranslationStatusBanner.vue'
@@ -51,9 +49,6 @@ const embeddedPage = {
     return this.$nuxtI18nHead({ addSeoAttributes: true, addDirAttribute: true })
   },
   setup() {
-    const navStore = useNavStore()
-    const isReferredFromCc = computed(() => navStore.isReferredFromCc)
-
     const { isVisible: isFilterVisible } = useFilterSidebarVisibility()
     const isMinScreenMd = isMinScreen('md')
     const { matches: isSearchRoute } = useMatchSearchRoutes()
@@ -80,7 +75,6 @@ const embeddedPage = {
     return {
       isHeaderScrolled,
       isMinScreenMd,
-      isReferredFromCc,
       isSidebarVisible,
       isSearchRoute,
       headerHasTwoRows,
