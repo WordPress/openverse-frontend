@@ -1,15 +1,17 @@
 <template>
   <div
-    class="wrapper px-4 md:px-7 py-2 md:flex md:items-center md:justify-between"
+    class="wrapper px-4 md:px-7 py-3 flex md:items-center md:justify-between border-l-[.25rem] bg-[#fff8e5] border-[#ffb900]"
     dir="ltr"
   >
-    <p class="text-center md:text-left">
+    <p
+      class="text-sm md:text-base text-center leading-tight md:leading-normal md:text-left"
+    >
       <slot name="default" />
     </p>
     <div class="flex">
       <slot name="buttons">
         <button
-          class="button is-text small dismiss-button"
+          class="button is-text small dismiss-button aspect-square"
           type="button"
           :aria-label="$t('modal.close')"
           @click="$emit('close')"
@@ -39,11 +41,3 @@ const VNotificationBanner = defineComponent({
 })
 export default VNotificationBanner
 </script>
-
-<style scoped>
-/** Styles from learn.wordpress.org **/
-.wrapper {
-  background-color: #fff8e5;
-  border-left: 0.25rem solid #ffb900;
-}
-</style>
