@@ -1,6 +1,5 @@
 <template>
-  <Component
-    :is="as"
+  <VButton
     :id="`tab-${id}`"
     ref="internalTabRef"
     role="tab"
@@ -18,8 +17,8 @@
     @mousedown="handleMouseDown"
     @keydown="handleKeyDown"
   >
-    <slot :selected="selected" />
-  </Component>
+    <slot />
+  </VButton>
 </template>
 
 <script lang="ts">
@@ -37,13 +36,12 @@ import { keycodes } from '~/constants/key-codes'
 import { dom } from '~/utils/dom'
 import { Focus, focusIn } from '~/utils/focus-management'
 
+import VButton from '~/components/VButton.vue'
+
 export default defineComponent({
   name: 'VTab',
+  components: { VButton },
   props: {
-    as: {
-      type: String,
-      default: 'VButton',
-    },
     disabled: {
       type: [Boolean],
       default: false,
