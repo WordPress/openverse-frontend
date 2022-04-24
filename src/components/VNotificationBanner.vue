@@ -1,6 +1,6 @@
 <template>
   <div
-    class="wrapper px-4 md:px-7 py-3 flex md:items-center md:justify-between border-l-[.25rem] bg-[#fff8e5] border-[#ffb900]"
+    class="wrapper px-4 md:px-7 sm:py-3 md:py-1 flex md:items-center md:justify-between border-l-[.25rem] bg-[#fff8e5] border-[#ffb900]"
     dir="ltr"
   >
     <p
