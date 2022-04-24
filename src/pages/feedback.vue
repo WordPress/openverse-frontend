@@ -17,7 +17,7 @@
       <!-- eslint-enable @intlify/vue-i18n/no-raw-text -->
     </i18n>
     <section>
-      <VTabs :label="$t('feedback.title').toString()" :manual="true">
+      <VTabs label="#feedback" variant="plain" manual>
         <template #tabs>
           <VTab v-for="tab in tabs" :id="tab" :key="tab">
             {{ $t(`feedback.${tab}`) }}

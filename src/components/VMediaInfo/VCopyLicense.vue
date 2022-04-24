@@ -1,10 +1,13 @@
 <template>
   <div>
-    <h5 class="mb-4 text-base md:text-2xl font-semibold">
+    <h5
+      id="copy-license-title"
+      class="mb-4 text-base md:text-2xl font-semibold"
+    >
       {{ $t('media-details.reuse.copy-license.title') }}
     </h5>
 
-    <VTabs :label="$t('media-details.reuse.copy-license.title').toString()">
+    <VTabs label="#copy-license-title">
       <template #tabs>
         <VTab v-for="tab in tabs" :id="tab" :key="tab">
           {{ $t(`media-details.reuse.copy-license.${tab}`) }}

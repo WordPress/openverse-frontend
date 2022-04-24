@@ -1,5 +1,5 @@
 <template>
-  <div :aria-label="label">
+  <div v-bind="accessibleLabel">
     <div role="tablist" class="flex flex-row">
       <slot name="tabs" />
     </div>
@@ -59,6 +59,15 @@ export default defineComponent({
       },
     }
     provide(tabsContextKey, tabGroupContext)
+
+    const accessibleLabel = computed(() =>
+      props.label.startsWith('#')
+        ? { 'aria-labelledby': props.label.slice(1) }
+        : { 'aria-label': props.label }
+    )
+    return {
+      accessibleLabel,
+    }
   },
 })
 </script>
