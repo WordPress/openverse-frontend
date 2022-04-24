@@ -62,13 +62,9 @@ const embeddedPage = {
     )
 
     const isHeaderScrolled = ref(false)
-    const scrollY = ref(0)
-    const { isScrolled: isMainContentScrolled, y: windowY } = useWindowScroll()
+    const { isScrolled: isMainContentScrolled, y: scrollY } = useWindowScroll()
     watch([isMainContentScrolled], ([isMainContentScrolled]) => {
       isHeaderScrolled.value = isMainContentScrolled
-    })
-    watch([windowY], ([windowY]) => {
-      scrollY.value = windowY
     })
     const showScrollButton = computed(() => scrollY.value > 70)
 

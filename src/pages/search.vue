@@ -1,6 +1,7 @@
 <template>
   <VSkipToContentContainer
-    class="browse-page flex flex-col w-full px-4 md:px-10"
+    class="browse-page flex flex-col px-4 md:px-10"
+    :class="[isFilterSidebarVisible ? 'w-full' : 'w-screen']"
   >
     <VSearchGrid
       :fetch-state="fetchState"
@@ -15,7 +16,7 @@
           :key="$route.path"
           :result-items="resultItems"
           :fetch-state="fetchState"
-          :is-filter-visible="isVisible"
+          :is-filter-visible="isFilterSidebarVisible"
           :search-term="query.q"
           :supported="supported"
           data-testid="search-results"
@@ -50,7 +51,7 @@ const BrowsePage = {
   },
   setup() {
     const isMinScreenMd = isMinScreen('md')
-    const { isVisible } = useFilterSidebarVisibility()
+    const { isVisible: isFilterSidebarVisible } = useFilterSidebarVisibility()
     const showScrollButton = inject('showScrollButton')
     const mediaStore = useMediaStore()
     const searchStore = useSearchStore()
@@ -67,7 +68,7 @@ const BrowsePage = {
 
     return {
       isMinScreenMd,
-      isVisible,
+      isFilterSidebarVisible,
       showScrollButton,
       searchTerm,
       searchType,
