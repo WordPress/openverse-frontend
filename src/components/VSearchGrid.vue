@@ -11,10 +11,7 @@
       class="mt-4"
       :class="isAllView ? 'mb-10' : 'mb-8'"
     >
-      <VSearchResultsTitle
-        class="leading-10"
-        :size="isAllView ? 'large' : 'default'"
-      >
+      <VSearchResultsTitle :size="isAllView ? 'large' : 'default'">
         {{ query.q }}
       </VSearchResultsTitle>
     </header>
