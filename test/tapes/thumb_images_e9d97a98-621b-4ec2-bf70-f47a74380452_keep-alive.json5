@@ -1,6 +1,6 @@
 {
     meta: {
-        createdAt: '2022-04-23T10:29:26.256Z',
+        createdAt: '2022-04-12T14:54:10.024Z',
         host: 'https://api.openverse.engineering',
     },
     req: {
@@ -15,7 +15,7 @@
         status: 200,
         headers: {
             date: [
-                'Sat, 23 Apr 2022 10:29:26 GMT',
+                'Tue, 12 Apr 2022 14:54:13 GMT',
             ],
             'content-type': [
                 'image/jpeg',
@@ -26,38 +26,32 @@
             connection: [
                 'keep-alive',
             ],
-            'cf-bgj': [
-                'h2pri',
+            vary: [
+                'Accept, Authorization, Origin, Accept-Encoding',
             ],
             allow: [
                 'GET, HEAD, OPTIONS',
             ],
-            'cross-origin-opener-policy': [
-                'same-origin',
-            ],
-            'referrer-policy': [
-                'same-origin',
-            ],
-            vary: [
-                'Accept, Authorization, Origin, Accept-Encoding',
+            'x-frame-options': [
+                'DENY',
             ],
             'x-content-type-options': [
                 'nosniff',
             ],
-            'x-frame-options': [
-                'DENY',
+            'referrer-policy': [
+                'same-origin',
+            ],
+            'cross-origin-opener-policy': [
+                'same-origin',
             ],
             'cache-control': [
                 'max-age=14400',
             ],
             'cf-cache-status': [
-                'HIT',
-            ],
-            age: [
-                '8910',
+                'MISS',
             ],
             'last-modified': [
-                'Sat, 23 Apr 2022 08:00:56 GMT',
+                'Tue, 12 Apr 2022 14:54:13 GMT',
             ],
             'accept-ranges': [
                 'bytes',
@@ -72,7 +66,7 @@
                 'cloudflare',
             ],
             'cf-ray': [
-                '7005eb086e6c1cfa-BUD',
+                '6faccbc22bc51cd8-BUD',
             ],
             'alt-svc': [
                 'h3=":443"; ma=86400, h3-29=":443"; ma=86400',
