@@ -13,7 +13,7 @@ test.describe('media-reuse', () => {
       await page.goto('/image/f9384235-b72e-4f1e-9b05-e1b116262a29')
     })
     for (const tab of tabs) {
-      breakpoints.describeDesktopMobile(({ expectSnapshot }) => {
+      breakpoints.describeEvery(({ expectSnapshot }) => {
         test(`Should render media reuse section with "${tab.name}" tab open`, async ({
           page,
         }) => {
@@ -35,7 +35,7 @@ test.describe('media-reuse', () => {
     })
 
     for (const tab of tabs) {
-      breakpoints.describeDesktopMobile(({ expectSnapshot }) => {
+      breakpoints.describeEvery(({ expectSnapshot }) => {
         test(`Should render media reuse section with "${tab.name}" tab open`, async ({
           page,
         }) => {
