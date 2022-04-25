@@ -1,6 +1,6 @@
 {
     meta: {
-        createdAt: '2022-04-20T07:01:18.141Z',
+        createdAt: '2022-04-17T03:56:51.971Z',
         host: 'https://api.openverse.engineering',
     },
     req: {
@@ -15,7 +15,7 @@
         status: 200,
         headers: {
             date: [
-                'Wed, 20 Apr 2022 07:01:19 GMT',
+                'Sun, 17 Apr 2022 03:56:53 GMT',
             ],
             'content-type': [
                 'image/jpeg',
@@ -51,7 +51,7 @@
                 'MISS',
             ],
             'last-modified': [
-                'Wed, 20 Apr 2022 07:01:19 GMT',
+                'Sun, 17 Apr 2022 03:56:53 GMT',
             ],
             'accept-ranges': [
                 'bytes',
@@ -66,7 +66,7 @@
                 'cloudflare',
             ],
             'cf-ray': [
-                '6fec02061e2b6261-OTP',
+                '6fd23bba2dfca792-IST',
             ],
             'alt-svc': [
                 'h3=":443"; ma=86400, h3-29=":443"; ma=86400',
