@@ -8,6 +8,7 @@
     "
     :pressed="pressed"
     aria-controls="filter-sidebar"
+    :aria-label="mdMinLabel"
     @click="$emit('toggle')"
   >
     <VIcon
@@ -81,6 +82,12 @@ const VFilterButton = defineComponent({
       return value
     })
 
+    /**
+     * This label's verbosity makes it useful for the aria-label
+     * where it is also used, especially on mobile where the
+     * label would just be the number of applied filters, and therefore
+     * basically useless as far as a label is concerned!
+     */
     const mdMinLabel = computed(() =>
       filtersAreApplied.value
         ? i18n.tc('header.filter-button.with-count', filterCount.value)
