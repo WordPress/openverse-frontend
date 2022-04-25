@@ -5,7 +5,8 @@
       ref="node"
       src=""
       sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
-      title="Sketchfab iframe"
+      :title="label"
+      :aria-label="label"
       allow="autoplay; fullscreen; vr"
       :autoplay="true"
       class="h-full w-full"
@@ -20,6 +21,8 @@ import {
   onMounted,
   useContext,
 } from '@nuxtjs/composition-api'
+
+import { useI18n } from '~/composables/use-i18n'
 
 import { loadScript } from '~/utils/load-script'
 
@@ -47,6 +50,10 @@ export default defineComponent({
   },
   emits: ['failure'],
   setup(props, { emit }) {
+    const i18n = useI18n()
+    const label = i18n
+      .t('sketchfab-iframe-title', { sketchfab: 'Sketchfab' })
+      .toString()
     const node = ref<Element | undefined>()
     const { $sentry } = useContext()
 
@@ -76,7 +83,7 @@ export default defineComponent({
       initSketchfab()
     })
 
-    return { node }
+    return { node, label }
   },
 })
 </script>
