@@ -65,11 +65,11 @@ export default defineComponent({
     const selectedIndex = ref<TabsState['selectedIndex']['value']>(0)
     const tabs = ref<TabsState['tabs']['value']>([])
     const panels = ref<TabsState['panels']['value']>([])
-    const tabGroupContext = {
+    const tabGroupContext: TabsState = {
       selectedIndex,
       activation: computed(() => (props.manual ? 'manual' : 'auto')),
-      variant: computed<TabsState['variant']['value'][number]>(
-        () => props.variant
+      variant: computed(() =>
+        props.variant === 'bordered' ? 'bordered' : 'plain'
       ),
       tabs,
       panels,
