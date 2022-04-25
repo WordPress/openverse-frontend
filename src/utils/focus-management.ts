@@ -1,5 +1,5 @@
 // Credit: https://github.com/tailwindlabs/headlessui/blob/main/packages/%40headlessui-vue/src/utils/focus-management.ts
-import { dom } from '~/utils/dom'
+import { getDomElement } from '~/utils/dom'
 
 import type { Ref } from '@nuxtjs/composition-api'
 
@@ -9,7 +9,7 @@ function getOwnerDocument<T extends Element | Ref<Element | null>>(
   if (typeof window === 'undefined') return null
   if (element instanceof Node) return element.ownerDocument
   if (element && Object.prototype.hasOwnProperty.call(element, 'value')) {
-    const domElement = dom(element)
+    const domElement = getDomElement(element)
     if (domElement) return domElement.ownerDocument
   }
 
@@ -55,18 +55,16 @@ export const Focus = Object.freeze({
 
   /** Wrap tab around */
   WrapAround: 1 << 4,
-}
+})
 
-export type FocusResult =
-  | 'Error'
-  | 'Overflow'
-  | 'Success'
-  | 'Underflow'
+export const FocusResult = Object.freeze({
+  Error: 1,
+  Overflow: 2,
+  Success: 4,
+  Underflow: 8,
+})
 
-// This could be an object too if we want to keep the nice names.
-type Direction =
-  | -1
-  | 1
+export const Direction = Object.freeze({ Next: -1, Previous: 1 })
 
 export function getFocusableElements(
   container: HTMLElement | null = document.body
@@ -111,7 +109,7 @@ export function sortByDomNode<T>(
   })
 }
 
-export function focusIn(container: HTMLElement | HTMLElement[], focus: Focus) {
+export function focusIn(container: HTMLElement | HTMLElement[], focus: number) {
   const ownerDocument =
     (Array.isArray(container)
       ? container.length > 0

@@ -30,7 +30,7 @@ import {
 
 import { tabsContextKey } from '~/models/tabs'
 import { keycodes } from '~/constants/key-codes'
-import { dom } from '~/utils/dom'
+import { getDomElement } from '~/utils/dom'
 import { Focus, focusIn } from '~/utils/focus-management'
 
 import VButton from '~/components/VButton.vue'
@@ -74,7 +74,7 @@ export default defineComponent({
       () => tabIndex.value === tabContext.selectedIndex.value
     )
 
-    function handleFocus() {
+    const handleFocus = () => {
       if (!tabContext) {
         throw Error('Cannot handle tab focus without tabContext')
       }
@@ -82,12 +82,12 @@ export default defineComponent({
       if (tabContext.activation.value === 'auto') {
         tabContext.setSelectedIndex(tabIndex.value)
       }
-      dom(internalTabRef)?.focus()
+      getDomElement(internalTabRef)?.focus()
     }
 
-    function handleSelection() {
+    const handleSelection = () => {
       if (props.disabled) return
-      dom(internalTabRef)?.focus()
+      getDomElement(internalTabRef)?.focus()
       tabContext?.setSelectedIndex(tabIndex.value)
     }
 
@@ -97,7 +97,7 @@ export default defineComponent({
 
      * @param event - we want to preventDefault for this mouse event
      */
-    function handleMouseDown(event: MouseEvent) {
+    const handleMouseDown = (event: MouseEvent) => {
       event.preventDefault()
     }
 
@@ -107,10 +107,10 @@ export default defineComponent({
      * @param arrowKeyCode - the code of key pressed, right or left arrow
      * @param documentDir - the dir attribute of the current document.
      */
-    function getFocusDirection(
+    const getFocusDirection = (
       arrowKeyCode: typeof keycodes.ArrowRight | typeof keycodes.ArrowLeft,
       documentDir?: string
-    ) {
+    ) => {
       let forward = arrowKeyCode === keycodes.ArrowRight
       if (documentDir === 'rtl') {
         forward = !forward
@@ -118,9 +118,9 @@ export default defineComponent({
       return forward ? Focus.Next : Focus.Previous
     }
 
-    function handleKeyDown(event: KeyboardEvent) {
+    const handleKeyDown = (event: KeyboardEvent) => {
       let list = tabContext?.tabs.value
-        .map((tab) => dom(tab))
+        .map((tab) => getDomElement(tab))
         .filter(Boolean) as HTMLElement[]
       const tabControlKeys = [
         keycodes.Spacebar,

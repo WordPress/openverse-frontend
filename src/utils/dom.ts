@@ -2,7 +2,7 @@
 import type { ComponentPublicInstance } from '@vue/runtime-dom'
 import type { Ref } from '@nuxtjs/composition-api'
 
-export function dom<T extends Element | ComponentPublicInstance>(
+export function getDomElement<T extends Element | ComponentPublicInstance>(
   ref?: Ref<T | null>
 ): T | null {
   if (ref == null) return null
