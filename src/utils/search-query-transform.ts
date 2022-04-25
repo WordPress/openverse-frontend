@@ -1,5 +1,3 @@
-import { deepclone } from '~/utils/clone'
-
 import {
   FilterCategory,
   FilterItem,
@@ -7,8 +5,8 @@ import {
   mediaFilterKeys,
 } from '~/constants/filters'
 import { ALL_MEDIA, SupportedSearchType } from '~/constants/media'
-
 import { getParameterByName } from '~/utils/url-params'
+import { deepclone } from '~/utils/clone'
 
 export interface ApiQueryParams {
   q?: string
