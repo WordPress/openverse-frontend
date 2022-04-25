@@ -4,7 +4,9 @@ import { defineStore } from 'pinia'
 // https://github.com/WordPress/openverse-frontend/issues/1103
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import clonedeep from 'lodash.clonedeep'
+import { deepclone } from '~/utils/clone'
+
+import type { DeepWriteable } from '~/types/utils'
 
 import {
   ALL_MEDIA,
@@ -60,7 +62,7 @@ export const useSearchStore = defineStore('search', {
   state: (): SearchState => ({
     searchType: ALL_MEDIA,
     searchTerm: '',
-    filters: clonedeep(filterData),
+    filters: deepclone(filterData as DeepWriteable<typeof filterData>),
   }),
   getters: {
     filterCategories(state) {
@@ -139,7 +141,7 @@ export const useSearchStore = defineStore('search', {
         }))
       }
       return {
-        ...clonedeep(filterData),
+        ...(deepclone(filterData) as DeepWriteable<typeof filterData>),
         audioProviders: resetProviders(AUDIO),
         imageProviders: resetProviders(IMAGE),
       }

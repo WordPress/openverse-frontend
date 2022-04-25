@@ -1,8 +1,4 @@
-// We plan to remove this dependency, so don't need to add types for it:
-// https://github.com/WordPress/openverse-frontend/issues/1103
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import clonedeep from 'lodash.clonedeep'
+import { deepclone } from '~/utils/clone'
 
 import {
   FilterCategory,
@@ -177,7 +173,7 @@ export const queryToFilterData = ({
 }) => {
   // The default filterData object from search store doesn't contain provider filters,
   // so we can't use it.
-  const filters = clonedeep(defaultFilters) as Filters
+  const filters = deepclone(defaultFilters) as Filters
   const filterTypes = getMediaFilterTypes(searchType)
   const differentFiltersWithSameApiParams = [
     'audioProviders',
