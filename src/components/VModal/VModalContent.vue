@@ -8,7 +8,7 @@
         <div
           ref="dialogRef"
           v-bind="$attrs"
-          class="w-full md:w-4/5 lg:max-w-[1024px] md:max-w-[768px] flex flex-col"
+          class="w-full md:max-w-[768px] lg:w-[768px] xl:max-w-[1024px] xl:w-[1024px] flex flex-col"
           role="dialog"
           aria-modal="true"
           v-on="$listeners"
