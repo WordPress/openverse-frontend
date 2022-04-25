@@ -75,9 +75,6 @@ export default defineComponent({
     )
 
     const handleFocus = () => {
-      if (!tabContext) {
-        throw Error('Cannot handle tab focus without tabContext')
-      }
       if (props.disabled) return
       if (tabContext.activation.value === 'auto') {
         tabContext.setSelectedIndex(tabIndex.value)
@@ -88,7 +85,7 @@ export default defineComponent({
     const handleSelection = () => {
       if (props.disabled) return
       getDomElement(internalTabRef)?.focus()
-      tabContext?.setSelectedIndex(tabIndex.value)
+      tabContext.setSelectedIndex(tabIndex.value)
     }
 
     /**
@@ -119,7 +116,7 @@ export default defineComponent({
     }
 
     const handleKeyDown = (event: KeyboardEvent) => {
-      let list = tabContext?.tabs.value
+      let list = tabContext.tabs.value
         .map((tab) => getDomElement(tab))
         .filter(Boolean) as HTMLElement[]
       const tabControlKeys = [
@@ -142,7 +139,7 @@ export default defineComponent({
       switch (event.key) {
         case keycodes.Spacebar:
         case keycodes.Enter:
-          tabContext?.setSelectedIndex(tabIndex.value)
+          tabContext.setSelectedIndex(tabIndex.value)
           break
         case keycodes.Home:
         case keycodes.PageUp:
@@ -178,14 +175,14 @@ export default defineComponent({
       'aria-selected': isSelected.value,
       disabled: props.disabled ? true : undefined,
     }))
-    const isManual = computed(() => tabContext?.activation.value === 'manual')
+    const isManual = computed(() => tabContext.activation.value === 'manual')
 
     return {
       internalTabRef,
       tabProps,
       isSelected,
       isManual,
-      variant: tabContext?.variant,
+      variant: tabContext.variant,
 
       handleKeyDown,
       handleFocus,
