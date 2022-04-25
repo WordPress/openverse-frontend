@@ -40,34 +40,33 @@ const focusableSelector = [
   )
   .join(',')
 
-export enum Focus {
+export const Focus = Object.freeze({
   /** Focus the first non-disabled element */
-  First = 1 << 0,
+  First: 1 << 0,
 
   /** Focus the previous non-disabled element */
-  Previous = 1 << 1,
+  Previous: 1 << 1,
 
   /** Focus the next non-disabled element */
-  Next = 1 << 2,
+  Next: 1 << 2,
 
   /** Focus the last non-disabled element */
-  Last = 1 << 3,
+  Last: 1 << 3,
 
   /** Wrap tab around */
-  WrapAround = 1 << 4,
+  WrapAround: 1 << 4,
 }
 
-export enum FocusResult {
-  Error,
-  Overflow,
-  Success,
-  Underflow,
-}
+export type FocusResult =
+  | 'Error'
+  | 'Overflow'
+  | 'Success'
+  | 'Underflow'
 
-enum Direction {
-  Previous = -1,
-  Next = 1,
-}
+// This could be an object too if we want to keep the nice names.
+type Direction =
+  | -1
+  | 1
 
 export function getFocusableElements(
   container: HTMLElement | null = document.body
