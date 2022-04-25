@@ -8,8 +8,7 @@ function getOwnerDocument<T extends Element | Ref<Element | null>>(
 ) {
   if (typeof window === 'undefined') return null
   if (element instanceof Node) return element.ownerDocument
-  // eslint-disable-next-line no-prototype-builtins
-  if (element?.hasOwnProperty('value')) {
+  if (element && Object.prototype.hasOwnProperty.call(element, 'value')) {
     const domElement = dom(element)
     if (domElement) return domElement.ownerDocument
   }
