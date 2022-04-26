@@ -28,8 +28,6 @@ import {
 
 import VButton from '~/components/VButton.vue'
 
-import type ClipboardJS from 'clipboard'
-
 export default defineComponent({
   name: 'VCopyButton',
   components: { VButton },
@@ -44,10 +42,10 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
-    const clipboard = ref<ClipboardJS | null>(null)
+    const clipboard = ref<Clipboard | null>(null)
     const success = ref(false)
 
-    const onCopySuccess = (e: ClipboardJS.Event) => {
+    const onCopySuccess = (e: Clipboard.Event) => {
       success.value = true
       emit('copied', { content: e.text })
 
@@ -57,7 +55,7 @@ export default defineComponent({
 
       e.clearSelection()
     }
-    const onCopyError = (e: ClipboardJS.Event) => {
+    const onCopyError = (e: Clipboard.Event) => {
       emit('copyFailed')
       e.clearSelection()
     }
