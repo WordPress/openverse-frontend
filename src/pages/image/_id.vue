@@ -33,8 +33,9 @@
         :href="image.foreign_landing_url"
         class="btn-main flex-initial w-full md:w-max mb-4 md:mb-0"
         size="large"
-        >{{ $t('image-details.weblink') }}</VButton
       >
+        {{ $t('image-details.weblink') }}
+      </VButton>
       <span class="flex-1 flex flex-col justify-center">
         <h1 class="text-base md:text-3xl font-semibold leading-[130%]">
           {{ image.title }}

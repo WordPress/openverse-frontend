@@ -1,7 +1,7 @@
 <template>
-  <Component :is="linkComponent" v-bind="linkProperties" v-on="$listeners"
-    ><slot
-  /></Component>
+  <Component :is="linkComponent" v-bind="linkProperties" v-on="$listeners">
+    <slot />
+  </Component>
 </template>
 
 <script lang="ts">

@@ -30,7 +30,9 @@ const assertCheckboxCount = async (
     total: '',
   }[checked]
   const locatorString = `input[type="checkbox"]${checkedString}`
-  await expect(page.locator(locatorString)).toHaveCount(count, { timeout: 200 })
+  await expect(page.locator(locatorString)).toHaveCount(count, {
+    timeout: 200,
+  })
 }
 
 const FILTER_COUNTS = {

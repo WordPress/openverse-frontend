@@ -10,9 +10,9 @@
     }}
     <i18n path="notification.translation.text">
       <template #link>
-        <VLink :href="translationLink" class="underline">{{
-          $t('notification.translation.link')
-        }}</VLink>
+        <VLink :href="translationLink" class="underline">
+          {{ $t('notification.translation.link') }}
+        </VLink>
       </template>
       <template #locale>
         {{ name }}

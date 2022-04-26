@@ -11,8 +11,9 @@
         v-for="(tag, index) in image.tags.filter((i) => !!i)"
         :key="index"
         tag="li"
-        >{{ tag.name }}</VMediaTag
       >
+        {{ tag.name }}
+      </VMediaTag>
     </ul>
     <dl>
       <div>
@@ -26,9 +27,9 @@
       <div>
         <dt>{{ $t('image-details.information.source') }}</dt>
         <dd>
-          <VLink :href="image.foreign_landing_url" class="text-pink">{{
-            image.sourceName
-          }}</VLink>
+          <VLink :href="image.foreign_landing_url" class="text-pink">
+            {{ image.sourceName }}
+          </VLink>
         </dd>
       </div>
       <div>

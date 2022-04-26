@@ -1,0 +1,24 @@
+{
+  "includes": ["**/*.*"],
+  "excludes": [
+    ".nuxt*",
+    ".vscode",
+    "node_modules",
+    "storybook-static",
+    "test-results",
+    "**coverage**",
+    "test/tapes",
+    "pnpm-lock.yaml",
+    "nuxt-template-overrides"
+  ],
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "semi": false,
+    "singleQuote": true,
+    "vueIndentScriptAndStyle": false
+  },
+  "plugins": [
+    "https://plugins.dprint.dev/prettier-0.7.0.json@4e846f43b32981258cef5095b3d732522947592e090ef52333801f9d6e8adb33"
+  ]
+}

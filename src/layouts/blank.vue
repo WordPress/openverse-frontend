@@ -16,7 +16,10 @@ export default defineComponent({
   name: 'BlankLayout',
   components: { VMigrationNotice, VTranslationStatusBanner },
   head() {
-    return this.$nuxtI18nHead({ addSeoAttributes: true, addDirAttribute: true })
+    return this.$nuxtI18nHead({
+      addSeoAttributes: true,
+      addDirAttribute: true,
+    })
   },
 })
 </script>

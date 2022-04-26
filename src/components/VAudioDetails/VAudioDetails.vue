@@ -26,9 +26,9 @@
           <div v-if="audio.audio_set">
             <dt>{{ $t('audio-details.table.album') }}</dt>
             <dd>
-              <VLink :href="audio.audio_set.url">{{
-                audio.audio_set.name
-              }}</VLink>
+              <VLink :href="audio.audio_set.url">
+                {{ audio.audio_set.name }}
+              </VLink>
             </dd>
           </div>
           <div v-if="audio.category">

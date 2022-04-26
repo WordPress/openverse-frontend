@@ -7,9 +7,9 @@
       <!-- eslint-disable @intlify/vue-i18n/no-raw-text -->
       <template #openverse>Openverse</template>
       <template #slack>
-        <VLink href="https://wordpress.slack.com/messages/openverse/"
-          >#openverse</VLink
-        >
+        <VLink href="https://wordpress.slack.com/messages/openverse/">
+          #openverse
+        </VLink>
       </template>
       <template #making-wordpress>
         <VLink href="https://make.wordpress.org/chat/">Making WordPress</VLink>

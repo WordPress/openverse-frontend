@@ -46,7 +46,10 @@ const embeddedPage = {
   },
   layout: 'embedded',
   head() {
-    return this.$nuxtI18nHead({ addSeoAttributes: true, addDirAttribute: true })
+    return this.$nuxtI18nHead({
+      addSeoAttributes: true,
+      addDirAttribute: true,
+    })
   },
   setup() {
     const mainContentRef = ref(null)

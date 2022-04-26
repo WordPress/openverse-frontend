@@ -4,30 +4,30 @@
 # Docs: https://github.com/release-drafter/release-drafter
 # Workflow: Draft release
 
-name-template: "v$RESOLVED_VERSION"
-tag-template: "v$RESOLVED_VERSION"
+name-template: 'v$RESOLVED_VERSION'
+tag-template: 'v$RESOLVED_VERSION'
 categories:
   - title: New Features
-    label: "🌟 goal: addition"
+    label: '🌟 goal: addition'
   - title: Improvements
-    label: "✨ goal: improvement"
+    label: '✨ goal: improvement'
   - title: Internal Improvements
     labels:
-      - "🤖 aspect: dx"
-      - "🧰 goal: internal improvement"
+      - '🤖 aspect: dx'
+      - '🧰 goal: internal improvement'
   - title: Bug Fixes
-    label: "🛠 goal: fix"
-change-template: "- $TITLE (#$NUMBER) @$AUTHOR"
+    label: '🛠 goal: fix'
+change-template: '- $TITLE (#$NUMBER) @$AUTHOR'
 version-resolver:
   major:
     labels:
-      - "💥 versioning: major"
+      - '💥 versioning: major'
   minor:
     labels:
-      - "🎉 versioning: minor"
+      - '🎉 versioning: minor'
   patch:
     labels:
-      - "🐛 versioning: patch"
+      - '🐛 versioning: patch'
   default: patch
 template: |
   $CHANGES

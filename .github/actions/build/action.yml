@@ -23,7 +23,7 @@ inputs:
     description: AWS secret access key associated to the access key id specified above
 
 runs:
-  using: "composite"
+  using: 'composite'
   steps:
     # setup docker buildx
     - name: setup docker buildx

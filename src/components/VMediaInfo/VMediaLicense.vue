@@ -30,8 +30,9 @@
           <VLink
             :aria-label="$t('media-details.aria.attribution.tool')"
             :href="licenseUrl"
-            >{{ $t('media-details.reuse.tool.link') }}</VLink
           >
+            {{ $t('media-details.reuse.tool.link') }}
+          </VLink>
         </template>
       </i18n>
     </template>

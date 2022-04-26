@@ -15,9 +15,9 @@
         <VLink href="https://www.flickr.com/">Flickr</VLink>
       </template>
       <template #smithsonian>
-        <VLink href="https://www.si.edu/">{{
-          $t('sources.cc-content.smithsonian')
-        }}</VLink>
+        <VLink href="https://www.si.edu/">
+          {{ $t('sources.cc-content.smithsonian') }}
+        </VLink>
       </template>
     </i18n>
     <i18n path="sources.cc-content.europeana" tag="p">
@@ -26,9 +26,9 @@
         <VLink href="https://www.europeana.eu/en">Europeana</VLink>
       </template>
       <template #link-api>
-        <VLink href="https://pro.europeana.eu/page/apis">{{
-          $t('sources.cc-content.europeana-api')
-        }}</VLink>
+        <VLink href="https://pro.europeana.eu/page/apis">
+          {{ $t('sources.cc-content.europeana-api') }}
+        </VLink>
       </template>
     </i18n>
 

@@ -6,8 +6,9 @@
         class="focus:fixed focus:absolute ms-2 mt-2 z-50"
         :class="$style.skipButton"
         @click="skipToContent"
-        >{{ $t('skip-to-content') }}</VButton
       >
+        {{ $t('skip-to-content') }}
+      </VButton>
     </VTeleport>
   </div>
 </template>

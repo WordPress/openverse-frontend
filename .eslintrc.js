@@ -22,7 +22,6 @@ module.exports = {
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:vue/recommended',
-    'plugin:prettier/recommended',
     'plugin:vuejs-accessibility/recommended',
     'plugin:@intlify/vue-i18n/recommended',
     'plugin:import/recommended',

@@ -26,8 +26,9 @@
             <VLink
               class="underline text-current hover:text-current active:text-current"
               href="/"
-              >Openverse</VLink
             >
+              Openverse
+            </VLink>
           </template>
         </i18n>
       </p>

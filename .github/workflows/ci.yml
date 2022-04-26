@@ -27,6 +27,14 @@ jobs:
 
       - uses: ./.github/actions/setup-node-env
 
+      - name: dprint cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/dprint
+          key: ${{ runner.os }}-${{ hashFiles('**/dprint.json') }}
+          restore-keys: |
+            ${{ runner.os }}-
+
       - name: Lint with ESLint and Prettier
         run: pnpm lint
 

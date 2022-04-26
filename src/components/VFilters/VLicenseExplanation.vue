@@ -1,14 +1,16 @@
 <template>
   <div class="license-explanation w-full max-w-xs p-6">
     <h5 class="text-base font-semibold">
-      <template v-if="isTechnicallyLicense">{{
-        $t('filters.license-explanation.license-definition')
-      }}</template>
-      <template v-else>{{
-        $t('filters.license-explanation.mark-definition', {
-          mark: license.toUpperCase(),
-        })
-      }}</template>
+      <template v-if="isTechnicallyLicense">
+        {{ $t('filters.license-explanation.license-definition') }}
+      </template>
+      <template v-else>
+        {{
+          $t('filters.license-explanation.mark-definition', {
+            mark: license.toUpperCase(),
+          })
+        }}
+      </template>
     </h5>
 
     <VLicenseElements
@@ -26,9 +28,9 @@
       class="text-sm"
     >
       <template #read-more>
-        <VLink :href="`${getLicenseDeedLink(license)}`">{{
-          $t('filters.license-explanation.more.read-more')
-        }}</VLink>
+        <VLink :href="`${getLicenseDeedLink(license)}`">
+          {{ $t('filters.license-explanation.more.read-more') }}
+        </VLink>
       </template>
       <template #mark>{{ license.toUpperCase() }}</template>
     </i18n>

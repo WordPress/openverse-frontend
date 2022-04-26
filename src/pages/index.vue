@@ -70,8 +70,9 @@
             <VLink
               href="https://creativecommons.org/licenses/"
               class="text-dark-charcoal hover:text-dark-charcoal underline"
-              >{{ $t('hero.disclaimer.license') }}</VLink
             >
+              {{ $t('hero.disclaimer.license') }}
+            </VLink>
           </template>
         </i18n>
       </div>
@@ -124,8 +125,9 @@
         <VLink
           href="https://creativecommons.org/licenses/"
           class="text-dark-charcoal hover:text-dark-charcoal underline"
-          >{{ $t('hero.disclaimer.license') }}</VLink
         >
+          {{ $t('hero.disclaimer.license') }}
+        </VLink>
       </template>
     </i18n>
   </main>

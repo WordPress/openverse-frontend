@@ -90,13 +90,14 @@
         <VLink
           aria-label="issue"
           href="https://github.com/WordPress/openverse-catalog/issues/new?assignees=&labels=%F0%9F%9A%A6+status%3A+awaiting+triage%2C%F0%9F%A7%B9+status%3A+ticket+work+required%2C%E2%98%81%EF%B8%8F+provider%3A+any&template=new_source_suggestion.yml&title=%3CSource+name+here%3E"
-          >{{ $t('meta-search-page.new.issue') }}</VLink
         >
+          {{ $t('meta-search-page.new.issue') }}
+        </VLink>
       </template>
       <template #email>
-        <VLink aria-label="email" href="mailto:openverse@wordpress.org">{{
-          $t('meta-search-page.new.email')
-        }}</VLink>
+        <VLink aria-label="email" href="mailto:openverse@wordpress.org">
+          {{ $t('meta-search-page.new.email') }}
+        </VLink>
       </template>
     </i18n>
     <h2>
@@ -111,8 +112,9 @@
         <VLink
           :aria-label="$t('meta-search-page.why.aria-label')"
           href="/feedback"
-          >{{ $t('meta-search-page.why.feedback-link') }}</VLink
         >
+          {{ $t('meta-search-page.why.feedback-link') }}
+        </VLink>
       </template>
     </i18n>
   </VContentPage>

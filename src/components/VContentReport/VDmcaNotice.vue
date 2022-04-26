@@ -9,13 +9,14 @@
         :aria-label="$t('media-details.content-report.form.dmca.form')"
         :href="DMCA_FORM_URL"
         class="text-pink hover:underline"
-        >{{ $t('media-details.content-report.form.dmca.form') }}</VLink
       >
+        {{ $t('media-details.content-report.form.dmca.form') }}
+      </VLink>
     </template>
     <template #source>
-      <VLink :href="foreignLandingUrl" class="text-pink hover:underline">{{
-        provider
-      }}</VLink>
+      <VLink :href="foreignLandingUrl" class="text-pink hover:underline">
+        {{ provider }}
+      </VLink>
     </template>
   </i18n>
 </template>

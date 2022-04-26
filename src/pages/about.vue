@@ -20,29 +20,29 @@
         <VLink href="/meta-search">{{ $t('about.planning.meta') }}</VLink>
       </template>
       <template #search>
-        <VLink href="https://github.com/wordpress/openverse-frontend/">{{
-          $t('about.planning.meta')
-        }}</VLink>
+        <VLink href="https://github.com/wordpress/openverse-frontend/">
+          {{ $t('about.planning.meta') }}
+        </VLink>
       </template>
       <template #api>
-        <VLink href="https://github.com/wordpress/openverse-api/">{{
-          $t('about.planning.api', { openverse: 'Openverse' })
-        }}</VLink>
+        <VLink href="https://github.com/wordpress/openverse-api/">
+          {{ $t('about.planning.api', { openverse: 'Openverse' }) }}
+        </VLink>
       </template>
       <template #catalog>
-        <VLink href="https://github.com/wordpress/openverse-catalog/">{{
-          $t('about.planning.catalog', { openverse: 'Openverse' })
-        }}</VLink>
+        <VLink href="https://github.com/wordpress/openverse-catalog/">
+          {{ $t('about.planning.catalog', { openverse: 'Openverse' }) }}
+        </VLink>
       </template>
       <template #community>
-        <VLink href="https://make.wordpress.org/openverse/">{{
-          $t('about.planning.community')
-        }}</VLink>
+        <VLink href="https://make.wordpress.org/openverse/">
+          {{ $t('about.planning.community') }}
+        </VLink>
       </template>
       <template #working>
-        <VLink href="https://github.com/orgs/WordPress/projects/3">{{
-          $t('about.planning.working')
-        }}</VLink>
+        <VLink href="https://github.com/orgs/WordPress/projects/3">
+          {{ $t('about.planning.working') }}
+        </VLink>
       </template>
     </i18n>
 
@@ -51,22 +51,23 @@
       <template #creative-commons>
         <VLink
           href="https://creativecommons.org/2021/05/03/cc-search-to-join-wordpress/"
-          >Creative Commons</VLink
         >
+          Creative Commons
+        </VLink>
       </template>
       <template #wordpress>
-        <VLink href="https://ma.tt/2021/04/cc-search-to-join-wordpress-org/"
-          >WordPress</VLink
-        >
+        <VLink href="https://ma.tt/2021/04/cc-search-to-join-wordpress-org/">
+          WordPress
+        </VLink>
       </template>
     </i18n>
 
     <i18n path="about.declaration.content" tag="p">
       <template #openverse>Openverse</template>
       <template #terms>
-        <VLink href="https://creativecommons.org/terms/">{{
-          $t('about.declaration.terms', { openverse: 'Openverse' })
-        }}</VLink>
+        <VLink href="https://creativecommons.org/terms/">
+          {{ $t('about.declaration.terms', { openverse: 'Openverse' }) }}
+        </VLink>
       </template>
     </i18n>
   </VContentPage>

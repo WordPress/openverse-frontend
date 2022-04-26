@@ -45,7 +45,9 @@ describe('VCheckbox', () => {
     // toHaveAttribute('checked', 'true') also doesn't work, screen.debug()
     // returns an element without `checked` attribute, although the attribute
     // exists in the app/Storybook.
-    const checkboxes = screen.queryAllByLabelText(/jpgs/i, { role: 'checkbox' })
+    const checkboxes = screen.queryAllByLabelText(/jpgs/i, {
+      role: 'checkbox',
+    })
 
     // The checkmark svg should not be visible
     expect(container.querySelector('svg')).not.toBeVisible()
@@ -55,7 +57,9 @@ describe('VCheckbox', () => {
   it('should render a checked checkbox if `checked` is true', async () => {
     const wrapper = TestWrapperStringLabel({ checked: true })
     const { container } = render(wrapper)
-    const checkboxes = screen.queryAllByLabelText(/jpgs/i, { role: 'checkbox' })
+    const checkboxes = screen.queryAllByLabelText(/jpgs/i, {
+      role: 'checkbox',
+    })
 
     // The checkmark svg should be visible
     expect(container.querySelector('svg')).toBeVisible()
@@ -76,7 +80,9 @@ describe('VCheckbox', () => {
   it('should render a disabled checkbox if `disabled` is true', async () => {
     const wrapper = TestWrapperStringLabel({ disabled: true })
     render(wrapper)
-    const checkboxes = screen.queryAllByLabelText(/jpgs/i, { role: 'checkbox' })
+    const checkboxes = screen.queryAllByLabelText(/jpgs/i, {
+      role: 'checkbox',
+    })
 
     expect(checkboxes).toHaveLength(1)
     expect(checkboxes[0]).toHaveAttribute('disabled', 'disabled')

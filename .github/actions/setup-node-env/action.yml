@@ -7,7 +7,7 @@ inputs:
     description: Whether to install dependencies.
 
 runs:
-  using: "composite"
+  using: 'composite'
   steps:
     - uses: pnpm/action-setup@v2.0.1
       with:
@@ -32,8 +32,8 @@ runs:
     - name: Install
       if: inputs.install
       shell: bash
-      run: "pnpm install"
+      run: 'pnpm install'
 
     - name: Get locales
       shell: bash
-      run: "pnpm i18n"
+      run: 'pnpm i18n'

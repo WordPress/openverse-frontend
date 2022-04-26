@@ -28,8 +28,9 @@
             'text-2xl': isMedium || isLarge,
             'leading-snug': isSmall,
           }"
-          >{{ audio.title }}</VLink
         >
+          {{ audio.title }}
+        </VLink>
 
         <div
           class="flex text-dark-charcoal-70 mt-2"
@@ -42,7 +43,8 @@
         >
           <div class="part-a">
             <i18n tag="span" path="audio-track.creator">
-              <template #creator>{{ audio.creator }}</template> </i18n
+              <template #creator>{{ audio.creator }}</template>
+</i18n
             ><span v-show="isLarge" class="mx-2">{{ $t('interpunct') }}</span>
           </div>
 
