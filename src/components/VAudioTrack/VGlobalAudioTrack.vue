@@ -155,7 +155,7 @@ export default defineComponent({
          * set to `playing` as the active audio is only updated when
          * a new track is set to play. But for good measure we might
          * as well do this robustly and make sure that the status is
-         * always synced any time the active audio hanges.
+         * always synced any time the active audio hangs.
          */
         if (audio.paused) {
           if (audio.ended) {
