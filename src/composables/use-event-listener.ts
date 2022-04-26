@@ -34,11 +34,8 @@ export function useEventListener<T extends EventTarget>(
   } else {
     // otherwise, use the mounted hook
     onMounted(() => {
-      ;(isComponentInstance(target) ? target.$el : target).addEventListener(
-        event,
-        handler,
-        options
-      )
+      const node = isComponentInstance(target) ? target.$el : target
+      node.addEventListener(event, handler, options)
     })
   }
   // clean it up

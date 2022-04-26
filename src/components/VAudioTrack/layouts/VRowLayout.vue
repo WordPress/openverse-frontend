@@ -44,8 +44,8 @@
           <div class="part-a">
             <i18n tag="span" path="audio-track.creator">
               <template #creator>{{ audio.creator }}</template>
-</i18n
-            ><span v-show="isLarge" class="mx-2">{{ $t('interpunct') }}</span>
+            </i18n>
+            <span v-show="isLarge" class="mx-2">{{ $t('interpunct') }}</span>
           </div>
 
           <div class="part-b inline-flex flex-row items-center">
