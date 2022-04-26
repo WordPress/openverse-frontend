@@ -2,7 +2,7 @@
   "*.{ts,js,vue}": [
     "eslint --fix --max-warnings=0"
   ],
-  "*": [
+  "*.{ts,js,vue,md,yaml,yml,mjs,cjs,json,mdx,svg}": [
     "dprint check"
   ]
 }
