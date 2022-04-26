@@ -58,10 +58,10 @@ export const Focus = Object.freeze({
 })
 
 export const FocusResult = Object.freeze({
-  Error: 1,
-  Overflow: 2,
-  Success: 4,
-  Underflow: 8,
+  Error: 'Error' as const,
+  Overflow: 'Overflow' as const,
+  Success: 'Success' as const,
+  Underflow: 'Underflow' as const,
 })
 
 export const Direction = Object.freeze({ Next: -1, Previous: 1 })
