@@ -133,10 +133,10 @@ jobs:
         if: steps.preview-comment.outputs.comment-id != 0
         with:
           comment-id: ${{ steps.preview-comment.outputs.comment-id }}
+          edit-mode: replace
           body: |
             **Storybook and Tailwind configuration previews**: _Updating_
             (This comment will be automatically updated with the preview URLs once they are ready)
-          reactions: rocket
 
       - uses: peter-evans/create-or-update-comment@v2
         if: steps.preview-comment.outputs.comment-id == 0
@@ -145,7 +145,6 @@ jobs:
           body: |
             **Storybook and Tailwind configuration previews**: _Updating_
             (This comment will be automatically updated with the preview URLs once they are ready)
-          reactions: rocket
 
       - name: Checkout
         uses: actions/checkout@v2
@@ -170,8 +169,8 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./storybook-static
-          force_orphan: true
           destination_dir: ${{ github.event.pull_request.number }}
+          keep_files: true
 
       - uses: peter-evans/find-comment@v2
         id: final-preview-comment
@@ -182,9 +181,11 @@ jobs:
       - uses: peter-evans/create-or-update-comment@v2
         with:
           comment-id: ${{ steps.final-preview-comment.outputs.comment-id }}
+          edit-mode: replace
           body: |
             **Storybook and Tailwind configuration previews**: _Ready_
 
             **Storybook:** <https://wordpress.github.io/openverse-frontend/${{ github.event.pull_request.number }}>
-            **Tailwind:** <https://wordpress.github.io/openverse-frontend/${{ github.event.pull_request.number }}>/tailwind
-          reactions: eyes
+            **Tailwind:** <https://wordpress.github.io/openverse-frontend/${{ github.event.pull_request.number }}/tailwind>
+
+            <small>Please note that GitHub pages takes a little time to deploy newly pushed code, if the links above don't work or you see old versions, wait 5 minutes and try again.</small>
