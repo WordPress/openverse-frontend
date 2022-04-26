@@ -61,6 +61,7 @@ export default defineComponent({
       default: 'bordered',
     },
   },
+  emits: ['change'],
   setup(props, { emit }) {
     const selectedIndex = ref<TabsState['selectedIndex']['value']>(0)
     const tabs = ref<TabsState['tabs']['value']>([])

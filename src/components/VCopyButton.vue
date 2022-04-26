@@ -41,6 +41,7 @@ export default defineComponent({
       required: true,
     },
   },
+  emits: ['copied', 'copy-failed'],
   setup(props, { emit }) {
     const clipboard = ref<Clipboard | null>(null)
     const success = ref(false)
@@ -56,7 +57,7 @@ export default defineComponent({
       e.clearSelection()
     }
     const onCopyError = (e: Clipboard.Event) => {
-      emit('copyFailed')
+      emit('copy-failed')
       e.clearSelection()
     }
 
