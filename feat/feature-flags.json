@@ -12,11 +12,6 @@
       "status": "switchable",
       "description": "Can be switched between on and off",
       "defaultState": "on"
-    },
-    "models_3d": {
-      "status": "switchable",
-      "description": "Show 3D models as a first-class media type on Openverse",
-      "defaultState": "on"
     }
   }
 }

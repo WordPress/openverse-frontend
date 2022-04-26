@@ -38,11 +38,10 @@
 <script>
 import { computed, defineComponent } from '@nuxtjs/composition-api'
 
+import { isDev } from '~/utils/node-env'
+
 import { supportedSearchTypes } from '~/constants/media'
 import useSearchType from '~/composables/use-search-type'
-import { ON } from '~/constants/feature-flag'
-
-import { useFeatureFlagStore } from '~/stores/feature-flag'
 
 import VItemGroup from '~/components/VItemGroup/VItemGroup.vue'
 import VSearchTypeItem from '~/components/VContentSwitcher/VSearchTypeItem.vue'
@@ -72,7 +71,6 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const content = useSearchType()
-    const featureFlagStore = useFeatureFlagStore()
 
     const contentTypeGroups = [
       {
@@ -86,7 +84,7 @@ export default defineComponent({
      * For example having all content types under `content.types` and making them filterable,
      * like `const additional = [...content.types.filter(i => i.status === ADDITIONAL)]`.
      */
-    if (featureFlagStore.featureState('models_3d') === ON) {
+    if (isDev) {
       content.additionalTypes = ['model_3d']
       contentTypeGroups.push({
         heading: 'additional',
