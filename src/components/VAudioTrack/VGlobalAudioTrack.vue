@@ -154,7 +154,6 @@ export default defineComponent({
         audio.addEventListener('timeupdate', setTimeWhenPaused)
         audio.addEventListener('durationchange', setDuration)
         currentTime.value = audio.currentTime
-        duration.value = audio.duration
 
         /**
          * By the time the `activeAudio` is updated and a rerender
