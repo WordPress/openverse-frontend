@@ -1,4 +1,4 @@
-import { DEVELOPMENT, TEST, PRODUCTION } from '~/constants/node-env'
+import { DEVELOPMENT, TEST, PRODUCTION } from '../constants/node-env'
 
 export const isDev: boolean = process.env.NODE_ENV === DEVELOPMENT
 export const isTest: boolean = process.env.NODE_ENV === TEST
