@@ -2,28 +2,37 @@
   <VContentPage>
     <h1>{{ $t('pref-page.title') }}</h1>
 
-    <h2>{{ $t('pref-page.toggle') }}</h2>
-    <ul class="!ps-0">
-      <li
-        v-for="(feature, name) in flags"
-        :key="name"
-        class="flex flex-row items-center"
-      >
-        <VCheckbox
-          :id="name"
-          class="flex-row items-center"
-          :checked="featureState(name) === ON"
-          :disabled="feature.status !== SWITCHABLE"
-          @change="handleChange"
-        >
-          <div>
-            <strong>{{ name }}</strong>
-            <br />
-            {{ feature.description }}
-          </div>
-        </VCheckbox>
-      </li>
-    </ul>
+    <div v-for="isSwitchable in [false, true]" :key="isSwitchable">
+      <h2>
+        {{ $t(`pref-page.${isSwitchable ? '' : 'non-'}switchable.title`) }}
+      </h2>
+      <p>
+        {{ $t(`pref-page.${isSwitchable ? '' : 'non-'}switchable.desc`) }}
+      </p>
+      <ul class="!ps-0">
+        <template v-for="(feature, name) in flags">
+          <li
+            v-if="(feature.status === SWITCHABLE) === isSwitchable"
+            :key="name"
+            class="flex flex-row items-center"
+          >
+            <VCheckbox
+              :id="name"
+              class="flex-row items-center"
+              :checked="featureState(name) === ON"
+              :disabled="!isSwitchable"
+              @change="handleChange"
+            >
+              <div>
+                <strong>{{ name }}</strong>
+                <br />
+                {{ feature.description }}
+              </div>
+            </VCheckbox>
+          </li>
+        </template>
+      </ul>
+    </div>
 
     <h2>{{ $t('pref-page.store-state') }}</h2>
     <pre><code>{{ flags }}</code></pre>

@@ -629,7 +629,14 @@
   "skip-to-content": "Skip to content",
   "pref-page": {
     "title": "Preferences",
-    "toggle": "Toggle features",
+    "non-switchable": {
+      "title": "Non-switchable features",
+      "desc": "You cannot modify the status of these features."
+    },
+    "switchable": {
+      "title": "Switchable features",
+      "desc": "You can toggle these features on or off as you like and your preferences will be saved in a cookie."
+    },
     "store-state": "Store state",
     "content-filtering": "Content filtering",
     "explanation": "Shown because {feat-name} is {feat-state}"
