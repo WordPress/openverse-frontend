@@ -1,6 +1,6 @@
 {
     meta: {
-        createdAt: '2022-04-20T07:34:36.043Z',
+        createdAt: '2022-04-17T03:56:51.971Z',
         host: 'https://api.openverse.engineering',
     },
     req: {
@@ -15,7 +15,7 @@
         status: 200,
         headers: {
             date: [
-                'Wed, 20 Apr 2022 07:34:36 GMT',
+                'Sun, 17 Apr 2022 03:56:53 GMT',
             ],
             'content-type': [
                 'image/jpeg',
@@ -26,38 +26,32 @@
             connection: [
                 'keep-alive',
             ],
-            'cf-bgj': [
-                'h2pri',
+            vary: [
+                'Accept, Authorization, Origin, Accept-Encoding',
             ],
             allow: [
                 'GET, HEAD, OPTIONS',
             ],
-            'cross-origin-opener-policy': [
-                'same-origin',
-            ],
-            'referrer-policy': [
-                'same-origin',
-            ],
-            vary: [
-                'Accept, Authorization, Origin, Accept-Encoding',
+            'x-frame-options': [
+                'DENY',
             ],
             'x-content-type-options': [
                 'nosniff',
             ],
-            'x-frame-options': [
-                'DENY',
+            'referrer-policy': [
+                'same-origin',
+            ],
+            'cross-origin-opener-policy': [
+                'same-origin',
             ],
             'cache-control': [
                 'max-age=14400',
             ],
             'cf-cache-status': [
-                'HIT',
-            ],
-            age: [
-                '1997',
+                'MISS',
             ],
             'last-modified': [
-                'Wed, 20 Apr 2022 07:01:19 GMT',
+                'Sun, 17 Apr 2022 03:56:53 GMT',
             ],
             'accept-ranges': [
                 'bytes',
@@ -72,7 +66,7 @@
                 'cloudflare',
             ],
             'cf-ray': [
-                '6fec32cd69fb6253-OTP',
+                '6fd23bba2dfca792-IST',
             ],
             'alt-svc': [
                 'h3=":443"; ma=86400, h3-29=":443"; ma=86400',
