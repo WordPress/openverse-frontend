@@ -4,14 +4,14 @@
     :aria-label="$t('audio-track.aria-label').toString()"
     role="region"
   >
-    <Component :is="layoutComponent" :audio="audio" :size="size">
+    <VGlobalLayout :audio="audio" size="m">
       <template #controller="waveformProps">
         <VWaveform
           v-bind="waveformProps"
           :peaks="audio.peaks"
           :current-time="currentTime"
           :duration="duration"
-          :message="message ? $t(`audio-track.messages.${message}`) : null"
+          :message="message"
           @seeked="handleSeeked"
           @toggle-playback="handleToggle"
         />
@@ -24,7 +24,7 @@
           @toggle="handleToggle"
         />
       </template>
-    </Component>
+    </VGlobalLayout>
   </div>
 </template>
 
@@ -39,17 +39,15 @@ import {
 
 import { useActiveAudio } from '~/composables/use-active-audio'
 import { defaultRef } from '~/composables/default-ref'
+import { useI18n } from '~/composables/use-i18n'
 
 import { useActiveMediaStore } from '~/stores/active-media'
 
-import type { AudioLayout, AudioSize } from '~/constants/audio'
 import type { AudioDetail } from '~/models/media'
+import type { AudioStatus } from '~/constants/audio'
 
 import VPlayPause from '~/components/VAudioTrack/VPlayPause.vue'
 import VWaveform from '~/components/VAudioTrack/VWaveform.vue'
-import VFullLayout from '~/components/VAudioTrack/layouts/VFullLayout.vue'
-import VRowLayout from '~/components/VAudioTrack/layouts/VRowLayout.vue'
-import VBoxLayout from '~/components/VAudioTrack/layouts/VBoxLayout.vue'
 import VGlobalLayout from '~/components/VAudioTrack/layouts/VGlobalLayout.vue'
 
 /**
@@ -61,11 +59,6 @@ export default defineComponent({
   components: {
     VPlayPause,
     VWaveform,
-
-    // Layouts
-    VFullLayout,
-    VRowLayout,
-    VBoxLayout,
     VGlobalLayout,
   },
   props: {
@@ -76,28 +69,13 @@ export default defineComponent({
       type: Object as PropType<AudioDetail>,
       required: true,
     },
-    /**
-     * the arrangement of the contents on the canvas; This determines the
-     * overall L&F of the audio component.
-     */
-    layout: {
-      type: String as PropType<AudioLayout>,
-      default: 'full',
-    },
-    /**
-     * the size of the component; Both 'box' and 'row' layouts offer multiple
-     * sizes to choose from.
-     */
-    size: {
-      type: String as PropType<AudioSize>,
-      default: 'm',
-    },
   },
   setup(props) {
+    const i18n = useI18n()
     const activeMediaStore = useActiveMediaStore()
     const activeAudio = useActiveAudio()
 
-    const status = ref('paused')
+    const status = ref<AudioStatus>('paused')
     const currentTime = ref(0)
     const duration = defaultRef(() => {
       if (typeof props.audio?.duration === 'number')
@@ -182,7 +160,11 @@ export default defineComponent({
     const pause = () => activeAudio.obj.value?.pause()
 
     /* Timekeeping */
-    const message = computed(() => activeMediaStore.message)
+    const message = computed<string | undefined>(() =>
+      activeMediaStore.message
+        ? i18n.t(`audio-track.messages.${activeMediaStore.message}`).toString()
+        : undefined
+    )
 
     /* Interface with VPlayPause */
 
@@ -217,16 +199,6 @@ export default defineComponent({
       }
     }
 
-    /* Layout */
-
-    const layoutMappings = {
-      full: 'VFullLayout',
-      row: 'VRowLayout',
-      box: 'VBoxLayout',
-      global: 'VGlobalLayout',
-    }
-    const layoutComponent = computed(() => layoutMappings[props.layout])
-
     return {
       status,
       message,
@@ -235,8 +207,6 @@ export default defineComponent({
 
       currentTime,
       duration,
-
-      layoutComponent,
     }
   },
 })
