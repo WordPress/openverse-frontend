@@ -25,6 +25,15 @@ jest.mock(
         description: 'Can be switched between on and off',
         defaultState: 'off',
       },
+      feat_env_specific: {
+        status: {
+          local: 'enabled',
+          staging: 'switchable',
+          production: 'disabled',
+        },
+        description: 'Depends on the environment',
+        defaultState: 'off',
+      },
     },
   }),
   { virtual: true }
@@ -37,7 +46,7 @@ describe('Feature flag store', () => {
 
   it('initialises state from JSON', () => {
     const featureFlagStore = useFeatureFlagStore()
-    expect(Object.keys(featureFlagStore.flags).length).toBe(4)
+    expect(Object.keys(featureFlagStore.flags).length).toBe(5)
   })
 
   it.each`
@@ -68,6 +77,28 @@ describe('Feature flag store', () => {
           feat_switchable_optin: ON,
         })
       expect(featureFlagStore.featureState(flagName)).toEqual(featureState)
+    }
+  )
+
+  it.each`
+    environment     | featureState
+    ${'local'}      | ${'on'}
+    ${'staging'}    | ${'off'}
+    ${'production'} | ${'off'}
+  `(
+    'returns $expectedState for $environment',
+    ({ environment, featureState }) => {
+      // Back up value of `NODE_ENV` and replace it
+      const old_env = process.env.NODE_ENV
+      process.env.NODE_ENV = environment
+
+      const featureFlagStore = useFeatureFlagStore()
+      expect(featureFlagStore.featureState('feat_env_specific')).toEqual(
+        featureState
+      )
+
+      // Restore `NODE_ENV` value
+      process.env.NODE_ENV = old_env
     }
   )
 

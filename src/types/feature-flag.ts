@@ -1,20 +1,11 @@
 import type { FeatureState, FlagStatus } from '~/constants/feature-flag'
+import type { NodeEnv } from '~/constants/node-env'
 
-interface BaseFeatureFlag {
-  status: FlagStatus
+export interface FeatureFlag {
+  status: FlagStatus | Record<NodeEnv, FlagStatus>
   description?: string
   data?: unknown
+
+  defaultState?: FeatureState
+  preferredState?: FeatureState // only set for switchable flag with known preference
 }
-
-export type FeatureFlag = BaseFeatureFlag &
-  (
-    | {
-        status: 'enabled' | 'disabled'
-      }
-    | {
-        status: 'switchable'
-
-        defaultState: FeatureState
-        preferredState?: FeatureState // only set for switchable flag with known preference
-      }
-  )
