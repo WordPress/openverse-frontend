@@ -4,10 +4,12 @@
     size="disabled"
     class="self-center gap-2 align-center font-semibold py-2 flex-shrink-0 focus-visible:border-tx focus-visible:ring focus-visible:ring-pink"
     :class="
-      filtersAreApplied ? 'px-3' : 'w-10 md:w-auto h-10 md:h-auto px-0 md:px-3'
+      filtersAreApplied
+        ? 'px-3 flex-shrink-0'
+        : 'w-10 md:w-auto h-10 md:h-auto px-0 md:px-3'
     "
     :pressed="pressed"
-    aria-controls="filter-sidebar"
+    aria-controls="filters"
     :aria-label="mdMinLabel"
     @click="$emit('toggle')"
   >

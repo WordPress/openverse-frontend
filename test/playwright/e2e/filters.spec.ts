@@ -153,7 +153,7 @@ test('filters are updated when media type changes', async ({ page }) => {
   // Only CC0 checkbox is checked, and the filter button label is '1 Filter'
   await assertCheckboxStatus(page, 'cc0')
   await expect(
-    page.locator('[aria-controls="filter-sidebar"] span:visible')
+    page.locator('[aria-controls="filters"] span:visible')
   ).toHaveText('1 Filter')
 
   await expect(page).toHaveURL('/search/audio?q=cat&license=cc0')
