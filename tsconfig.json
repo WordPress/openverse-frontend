@@ -54,6 +54,7 @@
     "src/components/VVariations.vue",
     "src/components/VAudioTrack/**.vue",
     "src/components/VAudioThumbnail/VAudioThumbnail.vue",
+    "src/components/VGlobalAudioSection/VGlobalAudioSection.vue",
     "src/components/VInputField/VInputField.vue",
     "src/components/VHeader/VSearchBar/VSearchBar.vue",
     "src/composables/types.js",
