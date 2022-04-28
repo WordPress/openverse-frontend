@@ -67,12 +67,11 @@ export default defineComponent({
     /* Message */
 
     const handleError = (event: Event) => {
-      const error = (event.target as HTMLAudioElement)?.error
-      let errorMsg = 'err_unknown'
-      if (!error) {
-        activeMediaStore.setMessage({ message: errorMsg })
+      if (!(event.target instanceof HTMLAudioElement)) {
+        activeMediaStore.setMessage({ message: 'err_unknown' })
         return
       }
+      const error = event.target.error
       switch (error.code) {
         case error.MEDIA_ERR_ABORTED:
           errorMsg = 'err_aborted'
