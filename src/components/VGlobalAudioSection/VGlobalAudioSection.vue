@@ -72,6 +72,8 @@ export default defineComponent({
         return
       }
       const error = event.target.error
+      if (!error) return
+      let errorMsg
       switch (error.code) {
         case error.MEDIA_ERR_ABORTED:
           errorMsg = 'err_aborted'
@@ -85,6 +87,8 @@ export default defineComponent({
         case error.MEDIA_ERR_SRC_NOT_SUPPORTED:
           errorMsg = 'err_unsupported'
           break
+        default:
+          errorMsg = 'err_unknown'
       }
       activeMediaStore.setMessage({ message: errorMsg })
     }
