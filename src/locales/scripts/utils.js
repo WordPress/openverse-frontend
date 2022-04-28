@@ -3,7 +3,7 @@
  * does not exist, it is created by nesting objects along the
  * path segments.
  *
- * From https://stackoverflow.com/a/20240290
+ * @see {@link https://stackoverflow.com/a/20240290|Stack Overflow}
  *
  * @param {any} obj - The object to mutate.
  * @param {string} path - The dot delimited path on the object to mutate.
