@@ -11,29 +11,9 @@ import VButton, {
   buttonSizes,
   buttonVariants,
 } from '~/components/VButton.vue'
+import { capital } from 'case'
 
-<Meta
-  title="Components/VButton"
-  components={VButton}
-  argTypes={{
-    as: {
-      options: buttonForms,
-      control: { type: 'radio' },
-    },
-    variant: {
-      options: buttonVariants,
-      control: { type: 'select' },
-    },
-    pressed: { control: 'boolean' },
-    size: {
-      options: buttonSizes,
-      control: { type: 'radio' },
-    },
-    disabled: { control: 'boolean' },
-    focusableWhenDisabled: { control: 'boolean' },
-    type: { control: 'text' },
-  }}
-/>
+<Meta title="Components/VButton" components={VButton} />
 
 export const Template = (args) => ({
   template: `
@@ -59,44 +39,55 @@ export const Template = (args) => ({
 <ArgsTable of={VButton} />
 
 <Canvas>
-  <Story name="VButton" args={{}}>
+  <Story
+    name="VButton"
+    args={{}}
+    argTypes={{
+      as: {
+        options: buttonForms,
+        control: { type: 'radio' },
+      },
+      variant: {
+        options: buttonVariants,
+        control: { type: 'select' },
+      },
+      pressed: { control: 'boolean' },
+      size: {
+        options: buttonSizes,
+        control: { type: 'radio' },
+      },
+      disabled: { control: 'boolean' },
+      focusableWhenDisabled: { control: 'boolean' },
+      type: { control: 'text' },
+    }}
+  >
     {Template.bind({})}
   </Story>
 </Canvas>
 
 ## Button variants
 
+export const variants = buttonVariants
+
 export const VariantsTemplate = (args) => ({
-  template: `<div class="flex gap-4 flex-wrap">
-    <VButton v-bind="args" variant="primary">
-      Primary
-    </VButton>
-    <VButton v-bind="args" variant="secondary">
-      Secondary
-    </VButton>
-    <VButton v-bind="args" variant="tertiary">
-      Tertiary
-    </VButton>
-    <VButton v-bind="args" variant="action-menu">
-      Action Menu
-    </VButton>
-    <VButton v-bind="args" variant="action-menu-secondary">
-      Action Menu Secondary
-    </VButton>
-    <VButton v-bind="args" variant="action-menu-muted">
-      Action Menu Muted
-    </VButton>
-    <VButton v-bind="args" variant="plain">
-      Plain
-    </VButton>
-    <VButton v-bind="args" variant="plain-dangerous">
-      Plain Dangerous
-    </VButton>
-    <VButton v-bind="args" variant="full">
-      Full
+  template: `
+<div class="flex gap-4 flex-wrap">
+<VButton v-for="variant in buttonVariants"
+    :variant="variant"
+    :key="variant"
+    :v-bind="args">
+    {{ capitalize(variant) }}
     </VButton>
   </div>`,
   components: { VButton },
+  data: () => ({
+    buttonVariants,
+  }),
+  methods: {
+    capitalize(str) {
+      return capital(str)
+    },
+  },
   setup() {
     return { args }
   },
