@@ -53,8 +53,6 @@ export const useSingleResultStore = defineStore('single-result', {
       const mediaStore = useMediaStore()
       const existingItem = mediaStore.getItemById(type, id)
 
-      // Not awaiting to make this call non-blocking
-      useRelatedMediaStore().fetchMedia(type, id)
       if (existingItem) {
         this.mediaType = existingItem.frontendMediaType
         this.mediaItem = this._addProviderName(existingItem)
@@ -65,6 +63,7 @@ export const useSingleResultStore = defineStore('single-result', {
             await services[type].getMediaDetail(id)
           )
           this.mediaType = type
+          await useRelatedMediaStore().fetchMedia(type, id)
 
           this._updateFetchState('end')
         } catch (error: unknown) {
