@@ -8,15 +8,15 @@
       <h4 id="filters-heading" class="text-sr font-semibold py-2 uppercase">
         {{ $t('filter-list.filter-by') }}
       </h4>
-      <button
+      <VButton
         v-if="isAnyFilterApplied"
         id="clear-filter-button"
-        type="button"
-        class="text-sm py-2 px-4 text-pink hover:border-dark-gray"
+        variant="plain"
+        class="text-sm font-semibold py-2 px-4 text-pink hover:ring hover:ring-pink"
         @click="clearFilters"
       >
         {{ $t('filter-list.clear') }}
-      </button>
+      </VButton>
     </div>
     <form class="filters-form">
       <VFilterChecklist
@@ -28,14 +28,10 @@
         @toggle-filter="toggleFilter"
       />
     </form>
-    <footer v-if="isAnyFilterApplied" class="flex justify-between">
-      <button
-        class="text-sm py-4 px-6 lowercase rounded bg-trans-blue text-white md:hidden hover:bg-trans-blue-action"
-        type="button"
-        @click="$emit('close')"
-      >
+    <footer v-if="isAnyFilterApplied" class="md:hidden flex justify-between">
+      <VButton variant="primary" @click="$emit('close')">
         {{ $t('filter-list.show') }}
-      </button>
+      </VButton>
     </footer>
   </section>
 </template>
@@ -54,10 +50,12 @@ import { useSearchStore } from '~/stores/search'
 import { areQueriesEqual } from '~/utils/search-query-transform'
 
 import VFilterChecklist from '~/components/VFilters/VFilterChecklist.vue'
+import VButton from '~/components/VButton.vue'
 
 export default {
   name: 'VSearchGridFilter',
   components: {
+    VButton,
     VFilterChecklist,
   },
   setup() {

@@ -12,6 +12,7 @@
     aria-controls="filters"
     :aria-label="mdMinLabel"
     @click="$emit('toggle')"
+    @keydown="$emit('keydown', $event)"
   >
     <VIcon
       :class="filtersAreApplied ? 'hidden' : 'block'"
