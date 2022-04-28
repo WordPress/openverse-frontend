@@ -104,6 +104,7 @@ export default defineComponent({
     )
 
     const handleClose = () => {
+      activeAudio.obj.value?.pause()
       activeAudio.obj.value = undefined
       activeMediaStore.ejectActiveMediaItem()
     }
