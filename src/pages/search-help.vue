@@ -228,8 +228,8 @@ import { defineComponent, useContext } from '@nuxtjs/composition-api'
 import VLink from '~/components/VLink.vue'
 import VContentPage from '~/components/VContentPage.vue'
 
-const SearchHelpPage = defineComponent({
-  name: 'SearchHelpPage',
+export default defineComponent({
+  name: 'VSearchHelpPage',
   components: { VLink, VContentPage },
   setup() {
     const { app } = useContext()
@@ -254,6 +254,4 @@ const SearchHelpPage = defineComponent({
     }
   },
 })
-
-export default SearchHelpPage
 </script>
