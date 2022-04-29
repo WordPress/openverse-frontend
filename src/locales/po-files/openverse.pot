@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-04-28T15:58:32+00:00\n"
+"POT-Creation-Date: 2022-04-29T06:30:14+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -418,7 +418,7 @@ msgctxt "image-details.information.unknown"
 msgid "Unknown"
 msgstr ""
 
-#: src/components/VBackToSearchResultsLink.vue:9
+#: src/components/VBackToSearchResultsLink.vue:8
 msgctxt "single-result.back"
 msgid "Back to search results"
 msgstr ""
@@ -1089,7 +1089,7 @@ msgid "Couldn't find image with id ###id###"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/audio/_id.vue:71
+#: src/pages/audio/_id.vue:72
 msgctxt "error.media-not-found"
 msgid "Couldn't find ###mediaType### with id ###id###"
 msgstr ""

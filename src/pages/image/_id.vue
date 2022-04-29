@@ -2,10 +2,10 @@
   <div>
     <figure class="w-full mb-4 pt-8 md:pt-12 px-6 bg-dark-charcoal-06 relative">
       <div
-        v-if="showBackToSearchLink"
+        v-if="backToSearchPath"
         class="absolute left-0 top-0 right-0 z-40 w-full px-2"
       >
-        <VBackToSearchResultsLink />
+        <VBackToSearchResultsLink :path="backToSearchPath" />
       </div>
 
       <img
@@ -109,7 +109,7 @@ const VImageDetailsPage = {
       imageHeight: 0,
       imageType: 'Unknown',
       isLoadingFullImage: true,
-      showBackToSearchLink: false,
+      backToSearchPath: '',
       sketchFabfailure: false,
     }
   },
@@ -156,7 +156,7 @@ const VImageDetailsPage = {
         from.name === _this.localeRoute({ path: '/search/' }).name ||
         from.name === _this.localeRoute({ path: '/search/image' }).name
       ) {
-        _this.showBackToSearchLink = true
+        _this.backToSearchPath = from.fullPath
       }
     })
   },

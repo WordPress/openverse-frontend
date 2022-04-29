@@ -1,7 +1,7 @@
 <template>
   <main class="relative">
-    <div class="w-full p-2">
-      <VBackToSearchResultsLink />
+    <div v-if="backToSearchPath" class="w-full p-2">
+      <VBackToSearchResultsLink :path="backToSearchPath" />
     </div>
     <VAudioTrack layout="full" :audio="audio" class="main-track" />
     <div
@@ -43,6 +43,7 @@ const AudioDetailPage = {
   },
   data() {
     return {
+      backToSearchPath: '',
       showBackToSearchLink: false,
     }
   },
@@ -82,6 +83,8 @@ const AudioDetailPage = {
         from.name === _this.localeRoute({ path: '/search/audio' }).name
       ) {
         _this.showBackToSearchLink = true
+        console.log('this', _this, from, from.fullPath)
+        _this.backToSearchPath = from.fullPath
       }
     })
   },
