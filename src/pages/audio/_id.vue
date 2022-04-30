@@ -45,13 +45,13 @@ export default defineComponent({
   },
   beforeRouteEnter(to, from, nextPage) {
     nextPage((_this) => {
+      // `_this` is the component instance that also has nuxt app properties injected
+      const localeRoute = (_this as NuxtApp).localeRoute
       if (
-        from.name ===
-          (_this as NuxtApp).localeRoute({ path: '/search/' }).name ||
-        from.name ===
-          (_this as NuxtApp).localeRoute({ path: '/search/audio' }).name
+        from.name === localeRoute({ path: '/search/' }).name ||
+        from.name === localeRoute({ path: '/search/audio' }).name
       ) {
-        // I don't know how to type `this` here
+        // I don't know how to type `_this` here
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         _this.showBackToSearchLink = true

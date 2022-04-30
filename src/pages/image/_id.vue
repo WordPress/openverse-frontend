@@ -81,6 +81,7 @@ import { computed, defineComponent, ref } from '@nuxtjs/composition-api'
 import { IMAGE } from '~/constants/media'
 import { useSingleResultStore } from '~/stores/media/single-result'
 import { useRelatedMediaStore } from '~/stores/media/related-media'
+import type { ImageDetail } from '~/models/media'
 
 import VButton from '~/components/VButton.vue'
 import VLink from '~/components/VLink.vue'
@@ -90,7 +91,7 @@ import VRelatedImages from '~/components/VImageDetails/VRelatedImages.vue'
 import SketchFabViewer from '~/components/SketchFabViewer.vue'
 import VBackToSearchResultsLink from '~/components/VBackToSearchResultsLink.vue'
 
-import { ImageDetail } from '../../models/media'
+import type { NuxtApp } from '@nuxt/types/app'
 
 export default defineComponent({
   name: 'VImageDetailsPage',
@@ -105,12 +106,11 @@ export default defineComponent({
   },
   beforeRouteEnter(_to, from, nextPage) {
     nextPage((_this) => {
-      // I don't know how to type `this` here
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
+      // `_this` is the component instance that also has nuxt app properties injected
+      const localeRoute = (_this as NuxtApp).localeRoute
       if (
-        from.name === _this.localeRoute({ path: '/search/' })?.name ||
-        from.name === _this.localeRoute({ path: '/search/image' })?.name
+        from.name === localeRoute({ path: '/search/' })?.name ||
+        from.name === localeRoute({ path: '/search/image' })?.name
       ) {
         // I don't know how to type `this` here
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
