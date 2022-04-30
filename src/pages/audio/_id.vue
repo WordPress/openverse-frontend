@@ -83,7 +83,6 @@ const AudioDetailPage = {
         from.name === _this.localeRoute({ path: '/search/audio' }).name
       ) {
         _this.showBackToSearchLink = true
-        console.log('this', _this, from, from.fullPath)
         _this.backToSearchPath = from.fullPath
       }
     })
