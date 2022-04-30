@@ -44,7 +44,6 @@ const AudioDetailPage = {
   data() {
     return {
       backToSearchPath: '',
-      showBackToSearchLink: false,
     }
   },
   setup() {
@@ -82,7 +81,6 @@ const AudioDetailPage = {
         from.name === _this.localeRoute({ path: '/search/' }).name ||
         from.name === _this.localeRoute({ path: '/search/audio' }).name
       ) {
-        _this.showBackToSearchLink = true
         _this.backToSearchPath = from.fullPath
       }
     })

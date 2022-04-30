@@ -83,7 +83,6 @@ import { useSingleResultStore } from '~/stores/media/single-result'
 import { useRelatedMediaStore } from '~/stores/media/related-media'
 
 import VButton from '~/components/VButton.vue'
-import VIcon from '~/components/VIcon/VIcon.vue'
 import VLink from '~/components/VLink.vue'
 import VImageDetails from '~/components/VImageDetails/VImageDetails.vue'
 import VMediaReuse from '~/components/VMediaInfo/VMediaReuse.vue'
@@ -95,7 +94,6 @@ const VImageDetailsPage = {
   name: 'VImageDetailsPage',
   components: {
     VButton,
-    VIcon,
     VLink,
     VImageDetails,
     VMediaReuse,
@@ -174,7 +172,7 @@ const VImageDetailsPage = {
           })
           .catch(() => {
             /**
-             * Do nothing. This avoid the console warning "Uncaught (in promise) Error:
+             * Do nothing. This avoids the console warning "Uncaught (in promise) Error:
              * Network Error" in Firefox in development mode.
              */
           })
