@@ -73,17 +73,16 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import axios from 'axios'
 
-import { computed } from '@nuxtjs/composition-api'
+import { computed, defineComponent, ref } from '@nuxtjs/composition-api'
 
 import { IMAGE } from '~/constants/media'
 import { useSingleResultStore } from '~/stores/media/single-result'
 import { useRelatedMediaStore } from '~/stores/media/related-media'
 
 import VButton from '~/components/VButton.vue'
-import VIcon from '~/components/VIcon/VIcon.vue'
 import VLink from '~/components/VLink.vue'
 import VImageDetails from '~/components/VImageDetails/VImageDetails.vue'
 import VMediaReuse from '~/components/VMediaInfo/VMediaReuse.vue'
@@ -91,11 +90,12 @@ import VRelatedImages from '~/components/VImageDetails/VRelatedImages.vue'
 import SketchFabViewer from '~/components/SketchFabViewer.vue'
 import VBackToSearchResultsLink from '~/components/VBackToSearchResultsLink.vue'
 
-const VImageDetailsPage = {
+import { ImageDetail } from '../../models/media'
+
+export default defineComponent({
   name: 'VImageDetailsPage',
   components: {
     VButton,
-    VIcon,
     VLink,
     VImageDetails,
     VMediaReuse,
@@ -103,85 +103,108 @@ const VImageDetailsPage = {
     SketchFabViewer,
     VBackToSearchResultsLink,
   },
-  data() {
-    return {
-      imageWidth: 0,
-      imageHeight: 0,
-      imageType: 'Unknown',
-      isLoadingFullImage: true,
-      showBackToSearchLink: false,
-      sketchFabfailure: false,
-    }
+  beforeRouteEnter(_to, from, nextPage) {
+    nextPage((_this) => {
+      // I don't know how to type `this` here
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      if (
+        from.name === _this.localeRoute({ path: '/search/' })?.name ||
+        from.name === _this.localeRoute({ path: '/search/image' })?.name
+      ) {
+        // I don't know how to type `this` here
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        _this.showBackToSearchLink = true
+      }
+    })
   },
   setup() {
+    const singleResultStore = useSingleResultStore()
     const relatedMediaStore = useRelatedMediaStore()
+    const image = computed(() =>
+      singleResultStore.mediaType === IMAGE
+        ? (singleResultStore.mediaItem as ImageDetail)
+        : null
+    )
 
     const relatedMedia = computed(() => relatedMediaStore.media)
     const relatedFetchState = computed(() => relatedMediaStore.fetchState)
 
-    return { relatedMedia, relatedFetchState }
-  },
-  computed: {
-    sketchFabUid() {
-      if (this.image?.source !== 'sketchfab' || this.sketchFabfailure) {
+    const imageWidth = ref(0)
+    const imageHeight = ref(0)
+    const imageType = ref('Unknown')
+    const isLoadingFullImage = ref(true)
+    const sketchFabfailure = ref(false)
+
+    const sketchFabUid = computed(() => {
+      if (image.value?.source !== 'sketchfab' || sketchFabfailure.value) {
         return null
       }
-      return this.image.url
+      return image.value.url
         .split('https://media.sketchfab.com/models/')[1]
         .split('/')[0]
-    },
+    })
+
+    const onImageLoaded = (event: Event) => {
+      if (!(event.target instanceof HTMLImageElement)) {
+        return
+      }
+      imageWidth.value = image.value?.width || event.target.naturalWidth
+      imageHeight.value = image.value?.height || event.target.naturalHeight
+      if (image.value?.filetype) {
+        imageType.value = image.value.filetype
+      } else {
+        if (event.target) {
+          axios
+            .head(event.target.src)
+            .then((res) => {
+              imageType.value = res.headers['content-type']
+            })
+            .catch(() => {
+              /**
+               * Do nothing. This avoid the console warning "Uncaught (in promise) Error:
+               * Network Error" in Firefox in development mode.
+               */
+            })
+        }
+      }
+      isLoadingFullImage.value = false
+    }
+
+    return {
+      image,
+      relatedMedia,
+      relatedFetchState,
+      imageWidth,
+      imageHeight,
+      imageType,
+      isLoadingFullImage,
+      sketchFabfailure,
+      sketchFabUid,
+      onImageLoaded,
+    }
   },
   async asyncData({ app, error, route, $pinia }) {
     const imageId = route.params.id
     const singleResultStore = useSingleResultStore($pinia)
     try {
-      await singleResultStore.fetchMediaItem(IMAGE, imageId)
-      const image = singleResultStore.mediaItem
-      return {
-        image,
-      }
+      await singleResultStore.fetch(IMAGE, imageId)
     } catch (err) {
-      const errorMessage = app.i18n.t('error.image-not-found', {
-        id: imageId,
-      })
-      error({
+      const errorMessage = app.i18n
+        .t('error.image-not-found', {
+          id: imageId,
+        })
+        .toString()
+      return error({
         statusCode: 404,
         message: errorMessage,
       })
     }
   },
-  beforeRouteEnter(to, from, nextPage) {
-    nextPage((_this) => {
-      if (
-        from.name === _this.localeRoute({ path: '/search/' }).name ||
-        from.name === _this.localeRoute({ path: '/search/image' }).name
-      ) {
-        _this.showBackToSearchLink = true
-      }
-    })
-  },
-  methods: {
-    onImageLoaded(event) {
-      this.imageWidth = this.image.width || event.target.naturalWidth
-      this.imageHeight = this.image.height || event.target.naturalHeight
-      if (this.image.filetype) {
-        this.imageType = this.image.filetype
-      } else {
-        axios
-          .head(event.target.src)
-          .then((res) => {
-            this.imageType = res.headers['content-type']
-          })
-          .catch(() => {
-            /**
-             * Do nothing. This avoid the console warning "Uncaught (in promise) Error:
-             * Network Error" in Firefox in development mode.
-             */
-          })
-      }
-      this.isLoadingFullImage = false
-    },
-  },
+  data: () => ({
+    showBackToSearchLink: false,
+  }),
   head() {
     const title = `${this.image.title} | Openverse`
 
@@ -206,9 +229,7 @@ const VImageDetailsPage = {
       ],
     }
   },
-}
-
-export default VImageDetailsPage
+})
 </script>
 
 <style scoped>
