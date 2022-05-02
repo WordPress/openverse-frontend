@@ -148,7 +148,7 @@ export default defineComponent({
     @apply text-pink hover:underline;
   }
   .table th {
-    @apply bg-dark-charcoal-06 border-t cursor-pointer;
+    @apply bg-dark-charcoal-10 border-t cursor-pointer;
   }
   .table th,
   .table td {
