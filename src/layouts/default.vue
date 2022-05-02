@@ -11,6 +11,7 @@
       <VSidebarTarget
         class="sidebar fixed pb-20 end-0 bg-dark-charcoal-06"
         :class="{ 'border-s border-dark-charcoal-20': isSidebarVisible }"
+        :style="headerHeight"
       />
     </main>
     <VModalTarget class="modal" />
@@ -72,12 +73,22 @@ const embeddedPage = {
         isSearchRoute.value && !isHeaderScrolled.value && !isMinScreenMd.value
     )
     provide('headerHasTwoRows', headerHasTwoRows)
+
+    /**
+     * Desktop header is 80px high in initial state, and 72px high when scrolled,
+     * plus 1px border.
+     * @type {import('@nuxtjs/composition-api').ComputedRef<CSSProperties>}
+     */
+    const headerHeight = computed(() => ({
+      '--header-height': `${isHeaderScrolled.value ? 73 : 81}px`,
+    }))
     return {
       isHeaderScrolled,
       isMinScreenMd,
       isSidebarVisible,
       isSearchRoute,
       headerHasTwoRows,
+      headerHeight,
     }
   },
 }
