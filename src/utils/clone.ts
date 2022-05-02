@@ -1,3 +1,3 @@
 import rfdc from 'rfdc'
 
-export const deepclone = rfdc()
+export const deepClone = rfdc()

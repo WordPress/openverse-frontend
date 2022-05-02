@@ -6,7 +6,7 @@ import {
 } from '~/constants/filters'
 import { ALL_MEDIA, SupportedSearchType } from '~/constants/media'
 import { getParameterByName } from '~/utils/url-params'
-import { deepclone } from '~/utils/clone'
+import { deepClone } from '~/utils/clone'
 
 export interface ApiQueryParams {
   q?: string
@@ -171,7 +171,7 @@ export const queryToFilterData = ({
 }) => {
   // The default filterData object from search store doesn't contain provider filters,
   // so we can't use it.
-  const filters = deepclone(defaultFilters) as Filters
+  const filters = deepClone(defaultFilters) as Filters
   const filterTypes = getMediaFilterTypes(searchType)
   const differentFiltersWithSameApiParams = [
     'audioProviders',

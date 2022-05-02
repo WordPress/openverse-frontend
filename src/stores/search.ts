@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-import { deepclone } from '~/utils/clone'
+import { deepClone } from '~/utils/clone'
 import type { DeepWriteable } from '~/types/utils'
 
 import {
@@ -57,7 +57,7 @@ export const useSearchStore = defineStore('search', {
   state: (): SearchState => ({
     searchType: ALL_MEDIA,
     searchTerm: '',
-    filters: deepclone(filterData as DeepWriteable<typeof filterData>),
+    filters: deepClone(filterData as DeepWriteable<typeof filterData>),
   }),
   getters: {
     filterCategories(state) {
@@ -136,7 +136,7 @@ export const useSearchStore = defineStore('search', {
         }))
       }
       return {
-        ...(deepclone(filterData) as DeepWriteable<typeof filterData>),
+        ...(deepClone(filterData) as DeepWriteable<typeof filterData>),
         audioProviders: resetProviders(AUDIO),
         imageProviders: resetProviders(IMAGE),
       }

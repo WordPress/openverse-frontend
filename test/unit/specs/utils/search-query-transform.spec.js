@@ -1,4 +1,4 @@
-import { deepclone } from '~/utils/clone'
+import { deepClone } from '~/utils/clone'
 import {
   filtersToQueryData,
   queryToFilterData,
@@ -257,7 +257,7 @@ describe('searchQueryTransform', () => {
       searchBy: 'creator',
       mature: 'true',
     }
-    const testFilters = deepclone(filters)
+    const testFilters = deepClone(filters)
     testFilters.audioProviders = [
       { code: 'jamendo', checked: true },
       { code: 'wikimedia', checked: true },
@@ -299,7 +299,7 @@ describe('searchQueryTransform', () => {
       searchBy: 'creator',
       mature: 'true',
     }
-    const expectedFilters = deepclone(filters)
+    const expectedFilters = deepClone(filters)
     const setChecked = (code, filterCategory) => {
       const idx = expectedFilters[filterCategory].findIndex(
         (item) => item.code === code
