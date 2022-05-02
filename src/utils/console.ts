@@ -9,3 +9,4 @@ export const getLogger = (level: 'log' | 'warn' | 'error') =>
 
 export const warn = getLogger('warn')
 export const log = getLogger('log')
+export const error = getLogger('error')

@@ -31,6 +31,7 @@ import {
   toRefs,
   computed,
   PropType,
+  ComponentPublicInstance,
 } from '@nuxtjs/composition-api'
 
 import { warn } from '~/utils/console'
@@ -69,6 +70,10 @@ export type ButtonProps = ProperlyExtractPropTypes<
   NonNullable<typeof VButton['props']>
 >
 
+export type VButtonInstance = ComponentPublicInstance<
+  ButtonProps,
+  ReturnType<NonNullable<typeof VButton['setup']>>
+>
 /**
  * A button component that behaves just like a regular HTML `button` element
  * aside from pre-applied styles based on the passed in variant.

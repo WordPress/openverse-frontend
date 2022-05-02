@@ -36,6 +36,7 @@
   "include": [
     "**/*.ts",
     "test/proxy.js",
+    "src/components/Ariakit/**/*.vue",
     "src/components/VButton.vue",
     "src/components/VContentPage.vue",
     "src/components/VMetaSearch/*.vue",
