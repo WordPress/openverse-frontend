@@ -1,7 +1,11 @@
 <template>
-  <div class="filters py-8 px-10" data-testid="filters-list">
+  <section
+    id="filters"
+    aria-labelledby="filters-heading"
+    class="filters py-8 px-10"
+  >
     <div class="flex items-center justify-between mt-2 mb-6">
-      <h4 class="text-sr font-semibold py-2 uppercase">
+      <h4 id="filters-heading" class="text-sr font-semibold py-2 uppercase">
         {{ $t('filter-list.filter-by') }}
       </h4>
       <button
@@ -33,7 +37,7 @@
         {{ $t('filter-list.show') }}
       </button>
     </footer>
-  </div>
+  </section>
 </template>
 
 <script>
