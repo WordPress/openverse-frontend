@@ -1,7 +1,7 @@
 <template>
   <main class="relative">
-    <div class="w-full p-2">
-      <VBackToSearchResultsLink />
+    <div v-if="backToSearchPath" class="w-full p-2">
+      <VBackToSearchResultsLink :path="backToSearchPath" />
     </div>
     <VAudioTrack layout="full" :audio="audio" class="main-track" />
     <div
@@ -54,7 +54,7 @@ export default defineComponent({
         // I don't know how to type `_this` here
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        _this.showBackToSearchLink = true
+        _this.backToSearchPath = from.fullPath
       }
     })
   },
@@ -90,7 +90,7 @@ export default defineComponent({
   },
   data() {
     return {
-      showBackToSearchLink: false,
+      backToSearchPath: '',
     }
   },
   head() {
