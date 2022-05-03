@@ -13,7 +13,7 @@ export interface Media {
   id: string
   title: string
 
-  creator: string
+  creator?: string
   creator_url?: string
 
   url: string
@@ -26,6 +26,7 @@ export interface Media {
 
   frontendMediaType: SupportedMediaType
 
+  category: string | null
   provider: string
   source?: string
   providerName?: string
