@@ -31,8 +31,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
-    name: Check
+  modern:
+    name: Check modern bundle size
     runs-on: ubuntu-latest
 
     steps:
@@ -43,5 +43,22 @@ jobs:
       - uses: preactjs/compressed-size-action@2.5.0
         with:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
-          # Only measure changes in the client, we don't care much about the size of the server bundles (I don't think?)
-          pattern: "./.nuxt/dist/client/**/*.{modern.js,js,css}"
+          pattern: "./.nuxt/dist/client/**/*.modern.js"
+          clean-script: "build:clean"
+
+  universal:
+    name: Check univseral bundle size
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: ./.github/actions/setup-node-env
+
+      - name: Universal bundle size check
+        uses: preactjs/compressed-size-action@2.5.0
+        with:
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+          pattern: "./.nuxt/dist/client/**/*.js"
+          exclude: "{**/*.map,**/node_modules/**,**modern.js}"
+          clean-script: "build:clean"
