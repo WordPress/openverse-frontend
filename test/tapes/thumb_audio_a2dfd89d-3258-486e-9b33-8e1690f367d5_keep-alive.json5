@@ -1,6 +1,6 @@
 {
     meta: {
-        createdAt: '2022-04-18T03:38:09.376Z',
+        createdAt: '2022-05-02T16:04:12.702Z',
         host: 'https://api.openverse.engineering',
     },
     req: {
@@ -15,7 +15,7 @@
         status: 200,
         headers: {
             date: [
-                'Mon, 18 Apr 2022 03:38:10 GMT',
+                'Mon, 02 May 2022 16:04:12 GMT',
             ],
             'content-type': [
                 'image/jpeg',
@@ -26,32 +26,38 @@
             connection: [
                 'keep-alive',
             ],
-            vary: [
-                'Accept, Authorization, Origin, Accept-Encoding',
+            'cf-bgj': [
+                'h2pri',
             ],
             allow: [
                 'GET, HEAD, OPTIONS',
             ],
-            'x-frame-options': [
-                'DENY',
-            ],
-            'x-content-type-options': [
-                'nosniff',
+            'cross-origin-opener-policy': [
+                'same-origin',
             ],
             'referrer-policy': [
                 'same-origin',
             ],
-            'cross-origin-opener-policy': [
-                'same-origin',
+            vary: [
+                'Accept, Authorization, Origin, Accept-Encoding',
+            ],
+            'x-content-type-options': [
+                'nosniff',
+            ],
+            'x-frame-options': [
+                'DENY',
             ],
             'cache-control': [
                 'max-age=14400',
             ],
             'cf-cache-status': [
-                'MISS',
+                'HIT',
+            ],
+            age: [
+                '33113',
             ],
             'last-modified': [
-                'Mon, 18 Apr 2022 03:38:10 GMT',
+                'Mon, 02 May 2022 06:52:19 GMT',
             ],
             'accept-ranges': [
                 'bytes',
@@ -66,7 +72,7 @@
                 'cloudflare',
             ],
             'cf-ray': [
-                '6fda5db24937989d-OTP',
+                '7051fdccc9aeb059-IST',
             ],
             'alt-svc': [
                 'h3=":443"; ma=86400, h3-29=":443"; ma=86400',

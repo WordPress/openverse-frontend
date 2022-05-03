@@ -52,15 +52,25 @@
     "src/components/VNotificationBanner.vue",
     "src/components/VMigrationNotice.vue",
     "src/components/VVariations.vue",
+    "src/components/VAudioTrack/**.vue",
+    "src/components/VAudioThumbnail/VAudioThumbnail.vue",
+    "src/components/VGlobalAudioSection/VGlobalAudioSection.vue",
+    "src/components/VInputField/VInputField.vue",
+    "src/components/VHeader/VFilterButton.vue",
+    "src/components/VHeader/VSearchBar/VSearchBar.vue",
+    "src/components/VAudioTrack/VPlayPause.vue",
+    "src/components/VSourcesTable.vue",
+    "src/components/TableSortIcon.vue",
+    "src/components/VTabs/**.vue",
+    "src/components/VCopyButton.vue",
+    "src/components/VMediaInfo/**.vue",
+    "src/pages/feedback.vue",
+    "src/pages/search-help.vue",
     "src/composables/types.js",
     "src/composables/use-event-listener-outside.js",
-    "src/composables/use-active-audio.js",
-    "src/composables/use-get-locale-formatted-number.js",
-    "src/composables/use-browser-detection.js",
-    "src/composables/use-media-query.js",
-    "src/composables/window.js",
-    "src/constants/screens.js",
-    "src/utils/deep-freeze.js"
+
+    // This section cannot be converted to TypeScript because it's used in non-TS contexts (like Tailwind configuration)
+    "src/constants/screens.js"
   ],
   "exclude": ["node_modules"],
   "vueCompilerOptions": {
