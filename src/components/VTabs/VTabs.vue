@@ -1,6 +1,6 @@
 <template>
-  <div v-bind="accessibleLabel">
-    <div role="tablist" class="flex flex-row">
+  <div>
+    <div role="tablist" class="flex flex-row" v-bind="accessibleLabel">
       <slot name="tabs" />
     </div>
     <slot name="default" />
