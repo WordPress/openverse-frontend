@@ -13,7 +13,7 @@ import {
   OFF,
   DISABLED,
 } from '~/constants/feature-flag'
-import type { NodeEnv } from '~/constants/node-env'
+import { LOCAL, DEPLOY_ENVS, DeployEnv } from '~/constants/deploy-env'
 
 export interface FeatureFlagState {
   flags: Record<keyof typeof featureData['features'], FeatureFlag>
@@ -24,17 +24,20 @@ const FEATURE_FLAG = 'feature_flag'
 /**
  * Get the status of the flag. If the flag status is environment dependent, this
  * function will use the flag status for the current environment based on the
- * `NODE_ENV` environment variable.
+ * `DEPLOYMENT_ENV` environment variable.
  *
  * @param flag - the flag for which to get the status
  */
-const getFlagStatus = (flag: FeatureFlag): FlagStatus => {
-  const node_env = process.env.NODE_ENV as NodeEnv
-  return typeof flag.status === 'string'
-    ? flag.status
-    : node_env && node_env in flag.status
-    ? flag.status[node_env] ?? DISABLED
-    : DISABLED
+export const getFlagStatus = (flag: FeatureFlag): FlagStatus => {
+  const deployEnv = (process.env.DEPLOYMENT_ENV ?? LOCAL) as DeployEnv
+  if (typeof flag.status === 'string') return flag.status
+  else {
+    const envIndex = DEPLOY_ENVS.indexOf(deployEnv)
+    for (let i = envIndex; i < DEPLOY_ENVS.length; i += 1) {
+      if (DEPLOY_ENVS[i] in flag.status) return flag.status[DEPLOY_ENVS[i]]
+    }
+  }
+  return DISABLED
 }
 
 /**

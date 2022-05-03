@@ -1,8 +1,8 @@
 import type { FeatureState, FlagStatus } from '~/constants/feature-flag'
-import type { NodeEnv } from '~/constants/node-env'
+import type { DeployEnv } from '~/constants/deploy-env'
 
 export interface FeatureFlag {
-  status: FlagStatus | Record<NodeEnv, FlagStatus>
+  status: FlagStatus | Record<DeployEnv, FlagStatus>
   description?: string
   data?: unknown
 

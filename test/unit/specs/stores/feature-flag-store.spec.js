@@ -1,6 +1,6 @@
 import { setActivePinia, createPinia } from 'pinia'
 
-import { useFeatureFlagStore } from '~/stores/feature-flag'
+import { useFeatureFlagStore, getFlagStatus } from '~/stores/feature-flag'
 import { OFF, ON } from '~/constants/feature-flag'
 
 jest.mock(
@@ -88,17 +88,38 @@ describe('Feature flag store', () => {
   `(
     'returns $expectedState for $environment',
     ({ environment, featureState }) => {
-      // Back up value of `NODE_ENV` and replace it
-      const old_env = process.env.NODE_ENV
-      process.env.NODE_ENV = environment
+      // Back up value of `DEPLOYMENT_ENV` and replace it
+      const old_env = process.env.DEPLOYMENT_ENV
+      process.env.DEPLOYMENT_ENV = environment
 
       const featureFlagStore = useFeatureFlagStore()
       expect(featureFlagStore.featureState('feat_env_specific')).toEqual(
         featureState
       )
 
-      // Restore `NODE_ENV` value
-      process.env.NODE_ENV = old_env
+      // Restore `DEPLOYMENT_ENV` value
+      process.env.DEPLOYMENT_ENV = old_env
+    }
+  )
+
+  it.each`
+    environment     | flagStatus
+    ${'local'}      | ${'switchable'}
+    ${'staging'}    | ${'switchable'}
+    ${'production'} | ${'disabled'}
+  `(
+    'handles fallback for missing $environment',
+    ({ environment, flagStatus }) => {
+      // Back up value of `DEPLOYMENT_ENV` and replace it
+      const old_env = process.env.DEPLOYMENT_ENV
+      process.env.DEPLOYMENT_ENV = environment
+
+      expect(getFlagStatus({ status: { staging: 'switchable' } })).toEqual(
+        flagStatus
+      )
+
+      // Restore `DEPLOYMENT_ENV` value
+      process.env.DEPLOYMENT_ENV = old_env
     }
   )
 
