@@ -1,6 +1,6 @@
 <template>
   <section dir="ltr">
-    <div class="border-b border-dark-charcoal-30 bg-[#f6f7f7]">
+    <div class="border-b border-dark-charcoal-30 bg-dark-charcoal-06">
       <div class="flex flex-col items-center pt-20">
         <h2 class="text-5xl text-center mb-10 max-w-[700px]">
           {{ $t('extension.description.intro') }}
