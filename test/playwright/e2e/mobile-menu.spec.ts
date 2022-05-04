@@ -14,10 +14,9 @@ const mobileFixture = {
   viewport: { width: 640, height: 700 },
   userAgent: mockUaString,
 }
+test.use(mobileFixture)
 
 test('Can open filters menu on mobile at least twice', async ({ page }) => {
-  test.use(mobileFixture)
-
   await page.goto('/search/?q=cat&license_type=commercial')
   const expectedFilter = 'commercial'
 
@@ -34,8 +33,6 @@ test('Can open filters menu on mobile at least twice', async ({ page }) => {
 })
 
 test('Can open mobile menu at least twice', async ({ page }) => {
-  test.use(mobileFixture)
-
   await page.goto('/search/?q=cat&license_type=commercial')
   await openMobileMenu(page)
   await expect(page.locator(`button:has-text('Close)`)).toBeVisible()
