@@ -22,6 +22,8 @@ on:
       - "tailwind.config.js"
       # Changes to this workflow file should always verify the changes are successful.
       - ".github/workflows/bundle_size.yml"
+      # Adding or removing ignored files will affect bundle size.
+      - ".nuxtignore"
 
 # Cancels all previous workflow runs for pull requests that have not completed.
 concurrency:
