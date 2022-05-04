@@ -5,7 +5,7 @@
     :class="$style[variant]"
     :data-testid="`banner-${id}`"
   >
-    <p class="leading-tight md:leading-normal text-sm md:text-base text-left">
+    <p class="leading-tight md:leading-normal text-sr md:text-base text-left">
       <slot name="default" />
     </p>
     <div class="flex">
