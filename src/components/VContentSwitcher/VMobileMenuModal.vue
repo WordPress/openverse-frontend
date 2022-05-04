@@ -12,6 +12,7 @@
       :visible="visibleRef"
       :trigger-element="triggerRef"
       :hide="close"
+      :hide-on-click-outside="false"
       :aria-label="$t('header.filter-button.simple')"
       :initial-focus-element="initialFocusElement"
     >

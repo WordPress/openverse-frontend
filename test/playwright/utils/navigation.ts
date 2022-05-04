@@ -1,13 +1,39 @@
 import { expect, Page } from '@playwright/test'
 
-export const openFilters = async (page: Page) => {
-  const filterButtonSelector = '[aria-controls="filters"]'
-  const isPressed = async () =>
-    await page.getAttribute(filterButtonSelector, 'aria-pressed')
-  if ((await isPressed()) !== 'true') {
-    await page.click(filterButtonSelector)
-    expect(await isPressed()).toEqual('true')
+const buttonSelectors = {
+  filter: '[aria-controls="filters"]',
+  mobileMenu: '[aria-controls="content-switcher-modal"]',
+}
+
+const isButtonPressed = async (page: Page, buttonSelector: string) =>
+  await page.getAttribute(buttonSelector, 'aria-pressed')
+
+const manipulateButton = async (
+  page: Page,
+  button: 'filter' | 'mobileMenu',
+  action: 'open' | 'close'
+) => {
+  const selector = buttonSelectors[button]
+  const expectedValue = action === 'open' ? 'true' : 'false'
+  if ((await isButtonPressed(page, selector)) !== expectedValue) {
+    await page.click(selector)
+    expect(await isButtonPressed(page, selector)).toEqual(expectedValue)
   }
+}
+
+export const openFilters = async (page: Page) => {
+  await manipulateButton(page, 'filter', 'open')
+}
+
+export const closeFilters = async (page: Page) => {
+  await manipulateButton(page, 'filter', 'close')
+}
+
+export const openMobileMenu = async (page: Page) => {
+  await manipulateButton(page, 'mobileMenu', 'open')
+}
+export const closeMobileMenu = async (page: Page) => {
+  await manipulateButton(page, 'mobileMenu', 'close')
 }
 
 export const assertCheckboxStatus = async (
