@@ -41,13 +41,13 @@
         <div
           :key="`description-${index}`"
           :data-index="index"
-          class="description flex flex-col justify-center items-center"
+          class="description flex flex-col justify-center items-center text-left"
           :style="{ '--cell-idx': index * 2 + 1 }"
         >
-          <h2 class="text-5xl text-left mb-4 max-w=[40rem]">
+          <h2 class="text-5xl mb-4 max-w=[30rem]">
             {{ $t(`extension.features.${feature.key}.heading`) }}
           </h2>
-          <p class="text-left">
+          <p class="max-w=[30rem]">
             {{ $t(`extension.features.${feature.key}.content`) }}
           </p>
         </div>
@@ -124,11 +124,6 @@ figure img {
   border-color: rgba(30, 30, 30, 0.2);
   filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.1))
     drop-shadow(0px 20px 33px rgba(0, 0, 0, 0.07));
-  max-width: 30rem;
-}
-
-.description h2,
-.description p {
   max-width: 30rem;
 }
 
