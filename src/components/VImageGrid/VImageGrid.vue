@@ -10,13 +10,8 @@
     <h5 v-if="isError && !fetchState.isFinished" class="py-4">
       {{ fetchState.fetchingError }}
     </h5>
-    <footer class="pt-4">
-      <VLoadMore
-        v-if="canLoadMore && !fetchState.isFinished"
-        :is-fetching="fetchState.isFetching"
-        data-testid="load-more"
-        @onLoadMore="onLoadMore"
-      />
+    <footer v-if="showLoadMore" class="pt-4">
+      <VLoadMore />
     </footer>
   </section>
 </template>
@@ -39,7 +34,11 @@ export default {
     images: {
       default: () => [],
     },
-    canLoadMore: {
+    /**
+     * Whether to show the 'Load More' button.
+     * Is false for related images
+     */
+    showLoadMore: {
       type: Boolean,
       default: true,
     },
@@ -52,10 +51,6 @@ export default {
     isError() {
       return !!this.fetchState.fetchingError
     },
-    fetchingErrorHeading() {
-      const type = this.$t('browse-page.search-form.image')
-      return this.$t('browse-page.fetching-error', { type })
-    },
   },
   methods: {
     onLoadMore() {
@@ -66,13 +61,14 @@ export default {
 </script>
 
 <style scoped>
-.image-grid:after {
-  /**
+@screen md {
+  .image-grid:after {
+    /**
    * This keeps the last item in the results from expanding to fill
-   * all avaliable space, which can result in a final row with a
+   * all available space, which can result in a final row with a
    * single, 100% wide image.
    */
-  @screen md {
+
     content: '';
     flex-grow: 999999999;
   }
