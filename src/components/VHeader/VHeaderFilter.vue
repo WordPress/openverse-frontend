@@ -108,10 +108,9 @@ export default {
 
     const mobileOptions = {
       visible: visibleRef,
-      hideOnClickOutside: false,
       'trigger-element': computed(() => nodeRef?.value?.firstChild),
       hide: close,
-      'aria-label': i18n.t('header.filter-button.simple'),
+      'aria-label': i18n.t('header.filter-button.simple').toString(),
       mode: 'mobile',
     }
 
@@ -120,10 +119,7 @@ export default {
       visible: visibleRef,
     }
     /**
-     * @type { import('@nuxtjs/composition-api').Ref<{
-     * 'trigger-element'?: import('@nuxtjs/composition-api').ComputedRef<HTMLElement|null>,
-     * hide?: () => {}, visible: import('@nuxtjs/composition-api').Ref<boolean>,
-     * 'aria-label': [string], to?: string, mode?: string, hideOnClickOutside?: boolean }> }
+     * @type { import('@nuxtjs/composition-api').Ref<{'trigger-element'?: import('@nuxtjs/composition-api').ComputedRef<HTMLElement|null>, hide?: () => void, visible: import('@nuxtjs/composition-api').Ref<boolean>, 'aria-label'?: string, to?: string, mode?: string, hideOnClickOutside?: boolean }> }
      */
     const options = ref(mobileOptions)
     onMounted(() => {

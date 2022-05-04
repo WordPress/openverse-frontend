@@ -1,8 +1,6 @@
 import { test, expect } from '@playwright/test'
 
 import {
-  assertCheckboxStatus,
-  closeFilters,
   closeMobileMenu,
   openFilters,
   openMobileMenu,
@@ -17,27 +15,29 @@ const mobileFixture = {
 test.use(mobileFixture)
 
 test('Can open filters menu on mobile at least twice', async ({ page }) => {
-  await page.goto('/search/?q=cat&license_type=commercial')
-  const expectedFilter = 'commercial'
+  await page.goto('/search/?q=cat')
 
   await openFilters(page)
-  await assertCheckboxStatus(page, expectedFilter)
-
-  await closeFilters(page)
+  await expect(page.locator(`input[type="checkbox"]`)).toHaveCount(11, {
+    timeout: 100,
+  })
+  await closeMobileMenu(page)
   await expect(page.locator(`input[type="checkbox"]`)).toHaveCount(0, {
     timeout: 100,
   })
 
   await openFilters(page)
-  await assertCheckboxStatus(page, expectedFilter)
+  await expect(page.locator(`input[type="checkbox"]`)).toHaveCount(11, {
+    timeout: 100,
+  })
 })
 
 test('Can open mobile menu at least twice', async ({ page }) => {
-  await page.goto('/search/?q=cat&license_type=commercial')
+  await page.goto('/search/?q=cat')
   await openMobileMenu(page)
-  await expect(page.locator(`button:has-text('Close)`)).toBeVisible()
+  await expect(page.locator('button', { hasText: 'Close' })).toBeVisible()
   await closeMobileMenu(page)
-  await expect(page.locator(`button:has-text('Close)`)).not.toBeVisible()
+  await expect(page.locator('button', { hasText: 'Close' })).not.toBeVisible()
   await openMobileMenu(page)
-  await expect(page.locator(`button:has-text('Close)`)).toBeVisible()
+  await expect(page.locator('button', { hasText: 'Close' })).toBeVisible()
 })

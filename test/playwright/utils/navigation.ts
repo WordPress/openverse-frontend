@@ -2,19 +2,29 @@ import { expect, Page } from '@playwright/test'
 
 const buttonSelectors = {
   filter: '[aria-controls="filters"]',
-  mobileMenu: '[aria-controls="content-switcher-modal"]',
+  contentSwitcher: '[aria-controls="content-switcher-modal"]',
 }
 
-const isButtonPressed = async (page: Page, buttonSelector: string) =>
-  await page.getAttribute(buttonSelector, 'aria-pressed')
+const isButtonPressed = async (page: Page, buttonSelector: string) => {
+  const viewportSize = page.viewportSize()
+  if (!viewportSize) {
+    return false
+  }
+  const pageWidth = viewportSize.width
+  if (pageWidth > 640) {
+    return await page.getAttribute(buttonSelector, 'aria-pressed')
+  } else {
+    console.log(
+      page.locator('button', { hasText: 'Close' }),
+      page.locator('button', { hasText: 'Close' }).isVisible()
+    )
+    return page.locator('button', { hasText: 'Close' }).isVisible()
+  }
+}
 
-const manipulateButton = async (
-  page: Page,
-  button: 'filter' | 'mobileMenu',
-  action: 'open' | 'close'
-) => {
+const openMenu = async (page: Page, button: 'filter' | 'contentSwitcher') => {
   const selector = buttonSelectors[button]
-  const expectedValue = action === 'open' ? 'true' : 'false'
+  const expectedValue = 'true'
   if ((await isButtonPressed(page, selector)) !== expectedValue) {
     await page.click(selector)
     expect(await isButtonPressed(page, selector)).toEqual(expectedValue)
@@ -22,18 +32,15 @@ const manipulateButton = async (
 }
 
 export const openFilters = async (page: Page) => {
-  await manipulateButton(page, 'filter', 'open')
-}
-
-export const closeFilters = async (page: Page) => {
-  await manipulateButton(page, 'filter', 'close')
+  await openMenu(page, 'filter')
 }
 
 export const openMobileMenu = async (page: Page) => {
-  await manipulateButton(page, 'mobileMenu', 'open')
+  await openMenu(page, 'contentSwitcher')
 }
+
 export const closeMobileMenu = async (page: Page) => {
-  await manipulateButton(page, 'mobileMenu', 'close')
+  await page.click('text=Close')
 }
 
 export const assertCheckboxStatus = async (
