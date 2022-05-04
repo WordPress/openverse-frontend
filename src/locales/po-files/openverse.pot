@@ -806,7 +806,6 @@ msgctxt "browse-page.search-form.placeholder"
 msgid "Search all ###type###"
 msgstr ""
 
-#: src/components/VImageGrid/VImageGrid.vue:51
 msgctxt "browse-page.search-form.image"
 msgid "images"
 msgstr ""
@@ -1129,13 +1128,13 @@ msgid "An error occurred"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/image/_id.vue:142
+#: src/pages/image/_id.vue:195
 msgctxt "error.image-not-found"
 msgid "Couldn't find image with id ###id###"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/audio/_id.vue:71
+#: src/pages/audio/_id.vue:84
 msgctxt "error.media-not-found"
 msgid "Couldn't find ###mediaType### with id ###id###"
 msgstr ""
