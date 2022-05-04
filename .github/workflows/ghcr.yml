@@ -34,13 +34,11 @@ jobs:
             type=sha
             type=ref,event=tag
 
-      - name: Set PNPM_VERSION
-        run: |
-          echo "PNPM_VERSION=$(cat .pnpm-version)" >> $GITHUB_ENV
-
       - uses: docker/build-push-action@v2
         with:
           context: .
           tags: ${{ steps.metadata.outputs.tags }}
           labels: ${{ steps.metadata.outputs.labels }}
           push: true
+          secret-files: |
+            PNPM_VERSION=./.pnpm-version

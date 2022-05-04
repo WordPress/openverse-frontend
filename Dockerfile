@@ -4,8 +4,6 @@ ARG PNPM_VERSION
 
 RUN npm install -g pnpm@${PNPM_VERSION}
 
-RUN pnpm --version
-
 USER node
 
 WORKDIR /home/node/app
