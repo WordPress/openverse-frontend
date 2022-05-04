@@ -14,11 +14,9 @@ const isButtonPressed = async (page: Page, buttonSelector: string) => {
   if (pageWidth > 640) {
     return await page.getAttribute(buttonSelector, 'aria-pressed')
   } else {
-    console.log(
-      page.locator('button', { hasText: 'Close' }),
-      page.locator('button', { hasText: 'Close' }).isVisible()
-    )
-    return page.locator('button', { hasText: 'Close' }).isVisible()
+    return (await page.locator('button', { hasText: 'Close' }).isVisible())
+      ? 'true'
+      : 'false'
   }
 }
 
