@@ -46,7 +46,7 @@ const LicenseCheckboxStory = (args, { argTypes }) => ({
   props: Object.keys(argTypes),
   methods: {
     onChange(params) {
-      window.alert('License checkbox checked. ' + JSON.stringify(params))
+      window.alert('License checkbox checked! ' + JSON.stringify(params))
       this.isChecked = params.checked
     },
   },
