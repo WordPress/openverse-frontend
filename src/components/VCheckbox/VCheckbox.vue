@@ -30,12 +30,11 @@ import { defineEvent } from '~/types/emits'
 
 import checkmark from '~/assets/icons/checkmark.svg'
 
-type Booleanish = boolean | 'true' | 'false'
 type CheckboxAttrs = {
   name: string
   value: string
-  disabled?: Booleanish
-  checked?: Booleanish
+  disabled?: boolean
+  checked?: boolean
 }
 
 /**
