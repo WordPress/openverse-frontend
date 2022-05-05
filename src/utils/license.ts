@@ -84,7 +84,7 @@ export const isDeprecated = (license: License): boolean =>
  * includes CC0, which although not technically a license, is offered by CC.
  *
  * @param license - the license slug to check
- * @returns `true` if the license is a deprecated CC license, `false` otherwise
+ * @returns `true` if the license is a CC license, `false` otherwise
  */
 export const isCc = (license: License): boolean =>
   license == 'cc0' ||
