@@ -6,6 +6,8 @@ import {
 } from '~/utils/license'
 import type { LicenseElement } from '~/constants/license'
 
+import enJson from '~/locales/en.json'
+
 import type VueI18n from 'vue-i18n'
 
 /* Helper functions */
@@ -29,6 +31,48 @@ const h = (
   const opening = map ? `<${name} ${map}>` : `<${name}>`
   const closing = `</${name}>`
   return `${opening}${(children ?? []).join('\n')}${closing}`
+}
+
+/**
+ * Format the given string by replacing all placeholder keys with their values.
+ * The pairs of placeholders and values are passed as a dictionary.
+ *
+ * @param text - the string in which to perform the formatting
+ * @param replacements - the mapping of placeholders to values
+ * @returns the formatted string
+ */
+const fmt = (text: string, replacements: Record<string, string>): string => {
+  Object.entries(replacements).forEach(([key, value]) => {
+    text = text.replace(`{${key}}`, value)
+  })
+  return text
+}
+
+/**
+ * Perform the same role as `i18n.t` except that it's restricted to reading
+ * English from `en.json`.
+ *
+ * @param path - the key to the JSON value to read
+ * @param replacements - the pair of placeholders and their replacement strings
+ * @returns the English string with placeholders substituted
+ */
+const fakeT = (
+  path: string,
+  replacements: Record<string, string> = {}
+): string => {
+  interface NestedRecord {
+    [key: string]: string | NestedRecord
+  }
+
+  const segments = path.split('.')
+  let fraction: NestedRecord = enJson
+  let text: string | undefined = undefined
+  segments.forEach((segment) => {
+    const piece = fraction[segment]
+    if (typeof piece === 'string') text = piece
+    else fraction = piece
+  })
+  return text ? fmt(text, replacements) : ''
 }
 
 /**
@@ -142,57 +186,37 @@ export const getAttribution = (
   const isPd = isPublicDomain(mediaItem.license)
 
   let attribution: string
-  if (i18n) {
-    let fillers: Record<string, string> = {
-      title: titleLink
-        ? i18n.t(`${i18nBase}.actual-title`, { title: titleLink }).toString()
-        : i18n.t(`${i18nBase}.generic-title`).toString(),
-      creator: creatorLink
-        ? i18n
-            .t(`${i18nBase}.creator-text`, {
-              'creator-name': creatorLink,
-            })
-            .toString()
-        : '',
-      'marked-licensed': i18n
-        .t(`${i18nBase}.${isPd ? 'marked' : 'licensed'}`)
-        .toString(),
-      license: licenseLink,
-    }
-    if (isPlaintext) {
-      fillers = {
-        ...fillers,
-        'view-legal': i18n
-          .t(`${i18nBase}.view-legal-text`, {
-            'terms-copy': i18n.t(
-              `${i18nBase}.${isPd ? 'terms-text' : 'copy-text'}`
-            ),
-            URL: `${mediaItem.license_url}?ref=openverse`,
-          })
-          .toString(),
-      }
-    }
-    attribution = i18n.t(`${i18nBase}.text`, fillers).toString()
-  } else {
-    const attributionParts = []
-    attributionParts.push(titleLink ? `"${titleLink}"` : 'This work')
-    if (creatorLink) attributionParts.push(' by ', creatorLink)
-    attributionParts.push(
-      isPd ? ' is marked with ' : ' is licensed under ',
-      licenseLink,
-      '.'
-    )
-    if (isPlaintext)
-      attributionParts.push(
-        ' To view ',
-        isPd ? 'the terms,' : 'a copy of this license,',
-        ' visit',
-        mediaItem.license_url,
-        '.'
-      )
 
-    attribution = attributionParts.join('')
+  const tFn = i18n
+    ? (key: string, values?: VueI18n.Values) => i18n.t(key, values).toString()
+    : fakeT
+
+  const fillers: Record<string, string> = {
+    title: titleLink
+      ? tFn(`${i18nBase}.actual-title`, { title: titleLink })
+      : tFn(`${i18nBase}.generic-title`),
+    'marked-licensed': tFn(`${i18nBase}.${isPd ? 'marked' : 'licensed'}`),
+    license: licenseLink,
+    'view-legal': '',
+    creator: '',
   }
+
+  if (isPlaintext && mediaItem.license_url) {
+    fillers['view-legal'] = tFn(`${i18nBase}.view-legal-text`, {
+      'terms-copy': tFn(`${i18nBase}.${isPd ? 'terms-text' : 'copy-text'}`),
+      url: `${mediaItem.license_url}?ref=openverse`,
+    })
+  }
+
+  if (creatorLink) {
+    fillers.creator = tFn(`${i18nBase}.creator-text`, {
+      'creator-name': creatorLink,
+    })
+  }
+
+  attribution = tFn(`${i18nBase}.text`, fillers)
+  attribution = attribution.replace(/\s{2}/g, ' ')
+
   return isPlaintext
     ? attribution
     : h('p', { class: 'attribution' }, [attribution])
