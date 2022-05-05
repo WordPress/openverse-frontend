@@ -54,8 +54,7 @@ export const getFullLicenseName = (
  * @param license - the license slug to check
  * @returns `false` if `license` is 'cc0' or 'pdm', `true` otherwise
  */
-export const isLicense = (license: string): boolean =>
-  !(PUBLIC_DOMAIN_MARKS as ReadonlyArray<string>).includes(license)
+export const isLicense = (license: License): boolean => !isPublicDomain(license)
 
 /**
  * CC licenses have different legal status from the public domain marks
@@ -65,7 +64,8 @@ export const isLicense = (license: string): boolean =>
  * @param license - the license slug to check
  * @returns `true` if `license` is 'cc0' or 'pdm', `false` otherwise
  */
-export const isPublicDomain = (license: License): boolean => !isLicense(license)
+export const isPublicDomain = (license: License): boolean =>
+  (PUBLIC_DOMAIN_MARKS as ReadonlyArray<string>).includes(license)
 
 /**
  * Check if the given name belongs to a deprecated CC license. The full list of
