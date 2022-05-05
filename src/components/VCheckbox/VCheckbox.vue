@@ -7,19 +7,13 @@
       v-bind="inputAttrs"
       @change="onChange"
     />
-    <svg
+    <VIcon
       v-show="localCheckedState"
-      class="checkmark stroke-current"
-      focusable="false"
-      viewBox="0 0 24 24"
-      width="20"
-      height="20"
-      aria-hidden="true"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <use :href="`${checkmark}#icon`" />
-    </svg>
-    <!--  @slot The checkbox label  --><slot />
+      class="absolute start-0 text-white"
+      :icon-path="checkmark"
+      view-box="0 0 20 20"
+      :size="5"
+    /><!--  @slot The checkbox label  --><slot />
   </label>
 </template>
 
@@ -27,6 +21,8 @@
 import { computed, defineComponent, ref, watch } from '@nuxtjs/composition-api'
 
 import { defineEvent } from '~/types/emits'
+
+import VIcon from '~/components/VIcon/VIcon.vue'
 
 import checkmark from '~/assets/icons/checkmark.svg'
 
@@ -44,6 +40,9 @@ type CheckboxAttrs = {
  */
 export default defineComponent({
   name: 'VCheckbox',
+  components: {
+    VIcon,
+  },
   props: {
     /**
      * Checkbox `id` is used for the input id property, connecting the label to
@@ -155,8 +154,5 @@ export default defineComponent({
   @apply disabled:bg-dark-charcoal-10 disabled:border-dark-charcoal-40;
   @apply checked:bg-dark-charcoal;
   @apply checked:disabled:bg-dark-charcoal-40;
-}
-.checkmark {
-  @apply absolute start-0 w-5 h-5 text-white;
 }
 </style>
