@@ -13,7 +13,8 @@
       :icon-path="checkmark"
       view-box="0 0 20 20"
       :size="5"
-    /><!--  @slot The checkbox label  --><slot />
+    />
+    <!--  @slot The checkbox label  --><slot />
   </label>
 </template>
 
