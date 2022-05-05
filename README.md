@@ -115,10 +115,18 @@ We do not currently support local development using Docker or `docker-compose`. 
 However, we do build and actively deploy the frontend using Docker images. If you wish to build the production image for yourself, run the following:
 
 ```shell
-PNPM_VERISON=$(cat .pnpm-version) docker build . openverse-frontend:latest
+docker build . --build-arg PNPM_VERSION=$(cat .pnpm-version) -t openverse-frontend:latest
 ```
 
 You can also find the latest `openverse-frontend` images on our [GitHub packages page](https://github.com/WordPress/openverse-frontend/pkgs/container/openverse-frontend).
+
+You can then run using either the locally built image or the `ghcr.io` image from the link above:
+
+```shell
+docker run -it -p 127.0.0.1:8443:8443/tcp openverse-frontend:latest
+```
+
+The app will be available at http://localhost:8443.
 
 ## Formatting and Linting
 
