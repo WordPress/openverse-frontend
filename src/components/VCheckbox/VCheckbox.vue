@@ -7,26 +7,44 @@
       v-bind="inputAttrs"
       @change="onChange"
     />
-    <Checkmark
+    <svg
       v-show="localCheckedState"
-      class="checkmark"
+      class="checkmark stroke-current"
       focusable="false"
+      viewBox="0 0 24 24"
       width="20"
       height="20"
       aria-hidden="true"
-    />
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <use :href="`${checkmark}#icon`" />
+    </svg>
     <!--  @slot The checkbox label  --><slot />
   </label>
 </template>
 
-<script>
+<script lang="ts">
 import { computed, defineComponent, ref, watch } from '@nuxtjs/composition-api'
 
-import Checkmark from '~/assets/icons/checkmark.svg?inline'
+import { defineEvent } from '~/types/emits'
 
-const VCheckbox = defineComponent({
+import checkmark from '~/assets/icons/checkmark.svg'
+
+type Booleanish = boolean | 'true' | 'false'
+type CheckboxAttrs = {
+  name: string
+  value: string
+  disabled?: Booleanish
+  checked?: Booleanish
+}
+
+/**
+ * A checkbox input component that allows selection of multiple options from a list .
+ *
+ * Unlike the native checkbox, this component only has two states: checked / not checked.
+ */
+export default defineComponent({
   name: 'VCheckbox',
-  components: { Checkmark },
   props: {
     /**
      * Checkbox `id` is used for the input id property, connecting the label to
@@ -47,12 +65,14 @@ const VCheckbox = defineComponent({
       default: false,
     },
     /**
-     * The name and value parameters are used when sending the form data to the server
-     * using HTML on form submit: if a checkbox is checked, `name=value` pair in
-     * the POST request body.
-     * In a Vue app, this is used as the name parameter in the emitted event's payload.
-     * It is usually the category that this checkbox belongs to, eg. licenseType for a
-     * 'by-nc-nd' checkbox.
+     * Usually this is the category that this checkbox belongs to, e.g. 'license' for a
+     * 'by-nc-nd' checkbox, or 'licenseType' for 'commercial' checkbox.
+     * This parameter is used in the emitted object.
+     *
+     * If the form submission is done natively, the name and value parameters are used
+     * when sending the form data to the server on form submit: if a checkbox is checked,
+     * `name=value` pair is added to the POST request body.
+     *
      * If not set, the value of `id` prop is used instead.
      */
     name: {
@@ -77,21 +97,24 @@ const VCheckbox = defineComponent({
       default: false,
     },
   },
+  emits: {
+    change: defineEvent<[Omit<CheckboxAttrs, 'disabled'>]>(),
+  },
   setup(props, { emit }) {
     const localCheckedState = ref(props.checked || false)
     const labelClasses = computed(() =>
       props.disabled ? 'text-dark-charcoal-70' : 'text-dark-charcoal'
     )
-    const inputAttrs = computed(() => {
-      const attrs = {
+    const inputAttrs = computed<CheckboxAttrs>(() => {
+      const attrs: CheckboxAttrs = {
         name: props.name || props.id,
         value: props.value || props.id,
       }
       if (props.disabled) {
-        attrs.disabled = 'disabled'
+        attrs.disabled = true
       }
       if (localCheckedState.value) {
-        attrs.checked = 'checked'
+        attrs.checked = true
       }
       return attrs
     })
@@ -114,6 +137,7 @@ const VCheckbox = defineComponent({
       })
     }
     return {
+      checkmark,
       localCheckedState,
       labelClasses,
       inputAttrs,
@@ -121,7 +145,6 @@ const VCheckbox = defineComponent({
     }
   },
 })
-export default VCheckbox
 </script>
 <style scoped>
 .checkbox-label {
