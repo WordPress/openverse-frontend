@@ -47,6 +47,30 @@ export const getFullLicenseName = (
 }
 
 /**
+ * Get the URL to the deed of the license.
+ *
+ * @param license - the slug of license
+ * @param licenseVersion - the version number of the license
+ * @returns the URL to the license deed
+ */
+export const getLicenseUrl = (
+  license: License,
+  licenseVersion: LicenseVersion = ''
+) => {
+  let fragment
+  if (license === 'cc0') {
+    fragment = 'publicdomain/zero/1.0'
+  } else if (license === 'pdm') {
+    fragment = 'publicdomain/mark/1.0'
+  } else if (isDeprecated(license)) {
+    fragment = `licenses/${license}/1.0`
+  } else {
+    fragment = `licenses/${license}/${licenseVersion || '4.0'}`
+  }
+  return `https://creativecommons.org/${fragment}/?ref=openverse`
+}
+
+/**
  * CC licenses have different legal status from the public domain marks
  * such as CC0 and PDM, and need different wording. Check if the given name
  * belongs to a license and is not a public-domain mark.
