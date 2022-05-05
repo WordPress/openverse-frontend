@@ -421,7 +421,9 @@
         "link": "here"
       },
       "credit": {
-        "text": "\"{title}\"{creator}{marked-licensed}{license}. {view-legal}",
+        "generic-title": "This work",
+        "actual-title": "\"{title}\"",
+        "text": "{title}{creator}{marked-licensed}{license}. {view-legal}",
         "creator-text": " by {creator-name}",
         "marked": " is marked with ",
         "licensed": " is licensed under ",
@@ -630,5 +632,19 @@
     "see-image": "See all images",
     "see-audio": "See all audio"
   },
-  "skip-to-content": "Skip to content"
+  "skip-to-content": "Skip to content",
+  "pref-page": {
+    "title": "Preferences",
+    "non-switchable": {
+      "title": "Non-switchable features",
+      "desc": "You cannot modify the status of these features."
+    },
+    "switchable": {
+      "title": "Switchable features",
+      "desc": "You can toggle these features on or off as you like and your preferences will be saved in a cookie."
+    },
+    "store-state": "Store state",
+    "content-filtering": "Content filtering",
+    "explanation": "Shown because {feat-name} is {feat-state}"
+  }
 }

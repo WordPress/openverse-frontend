@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-05-03T05:26:54+00:00\n"
+"POT-Creation-Date: 2022-05-04T11:38:38+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -21,6 +21,43 @@ msgstr ""
 #: src/components/VSkipToContentContainer.vue:9
 msgctxt "skip-to-content"
 msgid "Skip to content"
+msgstr ""
+
+#: src/pages/preferences.vue:3
+msgctxt "pref-page.title"
+msgid "Preferences"
+msgstr ""
+
+#: src/pages/preferences.vue:37
+msgctxt "pref-page.store-state"
+msgid "Store state"
+msgstr ""
+
+#: src/pages/preferences.vue:40
+msgctxt "pref-page.content-filtering"
+msgid "Content filtering"
+msgstr ""
+
+#. Do not translate words between ### ###.
+#: src/pages/preferences.vue:44
+msgctxt "pref-page.explanation"
+msgid "Shown because ###feat-name### is ###feat-state###"
+msgstr ""
+
+msgctxt "pref-page.switchable.title"
+msgid "Switchable features"
+msgstr ""
+
+msgctxt "pref-page.switchable.desc"
+msgid "You can toggle these features on or off as you like and your preferences will be saved in a cookie."
+msgstr ""
+
+msgctxt "pref-page.non-switchable.title"
+msgid "Non-switchable features"
+msgstr ""
+
+msgctxt "pref-page.non-switchable.desc"
+msgid "You cannot modify the status of these features."
 msgstr ""
 
 msgctxt "search-type.image"
@@ -418,7 +455,7 @@ msgctxt "image-details.information.unknown"
 msgid "Unknown"
 msgstr ""
 
-#: src/components/VBackToSearchResultsLink.vue:9
+#: src/components/VBackToSearchResultsLink.vue:8
 msgctxt "single-result.back"
 msgid "Back to search results"
 msgstr ""
@@ -618,9 +655,18 @@ msgctxt "media-details.reuse.copy-license.copied"
 msgid "Copied!"
 msgstr ""
 
+msgctxt "media-details.reuse.credit.generic-title"
+msgid "This work"
+msgstr ""
+
+#. Do not translate words between ### ###.
+msgctxt "media-details.reuse.credit.actual-title"
+msgid "\"###title###\""
+msgstr ""
+
 #. Do not translate words between ### ###.
 msgctxt "media-details.reuse.credit.text"
-msgid "\"###title###\"###creator######marked-licensed######license###. ###view-legal###"
+msgid "###title######creator######marked-licensed######license###. ###view-legal###"
 msgstr ""
 
 #. Do not translate words between ### ###.
@@ -760,7 +806,6 @@ msgctxt "browse-page.search-form.placeholder"
 msgid "Search all ###type###"
 msgstr ""
 
-#: src/components/VImageGrid/VImageGrid.vue:51
 msgctxt "browse-page.search-form.image"
 msgid "images"
 msgstr ""
@@ -1083,13 +1128,13 @@ msgid "An error occurred"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/image/_id.vue:144
+#: src/pages/image/_id.vue:195
 msgctxt "error.image-not-found"
 msgid "Couldn't find image with id ###id###"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/audio/_id.vue:71
+#: src/pages/audio/_id.vue:84
 msgctxt "error.media-not-found"
 msgid "Couldn't find ###mediaType### with id ###id###"
 msgstr ""
