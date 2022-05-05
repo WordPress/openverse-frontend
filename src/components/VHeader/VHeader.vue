@@ -204,6 +204,7 @@ const VHeader = defineComponent({
       })
       router.push(newPath)
       await mediaStore.fetchMedia()
+      document.activeElement?.blur()
     }
 
     return {
