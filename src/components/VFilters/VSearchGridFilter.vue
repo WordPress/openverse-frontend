@@ -18,7 +18,7 @@
         {{ $t('filter-list.clear') }}
       </VButton>
     </div>
-    <form class="filters-form">
+    <form ref="filtersFormRef" class="filters-form" @keydown="handleKeyDown">
       <VFilterChecklist
         v-for="filterType in filterTypes"
         :key="filterType"
@@ -36,9 +36,12 @@
   </section>
 </template>
 
-<script>
+<script lang="ts">
 import {
   computed,
+  defineComponent,
+  onMounted,
+  ref,
   useContext,
   useRoute,
   useRouter,
@@ -49,10 +52,14 @@ import { kebab } from 'case'
 import { useSearchStore } from '~/stores/search'
 import { areQueriesEqual } from '~/utils/search-query-transform'
 
+import type { NonMatureFilterCategory } from '~/constants/filters'
+import { keycodes } from '~/constants/key-codes'
+import { Focus, focusIn, getFocusableElements } from '~/utils/focus-management'
+
 import VFilterChecklist from '~/components/VFilters/VFilterChecklist.vue'
 import VButton from '~/components/VButton.vue'
 
-export default {
+export default defineComponent({
   name: 'VSearchGridFilter',
   components: {
     VButton,
@@ -65,15 +72,17 @@ export default {
     const route = useRoute()
     const router = useRouter()
 
+    const filtersFormRef = ref<HTMLFormElement>(null)
+
     const isAnyFilterApplied = computed(() => searchStore.isAnyFilterApplied)
     const filters = computed(() => searchStore.searchFilters)
-    const filterTypes = computed(() => Object.keys(filters.value))
-    const filterTypeTitle = (filterType) => {
-      if (filterType === 'searchBy') {
-        return ''
-      }
-      return i18n.t(`filters.${kebab(filterType)}.title`)
-    }
+    const filterTypes = computed(
+      () => Object.keys(filters.value) as NonMatureFilterCategory[]
+    )
+    const filterTypeTitle = (filterType: string) =>
+      filterType === 'searchBy'
+        ? ''
+        : i18n.t(`filters.${kebab(filterType)}.title`).toString()
 
     /**
      * This watcher fires even when the queries are equal. We update the path only
@@ -96,16 +105,47 @@ export default {
       }
     )
 
+    /**
+     * Find the last focusable element in VSearchGridFilter to add a 'Tab' keydown event
+     * handler to it.
+     * We could actually hard-code this because 'searchBy' is always the last now.
+     */
+    const lastFocusableElement = ref<HTMLElement>(null)
+    const updateLastFocusable = () => {
+      const focusable = getFocusableElements(filtersFormRef.value)
+      lastFocusableElement.value = focusable[focusable.length - 1]
+    }
+    onMounted(() => {
+      updateLastFocusable()
+    })
+    watch(filterTypes, () => updateLastFocusable())
+    /**
+     * When the user presses 'Tab' on the last focusable element, we need to
+     * move focus to the first focusable element in main.
+     * @param event
+     */
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (
+        event.key === keycodes.Tab &&
+        lastFocusableElement.value === event.target
+      ) {
+        event.preventDefault()
+        focusIn(document.querySelector('main'), Focus.First)
+      }
+    }
+
     return {
+      filtersFormRef,
       isAnyFilterApplied,
       filters,
       filterTypes,
       filterTypeTitle,
       clearFilters: searchStore.clearFilters,
       toggleFilter: searchStore.toggleFilter,
+      handleKeyDown,
     }
   },
-}
+})
 </script>
 <style scoped>
 .filters {
