@@ -22,6 +22,9 @@ for (const contentPage of contentPages) {
     test.describe('rtl', () => {
       test.beforeEach(async ({ page }) => {
         await page.goto(`/ar/${contentPage}`)
+        await page
+          .locator('[data-testid="banner-translation-ar"] [aria-label="Close"]')
+          .click()
       })
 
       breakpoints.describeEvery(({ expectSnapshot }) => {
