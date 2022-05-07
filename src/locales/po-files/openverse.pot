@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-05-03T11:03:14+00:00\n"
+"POT-Creation-Date: 2022-05-06T09:23:52+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -23,6 +23,43 @@ msgctxt "skip-to-content"
 msgid "Skip to content"
 msgstr ""
 
+#: src/pages/preferences.vue:3
+msgctxt "pref-page.title"
+msgid "Preferences"
+msgstr ""
+
+#: src/pages/preferences.vue:37
+msgctxt "pref-page.store-state"
+msgid "Store state"
+msgstr ""
+
+#: src/pages/preferences.vue:40
+msgctxt "pref-page.content-filtering"
+msgid "Content filtering"
+msgstr ""
+
+#. Do not translate words between ### ###.
+#: src/pages/preferences.vue:44
+msgctxt "pref-page.explanation"
+msgid "Shown because ###feat-name### is ###feat-state###"
+msgstr ""
+
+msgctxt "pref-page.switchable.title"
+msgid "Switchable features"
+msgstr ""
+
+msgctxt "pref-page.switchable.desc"
+msgid "You can toggle these features on or off as you like and your preferences will be saved in a cookie."
+msgstr ""
+
+msgctxt "pref-page.non-switchable.title"
+msgid "Non-switchable features"
+msgstr ""
+
+msgctxt "pref-page.non-switchable.desc"
+msgid "You cannot modify the status of these features."
+msgstr ""
+
 msgctxt "search-type.image"
 msgid "Images"
 msgstr ""
@@ -39,7 +76,7 @@ msgctxt "search-type.video"
 msgid "Videos"
 msgstr ""
 
-msgctxt "search-type.model-3d"
+msgctxt "search-type.model_3d"
 msgid "3D Models"
 msgstr ""
 
@@ -418,7 +455,7 @@ msgctxt "image-details.information.unknown"
 msgid "Unknown"
 msgstr ""
 
-#: src/components/VBackToSearchResultsLink.vue:9
+#: src/components/VBackToSearchResultsLink.vue:8
 msgctxt "single-result.back"
 msgid "Back to search results"
 msgstr ""
@@ -618,9 +655,18 @@ msgctxt "media-details.reuse.copy-license.copied"
 msgid "Copied!"
 msgstr ""
 
+msgctxt "media-details.reuse.credit.generic-title"
+msgid "This work"
+msgstr ""
+
+#. Do not translate words between ### ###.
+msgctxt "media-details.reuse.credit.actual-title"
+msgid "\"###title###\""
+msgstr ""
+
 #. Do not translate words between ### ###.
 msgctxt "media-details.reuse.credit.text"
-msgid "\"###title###\"###creator######marked-licensed######license###. ###view-legal###"
+msgid "###title######creator######marked-licensed######license###. ###view-legal###"
 msgstr ""
 
 #. Do not translate words between ### ###.
@@ -760,7 +806,6 @@ msgctxt "browse-page.search-form.placeholder"
 msgid "Search all ###type###"
 msgstr ""
 
-#: src/components/VImageGrid/VImageGrid.vue:51
 msgctxt "browse-page.search-form.image"
 msgid "images"
 msgstr ""
@@ -774,7 +819,7 @@ msgctxt "browse-page.search-form.video"
 msgid "videos"
 msgstr ""
 
-msgctxt "browse-page.search-form.model-3d"
+msgctxt "browse-page.search-form.model_3d"
 msgid "3D Models"
 msgstr ""
 
@@ -1083,13 +1128,13 @@ msgid "An error occurred"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/image/_id.vue:144
+#: src/pages/image/_id.vue:195
 msgctxt "error.image-not-found"
 msgid "Couldn't find image with id ###id###"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/audio/_id.vue:71
+#: src/pages/audio/_id.vue:84
 msgctxt "error.media-not-found"
 msgid "Couldn't find ###mediaType### with id ###id###"
 msgstr ""
@@ -1102,12 +1147,12 @@ msgctxt "error.audio"
 msgid "audio"
 msgstr ""
 
-#: src/pages/extension.vue:90
+#: src/pages/extension.vue:98
 msgctxt "extension.title"
 msgid "Web extension"
 msgstr ""
 
-#: src/pages/extension.vue:60
+#: src/pages/extension.vue:58
 msgctxt "extension.conclusion"
 msgid "Have your favourite content while browsing the web"
 msgstr ""
@@ -1136,7 +1181,7 @@ msgctxt "extension.features.search.content"
 msgid "Browse through millions of content and use filters to find what best meets your needs."
 msgstr ""
 
-#: src/pages/extension.vue:7
+#: src/pages/extension.vue:6
 msgctxt "extension.description.intro"
 msgid "A browser extension that lets you search and use open-licensed and public domain images."
 msgstr ""
@@ -1606,12 +1651,10 @@ msgctxt "sources.issue-button"
 msgid "Suggest a new source"
 msgstr ""
 
-#: src/pages/sources.vue:77
 msgctxt "sources.heading.image"
 msgid "Image Sources"
 msgstr ""
 
-#: src/pages/sources.vue:79
 msgctxt "sources.heading.audio"
 msgid "Audio Sources"
 msgstr ""
@@ -1816,7 +1859,7 @@ msgctxt "header.api-nav-item"
 msgid "API"
 msgstr ""
 
-#: src/components/VHeader/VHeader.vue:156
+#: src/components/VHeader/VHeader.vue:150
 msgctxt "header.loading"
 msgid "Loading..."
 msgstr ""
