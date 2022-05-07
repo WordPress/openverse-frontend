@@ -1,3 +1,9 @@
+/*
+ * This module highly mirrors the Python code present in the backend repository.
+ * For any changes made here, please make the corresponding changes in the
+ * backend, or open an issue to track it.
+ */
+
 import type { Media } from '~/models/media'
 import {
   getElements,
