@@ -27,6 +27,7 @@
       :has-no-results="hasNoResults"
       :query="query"
       :is-supported="supported"
+      @tab="$emit('tab', $event)"
     />
   </section>
   <VErrorSection v-else class="w-full py-10">
@@ -37,11 +38,13 @@
   </VErrorSection>
 </template>
 
-<script>
-import { computed } from '@nuxtjs/composition-api'
+<script lang="ts">
+import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
 
-import { ALL_MEDIA, IMAGE } from '~/constants/media'
+import { ALL_MEDIA, IMAGE, SupportedSearchType } from '~/constants/media'
 import { NO_RESULT } from '~/constants/errors'
+
+import { defineEvent } from '~/types/emits'
 
 import VMetaSearchForm from '~/components/VMetaSearch/VMetaSearchForm.vue'
 import VErrorSection from '~/components/VErrorSection/VErrorSection.vue'
@@ -49,7 +52,10 @@ import VErrorImage from '~/components/VErrorSection/VErrorImage.vue'
 import VNoResults from '~/components/VErrorSection/VNoResults.vue'
 import VSearchResultsTitle from '~/components/VSearchResultsTitle.vue'
 
-export default {
+import { ApiQueryParams } from '../utils/search-query-transform'
+import { FetchState } from '../composables/use-fetch-state'
+
+export default defineComponent({
   name: 'VSearchGrid',
   components: {
     VErrorSection,
@@ -64,22 +70,24 @@ export default {
       required: true,
     },
     query: {
-      type: Object,
+      type: Object as PropType<ApiQueryParams>,
       required: true,
     },
     searchType: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<import('~/constants/media').SupportedSearchType>} */ (
-        String
-      ),
+      type: String as PropType<SupportedSearchType>,
       required: true,
     },
     fetchState: {
+      type: Object as PropType<FetchState>,
       required: true,
     },
     resultsCount: {
       type: Number,
       required: true,
     },
+  },
+  emits: {
+    tab: defineEvent<[KeyboardEvent]>(),
   },
   setup(props) {
     const hasNoResults = computed(() => {
@@ -103,5 +111,5 @@ export default {
       NO_RESULT,
     }
   },
-}
+})
 </script>
