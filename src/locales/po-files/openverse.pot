@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-05-06T09:23:52+00:00\n"
+"POT-Creation-Date: 2022-05-07T17:42:30+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -76,7 +76,7 @@ msgctxt "search-type.video"
 msgid "Videos"
 msgstr ""
 
-msgctxt "search-type.model_3d"
+msgctxt "search-type.model-3d"
 msgid "3D Models"
 msgstr ""
 
@@ -819,7 +819,7 @@ msgctxt "browse-page.search-form.video"
 msgid "videos"
 msgstr ""
 
-msgctxt "browse-page.search-form.model_3d"
+msgctxt "browse-page.search-form.model-3d"
 msgid "3D Models"
 msgstr ""
 
@@ -1859,7 +1859,7 @@ msgctxt "header.api-nav-item"
 msgid "API"
 msgstr ""
 
-#: src/components/VHeader/VHeader.vue:150
+#: src/components/VHeader/VHeader.vue:156
 msgctxt "header.loading"
 msgid "Loading..."
 msgstr ""
