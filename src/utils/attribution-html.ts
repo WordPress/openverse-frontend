@@ -71,7 +71,7 @@ const fakeT = (
   }
 
   const segments = path.split('.')
-  let fraction: NestedRecord = enJson
+  let fraction: NestedRecord = enJson['media-details'].reuse.credit
   let text: string | undefined = undefined
   segments.forEach((segment) => {
     const piece = fraction[segment]
@@ -152,17 +152,21 @@ export const getAttribution = (
 ): string => {
   if (!mediaItem) return ''
 
+  const isPd = isPublicDomain(mediaItem.license)
+
+  const i18nBase = 'media-details.reuse.credit'
+  const tFn = i18n
+    ? (key: string, values?: VueI18n.Values) =>
+        i18n.t(`${i18nBase}.${key}`, values).toString()
+    : fakeT
+
   /* Title */
 
-  let titleLink = mediaItem.title || ''
-  if (!isPlaintext && mediaItem.foreign_landing_url && titleLink)
-    titleLink = extLink(mediaItem.foreign_landing_url, titleLink)
-
-  /* Creator */
-
-  let creatorLink = mediaItem.creator || ''
-  if (!isPlaintext && mediaItem.creator_url && creatorLink)
-    creatorLink = extLink(mediaItem.creator_url, creatorLink)
+  let title = mediaItem.title
+    ? tFn('actual-title', { title: mediaItem.title })
+    : tFn('generic-title')
+  if (!isPlaintext && mediaItem.foreign_landing_url)
+    title = extLink(mediaItem.foreign_landing_url, title)
 
   /* License */
 
@@ -176,52 +180,39 @@ export const getAttribution = (
     const elements = getElements(mediaItem.license)
     const icons = elements.map((element) => licenseElementImg(element))
     // Icons are only rendered if present for every element
-    if (!icons.includes('')) {
-      licenseIcons = icons.join('')
-    }
+    if (!icons.includes('')) licenseIcons = icons.join('')
   }
-
-  let licenseLink = `${fullLicenseName} ${licenseIcons}`.trim()
-  if (!isPlaintext && mediaItem.license_url) {
-    licenseLink = extLink(`${mediaItem.license_url}?ref=openverse`, licenseLink)
-  }
+  let license = `${fullLicenseName} ${licenseIcons}`.trim()
+  if (!isPlaintext && mediaItem.license_url)
+    license = extLink(`${mediaItem.license_url}?ref=openverse`, license)
 
   /* Attribution */
 
-  const i18nBase = 'media-details.reuse.credit'
-  const isPd = isPublicDomain(mediaItem.license)
-
-  let attribution: string
-
-  const tFn = i18n
-    ? (key: string, values?: VueI18n.Values) => i18n.t(key, values).toString()
-    : fakeT
-
-  const fillers: Record<string, string> = {
-    title: titleLink
-      ? tFn(`${i18nBase}.actual-title`, { title: titleLink })
-      : tFn(`${i18nBase}.generic-title`),
-    'marked-licensed': tFn(`${i18nBase}.${isPd ? 'marked' : 'licensed'}`),
-    license: licenseLink,
+  const attributionParts: Record<string, string> = {
+    title,
+    'marked-licensed': tFn(isPd ? 'marked' : 'licensed'),
+    license: license,
     'view-legal': '',
     creator: '',
   }
 
   if (isPlaintext && mediaItem.license_url) {
-    fillers['view-legal'] = tFn(`${i18nBase}.view-legal-text`, {
-      'terms-copy': tFn(`${i18nBase}.${isPd ? 'terms-text' : 'copy-text'}`),
+    attributionParts['view-legal'] = tFn('view-legal-text', {
+      'terms-copy': tFn(isPd ? 'terms-text' : 'copy-text'),
       url: `${mediaItem.license_url}?ref=openverse`,
     })
   }
 
-  if (creatorLink) {
-    fillers.creator = tFn(`${i18nBase}.creator-text`, {
-      'creator-name': creatorLink,
+  if (mediaItem.creator) {
+    let creator = mediaItem.creator
+    if (!isPlaintext && mediaItem.creator_url)
+      creator = extLink(mediaItem.creator_url, creator)
+    attributionParts.creator = tFn('creator-text', {
+      'creator-name': creator,
     })
   }
 
-  attribution = tFn(`${i18nBase}.text`, fillers)
-  attribution = attribution.replace(/\s{2}/g, ' ')
+  const attribution = tFn('text', attributionParts).replace(/\s{2}/g, ' ')
 
   return isPlaintext
     ? attribution
