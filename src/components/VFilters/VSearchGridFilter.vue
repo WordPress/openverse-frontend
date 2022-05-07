@@ -5,7 +5,10 @@
     class="filters py-8 px-10 min-h-full md:bg-dark-charcoal-06"
   >
     <div class="flex items-center justify-between mt-2 mb-6">
-      <h4 id="filters-heading" class="text-sr font-semibold py-2 uppercase">
+      <h4
+        id="filters-heading"
+        class="text-sr font-semibold py-2 uppercase leading-8"
+      >
         {{ $t('filter-list.filter-by') }}
       </h4>
       <VButton
@@ -14,11 +17,17 @@
         variant="plain"
         class="text-sm font-semibold py-2 px-4 text-pink hover:ring hover:ring-pink"
         @click="clearFilters"
+        @keydown.tab.shift="focusFilterButton"
       >
         {{ $t('filter-list.clear') }}
       </VButton>
     </div>
-    <form ref="filtersFormRef" class="filters-form" @keydown="handleKeyDown">
+    <form
+      ref="filtersFormRef"
+      class="filters-form"
+      @keydown.tab.exact="handleTabKey"
+      @keydown.tab.shift.exact="handleShiftTabKey"
+    >
       <VFilterChecklist
         v-for="filterType in filterTypes"
         :key="filterType"
@@ -40,7 +49,6 @@
 import {
   computed,
   defineComponent,
-  onMounted,
   ref,
   useContext,
   useRoute,
@@ -53,7 +61,6 @@ import { useSearchStore } from '~/stores/search'
 import { areQueriesEqual } from '~/utils/search-query-transform'
 
 import type { NonMatureFilterCategory } from '~/constants/filters'
-import { keycodes } from '~/constants/key-codes'
 import { Focus, focusIn, getFocusableElements } from '~/utils/focus-management'
 
 import VFilterChecklist from '~/components/VFilters/VFilterChecklist.vue'
@@ -110,31 +117,50 @@ export default defineComponent({
      * handler to it.
      * We could actually hard-code this because 'searchBy' is always the last now.
      */
-    const lastFocusableElement = ref<HTMLElement>(null)
-    const updateLastFocusable = () => {
+    const lastFocusableElement = computed<HTMLElement>(() => {
       const focusable = getFocusableElements(filtersFormRef.value)
-      lastFocusableElement.value = focusable[focusable.length - 1]
-    }
-    onMounted(() => {
-      updateLastFocusable()
+      return focusable[focusable.length - 1]
     })
-    watch(filterTypes, () => updateLastFocusable())
+
+    /**
+     * We add the `Shift-Tab` handler to the first focusable checkbox so that focus can go back
+     * to the filter button
+     */
+    const firstFocusableElement = computed<HTMLElement | undefined>(
+      () => getFocusableElements(filtersFormRef.value)[0]
+    )
+
     /**
      * When the user presses 'Tab' on the last focusable element, we need to
      * move focus to the first focusable element in main.
      * @param event
      */
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (
-        event.key === keycodes.Tab &&
-        lastFocusableElement.value === event.target
-      ) {
+    const handleTabKey = (event: KeyboardEvent) => {
+      if (lastFocusableElement.value === event.target) {
         event.preventDefault()
         focusIn(document.querySelector('main'), Focus.First)
       }
     }
-
+    /**
+     * Move focus to the filter button only when this checkbox is the first focusable
+     * element in the search grid filter, i.e. the 'Clear filters' button is hidden.
+     * @param event - The keydown event
+     */
+    const handleShiftTabKey = (event: KeyboardEvent) => {
+      if (
+        firstFocusableElement.value === event.target &&
+        !isAnyFilterApplied.value
+      ) {
+        focusFilterButton(event)
+      }
+    }
+    const focusFilterButton = (event: KeyboardEvent) => {
+      event.preventDefault()
+      const filterButton = document.getElementById('filter-button')
+      if (filterButton) filterButton.focus()
+    }
     return {
+      firstFocusableElement,
       filtersFormRef,
       isAnyFilterApplied,
       filters,
@@ -142,7 +168,9 @@ export default defineComponent({
       filterTypeTitle,
       clearFilters: searchStore.clearFilters,
       toggleFilter: searchStore.toggleFilter,
-      handleKeyDown,
+      handleTabKey,
+      handleShiftTabKey,
+      focusFilterButton,
     }
   },
 })

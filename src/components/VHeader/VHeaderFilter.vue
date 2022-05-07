@@ -10,73 +10,75 @@
       :pressed="visibleRef"
       v-bind="triggerA11yProps"
       @toggle="onTriggerClick"
-      @keydown="onKeyDown"
+      @tab="onTab"
     />
-    <Component :is="filterComponent" v-bind="options" @close="onTriggerClick">
+    <Component
+      :is="filterComponent"
+      v-bind="options"
+      :visible="visibleRef"
+      @close="onTriggerClick"
+    >
       <VSearchGridFilter @close="onTriggerClick" />
     </Component>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import {
+  defineComponent,
   ref,
   watch,
   reactive,
   computed,
   onMounted,
-  useContext,
   inject,
+  Ref,
 } from '@nuxtjs/composition-api'
 
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
 import { useBodyScrollLock } from '~/composables/use-body-scroll-lock'
+import { useI18n } from '~/composables/use-i18n'
 
-import { keycodes } from '~/constants/key-codes'
 import { Focus, focusIn } from '~/utils/focus-management'
+import { defineEvent } from '~/types/emits'
 
 import VTeleport from '~/components/VTeleport/VTeleport.vue'
 import VFilterButton from '~/components/VHeader/VFilterButton.vue'
 import VSearchGridFilter from '~/components/VFilters/VSearchGridFilter.vue'
-import VSidebarContent from '~/components/VHeader/VSidebarContent.vue'
-import VModalContent from '~/components/VModal/VModalContent.vue'
 
-export default {
+export default defineComponent({
   name: 'VHeaderFilter',
   components: {
     VFilterButton,
     VSearchGridFilter,
-    VSidebarContent,
-    VModalContent,
     VTeleport,
   },
-  emits: [
+  emits: {
     /**
      * Fires when the popover opens, regardless of reason. There are no extra parameters.
      */
-    'open',
+    open: defineEvent(),
     /**
      * Fires when the popover closes, regardless of reason. There are no extra parameters.
      */
-    'close',
-  ],
+    close: defineEvent(),
+  },
   setup(_, { emit }) {
-    const modalRef = ref(null)
-    /** @type { import('@nuxtjs/composition-api').Ref<boolean> } */
+    const modalRef = ref<HTMLElement | null>(null)
+    const nodeRef = ref<HTMLElement | null>(null)
+    const buttonRef = ref<HTMLElement | null>(null)
+
     const visibleRef = ref(false)
-    const nodeRef = ref(null)
-
-    /** @type { import('@nuxtjs/composition-api').Ref<HTMLElement | undefined> } */
-    const buttonRef = ref()
     const filterSidebar = useFilterSidebarVisibility()
-    const { i18n } = useContext()
-    /** @type { import('@nuxtjs/composition-api').Ref<boolean> } */
-    const isMinScreenMd = inject('isMinScreenMd')
-    /** @type { import('@nuxtjs/composition-api').Ref<boolean> } */
-    const isHeaderScrolled = inject('isHeaderScrolled')
+    const i18n = useI18n()
 
-    /** @type { import('@nuxtjs/composition-api').Ref<import('@nuxtjs/composition-api').Component> } */
-    const filterComponent = ref(VModalContent)
+    const isMinScreenMd: Ref<boolean> = inject('isMinScreenMd', ref(true))
+    const isHeaderScrolled: Ref<boolean> = inject(
+      'isHeaderScrolled',
+      ref(false)
+    )
+
+    const filterComponent = ref('VModalContent')
 
     const triggerA11yProps = reactive({
       'aria-expanded': false,
@@ -103,56 +105,50 @@ export default {
     }
 
     const onTriggerClick = () => {
-      if (visibleRef.value === true) {
-        close()
-      } else {
-        open()
-      }
+      visibleRef.value === true ? close() : open()
     }
 
     /**
      * Focus the first element in the sidebar when navigating from the VFilterButton
      * using keyboard `Tab` key.
-     * @param { KeyboardEvent } event
      */
-    const onKeyDown = (event) => {
-      if (
-        isMinScreenMd.value &&
-        event.key === keycodes.Tab &&
-        filterSidebar.isVisible.value
-      ) {
+    const onTab = (event: KeyboardEvent) => {
+      if (isMinScreenMd.value && filterSidebar.isVisible.value) {
         // Prevent over-tabbing to the element after the target one
         event.preventDefault()
         // Cannot use refs when using portals (for sidebar)
-        focusIn(document.querySelector('#filters'), Focus.First)
+        const filtersSidebarElement = document.getElementById('filters')
+        if (filtersSidebarElement) {
+          focusIn(filtersSidebarElement, Focus.First)
+        }
       }
     }
 
-    /**
-     * @typedef {{mode?: string, 'trigger-element'?: import('@nuxtjs/composition-api').ComputedRef<HTMLElement|null>, hide?: close, visible: import('@nuxtjs/composition-api').Ref<boolean>, 'aria-label'?: string}} FilterOptions
-     */
-
-    /** @type {FilterOptions} */
-    const mobileOptions = {
-      visible: visibleRef,
-      'trigger-element':
-        /** @type {import('@nuxtjs/composition-api').ComputedRef<HTMLElement|null>}*/ (
-          computed(() => nodeRef?.value?.firstChild)
-        ),
-      hide: close,
-      'aria-label': i18n.t('header.filter-button.simple').toString(),
-      mode: 'mobile',
+    type MobileFilterOptions = {
+      'aria-label': string
+      hide: () => void
+    }
+    type DesktopFilterOptions = {
+      to: string
     }
 
-    /** @type {FilterOptions} */
+    const mobileOptions = {
+      triggerElement: computed(() =>
+        nodeRef.value?.firstChild
+          ? (nodeRef.value?.firstChild as HTMLElement)
+          : null
+      ),
+      'aria-label': i18n.t('header.filter-button.simple').toString(),
+      hide: close,
+    }
+
     const desktopOptions = {
       to: 'sidebar',
-      visible: visibleRef,
     }
-    /**
-     * @type {Ref<FilterOptions>}
-     */
-    const options = ref(mobileOptions)
+
+    const options: Ref<MobileFilterOptions | DesktopFilterOptions> =
+      ref(mobileOptions)
+
     onMounted(() => {
       if (isMinScreenMd.value && filterSidebar.isVisible.value) {
         open()
@@ -162,10 +158,10 @@ export default {
       [isMinScreenMd],
       ([isMinScreenMd]) => {
         if (isMinScreenMd) {
-          filterComponent.value = VSidebarContent
+          filterComponent.value = 'VSidebarContent'
           options.value = desktopOptions
         } else {
-          filterComponent.value = VModalContent
+          filterComponent.value = 'VModalContent'
           options.value = mobileOptions
         }
       },
@@ -179,14 +175,15 @@ export default {
       isHeaderScrolled,
       nodeRef,
       visibleRef,
+
       open,
       close,
       onTriggerClick,
-      onKeyDown,
+      onTab,
       triggerA11yProps,
       isMinScreenMd,
       options,
     }
   },
-}
+})
 </script>
