@@ -1,11 +1,11 @@
 <template>
   <Component
-    :is="isBoxed ? 'VLink' : 'VWarningSuppressor'"
+    :is="isBoxed ? 'VLink' : 'div'"
+    v-bind="layoutBasedProps"
     class="audio-track group"
     :aria-label="ariaLabel"
     role="region"
-    v-bind="layoutBasedProps"
-    @keydown.native="handleKeydown"
+    v-on="listeners"
   >
     <Component
       :is="layoutComponent"
@@ -28,9 +28,9 @@
 
       <template #play-pause="playPauseProps">
         <VPlayPause
+          v-bind="playPauseProps"
           ref="playPauseRef"
           :status="status"
-          v-bind="playPauseProps"
           @toggle="handleToggle"
         />
       </template>
@@ -48,6 +48,8 @@ import {
   useRoute,
   PropType,
 } from '@nuxtjs/composition-api'
+
+import { withModifiers } from '@vue/runtime-dom'
 
 import { useActiveAudio } from '~/composables/use-active-audio'
 import { defaultRef } from '~/composables/default-ref'
@@ -74,7 +76,6 @@ import VRowLayout from '~/components/VAudioTrack/layouts/VRowLayout.vue'
 import VBoxLayout from '~/components/VAudioTrack/layouts/VBoxLayout.vue'
 import VGlobalLayout from '~/components/VAudioTrack/layouts/VGlobalLayout.vue'
 import VLink from '~/components/VLink.vue'
-import VWarningSuppressor from '~/components/VWarningSuppressor.vue'
 
 /**
  * Displays the waveform and basic information about the track, along with
@@ -86,7 +87,6 @@ export default defineComponent({
     VPlayPause,
     VWaveform,
     VLink,
-    VWarningSuppressor,
 
     // Layouts
     VFullLayout,
@@ -392,14 +392,19 @@ export default defineComponent({
       handleToggle(status.value)
     }
 
+    const listeners = computed(() => ({
+      keydown: isBoxed.value
+        ? withModifiers(handleKeydown, ['native'])
+        : handleKeydown,
+    }))
+
     return {
       status,
       message,
       ariaLabel,
       handleToggle,
       handleSeeked,
-      handleKeydown,
-
+      listeners,
       currentTime,
       duration,
 
