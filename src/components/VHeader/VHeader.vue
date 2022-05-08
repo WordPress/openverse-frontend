@@ -203,8 +203,8 @@ const VHeader = defineComponent({
         query: searchStore.searchQueryParams,
       })
       router.push(newPath)
-      await mediaStore.fetchMedia()
       document.activeElement?.blur()
+      await mediaStore.fetchMedia()
     }
 
     return {
