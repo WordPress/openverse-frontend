@@ -1,6 +1,6 @@
 <template>
   <div>
-    <figure class="w-full mb-4 pt-8 md:pt-12 px-6 bg-dark-charcoal-06 relative">
+    <figure class="w-full mb-4 pt-12 px-6 bg-dark-charcoal-06 relative">
       <div
         v-if="backToSearchPath"
         class="absolute left-0 top-0 right-0 w-full px-2"
@@ -16,7 +16,7 @@
         class="h-full max-h-[500px] mx-auto rounded-t-sm"
         @load="onImageLoaded"
       />
-      <SketchFabViewer
+      <VSketchFabViewer
         v-if="sketchFabUid"
         :uid="sketchFabUid"
         class="mx-auto rounded-t-sm"
@@ -88,7 +88,7 @@ import VLink from '~/components/VLink.vue'
 import VImageDetails from '~/components/VImageDetails/VImageDetails.vue'
 import VMediaReuse from '~/components/VMediaInfo/VMediaReuse.vue'
 import VRelatedImages from '~/components/VImageDetails/VRelatedImages.vue'
-import SketchFabViewer from '~/components/SketchFabViewer.vue'
+import VSketchFabViewer from '~/components/VSketchFabViewer.vue'
 import VBackToSearchResultsLink from '~/components/VBackToSearchResultsLink.vue'
 
 import type { NuxtApp } from '@nuxt/types/app'
@@ -101,7 +101,7 @@ export default defineComponent({
     VImageDetails,
     VMediaReuse,
     VRelatedImages,
-    SketchFabViewer,
+    VSketchFabViewer,
     VBackToSearchResultsLink,
   },
   beforeRouteEnter(_to, from, nextPage) {
