@@ -6,10 +6,12 @@ import { getDocument } from '~/utils/dom/get-document'
  * Creates a utility for locking body scrolling for a particular node.
  */
 export function useBodyScrollLock({ nodeRef }: { nodeRef: Ref<HTMLElement> }) {
+  console.log('scroll lock time, baby!', nodeRef)
   const locked = ref(false)
   let scrollY: number | null = null
 
   const lock = () => {
+    console.log('lock lock lock')
     if (!nodeRef.value) {
       throw new Error(
         'useBodyScrollLock: Cannot lock body with undefined node reference'
