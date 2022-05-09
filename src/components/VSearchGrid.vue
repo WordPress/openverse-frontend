@@ -8,7 +8,7 @@
   >
     <header
       v-if="query.q && supported"
-      class="mt-4"
+      class="mt-5"
       :class="isAllView ? 'mb-10' : 'mb-8'"
     >
       <VSearchResultsTitle :size="isAllView ? 'large' : 'default'">

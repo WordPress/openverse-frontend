@@ -1,6 +1,6 @@
 <template>
   <header
-    class="main-header flex px-4 py-3 md:px-7 items-center md:items-stretch z-40 w-full bg-white gap-x-2 gap-y-4 transition"
+    class="main-header flex px-4 py-4 md:px-7 items-center md:items-stretch z-40 w-full bg-white gap-x-2 gap-y-4"
     :class="{
       'flex-wrap md:flex-nowrap': !isHeaderScrolled,
       'border-b border-white': !isHeaderScrolled && !isMenuOpen,
