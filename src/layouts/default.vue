@@ -1,5 +1,5 @@
 <template>
-  <div class="app grid relative">
+  <div class="app grid relative pt-1">
     <div class="sticky top-0 block z-40">
       <VTeleportTarget name="skip-to-content" :force-destroy="true" />
       <VMigrationNotice />
