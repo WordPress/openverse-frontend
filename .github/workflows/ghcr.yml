@@ -61,6 +61,7 @@ jobs:
             ${{ github.event_name == 'push' && 'type=raw,value=main' || '' }}
 
       - uses: docker/build-push-action@v2
+        id: build
         with:
           context: .
           tags: ${{ steps.metadata.outputs.tags }}
