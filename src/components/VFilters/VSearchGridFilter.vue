@@ -12,7 +12,7 @@
         v-if="isAnyFilterApplied"
         id="clear-filter-button"
         type="button"
-        class="text-sm py-2 px-4 text-pink hover:border-dark-gray"
+        class="text-sm py-1 px-4 text-pink hover:border-dark-gray"
         @click="clearFilters"
       >
         {{ $t('filter-list.clear') }}
