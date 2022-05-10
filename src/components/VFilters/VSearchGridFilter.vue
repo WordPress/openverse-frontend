@@ -59,10 +59,10 @@ import { kebab } from 'case'
 
 import { useSearchStore } from '~/stores/search'
 import { areQueriesEqual } from '~/utils/search-query-transform'
-
-import type { NonMatureFilterCategory } from '~/constants/filters'
 import { Focus, focusIn, getFocusableElements } from '~/utils/focus-management'
+import type { NonMatureFilterCategory } from '~/constants/filters'
 import { useFocusFilters } from '~/composables/use-focus-filters'
+import { defineEvent } from '~/types/emits'
 
 import VFilterChecklist from '~/components/VFilters/VFilterChecklist.vue'
 import VButton from '~/components/VButton.vue'
@@ -72,6 +72,9 @@ export default defineComponent({
   components: {
     VButton,
     VFilterChecklist,
+  },
+  emits: {
+    close: defineEvent(),
   },
   setup() {
     const searchStore = useSearchStore()
