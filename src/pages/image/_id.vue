@@ -45,7 +45,7 @@
           v-if="image.creator"
           path="image-details.creator"
           tag="span"
-          class="font-semibold leading-[130%]"
+          class="font-semibold leading-[130%] text-base"
         >
           <template #name>
             <VLink
