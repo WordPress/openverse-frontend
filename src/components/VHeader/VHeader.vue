@@ -1,13 +1,12 @@
 <template>
   <header
-    class="main-header flex px-4 py-4 md:px-7 items-center md:items-stretch z-30 w-full bg-white gap-x-2 gap-y-4"
+    class="main-header flex px-4 py-4 md:px-7 items-center md:items-stretch z-30 w-full bg-white justify-between gap-x-2 gap-y-4"
     :class="{
       'flex-wrap md:flex-nowrap': !isHeaderScrolled,
       'border-b border-white': !isHeaderScrolled && !isMenuOpen,
       'border-b border-dark-charcoal-20':
         isSearchRoute && (isHeaderScrolled || isMenuOpen),
-      'justify-between': isSearchRoute,
-      'justify-between md:justify-start': !isSearchRoute,
+      'md:justify-start': !isSearchRoute,
       'flex-nowrap': !isSearchRoute && isHeaderScrolled,
     }"
   >
@@ -23,7 +22,6 @@
       :size="isMinScreenMd ? 'medium' : isHeaderScrolled ? 'small' : 'large'"
       :class="{
         'order-4 md:order-none w-full md:w-auto': !isHeaderScrolled,
-        'search-bar-mobile-scrolled': isSearchRoute && isHeaderScrolled,
       }"
       @submit="handleSearch"
     >
@@ -80,7 +78,7 @@ const menus = {
   CONTENT_SWITCHER: 'content-switcher',
 }
 
-const VHeader = defineComponent({
+export default defineComponent({
   name: 'VHeader',
   components: {
     VLogoButton,
@@ -230,6 +228,4 @@ const VHeader = defineComponent({
     }
   },
 })
-
-export default VHeader
 </script>
