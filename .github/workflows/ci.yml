@@ -109,7 +109,7 @@ jobs:
               body: `
                 **Nuxt Playwright Failure Test Results**
 
-                It looks like the Nuxt Playwright tests failed. You can download the Playwright `test-results`
+                It looks like the Nuxt Playwright tests failed. You can download the Playwright trace
                 output from this action artifact:
 
                 <${artifact.archive_download_url}>
@@ -170,7 +170,7 @@ jobs:
               body: `
                 **Storybook Playwright Failure Test Results**
 
-                It looks like the Storybook Playwright tests failed. You can download the Playwright `test-results`
+                It looks like the Storybook Playwright tests failed. You can download the Playwright trace
                 output from this action artifact:
 
                 <${artifact.archive_download_url}>
