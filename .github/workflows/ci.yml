@@ -127,12 +127,12 @@ jobs:
     steps:
       - uses: actions/download-artifact@v2
         with:
-          path: /test-results
+          path: test-results
 
       - name: Check if test results exist
         id: check-results
         run: |
-          if [[ stat /test-results/nuxt-test-results || stat /test-results/storybook-test-results ]]; then
+          if [[ stat test-results/nuxt-test-results || stat test-results/storybook-test-results ]]; then
             echo "::set-output name=has-failure::true"
           fi
 
