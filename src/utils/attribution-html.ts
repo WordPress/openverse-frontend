@@ -162,11 +162,10 @@ export const getAttribution = (
 
   /* Title */
 
-  let title = mediaItem.title
-    ? tFn('actual-title', { title: mediaItem.title })
-    : tFn('generic-title')
+  let title = mediaItem.title || tFn('generic-title')
   if (!isPlaintext && mediaItem.foreign_landing_url)
     title = extLink(mediaItem.foreign_landing_url, title)
+  if (mediaItem.title) title = tFn('actual-title', { title })
 
   /* License */
 
