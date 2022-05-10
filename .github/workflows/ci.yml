@@ -96,6 +96,9 @@ jobs:
         if: failure()
         with:
           script: |
+            // Wait for 5 seconds to allow the artifact to be read, otherwise we enter a race condition with the API
+            await new Promise(resolve => setTimeout(resolve, 5000))
+
             const response = await github.rest.actions.listWorkflowRunArtifacts({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -159,6 +162,8 @@ jobs:
         if: failure()
         with:
           script: |
+            // Wait for 5 seconds to allow the artifact to be read, otherwise we enter a race condition with the API
+            await new Promise(resolve => setTimeout(resolve, 5000))
             const response = await github.rest.actions.listWorkflowRunArtifacts({
               owner: context.repo.owner,
               repo: context.repo.repo,
