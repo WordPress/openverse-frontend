@@ -101,8 +101,8 @@ jobs:
               repo: context.repo.repo,
               run_id: ${{ github.run_id }},
             })
-            console.log(response)
-            const artifact = response.data.artifacts.find(a => a.name === 'nuxt-test-results')
+            console.log(JSON.stringify(response.data))
+            const artifact = response.data.artifacts.find(a => a.name === '${{ github.run_id }}-nuxt-test-results')
 
             await github.rest.issues.createComment({
               issue_number: context.issue.number,
@@ -165,8 +165,8 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
             })
-            console.log(response)
-            const artifact = response.data.artifacts.find(a => a.name === 'storybook-test-results')
+            console.log(JSON.stringify(response.data))
+            const artifact = response.data.artifacts.find(a => a.name === '${{ github.run_id }}-storybook-test-results')
 
             await github.rest.issues.createComment({
               issue_number: context.issue.number,
