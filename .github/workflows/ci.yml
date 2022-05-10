@@ -89,16 +89,13 @@ jobs:
       - uses: actions/upload-artifact@v3
         if: ${{ failure() }}
         with:
-          name: nuxt-test-results
+          name: ${{ github.run_id }}-nuxt-test-results
           path: test-results
 
       - uses: actions/github-script@v6
         if: failure()
         with:
           script: |
-            // Wait for 5 seconds to allow the artifact to be read, otherwise we enter a race condition with the API
-            await new Promise(resolve => setTimeout(resolve, 5000))
-
             const response = await github.rest.actions.listWorkflowRunArtifacts({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -155,7 +152,7 @@ jobs:
         if: failure()
         id: test-results
         with:
-          name: storybook-test-results
+          name: ${{ github.run_id }}-storybook-test-results
           path: test-results
 
       - uses: actions/github-script@v6
@@ -164,10 +161,9 @@ jobs:
           script: |
             // Wait for 5 seconds to allow the artifact to be read, otherwise we enter a race condition with the API
             await new Promise(resolve => setTimeout(resolve, 5000))
-            const response = await github.rest.actions.listWorkflowRunArtifacts({
+            const response = await github.rest.actions.listArtifactsForRepo({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              run_id: ${{ github.run_id }},
             })
             console.log(response)
             const artifact = response.data.artifacts.find(a => a.name === 'storybook-test-results')
