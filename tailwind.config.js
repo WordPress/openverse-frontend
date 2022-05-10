@@ -25,7 +25,8 @@ module.exports = {
       'dark-blue': '#23282d',
 
       // Brand
-      yellow: '#ffe033',
+      // yellow: '#ffe033',
+      yellow: 'hotpink',
       pink: '#c52b9b',
       // Active
       'dark-pink': '#7c2264',
