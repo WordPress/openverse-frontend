@@ -122,7 +122,7 @@ export default {
       const descriptions = elements
         .map((element) => this.$t(`browse-page.license-description.${element}`))
         .join(' ')
-      const close = this.$t('modal.close', {
+      const close = this.$t('modal.close-named', {
         name: this.$t('browse-page.aria.license-explanation'),
       })
       return `${descriptions} - ${close}`
