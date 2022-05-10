@@ -6,7 +6,10 @@
       <VTranslationStatusBanner />
       <VHeader />
     </div>
-    <main class="main embedded" :class="{ 'has-sidebar': isSidebarVisible }">
+    <main
+      class="main embedded w-screen"
+      :class="{ 'has-sidebar': isSidebarVisible }"
+    >
       <Nuxt class="min-w-0 main-page" />
       <VSidebarTarget
         class="sidebar fixed pb-20 end-0 bg-dark-charcoal-06"
