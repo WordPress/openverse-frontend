@@ -73,7 +73,7 @@ jobs:
         if: steps.test-results-comment.outputs.comment-id != 0
         with:
           script: |
-            github.pulls.deleteComment({
+            github.rest.issues.deleteComment({
               repo: context.repo.repo,
               owner: context.repo.owner,
               comment_id: ${{ steps.test-results-comment.outputs.comment-id }}
