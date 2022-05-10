@@ -14,7 +14,6 @@
       <VSidebarTarget
         class="sidebar fixed pb-20 end-0 bg-dark-charcoal-06"
         :class="{ 'border-s border-dark-charcoal-20': isSidebarVisible }"
-        :style="headerHeight"
       />
     </main>
     <VModalTarget class="modal" />
