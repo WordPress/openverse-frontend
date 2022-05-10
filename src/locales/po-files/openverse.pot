@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-05-03T05:46:51+00:00\n"
+"POT-Creation-Date: 2022-05-10T15:31:18+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -21,6 +21,12 @@ msgstr ""
 #: src/components/VSkipToContentContainer.vue:9
 msgctxt "skip-to-content"
 msgid "Skip to content"
+msgstr ""
+
+#. Do not translate words between ### ###.
+#: src/components/VSketchFabViewer.vue:55
+msgctxt "sketchfab-iframe-title"
+msgid "###sketchfab### viewer"
 msgstr ""
 
 #: src/pages/preferences.vue:3
@@ -133,6 +139,12 @@ msgstr ""
 #: src/components/VContentReport/VContentReportPopover.vue:18
 msgctxt "modal.close"
 msgid "Close"
+msgstr ""
+
+#. Do not translate words between ### ###.
+#: src/components/VFilters/VFilterChecklist.vue:125
+msgctxt "modal.close-named"
+msgid "Close ###name###"
 msgstr ""
 
 #: src/components/VAudioTrack/layouts/VFullLayout.vue:63
@@ -655,9 +667,18 @@ msgctxt "media-details.reuse.copy-license.copied"
 msgid "Copied!"
 msgstr ""
 
+msgctxt "media-details.reuse.credit.generic-title"
+msgid "This work"
+msgstr ""
+
+#. Do not translate words between ### ###.
+msgctxt "media-details.reuse.credit.actual-title"
+msgid "\"###title###\""
+msgstr ""
+
 #. Do not translate words between ### ###.
 msgctxt "media-details.reuse.credit.text"
-msgid "\"###title###\"###creator######marked-licensed######license###. ###view-legal###"
+msgid "###title######creator######marked-licensed######license###. ###view-legal###"
 msgstr ""
 
 #. Do not translate words between ### ###.
@@ -797,7 +818,6 @@ msgctxt "browse-page.search-form.placeholder"
 msgid "Search all ###type###"
 msgstr ""
 
-#: src/components/VImageGrid/VImageGrid.vue:51
 msgctxt "browse-page.search-form.image"
 msgid "images"
 msgstr ""
@@ -906,7 +926,7 @@ msgctxt "filters.license-explanation.more.read-more"
 msgid "Read more"
 msgstr ""
 
-#: src/components/VFilters/VFilterChecklist.vue:97
+#: src/components/VFilters/VFilterChecklist.vue:98
 msgctxt "filters.search-by.title"
 msgid "Search By"
 msgstr ""
@@ -1120,13 +1140,13 @@ msgid "An error occurred"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/image/_id.vue:142
+#: src/pages/image/_id.vue:195
 msgctxt "error.image-not-found"
 msgid "Couldn't find image with id ###id###"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/audio/_id.vue:71
+#: src/pages/audio/_id.vue:84
 msgctxt "error.media-not-found"
 msgid "Couldn't find ###mediaType### with id ###id###"
 msgstr ""
@@ -1139,12 +1159,12 @@ msgctxt "error.audio"
 msgid "audio"
 msgstr ""
 
-#: src/pages/extension.vue:90
+#: src/pages/extension.vue:98
 msgctxt "extension.title"
 msgid "Web extension"
 msgstr ""
 
-#: src/pages/extension.vue:60
+#: src/pages/extension.vue:58
 msgctxt "extension.conclusion"
 msgid "Have your favourite content while browsing the web"
 msgstr ""
@@ -1173,7 +1193,7 @@ msgctxt "extension.features.search.content"
 msgid "Browse through millions of content and use filters to find what best meets your needs."
 msgstr ""
 
-#: src/pages/extension.vue:7
+#: src/pages/extension.vue:6
 msgctxt "extension.description.intro"
 msgid "A browser extension that lets you search and use open-licensed and public domain images."
 msgstr ""
@@ -1643,12 +1663,10 @@ msgctxt "sources.issue-button"
 msgid "Suggest a new source"
 msgstr ""
 
-#: src/pages/sources.vue:77
 msgctxt "sources.heading.image"
 msgid "Image Sources"
 msgstr ""
 
-#: src/pages/sources.vue:79
 msgctxt "sources.heading.audio"
 msgid "Audio Sources"
 msgstr ""

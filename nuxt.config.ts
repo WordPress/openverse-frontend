@@ -140,6 +140,9 @@ const config: NuxtConfig = {
     },
   },
   srcDir: 'src/',
+  // Necessary to fix pm2 + nuxt issues
+  rootDir: process.cwd(),
+  buildDir: process.cwd() + '/.nuxt/',
   modern: 'client',
   server: {
     port: process.env.PORT || 8443,
@@ -162,13 +165,7 @@ const config: NuxtConfig = {
     { src: '~/plugins/ua-parse' },
     { src: '~/plugins/focus-visible', mode: 'client' },
   ],
-  css: [
-    '~/styles/tailwind.css',
-    '~/assets/fonts.css',
-    '~/styles/vocabulary.scss',
-    '~/styles/global.scss',
-    '~/styles/accent.scss',
-  ],
+  css: ['~/styles/tailwind.css', '~/assets/fonts.css', '~/styles/accent.css'],
   head,
   env,
   dev: !isProd,
@@ -181,12 +178,6 @@ const config: NuxtConfig = {
     '@nuxtjs/eslint-module',
     '@pinia/nuxt',
   ],
-  // Load the scss variables into every component:
-  // No need to import them. Since the variables will not exist in the final build,
-  // this doesn't make the built files larger.
-  styleResources: {
-    scss: ['./styles/utilities/all.scss'],
-  },
   modules: [
     '@nuxtjs/i18n',
     '@nuxtjs/redirect-module',
