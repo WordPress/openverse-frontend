@@ -109,14 +109,14 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: `
-                **Nuxt Playwright Failure Test Results**
+            **Nuxt Playwright Failure Test Results**
 
-                It looks like the Nuxt Playwright tests failed. You can download the Playwright trace
-                output from this action artifact:
+            It looks like the Nuxt Playwright tests failed. You can download the Playwright trace
+            output from this action artifact:
 
-                <${artifact.archive_download_url}>
+            <${artifact.archive_download_url}>
 
-                Read more about how to use this artifact here: <https://github.com/WordPress/openverse-frontend/blob/main/test/playwright/README.md#debugging>
+            Read more about how to use this artifact here: <https://github.com/WordPress/openverse-frontend/blob/main/test/playwright/README.md#debugging>
               `
             })
 
@@ -173,14 +173,14 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: `
-                **Storybook Playwright Failure Test Results**
+            **Storybook Playwright Failure Test Results**
 
-                It looks like the Storybook Playwright tests failed. You can download the Playwright trace
-                output from this action artifact:
+            It looks like the Storybook Playwright tests failed. You can download the Playwright trace
+            output from this action artifact:
 
-                <${artifact.archive_download_url}>
+            <${artifact.archive_download_url}>
 
-                Read more about how to use this artifact here: <https://github.com/WordPress/openverse-frontend/blob/main/test/playwright/README.md#debugging>
+            Read more about how to use this artifact here: <https://github.com/WordPress/openverse-frontend/blob/main/test/playwright/README.md#debugging>
               `
             })
 
