@@ -62,6 +62,7 @@ import { areQueriesEqual } from '~/utils/search-query-transform'
 
 import type { NonMatureFilterCategory } from '~/constants/filters'
 import { Focus, focusIn, getFocusableElements } from '~/utils/focus-management'
+import { useFocusFilters } from '~/composables/use-focus-filters'
 
 import VFilterChecklist from '~/components/VFilters/VFilterChecklist.vue'
 import VButton from '~/components/VButton.vue'
@@ -112,7 +113,9 @@ export default defineComponent({
       }
     )
 
-    const focusableElements = computed(() => getFocusableElements(filtersFormRef.value))
+    const focusableElements = computed(() =>
+      getFocusableElements(filtersFormRef.value)
+    )
     /**
      * Find the last focusable element in VSearchGridFilter to add a 'Tab' keydown event
      * handler to it.
@@ -151,14 +154,10 @@ export default defineComponent({
         firstFocusableElement.value === event.target &&
         !isAnyFilterApplied.value
       ) {
-        focusFilterButton(event)
+        useFocusFilters().focusFilterButton(event)
       }
     }
-    const focusFilterButton = (event: KeyboardEvent) => {
-      event.preventDefault()
-      const filterButton = document.getElementById('filter-button')
-      if (filterButton) filterButton.focus()
-    }
+
     return {
       firstFocusableElement,
       filtersFormRef,
@@ -170,7 +169,6 @@ export default defineComponent({
       toggleFilter: searchStore.toggleFilter,
       handleTabKey,
       handleShiftTabKey,
-      focusFilterButton,
     }
   },
 })

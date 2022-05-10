@@ -43,17 +43,16 @@ import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
 
 import { ALL_MEDIA, IMAGE, SupportedSearchType } from '~/constants/media'
 import { NO_RESULT } from '~/constants/errors'
-
 import { defineEvent } from '~/types/emits'
+
+import type { ApiQueryParams } from '~/utils/search-query-transform'
+import type { FetchState } from '~/composables/use-fetch-state'
 
 import VMetaSearchForm from '~/components/VMetaSearch/VMetaSearchForm.vue'
 import VErrorSection from '~/components/VErrorSection/VErrorSection.vue'
 import VErrorImage from '~/components/VErrorSection/VErrorImage.vue'
 import VNoResults from '~/components/VErrorSection/VNoResults.vue'
 import VSearchResultsTitle from '~/components/VSearchResultsTitle.vue'
-
-import { ApiQueryParams } from '../utils/search-query-transform'
-import { FetchState } from '../composables/use-fetch-state'
 
 export default defineComponent({
   name: 'VSearchGrid',

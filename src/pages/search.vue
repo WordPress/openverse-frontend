@@ -39,15 +39,13 @@ import { computed, defineComponent, inject, ref } from '@nuxtjs/composition-api'
 import { supportedSearchTypes } from '~/constants/media'
 import { isMinScreen } from '~/composables/use-media-query'
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
-
+import { Focus, focusIn } from '~/utils/focus-management'
 import { useMediaStore } from '~/stores/media'
 import { useSearchStore } from '~/stores/search'
 
 import VSearchGrid from '~/components/VSearchGrid.vue'
 import VSkipToContentContainer from '~/components/VSkipToContentContainer.vue'
 import VScrollButton from '~/components/VScrollButton.vue'
-
-import { Focus, focusIn } from '../utils/focus-management'
 
 export default defineComponent({
   name: 'BrowsePage',

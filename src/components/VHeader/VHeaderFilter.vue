@@ -35,11 +35,12 @@ import {
   Ref,
 } from '@nuxtjs/composition-api'
 
-import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
 import { useBodyScrollLock } from '~/composables/use-body-scroll-lock'
 import { useI18n } from '~/composables/use-i18n'
+import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
+import { useFocusFilters } from '~/composables/use-focus-filters'
 
-import { Focus, focusIn } from '~/utils/focus-management'
+import { Focus } from '~/utils/focus-management'
 import { defineEvent } from '~/types/emits'
 
 import VTeleport from '~/components/VTeleport/VTeleport.vue'
@@ -113,15 +114,7 @@ export default defineComponent({
      * using keyboard `Tab` key.
      */
     const onTab = (event: KeyboardEvent) => {
-      if (isMinScreenMd.value && filterSidebar.isVisible.value) {
-        // Prevent over-tabbing to the element after the target one
-        event.preventDefault()
-        // Cannot use refs when using portals (for sidebar)
-        const filtersSidebarElement = document.getElementById('filters')
-        if (filtersSidebarElement) {
-          focusIn(filtersSidebarElement, Focus.First)
-        }
-      }
+      useFocusFilters().focusFilterSidebar(event, Focus.First)
     }
 
     type MobileFilterOptions = {

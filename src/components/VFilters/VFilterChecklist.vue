@@ -95,12 +95,17 @@ export default defineComponent({
       type: Array as PropType<FilterItem[]>,
       required: false,
     },
-    title: { type: String },
+    title: {
+      type: String,
+    },
     filterType: {
       type: String as PropType<NonMatureFilterCategory>,
       required: true,
     },
-    disabled: { type: Boolean, default: false },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: {
     'toggle-filter': defineEvent<[toggleFilterPayload]>(),
