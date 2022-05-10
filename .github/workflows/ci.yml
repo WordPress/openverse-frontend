@@ -73,11 +73,12 @@ jobs:
         if: steps.test-results-comment.outputs.comment-id != 0
         with:
           script: |
-            github.rest.issues.deleteComment({
+            await github.rest.issues.deleteComment({
               repo: context.repo.repo,
               owner: context.repo.owner,
               comment_id: ${{ steps.test-results-comment.outputs.comment-id }}
             })
+            console.log('Deleted comment with ID ${{ steps.test-results-comment.outputs.comment-id }}')
 
   nuxt-playwright:
     name: Nuxt Playwright tests
@@ -132,7 +133,8 @@ jobs:
       - name: Check if test results exist
         id: check-results
         run: |
-          if [[ stat test-results/nuxt-test-results || stat test-results/storybook-test-results ]]; then
+          has_results=$(stat test-results/nuxt-test-results || stat test-results/storybook-test-results) || false
+          if [[ $has_results ]]; then
             echo "::set-output name=has-failure::true"
           fi
 
