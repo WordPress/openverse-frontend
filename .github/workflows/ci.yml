@@ -96,12 +96,13 @@ jobs:
         if: failure()
         with:
           script: |
-            const { data: { artifacts } } = await github.rest.actions.listWorkflowRunArtifacts({
+            const response = await github.rest.actions.listWorkflowRunArtifacts({
               owner: context.repo.owner,
               repo: context.repo.repo,
               run_id: ${{ github.run_id }},
             })
-            const artifact = artifacts.find(a => a.name === 'nuxt-test-results')
+            console.log(response)
+            const artifact = response.data.artifacts.find(a => a.name === 'nuxt-test-results')
 
             await github.rest.issues.createComment({
               issue_number: context.issue.number,
@@ -158,12 +159,13 @@ jobs:
         if: failure()
         with:
           script: |
-            const { data: { artifacts } } = await github.rest.actions.listWorkflowRunArtifacts({
+            const response = await github.rest.actions.listWorkflowRunArtifacts({
               owner: context.repo.owner,
               repo: context.repo.repo,
               run_id: ${{ github.run_id }},
             })
-            const artifact = artifacts.find(a => a.name === 'storybook-test-results')
+            console.log(response)
+            const artifact = response.data.artifacts.find(a => a.name === 'storybook-test-results')
 
             await github.rest.issues.createComment({
               issue_number: context.issue.number,
