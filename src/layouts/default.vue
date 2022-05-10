@@ -77,21 +77,12 @@ const embeddedPage = {
     )
     provide('headerHasTwoRows', headerHasTwoRows)
 
-    /**
-     * Desktop header is 80px high in initial state, and 72px high when scrolled,
-     * plus 1px border.
-     * @type {import('@nuxtjs/composition-api').ComputedRef<CSSProperties>}
-     */
-    const headerHeight = computed(() => ({
-      '--header-height': `${isHeaderScrolled.value ? 73 : 81}px`,
-    }))
     return {
       isHeaderScrolled,
       isMinScreenMd,
       isSidebarVisible,
       isSearchRoute,
       headerHasTwoRows,
-      headerHeight,
     }
   },
 }
@@ -100,7 +91,8 @@ export default embeddedPage
 
 <style scoped>
 .sidebar {
-  height: calc(100vh - var(--header-height, 81px));
+  /* Header height above md is 80px plus 1px for bottom border */
+  height: calc(100vh - 81px);
 }
 .has-sidebar .sidebar {
   width: var(--filter-sidebar-width);
