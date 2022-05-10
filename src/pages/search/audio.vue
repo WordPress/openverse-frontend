@@ -70,9 +70,10 @@ export default defineComponent({
       return i18n.t('browse-page.fetching-error', { type })
     })
 
+    const focusFilters = useFocusFilters()
     const handleShiftTab = (event: KeyboardEvent, i: number) => {
       if (i === 0) {
-        useFocusFilters().focusFilterSidebar(event, Focus.Last)
+        focusFilters.focusFilterSidebar(event, Focus.Last)
       }
     }
 

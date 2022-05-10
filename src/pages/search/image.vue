@@ -27,8 +27,9 @@ export default defineComponent({
     const results = computed(() => props.resultItems.image)
     const { canLoadMore, onLoadMore } = useLoadMore(props)
 
+    const focusFilters = useFocusFilters()
     const handleShiftTab = () => {
-      useFocusFilters().focusFilterButton()
+      focusFilters.focusFilterSidebar()
     }
 
     return { canLoadMore, onLoadMore, handleShiftTab, results }

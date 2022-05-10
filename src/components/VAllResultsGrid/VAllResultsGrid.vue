@@ -89,7 +89,7 @@ export default defineComponent({
     const noResults = computed(
       () => fetchState.value.isFinished && allMedia.value.length === 0
     )
-
+    const focusFilters = useFocusFilters()
     /**
      * Move focus to the filters sidebar if shift-tab is pressed on the first content link.
      * @param i - the index of the content link.
@@ -97,7 +97,7 @@ export default defineComponent({
      */
     const handleShiftTab = (event: KeyboardEvent, i: number) => {
       if (i === 0) {
-        useFocusFilters().focusFilterSidebar(event, Focus.Last)
+        focusFilters.focusFilterSidebar(event, Focus.Last)
       }
     }
 

@@ -17,7 +17,7 @@
         variant="plain"
         class="text-sm font-semibold py-2 px-4 text-pink hover:ring hover:ring-pink"
         @click="clearFilters"
-        @keydown.tab.shift="focusFilterButton"
+        @keydown.shift.tab.exact="focusFilterButton"
       >
         {{ $t('filter-list.clear') }}
       </VButton>
@@ -26,7 +26,7 @@
       ref="filtersFormRef"
       class="filters-form"
       @keydown.tab.exact="handleTabKey"
-      @keydown.tab.shift.exact="handleShiftTabKey"
+      @keydown.shift.tab.exact="handleShiftTabKey"
     >
       <VFilterChecklist
         v-for="filterType in filterTypes"
@@ -90,7 +90,7 @@ export default defineComponent({
     const filterTypeTitle = (filterType: string) =>
       filterType === 'searchBy'
         ? ''
-        : i18n.t(`filters.${kebab(filterType)}.title`).toString()
+        : i18n.t(`filters.${kebab(filterType)}.title`)
 
     /**
      * This watcher fires even when the queries are equal. We update the path only
@@ -154,8 +154,13 @@ export default defineComponent({
         firstFocusableElement.value === event.target &&
         !isAnyFilterApplied.value
       ) {
-        useFocusFilters().focusFilterButton(event)
+        focusFilterButton(event)
       }
+    }
+
+    const focusFilters = useFocusFilters()
+    const focusFilterButton = (event?: KeyboardEvent) => {
+      focusFilters.focusFilterButton(event)
     }
 
     return {
@@ -169,6 +174,7 @@ export default defineComponent({
       toggleFilter: searchStore.toggleFilter,
       handleTabKey,
       handleShiftTabKey,
+      focusFilterButton,
     }
   },
 })

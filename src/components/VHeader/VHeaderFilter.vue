@@ -108,13 +108,13 @@ export default defineComponent({
     const onTriggerClick = () => {
       visibleRef.value === true ? close() : open()
     }
-
+    const focusFilters = useFocusFilters()
     /**
      * Focus the first element in the sidebar when navigating from the VFilterButton
      * using keyboard `Tab` key.
      */
     const onTab = (event: KeyboardEvent) => {
-      useFocusFilters().focusFilterSidebar(event, Focus.First)
+      focusFilters.focusFilterSidebar(event, Focus.First)
     }
 
     type MobileFilterOptions = {
@@ -131,7 +131,7 @@ export default defineComponent({
           ? (nodeRef.value?.firstChild as HTMLElement)
           : null
       ),
-      'aria-label': i18n.t('header.filter-button.simple').toString(),
+      'aria-label': i18n.t('header.filter-button.simple'),
       hide: close,
     }
 

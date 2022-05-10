@@ -5,7 +5,7 @@
     :aria-label="ariaLabel"
     role="region"
     v-bind="layoutBasedProps"
-    @keydown.native.shift.tab="$emit('tab-shift', $event)"
+    @keydown.native.shift.tab.exact="$emit('shift-tab', $event)"
     @keydown.native.space="handleSpace"
   >
     <Component
