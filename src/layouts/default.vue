@@ -7,7 +7,7 @@
       <VHeader />
     </div>
     <main
-      class="main embedded w-screen"
+      class="main embedded w-full"
       :class="{ 'has-sidebar': isSidebarVisible }"
     >
       <Nuxt class="min-w-0 main-page" />
