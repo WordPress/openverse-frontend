@@ -1,11 +1,11 @@
-import { computed, ComputedRef } from '@nuxtjs/composition-api'
+import { computed, Ref } from '@nuxtjs/composition-api'
 
 import { useMediaStore } from '~/stores/media'
 
 /**
  * Fetches media on 'Load More' button click.
  */
-export const useLoadMore = (searchTerm: ComputedRef<string>) => {
+export const useLoadMore = (searchTerm: Ref<string>) => {
   const canLoadMore = computed(() => searchTerm.value.trim() !== '')
 
   const onLoadMore = async () => {

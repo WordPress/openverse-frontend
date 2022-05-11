@@ -44,6 +44,7 @@ import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-vis
 import { Focus, focusIn } from '~/utils/focus-management'
 import { useMediaStore } from '~/stores/media'
 import { useSearchStore } from '~/stores/search'
+import { showScrollButtonKey } from '~/layouts/default.vue'
 
 import VSearchGrid from '~/components/VSearchGrid.vue'
 import VSkipToContentContainer from '~/components/VSkipToContentContainer.vue'
@@ -70,7 +71,7 @@ export default defineComponent({
     const searchGridRef = ref(null)
     const isMinScreenMd = isMinScreen('md')
     const { isVisible: isFilterSidebarVisible } = useFilterSidebarVisibility()
-    const showScrollButton = inject('showScrollButton')
+    const showScrollButton = inject(showScrollButtonKey)
     const mediaStore = useMediaStore()
     const searchStore = useSearchStore()
 

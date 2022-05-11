@@ -2,7 +2,7 @@
   <VPopover
     ref="popoverEl"
     :hide-on-click-outside="false"
-    :label="$t('media-details.content-report.long')"
+    :label="$t('media-details.content-report.long').toString()"
     placement="bottom-end"
   >
     <template #trigger="{ a11yProps }">
@@ -30,8 +30,10 @@
   </VPopover>
 </template>
 
-<script>
-import { defineComponent } from '@nuxtjs/composition-api'
+<script lang="ts">
+import { defineComponent, PropType } from '@nuxtjs/composition-api'
+
+import { Media } from '~/models/media'
 
 import VIconButton from '~/components/VIconButton/VIconButton.vue'
 import VPopover from '~/components/VPopover/VPopover.vue'
@@ -54,7 +56,7 @@ export default defineComponent({
      * the media item to report; This can either be an audio track or an image.
      */
     media: {
-      type: Object,
+      type: Object as PropType<Media>,
       required: true,
     },
   },

@@ -2,7 +2,7 @@
   <VPopover
     ref="pageMenuPopover"
     class="flex items-stretch"
-    :label="$t('header.aria.menu')"
+    :label="$t('header.aria.menu').toString()"
   >
     <template #trigger="{ a11yProps }">
       <VPageMenuButton :a11y-props="a11yProps" />

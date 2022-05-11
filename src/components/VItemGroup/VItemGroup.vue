@@ -19,12 +19,15 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import {
   defineComponent,
   provide,
   ref,
   readonly,
+  InjectionKey,
+  PropType,
+  Ref,
 } from '@nuxtjs/composition-api'
 import { ensureFocus } from 'reakit-utils/ensureFocus'
 
@@ -32,31 +35,30 @@ import { useI18n } from '~/composables/use-i18n'
 
 import { keycodes } from '~/constants/key-codes'
 
-/**
- * @typedef VItemGroupContext
- * @property {'vertical' | 'horizontal'} direction
- * @property {boolean} bordered
- * @property {'menu' | 'radiogroup'} type
- * @property {'small' | 'medium'} size
- */
+type VItemGroupContext = {
+  direction: 'vertical' | 'horizontal'
+  bordered: boolean
+  type: 'menu' | 'radiogroup'
+  size: 'small' | 'medium'
+}
 
-/**
- * @type {import('@nuxtjs/composition-api').InjectionKey<VItemGroupContext>}
- */
-export const VItemGroupContextKey = Symbol('VItemGroupContext')
+export const VItemGroupContextKey = Symbol(
+  'VItemGroupContext'
+) as InjectionKey<VItemGroupContext>
 
-/**
- * @typedef VItemGroupFocusContext
- * @property {import('@nuxtjs/composition-api').Readonly<import('@nuxtjs/composition-api').Ref<boolean>>} isGroupFocused
- * @property {(event: KeyboardEvent) => void} onItemKeyPress
- * @property {import('@nuxtjs/composition-api').Readonly<import('@nuxtjs/composition-api').Ref<number>>} selectedCount
- * @property {(selected: boolean, previousSelected: boolean) => void} setSelected
- */
+type VItemGroupFocusContext = {
+  isGroupFocused: Readonly<Ref<boolean>>
+  onItemKeyPress: (event: KeyboardEvent) => void
+  selectedCount: Readonly<Ref<number>>
+  setSelected: (selected: boolean, previousSelected: boolean) => void
+}
 
-/**
- * @type {import('@nuxtjs/composition-api').InjectionKey<VItemGroupFocusContext>}
- */
-export const VItemGroupFocusContextKey = Symbol('VItemGroupFocusContext')
+export const VItemGroupFocusContextKey = Symbol(
+  'VItemGroupFocusContext'
+) as InjectionKey<VItemGroupFocusContext>
+
+const directions = ['vertical', 'horizontal', 'columns'] as const
+const itemGroupType = ['menu', 'radiogroup'] as const
 
 const arrows = [
   keycodes.ArrowUp,
@@ -74,11 +76,8 @@ export default defineComponent({
      * @default 'vertical'
      */
     direction: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<'vertical' | 'horizontal' | 'columns' >} */ (
-        String
-      ),
+      type: String as PropType<typeof directions[number]>,
       default: 'vertical',
-      validate: (v) => ['vertical', 'horizontal', 'columns'].includes(v),
     },
     /**
      * Whether to render a bordered, separated list of items. When false each
@@ -105,11 +104,8 @@ export default defineComponent({
      * @default 'menu'
      */
     type: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<'menu' | 'radiogroup'>} */ (
-        String
-      ),
+      type: String as PropType<typeof itemGroupType[number]>,
       default: 'menu',
-      validate: (v) => ['menu', 'radiogroup'].includes(v),
     },
     /**
      * Size of the item group corresponds to the size of the component.
@@ -117,14 +113,12 @@ export default defineComponent({
      * @default 'small'
      */
     size: {
-      type: String,
+      type: String as PropType<'small' | 'medium'>,
       default: 'small',
-      validate: (val) => ['small', 'medium'].includes(val),
     },
   },
   setup(props) {
-    /** @type {import('@nuxtjs/composition-api').Ref<HTMLElement | undefined>} */
-    const nodeRef = ref()
+    const nodeRef = ref<HTMLElement | undefined>()
     const isFocused = ref(false)
     provide(VItemGroupContextKey, props)
 
@@ -135,21 +129,18 @@ export default defineComponent({
      * because the DOM order gets reversed to be opposite the visual order relative to left/right movement.
      *
      * For vertical locales it should remain the same.
-     * @param {string} ltr
-     * @param {string} rtl
+     * @param ltr
+     * @param rtl
      */
-    const resolveArrow = (ltr, rtl) => {
+    const resolveArrow = (ltr: string, rtl: string) => {
       return i18n.localeProperties.dir === 'rtl' &&
         props.direction === 'horizontal'
         ? rtl
         : ltr
     }
 
-    /**
-     * @param {KeyboardEvent} event
-     */
-    const onItemKeyPress = (event) => {
-      if (!arrows.includes(event.key) || !nodeRef.value) return
+    const onItemKeyPress = (event: KeyboardEvent) => {
+      if (!Array.from(arrows).includes(event.key) || !nodeRef.value) return
 
       event.preventDefault()
 
