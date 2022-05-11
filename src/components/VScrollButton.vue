@@ -24,7 +24,7 @@ import { computed, defineComponent } from '@nuxtjs/composition-api'
 
 import { defineEvent } from '~/types/emits'
 
-import { useFilterSidebarVisibility } from '../composables/use-filter-sidebar-visibility'
+import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
 
 const positionWithoutSidebar = 'ltr:right-4 rtl:left-4'
 const positionWithSidebar = 'ltr:right-[21rem] rtl:left-[21rem]'
@@ -39,16 +39,10 @@ export default defineComponent({
     const hClass = computed(() =>
       isFilterVisible.value ? positionWithSidebar : positionWithoutSidebar
     )
-    return { hClass, isFilterVisible }
-  },
-  methods: {
-    scrollToTop() {
-      this.$el.parentElement.scrollTo({
-        top: 0,
-        left: 0,
-        behavior: 'smooth',
-      })
-    },
+    const scrollToTop = () => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+    }
+    return { hClass, isFilterVisible, scrollToTop }
   },
 })
 </script>

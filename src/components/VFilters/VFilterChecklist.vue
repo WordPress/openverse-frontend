@@ -41,7 +41,7 @@
         <template #default="{ close }">
           <div class="relative">
             <VIconButton
-              :aria-label="$t('modal.close')"
+              :aria-label="getLicenseExplanationCloseAria(item.code)"
               class="absolute top-0 end-0 border-none text-dark-charcoal-70"
               size="small"
               :icon-props="{ iconPath: icons.closeSmall }"
@@ -62,6 +62,7 @@ import { useSearchStore } from '~/stores/search'
 import { useI18n } from '~/composables/use-i18n'
 import type { NonMatureFilterCategory, FilterItem } from '~/constants/filters'
 import { defineEvent } from '~/types/emits'
+import { getElements } from '~/utils/license'
 
 import VLicenseExplanation from '~/components/VFilters/VLicenseExplanation.vue'
 import VCheckbox from '~/components/VCheckbox/VCheckbox.vue'
@@ -114,20 +115,30 @@ export default defineComponent({
     const i18n = useI18n()
     const itemName = computed(() => {
       return props.filterType === 'searchBy'
-        ? i18n.t('filters.search-by.title').toString()
+        ? i18n.t('filters.search-by.title')
         : props.title
     })
 
     const itemLabel = (item: FilterItem) =>
-      ['audioProviders', 'imageProviders'].includes(props.filterType)
+      ['audioProviders', 'imageProviders'].indexOf(props.filterType) > -1
         ? item.name
-        : i18n.t(item.name).toString()
+        : i18n.t(item.name)
 
     const onValueChange = ({ value }: { value: string }) => {
       emit('toggle-filter', {
         code: value,
         filterType: props.filterType,
       })
+    }
+    const getLicenseExplanationCloseAria = (license) => {
+      const elements = getElements(license).filter((icon) => icon !== 'cc')
+      const descriptions = elements
+        .map((element) => i18n.t(`browse-page.license-description.${element}`))
+        .join(' ')
+      const close = i18n.t('modal.close-named', {
+        name: i18n.t('browse-page.aria.license-explanation'),
+      })
+      return `${descriptions} - ${close}`
     }
 
     const isDisabled = (item: FilterItem) =>
@@ -141,6 +152,7 @@ export default defineComponent({
       isDisabled,
       itemLabel,
       onValueChange,
+      getLicenseExplanationCloseAria,
     }
   },
 })
