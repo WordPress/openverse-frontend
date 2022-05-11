@@ -5,7 +5,7 @@
     :class="$style[variant]"
     :data-testid="`banner-${id}`"
   >
-    <p class="text-left">
+    <p class="leading-tight md:leading-normal text-sr md:text-base text-left">
       <slot name="default" />
     </p>
     <div class="flex">
@@ -29,6 +29,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from '@nuxtjs/composition-api'
 
+import { defineEvent } from '~/types/emits'
 import { useI18n } from '~/composables/use-i18n'
 import { useStorage } from '~/composables/use-storage'
 
@@ -55,7 +56,9 @@ export default defineComponent({
       required: true,
     },
   },
-  emits: ['close'],
+  emits: {
+    close: defineEvent(),
+  },
   setup(props, { emit }) {
     const i18n = useI18n()
     const shouldShow = useStorage(`banner:show-${props.id}`, true)
@@ -84,5 +87,6 @@ export default defineComponent({
 
 .announcement {
   @apply bg-trans-blue text-white;
+  border-left: 0.25rem solid transparent;
 }
 </style>

@@ -28,6 +28,7 @@ export interface Filters {
   mature: FilterItem[]
 }
 export type FilterCategory = keyof Filters
+export type NonMatureFilterCategory = Exclude<FilterCategory, 'mature'>
 
 /**
  * List of filters available for each search type. The order of the keys
@@ -134,7 +135,7 @@ export const initFilters = () =>
         checked: false,
       })),
     }),
-    {} as Record<FilterCategory, FilterItem>
+    {} as Filters
   )
 
 export const filterData = deepFreeze(initFilters())

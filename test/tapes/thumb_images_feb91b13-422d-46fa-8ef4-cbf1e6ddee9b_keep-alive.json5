@@ -1,22 +1,11 @@
 {
     meta: {
-        createdAt: '2022-03-28T15:06:27.153Z',
+        createdAt: '2022-05-02T16:04:23.707Z',
         host: 'https://api.openverse.engineering',
     },
     req: {
         headers: {
             connection: 'keep-alive',
-            pragma: 'no-cache',
-            'cache-control': 'no-cache',
-            'sec-ch-ua': '',
-            'sec-ch-ua-mobile': '?0',
-            'sec-ch-ua-platform': '',
-            accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
-            'sec-fetch-site': 'same-site',
-            'sec-fetch-mode': 'no-cors',
-            'sec-fetch-dest': 'image',
-            referer: 'http://localhost:8443/',
-            'accept-encoding': 'gzip, deflate, br',
         },
         url: '/v1/images/feb91b13-422d-46fa-8ef4-cbf1e6ddee9b/thumb/',
         method: 'GET',
@@ -26,7 +15,7 @@
         status: 200,
         headers: {
             date: [
-                'Mon, 28 Mar 2022 15:06:27 GMT',
+                'Mon, 02 May 2022 16:04:24 GMT',
             ],
             'content-type': [
                 'image/jpeg',
@@ -37,38 +26,32 @@
             connection: [
                 'keep-alive',
             ],
-            'cf-bgj': [
-                'h2pri',
+            vary: [
+                'Accept, Authorization, Origin, Accept-Encoding',
             ],
             allow: [
                 'GET, HEAD, OPTIONS',
             ],
-            'cross-origin-opener-policy': [
-                'same-origin',
-            ],
-            'referrer-policy': [
-                'same-origin',
-            ],
-            vary: [
-                'Accept, Authorization, Origin, Accept-Encoding',
+            'x-frame-options': [
+                'DENY',
             ],
             'x-content-type-options': [
                 'nosniff',
             ],
-            'x-frame-options': [
-                'DENY',
+            'referrer-policy': [
+                'same-origin',
+            ],
+            'cross-origin-opener-policy': [
+                'same-origin',
             ],
             'cache-control': [
                 'max-age=14400',
             ],
             'cf-cache-status': [
-                'HIT',
-            ],
-            age: [
-                '102906',
+                'MISS',
             ],
             'last-modified': [
-                'Sun, 27 Mar 2022 10:31:21 GMT',
+                'Mon, 02 May 2022 16:04:24 GMT',
             ],
             'accept-ranges': [
                 'bytes',
@@ -83,7 +66,7 @@
                 'cloudflare',
             ],
             'cf-ray': [
-                '6f3145115ace1cc4-BUD',
+                '7051fe1188b2a81c-IST',
             ],
             'alt-svc': [
                 'h3=":443"; ma=86400, h3-29=":443"; ma=86400',

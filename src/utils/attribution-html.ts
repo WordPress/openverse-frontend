@@ -77,7 +77,7 @@ export type AttributableMedia = Pick<
  * This interface describes the options that the `getAttribution` function can
  * take to customise its output.
  */
-interface AttributionOptions {
+export interface AttributionOptions {
   includeIcons?: boolean
   isPlaintext?: boolean
 }
@@ -105,13 +105,13 @@ export const getAttribution = (
   /* Title */
 
   let titleLink = mediaItem.title || ''
-  if (!isPlaintext && mediaItem.foreign_landing_url)
+  if (!isPlaintext && mediaItem.foreign_landing_url && titleLink)
     titleLink = extLink(mediaItem.foreign_landing_url, titleLink)
 
   /* Creator */
 
   let creatorLink = mediaItem.creator || ''
-  if (!isPlaintext && mediaItem.creator_url)
+  if (!isPlaintext && mediaItem.creator_url && creatorLink)
     creatorLink = extLink(mediaItem.creator_url, creatorLink)
 
   /* License */
@@ -144,12 +144,16 @@ export const getAttribution = (
   let attribution: string
   if (i18n) {
     let fillers: Record<string, string> = {
-      title: titleLink,
-      creator: i18n
-        .t(`${i18nBase}.creator-text`, {
-          'creator-name': creatorLink,
-        })
-        .toString(),
+      title: titleLink
+        ? i18n.t(`${i18nBase}.actual-title`, { title: titleLink }).toString()
+        : i18n.t(`${i18nBase}.generic-title`).toString(),
+      creator: creatorLink
+        ? i18n
+            .t(`${i18nBase}.creator-text`, {
+              'creator-name': creatorLink,
+            })
+            .toString()
+        : '',
       'marked-licensed': i18n
         .t(`${i18nBase}.${isPd ? 'marked' : 'licensed'}`)
         .toString(),
@@ -170,24 +174,22 @@ export const getAttribution = (
     }
     attribution = i18n.t(`${i18nBase}.text`, fillers).toString()
   } else {
-    let attributionParts = [
-      `"${titleLink}"`,
-      ' by ',
-      creatorLink,
+    const attributionParts = []
+    attributionParts.push(titleLink ? `"${titleLink}"` : 'This work')
+    if (creatorLink) attributionParts.push(' by ', creatorLink)
+    attributionParts.push(
       isPd ? ' is marked with ' : ' is licensed under ',
       licenseLink,
-      '.',
-    ]
-    if (isPlaintext) {
-      attributionParts = [
-        ...attributionParts,
+      '.'
+    )
+    if (isPlaintext)
+      attributionParts.push(
         ' To view ',
         isPd ? 'the terms,' : 'a copy of this license,',
         ' visit',
         mediaItem.license_url,
-        '.',
-      ]
-    }
+        '.'
+      )
 
     attribution = attributionParts.join('')
   }

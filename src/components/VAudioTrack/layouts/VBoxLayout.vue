@@ -17,7 +17,9 @@
               hide-name
               :license="audio.license"
             />
-            <div>{{ $t(`filters.audio-categories.${audio.category}`) }}</div>
+            <div v-if="audio.category">
+              {{ categoryLabel }}
+            </div>
           </div>
         </div>
 
@@ -30,8 +32,16 @@
   </div>
 </template>
 
-<script>
-import { computed, defineComponent } from '@nuxtjs/composition-api'
+<script lang="ts">
+import {
+  computed,
+  defineComponent,
+  PropType,
+  useContext,
+} from '@nuxtjs/composition-api'
+
+import type { AudioDetail } from '~/models/media'
+import type { AudioSize } from '~/constants/audio'
 
 import VLicense from '~/components/VLicense/VLicense.vue'
 
@@ -40,24 +50,38 @@ export default defineComponent({
   components: {
     VLicense,
   },
-  props: ['audio', 'size'],
+  props: {
+    audio: {
+      type: Object as PropType<AudioDetail>,
+      required: true,
+    },
+    size: {
+      type: String as PropType<AudioSize>,
+      required: false,
+    },
+  },
   setup(props) {
+    const { i18n } = useContext()
     const isSmall = computed(() => props.size === 's')
 
     const width = computed(() => {
-      const magnitude = {
+      const magnitudes = {
         l: 13.25,
         m: 12.25,
         s: 9.75,
-      }[props.size]
+      }
 
-      return props.size ? `${magnitude}rem` : null
+      return props.size ? `${magnitudes[props.size]}rem` : undefined
     })
+    const categoryLabel = computed(() =>
+      i18n.t(`filters.audio-categories.${props.audio.category}`).toString()
+    )
 
     return {
       isSmall,
 
       width,
+      categoryLabel,
     }
   },
 })

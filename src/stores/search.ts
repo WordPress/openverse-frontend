@@ -1,10 +1,7 @@
 import { defineStore } from 'pinia'
 
-// We plan to remove this dependency, so don't need to add types for it:
-// https://github.com/WordPress/openverse-frontend/issues/1103
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import clonedeep from 'lodash.clonedeep'
+import { deepClone } from '~/utils/clone'
+import type { DeepWriteable } from '~/types/utils'
 
 import {
   ALL_MEDIA,
@@ -28,6 +25,8 @@ import {
   mediaFilterKeys,
   mediaUniqueFilterKeys,
 } from '~/constants/filters'
+
+import type { Dictionary } from 'vue-router/types/router'
 
 export interface SearchState {
   searchType: SupportedSearchType
@@ -60,7 +59,7 @@ export const useSearchStore = defineStore('search', {
   state: (): SearchState => ({
     searchType: ALL_MEDIA,
     searchTerm: '',
-    filters: clonedeep(filterData),
+    filters: deepClone(filterData as DeepWriteable<typeof filterData>),
   }),
   getters: {
     filterCategories(state) {
@@ -139,7 +138,7 @@ export const useSearchStore = defineStore('search', {
         }))
       }
       return {
-        ...clonedeep(filterData),
+        ...(deepClone(filterData) as DeepWriteable<typeof filterData>),
         audioProviders: resetProviders(AUDIO),
         imageProviders: resetProviders(IMAGE),
       }
@@ -248,9 +247,9 @@ export const useSearchStore = defineStore('search', {
       urlQuery,
     }: {
       path: string
-      urlQuery: Record<string, string>
+      urlQuery: Dictionary<string | (string | null)[]>
     }) {
-      if (urlQuery.q) {
+      if (urlQuery.q && typeof urlQuery.q === 'string') {
         this.setSearchTerm(urlQuery.q.trim())
       }
       this.searchType = queryStringToSearchType(path)
@@ -264,7 +263,7 @@ export const useSearchStore = defineStore('search', {
       }
 
       const newFilterData = queryToFilterData({
-        query,
+        query: query as Record<string, string>,
         searchType: this.searchType,
         defaultFilters: this.getBaseFiltersWithProviders(),
       })

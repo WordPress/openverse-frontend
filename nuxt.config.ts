@@ -108,6 +108,26 @@ const head = {
   ],
 }
 
+const baseProdName = process.env.CI ? '[name]' : '[contenthash:7]'
+
+const filenames: NonNullable<NuxtConfig['build']>['filenames'] = {
+  app: ({ isDev, isModern }) =>
+    isDev
+      ? `[name]${isModern ? '.modern' : ''}.js`
+      : `${baseProdName}${isModern ? '.modern' : ''}.js`,
+  chunk: ({ isDev, isModern }) =>
+    isDev
+      ? `[name]${isModern ? '.modern' : ''}.js`
+      : `${baseProdName}${isModern ? '.modern' : ''}.js`,
+  css: ({ isDev }) => (isDev ? '[name].css' : `css/${baseProdName}.css`),
+  img: ({ isDev }) =>
+    isDev ? '[path][name].[ext]' : `img/${baseProdName}.[ext]`,
+  font: ({ isDev }) =>
+    isDev ? '[path][name].[ext]' : `fonts/${baseProdName}.[ext]`,
+  video: ({ isDev }) =>
+    isDev ? '[path][name].[ext]' : `videos/${baseProdName}.[ext]`,
+}
+
 const config: NuxtConfig = {
   // eslint-disable-next-line no-undef
   version: pkg.version, // used to purge cache :)
@@ -120,6 +140,9 @@ const config: NuxtConfig = {
     },
   },
   srcDir: 'src/',
+  // Necessary to fix pm2 + nuxt issues
+  rootDir: process.cwd(),
+  buildDir: process.cwd() + '/.nuxt/',
   modern: 'client',
   server: {
     port: process.env.PORT || 8443,
@@ -142,13 +165,7 @@ const config: NuxtConfig = {
     { src: '~/plugins/ua-parse' },
     { src: '~/plugins/focus-visible', mode: 'client' },
   ],
-  css: [
-    '~/styles/tailwind.css',
-    '~/assets/fonts.css',
-    '~/styles/vocabulary.scss',
-    '~/styles/global.scss',
-    '~/styles/accent.scss',
-  ],
+  css: ['~/styles/tailwind.css', '~/assets/fonts.css', '~/styles/accent.css'],
   head,
   env,
   dev: !isProd,
@@ -161,17 +178,12 @@ const config: NuxtConfig = {
     '@nuxtjs/eslint-module',
     '@pinia/nuxt',
   ],
-  // Load the scss variables into every component:
-  // No need to import them. Since the variables will not exist in the final build,
-  // this doesn't make the built files larger.
-  styleResources: {
-    scss: ['./styles/utilities/all.scss'],
-  },
   modules: [
     '@nuxtjs/i18n',
     '@nuxtjs/redirect-module',
     '@nuxtjs/sentry',
     '@nuxtjs/sitemap',
+    'cookie-universal-nuxt',
   ],
   serverMiddleware: [
     { path: '/healthcheck', handler: '~/server-middleware/healthcheck.js' },
@@ -225,6 +237,7 @@ const config: NuxtConfig = {
         dst: 'index.js',
       },
     ],
+    filenames,
     friendlyErrors: false,
     postcss: {
       plugins: {
