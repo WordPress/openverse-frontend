@@ -31,7 +31,7 @@ export function usePopper({ popoverRef, popoverPropsRefs }) {
 
       popperInstanceRef.value = createPopper(triggerElement, popover, {
         placement,
-        strategy: 'absolute',
+        strategy: 'fixed',
         modifiers: [
           {
             name: 'eventListeners',
