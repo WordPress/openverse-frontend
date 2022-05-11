@@ -648,5 +648,10 @@
     "content-filtering": "Content filtering",
     "explanation": "Shown because {feat-name} is {feat-state}"
   },
-  "sketchfab-iframe-title": "{sketchfab} viewer"
+  "sketchfab-iframe-title": "{sketchfab} viewer",
+  "flag-status": {
+    "nonexistent": "Nonexistent",
+    "on": "On",
+    "off": "Off"
+  }
 }
