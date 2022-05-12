@@ -32,13 +32,13 @@ import {
   defineComponent,
   inject,
   toRefs,
-  useContext,
   ref,
   ComputedRef,
 } from '@nuxtjs/composition-api'
 
 import { useSearchStore } from '~/stores/search'
 import { defineEvent } from '~/types/emits'
+import { useI18n } from '~/composables/use-i18n'
 
 import VButton, { ButtonVariant } from '~/components/VButton.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'
@@ -62,7 +62,7 @@ export default defineComponent({
     toggle: defineEvent(),
   },
   setup(props) {
-    const { i18n } = useContext()
+    const i18n = useI18n()
     const searchStore = useSearchStore()
     const { pressed } = toRefs(props)
     const isMinScreenMd = inject('isMinScreenMd', ref(false))
