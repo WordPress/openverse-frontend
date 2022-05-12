@@ -33,7 +33,6 @@ import {
   inject,
   toRefs,
   ref,
-  ComputedRef,
 } from '@nuxtjs/composition-api'
 
 import { useSearchStore } from '~/stores/search'
@@ -74,7 +73,7 @@ export default defineComponent({
      * Determine the visual style of the button
      * based on the viewport, the application of filters, and scrolling.
      */
-    const variant: ComputedRef<ButtonVariant> = computed(() => {
+    const variant = computed(() => {
       // Show the bordered state by default, unless below md
       let value: ButtonVariant = isMinScreenMd.value
         ? 'tertiary'
