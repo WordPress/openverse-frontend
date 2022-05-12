@@ -16,9 +16,9 @@ import {
 } from '~/constants/feature-flag'
 import { LOCAL, DEPLOY_ENVS, DeployEnv } from '~/constants/deploy-env'
 
-type Flag = keyof typeof featureData['features']
+type FlagName = keyof typeof featureData['features']
 export interface FeatureFlagState {
-  flags: Record<Flag, FeatureFlag>
+  flags: Record<FlagName, FeatureFlag>
 }
 
 const FEATURE_FLAG = 'feature_flag'
@@ -69,7 +69,7 @@ export const useFeatureFlagStore = defineStore(FEATURE_FLAG, {
      */
     featureState:
       (state: FeatureFlagState) =>
-      (name: Flag): FeatureState => {
+      (name: FlagName): FeatureState => {
         if (name in state.flags) return getFeatureState(state.flags[name])
         else {
           warn(`Invalid feature flag accessed: ${name}`)
@@ -84,7 +84,7 @@ export const useFeatureFlagStore = defineStore(FEATURE_FLAG, {
      * @returns `true` if the flag is on, false otherwise
      */
     isOn() {
-      return (name: Flag): boolean => this.featureState(name) === ON
+      return (name: FlagName): boolean => this.featureState(name) === ON
     },
     /**
      * Get the mapping of switchable features to their preferred states.
@@ -117,7 +117,7 @@ export const useFeatureFlagStore = defineStore(FEATURE_FLAG, {
      * @param name - the name of the flag to toggle
      * @param targetState - the desired state of the feature flag
      */
-    toggleFeature(name: Flag, targetState: FeatureState) {
+    toggleFeature(name: FlagName, targetState: FeatureState) {
       const flag = this.flags[name]
       if (getFlagStatus(flag) === SWITCHABLE) flag.preferredState = targetState
       else warn(`Cannot set preferred state for non-switchable flag: ${name}`)
