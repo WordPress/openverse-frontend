@@ -34,17 +34,18 @@ import {
   toRefs,
   useContext,
   ref,
+  ComputedRef,
 } from '@nuxtjs/composition-api'
 
 import { useSearchStore } from '~/stores/search'
 import { defineEvent } from '~/types/emits'
 
-import VButton from '~/components/VButton.vue'
+import VButton, { ButtonVariant } from '~/components/VButton.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'
 
 import filterIcon from '~/assets/icons/filter.svg'
 
-const VFilterButton = defineComponent({
+export default defineComponent({
   name: 'VFilterButton',
   components: {
     VIcon,
@@ -73,9 +74,11 @@ const VFilterButton = defineComponent({
      * Determine the visual style of the button
      * based on the viewport, the application of filters, and scrolling.
      */
-    const variant = computed(() => {
+    const variant: ComputedRef<ButtonVariant> = computed(() => {
       // Show the bordered state by default, unless below md
-      let value = isMinScreenMd.value ? 'tertiary' : 'action-menu'
+      let value: ButtonVariant = isMinScreenMd.value
+        ? 'tertiary'
+        : 'action-menu'
 
       if (isHeaderScrolled.value) {
         value = 'action-menu'
@@ -119,6 +122,4 @@ const VFilterButton = defineComponent({
     }
   },
 })
-
-export default VFilterButton
 </script>

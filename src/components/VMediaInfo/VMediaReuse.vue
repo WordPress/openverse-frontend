@@ -32,7 +32,7 @@ import type { Media } from '~/models/media'
 import VCopyLicense from '~/components/VMediaInfo/VCopyLicense.vue'
 import VMediaLicense from '~/components/VMediaInfo/VMediaLicense.vue'
 
-const VMediaReuse = defineComponent({
+export default defineComponent({
   name: 'VMediaReuse',
   components: { VCopyLicense, VMediaLicense },
   props: {
@@ -51,5 +51,4 @@ const VMediaReuse = defineComponent({
     return { fullLicenseName }
   },
 })
-export default VMediaReuse
 </script>
