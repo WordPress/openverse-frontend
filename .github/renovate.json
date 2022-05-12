@@ -6,9 +6,6 @@
     "🧰 goal: internal improvement",
     "🟩 priority: low"
   ],
-  "constraints": {
-    "pnpm": "6.32.11"
-  },
   "js": {
     "labels": ["🟨 tech: javascript"]
   },
