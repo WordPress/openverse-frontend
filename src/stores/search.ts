@@ -10,6 +10,8 @@ import {
   SupportedMediaType,
   SupportedSearchType,
   supportedSearchTypes,
+  SearchType,
+  isAdditionalSearchType,
 } from '~/constants/media'
 import {
   ApiQueryParams,
@@ -26,10 +28,12 @@ import {
   mediaUniqueFilterKeys,
 } from '~/constants/filters'
 
+import { useFeatureFlagStore } from '~/stores/feature-flag'
+
 import type { Dictionary } from 'vue-router/types/router'
 
 export interface SearchState {
-  searchType: SupportedSearchType
+  searchType: SearchType
   searchTerm: string
   filters: Filters
 }
@@ -65,17 +69,23 @@ export const useSearchStore = defineStore('search', {
     filterCategories(state) {
       return Object.keys(state.filters) as FilterCategory[]
     },
+
     /**
      * Returns the search query parameters for API request:
      * drops all parameters with blank values.
      */
     searchQueryParams(state) {
+      if (isAdditionalSearchType(state.searchType)) {
+        return {}
+      }
+
       return computeQueryParams(
         state.searchType,
         state.filters,
         state.searchTerm
       )
     },
+
     /**
      * Returns the number of checked filters, excluding the `mature` filter.
      */
@@ -89,6 +99,7 @@ export const useSearchStore = defineStore('search', {
         )
       }, 0)
     },
+
     /**
      * Returns the object with filters for selected search type, with codes, names for i18n labels, and checked status.
      */
@@ -100,6 +111,7 @@ export const useSearchStore = defineStore('search', {
           return obj
         }, {} as Filters)
     },
+
     /**
      * True if any filter for selected search type except `mature` is checked.
      */
@@ -115,9 +127,21 @@ export const useSearchStore = defineStore('search', {
     },
   },
   actions: {
-    setSearchType(type: SupportedSearchType) {
+    setSearchType(type: SearchType) {
+      const featureFlagStore = useFeatureFlagStore()
+      if (
+        featureFlagStore.isOn('external_sources') &&
+        isAdditionalSearchType(type)
+      ) {
+        throw new Error(
+          `Please enable the 'external_sources' flag to use the ${type}`
+        )
+      }
+
       this.searchType = type
-      this.clearOtherMediaTypeFilters(type)
+      if (!isAdditionalSearchType(type)) {
+        this.clearOtherMediaTypeFilters(type)
+      }
     },
     setSearchTerm(term: string) {
       this.searchTerm = term.trim()

@@ -32,9 +32,7 @@ export default function useSearchType() {
     featureFlagStore.isOn('external_sources') ? ([MODEL_3D] as const) : []
   )
   const searchTypes = [...supportedSearchTypes]
-  const setActiveType = (
-    searchType: SupportedSearchType | typeof additionalTypes['value'][number]
-  ) => {
+  const setActiveType = (searchType: SupportedSearchType) => {
     if (previousSearchType.value === searchType) return
     useSearchStore().setSearchType(searchType as SupportedSearchType)
     previousSearchType.value = searchType as SupportedSearchType

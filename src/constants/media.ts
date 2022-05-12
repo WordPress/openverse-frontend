@@ -35,6 +35,19 @@ export const supportedSearchTypes = [ALL_MEDIA, ...supportedMediaTypes] as const
 
 export type SupportedSearchType = typeof supportedSearchTypes[number]
 
+export type AdditionalSearchType = Exclude<SearchType, SupportedSearchType>
+
+export const additionalSearchTypes: readonly AdditionalSearchType[] = [
+  VIDEO,
+  MODEL_3D,
+] as const
+
+export function isAdditionalSearchType(
+  searchType: SearchType
+): searchType is AdditionalSearchType {
+  return (additionalSearchTypes as readonly string[]).includes(searchType)
+}
+
 /* Media support */
 
 const SUPPORTED = 'supported' // Native search
