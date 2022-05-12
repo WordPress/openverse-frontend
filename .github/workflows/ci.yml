@@ -133,6 +133,7 @@ jobs:
 
       - name: Check if test results exist
         id: check-results
+        continue-on-error: true
         run: |
           has_results=$(stat test-results/nuxt-test-results || stat test-results/storybook-test-results) || false
           if [[ $has_results ]]; then
