@@ -40,7 +40,6 @@ import { computed, defineComponent } from '@nuxtjs/composition-api'
 
 import { supportedSearchTypes } from '~/constants/media'
 import useSearchType from '~/composables/use-search-type'
-import { useFeatureFlagStore } from '~/stores/feature-flag'
 
 import VItemGroup from '~/components/VItemGroup/VItemGroup.vue'
 import VSearchTypeItem from '~/components/VContentSwitcher/VSearchTypeItem.vue'
@@ -71,22 +70,23 @@ export default defineComponent({
   setup(props, { emit }) {
     const content = useSearchType()
 
-    const contentTypeGroups = [
-      {
-        heading: 'heading',
-        items: content.types,
-      },
-    ]
+    const contentTypeGroups = computed(() => {
+      const base = [
+        {
+          heading: 'heading',
+          items: content.types,
+        },
+      ]
 
-    const featureFlagStore = useFeatureFlagStore()
+      if (content.additionalTypes.value.length) {
+        base.push({
+          heading: 'additional',
+          items: content.additionalTypes.value,
+        })
+      }
 
-    if (featureFlagStore.isOn('external_sources')) {
-      content.additionalTypes = ['model_3d']
-      contentTypeGroups.push({
-        heading: 'additional',
-        items: content.additionalTypes,
-      })
-    }
+      return base
+    })
 
     const bordered = computed(() => props.size === 'small')
     const handleClick = (item) => {

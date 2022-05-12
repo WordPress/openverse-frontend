@@ -31,8 +31,6 @@
 <script>
 import { computed, defineComponent, ref } from '@nuxtjs/composition-api'
 
-import useSearchType from '~/composables/use-search-type'
-
 import VPopover from '~/components/VPopover/VPopover.vue'
 import VSearchTypeButton from '~/components/VContentSwitcher/VSearchTypeButton.vue'
 import VSearchTypes from '~/components/VContentSwitcher/VSearchTypes.vue'
@@ -61,8 +59,6 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
-    const content = useSearchType()
-
     const contentMenuPopover = ref(null)
 
     /**
@@ -86,7 +82,6 @@ export default defineComponent({
     }
 
     return {
-      content,
       checkIcon,
       selectItem,
       contentMenuPopover,
