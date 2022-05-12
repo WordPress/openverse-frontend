@@ -39,7 +39,7 @@ export interface SearchState {
 }
 
 function computeQueryParams(
-  searchType: SupportedSearchType,
+  searchType: SearchType,
   filters: Filters,
   searchTerm: string
 ) {
@@ -75,10 +75,6 @@ export const useSearchStore = defineStore('search', {
      * drops all parameters with blank values.
      */
     searchQueryParams(state) {
-      if (isAdditionalSearchType(state.searchType)) {
-        return {}
-      }
-
       return computeQueryParams(
         state.searchType,
         state.filters,
@@ -139,9 +135,7 @@ export const useSearchStore = defineStore('search', {
       }
 
       this.searchType = type
-      if (!isAdditionalSearchType(type)) {
-        this.clearOtherMediaTypeFilters(type)
-      }
+      this.clearOtherMediaTypeFilters(type)
     },
     setSearchTerm(term: string) {
       this.searchTerm = term.trim()
@@ -238,7 +232,7 @@ export const useSearchStore = defineStore('search', {
      * After a search type is changed, unchecks all the filters that are not
      * applicable for this Media type.
      */
-    clearOtherMediaTypeFilters(searchType: SupportedSearchType) {
+    clearOtherMediaTypeFilters(searchType: SearchType) {
       const mediaTypesToClear = supportedSearchTypes.filter(
         (type) => type !== searchType
       )

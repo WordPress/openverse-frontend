@@ -59,4 +59,5 @@ export const contentStatus = Object.freeze({
   [IMAGE]: SUPPORTED,
   [AUDIO]: BETA,
   [VIDEO]: ADDITIONAL,
+  [MODEL_3D]: ADDITIONAL,
 } as const)
