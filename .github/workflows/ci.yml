@@ -84,6 +84,8 @@ jobs:
   nuxt-playwright:
     name: Nuxt Playwright tests
     runs-on: ubuntu-latest
+    needs:
+      - build
 
     steps:
       - uses: actions/checkout@v2
