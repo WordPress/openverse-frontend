@@ -62,6 +62,7 @@ jobs:
   clean-playwright-failure-comment:
     name: Remove previous Playwright test failure comments
     runs-on: ubuntu-latest
+    if: github.ref != 'refs/heads/main'
 
     steps:
       - uses: peter-evans/find-comment@v2
@@ -123,7 +124,7 @@ jobs:
   playwright-test-failure-comment:
     name: Share Playwright test debugging instructions
     runs-on: ubuntu-latest
-    if: always() && (needs.nuxt-playwright.result == 'failure' || needs.storybook-playwright.result == 'failure')
+    if: always() && github.ref != 'refs/heads/main' && (needs.nuxt-playwright.result == 'failure' || needs.storybook-playwright.result == 'failure')
     needs:
       - nuxt-playwright
       - storybook-playwright
