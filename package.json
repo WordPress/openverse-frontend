@@ -2,6 +2,7 @@
   "name": "openverse-frontend",
   "version": "2.2.1",
   "description": "Openverse",
+  "packageManager": "pnpm@7.1.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/wordpress/openverse-frontend.git"
@@ -172,7 +173,7 @@
   },
   "engines": {
     "node": ">= 16.0.0 <17",
-    "pnpm": ">= 7.0.1"
+    "pnpm": ">= 7.1.0"
   },
   "browserslist": [
     "> 1%",
