@@ -3122,9 +3122,9 @@ packages:
     dependencies:
       '@nuxt/types': 2.15.8_webpack@4.46.0
       consola: 2.15.3
-      fork-ts-checker-webpack-plugin: 6.5.0_74f2hvla7n4b757hwnerd4quka
-      ts-loader: 8.3.0_e7hrjdrs22zc4syxbltzlwluhe
-      typescript: 4.2.4
+      fork-ts-checker-webpack-plugin: 6.5.0_mpahngmn3mtdx6vmys44ywifxm
+      ts-loader: 8.3.0_7in6qbnjgkqokibdcer35wqugu
+      typescript: 4.6.2
     transitivePeerDependencies:
       - eslint
       - vue-template-compiler
@@ -10945,39 +10945,6 @@ packages:
       - supports-color
     dev: true
 
-  /fork-ts-checker-webpack-plugin/6.5.0_74f2hvla7n4b757hwnerd4quka:
-    resolution: {integrity: sha512-cS178Y+xxtIjEUorcHddKS7yCMlrDPV31mt47blKKRfMd70Kxu5xruAFE2o9sDY6wVC5deuob/u/alD04YYHnw==}
-    engines: {node: '>=10', yarn: '>=1.0.0'}
-    peerDependencies:
-      eslint: '>= 6'
-      typescript: '>= 2.7'
-      vue-template-compiler: '*'
-      webpack: '>= 4'
-    peerDependenciesMeta:
-      eslint:
-        optional: true
-      vue-template-compiler:
-        optional: true
-    dependencies:
-      '@babel/code-frame': 7.16.0
-      '@types/json-schema': 7.0.9
-      chalk: 4.1.2
-      chokidar: 3.5.2
-      cosmiconfig: 6.0.0
-      deepmerge: 4.2.2
-      eslint: 8.15.0
-      fs-extra: 9.1.0
-      glob: 7.2.0
-      memfs: 3.4.0
-      minimatch: 3.1.2
-      schema-utils: 2.7.0
-      semver: 7.3.5
-      tapable: 1.1.3
-      typescript: 4.2.4
-      vue-template-compiler: 2.6.14
-      webpack: 4.46.0
-    dev: true
-
   /fork-ts-checker-webpack-plugin/6.5.0_mpahngmn3mtdx6vmys44ywifxm:
     resolution: {integrity: sha512-cS178Y+xxtIjEUorcHddKS7yCMlrDPV31mt47blKKRfMd70Kxu5xruAFE2o9sDY6wVC5deuob/u/alD04YYHnw==}
     engines: {node: '>=10', yarn: '>=1.0.0'}
@@ -18512,22 +18479,6 @@ packages:
       webpack: 4.46.0
     dev: true
 
-  /ts-loader/8.3.0_e7hrjdrs22zc4syxbltzlwluhe:
-    resolution: {integrity: sha512-MgGly4I6cStsJy27ViE32UoqxPTN9Xly4anxxVyaIWR+9BGxboV4EyJBGfR3RePV7Ksjj3rHmPZJeIt+7o4Vag==}
-    engines: {node: '>=10.0.0'}
-    peerDependencies:
-      typescript: '*'
-      webpack: '*'
-    dependencies:
-      chalk: 4.1.2
-      enhanced-resolve: 4.5.0
-      loader-utils: 2.0.2
-      micromatch: 4.0.4
-      semver: 7.3.5
-      typescript: 4.2.4
-      webpack: 4.46.0
-    dev: true
-
   /ts-map/1.0.3:
     resolution: {integrity: sha512-vDWbsl26LIcPGmDpoVzjEP6+hvHZkBkLW7JpvwbCv/5IYPJlsbzCVXY3wsCeAxAUeTclNOUZxnLdGh3VBD/J6w==}
     dev: true
@@ -18669,12 +18620,6 @@ packages:
 
   /typedarray/0.0.6:
     resolution: {integrity: sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=}
-
-  /typescript/4.2.4:
-    resolution: {integrity: sha512-V+evlYHZnQkaz8TRBuxTA92yZBPotr5H+WhQ7bD3hZUndx5tGOa1fuCgeSjxAzM1RiN5IzvadIXTVefuuwZCRg==}
-    engines: {node: '>=4.2.0'}
-    hasBin: true
-    dev: true
 
   /typescript/4.6.2:
     resolution: {integrity: sha512-HM/hFigTBHZhLXshn9sN37H085+hQGeJHJ/X7LpBWLID/fbc2acUMfU+lGD98X81sKP+pFa9f0DZmCwB9GnbAg==}
