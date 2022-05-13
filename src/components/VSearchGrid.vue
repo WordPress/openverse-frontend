@@ -38,12 +38,11 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
 
-import { ALL_MEDIA, IMAGE, VIDEO, SearchType } from '~/constants/media'
+import { ALL_MEDIA, IMAGE, SearchType, mediaTypes } from '~/constants/media'
 import { NO_RESULT } from '~/constants/errors'
 import { defineEvent } from '~/types/emits'
 import type { ApiQueryParams } from '~/utils/search-query-transform'
 import type { FetchState } from '~/composables/use-fetch-state'
-import { isSearchTypeSupported } from '~/stores/search'
 
 import VMetaSearchForm from '~/components/VMetaSearch/VMetaSearchForm.vue'
 import VErrorSection from '~/components/VErrorSection/VErrorSection.vue'
@@ -98,8 +97,9 @@ export default defineComponent({
      * Metasearch form shows the external sources for current search type, or for images if the search type is 'All Content'.
      */
     const metaSearchFormType = computed(() => {
-      if (isSearchTypeSupported(props.searchType)) return props.searchType
-      if (props.searchType === VIDEO) return VIDEO
+      if (mediaTypes.includes(props.searchType)) {
+        return props.searchType
+      }
       return IMAGE
     })
 
