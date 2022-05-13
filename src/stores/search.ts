@@ -270,7 +270,6 @@ export const useSearchStore = defineStore('search', {
         this.setSearchTerm(urlQuery.q.trim())
       }
       this.searchType = queryStringToSearchType(path)
-      console.log('search type set to', this.searchType)
       if (!isSearchTypeSupported(this.searchType)) return
       // When setting filters from URL query, 'mature' has a value of 'true',
       // but we need the 'mature' code. Creating a local shallow copy to prevent mutation.
