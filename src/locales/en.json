@@ -333,6 +333,7 @@
     },
     "durations": {
       "title": "Durations",
+      "shortest": "Shortest",
       "short": "Short",
       "medium": "Medium",
       "long": "Long"

@@ -18,7 +18,7 @@ export interface ApiQueryParams {
   searchBy?: string
   category?: string
   source?: string
-  duration?: string
+  length?: string
   mature?: string
   page?: string
 }
@@ -38,7 +38,7 @@ const filterPropertyMappings: Record<FilterCategory, ApiQueryKeys> = {
   imageCategories: 'category',
   audioExtensions: 'extension',
   imageExtensions: 'extension',
-  durations: 'duration',
+  lengths: 'length',
   aspectRatios: 'aspect_ratio',
   sizes: 'size',
   audioProviders: 'source',
