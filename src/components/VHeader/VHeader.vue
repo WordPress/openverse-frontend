@@ -1,14 +1,12 @@
 <template>
   <header
-    class="main-header flex px-4 md:px-7 items-center md:items-stretch z-40 w-screen bg-white gap-x-2 gap-y-4"
+    class="main-header flex px-4 py-3 md:py-4 md:px-7 items-center md:items-stretch z-30 w-full bg-white justify-between gap-x-2 gap-y-4"
     :class="{
-      'py-3 ': isHeaderScrolled,
-      'py-4 flex-wrap md:flex-nowrap': !isHeaderScrolled,
+      'flex-wrap md:flex-nowrap': !isHeaderScrolled,
       'border-b border-white': !isHeaderScrolled && !isMenuOpen,
       'border-b border-dark-charcoal-20':
         isSearchRoute && (isHeaderScrolled || isMenuOpen),
-      'justify-between': isSearchRoute,
-      'justify-between md:justify-start': !isSearchRoute,
+      'md:justify-start': !isSearchRoute,
       'flex-nowrap': !isSearchRoute && isHeaderScrolled,
     }"
   >
@@ -24,13 +22,12 @@
       :size="isMinScreenMd ? 'medium' : isHeaderScrolled ? 'small' : 'large'"
       :class="{
         'order-4 md:order-none w-full md:w-auto': !isHeaderScrolled,
-        'search-bar-mobile-scrolled': isSearchRoute && isHeaderScrolled,
       }"
       @submit="handleSearch"
     >
       <span
         v-show="searchStatus"
-        class="hidden lg:block info font-semibold text-xs text-dark-charcoal-70 group-hover:text-dark-charcoal group-focus:text-dark-charcoal mx-4"
+        class="hidden lg:block info font-semibold text-xs text-dark-charcoal-70 group-hover:text-dark-charcoal group-focus:text-dark-charcoal mx-4 whitespace-nowrap"
       >
         {{ searchStatus }}
       </span>
@@ -49,7 +46,7 @@
   </header>
 </template>
 
-<script>
+<script lang="ts">
 import {
   computed,
   defineComponent,
@@ -65,6 +62,7 @@ import { ALL_MEDIA } from '~/constants/media'
 import { isMinScreen } from '~/composables/use-media-query'
 import { useMatchSearchRoutes } from '~/composables/use-match-routes'
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
+import { useI18n } from '~/composables/use-i18n'
 import { useI18nResultsCount } from '~/composables/use-i18n-utilities'
 import { useMediaStore } from '~/stores/media'
 import { useSearchStore } from '~/stores/search'
@@ -80,8 +78,9 @@ const menus = {
   FILTERS: 'filters',
   CONTENT_SWITCHER: 'content-switcher',
 }
+type HeaderMenu = 'filters' | 'content-switcher'
 
-const VHeader = defineComponent({
+export default defineComponent({
   name: 'VHeader',
   components: {
     VLogoButton,
@@ -92,7 +91,8 @@ const VHeader = defineComponent({
   setup() {
     const mediaStore = useMediaStore()
     const searchStore = useSearchStore()
-    const { app, i18n } = useContext()
+    const { app } = useContext()
+    const i18n = useI18n()
     const router = useRouter()
 
     const { matches: isSearchRoute } = useMatchSearchRoutes()
@@ -106,6 +106,9 @@ const VHeader = defineComponent({
 
     const { isVisible: isFilterVisible } = useFilterSidebarVisibility()
 
+    const openMenu = ref<null | HeaderMenu>(null)
+    const isMenuOpen = computed(() => openMenu.value !== null)
+
     /**
      * Set the active mobile menu view to the 'filters'
      * if the filter sidebar has been toggled open.
@@ -114,16 +117,7 @@ const VHeader = defineComponent({
       openMenu.value = isFilterVisible ? menus.FILTERS : null
     })
 
-    /**
-     * @type {import('@nuxtjs/composition-api').Ref<null|'filters'|'content-switcher'>}
-     */
-    const openMenu = ref(null)
-    const isMenuOpen = computed(() => openMenu.value !== null)
-
-    /**
-     * @param {'filters'|'content-switcher'} menuName
-     */
-    const openMenuModal = (menuName) => {
+    const openMenuModal = (menuName: HeaderMenu) => {
       if (openMenu.value !== null) {
         close()
       }
@@ -133,12 +127,10 @@ const VHeader = defineComponent({
       openMenu.value = null
     }
 
-    /**  @type {import('@nuxtjs/composition-api').ComputedRef<boolean>} */
     const isFetching = computed(() => {
       return mediaStore.fetchState.isFetching
     })
 
-    /** @type {import('@nuxtjs/composition-api').ComputedRef<number>} */
     const resultsCount = computed(() => mediaStore.resultCount)
     const { getI18nCount } = useI18nResultsCount()
     /**
@@ -159,11 +151,10 @@ const VHeader = defineComponent({
      * Search term has a getter and setter to be used as a v-model.
      * To prevent sending unnecessary requests, we also keep track of whether
      * the search term was changed.
-     * @type {import('@nuxtjs/composition-api').WritableComputedRef<string>}
      */
     const searchTerm = computed({
       get: () => localSearchTerm.value,
-      set: (value) => {
+      set: (value: string) => {
         localSearchTerm.value = value
       },
     })
@@ -231,6 +222,4 @@ const VHeader = defineComponent({
     }
   },
 })
-
-export default VHeader
 </script>
