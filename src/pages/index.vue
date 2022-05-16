@@ -217,8 +217,6 @@ export default {
         query,
       })
       router.push(newPath)
-
-      await mediaStore.fetchMedia()
     }
 
     return {
