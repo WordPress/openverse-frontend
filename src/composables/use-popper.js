@@ -4,7 +4,7 @@ import { createPopper } from '@popperjs/core'
 /**
  * @typedef Props
  * @property {import('./types').Ref<HTMLElement>} popoverRef
- * @property {import('./types').ToRefs<import('../components/VPopover/VPopoverContent.types').Props>} popoverPropsRefs
+ * @property {import('./types').ToRefs<import('~/components/VPopover/VPopoverContent.types').Props>} popoverPropsRefs
  */
 
 /**
@@ -18,6 +18,7 @@ export function usePopper({ popoverRef, popoverPropsRefs }) {
     [
       popoverPropsRefs.visible,
       popoverPropsRefs.placement,
+      popoverPropsRefs.strategy,
       popoverPropsRefs.triggerElement,
       popoverRef,
     ],
@@ -26,12 +27,16 @@ export function usePopper({ popoverRef, popoverPropsRefs }) {
      * @param {unknown} _
      * @param {(cb: () => void) => void} onInvalidate
      */
-    ([visible, placement, triggerElement, popover], _, onInvalidate) => {
+    (
+      [visible, placement, strategy, triggerElement, popover],
+      _,
+      onInvalidate
+    ) => {
       if (!(triggerElement && popover)) return
 
       popperInstanceRef.value = createPopper(triggerElement, popover, {
         placement,
-        strategy: 'absolute',
+        strategy,
         modifiers: [
           {
             name: 'eventListeners',

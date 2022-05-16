@@ -43,6 +43,16 @@ describe('getAttribution', () => {
     }
   )
 
+  it('uses generic title if not known', () => {
+    const mediaItemNoTitle = { ...mediaItem, title: '' }
+    const attrText = getAttribution(mediaItemNoTitle, i18n, {
+      isPlaintext: true,
+    })
+    const expectation =
+      'This work by Creator is marked with Public Domain Mark 1.0'
+    expect(attrText).toContain(expectation)
+  })
+
   it('omits creator if not known', () => {
     const mediaItemNoCreator = { ...mediaItem, creator: undefined }
     const attrText = getAttribution(mediaItemNoCreator, i18n, {
@@ -66,6 +76,15 @@ describe('getAttribution', () => {
     const expectation =
       '"Title" by Creator is marked with Public Domain Mark 1.0. To view the terms, visit https://license/url?ref=openverse.'
     expect(attrText).toEqual(expectation)
+  })
+
+  it('skips the link if URL is missing', () => {
+    const mediaItemNoLicenseUrl = { ...mediaItem, license_url: undefined }
+    const attrText = getAttribution(mediaItemNoLicenseUrl, i18n, {
+      isPlaintext: true,
+    })
+    const antiExpectation = 'To view'
+    expect(attrText).not.toContain(antiExpectation)
   })
 
   it('does not add license element icons in no-icons mode', () => {
