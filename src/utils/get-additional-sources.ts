@@ -246,7 +246,7 @@ const additionalSourceBuilders: AdditionalSourceBuilder[] = [
   {
     name: 'Sketchfab',
     supportsUseFilters: false,
-    model_3d(search) {
+    'model-3d'(search) {
       // TODO: Use actual license from filters
       const licenseCodes: string[] = [
         '322a749bcfa841b29dff1e8a1bb74b0b', // CC BY
@@ -270,7 +270,7 @@ const additionalSourceBuilders: AdditionalSourceBuilder[] = [
   {
     name: 'Thingiverse',
     supportsUseFilters: false,
-    model_3d(search) {
+    'model-3d'(search) {
       return {
         url: 'https://www.thingiverse.com/search',
         queryParams: {
