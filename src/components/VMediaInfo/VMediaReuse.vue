@@ -6,7 +6,7 @@
     <h3 class="text-2xl md:text-3xl mb-6">
       {{ $t('media-details.reuse.title') }}
     </h3>
-    <div class="grid md:grid-cols-2 gap-6">
+    <div v-if="media.license_url" class="grid md:grid-cols-2 gap-6">
       <VMediaLicense
         :license="media.license"
         :license-url="media.license_url"
