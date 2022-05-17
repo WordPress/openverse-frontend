@@ -5,7 +5,7 @@
     class="play-pause flex-shrink-0 bg-dark-charcoal border-dark-charcoal text-white disabled:opacity-70 focus-visible:border-pink focus-visible:outline-none focus-visible:shadow-ring"
     :icon-props="{ iconPath: icon }"
     :aria-label="$t(label)"
-    :button-props="{ variant: 'plain-dangerous' }"
+    :button-props="buttonProps"
     @click.stop.prevent="handleClick"
   />
 </template>
@@ -16,6 +16,7 @@ import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
 import type { AudioLayout, AudioStatus } from '~/constants/audio'
 
 import VIconButton from '~/components/VIconButton/VIconButton.vue'
+import type { ButtonConnections, ButtonVariant } from '~/components/VButton.vue'
 
 import playIcon from '~/assets/icons/play.svg'
 import pauseIcon from '~/assets/icons/pause.svg'
@@ -69,12 +70,27 @@ export default defineComponent({
      * Get the button icon based on the current status of the player.
      */
     const icon = computed(() => statusIconMap[props.status])
+
+    const buttonProps = computed(() => {
+      const connections = (
+        props.layout === 'row'
+          ? 'end'
+          : props.layout === 'global'
+          ? 'all'
+          : 'none'
+      ) as ButtonConnections
+      const variant = 'plain-dangerous' as ButtonVariant
+
+      return { variant, connections }
+    })
+
     const handleClick = () => {
       emit('toggle', isPlaying.value ? 'paused' : 'playing')
     }
     return {
       label,
       icon,
+      buttonProps,
 
       handleClick,
     }
