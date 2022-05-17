@@ -2,13 +2,13 @@ import { computed, ref } from '@nuxtjs/composition-api'
 
 import {
   supportedSearchTypes,
-  SupportedSearchType,
   ALL_MEDIA,
   AUDIO,
   IMAGE,
   MODEL_3D,
   VIDEO,
   additionalSearchTypes,
+  SearchType,
 } from '~/constants/media'
 
 import { useSearchStore } from '~/stores/search'
@@ -40,10 +40,10 @@ export default function useSearchType() {
   )
   const searchTypes = [...supportedSearchTypes]
 
-  const setActiveType = (searchType: SupportedSearchType) => {
+  const setActiveType = (searchType: SearchType) => {
     if (previousSearchType.value === searchType) return
-    useSearchStore().setSearchType(searchType as SupportedSearchType)
-    previousSearchType.value = searchType as SupportedSearchType
+    useSearchStore().setSearchType(searchType)
+    previousSearchType.value = searchType
   }
 
   return {
