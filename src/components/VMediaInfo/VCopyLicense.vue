@@ -13,20 +13,22 @@
           {{ $t(`media-details.reuse.copy-license.${tab}`) }}
         </VTab>
       </template>
-      <VLicenseTabPanel :tab="tabs[0]">
-        <!-- Disable reason: We control the attribution HTML generation so this is safe and will not lead to XSS attacks -->
-        <!-- eslint-disable vue/no-v-html -->
-        <div v-html="getAttributionMarkup({ includeIcons: false })" />
-        <!-- eslint-enable vue/no-v-html -->
-      </VLicenseTabPanel>
-      <VLicenseTabPanel :tab="tabs[1]">
-        <p id="attribution-html" class="font-mono break-all" dir="ltr">
-          {{ getAttributionMarkup() }}
-        </p>
-      </VLicenseTabPanel>
-      <VLicenseTabPanel :tab="tabs[2]">
-        {{ getAttributionMarkup({ isPlaintext: true }) }}
-      </VLicenseTabPanel>
+      <template #default="{ selectedTabId }">
+        <VLicenseTabPanel :tab="tabs[0]" :selected="selectedTabId === 0">
+          <!-- Disable reason: We control the attribution HTML generation so this is safe and will not lead to XSS attacks -->
+          <!-- eslint-disable vue/no-v-html -->
+          <div v-html="getAttributionMarkup({ includeIcons: false })" />
+          <!-- eslint-enable vue/no-v-html -->
+        </VLicenseTabPanel>
+        <VLicenseTabPanel :tab="tabs[1]" :selected="selectedTabId === 1">
+          <p id="attribution-html" class="font-mono break-all" dir="ltr">
+            {{ getAttributionMarkup() }}
+          </p>
+        </VLicenseTabPanel>
+        <VLicenseTabPanel :tab="tabs[2]" :selected="selectedTabId === 2">
+          {{ getAttributionMarkup({ isPlaintext: true }) }}
+        </VLicenseTabPanel>
+      </template>
     </VTabs>
   </div>
 </template>
@@ -35,9 +37,7 @@
 import { defineComponent, PropType } from '@nuxtjs/composition-api'
 
 import { AttributionOptions, getAttribution } from '~/utils/attribution-html'
-
 import type { Media } from '~/models/media'
-
 import { useI18n } from '~/composables/use-i18n'
 
 import VTabs from '~/components/VTabs/VTabs.vue'

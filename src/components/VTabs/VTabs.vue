@@ -3,7 +3,7 @@
     <div role="tablist" class="flex flex-row" v-bind="accessibleLabel">
       <slot name="tabs" />
     </div>
-    <slot name="default" />
+    <slot name="default" :selected-tab-id="selectedIndex" />
   </div>
 </template>
 
@@ -115,6 +115,7 @@ export default defineComponent({
     )
     return {
       accessibleLabel,
+      selectedIndex: tabGroupContext.selectedIndex,
     }
   },
 })

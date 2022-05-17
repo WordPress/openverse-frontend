@@ -3,7 +3,7 @@ import type { ComponentPublicInstance } from '@vue/runtime-dom'
 
 export type TabsState = {
   // State
-  selectedIndex: Ref<number | null>
+  selectedIndex: Ref<number>
   initiallySelectedId: string
 
   activation: ComputedRef<'manual' | 'auto'>

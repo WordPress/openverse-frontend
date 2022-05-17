@@ -34,6 +34,10 @@ export default defineComponent({
       type: String,
       required: true,
     },
+    selected: {
+      type: Boolean,
+      required: false,
+    },
   },
   setup(props) {
     const tabContext = inject(tabsContextKey)
@@ -57,11 +61,12 @@ export default defineComponent({
      * After VTabs had mounted, the panels and tabs are registered and `selected`
      * status is managed by the `tabContext`.
      */
-    const isSelected = computed(() =>
-      internalPanelRef.value === null
+    const isSelected = computed(() => {
+      if (props.selected) return true
+      return internalPanelRef.value === null
         ? props.id === tabContext.initiallySelectedId
         : panelIndex.value === tabContext.selectedIndex.value
-    )
+    })
 
     const panelVariantStyle = computed(() =>
       tabContext.variant.value === 'bordered'
