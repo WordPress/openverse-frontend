@@ -36,7 +36,7 @@ import {
   ref,
 } from '@nuxtjs/composition-api'
 
-import { SearchType } from '~/constants/media'
+import type { SearchType } from '~/constants/media'
 import { defineEvent } from '~/types/emits'
 
 import VPopover from '~/components/VPopover/VPopover.vue'

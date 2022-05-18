@@ -38,7 +38,7 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
 
-import { SearchType } from '~/constants/media'
+import type { SearchType } from '~/constants/media'
 import useSearchType from '~/composables/use-search-type'
 
 import VItemGroup from '~/components/VItemGroup/VItemGroup.vue'
