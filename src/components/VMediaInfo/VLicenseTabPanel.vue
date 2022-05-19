@@ -1,7 +1,6 @@
 <template>
   <VTabPanel
     :id="tab"
-    :selected="selected"
     class="h-[190px] flex flex-col justify-between items-start text-sm md:text-base"
   >
     <div class="overflow-y-auto">
@@ -26,10 +25,6 @@ export default defineComponent({
   props: {
     tab: {
       type: String,
-      required: true,
-    },
-    selected: {
-      type: Boolean,
       required: true,
     },
   },

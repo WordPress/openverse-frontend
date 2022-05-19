@@ -13,19 +13,19 @@
           {{ $t(`media-details.reuse.copy-license.${tab}`) }}
         </VTab>
       </template>
-      <template #default="{ selectedTabId }">
-        <VLicenseTabPanel :tab="tabs[0]" :selected="selectedTabId === 0">
+      <template #default>
+        <VLicenseTabPanel :tab="tabs[0]">
           <!-- Disable reason: We control the attribution HTML generation so this is safe and will not lead to XSS attacks -->
           <!-- eslint-disable vue/no-v-html -->
           <div v-html="getAttributionMarkup({ includeIcons: false })" />
           <!-- eslint-enable vue/no-v-html -->
         </VLicenseTabPanel>
-        <VLicenseTabPanel :tab="tabs[1]" :selected="selectedTabId === 1">
+        <VLicenseTabPanel :tab="tabs[1]">
           <p id="attribution-html" class="font-mono break-all" dir="ltr">
             {{ getAttributionMarkup() }}
           </p>
         </VLicenseTabPanel>
-        <VLicenseTabPanel :tab="tabs[2]" :selected="selectedTabId === 2">
+        <VLicenseTabPanel :tab="tabs[2]">
           {{ getAttributionMarkup({ isPlaintext: true }) }}
         </VLicenseTabPanel>
       </template>

@@ -63,9 +63,7 @@ export default defineComponent({
      */
     const isSelected = computed(() => {
       if (props.selected) return true
-      return internalPanelRef.value === null
-        ? props.id === tabContext.initiallySelectedId
-        : panelIndex.value === tabContext.selectedIndex.value
+      return props.id === tabContext.selectedId.value
     })
 
     const panelVariantStyle = computed(() =>
