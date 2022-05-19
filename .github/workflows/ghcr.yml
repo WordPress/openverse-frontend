@@ -75,10 +75,10 @@ jobs:
           issue-number: ${{ github.event.pull_request.number }}
           body-includes: Container image run instructions
 
-      - name: Get short SHA
-        id: short-sha
+      - name: Get image with tag
+        id: image-and-tag
         run: |
-          echo "::set-output name=value::$(git rev-parse --short ${{ github.event.pull_request.head.sha }})"
+          echo "::set-output name=value::ghcr.io/wordpress/openverse-frontend:sha-$(git rev-parse --short ${{ github.event.pull_request.head.sha }})"
 
       - uses: peter-evans/create-or-update-comment@v2
         if: github.event_name == 'pull_request'
@@ -91,13 +91,13 @@ jobs:
             If you have a local container runtime like Docker you can run this branch's code using the image and tag below:
 
             ```
-            ghcr.io/wordpress/openverse-frontend:sha-${{ steps.short-sha.output.value }}
+            ${{ steps.image-and-tag.outputs.value }}
             ```
 
             For example, with Docker you should run:
 
             ```
-            docker run -it -p 127.0.0.1:8443:8443/tcp ghcr.io/wordpress/openverse-frontend:sha-${{ steps.short-sha.output.value }}
+            docker run -it -p 127.0.0.1:8443:8443/tcp ${{ steps.image-and-tag.outputs.value }}
             ```
 
             Please note that this comment will automatically update itself with the latest image tag once a new one is available (for example, if the PR's branch is pushed to).
