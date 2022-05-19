@@ -142,6 +142,15 @@ export default defineComponent({
       cleanSourceUrlForPresentation,
     }
   },
+  /**
+   * Force updating the providers. We cannot use the async `getProviders`
+   * that fetches provider data in a computed.
+   * @param $pinia
+   */
+  async asyncData({ $pinia }) {
+    const providerStore = useProviderStore($pinia)
+    await providerStore.getProviders()
+  },
 })
 </script>
 

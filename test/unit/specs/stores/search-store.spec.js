@@ -250,7 +250,7 @@ describe('Search Store', () => {
     it('toggleFilter updates isFilterApplied with provider', () => {
       const searchStore = useSearchStore()
       searchStore.setSearchType(IMAGE)
-      searchStore.initProviderFilters({
+      searchStore.updateProviderFilters({
         mediaType: IMAGE,
         providers: [{ source_name: 'met', display_name: 'Met' }],
       })
@@ -267,7 +267,7 @@ describe('Search Store', () => {
       expect(searchStore.isAnyFilterApplied).toEqual(true)
     })
 
-    it('initProviderFilters merges with existing provider filters', () => {
+    it('updateProviderFilters merges with existing provider filters', () => {
       const searchStore = useSearchStore()
       const existingProviderFilters = [{ code: 'met', checked: true }]
 
@@ -279,7 +279,7 @@ describe('Search Store', () => {
         { source_name: 'flickr', display_name: 'Flickr' },
       ]
 
-      searchStore.initProviderFilters({
+      searchStore.updateProviderFilters({
         mediaType: 'image',
         providers: providers,
       })

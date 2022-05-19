@@ -1,7 +1,7 @@
 import { sendWindowMessage } from '~/utils/send-message'
 import { useNavigationStore } from '~/stores/navigation'
-import { useProviderStore } from '~/stores/provider'
 import { useFeatureFlagStore } from '~/stores/feature-flag'
+import { useSearchStore } from '~/stores/search'
 
 import type { Middleware } from '@nuxt/types'
 
@@ -37,10 +37,13 @@ const middleware: Middleware = async ({ app, query, route, $pinia }) => {
     navigationStore.setIsReferredFromCc(false)
   }
 
-  /* Provider store */
+  /* Initialize provider data */
 
-  const providerStore = useProviderStore($pinia)
-  await providerStore.fetchMediaProviders()
+  const searchStore = useSearchStore($pinia)
+  /**
+   * Provider data is initially loaded from local file to ensure that the app can start even before the request is completed. Here we send a non-blocking request to update the providers. When the response is received, the local data will be replaced with the updated data.
+   */
+  searchStore.initProviderFilters()
 
   /* Feature flag store */
 

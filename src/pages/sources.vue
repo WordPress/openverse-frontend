@@ -75,7 +75,9 @@
       </template>
     </i18n>
     <template v-for="mediaType in supportedMediaTypes">
-      <h3 :key="mediaType">{{ $t(`sources.heading.${mediaType}`) }}</h3>
+      <h3 :key="`${mediaType}_title`">
+        {{ $t(`sources.heading.${mediaType}`) }}
+      </h3>
       <VSourcesTable :key="mediaType" :media="mediaType" />
     </template>
   </VContentPage>

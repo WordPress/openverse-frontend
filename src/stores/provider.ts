@@ -3,6 +3,8 @@ import { defineStore } from 'pinia'
 import { Ref, ssrRef } from '@nuxtjs/composition-api'
 import axios from 'axios'
 
+import initialProviderData from '~/data/sources.json'
+
 import { env } from '~/utils/env'
 import {
   AUDIO,
@@ -18,7 +20,6 @@ import {
   initialFetchState,
   updateFetchState,
 } from '~/composables/use-fetch-state'
-import { useSearchStore } from '~/stores/search'
 
 export interface ProviderState {
   providers: {
@@ -51,10 +52,7 @@ const updateFrequency = parseInt(env.providerUpdateFrequency, 10)
 
 export const useProviderStore = defineStore('provider', {
   state: (): ProviderState => ({
-    providers: {
-      [AUDIO]: [],
-      [IMAGE]: [],
-    },
+    providers: initialProviderData,
     fetchState: {
       [AUDIO]: { ...initialFetchState },
       [IMAGE]: { ...initialFetchState },
@@ -62,6 +60,11 @@ export const useProviderStore = defineStore('provider', {
   }),
 
   actions: {
+    async getProviders() {
+      await this.fetchMediaProviders()
+      return this.providers
+    },
+
     _updateFetchState(
       mediaType: SupportedMediaType,
       action: 'end' | 'start',
@@ -114,11 +117,6 @@ export const useProviderStore = defineStore('provider', {
       try {
         const res = await providerServices[mediaType].getProviderStats()
         sortedProviders = sortProviders(res.data)
-        const searchStore = useSearchStore()
-        searchStore.initProviderFilters({
-          mediaType,
-          providers: sortedProviders,
-        })
         this._updateFetchState(mediaType, 'end')
       } catch (error: unknown) {
         let errorMessage = `There was an error fetching media providers for ${mediaType}`
