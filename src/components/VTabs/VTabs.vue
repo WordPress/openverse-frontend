@@ -75,13 +75,11 @@ export default defineComponent({
     change: defineEvent<[string]>(),
   },
   setup(props, { emit }) {
-    const selectedIndex = ref<TabsState['selectedIndex']['value']>(0)
     const selectedId = ref<TabsState['selectedId']['value']>(props.selectedId)
     const tabs = ref<TabsState['tabs']['value']>([])
     const panels = ref<TabsState['panels']['value']>([])
 
     const tabGroupContext: TabsState = {
-      selectedIndex,
       selectedId,
       activation: computed(() => (props.manual ? 'manual' : 'auto')),
       variant: computed(() =>
