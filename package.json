@@ -46,7 +46,7 @@
     "test:storybook:debug": "PWDEBUG=1 pnpm test:storybook:local",
     "test:storybook:gen": "playwright codegen localhost:54000/",
     "types": "vue-tsc --noEmit",
-    "update:providers:dev": "CHECK_DATE=true pnpm update:providers",
+    "update:providers:dev": "NODE_ENV=development pnpm update:providers",
     "update:providers": "node scripts/providers.mjs",
     "lint": "prettier --check .; eslint --ext .js,.vue,.ts --ignore-path .gitignore --ignore-path .eslintignore --max-warnings=0 .",
     "lint:fix": "prettier --write --loglevel=warn .; pnpm lint -- --fix",

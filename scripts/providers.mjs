@@ -21,7 +21,7 @@ const needsUpdate = () => {
  * Always update for production, only update if the file is older than the update frequency in other environments.
  * @type {boolean}
  */
-const shouldUpdate = process.env.CHECK_DATE ? needsUpdate() : true
+const shouldUpdate = process.env.NODE_ENV === 'development' ? needsUpdate() : true
 
 async function updateProviderData() {
   const providerData = {}
@@ -45,4 +45,7 @@ try {
   }
 } catch (error) {
   console.log(`The providers data is outdated, but there was an error during update: ${error}`)
+  if (process.env.NODE_ENV !== 'development') {
+    process.exit(1)
+  }
 }
