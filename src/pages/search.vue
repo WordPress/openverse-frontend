@@ -101,6 +101,7 @@ export default defineComponent({
       path: route.path,
       urlQuery: route.query,
     })
+    await searchStore.initProviderFilters()
     if (
       searchStore.searchTypeIsSupported &&
       !mediaStore.resultCount &&
