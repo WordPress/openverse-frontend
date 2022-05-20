@@ -7,7 +7,7 @@
       {{ $t('media-details.reuse.copy-license.title') }}
     </h5>
 
-    <VTabs label="#copy-license-title">
+    <VTabs label="#copy-license-title" :selected-id="tabs[0]">
       <template #tabs>
         <VTab v-for="tab in tabs" :id="tab" :key="tab">
           {{ $t(`media-details.reuse.copy-license.${tab}`) }}
@@ -35,9 +35,7 @@
 import { defineComponent, PropType } from '@nuxtjs/composition-api'
 
 import { AttributionOptions, getAttribution } from '~/utils/attribution-html'
-
 import type { Media } from '~/models/media'
-
 import { useI18n } from '~/composables/use-i18n'
 
 import VTabs from '~/components/VTabs/VTabs.vue'
@@ -46,7 +44,7 @@ import VLicenseTabPanel from '~/components/VMediaInfo/VLicenseTabPanel.vue'
 
 const tabs = ['rich', 'html', 'plain']
 
-const VCopyLicense = defineComponent({
+export default defineComponent({
   name: 'VCopyLicense',
   components: { VTabs, VTab, VLicenseTabPanel },
   props: {
@@ -66,5 +64,4 @@ const VCopyLicense = defineComponent({
     }
   },
 })
-export default VCopyLicense
 </script>
