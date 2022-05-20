@@ -262,6 +262,16 @@ const config: NuxtConfig = {
          * of the middleware stack. Using server-middleware puts it
          * after a whole host of stuff.
          *
+         * Note: The middleware only has access to server side navigations,
+         * as it is indeed an express middleware, not a Nuxt page middleware.
+         * There's no safe way to pipe client side metrics to Prometheus with
+         * this set up and if we wanted that anyway we'll want to invest into
+         * an actual RUM solution, not a systems monitoring solution like
+         * Prometheus. The implication of this is that the metrics will only
+         * include SSR'd requests. SPA navigations or anything else that
+         * happens exclusively on the client will not be measured. This is the
+         * expected behavior!
+         *
          * @see {@link https://github.com/nuxt/nuxt.js/blob/dev/packages/server/src/server.js#L70-L138}
          */
         app.use(
