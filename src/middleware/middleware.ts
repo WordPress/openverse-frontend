@@ -1,6 +1,6 @@
 import { sendWindowMessage } from '~/utils/send-message'
 import { useNavigationStore } from '~/stores/navigation'
-import { useProviderStore } from '~/stores/provider'
+import { useSearchStore } from '~/stores/search'
 import { useFeatureFlagStore } from '~/stores/feature-flag'
 
 import type { Middleware } from '@nuxt/types'
@@ -39,8 +39,8 @@ const middleware: Middleware = async ({ app, query, route, $pinia }) => {
 
   /* Provider store */
 
-  const providerStore = useProviderStore($pinia)
-  await providerStore.fetchMediaProviders()
+  const searchStore = useSearchStore($pinia)
+  await searchStore.initProviderFilters()
 
   /* Feature flag store */
 
