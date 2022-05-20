@@ -26,12 +26,21 @@ const statusVerbMap = {
   playing: 'pause',
   paused: 'play',
   played: 'replay',
-}
+} as const
+
 const statusIconMap = {
   playing: pauseIcon,
   paused: playIcon,
   played: replayIcon,
-}
+} as const
+
+const layoutConnectionsMap: Record<AudioLayout, ButtonConnections> = {
+  row: 'end',
+  global: 'all',
+  box: 'none',
+  full: 'none',
+} as const
+
 /**
  * Displays the control for switching between the playing and paused states of
  * a media file.
@@ -71,17 +80,14 @@ export default defineComponent({
      */
     const icon = computed(() => statusIconMap[props.status])
 
+    /**
+     * Sets the button variant to `plain-dangerous` to manually handle focus states.
+     * Sets the connections (none-rounded corners) for the button based on the layout.
+     */
     const buttonProps = computed(() => {
-      const connections = (
-        props.layout === 'row'
-          ? 'end'
-          : props.layout === 'global'
-          ? 'all'
-          : 'none'
-      ) as ButtonConnections
       const variant = 'plain-dangerous' as ButtonVariant
 
-      return { variant, connections }
+      return { variant, connections: layoutConnectionsMap[props.layout] }
     })
 
     const handleClick = () => {
