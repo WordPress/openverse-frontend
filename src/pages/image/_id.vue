@@ -37,8 +37,8 @@
         size="large"
         >{{ $t('image-details.weblink') }}</VButton
       >
-      <span class="flex-1 flex flex-col justify-center">
-        <h1 class="text-base md:text-3xl font-semibold leading-[130%]">
+      <div class="flex-1 flex flex-col justify-center font-semibold text-base">
+        <h1 class="md:text-3xl leading-[130%]">
           {{ image.title }}
         </h1>
         <i18n
@@ -61,7 +61,7 @@
             <span v-else>{{ image.creator }}</span>
           </template>
         </i18n>
-      </span>
+      </div>
     </section>
 
     <VMediaReuse :media="image" />
