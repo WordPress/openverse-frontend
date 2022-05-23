@@ -15,30 +15,6 @@ jobs:
     if: github.repository == 'WordPress/openverse-frontend'
 
     steps:
-      - uses: peter-evans/find-comment@v2
-        if: github.event_name == 'pull_request'
-        id: preview-comment
-        with:
-          issue-number: ${{ github.event.pull_request.number }}
-          body-includes: Container image run instructions
-
-      - uses: peter-evans/create-or-update-comment@v2
-        if: github.event_name == 'pull_request' && steps.preview-comment.outputs.comment-id != 0
-        with:
-          comment-id: ${{ steps.preview-comment.outputs.comment-id }}
-          edit-mode: replace
-          body: |
-            **Container image run instructions**: _Updating_
-            (This comment will be automatically updated with the up-to-date instructions for running this branch's code once the docker image is available in GitHub Container Registry.)
-
-      - uses: peter-evans/create-or-update-comment@v2
-        if: github.event_name == 'pull_request' && steps.preview-comment.outputs.comment-id == 0
-        with:
-          issue-number: ${{ github.event.pull_request.number }}
-          body: |
-            **Container image run instructions**: _Updating_
-            (This comment will be automatically updated with the up-to-date instructions for running this branch's code once the docker image is available in GitHub Container Registry.)
-
       - uses: actions/checkout@v2
 
       - uses: docker/setup-buildx-action@v1
@@ -59,6 +35,7 @@ jobs:
             type=sha
             type=ref,event=tag
             ${{ github.event_name == 'push' && 'type=raw,value=main' || '' }}
+            ${{ github.event_name == 'pull_request' && 'type=raw,value=pr-' + github.event.pull_request.number || '' }}
 
       - uses: docker/build-push-action@v2
         id: build
@@ -68,36 +45,21 @@ jobs:
           labels: ${{ steps.metadata.outputs.labels }}
           push: true
 
-      - uses: peter-evans/find-comment@v2
+      - name: Docker instructions
         if: github.event_name == 'pull_request'
-        id: final-preview-comment
-        with:
-          issue-number: ${{ github.event.pull_request.number }}
-          body-includes: Container image run instructions
-
-      - name: Get image with tag
-        id: image-and-tag
         run: |
-          echo "::set-output name=value::ghcr.io/wordpress/openverse-frontend:sha-$(git rev-parse --short ${{ github.event.pull_request.head.sha }})"
+          echo "\
+          # Container image run instructions
 
-      - uses: peter-evans/create-or-update-comment@v2
-        if: github.event_name == 'pull_request'
-        with:
-          comment-id: ${{ steps.final-preview-comment.outputs.comment-id }}
-          edit-mode: replace
-          body: |
-            **Container image run instructions**: _Ready_
+          If you have a local container runtime like Docker you can run this branch's code using the image and tag below:
 
-            If you have a local container runtime like Docker you can run this branch's code using the image and tag below:
+          ```
+          ghcr.io/wordpress/openverse-frontend:pr-${{ github.event.pull_request.number }}
+          ```
 
-            ```
-            ${{ steps.image-and-tag.outputs.value }}
-            ```
+          For example, with Docker you should run:
 
-            For example, with Docker you should run:
-
-            ```
-            docker run -it -p 127.0.0.1:8443:8443/tcp ${{ steps.image-and-tag.outputs.value }}
-            ```
-
-            Please note that this comment will automatically update itself with the latest image tag once a new one is available (for example, if the PR's branch is pushed to).
+          ```
+          docker run -it -p 127.0.0.1:8443:8443/tcp ghcr.io/wordpress/openverse-frontend:pr-${{ github.event.pull_request.number }}
+          ```
+          " >> $GITHUB_STEP_SUMMARY
