@@ -55,7 +55,7 @@ jobs:
       - name: Docker instructions
         if: github.event_name == 'pull_request'
         run: |
-          echo "\
+          echo '\
           # Container image run instructions
 
           If you have a local container runtime like Docker you can run this branch's code using the image and tag below:
@@ -69,4 +69,4 @@ jobs:
           ```
           docker run -it -p 127.0.0.1:8443:8443/tcp ghcr.io/wordpress/openverse-frontend:pr-${{ github.event.pull_request.number }}
           ```
-          " >> $GITHUB_STEP_SUMMARY
+          ' >> $GITHUB_STEP_SUMMARY
