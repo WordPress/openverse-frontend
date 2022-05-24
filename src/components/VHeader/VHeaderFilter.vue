@@ -164,7 +164,7 @@ export default defineComponent({
       ref(mobileOptions)
 
     onMounted(() => {
-      if (isMinScreenMd.value && filterSidebar.isVisible.value) {
+      if (filterSidebar.isVisible.value) {
         open()
       }
     })
