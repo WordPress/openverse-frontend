@@ -129,9 +129,7 @@ export const useProviderStore = defineStore('provider', {
         }
         warn(errorMessage)
         // Fallback on existing providers if there was an error
-        if (this.providers[mediaType].length > 0 && !sortedProviders.length) {
-          sortedProviders = this.providers[mediaType]
-        }
+        sortedProviders = this.providers[mediaType]
         this._updateFetchState(mediaType, 'end', errorMessage)
       } finally {
         this.providers[mediaType] = sortedProviders
