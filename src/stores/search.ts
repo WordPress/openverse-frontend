@@ -12,6 +12,7 @@ import {
   supportedMediaTypes,
   SupportedSearchType,
   supportedSearchTypes,
+  isAdditionalSearchType,
 } from '~/constants/media'
 import {
   ApiQueryParams,
@@ -29,6 +30,8 @@ import {
 } from '~/constants/filters'
 import { useProviderStore } from '~/stores/provider'
 
+import { useFeatureFlagStore } from '~/stores/feature-flag'
+
 import type { Dictionary } from 'vue-router/types/router'
 
 export const isSearchTypeSupported = (
@@ -44,7 +47,7 @@ export interface SearchState {
 }
 
 function computeQueryParams(
-  searchType: SupportedSearchType,
+  searchType: SearchType,
   filters: Filters,
   searchTerm: string
 ) {
@@ -74,6 +77,7 @@ export const useSearchStore = defineStore('search', {
     filterCategories(state) {
       return Object.keys(state.filters) as FilterCategory[]
     },
+
     /**
      * Returns the search query parameters for API request:
      * drops all parameters with blank values.
@@ -89,6 +93,7 @@ export const useSearchStore = defineStore('search', {
         return { q: state.searchTerm }
       }
     },
+
     /**
      * Returns the number of checked filters, excluding the `mature` filter.
      */
@@ -102,6 +107,7 @@ export const useSearchStore = defineStore('search', {
         )
       }, 0)
     },
+
     /**
      * Returns the object with filters for selected search type, with codes, names for i18n labels, and checked status.
      */
@@ -113,6 +119,7 @@ export const useSearchStore = defineStore('search', {
           return obj
         }, {} as Filters)
     },
+
     /**
      * True if any filter for selected search type except `mature` is checked.
      */
@@ -134,7 +141,17 @@ export const useSearchStore = defineStore('search', {
     },
   },
   actions: {
-    setSearchType(type: SupportedSearchType) {
+    setSearchType(type: SearchType) {
+      const featureFlagStore = useFeatureFlagStore()
+      if (
+        !featureFlagStore.isOn('external_sources') &&
+        isAdditionalSearchType(type)
+      ) {
+        throw new Error(
+          `Please enable the 'external_sources' flag to use the ${type}`
+        )
+      }
+
       this.searchType = type
       this.clearOtherMediaTypeFilters(type)
     },
@@ -245,7 +262,7 @@ export const useSearchStore = defineStore('search', {
      * After a search type is changed, unchecks all the filters that are not
      * applicable for this Media type.
      */
-    clearOtherMediaTypeFilters(searchType: SupportedSearchType) {
+    clearOtherMediaTypeFilters(searchType: SearchType) {
       const mediaTypesToClear = supportedSearchTypes.filter(
         (type) => type !== searchType
       )
