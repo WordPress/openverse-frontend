@@ -53,6 +53,9 @@ export default defineComponent({
     VSearchGrid,
     VSkipToContentContainer,
   },
+  middleware({ route, redirect }) {
+    if (!route.query.q) return redirect('/')
+  },
   scrollToTop: false,
   setup() {
     const searchGridRef = ref(null)
