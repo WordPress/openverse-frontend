@@ -132,7 +132,13 @@
 </template>
 
 <script>
-import { onMounted, ref, useContext, useRouter } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  onMounted,
+  ref,
+  useContext,
+  useRouter,
+} from '@nuxtjs/composition-api'
 
 import { ALL_MEDIA, supportedSearchTypes } from '~/constants/media'
 import { isMinScreen } from '~/composables/use-media-query'
@@ -150,7 +156,7 @@ import imageInfo from '~/assets/homepage_images/image_info.json'
 import OpenverseLogo from '~/assets/logo.svg?inline'
 import OpenverseBrand from '~/assets/brand.svg?inline'
 
-export default {
+export default defineComponent({
   name: 'HomePage',
   components: {
     OpenverseLogo,
@@ -242,7 +248,7 @@ export default {
       },
     ],
   },
-}
+})
 </script>
 
 <style>

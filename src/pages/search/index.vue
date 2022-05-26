@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { useMeta, defineComponent } from '@nuxtjs/composition-api'
+import { computed, defineComponent, useMeta } from '@nuxtjs/composition-api'
 
 import { useLoadMore } from '~/composables/use-load-more'
 import { propTypes } from '~/pages/search/search-page.types'
@@ -17,7 +17,9 @@ export default defineComponent({
   setup(props) {
     useMeta({ title: `${props.searchTerm} | Openverse` })
 
-    const { canLoadMore, onLoadMore } = useLoadMore(props)
+    const searchTermRef = computed(() => props.searchTerm)
+    const { canLoadMore, onLoadMore } = useLoadMore(searchTermRef)
+
     return { canLoadMore, onLoadMore }
   },
   head: {

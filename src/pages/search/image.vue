@@ -25,7 +25,9 @@ export default defineComponent({
     useMeta({ title: `${props.searchTerm} | Openverse` })
 
     const results = computed(() => props.resultItems.image)
-    const { canLoadMore, onLoadMore } = useLoadMore(props)
+
+    const searchTermRef = computed(() => props.searchTerm)
+    const { canLoadMore, onLoadMore } = useLoadMore(searchTermRef)
 
     const focusFilters = useFocusFilters()
     const handleShiftTab = () => {

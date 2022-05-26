@@ -72,8 +72,8 @@ export default defineComponent({
         focusFilters.focusFilterSidebar(event, Focus.Last)
       }
     }
-
-    const { canLoadMore, onLoadMore } = useLoadMore(props)
+    const searchTermRef = computed(() => props.searchTerm)
+    const { canLoadMore, onLoadMore } = useLoadMore(searchTermRef)
 
     return {
       results,
