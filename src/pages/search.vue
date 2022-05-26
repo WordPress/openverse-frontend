@@ -54,7 +54,7 @@ export default defineComponent({
     VSkipToContentContainer,
   },
   middleware({ route, redirect }) {
-    if (!route.query.q || !route.query.creator) return redirect('/')
+    if (!route.query.q && !route.query.searchBy) return redirect('/')
   },
   scrollToTop: false,
   setup() {
