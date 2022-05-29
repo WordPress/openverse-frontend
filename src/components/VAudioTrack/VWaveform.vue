@@ -546,7 +546,7 @@ export default defineComponent({
     }))
 
     const seekTimeLeft = computed<CSSProperties>(() => ({
-      '--seek-time-left': `${seekBarWidth}px`,
+      '--seek-time-left': `${seekBarWidth.value}px`,
     }))
 
     return {
