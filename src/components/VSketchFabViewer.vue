@@ -24,6 +24,7 @@ import {
 
 import { useI18n } from '~/composables/use-i18n'
 import { loadScript } from '~/utils/load-script'
+import { defineEvent } from '~/types/emits'
 
 const sketchfabUrl =
   'https://static.sketchfab.com/api/sketchfab-viewer-1.10.1.js'
@@ -47,7 +48,9 @@ export default defineComponent({
       required: true,
     },
   },
-  emits: ['failure'],
+  emits: {
+    failure: defineEvent(),
+  },
   setup(props, { emit }) {
     const i18n = useI18n()
     const label = i18n
