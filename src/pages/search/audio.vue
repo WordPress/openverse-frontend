@@ -18,7 +18,12 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, useMeta } from '@nuxtjs/composition-api'
+import {
+  computed,
+  defineComponent,
+  toRef,
+  useMeta,
+} from '@nuxtjs/composition-api'
 
 import { useLoadMore } from '~/composables/use-load-more'
 import { isMinScreen } from '~/composables/use-media-query'
@@ -72,7 +77,7 @@ export default defineComponent({
         focusFilters.focusFilterSidebar(event, Focus.Last)
       }
     }
-    const searchTermRef = computed(() => props.searchTerm)
+    const searchTermRef = toRef(props, 'searchTerm')
     const { canLoadMore, onLoadMore } = useLoadMore(searchTermRef)
 
     return {

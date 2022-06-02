@@ -9,7 +9,12 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, useMeta } from '@nuxtjs/composition-api'
+import {
+  computed,
+  defineComponent,
+  toRef,
+  useMeta,
+} from '@nuxtjs/composition-api'
 
 import { propTypes } from '~/pages/search/search-page.types'
 import { useLoadMore } from '~/composables/use-load-more'
@@ -26,7 +31,7 @@ export default defineComponent({
 
     const results = computed(() => props.resultItems.image)
 
-    const searchTermRef = computed(() => props.searchTerm)
+    const searchTermRef = toRef(props, 'searchTerm')
     const { canLoadMore, onLoadMore } = useLoadMore(searchTermRef)
 
     const focusFilters = useFocusFilters()
