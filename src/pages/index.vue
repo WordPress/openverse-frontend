@@ -43,7 +43,7 @@
         </div>
         <VSearchBar
           v-model.trim="searchTerm"
-          class="max-w-[40rem] mt-4 lg:mt-8 group"
+          class="max-w-[40rem] mt-4 lg:mt-8 group h-[57px] md:h-[69px]"
           size="standalone"
           @submit="handleSearch"
         >
@@ -85,7 +85,7 @@
       <!-- Height is 114.286vh i.e. 100vh * 8/7 (so that 0.75, 1, 1, 0.75 circles are visible) -->
       <!-- Width is 57.143vh i.e. half of height (because grid dimensions are 4 ⨯ 2) -->
       <div
-        class="homepage-images flex flex-row gap-4 lg:gap-0 items-center lg:grid lg:grid-cols-2 lg:grid-rows-4 lg:w-[57.143vh] lg:h-[114.286vh]"
+        class="homepage-images flex flex-row gap-4 lg:gap-0 items-center lg:grid lg:grid-cols-2 lg:grid-rows-4 lg:w-[57.143vh] lg:h-[114.286vh] min-h-[120px]"
         aria-hidden
       >
         <ClientOnly>
@@ -102,9 +102,11 @@
               :style="{ '--transition-index': `${index * 0.05}s` }"
             >
               <img
-                class="object-cover h-full w-full rounded-full"
+                class="object-cover h-full w-full rounded-full aspect-square"
                 :src="image.src"
                 :alt="image.title"
+                width="120"
+                height="120"
                 :title="image.title"
               />
             </VLink>
@@ -131,7 +133,7 @@
   </main>
 </template>
 
-<script>
+<script lang="ts">
 import {
   defineComponent,
   onMounted,
