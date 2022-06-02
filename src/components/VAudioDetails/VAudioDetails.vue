@@ -85,16 +85,26 @@
   </section>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent, PropType } from '@nuxtjs/composition-api'
+
+import { AudioDetail } from '~/models/media'
+
 import VLink from '~/components/VLink.vue'
 import VAudioThumbnail from '~/components/VAudioThumbnail/VAudioThumbnail.vue'
 import VMediaTag from '~/components/VMediaTag/VMediaTag.vue'
+import VContentReportPopover from '~/components/VContentReport/VContentReportPopover.vue'
 
-export default {
+export default defineComponent({
   name: 'VAudioDetails',
-  components: { VAudioThumbnail, VLink, VMediaTag },
-  props: ['audio'],
-}
+  components: { VAudioThumbnail, VContentReportPopover, VLink, VMediaTag },
+  props: {
+    audio: {
+      type: Object as PropType<AudioDetail>,
+      required: true,
+    },
+  },
+})
 </script>
 
 <style scoped>

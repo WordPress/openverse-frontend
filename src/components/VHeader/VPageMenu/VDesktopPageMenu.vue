@@ -2,7 +2,7 @@
   <VPopover
     ref="pageMenuPopover"
     class="flex items-stretch"
-    :label="$t('header.aria.menu')"
+    :label="$t('header.aria.menu').toString()"
   >
     <template #trigger="{ a11yProps }">
       <VPageMenuButton :a11y-props="a11yProps" />
@@ -14,16 +14,18 @@
 </template>
 
 <script>
+import { defineComponent } from '@nuxtjs/composition-api'
+
 import VPopover from '~/components/VPopover/VPopover.vue'
 import VPageMenuButton from '~/components/VHeader/VPageMenu/VPageMenuButton.vue'
 import VPageList from '~/components/VHeader/VPageMenu/VPageList.vue'
 
-export default {
+export default defineComponent({
   name: 'VDesktopPageMenu',
   components: {
     VPageMenuButton,
     VPageList,
     VPopover,
   },
-}
+})
 </script>

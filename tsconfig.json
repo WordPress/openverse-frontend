@@ -61,7 +61,6 @@
     "src/components/VAudioThumbnail/VAudioThumbnail.vue",
     "src/components/VGlobalAudioSection/VGlobalAudioSection.vue",
     "src/components/VInputField/VInputField.vue",
-    "src/components/VHeader/VFilterButton.vue",
     "src/components/VHeader/VSearchBar/VSearchBar.vue",
     "src/components/VTabs/**.vue",
     "src/components/VCopyButton.vue",

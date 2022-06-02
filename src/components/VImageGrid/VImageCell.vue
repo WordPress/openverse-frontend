@@ -35,12 +35,15 @@
   </VLink>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent, PropType } from '@nuxtjs/composition-api'
+
+import { ImageDetail } from '~/models/media'
+
 import VLicense from '~/components/VLicense/VLicense.vue'
 import VLink from '~/components/VLink.vue'
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const errorImage = require('~/assets/image_not_available_placeholder.png')
+import errorImage from '~/assets/image_not_available_placeholder.png'
 
 const minAspect = 3 / 4
 const maxAspect = 16 / 9
@@ -54,10 +57,15 @@ const toAbsolutePath = (url, prefix = 'https://') => {
   return `${prefix}${url}`
 }
 
-export default {
+export default defineComponent({
   name: 'VImageCell',
   components: { VLicense, VLink },
-  props: ['image'],
+  props: {
+    image: {
+      type: Object as PropType<ImageDetail>,
+      required: true,
+    },
+  },
   data() {
     return {
       widthBasis: minRowWidth / maxAspect,
@@ -131,5 +139,5 @@ export default {
       this.imgWidth = e.target.naturalWidth
     },
   },
-}
+})
 </script>

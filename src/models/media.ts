@@ -26,6 +26,7 @@ export interface Media {
 
   frontendMediaType: SupportedMediaType
 
+  description?: string | null
   category: string | null
   provider: string
   source?: string
@@ -53,7 +54,7 @@ export interface ImageDetail extends Media {
 export interface AudioDetail extends Media {
   frontendMediaType: 'audio'
 
-  audio_set?: string
+  audio_set?: AudioSet
   genres?: string[]
   duration?: number
   bit_rate?: number
@@ -61,6 +62,11 @@ export interface AudioDetail extends Media {
   alt_files?: { provider: string; filetype: string }[]
   peaks?: number[]
   waveform?: string
+}
+
+export interface AudioSet {
+  name: string
+  url: string
 }
 
 export type DetailFromMediaType<T extends SupportedMediaType> =

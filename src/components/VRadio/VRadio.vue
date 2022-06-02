@@ -9,30 +9,37 @@
       :checked="isChecked"
       @input="handleInput"
     />
-    <Radiomark
-      class="radiomark absolute start-0 w-5 h-5 text-dark-charcoal opacity-0 transition-opacity"
-      focusable="false"
+    <VIcon
+      class="radiomark absolute start-0 text-dark-charcoal opacity-0 transition-opacity"
+      :icon-path="radiomark"
+      view-box="0 0 20 20"
       width="20"
       height="20"
-      aria-hidden="true"
+      :size="5"
     />
     <!--  @slot Label content goes here  -->
     <slot />
   </label>
 </template>
 
-<script>
-import { computed } from '@nuxtjs/composition-api'
+<script lang="ts">
+import { computed, defineComponent } from '@nuxtjs/composition-api'
 
-import Radiomark from '~/assets/icons/radiomark.svg?inline'
+import { defineEvent } from '~/types/emits'
+
+import VIcon from '~/components/VIcon/VIcon.vue'
+
+import radiomark from '~/assets/icons/radiomark.svg'
 
 /**
  * Renders a radio input field, useful for choosing one of a few options that
  * can all be presented on the screen at once.
  */
-export default {
+export default defineComponent({
   name: 'VRadio',
-  components: { Radiomark },
+  components: {
+    VIcon,
+  },
   inheritAttrs: false,
   model: {
     prop: 'modelValue',
@@ -61,18 +68,24 @@ export default {
       default: '',
     },
   },
+  emits: {
+    change: defineEvent<[string]>(),
+  },
   setup(props, { emit }) {
     const isChecked = computed(() => props.value === props.modelValue)
+
     const handleInput = () => {
       emit('change', props.value)
     }
 
     return {
+      radiomark,
+
       isChecked,
       handleInput,
     }
   },
-}
+})
 </script>
 
 <style scoped>

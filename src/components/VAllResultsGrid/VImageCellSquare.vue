@@ -32,12 +32,16 @@
   </VLink>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent, PropType } from '@nuxtjs/composition-api'
+
+import { defineEvent } from '~/types/emits'
+import { ImageDetail } from '~/models/media'
+
 import VLink from '~/components/VLink.vue'
 import VLicense from '~/components/VLicense/VLicense.vue'
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const errorImage = require('~/assets/image_not_available_placeholder.png')
+import errorImage from '~/assets/image_not_available_placeholder.png'
 
 const toAbsolutePath = (url, prefix = 'https://') => {
   if (url.indexOf('http://') >= 0 || url.indexOf('https://') >= 0) {
@@ -46,30 +50,45 @@ const toAbsolutePath = (url, prefix = 'https://') => {
   return `${prefix}${url}`
 }
 
-export default {
+export default defineComponent({
   name: 'VImageCell',
   components: { VLink, VLicense },
-  props: ['image'],
-  methods: {
-    getImageUrl(image) {
+  props: {
+    image: {
+      type: Object as PropType<ImageDetail>,
+      required: true,
+    },
+  },
+  emits: {
+    'focus-leave': defineEvent<[FocusEvent]>(),
+  },
+  setup(_, { emit }) {
+    const getImageUrl = (image: ImageDetail) => {
       if (!image) return ''
       const url = image.thumbnail || image.url
       return toAbsolutePath(url)
-    },
-    getImageForeignUrl(image) {
+    }
+    const getImageForeignUrl = (image: ImageDetail) => {
       return toAbsolutePath(image.foreign_landing_url)
-    },
-    onImageLoadError(event, image) {
+    }
+    const onImageLoadError = (event, image) => {
       const element = event.target
       if (element.src !== image.url) {
         element.src = image.url
       } else {
         element.src = errorImage
       }
-    },
-    onFocusLeave(event) {
-      this.$emit('focus-leave', event)
-    },
+    }
+    const onFocusLeave = (event: FocusEvent) => {
+      emit('focus-leave', event)
+    }
+
+    return {
+      getImageUrl,
+      getImageForeignUrl,
+      onImageLoadError,
+      onFocusLeave,
+    }
   },
-}
+})
 </script>

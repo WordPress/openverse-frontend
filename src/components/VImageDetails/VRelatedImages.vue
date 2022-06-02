@@ -11,10 +11,14 @@
   </aside>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent, PropType } from '@nuxtjs/composition-api'
+
+import { FetchState } from '~/composables/use-fetch-state'
+
 import VImageGrid from '~/components/VImageGrid/VImageGrid.vue'
 
-export default {
+export default defineComponent({
   name: 'VRelatedImages',
   components: { VImageGrid },
   props: {
@@ -23,9 +27,9 @@ export default {
       required: true,
     },
     fetchState: {
-      type: Object,
+      type: Object as PropType<FetchState>,
       required: true,
     },
   },
-}
+})
 </script>

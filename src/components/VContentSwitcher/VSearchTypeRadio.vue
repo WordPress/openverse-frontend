@@ -15,11 +15,12 @@
   </button>
 </template>
 
-<script>
-import { computed, defineComponent } from '@nuxtjs/composition-api'
+<script lang="ts">
+import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
 
-import { ALL_MEDIA, AUDIO, IMAGE } from '~/constants/media'
-import { isValidSearchType } from '~/utils/prop-validators'
+import { ALL_MEDIA, AUDIO, IMAGE, SupportedSearchType } from '~/constants/media'
+
+import { defineEvent } from '~/types/emits'
 
 import VIcon from '~/components/VIcon/VIcon.vue'
 
@@ -41,18 +42,22 @@ export default defineComponent({
      * One of the media types supported.
      */
     searchType: {
-      type: String,
+      type: String as PropType<SupportedSearchType>,
       required: true,
-      validator: isValidSearchType,
     },
     selected: {
       type: Boolean,
       default: false,
     },
   },
+  emits: {
+    select: defineEvent<[SupportedSearchType]>(),
+  },
   setup(props, { emit }) {
     const iconPath = computed(() => iconMapping[props.searchType])
+
     const handleClick = () => emit('select', props.searchType)
+
     return { iconPath, handleClick }
   },
 })

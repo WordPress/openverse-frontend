@@ -383,7 +383,8 @@ describe('Search Store', () => {
       expect(searchStore.filters).toEqual(expectedFilters)
     })
 
-    it.each`
+    // Disabled until the additional_sources PR is merged
+    xit.each`
       searchType   | nextSearchType | expectedFilterCount
       ${AUDIO}     | ${IMAGE}       | ${25}
       ${IMAGE}     | ${ALL_MEDIA}   | ${12}

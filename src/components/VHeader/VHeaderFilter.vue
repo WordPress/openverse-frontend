@@ -42,10 +42,12 @@ import { useFocusFilters } from '~/composables/use-focus-filters'
 
 import { Focus } from '~/utils/focus-management'
 import { defineEvent } from '~/types/emits'
+import { isHeaderScrolledKey } from '~/layouts/default.vue'
 
 import VTeleport from '~/components/VTeleport/VTeleport.vue'
 import VFilterButton from '~/components/VHeader/VFilterButton.vue'
 import VSearchGridFilter from '~/components/VFilters/VSearchGridFilter.vue'
+import { isMinScreenMdKey } from '~/components/VHeader/VHeader.vue'
 
 export default defineComponent({
   name: 'VHeaderFilter',
@@ -73,9 +75,9 @@ export default defineComponent({
     const filterSidebar = useFilterSidebarVisibility()
     const i18n = useI18n()
 
-    const isMinScreenMd: Ref<boolean> = inject('isMinScreenMd', ref(true))
+    const isMinScreenMd: Ref<boolean> = inject(isMinScreenMdKey, ref(true))
     const isHeaderScrolled: Ref<boolean> = inject(
-      'isHeaderScrolled',
+      isHeaderScrolledKey,
       ref(false)
     )
 

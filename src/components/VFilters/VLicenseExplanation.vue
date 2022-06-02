@@ -36,7 +36,9 @@
 </template>
 
 <script>
-import { isLicense, getLicenseUrl } from '~/utils/license'
+import { defineComponent } from '@nuxtjs/composition-api'
+
+import { getLicenseUrl, isLicense } from '~/utils/license'
 
 import VLicenseElements from '~/components/VLicense/VLicenseElements.vue'
 import VLink from '~/components/VLink.vue'
@@ -45,7 +47,7 @@ import VLink from '~/components/VLink.vue'
  * Renders the explanation of the license passed to it by breaking it down to
  * its constituent clauses.
  */
-export default {
+export default defineComponent({
   name: 'VLicenseExplanation',
   components: {
     VLicenseElements,
@@ -66,5 +68,5 @@ export default {
       getLicenseUrl,
     }
   },
-}
+})
 </script>

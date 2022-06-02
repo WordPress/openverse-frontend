@@ -1,5 +1,6 @@
-<script>
+<script lang="ts">
 import {
+  defineComponent,
   inject,
   onMounted,
   ref,
@@ -16,8 +17,9 @@ import VMobileMenuModal from '~/components/VContentSwitcher/VMobileMenuModal.vue
 import VSearchTypePopover from '~/components/VContentSwitcher/VSearchTypePopover.vue'
 import VDesktopPageMenu from '~/components/VHeader/VPageMenu/VDesktopPageMenu.vue'
 import VMobilePageMenu from '~/components/VHeader/VPageMenu/VMobilePageMenu.vue'
+import { isMinScreenMdKey } from '~/components/VHeader/VHeader.vue'
 
-export default {
+export default defineComponent({
   name: 'VHeaderMenu',
   components: {
     VMobileMenuModal,
@@ -32,10 +34,8 @@ export default {
     },
   },
   setup() {
-    /** @type {import('@nuxtjs/composition-api').Ref<boolean>} */
-    const isMinScreenMd = inject('isMinScreenMd')
-    /** @type {import('@nuxtjs/composition-api').Ref<null|HTMLElement>} */
-    const menuModalRef = ref(null)
+    const isMinScreenMd = inject(isMinScreenMdKey)
+    const menuModalRef = ref<HTMLElement | null>(null)
     const content = useSearchType()
     const { app } = useContext()
     const mediaStore = useMediaStore()
@@ -103,5 +103,5 @@ export default {
       })
     }
   },
-}
+})
 </script>

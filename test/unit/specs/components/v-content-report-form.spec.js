@@ -78,7 +78,7 @@ describe('VContentReportForm', () => {
     getReportLink()
   })
 
-  it('should render thank you note when report is sent', async () => {
+  xit('should render thank you note when report is sent', async () => {
     const { getByText } = render(VContentReportForm, options)
     await fireEvent.click(getMatureInput())
     await fireEvent.click(getReportButton())
@@ -87,7 +87,7 @@ describe('VContentReportForm', () => {
     getByText(/Thank you for reporting this content/i)
   })
 
-  it('should render error message if report sending fails', async () => {
+  xit('should render error message if report sending fails', async () => {
     options.propsData.reportService = { sendReport: () => Promise.reject() }
 
     const { getByText } = render(VContentReportForm, options)
@@ -118,7 +118,7 @@ describe('VContentReportForm', () => {
     getDescriptionTextarea()
   })
 
-  it('should dispatch SEND_CONTENT_REPORT on next when mature is selected', async () => {
+  xit('should dispatch SEND_CONTENT_REPORT on next when mature is selected', async () => {
     const serviceMock = { sendReport: jest.fn() }
     options.propsData.reportService = serviceMock
     render(VContentReportForm, options)
@@ -133,7 +133,7 @@ describe('VContentReportForm', () => {
     })
   })
 
-  it('should dispatch SEND_CONTENT_REPORT on other form submit', async () => {
+  xit('should dispatch SEND_CONTENT_REPORT on other form submit', async () => {
     const serviceMock = { sendReport: jest.fn() }
     options.propsData.reportService = serviceMock
 
@@ -152,7 +152,7 @@ describe('VContentReportForm', () => {
     })
   })
 
-  it('should not send other report if description is short', async () => {
+  xit('should not send other report if description is short', async () => {
     options.propsData.reportService = { sendReport: jest.fn() }
 
     render(VContentReportForm, options)

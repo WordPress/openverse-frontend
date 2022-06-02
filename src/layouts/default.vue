@@ -20,8 +20,15 @@
     <VGlobalAudioSection />
   </div>
 </template>
-<script>
-import { computed, provide, ref, watch } from '@nuxtjs/composition-api'
+<script lang="ts">
+import {
+  computed,
+  InjectionKey,
+  provide,
+  Ref,
+  ref,
+  watch,
+} from '@nuxtjs/composition-api'
 
 import { useWindowScroll } from '~/composables/use-window-scroll'
 import { useMatchSearchRoutes } from '~/composables/use-match-routes'
@@ -35,6 +42,14 @@ import VModalTarget from '~/components/VModal/VModalTarget.vue'
 import VSidebarTarget from '~/components/VModal/VSidebarTarget.vue'
 import VGlobalAudioSection from '~/components/VGlobalAudioSection/VGlobalAudioSection.vue'
 import VTeleportTarget from '~/components/VTeleport/VTeleportTarget.vue'
+
+export const isHeaderScrolledKey = Symbol(
+  'isHeaderScrolledKey'
+) as InjectionKey<Ref<boolean>>
+
+export const showScrollButtonKey = Symbol(
+  'showScrollButtonKey'
+) as InjectionKey<Ref<boolean>>
 
 const embeddedPage = {
   name: 'embedded',
@@ -67,8 +82,8 @@ const embeddedPage = {
     })
     const showScrollButton = computed(() => scrollY.value > 70)
 
-    provide('isHeaderScrolled', isHeaderScrolled)
-    provide('showScrollButton', showScrollButton)
+    provide(isHeaderScrolledKey, isHeaderScrolled)
+    provide(showScrollButtonKey, showScrollButton)
 
     const headerHasTwoRows = computed(
       () =>

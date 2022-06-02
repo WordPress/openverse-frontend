@@ -35,7 +35,7 @@
         :value="searchTerm"
         :label-text="$t('404.search-placeholder')"
         field-id="404-search"
-        :placeholder="$t('404.search-placeholder')"
+        :placeholder="$t('404.search-placeholder').toString()"
         size="standalone"
         @input="setSearchTerm"
         @submit="handleSearch"
@@ -71,7 +71,6 @@ export default defineComponent({
     VLink,
     VSearchBar,
   },
-  props: ['error'],
   setup() {
     const mediaStore = useMediaStore()
     const searchStore = useSearchStore()
