@@ -24,18 +24,14 @@
         class="audio-info order-2 lg:order-1 w-full lg:w-auto flex flex-col justify-center"
       >
         <h1
-          class="text-base leading-[130%] lg:text-3xl font-heading font-semibold lg:line-clamp-2"
+          class="text-base lg:text-3xl font-heading font-semibold lg:line-clamp-2 leading-[1.3]"
         >
           {{ audio.title }}
         </h1>
         <div
-          class="subtitle mt-1 flex flex-col lg:flex-row lg:items-center gap-2 text-base"
+          class="subtitle mt-1 flex flex-col lg:flex-row lg:items-center gap-2 text-base leading-[1.3]"
         >
-          <i18n
-            as="span"
-            path="audio-track.creator"
-            class="font-semibold leading-snug"
-          >
+          <i18n as="span" path="audio-track.creator" class="font-semibold">
             <template #creator>
               <VLink
                 class="p-px rounded-sm focus:outline-none focus:ring focus:ring-pink"
