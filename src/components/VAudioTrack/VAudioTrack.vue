@@ -132,13 +132,9 @@ export default defineComponent({
       // Preserve existing local audio if we plucked it from the global active audio
       if (!localAudio) localAudio = new Audio(props.audio.url)
 
-      localAudio.addEventListener('play', setPlaying)
-      localAudio.addEventListener('playing', setLoaded)
-      localAudio.addEventListener('waiting', setWaiting)
-      localAudio.addEventListener('pause', setPaused)
-      localAudio.addEventListener('ended', setPlayed)
-      localAudio.addEventListener('timeupdate', setTimeWhenPaused)
-      localAudio.addEventListener('durationchange', setDuration)
+      Object.entries(eventMap).forEach(([name, fn]) =>
+        localAudio?.addEventListener(name, fn)
+      )
 
       /**
        * Similar to the behavior in the global audio track,
@@ -201,8 +197,6 @@ export default defineComponent({
       }
     }
 
-    watch(status, console.log)
-
     let hasLoaded = false
     const setLoaded = () => {
       hasLoaded = true
@@ -250,6 +244,16 @@ export default defineComponent({
       if (localAudio) duration.value = localAudio.duration
     }
 
+    const eventMap = {
+      play: setPlaying,
+      pause: setPaused,
+      ended: setPlayed,
+      timeupdate: setTimeWhenPaused,
+      durationchange: setDuration,
+      waiting: setWaiting,
+      playing: setLoaded,
+    } as const
+
     /**
      * If we're transforming the globally active audio
      * into our local audio, then we need to initialize
@@ -267,13 +271,10 @@ export default defineComponent({
     onUnmounted(() => {
       if (!localAudio) return
 
-      localAudio.removeEventListener('play', setPlaying)
-      localAudio.removeEventListener('pause', setPaused)
-      localAudio.removeEventListener('ended', setPlayed)
-      localAudio.removeEventListener('timeupdate', setTimeWhenPaused)
-      localAudio.removeEventListener('durationchange', setDuration)
-      localAudio.removeEventListener('waiting', setWaiting)
-      localAudio.removeEventListener('playing', setLoaded)
+      Object.entries(eventMap).forEach(([name, fn]) =>
+        localAudio?.removeEventListener(name, fn)
+      )
+
       const mediaStore = useMediaStore()
       if (
         route.value.params.id === props.audio.id ||
