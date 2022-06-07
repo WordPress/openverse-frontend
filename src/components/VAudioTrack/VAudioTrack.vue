@@ -133,6 +133,8 @@ export default defineComponent({
       if (!localAudio) localAudio = new Audio(props.audio.url)
 
       localAudio.addEventListener('play', setPlaying)
+      localAudio.addEventListener('playing', setLoaded)
+      localAudio.addEventListener('waiting', setWaiting)
       localAudio.addEventListener('pause', setPaused)
       localAudio.addEventListener('ended', setPlayed)
       localAudio.addEventListener('timeupdate', setTimeWhenPaused)
@@ -189,17 +191,32 @@ export default defineComponent({
         : undefined
 
     const updateTimeLoop = () => {
-      if (localAudio)
-        if (status.value === 'playing') {
+      if (localAudio) {
+        if (status.value === 'playing' || status.value === 'loading') {
           currentTime.value = localAudio.currentTime
           window.requestAnimationFrame(updateTimeLoop)
         } else {
           currentTime.value = localAudio.currentTime
         }
+      }
     }
 
-    const setPlaying = () => {
+    watch(status, console.log)
+
+    let hasLoaded = false
+    const setLoaded = () => {
+      hasLoaded = true
       status.value = 'playing'
+    }
+    const setWaiting = () => {
+      status.value = 'loading'
+    }
+    const setPlaying = () => {
+      if (!hasLoaded) {
+        status.value = 'loading'
+      } else {
+        status.value = 'playing'
+      }
       activeAudio.obj.value = localAudio
       activeMediaStore.setActiveMediaItem({
         type: 'audio',
@@ -255,6 +272,8 @@ export default defineComponent({
       localAudio.removeEventListener('ended', setPlayed)
       localAudio.removeEventListener('timeupdate', setTimeWhenPaused)
       localAudio.removeEventListener('durationchange', setDuration)
+      localAudio.removeEventListener('waiting', setWaiting)
+      localAudio.removeEventListener('playing', setLoaded)
       const mediaStore = useMediaStore()
       if (
         route.value.params.id === props.audio.id ||
@@ -293,7 +312,10 @@ export default defineComponent({
     watch(
       activeAudio.obj,
       (audio) => {
-        if (audio !== localAudio && status.value === 'playing') {
+        if (
+          audio !== localAudio &&
+          (status.value === 'playing' || status.value === 'loading')
+        ) {
           localAudio?.pause()
         }
       },
