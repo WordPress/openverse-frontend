@@ -11,7 +11,7 @@
       <img
         v-if="!sketchFabUid"
         id="main-image"
-        :src="isLoadingFullImage ? image.thumbnail : image.url"
+        :src="imageSrc"
         :alt="image.title"
         class="h-full w-full max-h-[500px] mx-auto rounded-t-sm object-contain"
         :width="imageWidth"
@@ -131,7 +131,11 @@ export default defineComponent({
     const imageWidth = ref(0)
     const imageHeight = ref(0)
     const imageType = ref('Unknown')
-    const isLoadingFullImage = ref(true)
+    /**
+     * To make sure that image is loaded fast, we `src` to `image.thumbnail`,
+     * and then replace it with the provider image once it is loaded.
+     */
+    const imageSrc = ref(image.value.thumbnail)
     const sketchFabfailure = ref(false)
 
     const sketchFabUid = computed(() => {
@@ -143,30 +147,49 @@ export default defineComponent({
         .split('/')[0]
     })
 
+    /**
+     * This event is normally fired twice:
+     * - when the thumbnail image is loaded. We display the image, but replace
+     * the image src attribute with the `image.url` to load the original provider
+     * image.
+     * - when the original image is loaded. We check if the image is malformed, and
+     * if so, we replace it back with the thumbnail.
+     * @param event - the image load event.
+     */
     const onImageLoaded = (event: Event) => {
       if (!(event.target instanceof HTMLImageElement)) {
         return
+      }
+      /**
+       * The `load` event is fired even if the image is broken. We check the provider
+       * image's width. A width of 0 means that the image is broken, so we replace it
+       * with the thumbnail. This is important when blocking provider requests in
+       * Playwright tests.
+       */
+      if (
+        event.target.naturalHeight === 0 &&
+        event.target.src === image.value.url
+      ) {
+        imageSrc.value = image.value.thumbnail
       }
       imageWidth.value = image.value?.width || event.target.naturalWidth
       imageHeight.value = image.value?.height || event.target.naturalHeight
       if (image.value?.filetype) {
         imageType.value = image.value.filetype
       } else {
-        if (event.target) {
-          axios
-            .head(event.target.src)
-            .then((res) => {
-              imageType.value = res.headers['content-type']
-            })
-            .catch(() => {
-              /**
-               * Do nothing. This avoids the console warning "Uncaught (in promise) Error:
-               * Network Error" in Firefox in development mode.
-               */
-            })
-        }
+        axios
+          .head(event.target.src)
+          .then((res) => {
+            imageType.value = res.headers['content-type']
+          })
+          .catch(() => {
+            /**
+             * Do nothing. This avoids the console warning "Uncaught (in promise) Error:
+             * Network Error" in Firefox in development mode.
+             */
+          })
       }
-      isLoadingFullImage.value = false
+      imageSrc.value = image.value.url
     }
 
     return {
@@ -175,8 +198,8 @@ export default defineComponent({
       relatedFetchState,
       imageWidth,
       imageHeight,
+      imageSrc,
       imageType,
-      isLoadingFullImage,
       sketchFabfailure,
       sketchFabUid,
       onImageLoaded,
