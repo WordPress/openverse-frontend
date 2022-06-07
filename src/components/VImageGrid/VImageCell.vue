@@ -6,7 +6,7 @@
     :style="`width: ${containerAspect * widthBasis}px;flex-grow: ${
       containerAspect * widthBasis
     }`"
-    @click="onGotoDetailPage($event, image)"
+    @click="onGotoDetailPage($event)"
     @keydown.native.shift.tab.exact="$emit('shift-tab', $event)"
   >
     <figure
@@ -22,7 +22,7 @@
         :width="imgWidth"
         :height="imgHeight"
         @load="getImgDimension"
-        @error="onImageLoadError($event, image)"
+        @error="onImageLoadError($event)"
       />
       <figcaption
         class="absolute left-0 bottom-0 invisible group-hover:visible group-focus:visible bg-white p-1 text-dark-charcoal"
@@ -35,17 +35,28 @@
   </VLink>
 </template>
 
-<script>
+<script lang="ts">
+import {
+  computed,
+  defineComponent,
+  PropType,
+  ref,
+  useContext,
+  useRouter,
+} from '@nuxtjs/composition-api'
+
+import type { ImageDetail } from '~/models/media'
+
 import VLicense from '~/components/VLicense/VLicense.vue'
 import VLink from '~/components/VLink.vue'
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const errorImage = require('~/assets/image_not_available_placeholder.png')
+import errorImage from '~/assets/image_not_available_placeholder.png'
 
 const minAspect = 3 / 4
 const maxAspect = 16 / 9
 const panaromaAspect = 21 / 9
 const minRowWidth = 450
+const widthBasis = minRowWidth / maxAspect
 
 const toAbsolutePath = (url, prefix = 'https://') => {
   if (url.indexOf('http://') >= 0 || url.indexOf('https://') >= 0) {
@@ -54,82 +65,101 @@ const toAbsolutePath = (url, prefix = 'https://') => {
   return `${prefix}${url}`
 }
 
-export default {
+export default defineComponent({
   name: 'VImageCell',
   components: { VLicense, VLink },
-  props: ['image'],
-  data() {
-    return {
-      widthBasis: minRowWidth / maxAspect,
-      imgHeight: this.image.height || 100,
-      imgWidth: this.image.width || 100,
-    }
+  props: {
+    image: {
+      type: Object as PropType<ImageDetail>,
+      required: true,
+    },
   },
-  computed: {
-    imageAspect() {
-      return this.imgWidth / this.imgHeight
-    },
-    containerAspect() {
-      if (this.imageAspect > maxAspect) return maxAspect
-      if (this.imageAspect < minAspect) return minAspect
+  setup(props) {
+    const { app } = useContext()
+    const router = useRouter()
+    const imgHeight = ref(props.image.height || 100)
+    const imgWidth = ref(props.image.width || 100)
+
+    const imageAspect = computed(() => imgWidth.value / imgHeight.value)
+
+    const containerAspect = () => {
+      if (imageAspect.value > maxAspect) return maxAspect
+      if (imageAspect.value < minAspect) return minAspect
       return this.imageAspect
-    },
-    iPadding() {
-      if (this.imageAspect < minAspect) return (1 / minAspect) * 100
-      if (this.imageAspect > maxAspect) return (1 / maxAspect) * 100
+    }
+    const iPadding = () => {
+      if (imageAspect.value < minAspect) return (1 / minAspect) * 100
+      if (imageAspect.value > maxAspect) return (1 / maxAspect) * 100
       return (1 / this.imageAspect) * 100
-    },
-    imageWidth() {
-      if (this.imageAspect < maxAspect) return 100
-      return (this.imageAspect / maxAspect) * 100
-    },
-    imageTop() {
-      if (this.imageAspect > minAspect) return 0
+    }
+    const imageWidth = () => {
+      if (imageAspect.value < maxAspect) return 100
+      return (imageAspect.value / maxAspect) * 100
+    }
+    const imageTop = () => {
+      if (imageAspect.value > minAspect) return 0
       return (
         ((minAspect - this.imageAspect) /
-          (this.imageAspect * minAspect * minAspect)) *
+          (imageAspect.value * minAspect * minAspect)) *
         -50
       )
-    },
-    imageLeft() {
-      if (this.imageAspect < maxAspect) return 0
-      return ((this.imageAspect - maxAspect) / maxAspect) * -50
-    },
-  },
-  methods: {
-    getImageUrl(image) {
-      if (!image) {
-        return ''
-      }
-      const url = image.thumbnail || image.url
-      if (this.imageAspect > panaromaAspect) return toAbsolutePath(url)
+    }
+    const imageLeft = () => {
+      if (imageAspect.value < maxAspect) return 0
+      return ((imageAspect.value - maxAspect) / maxAspect) * -50
+    }
+
+    const getImageUrl = () => {
+      const url = props.image.thumbnail || props.image.url
+      if (imageAspect.value > panaromaAspect) return toAbsolutePath(url)
       return toAbsolutePath(url)
-    },
-    getImageForeignUrl(image) {
-      return toAbsolutePath(image.foreign_landing_url)
-    },
-    onGotoDetailPage(event, image) {
+    }
+
+    const getImageForeignUrl = () =>
+      toAbsolutePath(props.image.foreign_landing_url)
+
+    const onGotoDetailPage = (event: KeyboardEvent) => {
       if (!event.metaKey && !event.ctrlKey) {
         event.preventDefault()
-        const detailRoute = this.localeRoute({
+        const detailRoute = app.localeRoute({
           name: 'PhotoDetailPage',
-          params: { id: image.id, location: window.scrollY },
+          params: { id: props.image.id, location: window.scrollY },
         })
-        this.$router.push(detailRoute)
+        router.push(detailRoute)
       }
-    },
-    onImageLoadError(event, image) {
-      const element = event.target
-      if (element.src !== image.url) {
-        element.src = image.url
+    }
+    const onImageLoadError = (event: Event) => {
+      const element = event.target as HTMLImageElement
+      if (element.src !== props.image.url) {
+        element.src = props.image.url
       } else {
         element.src = errorImage
       }
-    },
-    getImgDimension(e) {
-      this.imgHeight = e.target.naturalHeight
-      this.imgWidth = e.target.naturalWidth
-    },
+    }
+    const getImgDimension = (event: Event) => {
+      const element = event.target as HTMLImageElement
+      imgHeight.value = element.naturalHeight
+      imgWidth.value = element.naturalWidth
+    }
+
+    return {
+      widthBasis,
+      imgHeight,
+      imgWidth,
+      imageAspect,
+      containerAspect,
+      iPadding,
+
+      imageWidth,
+      imageTop,
+      imageLeft,
+
+      getImageUrl,
+      getImageForeignUrl,
+      onGotoDetailPage,
+      onImageLoadError,
+      getImgDimension,
+    }
   },
-}
+})
 </script>
