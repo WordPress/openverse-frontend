@@ -17,6 +17,7 @@
         :width="imageWidth"
         :height="imageHeight"
         @load="onImageLoaded"
+        @error="onImageError"
       />
       <VSketchFabViewer
         v-if="sketchFabUid"
@@ -86,9 +87,9 @@ import {
 } from '@nuxtjs/composition-api'
 
 import { IMAGE } from '~/constants/media'
+import type { ImageDetail } from '~/models/media'
 import { useSingleResultStore } from '~/stores/media/single-result'
 import { useRelatedMediaStore } from '~/stores/media/related-media'
-import type { ImageDetail } from '~/models/media'
 import { createDetailPageMeta } from '~/utils/og'
 
 import VButton from '~/components/VButton.vue'
@@ -98,6 +99,8 @@ import VMediaReuse from '~/components/VMediaInfo/VMediaReuse.vue'
 import VRelatedImages from '~/components/VImageDetails/VRelatedImages.vue'
 import VSketchFabViewer from '~/components/VSketchFabViewer.vue'
 import VBackToSearchResultsLink from '~/components/VBackToSearchResultsLink.vue'
+
+import errorImage from '~/assets/image_not_available_placeholder.png'
 
 export default defineComponent({
   name: 'VImageDetailsPage',
@@ -139,6 +142,7 @@ export default defineComponent({
      * and then replace it with the provider image once it is loaded.
      */
     const imageSrc = ref(image.value.thumbnail)
+    const isLoadingMainImage = ref(true)
     const sketchFabfailure = ref(false)
 
     const sketchFabUid = computed(() => {
@@ -151,50 +155,51 @@ export default defineComponent({
     })
 
     /**
-     * This event is normally fired twice:
-     * - when the thumbnail image is loaded. We display the image, but replace
-     * the image src attribute with the `image.url` to load the original provider
-     * image.
-     * - when the original image is loaded. We check if the image is malformed, and
-     * if so, we replace it back with the thumbnail.
+     * On image error, fall back on image thumbnail or the error image.
+     * @param event - image load error event.
+     */
+    const onImageError = (event: Event) => {
+      if (!(event.target instanceof HTMLImageElement)) {
+        return
+      }
+      imageSrc.value =
+        event.target.src === image.value.url
+          ? image.value.thumbnail
+          : errorImage
+    }
+    /**
+     * When the load event is fired for the thumbnail image, we set the dimensions
+     * of the image, and replace the image src attribute with the `image.url`
+     * to load the original provider image.
      * @param event - the image load event.
      */
     const onImageLoaded = (event: Event) => {
       if (!(event.target instanceof HTMLImageElement)) {
         return
       }
-      /**
-       * The `load` event is fired even if the image is broken. We check the provider
-       * image's width. A width of 0 means that the image is broken, so we replace it
-       * with the thumbnail. This is important when blocking provider requests in
-       * Playwright tests.
-       */
-      if (
-        event.target.naturalHeight === 0 &&
-        event.target.src === image.value.url
-      ) {
-        imageSrc.value = image.value.thumbnail
-      }
-      imageWidth.value = image.value?.width || event.target.naturalWidth
-      imageHeight.value = image.value?.height || event.target.naturalHeight
-      if (image.value?.filetype) {
-        imageType.value = image.value.filetype
-      } else {
-        axios
-          .head(event.target.src)
-          .then((res) => {
-            imageType.value = res.headers['content-type']
-          })
-          .catch(() => {
-            /**
-             * Do nothing. This avoids the console warning "Uncaught (in promise) Error:
-             * Network Error" in Firefox in development mode.
-             */
-          })
-      }
-      imageSrc.value = image.value.url
-    }
+      if (isLoadingMainImage.value) {
+        imageWidth.value = image.value?.width || event.target.naturalWidth
+        imageHeight.value = image.value?.height || event.target.naturalHeight
 
+        if (image.value?.filetype) {
+          imageType.value = image.value.filetype
+        } else {
+          axios
+            .head(event.target.src)
+            .then((res) => {
+              imageType.value = res.headers['content-type']
+            })
+            .catch(() => {
+              /**
+               * Do nothing. This avoids the console warning "Uncaught (in promise) Error:
+               * Network Error" in Firefox in development mode.
+               */
+            })
+        }
+        imageSrc.value = image.value.url
+        isLoadingMainImage.value = false
+      }
+    }
     return {
       image,
       relatedMedia,
@@ -206,6 +211,7 @@ export default defineComponent({
       sketchFabfailure,
       sketchFabUid,
       onImageLoaded,
+      onImageError,
       backToSearchPath,
     }
   },
