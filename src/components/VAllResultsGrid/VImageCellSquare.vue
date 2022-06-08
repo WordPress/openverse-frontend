@@ -7,7 +7,7 @@
   >
     <figure
       itemprop="image"
-      itemscope=""
+      itemscope
       itemtype="https://schema.org/ImageObject"
       class="aspect-square relative rounded-sm"
     >
@@ -16,7 +16,7 @@
         class="w-full h-full object-cover rounded-sm bg-dark-charcoal-10 text-dark-charcoal-10"
         loading="lazy"
         :alt="image.title"
-        :src="getImageUrl"
+        :src="getImageUrl()"
         :width="250"
         :height="250"
         itemprop="thumbnailUrl"
