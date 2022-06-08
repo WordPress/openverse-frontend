@@ -51,7 +51,7 @@ The configuration object currently supports the following options:
 
 - `uaMocking`: This `boolean` option defaults to `true`. When enabled, it will use a mock mobile browser user agent string for narrow viewports. Setting it to `false` for viewport widths above `md` (inclusive) is a no-op.
 
-Please see the [`homepage.spec.ts` visual-regression tests](./visual-regression/homepage.spec.ts) as an example of how to use these helpers.
+Please see the [`homepage.spec.ts` visual-regression tests](visual-regression/pages/homepage.spec.ts) as an example of how to use these helpers.
 
 ### What to test for visual regression
 

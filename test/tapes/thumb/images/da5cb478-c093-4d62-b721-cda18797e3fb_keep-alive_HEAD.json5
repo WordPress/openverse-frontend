@@ -1,0 +1,86 @@
+{
+    meta: {
+        createdAt: '2022-06-08T14:30:06.059Z',
+        host: 'https://api.openverse.engineering',
+    },
+    req: {
+        headers: {
+            connection: 'keep-alive',
+        },
+        url: '/v1/images/da5cb478-c093-4d62-b721-cda18797e3fb/thumb/',
+        method: 'HEAD',
+        body: '',
+    },
+    res: {
+        status: 200,
+        headers: {
+            date: [
+                'Wed, 08 Jun 2022 14:30:06 GMT',
+            ],
+            'content-type': [
+                'image/jpeg',
+            ],
+            'content-length': [
+                '30276',
+            ],
+            connection: [
+                'keep-alive',
+            ],
+            'cf-bgj': [
+                'h2pri',
+            ],
+            'access-control-allow-origin': [
+                '*',
+            ],
+            allow: [
+                'GET, HEAD, OPTIONS',
+            ],
+            'cross-origin-opener-policy': [
+                'same-origin',
+            ],
+            'referrer-policy': [
+                'same-origin',
+            ],
+            vary: [
+                'Accept, Authorization, Origin, Accept-Encoding',
+            ],
+            'x-content-type-options': [
+                'nosniff',
+            ],
+            'x-frame-options': [
+                'DENY',
+            ],
+            'cache-control': [
+                'max-age=31536000',
+            ],
+            'cf-cache-status': [
+                'HIT',
+            ],
+            age: [
+                '29989',
+            ],
+            'last-modified': [
+                'Wed, 08 Jun 2022 06:10:17 GMT',
+            ],
+            'accept-ranges': [
+                'bytes',
+            ],
+            'expect-ct': [
+                'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"',
+            ],
+            'strict-transport-security': [
+                'max-age=15552000; includeSubDomains; preload',
+            ],
+            server: [
+                'cloudflare',
+            ],
+            'cf-ray': [
+                '718252d22f76fd0d-OTP',
+            ],
+            'alt-svc': [
+                'h3=":443"; ma=86400, h3-29=":443"; ma=86400',
+            ],
+        },
+        body: '',
+    },
+}

@@ -46,7 +46,7 @@ const audioConfig = {
   url: '/search/audio?q=birds',
   canLoadMore: true,
   metaSourceCount: 3,
-  results: /764 results/,
+  results: /1,231 results/,
 } as const
 
 const searchTypes = [allContentConfig, imageConfig, audioConfig] as const
