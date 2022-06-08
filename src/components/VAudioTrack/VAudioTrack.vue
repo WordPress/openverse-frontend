@@ -133,7 +133,11 @@ export default defineComponent({
       if (!localAudio) localAudio = new Audio(props.audio.url)
 
       Object.entries(eventMap).forEach(([name, fn]) =>
-        localAudio?.addEventListener(name, fn)
+        /**
+         * This cast is safe, it just filters `undefined` that is still present on the
+         * `localAudio`'s type despite the check above to create it if it doesn't exist.
+         */
+        (localAudio as HTMLAudioElement).addEventListener(name, fn)
       )
 
       /**
