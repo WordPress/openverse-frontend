@@ -1,6 +1,6 @@
 /**
- * Openverse searches without a search term / query should
- * be redirected to the Openverse homepage.
+ * Searches without a search term should
+ * redirect to the homepage.
  */
 
 import { test, expect } from '@playwright/test'
