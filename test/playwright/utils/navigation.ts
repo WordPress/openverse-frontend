@@ -4,9 +4,6 @@ const buttonSelectors = {
   filter: '[aria-controls="filters"]',
   contentSwitcher: '[aria-controls="content-switcher-modal"]',
 }
-export function sleep(ms: number) {
-  return new Promise<void>((resolve) => setTimeout(async () => resolve(), ms))
-}
 
 const isButtonPressed = async (page: Page, buttonSelector: string) => {
   const viewportSize = page.viewportSize()
@@ -96,11 +93,4 @@ export const dismissTranslationBanner = async (page: Page) => {
   await page
     .locator('[data-testid="banner-translation-ar"] [aria-label="Close"]')
     .click()
-}
-
-export const scrollToBottom = async (page: Page) => {
-  await page.evaluate(() => {
-    window.scrollTo(0, document.body.scrollHeight)
-  })
-  await sleep(300)
 }
