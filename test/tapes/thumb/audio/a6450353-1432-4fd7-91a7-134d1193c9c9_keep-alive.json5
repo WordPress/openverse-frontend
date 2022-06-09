@@ -1,12 +1,23 @@
 {
     meta: {
-        createdAt: '2022-06-09T04:25:43.898Z',
+        createdAt: '2022-03-28T15:05:45.152Z',
         host: 'https://api.openverse.engineering',
         resHumanReadable: true,
     },
     req: {
         headers: {
             connection: 'keep-alive',
+            pragma: 'no-cache',
+            'cache-control': 'no-cache',
+            'sec-ch-ua': '',
+            'sec-ch-ua-mobile': '?0',
+            'sec-ch-ua-platform': '',
+            accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+            'sec-fetch-site': 'same-site',
+            'sec-fetch-mode': 'no-cors',
+            'sec-fetch-dest': 'image',
+            referer: 'http://localhost:8443/',
+            'accept-encoding': 'gzip, deflate, br',
         },
         url: '/v1/audio/a6450353-1432-4fd7-91a7-134d1193c9c9/thumb/',
         method: 'GET',
@@ -16,7 +27,7 @@
         status: 404,
         headers: {
             date: [
-                'Thu, 09 Jun 2022 04:25:44 GMT',
+                'Mon, 28 Mar 2022 15:05:45 GMT',
             ],
             'content-type': [
                 'application/json',
@@ -49,7 +60,10 @@
                 'max-age=14400',
             ],
             'cf-cache-status': [
-                'MISS',
+                'HIT',
+            ],
+            age: [
+                '102889',
             ],
             'expect-ct': [
                 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"',
@@ -61,7 +75,7 @@
                 'cloudflare',
             ],
             'cf-ray': [
-                '71871ae2eeed6261-OTP',
+                '6f31440a8fe21cf2-BUD',
             ],
             'alt-svc': [
                 'h3=":443"; ma=86400, h3-29=":443"; ma=86400',
