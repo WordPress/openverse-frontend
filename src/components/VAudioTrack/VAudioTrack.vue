@@ -193,7 +193,7 @@ export default defineComponent({
         if (status.value === 'playing') {
           currentTime.value = localAudio.currentTime
           window.requestAnimationFrame(updateTimeLoop)
-        } else if (status.value === 'played') {
+        } else {
           currentTime.value = localAudio.currentTime
         }
     }
