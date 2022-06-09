@@ -179,7 +179,7 @@ import type { CSSProperties } from '@vue/runtime-dom'
 /**
  * If the duration is above this threshold, the progress timestamp will show ms.
  */
-const MAX_SECONDS_FOR_MS = 5
+const MAX_SECONDS_FOR_MS = 1
 
 /**
  * Renders an SVG representation of the waveform given a list of heights for the
