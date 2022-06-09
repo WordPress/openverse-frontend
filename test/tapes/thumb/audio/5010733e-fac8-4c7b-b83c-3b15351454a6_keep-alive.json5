@@ -1,6 +1,6 @@
 {
     meta: {
-        createdAt: '2022-06-09T04:25:43.896Z',
+        createdAt: '2022-05-03T03:47:26.322Z',
         host: 'https://api.openverse.engineering',
         resHumanReadable: true,
     },
@@ -8,7 +8,7 @@
         headers: {
             connection: 'keep-alive',
         },
-        url: '/v1/audio/1f259684-294e-4497-864b-2abd0549b1d3/thumb/',
+        url: '/v1/audio/5010733e-fac8-4c7b-b83c-3b15351454a6/thumb/',
         method: 'GET',
         body: '',
     },
@@ -16,7 +16,7 @@
         status: 404,
         headers: {
             date: [
-                'Thu, 09 Jun 2022 04:25:44 GMT',
+                'Tue, 03 May 2022 03:47:26 GMT',
             ],
             'content-type': [
                 'application/json',
@@ -61,7 +61,7 @@
                 'cloudflare',
             ],
             'cf-ray': [
-                '71871ae2da7e6259-OTP',
+                '705603eb49a0a7e0-IST',
             ],
             'alt-svc': [
                 'h3=":443"; ma=86400, h3-29=":443"; ma=86400',
