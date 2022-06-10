@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - main
-  pull_request:
-
   release:
     types:
       - "released"
@@ -17,7 +15,6 @@ on:
 
 jobs:
   update-task-definition-and-deploy:
-    if: github.head_ref == 'fix/task-def-redeploy'
     name: Update task definition and deploy
     runs-on: ubuntu-latest
 
@@ -26,6 +23,6 @@ jobs:
 
       - uses: ./.github/actions/frontend-deploy
         with:
-          tag: ${{ (github.event_name == 'workflow_dispatch' && github.event.inputs.sha) || (github.event_name == 'push' && 'main') || github.event.release.tag_name || 'main' }} # remove final || 'main' after testing
+          tag: ${{ (github.event_name == 'workflow_dispatch' && github.event.inputs.sha) || (github.event_name == 'push' && 'main') || github.event.release.tag_name }}
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
