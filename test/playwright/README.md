@@ -1,5 +1,16 @@
 # Playwright tests
 
+## Visual regression and end-to-end tests
+
+We run the Playwright test suite on each PR to test that the front end works correctly and there are no visual regressions.
+
+The **end-to-end** tests make sure that functionality works as expected and are located in `test/playwright/e2e`. They test, for instance, that we can open the filters by clicking on the Filters button in the header, or select the filters and execute the relevant search by clicking on the filter checkboxes.
+
+There are also **visual regression** tests that make sure that the pages display correct components, and components are rendered correctly.
+The components can be tested in isolation to make sure that the states are correctly rendered. For more on which states should be tested, see [`TESTING_GUIDELINES.md`](./TESTING_GUIDELINES.md). These tests should use Storybook to render the component in isolation, and be placed in `test/storybook/visual-regression`.
+
+The component tests that test that the component state is correctly rendered based on the page interaction should be placed in `test/visual-regression/components`. For example, the header elements are tested this way because their appearance depends on the page scroll position.
+
 ## Dockerization
 
 Our Playwright test suite runs inside a docker container in order to prevent cross-platform browser differences from creating flaky test behavior. We run both end-to-end and visual-regression tests in the same container to save from having to run the Nuxt production build twice.
