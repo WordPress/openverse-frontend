@@ -2,7 +2,7 @@
   "name": "openverse-frontend",
   "version": "2.2.1",
   "description": "Openverse",
-  "packageManager": "pnpm@7.1.0",
+  "packageManager": "pnpm@7.2.1",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/wordpress/openverse-frontend.git"
