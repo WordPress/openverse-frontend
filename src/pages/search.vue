@@ -37,6 +37,8 @@
 import { isShallowEqualObjects } from '@wordpress/is-shallow-equal'
 import { computed, defineComponent, inject, ref } from '@nuxtjs/composition-api'
 
+import { Context } from '@nuxt/types'
+
 import { isMinScreen } from '~/composables/use-media-query'
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
 import { Focus, focusIn } from '~/utils/focus-management'
@@ -95,14 +97,24 @@ export default defineComponent({
       handleTab,
     }
   },
+  /**
+   * asyncData blocks the rendering of the page, so we only
+   * update the state from the route here, and do not fetch media.
+   */
   async asyncData({ route, $pinia }) {
     const searchStore = useSearchStore($pinia)
-    const mediaStore = useMediaStore($pinia)
     await searchStore.initProviderFilters()
     searchStore.setSearchStateFromUrl({
       path: route.path,
       urlQuery: route.query,
     })
+  },
+  /**
+   * Fetch media, if necessary, in a non-blocking way.
+   */
+  async fetch() {
+    const mediaStore = useMediaStore()
+    const searchStore = useSearchStore()
     if (
       searchStore.searchTypeIsSupported &&
       !mediaStore.resultCount &&
@@ -114,17 +126,15 @@ export default defineComponent({
   watch: {
     /**
      * Updates the search type only if the route's path changes.
-     * @param {import('@nuxt/types').Context['route']} newRoute
-     * @param {import('@nuxt/types').Context['route']} oldRoute
      */
-    async $route(newRoute, oldRoute) {
+    async $route(newRoute: Context['route'], oldRoute: Context['route']) {
       if (
         newRoute.path !== oldRoute.path ||
         !isShallowEqualObjects(newRoute.query, oldRoute.query)
       ) {
         const { query, path } = newRoute
-        await this.setSearchStateFromUrl({ urlQuery: query, path })
-        this.fetchMedia()
+        this.setSearchStateFromUrl({ urlQuery: query, path })
+        await this.fetchMedia()
       }
     },
   },
