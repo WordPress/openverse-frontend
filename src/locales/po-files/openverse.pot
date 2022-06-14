@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-05-24T15:12:45+00:00\n"
+"POT-Creation-Date: 2022-06-09T12:59:13+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -254,13 +254,13 @@ msgid "Replay"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VAudioTrack/VAudioTrack.vue:385
+#: src/components/VAudioTrack/VAudioTrack.vue:389
 msgctxt "audio-track.aria-label"
 msgid "###title### - Audio Player"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VAudioTrack/VAudioTrack.vue:382
+#: src/components/VAudioTrack/VAudioTrack.vue:386
 msgctxt "audio-track.aria-label-interactive"
 msgid "###title### - audio player - press the spacebar to play and pause a preview of the audio"
 msgstr ""
@@ -308,7 +308,7 @@ msgid "Audio seek bar"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VAudioTrack/VWaveform.vue:609
+#: src/components/VAudioTrack/VWaveform.vue:644
 msgctxt "waveform.current-time"
 msgid "###time### second"
 msgid_plural "###time### seconds"
@@ -332,7 +332,7 @@ msgid "Edge"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VMetaSearch/VMetaSearchForm.vue:50
+#: src/components/VMetaSearch/VMetaSearchForm.vue:49
 msgctxt "meta-search.caption"
 msgid "###openverse### does not currently index the sources listed above, but through this interface is offering convenient access to search services provided by other independent organizations. ###openverse### has no control over the results that are returned. Do not assume that the results displayed in this search portal are under a CC license. Always verify that the work is actually under a CC license by following the link. If you are in doubt, you should contact the copyright holder directly, or try to contact the site where you found the content."
 msgstr ""
@@ -357,7 +357,7 @@ msgstr ""
 #. Do not translate words between ### ###.
 #: src/components/VMetaSearch/VMetaSearchForm.vue:32
 msgctxt "meta-search.form.caption"
-msgid "Click on a source below to directly search other collections of CC-licensed ###type###.###break###Please note that \"Use\" filters are not supported for ###filter###."
+msgid "Click on a source below to directly search other collections of CC-licensed ###type###."
 msgstr ""
 
 msgctxt "meta-search.form.types-plural.image"
@@ -1922,7 +1922,7 @@ msgctxt "header.api-nav-item"
 msgid "API"
 msgstr ""
 
-#: src/components/VHeader/VHeader.vue:142
+#: src/components/VHeader/VHeader.vue:143
 msgctxt "header.loading"
 msgid "Loading..."
 msgstr ""
@@ -1933,7 +1933,7 @@ msgid "Filters"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VHeader/VFilterButton.vue:103
+#: src/components/VHeader/VFilterButton.vue:108
 msgctxt "header.filter-button.with-count"
 msgid "###count### Filter"
 msgid_plural "###count### Filters"

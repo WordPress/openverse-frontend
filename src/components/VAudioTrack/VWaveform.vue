@@ -172,7 +172,14 @@ import { keycodes } from '~/constants/key-codes'
 
 import type { AudioFeature } from '~/constants/audio'
 
+import { hash, rand as prng } from '~/utils/prng'
+
 import type { CSSProperties } from '@vue/runtime-dom'
+
+/**
+ * If the duration is above this threshold, the progress timestamp will show ms.
+ */
+const MAX_SECONDS_FOR_MS = 1
 
 /**
  * Renders an SVG representation of the waveform given a list of heights for the
@@ -236,6 +243,13 @@ export default defineComponent({
       type: Object as PropType<Record<AudioFeature, boolean>>,
       default: () => ({}),
     },
+    /**
+     * Audio id to make the randomly-created peaks deterministic.
+     */
+    audioId: {
+      type: String,
+      required: true,
+    },
   },
   emits: [
     /**
@@ -252,14 +266,22 @@ export default defineComponent({
     /* Utils */
 
     /**
-     * Format the time as hh:mm:ss, dropping the hour part if it is zero.
+     * Format the time as hh:mm:ss:ms.
+     * We drop the hour part if it is zero, and the ms part if the audio
+     * is longer than MAX_SECONDS_FOR_MS seconds.
+     *
      * @param seconds - the number of seconds in the duration
      * @returns the duration in a human-friendly format
      */
     const timeFmt = (seconds: number): string => {
       const date = new Date(0)
-      date.setSeconds(Number.isFinite(seconds) ? seconds : 0)
-      return date.toISOString().substr(11, 8).replace(/^00:/, '')
+      const timeInSeconds = Number.isFinite(seconds) ? seconds : 0
+      date.setSeconds(0, timeInSeconds * 1000)
+
+      return date
+        .toISOString()
+        .substr(11, showMsInTimestamp.value ? 12 : 8)
+        .replace(/^00:/, '')
     }
     /**
      * Get the x-coordinate of the event with respect to the bounding box of the
@@ -336,10 +358,13 @@ export default defineComponent({
     const peakCount = computed(() =>
       getPeaksInWidth(waveformDimens.value.width)
     )
+
+    const createRandomPeaks = (audioId: string) => {
+      const rand = prng(hash(audioId))
+      return Array.from({ length: 100 }, () => rand())
+    }
     const peaks = computed(() =>
-      props.peaks?.length
-        ? props.peaks
-        : Array.from({ length: 100 }, () => Math.random())
+      props.peaks?.length ? props.peaks : createRandomPeaks(props.audioId)
     )
     const normalizedPeaks = computed(() => {
       let samples = peaks.value
@@ -388,6 +413,15 @@ export default defineComponent({
       const timestampWidth = progressTimestampEl.value.offsetWidth
       return barWidth < timestampWidth + 2
     })
+
+    /**
+     * Whether to show the ms part in the timestamps. True when the duration
+     * is below MAX_SECONDS_FOR_MS seconds.
+     */
+    const showMsInTimestamp = computed(
+      () =>
+        Number.isFinite(props.duration) && props.duration < MAX_SECONDS_FOR_MS
+    )
 
     /* Seek bar */
 
@@ -546,7 +580,7 @@ export default defineComponent({
     }))
 
     const seekTimeLeft = computed<CSSProperties>(() => ({
-      '--seek-time-left': `${seekBarWidth}px`,
+      '--seek-time-left': `${seekBarWidth.value}px`,
     }))
 
     return {
@@ -575,6 +609,7 @@ export default defineComponent({
       progressTimestamp,
       progressTimestampEl,
       isProgressTimestampCutoff,
+      showMsInTimestamp,
 
       seekFrac,
       seekBarWidth,
