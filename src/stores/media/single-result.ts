@@ -82,12 +82,17 @@ export const useSingleResultStore = defineStore('single-result', {
        * On the client, we don't await it to render the whole page while the related media are loading.
        */
       if (process.server) {
-        await useRelatedMediaStore().fetchMedia(type, id)
+        try {
+          await useRelatedMediaStore().fetchMedia(type, id)
+        } catch (error) {
+          console.warn('Could not load related media: ', error)
+        }
       } else {
         useRelatedMediaStore()
           .fetchMedia(type, id)
-          .then(() => Promise.resolve())
-          .catch((error) => console.warn('Could not load related media', error))
+          .catch((error) =>
+            console.warn('Could not load related media: ', error)
+          )
       }
     },
     /**
