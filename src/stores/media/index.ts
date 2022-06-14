@@ -144,7 +144,15 @@ export const useMediaStore = defineStore('media', {
       }
     },
 
-    allMedia(): Media[] {
+    /**
+     * Returns a mixed bag of search results across media types.
+     *
+     * This does not contain all hits across all media types! It contains all
+     * image results and as many audio results as can be sparsely spliced into
+     * the image results. The leftover audio results will appear when more
+     * results are requested using the 'Load more' button.
+     */
+    allMedia(state): Media[] {
       const media = this.resultItems
 
       // Seed the random number generator with the ID of
@@ -167,28 +175,34 @@ export const useMediaStore = defineStore('media', {
       const rand = prng(seed)
       const randomIntegerInRange = (min: number, max: number) =>
         Math.floor(rand() * (max - min + 1)) + min
-      /**
-       * When navigating from All page to Audio page, VAllResultsGrid is displayed
-       * for a short period of time. Then media['image'] is undefined, and it throws an error
-       * `TypeError: can't convert undefined to object`. To fix it, we add `|| {}` to the media['image'].
-       */
-      /**
-       * First, set the results to all images
-       */
-      const newResults = media.image
 
-      // push other items into the list, using a random index.
+      // First, identify the media type with most hits
+      const [mostHits] = supportedMediaTypes
+        .map((type): [SupportedMediaType, number] => [
+          type,
+          state.results[type].count,
+        ])
+        .sort(([, a], [, b]) => b - a)[0]
+
+      // First, set the results to the type with most hits...
+      const newResults = media[mostHits]
+
+      // ...then push other items into the list, using a random index.
       let nonImageIndex = 1
-      for (const type of supportedMediaTypes.slice(1)) {
+      for (const type of supportedMediaTypes.filter(
+        (type) => type !== mostHits
+      )) {
         for (const item of media[type]) {
           newResults.splice(nonImageIndex, 0, item)
           // TODO: Fix the algorithm. Currently, when there is no images, the nonImageIndex can get higher
           //  than general index, and items can get discarded.
-          if (nonImageIndex > newResults.length + 1) break
           nonImageIndex = randomIntegerInRange(
             nonImageIndex + 1,
             nonImageIndex + 6
           )
+
+          // Prevent the bunching of audio results at the end.
+          if (nonImageIndex > newResults.length) break
         }
       }
 
