@@ -73,6 +73,14 @@ export default defineComponent({
     const fetchState = computed(() => mediaStore.fetchState)
     const resultItems = computed(() => mediaStore.resultItems)
 
+    const needsFetching = computed(() =>
+      Boolean(
+        searchStore.searchTypeIsSupported &&
+          !mediaStore.resultCount &&
+          searchStore.searchTerm.trim() !== ''
+      )
+    )
+
     const handleTab = (event: KeyboardEvent, element: string) => {
       if (showScrollButton.value && element !== 'scroll-button') {
         return
@@ -92,6 +100,7 @@ export default defineComponent({
       resultCount,
       fetchState,
       resultItems,
+      needsFetching,
       fetchMedia: mediaStore.fetchMedia,
       setSearchStateFromUrl: searchStore.setSearchStateFromUrl,
       handleTab,
@@ -113,14 +122,8 @@ export default defineComponent({
    * Fetch media, if necessary, in a non-blocking way.
    */
   async fetch() {
-    const mediaStore = useMediaStore()
-    const searchStore = useSearchStore()
-    if (
-      searchStore.searchTypeIsSupported &&
-      !mediaStore.resultCount &&
-      searchStore.searchTerm.trim() !== ''
-    ) {
-      await mediaStore.fetchMedia()
+    if (this.needsFetching) {
+      await this.fetchMedia()
     }
   },
   watch: {
