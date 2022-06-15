@@ -148,9 +148,12 @@ export const useMediaStore = defineStore('media', {
      * Returns a mixed bag of search results across media types.
      *
      * This does not contain all hits across all media types! It contains all
-     * image results and as many audio results as can be sparsely spliced into
-     * the image results. The leftover audio results will appear when more
-     * results are requested using the 'Load more' button.
+     * the hits for the media type with the most hits and as many hits from
+     * other media types as can be sparsely spliced into the list. The
+     * leftover hits will appear in subsequent pages.
+     *
+     * TODO: Fix the algorithm.
+     * This implementation can hide hits from media types with fewer hits.
      */
     allMedia(state): Media[] {
       const media = this.resultItems
@@ -194,8 +197,6 @@ export const useMediaStore = defineStore('media', {
       )) {
         for (const item of media[type]) {
           newResults.splice(nonImageIndex, 0, item)
-          // TODO: Fix the algorithm. Currently, when there is no images, the nonImageIndex can get higher
-          //  than general index, and items can get discarded.
           nonImageIndex = randomIntegerInRange(
             nonImageIndex + 1,
             nonImageIndex + 6
