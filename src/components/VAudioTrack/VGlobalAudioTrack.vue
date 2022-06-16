@@ -110,19 +110,7 @@ export default defineComponent({
       if (activeAudio.obj.value) duration.value = activeAudio.obj.value.duration
     }
 
-    const confirmStatus = () => {
-      if (!activeAudio.obj.value) return
-      if (activeAudio.obj.value.paused) {
-        status.value = 'paused'
-      } else if (activeAudio.obj.value.ended) {
-        status.value = 'played'
-      } else {
-        status.value = 'playing'
-      }
-    }
-
     const updateTimeLoop = () => {
-      confirmStatus()
       if (
         activeAudio.obj.value &&
         (status.value === 'playing' || status.value === 'loading')

@@ -191,19 +191,7 @@ export default defineComponent({
         ? activeAudio.obj.value
         : undefined
 
-    const confirmStatus = () => {
-      if (!localAudio) return
-      if (localAudio.paused) {
-        status.value = 'paused'
-      } else if (localAudio.ended) {
-        status.value = 'played'
-      } else {
-        status.value = 'playing'
-      }
-    }
-
     const updateTimeLoop = () => {
-      confirmStatus()
       if (localAudio) {
         if (status.value === 'playing' || status.value === 'loading') {
           currentTime.value = localAudio.currentTime
