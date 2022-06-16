@@ -1,9 +1,9 @@
 <template>
   <VNotificationBanner
-    id="translation"
+    :id="bannerKey"
     :enabled="needsTranslationBanner"
     variant="informational"
-    :data-lang="bannerKey"
+    data-testid="translation-banner"
   >
     {{
       // eslint-disable-next-line @intlify/vue-i18n/no-raw-text
@@ -39,7 +39,7 @@ export default defineComponent({
   setup() {
     const { currentLocale, translationLink, needsTranslationBanner } =
       useI18nSync()
-    const bannerKey = currentLocale.value?.code ?? 'en'
+    const bannerKey = `translation-${currentLocale.value?.code ?? 'en'}`
     const name = computed(() => currentLocale.value?.name ?? '')
     return {
       needsTranslationBanner,
