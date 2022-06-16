@@ -2,31 +2,21 @@ import { test } from '@playwright/test'
 
 import breakpoints from '~~/test/playwright/utils/breakpoints'
 import { removeHiddenOverflow } from '~~/test/playwright/utils/page'
+import { renderDirs } from '~~/test/playwright/utils/navigation'
 
 test.describe('sources page snapshots', () => {
-  test.describe('ltr', () => {
-    test.beforeEach(async ({ page }) => {
-      await page.goto('/sources')
-    })
-
-    breakpoints.describeEvery(({ expectSnapshot }) => {
-      test('top', async ({ page }) => {
-        await removeHiddenOverflow(page)
-        await expectSnapshot('sources-ltr', page, { fullPage: true })
+  for (const dir of renderDirs) {
+    test.describe(dir, () => {
+      const path = `${dir === 'rtl' ? '/ar' : ''}/sources`
+      test.beforeEach(async ({ page }) => {
+        await page.goto(path)
+      })
+      breakpoints.describeEvery(({ expectSnapshot }) => {
+        test('top', async ({ page }) => {
+          await removeHiddenOverflow(page)
+          await expectSnapshot(`sources-${dir}`, page, { fullPage: true })
+        })
       })
     })
-  })
-
-  test.describe('rtl', () => {
-    test.beforeEach(async ({ page }) => {
-      await page.goto('/ar/sources')
-    })
-
-    breakpoints.describeEvery(({ expectSnapshot }) => {
-      test('top', async ({ page }) => {
-        await removeHiddenOverflow(page)
-        await expectSnapshot('sources-rtl', page, { fullPage: true })
-      })
-    })
-  })
+  }
 })

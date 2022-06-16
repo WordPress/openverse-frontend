@@ -9,7 +9,11 @@
 import { expect, test } from '@playwright/test'
 
 import { mockProviderApis } from '~~/test/playwright/utils/route'
-import { goToSearchTerm } from '~~/test/playwright/utils/navigation'
+import {
+  goToSearchTerm,
+  scrollToBottom,
+  searchFromHeader,
+} from '~~/test/playwright/utils/navigation'
 
 test.beforeEach(async ({ context }) => {
   await mockProviderApis(context)
@@ -22,13 +26,12 @@ test('shows no results page when no results', async ({ page }) => {
 
 test('scroll to top on new search term submitted', async ({ page }) => {
   await goToSearchTerm(page, 'galah')
-  await page.keyboard.press('PageDown')
+  await scrollToBottom(page)
   let scrollY = await page.evaluate(() => window.scrollY)
 
   expect(scrollY).not.toBe(0)
 
-  await page.fill('id=search-bar', 'honey')
-  await page.locator('button[type="submit"]').click()
+  await searchFromHeader(page, 'honey')
   scrollY = await page.evaluate(() => window.scrollY)
 
   expect(scrollY).toBe(0)

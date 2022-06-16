@@ -2,36 +2,29 @@ import { test } from '@playwright/test'
 
 import breakpoints from '~~/test/playwright/utils/breakpoints'
 import { removeHiddenOverflow } from '~~/test/playwright/utils/page'
-import { dismissTranslationBanner } from '~~/test/playwright/utils/navigation'
+import {
+  dismissTranslationBanner,
+  renderDirs,
+} from '~~/test/playwright/utils/navigation'
 
 const contentPages = ['extension', 'about', 'meta-search', 'search-help']
 for (const contentPage of contentPages) {
-  test.describe(`${contentPage} page snapshots`, () => {
-    test.describe('ltr', () => {
+  for (const dir of renderDirs) {
+    test.describe(`${contentPage} ${dir} page snapshots`, () => {
+      const path = `${dir === 'rtl' ? '/ar' : ''}/${contentPage}`
       test.beforeEach(async ({ page }) => {
-        await page.goto(`/${contentPage}`)
-      })
-
-      breakpoints.describeEvery(({ expectSnapshot }) => {
-        test('full page', async ({ page }) => {
-          await removeHiddenOverflow(page)
-          await expectSnapshot(`${contentPage}-ltr`, page, { fullPage: true })
-        })
-      })
-    })
-
-    test.describe('rtl', () => {
-      test.beforeEach(async ({ page }) => {
-        await page.goto(`/ar/${contentPage}`)
+        await page.goto(path)
         await dismissTranslationBanner(page)
       })
 
       breakpoints.describeEvery(({ expectSnapshot }) => {
         test('full page', async ({ page }) => {
           await removeHiddenOverflow(page)
-          await expectSnapshot(`${contentPage}-rtl`, page, { fullPage: true })
+          await expectSnapshot(`${contentPage}-${dir}`, page, {
+            fullPage: true,
+          })
         })
       })
     })
-  })
+  }
 }

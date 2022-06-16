@@ -172,6 +172,18 @@ export const goToSearchTerm = async (
 }
 
 /**
+ * Fills the search input in the page header, clicks on submit
+ * and waits for navigation.
+ */
+export const searchFromHeader = async (page: Page, term: string) => {
+  await page.fill('id=search-bar', term)
+  await Promise.all([
+    page.waitForNavigation(),
+    page.locator('button[type="submit"]').click(),
+  ])
+}
+
+/**
  * Click on the first <mediaType> result: a link that contains
  * /<mediaType>/ in its URL. We cannot use the 'startsWith' `^` matcher
  * because localized routes start with the locale prefix (e.g. /ar/image/).
@@ -218,3 +230,12 @@ export const scrollDownAndUp = async (page: Page) => {
   await scrollToBottom(page)
   await scrollToTop(page)
 }
+
+export const renderDirs = ['ltr', 'rtl'] as const
+
+export const renderModes = [
+  ['SSR', 'ltr'],
+  ['SSR', 'rtl'],
+  ['CSR', 'ltr'],
+  ['CSR', 'rtl'],
+] as const
