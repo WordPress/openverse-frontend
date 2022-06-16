@@ -9,6 +9,7 @@ import {
   SearchType,
   VIDEO,
 } from '~/constants/media'
+import messages from '~/locales/en.json'
 
 const buttonSelectors = {
   filter: '[aria-controls="filters"]',
@@ -26,12 +27,13 @@ export function sleep(ms: number) {
 export type RenderMode = 'SSR' | 'CSR'
 export const searchTypePath = (searchType: SearchType) =>
   searchType === 'all' ? '' : `${searchType}`
+
 export const searchTypeNames = {
-  [IMAGE]: 'Images',
-  [AUDIO]: 'Audio',
-  [VIDEO]: 'Videos',
-  [MODEL_3D]: '3D Models',
-  [ALL_MEDIA]: 'All Content',
+  [IMAGE]: messages['search-type'][IMAGE],
+  [AUDIO]: messages['search-type'][AUDIO],
+  [VIDEO]: messages['search-type'][VIDEO],
+  [MODEL_3D]: messages['search-type'][MODEL_3D],
+  [ALL_MEDIA]: messages['search-type'][ALL_MEDIA],
 }
 
 const isButtonPressed = async (page: Page, buttonSelector: string) => {
@@ -137,7 +139,6 @@ export const goToSearchTerm = async (
   const query = options.query ? `&${options.query}` : ''
 
   const prefix = dir === 'ltr' ? '' : '/ar'
-  console.log('[goToSearchTerm]', dir, mode, query)
   if (mode === 'SSR') {
     await page.goto(
       `${prefix}/search/${searchTypePath(searchType)}?q=${term}${query}`
@@ -177,7 +178,6 @@ export const goToSearchTerm = async (
  * Scroll down and up to load all lazy-loaded content.
  */
 export const openFirstResult = async (page: Page, mediaType: MediaType) => {
-  console.log('openFirstResult', mediaType)
   await page.locator(`a[href*="/${mediaType}/"]`).first().click()
   await scrollDownAndUp(page)
 }
