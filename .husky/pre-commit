@@ -2,12 +2,10 @@
 . "$(dirname "$0")/_/husky.sh"
 
 # Generate a new openverse.pot file if en.json has changes
-TRANSFILE=src/locales/en.json
 POTFILE=src/locales/po-files/openverse.pot
+pnpm i18n:generate-pot
 CHANGED=$(git diff --staged --name-only HEAD)
-
-if [[ "$CHANGED" == *"$TRANSFILE"* ]] && [[ "$CHANGED" != *"$POTFILE"* ]]; then
-  pnpm i18n:generate-pot
+if [[ "$CHANGED" == *"$POTFILE"* ]]; then
   git add $POTFILE
 fi
 
