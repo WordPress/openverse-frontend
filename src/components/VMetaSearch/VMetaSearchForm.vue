@@ -2,8 +2,8 @@
   <section
     :key="type"
     ref="sectionRef"
-    class="p-6 meta-search text-center mt-12"
-    data-testid="meta-search-form"
+    class="p-6 additional-sources text-center mt-12"
+    data-testid="additional-sources-form"
     @keydown.tab.exact="handleTab"
   >
     <header class="mb-10">
@@ -11,8 +11,8 @@
         v-if="!hasNoResults"
         :path="
           isSupported
-            ? 'meta-search.form.supported-title'
-            : 'meta-search.form.unsupported-title'
+            ? 'additional-sources.form.supported-title'
+            : 'additional-sources.form.unsupported-title'
         "
         tag="h4"
         class="text-4xl mb-2"
@@ -22,14 +22,14 @@
       </i18n>
       <i18n
         v-else
-        path="meta-search.form.no-results-title"
+        path="additional-sources.form.no-results-title"
         tag="h4"
         class="text-4xl mb-2"
       >
         <template #type>{{ $t(`meta-search.form.types.${type}`) }}</template>
         <template #query>{{ query.q }}</template>
       </i18n>
-      <i18n path="meta-search.form.caption" tag="p">
+      <i18n path="additional-sources.form.caption" tag="p">
         <template #type>{{
           $t(`meta-search.form.types-plural.${type}`)
         }}</template>
@@ -46,7 +46,7 @@
     />
 
     <p class="text-sm font-semibold max-w-3xl my-0 mx-auto">
-      {{ $t('meta-search.caption', { openverse: 'Openverse' }) }}
+      {{ $t('additional-sources.caption', { openverse: 'Openverse' }) }}
     </p>
   </section>
 </template>

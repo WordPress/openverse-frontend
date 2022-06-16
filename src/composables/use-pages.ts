@@ -25,9 +25,9 @@ export default function usePages() {
       link: app.localePath('/search-help'),
     },
     {
-      id: 'meta-search',
-      name: 'header.meta-search-nav-item',
-      link: app.localePath('/meta-search'),
+      id: 'additional-sources',
+      name: 'header.additional-sources-nav-item',
+      link: app.localePath('/additional-sources'),
     },
     {
       id: 'feedback',

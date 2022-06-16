@@ -15,7 +15,7 @@ import { changeContentType } from '~~/test/playwright/utils/navigation'
  * 4. Can open 'image' search page from the 'all content' page.
  * 5. Can open 'audio' search from the 'all content' page.
  *
- * Results include search meta information, media grid and Meta search form, can load more media if there are more media items.
+ * Results include search meta information, media grid and Additional Sources form, can load more media if there are more media items.
  */
 
 test.beforeEach(async ({ context }) => {
@@ -65,10 +65,12 @@ async function checkLoadMore(page: Page, searchType: SearchTypeConfig) {
   }
 }
 async function checkMetasearchForm(page: Page, searchType: SearchTypeConfig) {
-  const metaSearchForm = await page.locator('[data-testid="meta-search-form"]')
+  const metaSearchForm = await page.locator(
+    '[data-testid="additional-sources-form"]'
+  )
   await expect(metaSearchForm).toHaveCount(1)
 
-  const sourceButtons = await page.locator('.meta-search a')
+  const sourceButtons = await page.locator('.additional-sources a')
   await expect(sourceButtons).toHaveCount(searchType.metaSourceCount)
 }
 
