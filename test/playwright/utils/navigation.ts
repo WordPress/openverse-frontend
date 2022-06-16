@@ -205,6 +205,18 @@ export const searchFromHeader = async (page: Page, term: string) => {
 }
 
 /**
+ * Fills the search input in the page header, clicks on submit
+ * and waits for navigation.
+ */
+export const searchFromHeader = async (page: Page, term: string) => {
+  await page.fill('id=search-bar', term)
+  await Promise.all([
+    page.waitForNavigation(),
+    page.locator('button[type="submit"]').click(),
+  ])
+}
+
+/**
  * Click on the first <mediaType> result: a link that contains
  * /<mediaType>/ in its URL. We cannot use the 'startsWith' `^` matcher
  * because localized routes start with the locale prefix (e.g. /ar/image/).

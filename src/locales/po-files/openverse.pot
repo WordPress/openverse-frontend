@@ -236,7 +236,7 @@ msgid "Search"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VHeader/VSearchBar/VSearchBar.vue:13
+#: src/components/VHeader/VSearchBar/VSearchBar.vue:12
 msgctxt "search.search-bar-label"
 msgid "Search for content in ###openverse###"
 msgstr ""
@@ -2016,7 +2016,7 @@ msgctxt "hero.disclaimer.license"
 msgid "Creative Commons license"
 msgstr ""
 
-#: src/components/VHeader/VSearchBar/VSearchBar.vue:8
+#: src/components/VHeader/VSearchBar/VSearchBar.vue:7
 msgctxt "hero.search.placeholder"
 msgid "Search for content"
 msgstr ""
