@@ -1,10 +1,12 @@
 <template>
-  <div
+  <Component
+    :is="isBoxed ? 'VLink' : 'VWarningSuppressor'"
     class="audio-track group"
-    :aria-label="$t('audio-track.aria-label')"
+    :aria-label="ariaLabel"
     role="region"
     v-bind="layoutBasedProps"
-    v-on="layoutBasedListeners"
+    @keydown.native.shift.tab.exact="$emit('shift-tab', $event)"
+    @keydown.native.space="handleSpace"
   >
     <Component
       :is="layoutComponent"
@@ -17,6 +19,7 @@
         <VWaveform
           v-bind="waveformProps"
           :peaks="audio.peaks"
+          :audio-id="audio.id"
           :current-time="currentTime"
           :duration="duration"
           :message="message ? $t(`audio-track.messages.${message}`) : null"
@@ -34,10 +37,10 @@
         />
       </template>
     </Component>
-  </div>
+  </Component>
 </template>
 
-<script>
+<script lang="ts">
 import {
   computed,
   defineComponent,
@@ -45,15 +48,25 @@ import {
   watch,
   onUnmounted,
   useRoute,
+  PropType,
 } from '@nuxtjs/composition-api'
 
 import { useActiveAudio } from '~/composables/use-active-audio'
 import { defaultRef } from '~/composables/default-ref'
+import { useI18n } from '~/composables/use-i18n'
 
 import { useActiveMediaStore } from '~/stores/active-media'
 import { useMediaStore } from '~/stores/media'
 
 import { AUDIO } from '~/constants/media'
+
+import type { AudioDetail } from '~/models/media'
+import {
+  AudioLayout,
+  AudioSize,
+  AudioStatus,
+  layoutMappings,
+} from '~/constants/audio'
 
 import VPlayPause from '~/components/VAudioTrack/VPlayPause.vue'
 import VWaveform from '~/components/VAudioTrack/VWaveform.vue'
@@ -61,46 +74,8 @@ import VFullLayout from '~/components/VAudioTrack/layouts/VFullLayout.vue'
 import VRowLayout from '~/components/VAudioTrack/layouts/VRowLayout.vue'
 import VBoxLayout from '~/components/VAudioTrack/layouts/VBoxLayout.vue'
 import VGlobalLayout from '~/components/VAudioTrack/layouts/VGlobalLayout.vue'
-
-const propTypes = {
-  /**
-   * the information about the track, typically from a track's detail endpoint
-   */
-  audio: {
-    type: /** @type {import('@nuxtjs/composition-api').PropType<import('~/store/types').AudioDetail>} */ (
-      Object
-    ),
-    required: /** @type {true} */ (true),
-  },
-  /**
-   * the arrangement of the contents on the canvas; This determines the
-   * overall L&F of the audio component.
-   * @todo This type def should be extracted for reuse across components
-   */
-  layout: {
-    type: /** @type {import('@nuxtjs/composition-api').PropType<'full' | 'box' | 'row' | 'global'>} */ (
-      String
-    ),
-    default: 'full',
-    /**
-     * @param {string} val
-     */
-    validator: (val) => ['full', 'box', 'row', 'global'].includes(val),
-  },
-  /**
-   * the size of the component; Both 'box' and 'row' layouts offer multiple
-   * sizes to choose from.
-   */
-  size: {
-    type: /** @type {import('@nuxtjs/composition-api').PropType<'s' | 'm' | 'l'>} */ (
-      String
-    ),
-    /**
-     * @param {string} val
-     */
-    validator: (val) => ['s', 'm', 'l'].includes(val),
-  },
-}
+import VLink from '~/components/VLink.vue'
+import VWarningSuppressor from '~/components/VWarningSuppressor.vue'
 
 /**
  * Displays the waveform and basic information about the track, along with
@@ -111,6 +86,8 @@ export default defineComponent({
   components: {
     VPlayPause,
     VWaveform,
+    VLink,
+    VWarningSuppressor,
 
     // Layouts
     VFullLayout,
@@ -118,25 +95,50 @@ export default defineComponent({
     VBoxLayout,
     VGlobalLayout,
   },
-  props: propTypes,
-  setup(props, { emit }) {
+  props: {
+    /**
+     * the information about the track, typically from a track's detail endpoint
+     */
+    audio: {
+      type: Object as PropType<AudioDetail>,
+      required: true,
+    },
+    /**
+     * the arrangement of the contents on the canvas; This determines the
+     * overall L&F of the audio component.
+     */
+    layout: {
+      type: String as PropType<AudioLayout>,
+      default: 'full',
+    },
+    /**
+     * the size of the component; Both 'box' and 'row' layouts offer multiple
+     * sizes to choose from.
+     */
+    size: {
+      type: String as PropType<AudioSize>,
+    },
+  },
+  setup(props) {
     const activeMediaStore = useActiveMediaStore()
     const route = useRoute()
 
     const activeAudio = useActiveAudio()
 
-    const status = ref('paused')
+    const status = ref<AudioStatus>('paused')
     const currentTime = ref(0)
 
     const initLocalAudio = () => {
       // Preserve existing local audio if we plucked it from the global active audio
       if (!localAudio) localAudio = new Audio(props.audio.url)
 
-      localAudio.addEventListener('play', setPlaying)
-      localAudio.addEventListener('pause', setPaused)
-      localAudio.addEventListener('ended', setPlayed)
-      localAudio.addEventListener('timeupdate', setTimeWhenPaused)
-      localAudio.addEventListener('durationchange', setDuration)
+      Object.entries(eventMap).forEach(([name, fn]) =>
+        /**
+         * This cast is safe, it just filters `undefined` that is still present on the
+         * `localAudio`'s type despite the check above to create it if it doesn't exist.
+         */
+        (localAudio as HTMLAudioElement).addEventListener(name, fn)
+      )
 
       /**
        * Similar to the behavior in the global audio track,
@@ -182,23 +184,37 @@ export default defineComponent({
      * the globally active audio already matches the result
      * that was clicked on, hijack that object instead and
      * treat it as the local audio for this instance.
-     *
-     * @type {HTMLAudioElement | undefined}
-     * */
+     */
     let localAudio =
       activeAudio.obj.value?.src === props.audio.url
         ? activeAudio.obj.value
         : undefined
 
     const updateTimeLoop = () => {
-      if (localAudio && status.value === 'playing') {
-        currentTime.value = localAudio.currentTime
-        window.requestAnimationFrame(updateTimeLoop)
+      if (localAudio) {
+        if (status.value === 'playing' || status.value === 'loading') {
+          currentTime.value = localAudio.currentTime
+          window.requestAnimationFrame(updateTimeLoop)
+        } else {
+          currentTime.value = localAudio.currentTime
+        }
       }
     }
 
-    const setPlaying = () => {
+    let hasLoaded = false
+    const setLoaded = () => {
+      hasLoaded = true
       status.value = 'playing'
+    }
+    const setWaiting = () => {
+      status.value = 'loading'
+    }
+    const setPlaying = () => {
+      if (!hasLoaded) {
+        status.value = 'loading'
+      } else {
+        status.value = 'playing'
+      }
       activeAudio.obj.value = localAudio
       activeMediaStore.setActiveMediaItem({
         type: 'audio',
@@ -232,6 +248,16 @@ export default defineComponent({
       if (localAudio) duration.value = localAudio.duration
     }
 
+    const eventMap = {
+      play: setPlaying,
+      pause: setPaused,
+      ended: setPlayed,
+      timeupdate: setTimeWhenPaused,
+      durationchange: setDuration,
+      waiting: setWaiting,
+      playing: setLoaded,
+    } as const
+
     /**
      * If we're transforming the globally active audio
      * into our local audio, then we need to initialize
@@ -249,11 +275,10 @@ export default defineComponent({
     onUnmounted(() => {
       if (!localAudio) return
 
-      localAudio.removeEventListener('play', setPlaying)
-      localAudio.removeEventListener('pause', setPaused)
-      localAudio.removeEventListener('ended', setPlayed)
-      localAudio.removeEventListener('timeupdate', setTimeWhenPaused)
-      localAudio.removeEventListener('durationchange', setDuration)
+      Object.entries(eventMap).forEach(([name, fn]) =>
+        localAudio?.removeEventListener(name, fn)
+      )
+
       const mediaStore = useMediaStore()
       if (
         route.value.params.id === props.audio.id ||
@@ -262,7 +287,7 @@ export default defineComponent({
         /**
          * If switching to any route other than the single result
          * route for this track, pause it. Otherwise, let it keep
-         * playing to introduce a "seamless" feeling beween the
+         * playing to introduce a "seamless" feeling between the
          * search results page and the single result page.
          *
          * This handles going from the search page to the single
@@ -292,7 +317,10 @@ export default defineComponent({
     watch(
       activeAudio.obj,
       (audio) => {
-        if (audio !== localAudio && status.value === 'playing') {
+        if (
+          audio !== localAudio &&
+          (status.value === 'playing' || status.value === 'loading')
+        ) {
           localAudio?.pause()
         }
       },
@@ -305,10 +333,7 @@ export default defineComponent({
 
     /* Interface with VPlayPause */
 
-    /**
-     * @param {'playing' | 'paused'} [state]
-     */
-    const handleToggle = (state) => {
+    const handleToggle = (state?: 'playing' | 'paused') => {
       if (!state) {
         switch (status.value) {
           case 'playing':
@@ -333,10 +358,7 @@ export default defineComponent({
 
     /* Interface with VWaveform */
 
-    /**
-     * @param {number} frac
-     */
-    const handleSeeked = (frac) => {
+    const handleSeeked = (frac: number) => {
       if (!localAudio) initLocalAudio()
       /**
        * Calling initLocalAudio will guarantee localAudio
@@ -345,17 +367,12 @@ export default defineComponent({
        * hoops (using `assert`) or adding unnecessary
        * runtime checks.
        */
-      localAudio.currentTime = frac * duration.value
+      if (localAudio) {
+        localAudio.currentTime = frac * duration.value
+      }
     }
 
     /* Layout */
-
-    const layoutMappings = {
-      full: 'VFullLayout',
-      row: 'VRowLayout',
-      box: 'VBoxLayout',
-      global: 'VGlobalLayout',
-    }
     const layoutComponent = computed(() => layoutMappings[props.layout])
 
     /**
@@ -363,7 +380,7 @@ export default defineComponent({
      */
     const _size = computed(() => {
       if (isBoxed && !props.size) {
-        return null
+        return undefined
       }
       return props.size ?? 'm'
     })
@@ -373,7 +390,7 @@ export default defineComponent({
      * so we can capture clicks and skip
      * sending an event to the boxed layout.
      */
-    const playPauseRef = ref(null)
+    const playPauseRef = ref<HTMLElement | null>(null)
 
     /**
      * These layout-conditional props and listeners allow us
@@ -382,38 +399,37 @@ export default defineComponent({
      * boxed layout exclusively.
      */
     const isBoxed = computed(() => props.layout === 'box')
+    const i18n = useI18n()
     const layoutBasedProps = computed(() => {
       if (!isBoxed.value) return {}
       return {
-        tabindex: isBoxed.value ? 0 : -1,
+        href: `/audio/${props.audio.id}`,
         class:
           'block focus:bg-white focus:border-tx focus:ring-[3px] focus:ring-pink focus:ring-offset-[3px] focus:outline-none rounded-sm overflow-hidden cursor-pointer',
       }
     })
-    const layoutBasedListeners = computed(() => {
-      if (!isBoxed.value) return {}
-      return {
-        click: (event) => {
-          // Emit an event when the boxed layout is clicked
-          // unless the click is on the play/pause button
-          if (event.target === playPauseRef?.value?.$el) return
-          emit('boxedAudioClick', props.audio)
-        },
-        keydown: (event) => {
-          // 32 is Spacebar
-          if (event.keyCode !== 32) return
-          event.preventDefault()
-          status.value = status.value === 'playing' ? 'paused' : 'playing'
-          handleToggle(status.value)
-        },
-      }
-    })
+    const ariaLabel = computed(() =>
+      isBoxed.value
+        ? i18n.t('audio-track.aria-label-interactive', {
+            title: props.audio.title,
+          })
+        : i18n.t('audio-track.aria-label', { title: props.audio.title })
+    )
+
+    const handleSpace = (event: KeyboardEvent) => {
+      if (!isBoxed.value) return
+      event.preventDefault()
+      status.value = status.value === 'playing' ? 'paused' : 'playing'
+      handleToggle(status.value)
+    }
 
     return {
       status,
       message,
+      ariaLabel,
       handleToggle,
       handleSeeked,
+      handleSpace,
 
       currentTime,
       duration,
@@ -421,8 +437,8 @@ export default defineComponent({
       layoutComponent,
       _size,
 
+      isBoxed,
       layoutBasedProps,
-      layoutBasedListeners,
 
       playPauseRef,
     }

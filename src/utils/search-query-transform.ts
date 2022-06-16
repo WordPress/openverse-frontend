@@ -1,27 +1,47 @@
-// We plan to remove this dependency, so don't need to add types for it:
-// https://github.com/WordPress/openverse-frontend/issues/1103
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import clonedeep from 'lodash.clonedeep'
-
-import { mediaFilterKeys } from '~/constants/filters'
-import { ALL_MEDIA, SupportedSearchType } from '~/constants/media'
-
-import { getParameterByName } from '~/utils/url-params'
-import type {
-  ApiQueryFilters,
-  ApiQueryKeys,
-  ApiQueryParams,
+import {
   FilterCategory,
   FilterItem,
   Filters,
-} from '~/store/types'
+  mediaFilterKeys,
+} from '~/constants/filters'
+import {
+  ALL_MEDIA,
+  mediaTypes,
+  SearchType,
+  SupportedSearchType,
+  supportedSearchTypes,
+} from '~/constants/media'
+import { getParameterByName } from '~/utils/url-params'
+import { deepClone } from '~/utils/clone'
 
+export interface ApiQueryParams {
+  q?: string
+  license?: string
+  license_type?: string
+  extension?: string
+  size?: string
+  aspect_ratio?: string
+  searchBy?: string
+  category?: string
+  source?: string
+  duration?: string
+  mature?: string
+  page?: string
+}
+
+export type ApiQueryFilters = Omit<ApiQueryParams, 'q'>
+export type ApiQueryKeys = keyof ApiQueryFilters
+
+/**
+ * This maps properties in the search store state to the corresponding API query
+ * parameters. The convention is that filter property names are plural, and API query
+ * parameters are singular.
+ */
 const filterPropertyMappings: Record<FilterCategory, ApiQueryKeys> = {
   licenses: 'license',
   licenseTypes: 'license_type',
-  audioCategories: 'categories',
-  imageCategories: 'categories',
+  audioCategories: 'category',
+  imageCategories: 'category',
   audioExtensions: 'extension',
   imageExtensions: 'extension',
   durations: 'duration',
@@ -33,17 +53,11 @@ const filterPropertyMappings: Record<FilterCategory, ApiQueryKeys> = {
   mature: 'mature',
 }
 
-const getMediaFilterTypes = (searchType: SupportedSearchType) => [
-  ...mediaFilterKeys[searchType],
-]
-// {
-//   license: 'cc0,pdm,by,by-sa,by-nc,by-nd,by-nc-sa,by-nc-nd',
-//   imageCategories: 'photograph,illustration,digitized_artwork',
-//   imageExtension: 'jpg,png',
-//   aspect_ratio: 'square',
-//   size: 'small',
-//   source: 'animaldiversity,bio_diversity,brooklynmuseum,CAPL,clevelandmuseum,deviantart'
-// }
+const getMediaFilterTypes = (searchType: SearchType) => {
+  return supportedSearchTypes.includes(searchType as SupportedSearchType)
+    ? [...mediaFilterKeys[searchType]]
+    : []
+}
 
 /**
  * Joins all the filters which have the checked property `true`
@@ -68,7 +82,7 @@ const filterToString = (filterItem: FilterItem[]) => {
  */
 export const filtersToQueryData = (
   filters: Filters,
-  searchType: SupportedSearchType = ALL_MEDIA,
+  searchType: Parameters<typeof getMediaFilterTypes>[0] = ALL_MEDIA,
   hideEmpty = true
 ): ApiQueryFilters => {
   const mediaFilterTypes = getMediaFilterTypes(searchType)
@@ -85,27 +99,23 @@ export const filtersToQueryData = (
 
 /**
  * Extract search type from the url. Returns the last part
- * of the path between `/search/` and query, or `all` by default.
- * `/search/?q=test`: all
- * `/search/image?q=test`: image
- * @param queryString - the query string from the url
+ * of the path after `/search/`, or `all` by default.
+ * `/search/`: all
+ * `/search/image`: image
+ * @param queryString - the query path string from the url
  */
-export const queryStringToSearchType = (
-  queryString: string
-): SupportedSearchType => {
-  const searchTypePattern = /\/search\/(image|audio|video)\?*/
+export const queryStringToSearchType = (queryString: string): SearchType => {
+  const searchTypePattern = new RegExp(`/search/(${mediaTypes.join('|')})`)
   const matchedType = queryString.match(searchTypePattern)
-  return matchedType === null
-    ? ALL_MEDIA
-    : (matchedType[1] as SupportedSearchType)
+  return matchedType === null ? ALL_MEDIA : (matchedType[1] as SearchType)
 }
 
 /**
- * `source`, `extensions` and `categories` API parameters correspond
+ * `source`, `extension` and `category` API parameters correspond
  * to different filters in different media types:
  * `source` - audioProviders/imageProviders
- * `extensions` - audioExtensions/imageExtensions
- * `categories` - audioCategories/imageCategories
+ * `extension` - audioExtensions/imageExtensions
+ * `category` - audioCategories/imageCategories
  *
  * This function sets only filters that are possible for current
  * media type. E.g., for queryString `search/audio?extensions=ogg`
@@ -157,7 +167,7 @@ export const queryToFilterData = ({
 }) => {
   // The default filterData object from search store doesn't contain provider filters,
   // so we can't use it.
-  const filters = clonedeep(defaultFilters) as Filters
+  const filters = deepClone(defaultFilters) as Filters
   const filterTypes = getMediaFilterTypes(searchType)
   const differentFiltersWithSameApiParams = [
     'audioProviders',
@@ -219,6 +229,7 @@ export const queryStringToQueryData = (queryString: string) => {
       queryString
     )
   })
+
   queryDataObject.q = getParameterByName('q', queryString)
 
   return queryDataObject

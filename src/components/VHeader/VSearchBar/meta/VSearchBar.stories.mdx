@@ -8,7 +8,7 @@ import {
 import VSearchBar from '~/components/VHeader/VSearchBar/VSearchBar.vue'
 
 <Meta
-  title="Components/Header/Search bar"
+  title="Components/VHeader/Search bar"
   component={VSearchBar}
   argTypes={{
     input: {
@@ -20,13 +20,15 @@ import VSearchBar from '~/components/VHeader/VSearchBar/VSearchBar.vue'
   }}
 />
 
-export const Template = (args, { argTypes }) => ({
+export const Template = (args) => ({
   template: `
-    <VSearchBar v-bind="$props" v-on="$props">
+    <VSearchBar v-bind="args" v-on="args">
       12,345 results
     </VSearchBar>`,
   components: { VSearchBar },
-  props: Object.keys(argTypes),
+  setup() {
+    return { args }
+  },
 })
 
 # Search bar
@@ -44,6 +46,7 @@ button is clicked.
     name="Default"
     args={{
       value: 'Search query',
+      size: 'medium',
     }}
   >
     {Template.bind({})}
@@ -56,7 +59,7 @@ representing the search query.
 export const vModelTemplate = () => ({
   template: `
     <div>
-      <VSearchBar v-model="text">
+      <VSearchBar v-model="text" size="small">
         {{ text.length }}
       </VSearchBar>
       {{ text }}
@@ -83,6 +86,7 @@ easy `<input>` attributes like placeholders or HTML validations.
     name="With placeholder"
     args={{
       placeholder: 'Search query',
+      size: 'large',
     }}
   >
     {Template.bind({})}

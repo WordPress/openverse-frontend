@@ -5,7 +5,7 @@
     class="scroll text-white bg-pink hover:bg-dark-pink transition-all duration-100 ease-linear fixed bottom-4 w-14 h-14 hover:shadow-md rounded-full text-center"
     :class="hClass"
     @click="scrollToTop"
-    @keyup.enter="scrollToTop"
+    @keydown.tab.exact="$emit('tab', $event)"
   >
     <svg
       viewBox="0 0 24 24"
@@ -19,30 +19,35 @@
   </button>
 </template>
 
-<script>
-import { computed } from '@nuxtjs/composition-api'
+<script lang="ts">
+import { computed, defineComponent } from '@nuxtjs/composition-api'
 
-import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
+import { defineEvent } from '~/types/emits'
 
 const positionWithoutSidebar = 'ltr:right-4 rtl:left-4'
 const positionWithSidebar = 'ltr:right-[21rem] rtl:left-[21rem]'
-export default {
+
+export default defineComponent({
   name: 'VScrollButton',
-  setup() {
-    const { isVisible: isFilterVisible } = useFilterSidebarVisibility()
-    const hClass = computed(() =>
-      isFilterVisible.value ? positionWithSidebar : positionWithoutSidebar
-    )
-    return { hClass, isFilterVisible }
-  },
-  methods: {
-    scrollToTop() {
-      this.$el.parentElement.scrollTo({
-        top: 0,
-        left: 0,
-        behavior: 'smooth',
-      })
+  props: {
+    isFilterSidebarVisible: {
+      type: Boolean,
+      default: true,
     },
   },
-}
+  emits: {
+    tab: defineEvent<[KeyboardEvent]>(),
+  },
+  setup(props) {
+    const hClass = computed(() =>
+      props.isFilterSidebarVisible
+        ? positionWithSidebar
+        : positionWithoutSidebar
+    )
+    const scrollToTop = () => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+    }
+    return { hClass, scrollToTop }
+  },
+})
 </script>

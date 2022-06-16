@@ -9,17 +9,21 @@
       <VContentReportButton v-bind="a11yProps" />
     </template>
     <template #default="{ close }">
-      <div class="relative">
+      <div class="relative" data-testid="content-report-popover">
         <VIconButton
-          class="absolute top-0 end-0 border-none"
+          class="absolute top-0 end-0 border-none text-dark-charcoal-70"
           size="search-medium"
           :icon-props="{ iconPath: icons.closeSmall }"
+          :button-props="{
+            'aria-label': $t('modal.close').toString(),
+            variant: 'plain',
+          }"
           @click="close"
         />
         <VContentReportForm
           :close-fn="close"
           :media="media"
-          :provider-name="providerName"
+          :provider-name="media.providerName"
         />
       </div>
     </template>
@@ -27,7 +31,7 @@
 </template>
 
 <script>
-import { computed, useStore, defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 
 import VIconButton from '~/components/VIconButton/VIconButton.vue'
 import VPopover from '~/components/VPopover/VPopover.vue'
@@ -54,17 +58,9 @@ export default defineComponent({
       required: true,
     },
   },
-  setup(props) {
-    const store = useStore()
-
-    const getProviderName = (nameCode) =>
-      store.getters['provider/getProviderName'](nameCode)
-    const providerName = computed(() => getProviderName(props.media.provider))
-
+  setup() {
     return {
       icons: { flag: flagIcon, closeSmall: closeSmallIcon },
-
-      providerName,
     }
   },
 })

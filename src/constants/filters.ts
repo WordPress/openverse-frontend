@@ -5,7 +5,30 @@ import { ACTIVE_LICENSES } from '~/constants/license'
 import { deepFreeze } from '~/utils/deep-freeze'
 
 import type { SearchType } from '~/constants/media'
-import type { FilterCategory, FilterItem } from '~/store/types'
+
+export interface FilterItem {
+  code: string
+  name: string
+  checked: boolean
+}
+
+export interface Filters {
+  licenses: FilterItem[]
+  licenseTypes: FilterItem[]
+  audioCategories: FilterItem[]
+  imageCategories: FilterItem[]
+  audioExtensions: FilterItem[]
+  imageExtensions: FilterItem[]
+  aspectRatios: FilterItem[]
+  durations: FilterItem[]
+  sizes: FilterItem[]
+  audioProviders: FilterItem[]
+  imageProviders: FilterItem[]
+  searchBy: FilterItem[]
+  mature: FilterItem[]
+}
+export type FilterCategory = keyof Filters
+export type NonMatureFilterCategory = Exclude<FilterCategory, 'mature'>
 
 /**
  * List of filters available for each search type. The order of the keys
@@ -112,7 +135,7 @@ export const initFilters = () =>
         checked: false,
       })),
     }),
-    {} as Record<FilterCategory, FilterItem>
+    {} as Filters
   )
 
 export const filterData = deepFreeze(initFilters())

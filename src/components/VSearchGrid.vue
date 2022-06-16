@@ -8,13 +8,10 @@
   >
     <header
       v-if="query.q && supported"
-      class="mt-4"
+      class="mt-5"
       :class="isAllView ? 'mb-10' : 'mb-8'"
     >
-      <VSearchResultsTitle
-        class="leading-10"
-        :size="isAllView ? 'large' : 'default'"
-      >
+      <VSearchResultsTitle :size="isAllView ? 'large' : 'default'">
         {{ query.q }}
       </VSearchResultsTitle>
     </header>
@@ -27,6 +24,7 @@
       :has-no-results="hasNoResults"
       :query="query"
       :is-supported="supported"
+      @tab="$emit('tab', $event)"
     />
   </section>
   <VErrorSection v-else class="w-full py-10">
@@ -37,11 +35,14 @@
   </VErrorSection>
 </template>
 
-<script>
-import { computed } from '@nuxtjs/composition-api'
+<script lang="ts">
+import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
 
-import { ALL_MEDIA, IMAGE } from '~/constants/media'
+import { ALL_MEDIA, IMAGE, SearchType, mediaTypes } from '~/constants/media'
 import { NO_RESULT } from '~/constants/errors'
+import { defineEvent } from '~/types/emits'
+import type { ApiQueryParams } from '~/utils/search-query-transform'
+import type { FetchState } from '~/composables/use-fetch-state'
 
 import VMetaSearchForm from '~/components/VMetaSearch/VMetaSearchForm.vue'
 import VErrorSection from '~/components/VErrorSection/VErrorSection.vue'
@@ -49,7 +50,7 @@ import VErrorImage from '~/components/VErrorSection/VErrorImage.vue'
 import VNoResults from '~/components/VErrorSection/VNoResults.vue'
 import VSearchResultsTitle from '~/components/VSearchResultsTitle.vue'
 
-export default {
+export default defineComponent({
   name: 'VSearchGrid',
   components: {
     VErrorSection,
@@ -64,22 +65,24 @@ export default {
       required: true,
     },
     query: {
-      type: Object,
+      type: Object as PropType<ApiQueryParams>,
       required: true,
     },
     searchType: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<import('../store/types').SupportedSearchType>} */ (
-        String
-      ),
+      type: String as PropType<SearchType>,
       required: true,
     },
     fetchState: {
+      type: Object as PropType<FetchState>,
       required: true,
     },
     resultsCount: {
       type: Number,
       required: true,
     },
+  },
+  emits: {
+    tab: defineEvent<[KeyboardEvent]>(),
   },
   setup(props) {
     const hasNoResults = computed(() => {
@@ -89,9 +92,17 @@ export default {
         ? props.query.q !== '' && props.resultsCount === 0
         : false
     })
+
+    /**
+     * Metasearch form shows the external sources for current search type, or for images if the search type is 'All Content'.
+     */
     const metaSearchFormType = computed(() => {
-      return props.searchType === ALL_MEDIA ? IMAGE : props.searchType
+      if (mediaTypes.includes(props.searchType)) {
+        return props.searchType
+      }
+      return IMAGE
     })
+
     const isAllView = computed(() => {
       return props.searchType === ALL_MEDIA
     })
@@ -103,5 +114,5 @@ export default {
       NO_RESULT,
     }
   },
-}
+})
 </script>

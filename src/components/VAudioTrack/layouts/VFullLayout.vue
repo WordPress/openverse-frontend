@@ -12,15 +12,11 @@
         aria-hidden
       />
       <div class="md:mx-4 lg:mx-10">
-        <slot
-          name="controller"
-          :features="['timestamps', 'duration', 'seek']"
-          :usable-frac="0.8"
-        />
+        <slot name="controller" :features="audioFeatures" :usable-frac="0.8" />
       </div>
     </div>
     <div
-      class="flex flex-row flex-wrap lg:flex-nowrap items-top px-4 lg:px-0 lg:max-w-5xl mx-auto gap-6 mt-6"
+      class="flex flex-row flex-wrap lg:flex-nowrap items-top px-6 lg:max-w-5xl mx-auto gap-6 mt-6"
     >
       <slot name="play-pause" :size="isSmall ? 'small' : 'medium'" />
 
@@ -54,39 +50,57 @@
             $t('interpunct')
           }}</span>
 
-          <div>{{ timeFmt(audio.duration) }}</div>
+          <div>{{ timeFmt(audio.duration || 0) }}</div>
         </div>
       </div>
 
-      <DownloadButton
-        class="ms-auto order-1 lg:order-2"
-        :formats="getFormats(audio)"
+      <VButton
+        as="VLink"
+        :href="audio.foreign_landing_url"
         :size="isSmall ? 'small' : 'medium'"
-      />
+        class="ms-auto order-1 lg:order-2 font-bold"
+      >
+        {{ $t('download-button.download') }}
+      </VButton>
     </div>
   </div>
 </template>
 
-<script>
-import { computed, defineComponent } from '@nuxtjs/composition-api'
+<script lang="ts">
+import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
 
-import DownloadButton from '~/components/DownloadButton.vue'
+import type { AudioDetail } from '~/models/media'
+import { AudioSize, AudioStatus, audioFeatures } from '~/constants/audio'
+
+import VButton from '~/components/VButton.vue'
 import VLink from '~/components/VLink.vue'
 
 export default defineComponent({
   name: 'VFullLayout',
-  components: {
-    DownloadButton,
-    VLink,
+  components: { VButton, VLink },
+  props: {
+    audio: {
+      type: Object as PropType<AudioDetail>,
+      required: true,
+    },
+    size: {
+      type: String as PropType<AudioSize>,
+    },
+    status: {
+      type: String as PropType<AudioStatus>,
+    },
+    currentTime: {
+      type: Number,
+      required: true,
+    },
   },
-  props: ['audio', 'size', 'status', 'currentTime'],
   setup(props) {
     /**
      * Format the time as hh:mm:ss, dropping the hour part if it is zero.
-     * @param {number} ms - the number of milliseconds in the duration
-     * @returns {string} the duration in a human-friendly format
+     * @param ms - the number of milliseconds in the duration
+     * @returns the duration in a human-friendly format
      */
-    const timeFmt = (ms) => {
+    const timeFmt = (ms: number): string => {
       if (ms) {
         const date = new Date(0)
         date.setSeconds(ms / 1e3)
@@ -95,55 +109,13 @@ export default defineComponent({
       return '--:--'
     }
 
-    /**
-     * Returns specific display name for file format if there is a mapping for
-     * provider's format display names (like Jamendo's `mp32` -> `MP3 V0`).
-     * Otherwise, returns UpperCase format or ''
-     * @param {string} provider
-     * @param {string} [format]
-     */
-    const displayFormat = (provider, format) => {
-      const filetypeMappings = {
-        jamendo: { mp31: 'MP3 96kbs', mp32: 'MP3 V0' },
-      }
-      if (filetypeMappings[provider] && filetypeMappings[provider][format]) {
-        return filetypeMappings[provider][format]
-      }
-      return format ? format.toUpperCase() : ''
-    }
-
-    /**
-     * Creates a list of { extension_name, download_url } objects
-     * for DownloadButton.
-     *
-     * If there are `alt_files` then just use that list. Otherwise,
-     * create one using the preview URL.
-     *
-     * @param {AudioDetail} audio
-     */
-    const getFormats = (audio) => {
-      if (audio.alt_files?.length) {
-        return audio.alt_files.map((altFile) => ({
-          extension_name: displayFormat(audio.provider, altFile.filetype),
-          download_url: altFile.url,
-        }))
-      }
-
-      return [
-        {
-          extension_name: displayFormat(audio.provider, audio.filetype),
-          download_url: audio.url,
-        },
-      ]
-    }
-
     const isSmall = computed(() => props.size === 's')
 
     return {
       timeFmt,
-      getFormats,
 
       isSmall,
+      audioFeatures,
     }
   },
 })

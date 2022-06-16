@@ -1,5 +1,4 @@
-import clonedeep from 'lodash.clonedeep'
-
+import { deepClone } from '~/utils/clone'
 import {
   filtersToQueryData,
   queryToFilterData,
@@ -93,7 +92,7 @@ describe('searchQueryTransform', () => {
     }
     const expectedQueryData = {
       aspect_ratio: 'tall',
-      categories: 'photograph',
+      category: 'photograph',
       extension: 'jpg',
       license: 'cc0',
       license_type: 'commercial',
@@ -251,14 +250,14 @@ describe('searchQueryTransform', () => {
       q: 'cat',
       license: 'cc0',
       license_type: 'commercial',
-      categories: 'music',
+      category: 'music',
       extension: 'mp3',
       duration: 'medium',
       source: 'jamendo',
       searchBy: 'creator',
       mature: 'true',
     }
-    const testFilters = clonedeep(filters)
+    const testFilters = deepClone(filters)
     testFilters.audioProviders = [
       { code: 'jamendo', checked: true },
       { code: 'wikimedia', checked: true },
@@ -278,7 +277,7 @@ describe('searchQueryTransform', () => {
       { code: 'wikimedia_audio', checked: false },
     ]
     /**
-     * `categories` and `extension` parameter values will not be used because those
+     * `category` and `extension` parameter values will not be used because those
      * codes (`photograph` and `svg`) only exist for the `imageCategories` and `imageExtensions`
      * filter categories.
      * `source` will only use the `wikimedia_audio` and `jamendo` parameters because they
@@ -293,14 +292,14 @@ describe('searchQueryTransform', () => {
       q: 'cat',
       license: 'cc0,nonexistent',
       license_type: 'commercial',
-      categories: 'photograph',
+      category: 'photograph',
       extension: 'svg',
       duration: 'medium',
       source: 'animaldiversity,wikimedia,nonexistent,wikimedia_audio,jamendo',
       searchBy: 'creator',
       mature: 'true',
     }
-    const expectedFilters = clonedeep(filters)
+    const expectedFilters = deepClone(filters)
     const setChecked = (code, filterCategory) => {
       const idx = expectedFilters[filterCategory].findIndex(
         (item) => item.code === code
@@ -326,7 +325,7 @@ describe('searchQueryTransform', () => {
     const expectedQueryData = {
       license: 'cc0',
       license_type: 'commercial',
-      categories: 'photograph',
+      category: 'photograph',
       extension: 'jpg',
       aspect_ratio: 'tall',
       size: 'medium',
@@ -336,7 +335,7 @@ describe('searchQueryTransform', () => {
       mature: 'true',
     }
     const queryString =
-      'http://localhost:8443/search/image?q=cat&license=cc0&license_type=commercial&categories=photograph&extension=jpg&aspect_ratio=tall&size=medium&source=animaldiversity,brooklynmuseum&searchBy=creator&mature=true'
+      'http://localhost:8443/search/image?q=cat&license=cc0&license_type=commercial&category=photograph&extension=jpg&aspect_ratio=tall&size=medium&source=animaldiversity,brooklynmuseum&searchBy=creator&mature=true'
     const result = queryStringToQueryData(queryString)
     expect(result).toEqual(expectedQueryData)
   })

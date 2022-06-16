@@ -1,17 +1,17 @@
 import { test, expect } from '@playwright/test'
 
-import {
-  Breakpoints as AllBreakpoints,
-  SCREEN_SIZES,
-} from '~/constants/screens'
-
-type Breakpoint = Exclude<AllBreakpoints, 'mob'>
+import { Breakpoint, VIEWPORTS } from '~/constants/screens'
 
 type ScreenshotAble = {
-  screenshot(): Promise<Buffer>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  screenshot(...args: any[]): Promise<Buffer>
 }
 
-type ExpectSnapshot = (name: string, s: ScreenshotAble) => Promise<Buffer>
+type ExpectSnapshot = <T extends ScreenshotAble>(
+  name: string,
+  s: T,
+  options?: Parameters<T['screenshot']>[0]
+) => Promise<Buffer>
 
 type BreakpointBlock = (options: {
   getConfigValues: (name: string) => {
@@ -37,29 +37,59 @@ const mockUaStrings: Readonly<Record<Breakpoint, string | undefined>> =
     ])
   )
 
+interface Options {
+  /**
+   * Whether to mock the UA for mobile browsers.
+   *
+   * @defaultValue true
+   */
+  uaMocking: boolean
+}
+
+const defaultOptions = Object.freeze({
+  uaMocking: true,
+})
+
 const makeBreakpointDescribe =
-  (breakpoint: Breakpoint, screenWidth: number) => (block: BreakpointBlock) => {
+  (breakpoint: Breakpoint, screenWidth: number) =>
+  <T extends BreakpointBlock | Options>(
+    blockOrOptions: T,
+    block?: T extends Record<string, unknown> ? BreakpointBlock : undefined
+  ) => {
     test.describe(
       `screen at breakpoint ${breakpoint} with width ${screenWidth}`,
       () => {
+        const _block = (
+          typeof blockOrOptions === 'function' ? blockOrOptions : block
+        ) as BreakpointBlock
+        const options =
+          typeof blockOrOptions !== 'function'
+            ? { ...defaultOptions, ...blockOrOptions }
+            : defaultOptions
+
         test.use({
           viewport: { width: screenWidth, height: 700 },
-          userAgent: mockUaStrings[breakpoint],
+          userAgent: options.uaMocking ? mockUaStrings[breakpoint] : undefined,
         })
+
         const getConfigValues = (name: string) => ({
           name: `${name}-${breakpoint}.png` as const,
         })
-        const expectSnapshot = async (
+
+        const expectSnapshot = async <T extends ScreenshotAble>(
           name: string,
-          screenshotAble: ScreenshotAble
+          screenshotAble: T,
+          options?: Parameters<T['screenshot']>[0]
         ) => {
           const { name: snapshotName } = getConfigValues(name)
-          return expect(await screenshotAble.screenshot()).toMatchSnapshot({
+          return expect(
+            await screenshotAble.screenshot(options)
+          ).toMatchSnapshot({
             name: snapshotName,
           })
         }
 
-        block({ breakpoint, getConfigValues, expectSnapshot })
+        _block({ breakpoint, getConfigValues, expectSnapshot })
       }
     )
   }
@@ -67,12 +97,20 @@ const makeBreakpointDescribe =
 const capitalize = (s: string): Capitalize<typeof s> =>
   `${s[0].toUpperCase()}${s.slice(1)}`
 
-const breakpointTests = Array.from(SCREEN_SIZES.entries()).reduce(
-  (tests, [breakpoint, screenWidth]) =>
+const breakpointTests = Array.from(Object.entries(VIEWPORTS)).reduce(
+  (
+    tests,
+    [
+      breakpoint,
+      {
+        styles: { width },
+      },
+    ]
+  ) =>
     Object.assign(tests, {
       [`describe${capitalize(breakpoint)}`]: makeBreakpointDescribe(
-        breakpoint,
-        screenWidth
+        breakpoint as Breakpoint,
+        parseFloat(width.replace('px', ''))
       ),
     }),
   {} as Record<
@@ -82,18 +120,24 @@ const breakpointTests = Array.from(SCREEN_SIZES.entries()).reduce(
 )
 
 const describeEachBreakpoint =
-  (breakpoints: readonly Breakpoint[]) => (block: BreakpointBlock) => {
+  (breakpoints: readonly Breakpoint[]) =>
+  <T extends BreakpointBlock | Options>(
+    blockOrOptions: T,
+    block?: T extends Record<string, unknown> ? BreakpointBlock : undefined
+  ) => {
     Object.entries(breakpointTests).forEach(([bp, describe]) => {
       if (
         breakpoints.includes(
           bp.replace('describe', '').toLowerCase() as Breakpoint
         )
       )
-        describe(block)
+        describe(blockOrOptions, block)
     })
   }
 
-const describeEvery = describeEachBreakpoint(Array.from(SCREEN_SIZES.keys()))
+const describeEvery = describeEachBreakpoint(
+  Object.keys(VIEWPORTS) as Breakpoint[]
+)
 const describeEachDesktop = describeEachBreakpoint(desktopBreakpoints)
 const describeEachMobile = describeEachBreakpoint(mobileBreakpoints)
 

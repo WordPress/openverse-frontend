@@ -4,7 +4,7 @@
     :aria-label="$t('search.search')"
     size="disabled"
     :variant="isIcon ? 'plain' : 'primary'"
-    class="transition-none inline-block rounded-s-none font-semibold text-2xl hover:text-white group-hover:text-white hover:bg-pink group-hover:bg-pink"
+    class="transition-none flex-shrink-0 rounded-s-none font-semibold text-2xl hover:text-white group-hover:text-white group-hover:border-pink hover:bg-pink group-hover:bg-pink focus-visible:ring focus-visible:ring-pink"
     :class="[
       isIcon
         ? 'search-button focus-visible:bg-pink focus-visible:text-white p-[0.5px] ps-[1.5px]'
@@ -25,23 +25,17 @@
   </VButton>
 </template>
 
-<script>
-import { defineComponent, computed } from '@nuxtjs/composition-api'
+<script lang="ts">
+import { defineComponent, computed, PropType } from '@nuxtjs/composition-api'
 
 import { isMinScreen } from '~/composables/use-media-query'
 import { useBrowserIsMobile } from '~/composables/use-browser-detection'
 
 import VIcon from '~/components/VIcon/VIcon.vue'
-
 import VButton from '~/components/VButton.vue'
+import type { FieldSize } from '~/components/VInputField/VInputField.vue'
 
 import searchIcon from '~/assets/icons/search.svg'
-
-/**
- * @typedef Props
- * @property {'small' | 'medium' | 'large' | 'standalone'} size
- * @property {boolean} isHomeRoute
- */
 
 export default defineComponent({
   name: 'VSearchButton',
@@ -49,12 +43,8 @@ export default defineComponent({
   inheritAttrs: false,
   props: {
     size: {
-      type: String,
+      type: String as PropType<FieldSize>,
       required: true,
-      /**
-       * @param {string} v
-       */
-      validator: (v) => ['small', 'medium', 'large', 'standalone'].includes(v),
     },
     isHomeRoute: {
       type: Boolean,
@@ -85,7 +75,7 @@ export default defineComponent({
             small: ['w-10', 'md:w-12', 'h-10', 'md:h-12'],
             medium: ['w-12', 'h-12'],
             large: ['w-14', 'h-14'],
-            standalone: ['w-14', 'md:w-auto', 'h-14', 'md:h-[69px]'],
+            standalone: ['w-14', 'md:w-auto', 'h-full'],
           }[props.size]
         : undefined
     })

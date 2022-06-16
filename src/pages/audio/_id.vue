@@ -1,32 +1,31 @@
 <template>
   <main class="relative">
-    <div class="w-full p-2">
-      <VBackToSearchResultsLink />
+    <div v-if="backToSearchPath" class="w-full p-2">
+      <VBackToSearchResultsLink :path="backToSearchPath" />
     </div>
     <VAudioTrack layout="full" :audio="audio" class="main-track" />
     <div
-      class="mt-10 lg:mt-16 flex flex-col gap-10 lg:gap-16 px-4 lg:px-0 lg:max-w-5xl mx-auto"
+      class="mt-10 lg:mt-16 flex flex-col gap-10 lg:gap-16 px-6 lg:max-w-5xl mx-auto"
     >
-      <VMediaReuse
-        data-testid="audio-attribution"
-        :media="audio"
-        :license-url="licenseUrl"
-        :full-license-name="fullLicenseName"
-        :attribution-html="attributionHtml()"
-      />
+      <VMediaReuse data-testid="audio-attribution" :media="audio" />
       <VAudioDetails data-testid="audio-info" :audio="audio" />
-      <VRelatedAudio v-if="audio.id" :audio-id="audio.id" />
+      <VRelatedAudio
+        v-if="audio.id"
+        :media="relatedMedia"
+        :fetch-state="relatedFetchState"
+      />
     </div>
   </main>
 </template>
 
-<script>
-import { computed } from '@nuxtjs/composition-api'
+<script lang="ts">
+import { computed, defineComponent, useRoute } from '@nuxtjs/composition-api'
 
 import { AUDIO } from '~/constants/media'
-import getAttributionHtml from '~/utils/attribution-html'
-import { getFullLicenseName } from '~/utils/license'
-import { useMediaStore } from '~/stores/media'
+import type { AudioDetail } from '~/models/media'
+import { useRelatedMediaStore } from '~/stores/media/related-media'
+import { useSingleResultStore } from '~/stores/media/single-result'
+import { createDetailPageMeta } from '~/utils/og'
 
 import VAudioDetails from '~/components/VAudioDetails/VAudioDetails.vue'
 import VAudioTrack from '~/components/VAudioTrack/VAudioTrack.vue'
@@ -34,7 +33,7 @@ import VBackToSearchResultsLink from '~/components/VBackToSearchResultsLink.vue'
 import VRelatedAudio from '~/components/VAudioDetails/VRelatedAudio.vue'
 import VMediaReuse from '~/components/VMediaInfo/VMediaReuse.vue'
 
-const AudioDetailPage = {
+export default defineComponent({
   name: 'AudioDetailPage',
   components: {
     VAudioDetails,
@@ -43,44 +42,34 @@ const AudioDetailPage = {
     VMediaReuse,
     VRelatedAudio,
   },
-  data() {
-    return {
-      showBackToSearchLink: false,
+  beforeRouteEnter(to, from, next) {
+    if (from.path.includes('/search/')) {
+      to.meta.backToSearchPath = from.fullPath
     }
+    next()
   },
   setup() {
-    const mediaStore = useMediaStore()
-    const audio = computed(() => mediaStore.state.audio)
+    const route = useRoute()
+    const singleResultStore = useSingleResultStore()
+    const relatedMediaStore = useRelatedMediaStore()
 
-    return { audio }
-  },
-  computed: {
-    fullLicenseName() {
-      return getFullLicenseName(
-        this.audio.license,
-        this.audio.license_version,
-        this.$i18n
-      )
-    },
-    licenseUrl() {
-      return `${this.audio.license_url}?ref=openverse`
-    },
-  },
-  watch: {
-    audio(newAudio) {
-      this.id = newAudio.id
-    },
+    const audio = computed(() =>
+      singleResultStore.mediaType === AUDIO
+        ? (singleResultStore.mediaItem as AudioDetail)
+        : null
+    )
+    const relatedMedia = computed(() => relatedMediaStore.media)
+    const relatedFetchState = computed(() => relatedMediaStore.fetchState)
+    const backToSearchPath = computed(() => route.value.meta?.backToSearchPath)
+
+    return { audio, backToSearchPath, relatedMedia, relatedFetchState }
   },
   async asyncData({ route, error, app, $pinia }) {
+    const audioId = route.params.id
+    const singleResultStore = useSingleResultStore($pinia)
+
     try {
-      const mediaStore = useMediaStore($pinia)
-      await mediaStore.fetchMediaItem({
-        id: route.params.id,
-        mediaType: AUDIO,
-      })
-      return {
-        id: route.params.id,
-      }
+      await singleResultStore.fetch(AUDIO, audioId)
     } catch (err) {
       error({
         statusCode: 404,
@@ -91,38 +80,10 @@ const AudioDetailPage = {
       })
     }
   },
-  beforeRouteEnter(to, from, nextPage) {
-    nextPage((_this) => {
-      if (
-        from.name === _this.localeRoute({ path: '/search/' }).name ||
-        from.name === _this.localeRoute({ path: '/search/audio' }).name
-      ) {
-        _this.showBackToSearchLink = true
-      }
-    })
-  },
-  methods: {
-    attributionHtml() {
-      const licenseUrl = `${this.licenseUrl}&atype=html`
-      return getAttributionHtml(this.audio, licenseUrl, this.fullLicenseName)
-    },
-  },
   head() {
-    const title = this.audio.title
-    return {
-      title: `${title} | Openverse`,
-      meta: [
-        {
-          hid: 'robots',
-          name: 'robots',
-          content: 'noindex',
-        },
-      ],
-    }
+    return createDetailPageMeta(this.audio.title, this.audio.thumbnail)
   },
-}
-
-export default AudioDetailPage
+})
 </script>
 <style>
 .audio-page {

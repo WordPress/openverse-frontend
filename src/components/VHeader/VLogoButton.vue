@@ -11,9 +11,11 @@
       :auto-resize="autoResizeLogo"
     />
     <OpenverseLogoText
-      v-if="!isHeaderScrolled"
-      class="hidden xs:block -ml-1 mt-1 me-3"
-      :class="{ 'md:hidden': isSearchRoute }"
+      v-show="!isHeaderScrolled"
+      class="-ml-1 mt-1 me-3"
+      :class="{
+        'hidden sm:block md:hidden': isSearchRoute,
+      }"
       width="95"
       height="15"
     />
@@ -27,7 +29,7 @@ import VButton from '~/components/VButton.vue'
 
 import OpenverseLogoText from '~/assets/icons/openverse-logo-text.svg?inline'
 
-const VLogoButton = defineComponent({
+export default defineComponent({
   name: 'VLogoButton',
   components: { OpenverseLogoText, VLogoLoader, VButton },
   props: {
@@ -49,5 +51,4 @@ const VLogoButton = defineComponent({
     },
   },
 })
-export default VLogoButton
 </script>

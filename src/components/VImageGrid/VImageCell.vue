@@ -7,6 +7,7 @@
       containerAspect * widthBasis
     }`"
     @click="onGotoDetailPage($event, image)"
+    @keydown.native.shift.tab.exact="$emit('shift-tab', $event)"
   >
     <figure
       class="absolute w-full"
@@ -35,7 +36,7 @@
 </template>
 
 <script>
-import VLicense from '~/components/License/VLicense.vue'
+import VLicense from '~/components/VLicense/VLicense.vue'
 import VLink from '~/components/VLink.vue'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires

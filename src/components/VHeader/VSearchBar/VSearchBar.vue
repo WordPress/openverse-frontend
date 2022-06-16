@@ -8,7 +8,9 @@
       v-bind="$attrs"
       class="flex-grow search-field"
       :class="{ 'border-transparent': isHomeRoute }"
-      label-text="Openverse"
+      :label-text="
+        $t('search.search-bar-label', { openverse: 'Openverse' }).toString()
+      "
       :connection-sides="['end']"
       :size="size"
       field-id="search-bar"
@@ -24,12 +26,15 @@
   </form>
 </template>
 
-<script>
-import { computed, defineComponent } from '@nuxtjs/composition-api'
+<script lang="ts">
+import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
 
 import { useMatchHomeRoute } from '~/composables/use-match-routes'
+import { defineEvent } from '~/types/emits'
 
-import VInputField from '~/components/VInputField/VInputField.vue'
+import VInputField, {
+  FIELD_SIZES,
+} from '~/components/VInputField/VInputField.vue'
 import VSearchButton from '~/components/VHeader/VSearchBar/VSearchButton.vue'
 
 /**
@@ -37,7 +42,7 @@ import VSearchButton from '~/components/VHeader/VSearchBar/VSearchButton.vue'
  * that fires a search request. The loading state and number of hits are also
  * displayed in the bar itself.
  */
-const VSearchBar = defineComponent({
+export default defineComponent({
   name: 'VSearchBar',
   components: { VInputField, VSearchButton },
   inheritAttrs: false,
@@ -50,21 +55,24 @@ const VSearchBar = defineComponent({
       default: '',
     },
     size: {
-      type: String,
+      type: String as PropType<keyof typeof FIELD_SIZES>,
       required: true,
-      validator: (v) => ['small', 'medium', 'large', 'standalone'].includes(v),
     },
     placeholder: {
       type: String,
       required: false,
     },
   },
-  emits: ['input', 'submit'],
+  emits: {
+    input: defineEvent<[string]>(),
+    submit: defineEvent(),
+  },
   setup(props, { emit }) {
     const { matches: isHomeRoute } = useMatchHomeRoute()
 
     const searchText = computed(() => props.value)
-    const updateSearchText = (val) => {
+
+    const updateSearchText = (val: string) => {
       emit('input', val)
     }
 
@@ -80,7 +88,6 @@ const VSearchBar = defineComponent({
     }
   },
 })
-export default VSearchBar
 </script>
 
 <style>

@@ -1,4 +1,5 @@
 import type { SupportedMediaType } from '~/constants/media'
+import type { License, LicenseVersion } from '~/constants/license'
 
 export interface Tag {
   name: string
@@ -12,21 +13,24 @@ export interface Media {
   id: string
   title: string
 
-  creator: string
+  creator?: string
   creator_url?: string
 
   url: string
   foreign_landing_url: string
 
-  license: string
-  license_version: string
-  license_url: string
+  license: License
+  license_version: LicenseVersion
+  license_url?: string
   attribution: string
 
   frontendMediaType: SupportedMediaType
 
+  category: string | null
   provider: string
   source?: string
+  providerName?: string
+  sourceName?: string
   thumbnail?: string
 
   filesize?: string

@@ -1,5 +1,18 @@
 # Playwright tests
 
+## Visual regression and end-to-end tests
+
+We run the Playwright test suite on each PR to test that the front end works correctly and there are no visual regressions.
+
+The **end-to-end** tests make sure that functionality works as expected and are located in `test/playwright/e2e`. They test, for instance, that we can open the filters by clicking on the Filters button in the header, or select the filters and execute the relevant search by clicking on the filter checkboxes.
+
+There are also **visual regression** tests that make sure that the pages display correct components, and components are rendered correctly.
+The components can be tested in isolation to make sure that the states are correctly rendered. For more on which states should be tested, see [`TESTING_GUIDELINES.md`](./TESTING_GUIDELINES.md). These tests should use Storybook to render the component in isolation, and be placed in `test/storybook/visual-regression`.
+
+The component tests that test that the component state is correctly rendered based on the page interaction should be placed in `test/visual-regression/components`. For example, the header elements are tested this way because their appearance depends on the page scroll position.
+
+## Dockerization
+
 Our Playwright test suite runs inside a docker container in order to prevent cross-platform browser differences from creating flaky test behavior. We run both end-to-end and visual-regression tests in the same container to save from having to run the Nuxt production build twice.
 
 Having docker and docker-compose is a pre-requisite to running the playwright tests locally. Please follow [the relevant instructions for your operating system for how to install docker and docker-compose](https://docs.docker.com/get-docker/). If you're on Windows 10 Home Edition, please note that you'll need to [install and run docker inside WSL2](https://www.freecodecamp.org/news/how-to-run-docker-on-windows-10-home-edition/). We strongly recommend (and only plan to support) Windows users run everything inside of WSL.
@@ -43,7 +56,13 @@ The describe blocks are passed the following helpers:
 - `getConfigValues`: Returns useful configuration values if running a snapshot test manually.
 - `expectSnapshot`: A function accepting an identifier and a screenshot-able object. This will generate the screenshot and match it against a snapshot matching the name passed. Remember to `await` this function or else the `expect` will not be fired within the context of the test (you'll get a nasty error in this case).
 
-Please see the [`homepage.spec.ts` visual-regression tests](./visual-regression/homepage.spec.ts) as an example of how to use these helpers.
+Optionally, you may pass a configuration object as the first argument to the `breakpoints.describe*` functions. If you do this, then the describe block is the second argument.
+
+The configuration object currently supports the following options:
+
+- `uaMocking`: This `boolean` option defaults to `true`. When enabled, it will use a mock mobile browser user agent string for narrow viewports. Setting it to `false` for viewport widths above `md` (inclusive) is a no-op.
+
+Please see the [`homepage.spec.ts` visual-regression tests](visual-regression/pages/homepage.spec.ts) as an example of how to use these helpers.
 
 ### What to test for visual regression
 
@@ -66,6 +85,8 @@ If for some reason you find yourself needing to completely recreate the tapes, y
 ## Debugging
 
 Additional debugging may be accomplished in two ways. You may inspect the trace output of failed tests by finding the `trace.zip` for the relevant test in the `test-results` folder. Traces are only saved for failed tests. You can use the [Playwright Trace Viewer](https://playwright.dev/docs/trace-viewer) to inspect these (or open the zip yourself and poke around the files on your own).
+
+For Playwright tests failing in CI, a GitHub comment will appear with a link to download an artifact of the `test-results` folder.
 
 Visual regression tests that fail to match the existing snapshots will also have `expected`, `actual` and `diff` files generated that are helpful for understanding why intermittent failures are happening. These are generated automatically by Playwright and will be placed in the `test-results` folder under the fully qualified name of the test that failed (with every parent describe block included).
 
@@ -96,7 +117,7 @@ Don't be alarmed if you notice this.
 When writing end-to-end tests, it can be helpful to use Playwright [codegen](https://playwright.dev/docs/cli#generate-code) to generate the tests by performing actions in the browser:
 
 ```
-pnpm run generate-playwright-tests
+pnpm run test:playwright:gen
 ```
 
 This will open the app in a new browser window, and record any actions you take in a format that can be used in end-to-end tests.

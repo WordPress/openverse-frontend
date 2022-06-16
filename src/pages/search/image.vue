@@ -4,18 +4,25 @@
     :can-load-more="canLoadMore"
     :fetch-state="fetchState"
     @load-more="onLoadMore"
+    @shift-tab="handleShiftTab"
   />
 </template>
 
-<script>
-import { computed, defineComponent, useMeta } from '@nuxtjs/composition-api'
+<script lang="ts">
+import {
+  computed,
+  defineComponent,
+  toRef,
+  useMeta,
+} from '@nuxtjs/composition-api'
 
 import { propTypes } from '~/pages/search/search-page.types'
 import { useLoadMore } from '~/composables/use-load-more'
+import { useFocusFilters } from '~/composables/use-focus-filters'
 
 import VImageGrid from '~/components/VImageGrid/VImageGrid.vue'
 
-const ImageSearch = defineComponent({
+export default defineComponent({
   name: 'ImageSearch',
   components: { VImageGrid },
   props: propTypes,
@@ -23,11 +30,17 @@ const ImageSearch = defineComponent({
     useMeta({ title: `${props.searchTerm} | Openverse` })
 
     const results = computed(() => props.resultItems.image)
-    const { canLoadMore, onLoadMore } = useLoadMore(props)
-    return { canLoadMore, onLoadMore, results }
+
+    const searchTermRef = toRef(props, 'searchTerm')
+    const { canLoadMore, onLoadMore } = useLoadMore(searchTermRef)
+
+    const focusFilters = useFocusFilters()
+    const handleShiftTab = () => {
+      focusFilters.focusFilterSidebar()
+    }
+
+    return { canLoadMore, onLoadMore, handleShiftTab, results }
   },
   head: {},
 })
-
-export default ImageSearch
 </script>

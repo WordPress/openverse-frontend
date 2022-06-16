@@ -3,7 +3,7 @@
     class="flex flex-row font-semibold py-2 text-sr md:text-base"
     :class="[
       sizeClasses,
-      showLabel ? 'max-w-[10rem] sm:max-w-[20rem] md:max-w-[16rem]' : '',
+      isHeaderScrolled ? 'max-w-[10rem] sm:max-w-[20rem] md:max-w-[16rem]' : '',
     ]"
     :variant="buttonVariant"
     size="disabled"
@@ -13,9 +13,8 @@
   >
     <VIcon :icon-path="icon" />
     <span
-      v-show="showLabel"
-      class="hidden xs:block"
-      :class="{ 'ms-2 truncate text-left': showLabel }"
+      class="md:block md:ms-2 md:truncate md:text-left"
+      :class="isHeaderScrolled ? 'hidden' : 'block ms-2 truncate text-left'"
       >{{ buttonLabel }}</span
     >
     <VIcon
@@ -24,18 +23,19 @@
     />
   </VButton>
 </template>
-<script>
+<script lang="ts">
 import {
   computed,
   defineComponent,
   inject,
-  useContext,
+  PropType,
+  ref,
 } from '@nuxtjs/composition-api'
 
-import { ALL_MEDIA } from '~/constants/media'
+import { ALL_MEDIA, SearchType } from '~/constants/media'
 import useSearchType from '~/composables/use-search-type'
+import { useI18n } from '~/composables/use-i18n'
 import { isMinScreen } from '~/composables/use-media-query'
-import { isValidSearchType } from '~/utils/prop-validators'
 
 import VIcon from '~/components/VIcon/VIcon.vue'
 import VButton from '~/components/VButton.vue'
@@ -51,19 +51,17 @@ export default defineComponent({
       required: true,
     },
     activeItem: {
-      type: String,
+      type: String as PropType<SearchType>,
       default: ALL_MEDIA,
-      validator: isValidSearchType,
     },
     type: {
-      type: String,
+      type: String as PropType<'header' | 'searchbar'>,
       default: 'header',
-      validator: (v) => ['header', 'searchbar'].includes(v),
     },
   },
   setup(props) {
-    const { i18n } = useContext()
-    const isHeaderScrolled = inject('isHeaderScrolled', null)
+    const i18n = useI18n()
+    const isHeaderScrolled = inject('isHeaderScrolled', ref(null))
     const isMinScreenMd = isMinScreen('md', { shouldPassInSSR: true })
 
     const { icons, activeType: activeItem } = useSearchType()
@@ -94,25 +92,14 @@ export default defineComponent({
       }
     })
     const buttonLabel = computed(() => {
-      const labelKey = {
-        image: 'search-type.image',
-        audio: 'search-type.audio',
-        all: 'search-type.all',
-        video: 'search-type.video',
-        model_3d: 'search-type.model_3d',
-      }[props.activeItem]
-      return i18n.t(labelKey)
+      return i18n.t(`search-type.${props.activeItem}`)
     })
-    const showLabel = computed(
-      () => isMinScreenMd.value || !isHeaderScrolled?.value
-    )
 
     return {
       buttonVariant,
       sizeClasses,
       buttonLabel,
       caretDownIcon,
-      showLabel,
       isHeaderScrolled,
       isMinScreenMd,
       icon: computed(() => icons[activeItem.value]),

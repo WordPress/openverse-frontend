@@ -12,6 +12,7 @@ import {
 } from '~/constants/media'
 
 import { useSearchStore } from '~/stores/search'
+import { useFeatureFlagStore } from '~/stores/feature-flag'
 
 describe('Search Store', () => {
   beforeEach(() => {
@@ -70,6 +71,9 @@ describe('Search Store', () => {
     `(
       'mediaFiltersForDisplay returns $filterTypeCount filters for $searchType',
       ({ searchType, filterTypeCount }) => {
+        const featureFlagStore = useFeatureFlagStore()
+        featureFlagStore.toggleFeature('external_sources', 'on')
+
         const searchStore = useSearchStore()
         searchStore.setSearchType(searchType)
         const filtersForDisplay = searchStore.searchFilters
@@ -250,7 +254,7 @@ describe('Search Store', () => {
     it('toggleFilter updates isFilterApplied with provider', () => {
       const searchStore = useSearchStore()
       searchStore.setSearchType(IMAGE)
-      searchStore.initProviderFilters({
+      searchStore.updateProviderFilters({
         mediaType: IMAGE,
         providers: [{ source_name: 'met', display_name: 'Met' }],
       })
@@ -267,7 +271,7 @@ describe('Search Store', () => {
       expect(searchStore.isAnyFilterApplied).toEqual(true)
     })
 
-    it('initProviderFilters merges with existing provider filters', () => {
+    it('updateProviderFilters merges with existing provider filters', () => {
       const searchStore = useSearchStore()
       const existingProviderFilters = [{ code: 'met', checked: true }]
 
@@ -279,7 +283,7 @@ describe('Search Store', () => {
         { source_name: 'flickr', display_name: 'Flickr' },
       ]
 
-      searchStore.initProviderFilters({
+      searchStore.updateProviderFilters({
         mediaType: 'image',
         providers: providers,
       })
@@ -382,7 +386,7 @@ describe('Search Store', () => {
     it.each`
       searchType   | nextSearchType | expectedFilterCount
       ${AUDIO}     | ${IMAGE}       | ${25}
-      ${IMAGE}     | ${ALL_MEDIA}   | ${37}
+      ${IMAGE}     | ${ALL_MEDIA}   | ${12}
       ${ALL_MEDIA} | ${VIDEO}       | ${12}
       ${VIDEO}     | ${AUDIO}       | ${24}
       ${ALL_MEDIA} | ${IMAGE}       | ${25}
@@ -391,6 +395,10 @@ describe('Search Store', () => {
       async ({ searchType, nextSearchType, expectedFilterCount }) => {
         const searchStore = useSearchStore()
         searchStore.setSearchType(searchType)
+
+        const featureFlagStore = useFeatureFlagStore()
+        featureFlagStore.toggleFeature('external_sources', 'on')
+
         // Set all filters to checked
         for (let ft in searchStore.filters) {
           for (let f of searchStore.filters[ft]) {
@@ -409,40 +417,10 @@ describe('Search Store', () => {
       }
     )
 
-    /**
-     * Changing the search type to ALL_MEDIA does not fire the watcher that clears the filters
-     * in tests, but does fire it in the app. TODO: Figure out why???
-     */
-    it.each`
-      searchType   | nextSearchType | expectedFilterCount
-      ${AUDIO}     | ${ALL_MEDIA}   | ${37}
-      ${IMAGE}     | ${ALL_MEDIA}   | ${37}
-      ${ALL_MEDIA} | ${ALL_MEDIA}   | ${37}
-      ${VIDEO}     | ${ALL_MEDIA}   | ${37}
-    `(
-      'changing searchType clears all but $expectedFilterCount ALL_MEDIA filters',
-      async ({ searchType, nextSearchType, expectedFilterCount }) => {
-        const searchStore = useSearchStore()
-        searchStore.setSearchType(searchType)
-        // Set all filters to checked
-        for (let [fc, filter_items] of Object.entries(searchStore.filters)) {
-          for (let f of filter_items) {
-            searchStore.toggleFilter({ filterType: fc, code: f.code })
-          }
-        }
-        searchStore.setSearchType(nextSearchType)
-        const checkedFilterCount = Object.keys(searchStore.filters)
-          .map(
-            (key) => searchStore.filters[key].filter((f) => f.checked).length
-          )
-          .reduce((partialSum, count) => partialSum + count, 0)
-
-        expect(checkedFilterCount).toEqual(expectedFilterCount)
-      }
-    )
-
     it('Does not set filter or count filter as applied, and does not raise error for unsupported search types', () => {
       const searchStore = useSearchStore()
+      const featureFlagStore = useFeatureFlagStore()
+      featureFlagStore.toggleFeature('external_sources', 'on')
       searchStore.toggleFilter({
         filterType: 'licenseTypes',
         code: 'commercial',

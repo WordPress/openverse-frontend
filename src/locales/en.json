@@ -94,8 +94,8 @@
     "cc-content": {
       "where": "Where does the content on {openverse} come from?",
       "content": "There is openly licensed content hosted on millions of domains across the breadth of the internet. Our team systematically identifies providers hosting CC-licensed content. If it’s a good fit, we index that content and make it discoverable through {openverse}.",
-      "provider": "Some providers have multiple different groupings of content within them. {flickr} has sources ranging from NASA to personal photography. The {smithsonian} comprises a dozen, diverse collections. Wikimedia Commons runs the gamut in terms of content, and is used by several Galleries, Libraries, Archives, and Museums highlighting some or all of their digitized collections.",
-      "europeana": "{openverse} is especially grateful for the work of {link}, an organization that works to digitize and make discoverable cultural heritage works across Europe. {openverse} is able to index hundreds of valuable sources, through a single integration with the {link-api}.",
+      "provider": "Some providers have multiple different groupings of content within them. {flickr} has sources ranging from NASA to personal photography. The {smithsonian} comprises a dozen diverse collections. Wikimedia Commons runs the gamut in terms of content, and is used by several Galleries, Libraries, Archives, and Museums highlighting some or all of their digitized collections.",
+      "europeana": "{openverse} is especially grateful for the work of {link}, an organization that works to digitize and make discoverable cultural heritage works across Europe. {openverse} is able to index hundreds of valuable sources through a single integration with the {link-api}.",
       "europeana-api": "Europeana API",
       "smithsonian": "Smithsonian Institute"
     },
@@ -108,7 +108,11 @@
     },
     "suggestions": "We appreciate suggestions for new sources from our community of users.",
     "issue-button": "Suggest a new source",
-    "aria": { "table": "sources table" }
+    "aria": { "table": "sources table" },
+    "heading": {
+      "image": "Image Sources",
+      "audio": "Audio Sources"
+    }
   },
   "additional-sources-page": {
     "title": "Additional Sources",
@@ -377,7 +381,7 @@
       "image": "images",
       "audio": "audio",
       "video": "videos",
-      "model_3d": "3D Models",
+      "model-3d": "3D Models",
       "all": "content",
       "collection-placeholder": "Search this collection",
       "button": "Search"
@@ -388,9 +392,9 @@
       "nc": "Noncommercial uses only.",
       "nd": "No derivatives or adaptations permitted.",
       "sa": "Share adaptations under the same terms.",
-      "cc0": "This work has been marked as dedicated to the public domain.",
-      "pdm": "This work is marked as being in the public domain.",
-      "sampling+": "Samples, mash-ups, creative transformations permitted."
+      "zero": "This work has been marked as dedicated to the public domain.",
+      "pd": "This work is marked as being in the public domain.",
+      "sampling-plus": "Samples, mash-ups, creative transformations permitted."
     },
     "aria": {
       "close": "close",
@@ -417,13 +421,15 @@
         "link": "here"
       },
       "credit": {
-        "text": "\"{title}\"{creator}{marked-licensed}{license}{view-legal}",
-        "creator-text": " by {creator-name}",
+        "generic-title": "This work",
+        "actual-title": "\"{title}\"",
+        "text": "{title} {creator} {marked-licensed} {license}. {view-legal}",
+        "creator-text": "by {creator-name}",
         "marked": "is marked with",
         "licensed": "is licensed under",
-        "view-legal-text": ". To view {terms-copy}visit {URL}",
-        "terms-text": "the terms,",
-        "copy-text": "a copy of this license,"
+        "view-legal-text": "To view {terms-copy}, visit {url}.",
+        "terms-text": "the terms",
+        "copy-text": "a copy of this license"
       },
       "copy-license": {
         "title": "Credit the creator",
@@ -533,7 +539,19 @@
       "unsupported-title": "{openverse} does not yet support built-in {type} search.",
       "supported-title": "Not finding what you're looking for? Try additional {type} sources.",
       "no-results-title": "No {type} results for \"{query}\".",
-      "caption": "Click on a source below to directly search other collections of CC-licensed {type}.{break}Please note that Use filters are not supported for {filter}."
+      "caption": "Click on a source below to directly search other collections of CC-licensed {type}.",
+      "types": {
+        "image": "image",
+        "audio": "audio",
+        "video": "video",
+        "model-3d": "3D model"
+      },
+      "types-plural": {
+        "image": "images",
+        "audio": "audios",
+        "video": "videos",
+        "model-3d": "3D models"
+      }
     }
   },
   "browsers": {
@@ -550,7 +568,8 @@
     "alt": "Cover art for \"{title}\" by {creator}"
   },
   "audio-track": {
-    "aria-label": "Audio Player",
+    "aria-label": "{title} - Audio Player",
+    "aria-label-interactive": "{title} - audio player - press the spacebar to play and pause a preview of the audio",
     "messages": {
       "blink_seek_disabled": "Seeking for Jamendo tracks is limited to Firefox and Safari.",
       "err_aborted": "You aborted playback.",
@@ -564,10 +583,12 @@
   "play-pause": {
     "play": "Play",
     "pause": "Pause",
-    "replay": "Replay"
+    "replay": "Replay",
+    "loading": "Loading"
   },
   "search": {
-    "search": "Search"
+    "search": "Search",
+    "search-bar-label": "Search for content in {openverse}"
   },
   "license-readable-names": {
     "cc0": "Zero",
@@ -599,7 +620,8 @@
   },
   "interpunct": "•",
   "modal": {
-    "close": "Close"
+    "close": "Close",
+    "close-named": "Close {name}"
   },
   "error-images": {
     "depressed-musician": "A depressed pianist rests their head in their hands.",
@@ -617,7 +639,7 @@
     "audio": "Audio",
     "all": "All content",
     "video": "Videos",
-    "model_3d": "3D Models",
+    "model-3d": "3D Models",
     "label": "Type of content to search",
     "heading": "Content types",
     "additional": "Additional sources",
@@ -625,5 +647,25 @@
     "see-image": "See all images",
     "see-audio": "See all audio"
   },
-  "skip-to-content": "Skip to content"
+  "skip-to-content": "Skip to content",
+  "pref-page": {
+    "title": "Preferences",
+    "non-switchable": {
+      "title": "Non-switchable features",
+      "desc": "You cannot modify the status of these features."
+    },
+    "switchable": {
+      "title": "Switchable features",
+      "desc": "You can toggle these features on or off as you like and your preferences will be saved in a cookie."
+    },
+    "store-state": "Store state",
+    "content-filtering": "Content filtering",
+    "explanation": "Shown because {feat-name} is {feat-state}"
+  },
+  "sketchfab-iframe-title": "{sketchfab} viewer",
+  "flag-status": {
+    "nonexistent": "Nonexistent",
+    "on": "On",
+    "off": "Off"
+  }
 }

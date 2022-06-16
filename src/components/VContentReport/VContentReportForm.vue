@@ -1,6 +1,6 @@
 <template>
   <div id="content-report-form" class="w-80 p-6">
-    <div v-if="status === statuses.SENT">
+    <div v-if="status === SENT">
       <p class="font-semibold text-2xl mb-4">
         {{ $t('media-details.content-report.success.title') }}
       </p>
@@ -17,7 +17,7 @@
       </i18n>
     </div>
 
-    <div v-else-if="status === statuses.FAILED">
+    <div v-else-if="status === FAILED">
       <p class="font-semibold text-2xl mb-4">
         {{ $t('media-details.content-report.failure.title') }}
       </p>
@@ -40,7 +40,7 @@
         }}
       </p>
 
-      <form class="text-sm">
+      <form class="text-sm" @submit="handleSubmit">
         <fieldset class="flex flex-col">
           <legend class="font-semibold mb-4">
             {{ $t('media-details.content-report.form.question') }}
@@ -60,16 +60,16 @@
 
         <div class="mb-4 min-h-[7rem]">
           <VDmcaNotice
-            v-if="media.foreign_landing_url && selectedReason === reasons.DMCA"
+            v-if="media.foreign_landing_url && selectedReason === DMCA"
             :provider="providerName"
             :foreign-landing-url="media.foreign_landing_url"
           />
           <VReportDescForm
-            v-if="selectedReason !== reasons.DMCA"
+            v-if="selectedReason !== DMCA"
             key="other"
             v-model="description"
             :reason="selectedReason"
-            :is-required="selectedReason === reasons.OTHER"
+            :is-required="selectedReason === OTHER"
           />
         </div>
 
@@ -79,7 +79,7 @@
           </VButton>
 
           <VButton
-            v-if="selectedReason === reasons.DMCA"
+            v-if="selectedReason === DMCA"
             key="dmca"
             as="VLink"
             variant="secondary"
@@ -93,10 +93,11 @@
           <VButton
             v-else
             key="non-dmca"
+            type="submit"
             :disabled="isSubmitDisabled"
             :focusable-when-disabled="true"
             variant="secondary"
-            @click="handleSubmit"
+            :value="$t('media-details.content-report.form.submit')"
           >
             {{ $t('media-details.content-report.form.submit') }}
           </VButton>
@@ -111,7 +112,15 @@ import { computed, defineComponent, ref } from '@nuxtjs/composition-api'
 
 import ReportService from '~/data/report-service'
 
-import { reasons, statuses, DMCA_FORM_URL } from '~/constants/content-report'
+import {
+  reasons,
+  DMCA,
+  OTHER,
+  SENT,
+  FAILED,
+  WIP,
+  DMCA_FORM_URL,
+} from '~/constants/content-report'
 
 import VButton from '~/components/VButton.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'
@@ -143,10 +152,10 @@ export default defineComponent({
     const description = ref('')
 
     /** @type {import('@nuxtjs/composition-api').Ref<string|null>} */
-    const status = ref(statuses.WIP)
+    const status = ref(WIP)
 
     /** @type {import('@nuxtjs/composition-api').Ref<string|null>} */
-    const selectedReason = ref(reasons.DMCA)
+    const selectedReason = ref(DMCA)
 
     /* Buttons */
     const handleCancel = () => {
@@ -156,21 +165,22 @@ export default defineComponent({
     }
 
     const isSubmitDisabled = computed(
-      () =>
-        selectedReason.value === reasons.OTHER && description.value.length < 20
+      () => selectedReason.value === OTHER && description.value.length < 20
     )
-    const handleSubmit = async () => {
-      if (selectedReason.value === reasons.DMCA) return
+    const handleSubmit = async (event) => {
+      event.preventDefault()
+      if (selectedReason.value === DMCA) return
       // Submit report
       try {
         await service.sendReport({
+          mediaType: props.media.frontendMediaType,
           identifier: props.media.id,
           reason: selectedReason.value,
           description: description.value,
         })
-        status.value = statuses.SENT
+        status.value = SENT
       } catch (error) {
-        status.value = statuses.FAILED
+        status.value = FAILED
       }
     }
 
@@ -179,7 +189,10 @@ export default defineComponent({
         externalLink: externalLinkIcon,
       },
       reasons,
-      statuses,
+      DMCA,
+      OTHER,
+      SENT,
+      FAILED,
       DMCA_FORM_URL,
 
       selectedReason,

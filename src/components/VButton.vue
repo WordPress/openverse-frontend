@@ -6,8 +6,10 @@
     :class="[
       $style.button,
       $style[variant],
+      isConnected && $style[`connection-${connections}`],
       isActive && $style[`${variant}-pressed`],
       $style[`size-${size}`],
+      isPlainDangerous ? '' : 'focus-visible:ring focus-visible:ring-pink',
     ]"
     :aria-pressed="pressed"
     :aria-disabled="ariaDisabledRef"
@@ -22,18 +24,52 @@
   </Component>
 </template>
 
-<script>
+<script lang="ts">
 import {
   defineComponent,
   ref,
   watch,
   toRefs,
   computed,
+  PropType,
 } from '@nuxtjs/composition-api'
 
 import { warn } from '~/utils/console'
 
+import type { ProperlyExtractPropTypes } from '~/types/prop-extraction'
+
 import VLink from '~/components/VLink.vue'
+
+export const buttonForms = ['VLink', 'button'] as const
+
+type ButtonForm = typeof buttonForms[number]
+
+export const buttonVariants = [
+  'primary',
+  'secondary',
+  'tertiary',
+  'action-menu',
+  'action-menu-secondary',
+  'action-menu-muted',
+  'action-menu-muted-pressed',
+  'plain',
+  'plain-dangerous',
+  'full',
+] as const
+export type ButtonVariant = typeof buttonVariants[number]
+
+export const buttonSizes = ['large', 'medium', 'small', 'disabled'] as const
+export type ButtonSize = typeof buttonSizes[number]
+
+export const buttonTypes = ['button', 'submit', 'reset'] as const
+export type ButtonType = typeof buttonTypes[number]
+
+export const buttonConnections = ['start', 'end', 'none', 'all'] as const
+export type ButtonConnections = typeof buttonConnections[number]
+
+export type ButtonProps = ProperlyExtractPropTypes<
+  NonNullable<typeof VButton['props']>
+>
 
 /**
  * A button component that behaves just like a regular HTML `button` element
@@ -65,11 +101,9 @@ const VButton = defineComponent({
      * @default 'button'
      */
     as: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<'VLink' | 'button'>} */ (
-        String
-      ),
+      type: String as PropType<ButtonForm>,
       default: 'button',
-      validate: (v) => ['VLink', 'button'].includes(v),
+      validate: (val: ButtonForm) => buttonForms.includes(val),
     },
     /**
      * The variant of the button.
@@ -80,21 +114,8 @@ const VButton = defineComponent({
      * @default 'primary'
      */
     variant: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<'primary' | 'secondary' | 'tertiary' | 'action-menu' | 'action-menu-muted' | 'plain' | 'plain-dangerous'>} */ (
-        String
-      ),
+      type: String as PropType<ButtonVariant>,
       default: 'primary',
-      validate: (v) =>
-        [
-          'primary',
-          'secondary',
-          'tertiary',
-          'action-menu',
-          'action-menu-secondary',
-          'action-menu-muted',
-          'plain',
-          'plain-dangerous',
-        ].includes(v),
     },
     /**
      * Allows for programmatically setting the pressed state of a button,
@@ -113,11 +134,8 @@ const VButton = defineComponent({
      * @default 'medium'
      */
     size: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<'large' | 'medium' | 'small' | 'disabled'>} */ (
-        String
-      ),
+      type: String as PropType<ButtonSize>,
       default: 'medium',
-      validate: (v) => ['large', 'medium', 'small', 'disabled'].includes(v),
     },
     /**
      * Whether the button is disabled. Used alone this will only
@@ -149,24 +167,32 @@ const VButton = defineComponent({
      * @default 'button'
      */
     type: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<'buton' | 'submit' | 'reset'>} */ (
-        String
-      ),
+      type: String as PropType<ButtonType>,
       default: 'button',
-      validate: (v) => ['button', 'submit', 'reset'].includes(v),
+    },
+    /**
+     * Whether the button is connected to another control and needs to have no rounded
+     * borders at that edge.
+     * `all` means that the button is not rounded.
+     *
+     * @default 'none'
+     */
+    connections: {
+      type: String as PropType<ButtonConnections>,
+      default: 'none',
     },
   },
-  /**
-   * @param {Props} props
-   * @param {import('@nuxtjs/composition-api').SetupContext}
-   */
   setup(props, { attrs }) {
     const propsRef = toRefs(props)
-    const disabledAttributeRef = ref(propsRef.disabled.value)
-    const ariaDisabledRef = ref()
-    const trulyDisabledRef = ref()
-    const typeRef = ref(propsRef.type.value)
+    const disabledAttributeRef = ref<boolean | undefined>(
+      propsRef.disabled.value
+    )
+    const ariaDisabledRef = ref<boolean>()
+    const trulyDisabledRef = ref<boolean>()
+    const typeRef = ref<ButtonType | undefined>(propsRef.type.value)
     const supportsDisabledAttributeRef = ref(true)
+
+    const isConnected = computed(() => props.connections !== 'none')
 
     const isActive = computed(() => {
       return (
@@ -175,6 +201,11 @@ const VButton = defineComponent({
         attrs['aria-expanded']
       )
     })
+
+    const isPlainDangerous = computed(() => {
+      return propsRef.variant.value === 'plain-dangerous'
+    })
+
     watch(
       [propsRef.disabled, propsRef.focusableWhenDisabled],
       ([disabled, focusableWhenDisabled]) => {
@@ -220,6 +251,8 @@ const VButton = defineComponent({
       ariaDisabledRef,
       typeRef,
       isActive,
+      isConnected,
+      isPlainDangerous,
     }
   },
 })
@@ -228,12 +261,6 @@ export default VButton
 </script>
 
 <style module>
-/**
- * Classnames in this file are duplicated to increase specificity.
- * This is currently necessary due to a bug with the order of CSS files
- * that only appears in development.
- */
-
 .button[disabled='disabled'],
 .button[aria-disabled='true'] {
   @apply opacity-50;
@@ -256,7 +283,7 @@ a.button {
 }
 
 .primary {
-  @apply bg-pink text-white focus-visible:ring focus-visible:ring-pink hover:bg-dark-pink hover:text-white;
+  @apply bg-pink text-white  hover:bg-dark-pink hover:text-white;
 }
 
 .primary-pressed {
@@ -264,7 +291,7 @@ a.button {
 }
 
 .secondary {
-  @apply bg-dark-charcoal text-white font-bold focus-visible:ring focus-visible:ring-pink hover:bg-dark-charcoal-80 hover:text-white;
+  @apply bg-dark-charcoal text-white font-bold hover:bg-dark-charcoal-80 hover:text-white;
 }
 
 .secondary-pressed {
@@ -272,7 +299,14 @@ a.button {
 }
 
 .tertiary {
-  @apply bg-white text-dark-charcoal border border-dark-charcoal-20 focus-visible:border-tx focus-visible:ring focus-visible:ring-pink ring-offset-0;
+  @apply bg-white text-dark-charcoal border border-dark-charcoal-20 focus-visible:border-tx ring-offset-0;
+}
+
+.tertiary[disabled='disabled'],
+.tertiary[aria-disabled='true'],
+.action-menu[disabled='disabled'],
+.action-menu[aria-disabled='true'] {
+  @apply bg-dark-charcoal-10 border-dark-charcoal-10;
 }
 
 .tertiary-pressed {
@@ -280,11 +314,11 @@ a.button {
 }
 
 .action-menu {
-  @apply bg-white text-dark-charcoal border border-tx hover:border-dark-charcoal-20 focus-visible:ring focus-visible:ring-pink;
+  @apply bg-tx text-dark-charcoal border border-tx hover:border-dark-charcoal-20;
 }
 
 .action-menu-secondary {
-  @apply bg-white text-dark-charcoal border border-tx hover:border-dark-charcoal-20 focus-visible:ring focus-visible:ring-pink;
+  @apply bg-white text-dark-charcoal border border-tx hover:border-dark-charcoal-20;
 }
 
 .action-menu-secondary-pressed {
@@ -296,22 +330,28 @@ a.button {
 }
 
 .action-menu-muted {
-  @apply bg-dark-charcoal-10 text-dark-charcoal border border-tx hover:border-dark-charcoal-20 focus-visible:ring focus-visible:ring-pink;
+  @apply bg-dark-charcoal-10 text-dark-charcoal border border-tx hover:border-dark-charcoal-20;
 }
 
 .action-menu-muted-pressed {
-  @apply border border-tx bg-dark-charcoal text-white focus-visible:ring focus-visible:ring-pink;
+  @apply border border-tx bg-dark-charcoal text-white;
 }
 
 .full {
-  @apply w-full font-semibold bg-dark-charcoal-06 focus-visible:ring focus-visible:ring-pink hover:bg-dark-charcoal-40 hover:text-white;
+  @apply w-full font-semibold bg-dark-charcoal-06 hover:bg-dark-charcoal-40 hover:text-white;
 }
 
 .full-pressed {
   @apply w-full font-semibold bg-dark-charcoal-06 text-dark-charcoal;
 }
 
-.plain {
-  @apply focus-visible:ring focus-visible:ring-pink;
+.connection-start {
+  @apply rounded-s-none;
+}
+.connection-end {
+  @apply rounded-e-none;
+}
+.connection-all {
+  @apply rounded-none;
 }
 </style>

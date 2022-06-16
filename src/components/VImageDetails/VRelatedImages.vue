@@ -3,51 +3,36 @@
     <h3 class="text-2xl md:text-3xl mb-6">
       {{ $t('image-details.related-images') }}
     </h3>
+    <VLoadingIcon v-if="fetchState.isFetching" />
     <VImageGrid
-      :images="images"
-      :can-load-more="false"
-      :fetch-state="{
-        isFetching: $fetchState.pending,
-        fetchingError: $fetchState.error,
-      }"
+      :images="media"
+      :show-load-more="false"
+      :fetch-state="fetchState"
     />
   </aside>
 </template>
 
-<script>
-import { ref } from '@nuxtjs/composition-api'
+<script lang="ts">
+import { defineComponent, PropType } from '@nuxtjs/composition-api'
 
-import useRelated from '~/composables/use-related'
-import { IMAGE } from '~/constants/media'
+import type { ImageDetail } from '~/models/media'
+import type { FetchState } from '~/composables/use-fetch-state'
 
 import VImageGrid from '~/components/VImageGrid/VImageGrid.vue'
+import VLoadingIcon from '~/components/LoadingIcon.vue'
 
-export default {
+export default defineComponent({
   name: 'VRelatedImages',
-  components: { VImageGrid },
+  components: { VImageGrid, VLoadingIcon },
   props: {
-    imageId: {
-      type: String,
+    media: {
+      type: Array as PropType<ImageDetail[]>,
       required: true,
     },
-    service: {},
+    fetchState: {
+      type: Object as PropType<FetchState>,
+      required: true,
+    },
   },
-  setup(props) {
-    const mainImageId = ref(props.imageId)
-    const relatedOptions = {
-      mediaType: IMAGE,
-      mediaId: mainImageId,
-    }
-    // Using service prop to be able to mock when testing
-    if (props.service) {
-      relatedOptions.service = props.service
-    }
-    /**
-     * Fetches related images on `imageId` change.
-     */
-    const { media: images } = useRelated(relatedOptions)
-
-    return { images }
-  },
-}
+})
 </script>

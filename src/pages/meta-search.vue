@@ -5,7 +5,6 @@
     </h1>
 
     <i18n path="additional-sources-page.intro" tag="p">
-      <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
       <template #openverse>Openverse</template>
       <template #link>
         <VLink href="/sources">{{ $t('additional-sources-page.link') }}</VLink>
@@ -74,9 +73,7 @@
     </h2>
     <p>
       {{
-        $t('additional-sources-page.audio-video.content', {
-          openverse: 'Openverse',
-        })
+        $t('meta-search-page.audio-video.content', { openverse: 'Openverse' })
       }}
     </p>
     <i18n path="additional-sources-page.audio-video.filter" tag="p">

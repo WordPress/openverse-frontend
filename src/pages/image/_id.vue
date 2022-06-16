@@ -1,11 +1,11 @@
 <template>
   <div>
-    <figure class="w-full mb-4 pt-8 md:pt-12 px-6 bg-dark-charcoal-06 relative">
+    <figure class="w-full mb-4 pt-12 px-6 bg-dark-charcoal-06 relative">
       <div
-        v-if="showBackToSearchLink"
-        class="absolute left-0 top-0 right-0 z-40 w-full px-2"
+        v-if="backToSearchPath"
+        class="absolute left-0 top-0 right-0 w-full px-2"
       >
-        <VBackToSearchResultsLink />
+        <VBackToSearchResultsLink :path="backToSearchPath" />
       </div>
 
       <img
@@ -13,10 +13,12 @@
         id="main-image"
         :src="isLoadingFullImage ? image.thumbnail : image.url"
         :alt="image.title"
-        class="h-full max-h-[500px] mx-auto rounded-t-sm"
+        class="h-full w-full max-h-[500px] mx-auto rounded-t-sm object-contain"
+        :width="imageWidth"
+        :height="imageHeight"
         @load="onImageLoaded"
       />
-      <SketchFabViewer
+      <VSketchFabViewer
         v-if="sketchFabUid"
         :uid="sketchFabUid"
         class="mx-auto rounded-t-sm"
@@ -69,150 +71,148 @@
       :image-height="imageHeight"
       :image-type="imageType"
     />
-    <VRelatedImages :image-id="imageId" />
+    <VRelatedImages :media="relatedMedia" :fetch-state="relatedFetchState" />
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import axios from 'axios'
 
-import { computed } from '@nuxtjs/composition-api'
+import {
+  computed,
+  defineComponent,
+  ref,
+  useRoute,
+} from '@nuxtjs/composition-api'
 
 import { IMAGE } from '~/constants/media'
-import { useMediaStore } from '~/stores/media'
+import { useSingleResultStore } from '~/stores/media/single-result'
+import { useRelatedMediaStore } from '~/stores/media/related-media'
+import type { ImageDetail } from '~/models/media'
+import { createDetailPageMeta } from '~/utils/og'
 
 import VButton from '~/components/VButton.vue'
-import VIcon from '~/components/VIcon/VIcon.vue'
 import VLink from '~/components/VLink.vue'
 import VImageDetails from '~/components/VImageDetails/VImageDetails.vue'
 import VMediaReuse from '~/components/VMediaInfo/VMediaReuse.vue'
 import VRelatedImages from '~/components/VImageDetails/VRelatedImages.vue'
-import SketchFabViewer from '~/components/SketchFabViewer.vue'
+import VSketchFabViewer from '~/components/VSketchFabViewer.vue'
 import VBackToSearchResultsLink from '~/components/VBackToSearchResultsLink.vue'
 
-const VImageDetailsPage = {
+export default defineComponent({
   name: 'VImageDetailsPage',
   components: {
     VButton,
-    VIcon,
     VLink,
     VImageDetails,
     VMediaReuse,
     VRelatedImages,
-    SketchFabViewer,
+    VSketchFabViewer,
     VBackToSearchResultsLink,
   },
-  data() {
-    return {
-      imageWidth: 0,
-      imageHeight: 0,
-      imageType: 'Unknown',
-      isLoadingFullImage: true,
-      showBackToSearchLink: false,
-      sketchFabfailure: false,
+  beforeRouteEnter(to, from, next) {
+    if (from.path.includes('/search/')) {
+      to.meta.backToSearchPath = from.fullPath
     }
+    next()
   },
   setup() {
-    const mediaStore = useMediaStore()
-    const image = computed(() => mediaStore.state.image)
-    return { image }
-  },
-  computed: {
-    sketchFabUid() {
-      if (this.image?.source !== 'sketchfab' || this.sketchFabfailure) {
+    const route = useRoute()
+
+    const singleResultStore = useSingleResultStore()
+    const relatedMediaStore = useRelatedMediaStore()
+    const image = computed(() =>
+      singleResultStore.mediaType === IMAGE
+        ? (singleResultStore.mediaItem as ImageDetail)
+        : null
+    )
+
+    const backToSearchPath = computed(() => route.value.meta?.backToSearchPath)
+    const relatedMedia = computed(() => relatedMediaStore.media)
+    const relatedFetchState = computed(() => relatedMediaStore.fetchState)
+
+    const imageWidth = ref(0)
+    const imageHeight = ref(0)
+    const imageType = ref('Unknown')
+    const isLoadingFullImage = ref(true)
+    const sketchFabfailure = ref(false)
+
+    const sketchFabUid = computed(() => {
+      if (image.value?.source !== 'sketchfab' || sketchFabfailure.value) {
         return null
       }
-      return this.image.url
+      return image.value.url
         .split('https://media.sketchfab.com/models/')[1]
         .split('/')[0]
-    },
+    })
+
+    const onImageLoaded = (event: Event) => {
+      if (!(event.target instanceof HTMLImageElement)) {
+        return
+      }
+      imageWidth.value = image.value?.width || event.target.naturalWidth
+      imageHeight.value = image.value?.height || event.target.naturalHeight
+      if (image.value?.filetype) {
+        imageType.value = image.value.filetype
+      } else {
+        if (event.target) {
+          axios
+            .head(event.target.src)
+            .then((res) => {
+              imageType.value = res.headers['content-type']
+            })
+            .catch(() => {
+              /**
+               * Do nothing. This avoids the console warning "Uncaught (in promise) Error:
+               * Network Error" in Firefox in development mode.
+               */
+            })
+        }
+      }
+      isLoadingFullImage.value = false
+    }
+
+    return {
+      image,
+      relatedMedia,
+      relatedFetchState,
+      imageWidth,
+      imageHeight,
+      imageType,
+      isLoadingFullImage,
+      sketchFabfailure,
+      sketchFabUid,
+      onImageLoaded,
+      backToSearchPath,
+    }
   },
   async asyncData({ app, error, route, $pinia }) {
     const imageId = route.params.id
-    const mediaStore = useMediaStore($pinia)
+    const singleResultStore = useSingleResultStore($pinia)
     try {
-      await mediaStore.fetchMediaItem({
-        id: imageId,
-        mediaType: IMAGE,
-      })
-      return {
-        imageId: imageId,
-      }
+      await singleResultStore.fetch(IMAGE, imageId)
     } catch (err) {
-      const errorMessage = app.i18n.t('error.image-not-found', {
-        id: imageId,
-      })
-      error({
+      const errorMessage = app.i18n
+        .t('error.image-not-found', {
+          id: imageId,
+        })
+        .toString()
+      return error({
         statusCode: 404,
         message: errorMessage,
       })
     }
   },
-  beforeRouteEnter(to, from, nextPage) {
-    nextPage((_this) => {
-      if (
-        from.name === _this.localeRoute({ path: '/search/' }).name ||
-        from.name === _this.localeRoute({ path: '/search/image' }).name
-      ) {
-        _this.showBackToSearchLink = true
-      }
-    })
-  },
-  methods: {
-    onImageLoaded(event) {
-      this.imageWidth = this.image.width || event.target.naturalWidth
-      this.imageHeight = this.image.height || event.target.naturalHeight
-      if (this.image.filetype) {
-        this.imageType = this.image.filetype
-      } else {
-        axios
-          .head(event.target.src)
-          .then((res) => {
-            this.imageType = res.headers['content-type']
-          })
-          .catch(() => {
-            /**
-             * Do nothing. This avoid the console warning "Uncaught (in promise) Error:
-             * Network Error" in Firefox in development mode.
-             */
-          })
-      }
-      this.isLoadingFullImage = false
-    },
-  },
   head() {
-    const title = `${this.image.title} | Openverse`
-
-    return {
-      title,
-      meta: [
-        {
-          hid: 'robots',
-          name: 'robots',
-          content: 'noindex',
-        },
-        {
-          hid: 'og:title',
-          name: 'og:title',
-          content: title,
-        },
-        {
-          hid: 'og:image',
-          name: 'og:image',
-          content: this.image.url,
-        },
-      ],
-    }
+    return createDetailPageMeta(this.image.title, this.image.url)
   },
-}
-
-export default VImageDetailsPage
+})
 </script>
 
 <style scoped>
 section,
 aside {
-  @apply px-6 md:px-16 mb-10 md:mb-16 md:max-w-screen-lg lg:mx-auto;
+  @apply w-full px-6 md:px-16 mb-10 md:mb-16 md:max-w-screen-lg lg:mx-auto;
 }
 
 .btn-main {

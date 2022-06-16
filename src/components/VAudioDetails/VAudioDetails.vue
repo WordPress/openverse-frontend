@@ -1,8 +1,12 @@
 <template>
   <section class="audio-info">
-    <h4 class="text-base lg:text-3xl mb-6">
-      {{ $t('audio-details.information') }}
-    </h4>
+    <header class="flex flex-row justify-between items-center mb-6">
+      <h4 class="text-base lg:text-3xl">
+        {{ $t('audio-details.information') }}
+      </h4>
+      <VContentReportPopover :media="audio" />
+    </header>
+
     <div class="flex flex-col md:flex-row items-start gap-6">
       <div class="w-[75px] h-[75px] lg:w-30 lg:h-30 rounded-sm overflow-hidden">
         <VAudioThumbnail :audio="audio" />
@@ -55,16 +59,16 @@
             </dt>
             <dd>
               <VLink :href="audio.foreign_landing_url">
-                {{ providerName }}
+                {{ audio.providerName }}
               </VLink>
             </dd>
           </div>
-          <div v-if="audio.source && sourceName !== providerName">
+          <div v-if="audio.source && audio.sourceName !== audio.providerName">
             <dt>
               {{ $t('audio-details.table.source') }}
             </dt>
             <dd>
-              {{ sourceName }}
+              {{ audio.sourceName }}
             </dd>
           </div>
           <div v-if="audio.genres && audio.genres.length > 0">
@@ -82,10 +86,6 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex'
-
-import { PROVIDER } from '~/constants/store-modules'
-
 import VLink from '~/components/VLink.vue'
 import VAudioThumbnail from '~/components/VAudioThumbnail/VAudioThumbnail.vue'
 import VMediaTag from '~/components/VMediaTag/VMediaTag.vue'
@@ -94,16 +94,6 @@ export default {
   name: 'VAudioDetails',
   components: { VAudioThumbnail, VLink, VMediaTag },
   props: ['audio'],
-  computed: {
-    ...mapState(PROVIDER, ['audioProviders']),
-    ...mapGetters(PROVIDER, ['getProviderName']),
-    providerName() {
-      return this.getProviderName(this.$props.audio.provider)
-    },
-    sourceName() {
-      return this.getProviderName(this.$props.audio.source)
-    },
-  },
 }
 </script>
 

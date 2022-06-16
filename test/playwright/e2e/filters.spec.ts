@@ -152,9 +152,9 @@ test('filters are updated when media type changes', async ({ page }) => {
 
   // Only CC0 checkbox is checked, and the filter button label is '1 Filter'
   await assertCheckboxStatus(page, 'cc0')
-  const filterButtonSelector =
-    '[aria-controls="filter-sidebar"], [aria-controls="filter-modal"]'
-  await expect(page.locator(filterButtonSelector)).toHaveText('1 Filter')
+  await expect(
+    page.locator('[aria-controls="filters"] span:visible')
+  ).toHaveText('1 Filter')
 
   await expect(page).toHaveURL('/search/audio?q=cat&license=cc0')
 })
@@ -173,8 +173,24 @@ test('new media request is sent when a filter is selected', async ({
   ])
 
   await assertCheckboxStatus(page, 'cc0')
-  // Remove the host url and path because when proxied, the 'http://localhost:49152' is used instead of the
+  // Remove the host url and path because when proxied, the 'http://localhost:49153' is used instead of the
   // real API url
   const queryString = response.url().split('/images/')[1]
   expect(queryString).toEqual('?q=cat&license=cc0')
 })
+
+for (const [searchType, source] of [
+  ['audio', 'Freesound'],
+  ['image', 'Flickr'],
+]) {
+  test(`Provider filters are correctly initialized from the URL: ${source} - ${searchType}`, async ({
+    page,
+  }) => {
+    await page.goto(
+      `/search/${searchType}?q=birds&source=${source.toLowerCase()}`
+    )
+    await openFilters(page)
+
+    await assertCheckboxStatus(page, source, 'checked')
+  })
+}

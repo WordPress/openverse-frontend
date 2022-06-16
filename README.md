@@ -31,13 +31,8 @@ volta install pnpm
 Run the following commands in order to have the code up and running on your machine:
 
 ```bash
-# installs dependencies
-pnpm install
-
-# sets up required i18n files
-pnpm i18n:get-translations
-
 # Builds and serves assets with hot-reload
+# Automatically invokes pnpm install and pnpm i18n
 pnpm dev
 
 ```
@@ -51,7 +46,7 @@ localhost+1-key.pem # The private key file
 localhost+1.pem # The certificate file
 ```
 
-The easiest way to create these files is with a local development tool called [mkcrt](https://github.com/FiloSottile/mkcert). First make sure you have [mkcert installed](https://github.com/FiloSottile/mkcert#installation) and activated with `mkcert -install`. Then use `mkcert` to create a certificate for `localhost` and for the external IP address used by Nuxt's development process. That command looks like this:
+The easiest way to create these files is with a local development tool called [mkcert](https://github.com/FiloSottile/mkcert). First make sure you have [mkcert installed](https://github.com/FiloSottile/mkcert#installation) and activated with `mkcert -install`. Then use `mkcert` to create a certificate for `localhost` and for the external IP address used by Nuxt's development process. That command looks like this:
 
 ```shell
 mkcert localhost 192.168.50.119
@@ -64,7 +59,7 @@ Be sure to replace the IP address in the example with your own. See the next sec
 You can find the local IP address Nuxt uses by looking at the output of `nuxt dev`. Look in your console for a box of configuration details that looks like this:
 
 ```bash
-#  ╭────────────────────────────────────────────╮
+#  ╭───────────────────────────────────────────╮
 #  │                                           │
 #  │   Nuxt @ v2.15.8                          │
 #  │                                           │
@@ -74,22 +69,18 @@ You can find the local IP address Nuxt uses by looking at the output of `nuxt de
 #  │                                           │
 #  │   Listening: http://192.168.50.119:8443/  │ # <-- Use this IP Address
 #  │                                           │
-#  ╰────────────────────────────────────────────╯
+#  ╰───────────────────────────────────────────╯
 ```
 
 You will need to regenerate the certificate if this IP address changes for any reason, like by enabling a VPN or changing networks.
 
-### Docker setup
+### Choosing which API to use
 
-Alternatively, you can use Docker to build and run the application. You just have to run:
+You don't need to have the Openverse API running locally to be able to run the frontend application. It's configured to communicate, by default, with the [production API](https://api.openverse.engineering) that's already publicly available. If you need to test against changes in your local API, set the `API_URL` environment variable when run the development server.
 
-```bash
-docker-compose up
+```shell
+API_URL=http://localhost:8000 pnpm dev
 ```
-
-You should now have the application running and accessible at http://localhost:8443.
-
-You don't need to have the Openverse API running locally to be able to run the frontend application. It's configured to communicate, by default, with the [API](https://api.openverse.engineering) that's already publicly available. If you wish, you can change the URL of the API that's used during development by setting the `API_URL` environment variable.
 
 ### Standalone and embedded modes
 
@@ -98,21 +89,7 @@ The standalone mode which has a large header with logo and a footer, can be enab
 
 ### Running tests
 
-You can run the unit tests by executing:
-
-```bash
-pnpm test
-```
-
-To run the e2e tests, run:
-
-```bash
-pnpm test:e2e
-```
-
-You might have to run `npx playwright install` to get the browsers installed if e2e tests fail.
-
-When writing e2e tests, you can also use `pnpm generate-e2e-tests` to generate tests and test selectors.
+Refer to the [`TESTING_GUIDELINES.md` file](./TESTING_GUIDELINES.md) for instructions on how to run tests.
 
 ### localhost tunneling
 
@@ -131,9 +108,29 @@ If you need to run an HTTP version (for example, if you're testing against third
 ngrok http 8443 -host-header="localhost:8443"
 ```
 
+## Docker and Openverse frontend
+
+We do not currently support local development using Docker or `docker-compose`. It was supported in the past, but it was not used by the core contributors. It remained broken for many months without ever being noticed, so the assumption is that it was also not being used active community members. Local `nuxt` development is still easy across platforms, so maintaining a separate Docker development stack for the frontend did not make sense.
+
+However, we do build and actively deploy the frontend using Docker images. If you wish to build the production image for yourself, run the following:
+
+```shell
+docker build . -t openverse-frontend:latest
+```
+
+You can also find the latest `openverse-frontend` images on our [GitHub packages page](https://github.com/WordPress/openverse-frontend/pkgs/container/openverse-frontend).
+
+You can then run using either the locally built image or the `ghcr.io` image from the link above:
+
+```shell
+docker run -it -p 127.0.0.1:8443:8443/tcp openverse-frontend:latest
+```
+
+The app will be available at http://localhost:8443.
+
 ## Formatting and Linting
 
-The code in this repository is formatted using `prettier`. If you have prettier setup in your code editor it should work out of the box; otherwise you can use the `pnpm lintfix` script to format and fix lint errors in your code. Checks are run to lint your code and validate the formatting on git precommit using [husky](https://github.com/typicode/husky).
+The code in this repository is formatted using `prettier`. If you have prettier setup in your code editor it should work out of the box; otherwise you can use the `pnpm lint:fix` script to format and fix lint errors in your code. Checks are run to lint your code and validate the formatting on git precommit using [husky](https://github.com/typicode/husky).
 
 You will need to fix any linting issues before committing. We recommend formatting your JavaScript files on save in your text editor. You can learn how to do this in Visual Studio Code [here](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode#format-on-save).
 

@@ -2,7 +2,7 @@
  * A module exporting KeyboardEvent['key'] codes as constants.
  *
  * This is incomplete and based purely on the current usage of
- * the application, so if you come accross a new one that is
+ * the application, so if you come across a new one that is
  * needed just add it.
  *
  * This mostly exists to avoid having to look at the MDN page
@@ -22,4 +22,5 @@ export const keycodes = Object.freeze({
   PageUp: 'PageUp',
   PageDown: 'PageDown',
   Tab: 'Tab',
+  Enter: 'Enter',
 } as const)
