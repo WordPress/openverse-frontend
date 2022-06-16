@@ -40,7 +40,7 @@
       <div
         class="flex-1 flex flex-col justify-center font-semibold text-base leading-[1.3]"
       >
-        <h1 class="md:text-3xl">
+        <h1 class="md:text-3xl font-semibold">
           {{ image.title }}
         </h1>
         <i18n v-if="image.creator" path="image-details.creator" tag="span">
