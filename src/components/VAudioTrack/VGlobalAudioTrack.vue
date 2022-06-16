@@ -39,11 +39,10 @@ import { defaultRef } from '~/composables/default-ref'
 import { useI18n } from '~/composables/use-i18n'
 
 import { useActiveMediaStore } from '~/stores/active-media'
+import { useMediaStore } from '~/stores/media'
 
 import type { AudioDetail } from '~/models/media'
 import type { AudioStatus } from '~/constants/audio'
-
-import { useLoadedAudio } from '~/stores/loaded-audio'
 
 import VPlayPause from '~/components/VAudioTrack/VPlayPause.vue'
 import VWaveform from '~/components/VAudioTrack/VWaveform.vue'
@@ -87,7 +86,7 @@ export default defineComponent({
     })
 
     const setPlaying = () => {
-      if (loadedAudio.isLoaded(props.audio.id)) {
+      if (props.audio.hasLoaded) {
         status.value = 'playing'
       } else {
         status.value = 'loading'
@@ -120,9 +119,11 @@ export default defineComponent({
       }
     }
 
-    const loadedAudio = useLoadedAudio()
+    const mediaStore = useMediaStore()
     const setLoaded = () => {
-      loadedAudio.setLoaded(props.audio.id)
+      mediaStore.setMediaProperties('audio', props.audio.id, {
+        hasLoaded: true,
+      })
       status.value = 'playing'
     }
     const setWaiting = () => {

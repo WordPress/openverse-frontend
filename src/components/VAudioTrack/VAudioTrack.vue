@@ -57,7 +57,6 @@ import { useI18n } from '~/composables/use-i18n'
 
 import { useActiveMediaStore } from '~/stores/active-media'
 import { useMediaStore } from '~/stores/media'
-import { useLoadedAudio } from '~/stores/loaded-audio'
 
 import { AUDIO } from '~/constants/media'
 
@@ -202,16 +201,18 @@ export default defineComponent({
       }
     }
 
-    const loadedAudio = useLoadedAudio()
+    const mediaStore = useMediaStore()
     const setLoaded = () => {
-      loadedAudio.setLoaded(props.audio.id)
+      mediaStore.setMediaProperties('audio', props.audio.id, {
+        hasLoaded: true,
+      })
       status.value = 'playing'
     }
     const setWaiting = () => {
       status.value = 'loading'
     }
     const setPlaying = () => {
-      if (loadedAudio.isLoaded(props.audio.id)) {
+      if (props.audio.hasLoaded) {
         status.value = 'playing'
       } else {
         status.value = 'loading'
@@ -280,7 +281,6 @@ export default defineComponent({
         localAudio?.removeEventListener(name, fn)
       )
 
-      const mediaStore = useMediaStore()
       if (
         route.value.params.id === props.audio.id ||
         mediaStore.getItemById(AUDIO, props.audio.id)

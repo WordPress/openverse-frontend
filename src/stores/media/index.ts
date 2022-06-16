@@ -391,5 +391,16 @@ export const useMediaStore = defineStore('media', {
         throw new Error(errorMessage)
       }
     },
+
+    setMediaProperties(
+      type: SupportedMediaType,
+      id: string,
+      properties: Partial<DetailFromMediaType<typeof type>>
+    ) {
+      this.results[type].items[id] = {
+        ...this.results[type].items[id],
+        ...properties,
+      }
+    },
   },
 })
