@@ -127,13 +127,14 @@ export const dismissTranslationBanner = async (page: Page) => {
 export const goToSearchTerm = async (
   page: Page,
   term: string,
-  searchType: SearchType = ALL_MEDIA,
   options: {
+    searchType?: SearchType
     mode?: RenderMode
     dir?: 'ltr' | 'rtl'
     query?: string // Only for SSR mode
   } = {}
 ) => {
+  const searchType = options.searchType || ALL_MEDIA
   const dir = options.dir || 'ltr'
   const mode = options.mode ?? 'SSR'
   const query = options.query ? `&${options.query}` : ''

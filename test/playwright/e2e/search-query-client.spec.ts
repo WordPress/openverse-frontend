@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { expect, test } from '@playwright/test'
 
 import {
   changeContentType,
@@ -6,7 +6,7 @@ import {
 } from '~~/test/playwright/utils/navigation'
 import { mockProviderApis } from '~~/test/playwright/utils/route'
 
-import { ALL_MEDIA, IMAGE } from '~/constants/media'
+import { AUDIO, IMAGE } from '~/constants/media'
 
 /**
  * When navigating to the search page on the client side:
@@ -25,7 +25,7 @@ test.beforeEach(async ({ context }) => {
 })
 
 test('q query parameter is set as the search term', async ({ page }) => {
-  await goToSearchTerm(page, 'cat', ALL_MEDIA, { mode: 'CSR' })
+  await goToSearchTerm(page, 'cat', { mode: 'CSR' })
 
   await expect(page.locator('header input[type="search"]')).toHaveValue('cat')
   await expect(page).toHaveURL('search/?q=cat')
@@ -34,7 +34,7 @@ test('q query parameter is set as the search term', async ({ page }) => {
 test('selecting `audio` on homepage, you can search for audio', async ({
   page,
 }) => {
-  await goToSearchTerm(page, 'cat', 'audio', { mode: 'CSR' })
+  await goToSearchTerm(page, 'cat', { searchType: AUDIO, mode: 'CSR' })
 
   await expect(page.locator('header input[type="search"]')).toHaveValue('cat')
 
@@ -44,7 +44,10 @@ test('selecting `audio` on homepage, you can search for audio', async ({
 test('url filter parameters not used by current mediaType are discarded', async ({
   page,
 }) => {
-  await goToSearchTerm(page, 'cat', IMAGE, { query: 'category=photograph' })
+  await goToSearchTerm(page, 'cat', {
+    searchType: IMAGE,
+    query: 'category=photograph',
+  })
 
   await changeContentType(page, 'Audio')
   await expect(page).toHaveURL('/search/audio?q=cat')
@@ -53,21 +56,25 @@ test('url filter parameters not used by current mediaType are discarded', async 
 test('url filter types not used by current mediaType are discarded', async ({
   page,
 }) => {
-  await goToSearchTerm(page, 'cat', IMAGE, { query: 'aspect_ratio=tall' })
+  await goToSearchTerm(page, 'cat', {
+    searchType: IMAGE,
+    query: 'aspect_ratio=tall',
+  })
 
   await changeContentType(page, 'Audio')
   await expect(page).toHaveURL('/search/audio?q=cat')
 })
 
 test('can search for a different term', async ({ page }) => {
-  await goToSearchTerm(page, 'cat', IMAGE)
+  await goToSearchTerm(page, 'cat', { searchType: IMAGE })
   await page.fill('header input[type="search"]', 'dog')
   await page.keyboard.press('Enter')
   await expect(page).toHaveURL('/search/image?q=dog')
 })
 
 test('search for a different term keeps query parameters', async ({ page }) => {
-  await goToSearchTerm(page, 'cat', IMAGE, {
+  await goToSearchTerm(page, 'cat', {
+    searchType: IMAGE,
     query: 'license=by&extension=jpg',
   })
   await page.fill('header input[type="search"]', 'dog')

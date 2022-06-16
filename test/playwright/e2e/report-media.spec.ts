@@ -99,7 +99,7 @@ supportedMediaTypes.forEach((mediaType) => {
     test(`Files ${reportName} report for ${searchTypeNames[
       mediaType
     ].toLowerCase()}`, async ({ page, context }) => {
-      await goToSearchTerm(page, 'cat', mediaType)
+      await goToSearchTerm(page, 'cat', { searchType: mediaType })
       await visitFirstResult(page)
       await openReportModal(page)
       await reportAssertion(page, context)

@@ -44,7 +44,7 @@ for (const searchType of supportedSearchTypes) {
   test(`correct total number of filters is displayed for ${searchType}`, async ({
     page,
   }) => {
-    await goToSearchTerm(page, 'cat', searchType)
+    await goToSearchTerm(page, 'cat', { searchType })
 
     await openFilters(page)
 

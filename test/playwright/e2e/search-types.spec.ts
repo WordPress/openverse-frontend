@@ -102,7 +102,7 @@ async function checkSearchResult(page: Page, searchType: SearchTypeConfig) {
 
 for (const searchType of searchTypes) {
   test(`Can open ${searchType.name} search page on SSR`, async ({ page }) => {
-    await goToSearchTerm(page, 'birds', searchType.id)
+    await goToSearchTerm(page, 'birds', { searchType: searchType.id })
 
     await checkSearchResult(page, searchType)
   })
