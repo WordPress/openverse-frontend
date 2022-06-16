@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-06-16T11:25:45+00:00\n"
+"POT-Creation-Date: 2022-06-16T11:43:56+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -347,7 +347,7 @@ msgid "###openverse### does not yet support built-in ###type### search."
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/meta-search.vue:46
+#: src/pages/additional-sources.vue:46
 msgctxt "additional-sources.form.supported-title"
 msgid "Not finding what you're looking for? Try additional ###type### sources."
 msgstr ""
@@ -1545,103 +1545,103 @@ msgctxt "search-guide.exact.content"
 msgid "Put a word or phrase inside quotes. For example, ###link###."
 msgstr ""
 
-#: src/pages/meta-search.vue:4
+#: src/pages/additional-sources.vue:4
 msgctxt "additional-sources-page.title"
 msgid "Additional Sources"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/meta-search.vue:7
+#: src/pages/additional-sources.vue:7
 msgctxt "additional-sources-page.intro"
 msgid "###openverse### is built on top of a catalog that indexes CC-licensed and public domain content from selected sources. Learn more about our ###link###."
 msgstr ""
 
-#: src/pages/meta-search.vue:10
+#: src/pages/additional-sources.vue:10
 msgctxt "additional-sources-page.link"
 msgid "sources"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/meta-search.vue:14
+#: src/pages/additional-sources.vue:14
 msgctxt "additional-sources-page.license"
 msgid "The internet is a big place! There are plenty of search portals and collections, hosting CC-licensed and public domain content, which we aren’t able to index or surface results from within the ###openverse### interface. These are important sources of CC-licensed and public domain content, and we want to make sure that you are able to find the best openly licensed materials possible, regardless of where they are located."
 msgstr ""
 
-#: src/pages/meta-search.vue:17
+#: src/pages/additional-sources.vue:17
 msgctxt "additional-sources-page.content"
 msgid "What content types can I search for using the Additional Sources feature?"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/meta-search.vue:21
+#: src/pages/additional-sources.vue:21
 msgctxt "additional-sources-page.content-types"
 msgid "Additional Sources on ###openverse### currently supports image, audio, and video search on external sites."
 msgstr ""
 
-#: src/pages/meta-search.vue:55
+#: src/pages/additional-sources.vue:55
 msgctxt "additional-sources-page.use"
 msgid " Use "
 msgstr ""
 
-#: src/pages/meta-search.vue:111
+#: src/pages/additional-sources.vue:111
 msgctxt "additional-sources-page.why.title"
 msgid "Why did you build this?"
 msgstr ""
 
-#: src/pages/meta-search.vue:113
+#: src/pages/additional-sources.vue:113
 msgctxt "additional-sources-page.why.content"
 msgid "For many years, CC has offered its users a dedicated search portal for searching platforms that have CC licensing filters built in. These platforms included Europeana, Google Images, Flickr, Jamendo, Open Clip Art Library, SpinXpress, Wikimedia Commons, YouTube, ccMixter, and SoundCloud. The search experience looked like this:"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/meta-search.vue:115
+#: src/pages/additional-sources.vue:115
 msgctxt "additional-sources-page.why.new"
 msgid "For users of the legacy CC Meta Search site, the Meta Search feature on ###openverse### will look familiar. The goal was to ensure that the functionality is not lost, but is updated and embedded within our new search engine for openly licensed content. In addition, the Meta Search feature builds on this functionality, allowing us to quickly add new sources to Meta Search as we discover them, and support new content types in the future, as we expand."
 msgstr ""
 
-#: src/pages/meta-search.vue:120
+#: src/pages/additional-sources.vue:120
 msgctxt "additional-sources-page.why.aria-label"
 msgid "feedback"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/meta-search.vue:117
+#: src/pages/additional-sources.vue:117
 msgctxt "additional-sources-page.why.feedback-suggestions"
 msgid "We hope you enjoy, and if you have suggestions for improvement, leave us ###feedback###."
 msgstr ""
 
-#: src/pages/meta-search.vue:122
+#: src/pages/additional-sources.vue:122
 msgctxt "additional-sources-page.why.feedback-link"
 msgid "feedback"
 msgstr ""
 
-#: src/pages/meta-search.vue:94
+#: src/pages/additional-sources.vue:94
 msgctxt "additional-sources-page.new.title"
 msgid "Can I suggest new sources for Additional Sources?"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/meta-search.vue:96
+#: src/pages/additional-sources.vue:96
 msgctxt "additional-sources-page.new.content"
 msgid "Yes, please! Create an ###issue### in our GitHub repository or send us an ###email### and tell us about the new sources you’d like to see included."
 msgstr ""
 
-#: src/pages/meta-search.vue:101
+#: src/pages/additional-sources.vue:101
 msgctxt "additional-sources-page.new.issue"
 msgid "issue"
 msgstr ""
 
-#: src/pages/meta-search.vue:106
+#: src/pages/additional-sources.vue:106
 msgctxt "additional-sources-page.new.email"
 msgid "email"
 msgstr ""
 
-#: src/pages/meta-search.vue:72
+#: src/pages/additional-sources.vue:72
 msgctxt "additional-sources-page.audio-video.title"
 msgid "How does the Additional Sources feature work for non-indexed media types?"
 msgstr ""
 
-#: src/pages/meta-search.vue:87
+#: src/pages/additional-sources.vue:87
 msgctxt "additional-sources-page.audio-video.demo-label"
 msgid "Layout of Additional Sources for non-indexed media type, like video"
 msgstr ""
@@ -1652,41 +1652,41 @@ msgid "###openverse### does not yet support built-in search for some media types
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/meta-search.vue:79
+#: src/pages/additional-sources.vue:79
 msgctxt "additional-sources-page.audio-video.filter"
 msgid "The Filters bar on the left includes the ###use### filter, which may be supported by some Additional Sources sources. Apply these before clicking on the button for the external source you’d like to search."
 msgstr ""
 
-#: src/pages/meta-search.vue:26
+#: src/pages/additional-sources.vue:26
 msgctxt "additional-sources-page.images.title"
 msgid "How does the Additional Sources feature work for indexed media types?"
 msgstr ""
 
-#: src/pages/meta-search.vue:65
+#: src/pages/additional-sources.vue:65
 msgctxt "additional-sources-page.images.demo-label"
 msgid "Layout of Additional Sources for indexed media type, like images"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/meta-search.vue:30
+#: src/pages/additional-sources.vue:30
 msgctxt "additional-sources-page.images.content"
 msgid "###openverse### supports built-in search for some media types, such as images. When you enter a query on the ###openverse### homepage, a page of results will be displayed. Scrolling to the bottom of the page, you have two choices:"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/meta-search.vue:36
+#: src/pages/additional-sources.vue:36
 msgctxt "additional-sources-page.images.continue"
 msgid "###load-more###, and continue browsing in ###openverse###."
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/meta-search.vue:43
+#: src/pages/additional-sources.vue:43
 msgctxt "additional-sources-page.images.not-finding"
 msgid "See the section “###not-finding###” below the results."
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/meta-search.vue:53
+#: src/pages/additional-sources.vue:53
 msgctxt "additional-sources-page.images.info"
 msgid "The “###not-finding###” section lists other sources of CC-licensed and public domain content. Your search query will be preloaded, and if supported, you can select a ###use### filter to proactively filter your results. Click on the button for the external source you’d like to search, and your results will open in a new tab."
 msgstr ""
