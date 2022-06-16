@@ -18,9 +18,7 @@ const buttonSelectors = {
 
 export function sleep(ms: number) {
   return new Promise<void>((resolve) =>
-    setTimeout(async () => {
-      resolve()
-    }, ms)
+    setTimeout(resolve, ms)
   )
 }
 
