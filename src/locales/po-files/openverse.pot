@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-06-16T11:19:25+00:00\n"
+"POT-Creation-Date: 2022-06-16T11:25:45+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1596,7 +1596,7 @@ msgstr ""
 #. Do not translate words between ### ###.
 #: src/pages/meta-search.vue:115
 msgctxt "additional-sources-page.why.new"
-msgid "For users of the legacy CC Additional Sources site, the Additional Sources feature on ###openverse### will look familiar. The goal was to ensure that the functionality is not lost, but is updated and embedded within our new search engine for openly licensed content. In addition, the Additional Sources feature builds on this functionality, allowing us to quickly add new sources to Additional Sources as we discover them, and support new content types in the future, as we expand."
+msgid "For users of the legacy CC Meta Search site, the Meta Search feature on ###openverse### will look familiar. The goal was to ensure that the functionality is not lost, but is updated and embedded within our new search engine for openly licensed content. In addition, the Meta Search feature builds on this functionality, allowing us to quickly add new sources to Meta Search as we discover them, and support new content types in the future, as we expand."
 msgstr ""
 
 #: src/pages/meta-search.vue:120
