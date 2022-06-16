@@ -43,6 +43,8 @@ import { useActiveMediaStore } from '~/stores/active-media'
 import type { AudioDetail } from '~/models/media'
 import type { AudioStatus } from '~/constants/audio'
 
+import { useLoadedAudio } from '~/stores/loaded-audio'
+
 import VPlayPause from '~/components/VAudioTrack/VPlayPause.vue'
 import VWaveform from '~/components/VAudioTrack/VWaveform.vue'
 import VGlobalLayout from '~/components/VAudioTrack/layouts/VGlobalLayout.vue'
@@ -85,7 +87,7 @@ export default defineComponent({
     })
 
     const setPlaying = () => {
-      if (hasLoaded) {
+      if (loadedAudio.isLoaded(props.audio.id)) {
         status.value = 'playing'
       } else {
         status.value = 'loading'
@@ -108,7 +110,19 @@ export default defineComponent({
       if (activeAudio.obj.value) duration.value = activeAudio.obj.value.duration
     }
 
+    const confirmStatus = () => {
+      if (!activeAudio.obj.value) return
+      if (activeAudio.obj.value.paused) {
+        status.value = 'paused'
+      } else if (activeAudio.obj.value.ended) {
+        status.value = 'played'
+      } else {
+        status.value = 'playing'
+      }
+    }
+
     const updateTimeLoop = () => {
+      confirmStatus()
       if (
         activeAudio.obj.value &&
         (status.value === 'playing' || status.value === 'loading')
@@ -118,9 +132,9 @@ export default defineComponent({
       }
     }
 
-    let hasLoaded = false
+    const loadedAudio = useLoadedAudio()
     const setLoaded = () => {
-      hasLoaded = true
+      loadedAudio.setLoaded(props.audio.id)
       status.value = 'playing'
     }
     const setWaiting = () => {

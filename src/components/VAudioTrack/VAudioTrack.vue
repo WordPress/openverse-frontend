@@ -57,6 +57,7 @@ import { useI18n } from '~/composables/use-i18n'
 
 import { useActiveMediaStore } from '~/stores/active-media'
 import { useMediaStore } from '~/stores/media'
+import { useLoadedAudio } from '~/stores/loaded-audio'
 
 import { AUDIO } from '~/constants/media'
 
@@ -178,7 +179,7 @@ export default defineComponent({
      * We can only create the local audio object on the client,
      * so the initialization of this variable is hidden inside
      * the `initLocalAudio` function which is only called when
-     * playback is first requested or when the track if first seeked.
+     * playback is first requested or when the track is first seeked.
      *
      * However, when navigating to an audio result page, if
      * the globally active audio already matches the result
@@ -190,7 +191,19 @@ export default defineComponent({
         ? activeAudio.obj.value
         : undefined
 
+    const confirmStatus = () => {
+      if (!localAudio) return
+      if (localAudio.paused) {
+        status.value = 'paused'
+      } else if (localAudio.ended) {
+        status.value = 'played'
+      } else {
+        status.value = 'playing'
+      }
+    }
+
     const updateTimeLoop = () => {
+      confirmStatus()
       if (localAudio) {
         if (status.value === 'playing' || status.value === 'loading') {
           currentTime.value = localAudio.currentTime
@@ -201,19 +214,19 @@ export default defineComponent({
       }
     }
 
-    let hasLoaded = false
+    const loadedAudio = useLoadedAudio()
     const setLoaded = () => {
-      hasLoaded = true
+      loadedAudio.setLoaded(props.audio.id)
       status.value = 'playing'
     }
     const setWaiting = () => {
       status.value = 'loading'
     }
     const setPlaying = () => {
-      if (!hasLoaded) {
-        status.value = 'loading'
-      } else {
+      if (loadedAudio.isLoaded(props.audio.id)) {
         status.value = 'playing'
+      } else {
+        status.value = 'loading'
       }
       activeAudio.obj.value = localAudio
       activeMediaStore.setActiveMediaItem({
