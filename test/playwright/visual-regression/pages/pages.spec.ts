@@ -8,7 +8,13 @@ import {
   renderDirs,
 } from '~~/test/playwright/utils/navigation'
 
-const contentPages = ['extension', 'about', 'meta-search', 'search-help']
+const contentPages = [
+  'extension',
+  'about',
+  'meta-search',
+  'search-help',
+  'non-existent',
+]
 for (const contentPage of contentPages) {
   for (const dir of renderDirs) {
     test.describe(`${contentPage} ${dir} page snapshots`, () => {
