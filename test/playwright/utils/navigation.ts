@@ -144,19 +144,14 @@ export const goToSearchTerm = async (
   const mode = options.mode ?? 'SSR'
   const query = options.query ? `&${options.query}` : ''
 
-  const prefix = dir === 'ltr' ? '' : '/ar'
   if (mode === 'SSR') {
     await page.goto(
-      `${prefix}/search/${searchTypePath(searchType)}?q=${term}${query}`
+      pathWithDir(`search/${searchTypePath(searchType)}?q=${term}${query}`, dir)
     )
-    if (dir === 'rtl') {
-      await dismissTranslationBanner(page)
-    }
+    await dismissTranslationBanner(page)
   } else {
-    await page.goto(`/${prefix}`)
-    if (dir === 'rtl') {
-      await dismissTranslationBanner(page)
-    }
+    await page.goto(pathWithDir('/', dir))
+    await dismissTranslationBanner(page)
     // Select the search type
     if (searchType !== 'all') {
       await page.click('[aria-label="All content"]')
@@ -245,3 +240,11 @@ export const renderModes = [
   ['CSR', 'ltr'],
   ['CSR', 'rtl'],
 ] as const
+
+/**
+ * Adds '/ar' prefix to a rtl route. The path should start with '/'
+ */
+export const pathWithDir = (rawPath: string, dir: string) => {
+  const path = rawPath.startsWith('/') ? rawPath : `/${rawPath}`
+  return dir === 'rtl' ? `/ar${path}` : path
+}

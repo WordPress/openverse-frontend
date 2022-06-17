@@ -4,9 +4,13 @@ import breakpoints from '~~/test/playwright/utils/breakpoints'
 import { hideInputCursors } from '~~/test/playwright/utils/page'
 import {
   dismissTranslationBanner,
+  pathWithDir,
   renderDirs,
 } from '~~/test/playwright/utils/navigation'
 
+/**
+ * Remove the randomly-selected images from the homepage .
+ */
 const deleteImageCarousel = async (page: Page) => {
   const element = await page.$('[data-testid="image-carousel"]')
   await element?.evaluate((node) => node.remove())
@@ -14,7 +18,7 @@ const deleteImageCarousel = async (page: Page) => {
 }
 for (const dir of renderDirs) {
   test.describe(`${dir} homepage snapshots`, () => {
-    const path = dir === 'rtl' ? '/ar' : '/'
+    const path = pathWithDir('/', dir)
     test.beforeEach(async ({ page }) => {
       await page.goto(path)
       await dismissTranslationBanner(page)

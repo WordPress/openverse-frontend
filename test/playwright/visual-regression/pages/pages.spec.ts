@@ -4,6 +4,7 @@ import breakpoints from '~~/test/playwright/utils/breakpoints'
 import { removeHiddenOverflow } from '~~/test/playwright/utils/page'
 import {
   dismissTranslationBanner,
+  pathWithDir,
   renderDirs,
 } from '~~/test/playwright/utils/navigation'
 
@@ -11,9 +12,8 @@ const contentPages = ['extension', 'about', 'meta-search', 'search-help']
 for (const contentPage of contentPages) {
   for (const dir of renderDirs) {
     test.describe(`${contentPage} ${dir} page snapshots`, () => {
-      const path = `${dir === 'rtl' ? '/ar' : ''}/${contentPage}`
       test.beforeEach(async ({ page }) => {
-        await page.goto(path)
+        await page.goto(pathWithDir(contentPage, dir))
         await dismissTranslationBanner(page)
       })
 
