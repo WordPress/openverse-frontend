@@ -116,8 +116,17 @@ export const currentContentType = async (page: Page) => {
   return contentSwitcherButton.textContent()
 }
 
+/**
+ * Dismisses the translation banner if it is visible. It does not wait for the banner to become visible,
+ * so the page should finish rendering before calling `dismissTranslationBanner`.
+ */
 export const dismissTranslationBanner = async (page: Page) => {
-  await page.locator('[data-testid="banner-translation"] button').click()
+  const bannerCloseButton = page.locator(
+    '[data-testid="banner-translation"] button'
+  )
+  if (await bannerCloseButton.isVisible()) {
+    await bannerCloseButton.click()
+  }
 }
 
 export const goToSearchTerm = async (
