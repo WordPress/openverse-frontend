@@ -10,6 +10,7 @@
         : 'w-10 md:w-auto h-10 md:h-auto px-0 md:px-3'
     "
     :pressed="pressed"
+    :disabled="disabled"
     aria-controls="filters"
     :aria-label="mdMinLabel"
     @click="$emit('toggle')"
@@ -32,19 +33,19 @@ import {
   defineComponent,
   inject,
   toRefs,
-  useContext,
   ref,
 } from '@nuxtjs/composition-api'
 
 import { useSearchStore } from '~/stores/search'
 import { defineEvent } from '~/types/emits'
+import { useI18n } from '~/composables/use-i18n'
 
-import VButton from '~/components/VButton.vue'
+import VButton, { ButtonVariant } from '~/components/VButton.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'
 
 import filterIcon from '~/assets/icons/filter.svg'
 
-const VFilterButton = defineComponent({
+export default defineComponent({
   name: 'VFilterButton',
   components: {
     VIcon,
@@ -55,13 +56,17 @@ const VFilterButton = defineComponent({
       type: Boolean,
       default: false,
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: {
     tab: defineEvent<[KeyboardEvent]>(),
     toggle: defineEvent(),
   },
   setup(props) {
-    const { i18n } = useContext()
+    const i18n = useI18n()
     const searchStore = useSearchStore()
     const { pressed } = toRefs(props)
     const isMinScreenMd = inject('isMinScreenMd', ref(false))
@@ -75,7 +80,9 @@ const VFilterButton = defineComponent({
      */
     const variant = computed(() => {
       // Show the bordered state by default, unless below md
-      let value = isMinScreenMd.value ? 'tertiary' : 'action-menu'
+      let value: ButtonVariant = isMinScreenMd.value
+        ? 'tertiary'
+        : 'action-menu'
 
       if (isHeaderScrolled.value) {
         value = 'action-menu'
@@ -119,6 +126,4 @@ const VFilterButton = defineComponent({
     }
   },
 })
-
-export default VFilterButton
 </script>

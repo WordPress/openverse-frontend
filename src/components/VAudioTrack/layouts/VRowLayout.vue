@@ -9,7 +9,7 @@
     >
       <VAudioThumbnail :audio="audio" />
       <div v-show="isSmall" class="absolute bottom-0 rtl:left-0 ltr:right-0">
-        <slot name="play-pause" size="tiny" />
+        <slot name="play-pause" size="tiny" layout="row" />
       </div>
     </div>
 
@@ -71,7 +71,11 @@
           'flex-grow': isMedium,
         }"
       >
-        <slot name="play-pause" :size="isLarge ? 'medium' : 'large'" />
+        <slot
+          name="play-pause"
+          :size="isLarge ? 'medium' : 'large'"
+          :layout="'row'"
+        />
         <slot
           name="controller"
           :features="features"
@@ -83,17 +87,11 @@
 </template>
 
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  PropType,
-  useContext,
-} from '@nuxtjs/composition-api'
+import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
 
 import { useBrowserIsBlink } from '~/composables/use-browser-detection'
-
+import { useI18n } from '~/composables/use-i18n'
 import type { AudioDetail } from '~/models/media'
-
 import type { AudioSize } from '~/constants/audio'
 
 import VAudioThumbnail from '~/components/VAudioThumbnail/VAudioThumbnail.vue'
@@ -120,7 +118,7 @@ export default defineComponent({
   setup(props) {
     /* Utils */
     const browserIsBlink = useBrowserIsBlink()
-    const { i18n } = useContext()
+    const i18n = useI18n()
 
     const featureNotices: {
       timestamps?: string

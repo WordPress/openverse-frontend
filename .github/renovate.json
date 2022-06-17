@@ -1,5 +1,12 @@
 {
+  "branchPrefix": "gha-renovate",
+  "username": "openverse-bot",
+  "gitAuthor": "Openverse Bot <openverse@wordpress.org>",
+  "onboarding": false,
+  "platform": "github",
+  "repositories": ["WordPress/openverse-frontend"],
   "extends": ["config:base", ":preserveSemverRanges", "schedule:monthly"],
+  "prCommitsPerRunLimit": 3,
   "labels": [
     "dependencies",
     "💻 aspect: code",
@@ -11,5 +18,13 @@
   },
   "docker": {
     "labels": ["🐳 tech: docker"]
-  }
+  },
+  "ignorePaths": [
+    ".github/workflows/draft_release.yml",
+    ".github/workflows/label_new_pr.yml",
+    ".github/workflows/new_isssues.yml",
+    ".github/workflows/new_prs.yml",
+    ".github/workflows/pr_label_check.yml",
+    ".github/workflows/pr_ping.yml"
+  ]
 }

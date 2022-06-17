@@ -6,6 +6,8 @@ import {
   Ref,
 } from '@nuxtjs/composition-api'
 
+import { ALL_MEDIA, searchTypes } from '~/constants/media'
+
 /**
  * Reactive property that returns true only on the matching routes.
  * Note that routes are matched by name, not the url path.
@@ -20,14 +22,17 @@ export const useMatchRoute = (
   const { app } = useContext()
   const route = useRoute()
   const router = useRouter()
+
   const localizedRoutes = routes.map(
     (route) => app.localeRoute({ name: route })?.name
   )
   const matches = ref(localizedRoutes.includes(route.value.name))
+
   router.beforeEach((to, _from, next) => {
     matches.value = localizedRoutes.includes(to.name)
     next()
   })
+
   return { matches }
 }
 
@@ -35,7 +40,14 @@ export const useMatchRoute = (
  * Reactive property that returns true only on the `search` routes.
  * Homepage, single image result and other content pages return `false`
  */
-export const useMatchSearchRoutes = () =>
-  useMatchRoute(['search', 'search-image', 'search-audio', 'search-video'])
+export const useMatchSearchRoutes = () => {
+  const routes = [
+    'search',
+    ...searchTypes
+      .filter((type) => type !== ALL_MEDIA)
+      .map((type) => `search-${type}`),
+  ]
+  return useMatchRoute(routes)
+}
 
 export const useMatchHomeRoute = () => useMatchRoute(['index'])

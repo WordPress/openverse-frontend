@@ -16,9 +16,10 @@ import {
   IMAGE,
   SupportedMediaType,
   supportedMediaTypes,
+  isAdditionalSearchType,
 } from '~/constants/media'
 import { services } from '~/stores/media/services'
-import { useSearchStore } from '~/stores/search'
+import { isSearchTypeSupported, useSearchStore } from '~/stores/search'
 import { useRelatedMediaStore } from '~/stores/media/related-media'
 import { deepFreeze } from '~/utils/deep-freeze'
 
@@ -61,7 +62,11 @@ export const useMediaStore = defineStore('media', {
 
   getters: {
     _searchType() {
-      return useSearchStore().searchType
+      const searchType = useSearchStore().searchType
+      if (isAdditionalSearchType(searchType)) {
+        return ALL_MEDIA
+      }
+      return searchType
     },
     getItemById: (state) => {
       return (mediaType: SupportedMediaType, id: string): Media | undefined => {
@@ -92,12 +97,13 @@ export const useMediaStore = defineStore('media', {
     },
 
     /**
-     * Returns the total count of results for selected search type, sums all media results for ALL_MEDIA.
+     * Returns the total count of results for selected search type, sums all media results for ALL_MEDIA or additional types.
      * If the count is more than 10000, returns 10000 to match the API result.
      */
     resultCount(state) {
       const types = (
-        this._searchType === ALL_MEDIA
+        this._searchType === ALL_MEDIA ||
+        !isSearchTypeSupported(this._searchType)
           ? supportedMediaTypes
           : [this._searchType]
       ) as SupportedMediaType[]
@@ -139,8 +145,10 @@ export const useMediaStore = defineStore('media', {
             (type) => this.mediaFetchState[type].isFinished
           ),
         }
-      } else {
+      } else if (isSearchTypeSupported(this._searchType)) {
         return this.mediaFetchState[this._searchType]
+      } else {
+        return initialFetchState
       }
     },
 

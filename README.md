@@ -25,7 +25,7 @@ We use [Volta](https://volta.sh/) to manage our local environment tools. Please 
 Once you have volta installed, manually install `pnpm` using volta. [Volta does not currently officially support `pnpm`](https://github.com/volta-cli/volta/issues/737) so this is a stop gap solution until that support is implemented:
 
 ```bash
-volta install pnpm@$(cat .pnpm-version)
+volta install pnpm
 ```
 
 Run the following commands in order to have the code up and running on your machine:
@@ -59,7 +59,7 @@ Be sure to replace the IP address in the example with your own. See the next sec
 You can find the local IP address Nuxt uses by looking at the output of `nuxt dev`. Look in your console for a box of configuration details that looks like this:
 
 ```bash
-#  ╭────────────────────────────────────────────╮
+#  ╭───────────────────────────────────────────╮
 #  │                                           │
 #  │   Nuxt @ v2.15.8                          │
 #  │                                           │
@@ -69,7 +69,7 @@ You can find the local IP address Nuxt uses by looking at the output of `nuxt de
 #  │                                           │
 #  │   Listening: http://192.168.50.119:8443/  │ # <-- Use this IP Address
 #  │                                           │
-#  ╰────────────────────────────────────────────╯
+#  ╰───────────────────────────────────────────╯
 ```
 
 You will need to regenerate the certificate if this IP address changes for any reason, like by enabling a VPN or changing networks.
@@ -115,7 +115,7 @@ We do not currently support local development using Docker or `docker-compose`. 
 However, we do build and actively deploy the frontend using Docker images. If you wish to build the production image for yourself, run the following:
 
 ```shell
-docker build . --build-arg PNPM_VERSION=$(cat .pnpm-version) -t openverse-frontend:latest
+docker build . -t openverse-frontend:latest
 ```
 
 You can also find the latest `openverse-frontend` images on our [GitHub packages page](https://github.com/WordPress/openverse-frontend/pkgs/container/openverse-frontend).

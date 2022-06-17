@@ -18,9 +18,7 @@
         class="text-4xl mb-2"
       >
         <template #openverse>Openverse</template>
-        <template #type>
-          {{ type }}
-        </template>
+        <template #type>{{ $t(`meta-search.form.types.${type}`) }}</template>
       </i18n>
       <i18n
         v-else
@@ -28,15 +26,16 @@
         tag="h4"
         class="text-4xl mb-2"
       >
-        <template #type>{{ type }}</template>
+        <template #type>{{ $t(`meta-search.form.types.${type}`) }}</template>
         <template #query>{{ query.q }}</template>
       </i18n>
       <i18n path="meta-search.form.caption" tag="p">
-        <template #type>{{ type }}</template>
+        <template #type>{{
+          $t(`meta-search.form.types-plural.${type}`)
+        }}</template>
         <template #break>
           <br />
         </template>
-        <template #filter>{{ unsupportedByUseFilter }}</template>
       </i18n>
     </header>
 
@@ -62,7 +61,6 @@ import {
 
 import type { MediaType } from '~/constants/media'
 import type { ApiQueryParams } from '~/utils/search-query-transform'
-import { getAdditionalSourceBuilders } from '~/utils/get-additional-sources'
 import { getFocusableElements } from '~/utils/focus-management'
 import { defineEvent } from '~/types/emits'
 
@@ -82,14 +80,8 @@ export default defineComponent({
   emits: {
     tab: defineEvent<[KeyboardEvent]>(),
   },
-  setup(props, { emit }) {
+  setup(_, { emit }) {
     const sectionRef = ref<HTMLElement>()
-    const unsupportedByUseFilter = computed(() =>
-      getAdditionalSourceBuilders(props.type)
-        .filter((source) => !source.supportsUseFilters)
-        .map((source) => source.name)
-        .join(', ')
-    )
 
     /**
      * Find the last focusable element in VSearchGridFilter to add a 'Tab' keydown event
@@ -108,7 +100,6 @@ export default defineComponent({
     }
     return {
       sectionRef,
-      unsupportedByUseFilter,
       handleTab,
     }
   },

@@ -12,6 +12,7 @@ import {
 } from '~/constants/media'
 
 import { useSearchStore } from '~/stores/search'
+import { useFeatureFlagStore } from '~/stores/feature-flag'
 
 describe('Search Store', () => {
   beforeEach(() => {
@@ -70,6 +71,9 @@ describe('Search Store', () => {
     `(
       'mediaFiltersForDisplay returns $filterTypeCount filters for $searchType',
       ({ searchType, filterTypeCount }) => {
+        const featureFlagStore = useFeatureFlagStore()
+        featureFlagStore.toggleFeature('external_sources', 'on')
+
         const searchStore = useSearchStore()
         searchStore.setSearchType(searchType)
         const filtersForDisplay = searchStore.searchFilters
@@ -250,7 +254,7 @@ describe('Search Store', () => {
     it('toggleFilter updates isFilterApplied with provider', () => {
       const searchStore = useSearchStore()
       searchStore.setSearchType(IMAGE)
-      searchStore.initProviderFilters({
+      searchStore.updateProviderFilters({
         mediaType: IMAGE,
         providers: [{ source_name: 'met', display_name: 'Met' }],
       })
@@ -267,7 +271,7 @@ describe('Search Store', () => {
       expect(searchStore.isAnyFilterApplied).toEqual(true)
     })
 
-    it('initProviderFilters merges with existing provider filters', () => {
+    it('updateProviderFilters merges with existing provider filters', () => {
       const searchStore = useSearchStore()
       const existingProviderFilters = [{ code: 'met', checked: true }]
 
@@ -279,7 +283,7 @@ describe('Search Store', () => {
         { source_name: 'flickr', display_name: 'Flickr' },
       ]
 
-      searchStore.initProviderFilters({
+      searchStore.updateProviderFilters({
         mediaType: 'image',
         providers: providers,
       })
@@ -391,6 +395,10 @@ describe('Search Store', () => {
       async ({ searchType, nextSearchType, expectedFilterCount }) => {
         const searchStore = useSearchStore()
         searchStore.setSearchType(searchType)
+
+        const featureFlagStore = useFeatureFlagStore()
+        featureFlagStore.toggleFeature('external_sources', 'on')
+
         // Set all filters to checked
         for (let ft in searchStore.filters) {
           for (let f of searchStore.filters[ft]) {
@@ -411,6 +419,8 @@ describe('Search Store', () => {
 
     it('Does not set filter or count filter as applied, and does not raise error for unsupported search types', () => {
       const searchStore = useSearchStore()
+      const featureFlagStore = useFeatureFlagStore()
+      featureFlagStore.toggleFeature('external_sources', 'on')
       searchStore.toggleFilter({
         filterType: 'licenseTypes',
         code: 'commercial',

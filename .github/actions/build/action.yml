@@ -25,15 +25,9 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Get pnpm-version
-      shell: bash
-      id: pnpm-version
-      run: |
-        echo "::set-output name=val::$(cat .pnpm-version)"
-
     # setup docker buildx
     - name: setup docker buildx
-      uses: docker/setup-buildx-action@v1
+      uses: docker/setup-buildx-action@v2
       with:
         install: true
 
@@ -50,7 +44,7 @@ runs:
     # gather metadata from git & github actions to reference in docker
     - name: git & github metadata staging
       id: metadata_staging
-      uses: docker/metadata-action@v3
+      uses: docker/metadata-action@v4
       if: ${{ github.event.inputs.is_production == false }}
       with:
         images: ${{ inputs.aws_account_id }}.dkr.ecr.${{ inputs.aws_region }}.amazonaws.com/openverse/frontend
@@ -60,21 +54,19 @@ runs:
 
     # build a docker image
     - name: build docker image
-      uses: docker/build-push-action@v2
+      uses: docker/build-push-action@v3
       if: ${{ github.event.inputs.is_production == false }}
       with:
         context: .
         tags: ${{ steps.metadata_staging.outputs.tags }}
         labels: ${{ steps.metadata_staging.outputs.labels }}
         push: true
-        build-args: |
-          PNPM_VERSION=${{ steps.pnpm-version.outputs.val }}
 
     # for production
     # gather metadata from git & github actions to reference in docker
     - name: git & github metadata production
       id: metadata_production
-      uses: docker/metadata-action@v3
+      uses: docker/metadata-action@v4
       if: ${{ github.event.inputs.is_production == true }}
       with:
         images: ${{ inputs.aws_account_id }}.dkr.ecr.${{ inputs.aws_region }}.amazonaws.com/openverse/frontend
@@ -87,12 +79,10 @@ runs:
 
     # build a docker image
     - name: build docker image
-      uses: docker/build-push-action@v2
+      uses: docker/build-push-action@v3
       if: ${{ github.event.inputs.is_production == true }}
       with:
         context: .
         tags: ${{ steps.metadata_production.outputs.tags }}
         labels: ${{ steps.metadata_production.outputs.labels }}
         push: true
-        build-args: |
-          PNPM_VERSION=${{ steps.pnpm-version.outputs.val }}

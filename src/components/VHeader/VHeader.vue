@@ -40,6 +40,7 @@
     />
     <VHeaderFilter
       v-if="isSearchRoute"
+      :disabled="areFiltersDisabled"
       @open="openMenuModal(menus.FILTERS)"
       @close="close()"
     />
@@ -58,13 +59,14 @@ import {
   watch,
 } from '@nuxtjs/composition-api'
 
-import { ALL_MEDIA } from '~/constants/media'
+import { ALL_MEDIA, searchPath } from '~/constants/media'
 import { isMinScreen } from '~/composables/use-media-query'
 import { useMatchSearchRoutes } from '~/composables/use-match-routes'
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
+import { useI18n } from '~/composables/use-i18n'
 import { useI18nResultsCount } from '~/composables/use-i18n-utilities'
 import { useMediaStore } from '~/stores/media'
-import { useSearchStore } from '~/stores/search'
+import { isSearchTypeSupported, useSearchStore } from '~/stores/search'
 
 import VLogoButton from '~/components/VHeader/VLogoButton.vue'
 import VHeaderFilter from '~/components/VHeader/VHeaderFilter.vue'
@@ -90,7 +92,8 @@ export default defineComponent({
   setup() {
     const mediaStore = useMediaStore()
     const searchStore = useSearchStore()
-    const { app, i18n } = useContext()
+    const { app } = useContext()
+    const i18n = useI18n()
     const router = useRouter()
 
     const { matches: isSearchRoute } = useMatchSearchRoutes()
@@ -171,6 +174,7 @@ export default defineComponent({
      *     update query `q` param, fetch new media.
      */
     const handleSearch = async () => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
       const mediaStore = useMediaStore()
       const searchStore = useSearchStore()
       const searchType = isSearchRoute.value
@@ -187,14 +191,19 @@ export default defineComponent({
         searchStore.setSearchTerm(searchTerm.value)
         searchStore.setSearchType(searchType)
       }
-      const newPath = app.localePath({
-        path: `/search/${searchType === 'all' ? '' : searchType}`,
-        query: searchStore.searchQueryParams,
-      })
-      router.push(newPath)
       document.activeElement?.blur()
-      await mediaStore.fetchMedia()
+      if (isSearchTypeSupported(searchType)) {
+        const newPath = app.localePath({
+          path: searchPath(searchType),
+          query: searchStore.searchQueryParams,
+        })
+        router.push(newPath)
+        await mediaStore.fetchMedia()
+      }
     }
+    const areFiltersDisabled = computed(
+      () => !searchStore.searchTypeIsSupported
+    )
 
     return {
       closeIcon,
@@ -204,6 +213,7 @@ export default defineComponent({
       isMinScreenMd,
       isSearchRoute,
       headerHasTwoRows,
+      areFiltersDisabled,
 
       menuModalRef,
 

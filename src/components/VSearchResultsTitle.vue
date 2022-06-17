@@ -1,6 +1,6 @@
 <template>
   <h1
-    class="leading-tight sr-only md:not-sr-only"
+    class="leading-tight sr-only md:not-sr-only break-words"
     :class="[size === 'large' ? 'text-[90px]' : 'text-6xl']"
   >
     <slot default />
@@ -14,7 +14,7 @@ const sizes = {
   DEFAULT: 'default',
   LARGE: 'large',
 }
-const VSearchResultsTitle = defineComponent({
+export default defineComponent({
   name: 'VSearchResultsTitle',
   props: {
     size: {
@@ -24,7 +24,6 @@ const VSearchResultsTitle = defineComponent({
     },
   },
 })
-export default VSearchResultsTitle
 </script>
 
 <style scoped>

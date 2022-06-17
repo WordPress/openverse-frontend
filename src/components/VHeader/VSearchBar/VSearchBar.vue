@@ -1,6 +1,7 @@
 <template>
   <form
     class="search-bar group flex flex-row items-center bg-white rounded-sm"
+    :class="{ 'h-[57px] md:h-[69px]': size === 'standalone' }"
     @submit.prevent="handleSearch"
   >
     <VInputField
@@ -8,7 +9,9 @@
       v-bind="$attrs"
       class="flex-grow search-field"
       :class="{ 'border-transparent': isHomeRoute }"
-      label-text="Openverse"
+      :label-text="
+        $t('search.search-bar-label', { openverse: 'Openverse' }).toString()
+      "
       :connection-sides="['end']"
       :size="size"
       field-id="search-bar"
@@ -28,7 +31,6 @@
 import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
 
 import { useMatchHomeRoute } from '~/composables/use-match-routes'
-
 import { defineEvent } from '~/types/emits'
 
 import VInputField, {
@@ -41,7 +43,7 @@ import VSearchButton from '~/components/VHeader/VSearchBar/VSearchButton.vue'
  * that fires a search request. The loading state and number of hits are also
  * displayed in the bar itself.
  */
-const VSearchBar = defineComponent({
+export default defineComponent({
   name: 'VSearchBar',
   components: { VInputField, VSearchButton },
   inheritAttrs: false,
@@ -56,7 +58,6 @@ const VSearchBar = defineComponent({
     size: {
       type: String as PropType<keyof typeof FIELD_SIZES>,
       required: true,
-      validator: (v: string) => Object.keys(FIELD_SIZES).includes(v),
     },
     placeholder: {
       type: String,
@@ -88,7 +89,6 @@ const VSearchBar = defineComponent({
     }
   },
 })
-export default VSearchBar
 </script>
 
 <style>

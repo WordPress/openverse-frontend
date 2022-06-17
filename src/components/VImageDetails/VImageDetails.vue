@@ -44,13 +44,15 @@
 </template>
 
 <script>
-import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
+import { computed, defineComponent } from '@nuxtjs/composition-api'
+
+import { useI18n } from '~/composables/use-i18n'
 
 import VContentReportPopover from '~/components/VContentReport/VContentReportPopover.vue'
 import VLink from '~/components/VLink.vue'
 import VMediaTag from '~/components/VMediaTag/VMediaTag.vue'
 
-const VImageDetails = defineComponent({
+export default defineComponent({
   name: 'VImageDetails',
   components: { VContentReportPopover, VLink, VMediaTag },
   props: {
@@ -69,7 +71,7 @@ const VImageDetails = defineComponent({
     },
   },
   setup(props) {
-    const { i18n } = useContext()
+    const i18n = useI18n()
 
     const imgType = computed(() => {
       if (props.imageType) {
@@ -84,7 +86,6 @@ const VImageDetails = defineComponent({
     return { imgType }
   },
 })
-export default VImageDetails
 </script>
 
 <style scoped>

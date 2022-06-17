@@ -21,7 +21,7 @@
 import {
   computed,
   defineComponent,
-  useContext,
+  toRef,
   useMeta,
 } from '@nuxtjs/composition-api'
 
@@ -29,6 +29,7 @@ import { useLoadMore } from '~/composables/use-load-more'
 import { isMinScreen } from '~/composables/use-media-query'
 import { useBrowserIsMobile } from '~/composables/use-browser-detection'
 import { useFocusFilters } from '~/composables/use-focus-filters'
+import { useI18n } from '~/composables/use-i18n'
 import { Focus } from '~/utils/focus-management'
 
 import VAudioTrack from '~/components/VAudioTrack/VAudioTrack.vue'
@@ -46,7 +47,7 @@ export default defineComponent({
   },
   props: propTypes,
   setup(props) {
-    const { i18n } = useContext()
+    const i18n = useI18n()
 
     useMeta({ title: `${props.searchTerm} | Openverse` })
 
@@ -76,8 +77,8 @@ export default defineComponent({
         focusFilters.focusFilterSidebar(event, Focus.Last)
       }
     }
-
-    const { canLoadMore, onLoadMore } = useLoadMore(props)
+    const searchTermRef = toRef(props, 'searchTerm')
+    const { canLoadMore, onLoadMore } = useLoadMore(searchTermRef)
 
     return {
       results,

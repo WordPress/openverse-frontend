@@ -8,7 +8,7 @@
       :query="query"
       :supported="supported"
       :search-type="searchType"
-      :results-count="resultsCount"
+      :results-count="resultCount"
       data-testid="search-grid"
       @tab="handleTab($event, 'search-grid')"
     >
@@ -26,6 +26,7 @@
     </VSearchGrid>
     <VScrollButton
       v-show="showScrollButton"
+      :is-filter-sidebar-visible="isFilterSidebarVisible"
       data-testid="scroll-button"
       @tab="handleTab($event, 'scroll-button')"
     />
@@ -36,7 +37,6 @@
 import { isShallowEqualObjects } from '@wordpress/is-shallow-equal'
 import { computed, defineComponent, inject, ref } from '@nuxtjs/composition-api'
 
-import { supportedSearchTypes } from '~/constants/media'
 import { isMinScreen } from '~/composables/use-media-query'
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
 import { Focus, focusIn } from '~/utils/focus-management'
@@ -54,6 +54,15 @@ export default defineComponent({
     VSearchGrid,
     VSkipToContentContainer,
   },
+  middleware({ route, redirect }) {
+    /**
+     * This anonymous middleware redirects any search without a query to the homepage.
+     * This is meant to block direct access to /search and all sub-routes, with
+     * an exception for the 'creator' filter. The creator filter doesn't send
+     * the search query to the API.
+     */
+    if (!route.query.q && !route.query.searchBy) return redirect('/')
+  },
   scrollToTop: false,
   setup() {
     const searchGridRef = ref(null)
@@ -66,9 +75,7 @@ export default defineComponent({
     const searchTerm = computed(() => searchStore.searchTerm)
     const searchType = computed(() => searchStore.searchType)
     const query = computed(() => searchStore.searchQueryParams)
-    const supported = computed(() =>
-      supportedSearchTypes.includes(searchType.value)
-    )
+    const supported = computed(() => searchStore.searchTypeIsSupported)
     const resultCount = computed(() => mediaStore.resultCount)
     const fetchState = computed(() => mediaStore.fetchState)
     const resultItems = computed(() => mediaStore.resultItems)
@@ -97,26 +104,21 @@ export default defineComponent({
       handleTab,
     }
   },
-  asyncData({ route, $pinia }) {
+  async asyncData({ route, $pinia }) {
     const searchStore = useSearchStore($pinia)
+    const mediaStore = useMediaStore($pinia)
+    await searchStore.initProviderFilters()
     searchStore.setSearchStateFromUrl({
       path: route.path,
       urlQuery: route.query,
     })
-  },
-  async fetch() {
-    if (this.supported && !this.resultCount && this.searchTerm.trim() !== '') {
-      await this.fetchMedia()
+    if (
+      searchStore.searchTypeIsSupported &&
+      !mediaStore.resultCount &&
+      searchStore.searchTerm.trim() !== ''
+    ) {
+      await mediaStore.fetchMedia()
     }
-  },
-  computed: {
-    /**
-     * Number of search results. Returns 0 for unsupported types.
-     * @returns {number}
-     */
-    resultsCount() {
-      return this.supported ? this.resultCount : 0 ?? 0
-    },
   },
   watch: {
     /**
