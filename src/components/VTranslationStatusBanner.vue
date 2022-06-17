@@ -3,7 +3,7 @@
     :id="bannerKey"
     :enabled="needsTranslationBanner"
     variant="informational"
-    data-testid="translation-banner"
+    data-testid="banner-translation"
   >
     {{
       // eslint-disable-next-line @intlify/vue-i18n/no-raw-text
