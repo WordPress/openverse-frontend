@@ -244,7 +244,6 @@ export const renderModes = [
 /**
  * Adds '/ar' prefix to a rtl route. The path should start with '/'
  */
-export const pathWithDir = (rawPath: string, dir: string) => {
-  const path = rawPath.startsWith('/') ? rawPath : `/${rawPath}`
+export const pathWithDir = (path: `/${string}`, dir: 'ltr' | 'rtl') => {
   return dir === 'rtl' ? `/ar${path}` : path
 }
