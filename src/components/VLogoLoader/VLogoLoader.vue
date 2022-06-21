@@ -40,15 +40,23 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, PropType } from '@nuxtjs/composition-api'
 
 import { useReducedMotion } from '~/composables/use-media-query'
 
-import { propTypes } from './VLogoLoader.types'
-
 export default defineComponent({
   name: 'VLogoLoader',
-  props: propTypes,
+  props: {
+    status: {
+      type: String as PropType<'loading' | 'idle'>,
+      default: 'idle',
+      required: false,
+    },
+    autoResize: {
+      type: Boolean,
+      default: true,
+    },
+  },
   setup() {
     const prefersReducedMotion = useReducedMotion()
 

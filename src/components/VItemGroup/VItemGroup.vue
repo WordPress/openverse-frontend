@@ -173,7 +173,7 @@ export default defineComponent({
      * @param {boolean} selected
      * @param {boolean} previousSelected
      */
-    const setSelected = (selected, previousSelected) => {
+    const setSelected = (selected: boolean, previousSelected: boolean) => {
       if (previousSelected && !selected) selectedCount.value -= 1
       if (!previousSelected && selected) selectedCount.value += 1
     }

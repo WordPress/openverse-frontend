@@ -29,7 +29,7 @@
  */
 import { defineComponent, PropType } from '@nuxtjs/composition-api'
 
-import { SupportedSearchType } from '~/constants/media'
+import type { SupportedSearchType } from '~/constants/media'
 
 import VAudioTrackSkeleton from '~/components/VSkeleton/VAudioTrackSkeleton.vue'
 import VBone from '~/components/VSkeleton/VBone.vue'

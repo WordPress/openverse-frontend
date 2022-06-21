@@ -35,10 +35,12 @@
   </div>
 </template>
 
-<script>
-import { defineComponent } from '@nuxtjs/composition-api'
+<script lang="ts">
+import { defineComponent, PropType } from '@nuxtjs/composition-api'
 
 import { getLicenseUrl, isLicense } from '~/utils/license'
+
+import type { License } from '~/constants/license'
 
 import VLicenseElements from '~/components/VLicense/VLicenseElements.vue'
 import VLink from '~/components/VLink.vue'
@@ -58,7 +60,7 @@ export default defineComponent({
      * the code of the license whose elements need to be explained
      */
     license: {
-      type: String,
+      type: String as PropType<License>,
       required: true,
     },
   },

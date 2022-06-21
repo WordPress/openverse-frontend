@@ -1,5 +1,5 @@
 <template>
-  <aside :aria-label="$t('audio-details.related-audios')">
+  <aside :aria-label="$t('audio-details.related-audios').toString()">
     <h4 class="text-2xl lg:text-3xl mb-6">
       {{ $t('audio-details.related-audios') }}
     </h4>
@@ -23,11 +23,16 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
+import {
+  computed,
+  ComputedRef,
+  defineComponent,
+  PropType,
+} from '@nuxtjs/composition-api'
 
 import { isMinScreen } from '~/composables/use-media-query'
-import { FetchState } from '~/composables/use-fetch-state'
-import { AudioDetail } from '~/models/media'
+import type { FetchState } from '~/composables/use-fetch-state'
+import type { AudioDetail } from '~/models/media'
 
 import LoadingIcon from '~/components/LoadingIcon.vue'
 import VAudioTrack from '~/components/VAudioTrack/VAudioTrack.vue'
@@ -50,9 +55,10 @@ export default defineComponent({
    */
   setup() {
     const isMinScreenMd = isMinScreen('md', { shouldPassInSSR: true })
-    const audioTrackSize = computed(() => {
-      return isMinScreenMd.value ? 'l' : 's'
-    })
+
+    const audioTrackSize: ComputedRef<'l' | 's'> = computed(() =>
+      isMinScreenMd.value ? 'l' : 's'
+    )
     return { audioTrackSize }
   },
 })
