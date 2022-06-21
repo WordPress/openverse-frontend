@@ -17,10 +17,12 @@ interface ApiMedia
 
 const mediaTypeExtensions: Record<MediaType, string[]> = {
   [IMAGE]: ['jpg', 'jpeg', 'png', 'gif', 'svg'],
-  [AUDIO]: ['mp3', 'wav', 'ogg', 'flac', 'aac', 'aiff'],
+  [AUDIO]: ['mp3', 'wav', 'ogg', 'flac', 'aac', 'aiff', 'mp32'],
   [VIDEO]: ['mp4', 'webm', 'mkv', 'avi', 'mov', 'wmv', 'flv', 'mpg', 'mpeg'],
   [MODEL_3D]: ['fbx', 'obj', 'stl', 'dae', '3ds', 'blend', 'max', 'obj', 'ply'],
 }
+
+const matchers = [/jpe?g$/i, /tiff?$/i, /mp32?$/i]
 
 /**
  * Compares the filetypes, taking into account different versions of the same
@@ -32,10 +34,9 @@ const isFiletypeMatching = (extension: string, filetype?: string) => {
   if (filetype === extension) {
     return true
   }
-  return (
-    filetype &&
-    ['jpg', 'jpeg'].includes(filetype) &&
-    ['jpg', 'jpeg'].includes(extension)
+  if (!filetype) return false
+  return matchers.some((matcher) =>
+    Boolean(filetype.match(matcher) && extension.match(matcher))
   )
 }
 const extractPartAfterLastDot = (str?: string) => {
