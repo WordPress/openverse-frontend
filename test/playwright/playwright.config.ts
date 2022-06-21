@@ -27,7 +27,7 @@ const config: PlaywrightTestConfig = {
      * switch this back to `prod` and see if your tests pass.
      */
     command: './node_modules/.bin/npm-run-all -p -r talkback prod',
-    timeout: 60_000 * 5, // 5 minutes
+    timeout: 60_000 * 10, // 5 minutes
     port: 8443,
     reuseExistingServer: !process.env.CI || process.env.PWDEBUG === '1',
     env: {
@@ -39,7 +39,7 @@ const config: PlaywrightTestConfig = {
     baseURL: 'http://localhost:8443',
     trace: 'retain-on-failure',
   },
-  timeout: 60 * 1e3,
+  timeout: 5 * 60 * 1e3,
   /**
    * When updating or recreating tapes, if we have more than one worker running
    * then Talkback is liable to see multiple requests at the same time that would

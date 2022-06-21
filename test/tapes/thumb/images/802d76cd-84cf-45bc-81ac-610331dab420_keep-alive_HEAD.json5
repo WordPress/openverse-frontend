@@ -1,0 +1,80 @@
+{
+    meta: {
+        createdAt: '2022-06-21T04:21:32.133Z',
+        host: 'https://api.openverse.engineering',
+    },
+    req: {
+        headers: {
+            connection: 'keep-alive',
+        },
+        url: '/v1/images/802d76cd-84cf-45bc-81ac-610331dab420/thumb/',
+        method: 'HEAD',
+        body: '',
+    },
+    res: {
+        status: 200,
+        headers: {
+            date: [
+                'Tue, 21 Jun 2022 04:21:33 GMT',
+            ],
+            'content-type': [
+                'image/jpeg',
+            ],
+            'content-length': [
+                '64224',
+            ],
+            connection: [
+                'keep-alive',
+            ],
+            vary: [
+                'Accept, Authorization, Origin, Accept-Encoding',
+            ],
+            allow: [
+                'GET, HEAD, OPTIONS',
+            ],
+            'x-frame-options': [
+                'DENY',
+            ],
+            'access-control-allow-origin': [
+                '*',
+            ],
+            'x-content-type-options': [
+                'nosniff',
+            ],
+            'referrer-policy': [
+                'same-origin',
+            ],
+            'cross-origin-opener-policy': [
+                'same-origin',
+            ],
+            'cache-control': [
+                'max-age=31536000',
+            ],
+            'cf-cache-status': [
+                'MISS',
+            ],
+            'last-modified': [
+                'Tue, 21 Jun 2022 04:21:33 GMT',
+            ],
+            'accept-ranges': [
+                'bytes',
+            ],
+            'expect-ct': [
+                'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"',
+            ],
+            'strict-transport-security': [
+                'max-age=15552000; includeSubDomains; preload',
+            ],
+            server: [
+                'cloudflare',
+            ],
+            'cf-ray': [
+                '71e9f53d985198b2-OTP',
+            ],
+            'alt-svc': [
+                'h3=":443"; ma=86400, h3-29=":443"; ma=86400',
+            ],
+        },
+        body: '',
+    },
+}
