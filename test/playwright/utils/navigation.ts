@@ -145,9 +145,8 @@ export const goToSearchTerm = async (
   const query = options.query ? `&${options.query}` : ''
 
   if (mode === 'SSR') {
-    await page.goto(
-      pathWithDir(`search/${searchTypePath(searchType)}?q=${term}${query}`, dir)
-    )
+    const path = `search/${searchTypePath(searchType)}?q=${term}${query}`
+    await page.goto(pathWithDir(path, dir))
     await dismissTranslationBanner(page)
   } else {
     await page.goto(pathWithDir('/', dir))
@@ -244,6 +243,7 @@ export const renderModes = [
 /**
  * Adds '/ar' prefix to a rtl route. The path should start with '/'
  */
-export const pathWithDir = (path: `/${string}`, dir: 'ltr' | 'rtl') => {
+export const pathWithDir = (path: string, dir: 'ltr' | 'rtl') => {
+  path = `/${path}`
   return dir === 'rtl' ? `/ar${path}` : path
 }
