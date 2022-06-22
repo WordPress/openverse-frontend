@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 
 import axios from 'axios'
 
+import { warn } from '~/utils/console'
 import { hash, rand as prng } from '~/utils/prng'
 import prepareSearchQueryParams from '~/utils/prepare-search-query-params'
 import type { DetailFromMediaType, Media } from '~/models/media'
@@ -397,9 +398,13 @@ export const useMediaStore = defineStore('media', {
       id: string,
       properties: Partial<DetailFromMediaType<typeof type>>
     ) {
-      this.results[type].items[id] = {
-        ...this.results[type].items[id],
-        ...properties,
+      const item = this.getItemById(type, id)
+      if (item) {
+        Object.assign(item, properties)
+      } else {
+        warn(
+          `Attempted to update media item ${type} ${id} but could not find it.`
+        )
       }
     },
   },
