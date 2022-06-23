@@ -5,7 +5,7 @@ import { hideInputCursors } from '~~/test/playwright/utils/page'
 import {
   dismissTranslationBanner,
   pathWithDir,
-  renderDirs,
+  languageDirections,
 } from '~~/test/playwright/utils/navigation'
 
 /**
@@ -16,7 +16,7 @@ const deleteImageCarousel = async (page: Page) => {
   await element?.evaluate((node) => node.remove())
   element?.dispose()
 }
-for (const dir of renderDirs) {
+for (const dir of languageDirections) {
   test.describe(`${dir} homepage snapshots`, () => {
     const path = pathWithDir('/', dir)
     test.beforeEach(async ({ page }) => {

@@ -2,13 +2,16 @@ import { test } from '@playwright/test'
 
 import breakpoints from '~~/test/playwright/utils/breakpoints'
 import { hideInputCursors } from '~~/test/playwright/utils/page'
-import { goToSearchTerm, renderDirs } from '~~/test/playwright/utils/navigation'
+import {
+  goToSearchTerm,
+  languageDirections,
+} from '~~/test/playwright/utils/navigation'
 
 const headerSelector = '.main-header'
 const loadMoreSelector = 'button:has-text("Load more")'
 
 test.describe('header snapshots', () => {
-  for (const dir of renderDirs) {
+  for (const dir of languageDirections) {
     test.describe(dir, () => {
       test.beforeEach(async ({ page }) => {
         await goToSearchTerm(page, 'birds', { dir: dir })

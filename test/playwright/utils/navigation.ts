@@ -231,9 +231,9 @@ export const scrollDownAndUp = async (page: Page) => {
   await scrollToTop(page)
 }
 
-export const renderDirs = ['ltr', 'rtl'] as const
+export const languageDirections = ['ltr', 'rtl'] as const
 
-export const renderModes = [
+export const renderingContexts = [
   ['SSR', 'ltr'],
   ['SSR', 'rtl'],
   ['CSR', 'ltr'],

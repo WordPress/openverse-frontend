@@ -4,7 +4,7 @@ import breakpoints from '~~/test/playwright/utils/breakpoints'
 import {
   dismissTranslationBanner,
   pathWithDir,
-  renderDirs,
+  languageDirections,
 } from '~~/test/playwright/utils/navigation'
 
 const tabs = [
@@ -14,7 +14,7 @@ const tabs = [
 ]
 test.describe('media-reuse', () => {
   for (const tab of tabs) {
-    for (const dir of renderDirs) {
+    for (const dir of languageDirections) {
       breakpoints.describeEvery(({ expectSnapshot }) => {
         test(`Should render a ${dir} media reuse section with "${tab.name}" tab open`, async ({
           page,

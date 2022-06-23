@@ -5,7 +5,7 @@ import { removeHiddenOverflow } from '~~/test/playwright/utils/page'
 import {
   dismissTranslationBanner,
   pathWithDir,
-  renderDirs,
+  languageDirections,
 } from '~~/test/playwright/utils/navigation'
 
 const contentPages = [
@@ -16,7 +16,7 @@ const contentPages = [
   'non-existent',
 ]
 for (const contentPage of contentPages) {
-  for (const dir of renderDirs) {
+  for (const dir of languageDirections) {
     test.describe(`${contentPage} ${dir} page snapshots`, () => {
       test.beforeEach(async ({ page }) => {
         await page.goto(pathWithDir(contentPage, dir))
