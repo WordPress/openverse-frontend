@@ -6,10 +6,14 @@ import {
   IMAGE,
   MediaType,
   MODEL_3D,
-  SearchType,
+  SupportedSearchType,
   VIDEO,
 } from '~/constants/media'
+import { SCREEN_SIZES } from '~/constants/screens'
+
 import messages from '~/locales/en.json'
+
+const smWidth = SCREEN_SIZES.get('sm') as number
 
 const buttonSelectors = {
   filter: '[aria-controls="filters"]',
@@ -21,7 +25,7 @@ export function sleep(ms: number) {
 }
 
 export type RenderMode = 'SSR' | 'CSR'
-export const searchTypePath = (searchType: SearchType) =>
+export const searchTypePath = (searchType: SupportedSearchType) =>
   searchType === 'all' ? '' : `${searchType}`
 
 export const searchTypeNames = {
@@ -129,11 +133,26 @@ export const dismissTranslationBanner = async (page: Page) => {
   }
 }
 
+export const selectHomepageSearchType = async (
+  page: Page,
+  searchType: SupportedSearchType
+) => {
+  const pageWidth = page.viewportSize()?.width
+  if (pageWidth && pageWidth > smWidth) {
+    await page.click('[aria-label="All content"]')
+    await page.click(
+      `button[role="radio"]:has-text("${searchTypeNames[searchType]}")`
+    )
+  } else {
+    await page.click(`button:has-text("${searchTypeNames[searchType]}")`)
+  }
+}
+
 export const goToSearchTerm = async (
   page: Page,
   term: string,
   options: {
-    searchType?: SearchType
+    searchType?: SupportedSearchType
     mode?: RenderMode
     dir?: 'ltr' | 'rtl'
     query?: string // Only for SSR mode
@@ -153,10 +172,7 @@ export const goToSearchTerm = async (
     await dismissTranslationBanner(page)
     // Select the search type
     if (searchType !== 'all') {
-      await page.click('[aria-label="All content"]')
-      await page.click(
-        `button[role="radio"]:has-text("${searchTypeNames[searchType]}")`
-      )
+      await selectHomepageSearchType(page, searchType)
     }
     // Type search term
     const searchInput = page.locator('main input[type="search"]')
@@ -164,10 +180,15 @@ export const goToSearchTerm = async (
     // Click search button
     // Wait for navigation
     await Promise.all([
-      page.click('[aria-label="Search"]'),
       page.waitForNavigation(),
+      page.click('[aria-label="Search"]'),
     ])
-    await scrollDownAndUp(page)
+    await page.waitForLoadState('networkidle')
+  }
+  await scrollDownAndUp(page)
+  const pageWidth = page.viewportSize()?.width
+  if (pageWidth && pageWidth > smWidth) {
+    await page.waitForSelector('[aria-label="menu"]')
   }
 }
 
@@ -213,7 +234,6 @@ export const scrollToBottom = async (page: Page) => {
   await page.evaluate(() => {
     window.scrollTo(0, document.body.scrollHeight)
   })
-  await sleep(300)
 }
 
 export const scrollToTop = async (page: Page) => {
@@ -228,6 +248,7 @@ export const scrollToTop = async (page: Page) => {
  */
 export const scrollDownAndUp = async (page: Page) => {
   await scrollToBottom(page)
+  await page.waitForLoadState('networkidle')
   await scrollToTop(page)
 }
 
@@ -243,7 +264,7 @@ export const renderingContexts = [
 /**
  * Adds '/ar' prefix to a rtl route. The path should start with '/'
  */
-export const pathWithDir = (path: string, dir: 'ltr' | 'rtl') => {
-  path = `/${path}`
+export const pathWithDir = (rawPath: string, dir: string) => {
+  const path = rawPath.startsWith('/') ? rawPath : `/${rawPath}`
   return dir === 'rtl' ? `/ar${path}` : path
 }
