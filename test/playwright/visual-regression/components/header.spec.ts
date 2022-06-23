@@ -5,6 +5,8 @@ import { hideInputCursors } from '~~/test/playwright/utils/page'
 import {
   goToSearchTerm,
   languageDirections,
+  scrollToBottom,
+  sleep,
 } from '~~/test/playwright/utils/navigation'
 
 const headerSelector = '.main-header'
@@ -25,7 +27,8 @@ test.describe('header snapshots', () => {
 
           test('scrolled', async ({ page }) => {
             await page.locator(loadMoreSelector).focus()
-            await page.mouse.wheel(10, 0)
+            await scrollToBottom(page)
+            await sleep(200)
             await expectSnapshot(
               `scrolled-${dir}`,
               page.locator(headerSelector)
