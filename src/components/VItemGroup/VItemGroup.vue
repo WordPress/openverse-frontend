@@ -19,15 +19,12 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import {
   defineComponent,
   provide,
   ref,
   readonly,
-  InjectionKey,
-  PropType,
-  Ref,
 } from '@nuxtjs/composition-api'
 import { ensureFocus } from 'reakit-utils/ensureFocus'
 
@@ -35,27 +32,31 @@ import { useI18n } from '~/composables/use-i18n'
 
 import { keycodes } from '~/constants/key-codes'
 
-type VItemGroupContext = {
-  direction: 'vertical' | 'horizontal' | 'columns'
-  bordered: boolean
-  type: 'menu' | 'radiogroup'
-  size: 'small' | 'medium'
-}
+/**
+ * @typedef VItemGroupContext
+ * @property {'vertical' | 'horizontal'} direction
+ * @property {boolean} bordered
+ * @property {'menu' | 'radiogroup'} type
+ * @property {'small' | 'medium'} size
+ */
 
-export const VItemGroupContextKey = Symbol(
-  'VItemGroupContext'
-) as InjectionKey<VItemGroupContext>
+/**
+ * @type {import('@nuxtjs/composition-api').InjectionKey<VItemGroupContext>}
+ */
+export const VItemGroupContextKey = Symbol('VItemGroupContext')
 
-type VItemGroupFocusContext = {
-  isGroupFocused: Readonly<Ref<boolean>>
-  onItemKeyPress: (event: KeyboardEvent) => void
-  selectedCount: Readonly<Ref<number>>
-  setSelected: (selected: boolean, previousSelected: boolean) => void
-}
+/**
+ * @typedef VItemGroupFocusContext
+ * @property {import('@nuxtjs/composition-api').Readonly<import('@nuxtjs/composition-api').Ref<boolean>>} isGroupFocused
+ * @property {(event: KeyboardEvent) => void} onItemKeyPress
+ * @property {import('@nuxtjs/composition-api').Readonly<import('@nuxtjs/composition-api').Ref<number>>} selectedCount
+ * @property {(selected: boolean, previousSelected: boolean) => void} setSelected
+ */
 
-export const VItemGroupFocusContextKey = Symbol(
-  'VItemGroupFocusContext'
-) as InjectionKey<VItemGroupFocusContext>
+/**
+ * @type {import('@nuxtjs/composition-api').InjectionKey<VItemGroupFocusContext>}
+ */
+export const VItemGroupFocusContextKey = Symbol('VItemGroupFocusContext')
 
 const arrows = [
   keycodes.ArrowUp,
@@ -73,8 +74,11 @@ export default defineComponent({
      * @default 'vertical'
      */
     direction: {
-      type: String as PropType<VItemGroupContext['direction']>,
+      type: /** @type {import('@nuxtjs/composition-api').PropType<'vertical' | 'horizontal' | 'columns' >} */ (
+        String
+      ),
       default: 'vertical',
+      validate: (v) => ['vertical', 'horizontal', 'columns'].includes(v),
     },
     /**
      * Whether to render a bordered, separated list of items. When false each
@@ -101,8 +105,11 @@ export default defineComponent({
      * @default 'menu'
      */
     type: {
-      type: String as PropType<VItemGroupContext['type']>,
+      type: /** @type {import('@nuxtjs/composition-api').PropType<'menu' | 'radiogroup'>} */ (
+        String
+      ),
       default: 'menu',
+      validate: (v) => ['menu', 'radiogroup'].includes(v),
     },
     /**
      * Size of the item group corresponds to the size of the component.
@@ -110,8 +117,9 @@ export default defineComponent({
      * @default 'small'
      */
     size: {
-      type: String as PropType<VItemGroupContext['size']>,
+      type: String,
       default: 'small',
+      validate: (val) => ['small', 'medium'].includes(val),
     },
   },
   setup(props) {
@@ -127,18 +135,21 @@ export default defineComponent({
      * because the DOM order gets reversed to be opposite the visual order relative to left/right movement.
      *
      * For vertical locales it should remain the same.
-     * @param ltr
-     * @param rtl
+     * @param {string} ltr
+     * @param {string} rtl
      */
-    const resolveArrow = (ltr: string, rtl: string) => {
+    const resolveArrow = (ltr, rtl) => {
       return i18n.localeProperties.dir === 'rtl' &&
         props.direction === 'horizontal'
         ? rtl
         : ltr
     }
 
-    const onItemKeyPress = (event: KeyboardEvent) => {
-      if (!Array.from(arrows).includes(event.key) || !nodeRef.value) return
+    /**
+     * @param {KeyboardEvent} event
+     */
+    const onItemKeyPress = (event) => {
+      if (!arrows.includes(event.key) || !nodeRef.value) return
 
       event.preventDefault()
 
@@ -147,7 +158,7 @@ export default defineComponent({
       // While VItem ultimately renders a button at the moment, that could change in the future, so using a data attribute selector makes it more flexible for the future
       const items = Array.from(
         nodeRef.value.querySelectorAll('[data-item-group-item]')
-      ) as HTMLElement[]
+      )
 
       const targetIndex = items.findIndex((item) => item === target)
 
@@ -173,7 +184,7 @@ export default defineComponent({
      * @param {boolean} selected
      * @param {boolean} previousSelected
      */
-    const setSelected = (selected: boolean, previousSelected: boolean) => {
+    const setSelected = (selected, previousSelected) => {
       if (previousSelected && !selected) selectedCount.value -= 1
       if (!previousSelected && selected) selectedCount.value += 1
     }

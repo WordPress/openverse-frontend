@@ -43,11 +43,10 @@
   </section>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
+<script>
+import { computed, defineComponent } from '@nuxtjs/composition-api'
 
 import { useI18n } from '~/composables/use-i18n'
-import { ImageDetail } from '~/models/media'
 
 import VContentReportPopover from '~/components/VContentReport/VContentReportPopover.vue'
 import VLink from '~/components/VLink.vue'
@@ -58,7 +57,7 @@ export default defineComponent({
   components: { VContentReportPopover, VLink, VMediaTag },
   props: {
     image: {
-      type: Object as PropType<ImageDetail>,
+      type: Object,
       required: true,
     },
     imageWidth: {

@@ -49,14 +49,13 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import {
   defineComponent,
   inject,
   ref,
   computed,
   watch,
-  PropType,
 } from '@nuxtjs/composition-api'
 
 import { warn } from '~/utils/console'
@@ -97,8 +96,9 @@ export default defineComponent({
      * @variants 'button', 'VLink'
      */
     as: {
-      type: String as PropType<'button' | 'VLink'>,
+      type: String,
       default: 'button',
+      validator: (val) => ['button', 'VLink'].includes(val),
     },
   },
   /**

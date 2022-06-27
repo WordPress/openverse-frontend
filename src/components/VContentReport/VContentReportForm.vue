@@ -107,13 +107,8 @@
   </div>
 </template>
 
-<script lang="ts">
-import {
-  computed,
-  defineComponent,
-  PropType,
-  ref,
-} from '@nuxtjs/composition-api'
+<script>
+import { computed, defineComponent, ref } from '@nuxtjs/composition-api'
 
 import ReportService from '~/data/report-service'
 
@@ -126,8 +121,6 @@ import {
   WIP,
   DMCA_FORM_URL,
 } from '~/constants/content-report'
-
-import type { Media } from '~/models/media'
 
 import VButton from '~/components/VButton.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'
@@ -149,14 +142,8 @@ export default defineComponent({
     VReportDescForm,
   },
   props: {
-    media: {
-      type: Object as PropType<Media>,
-      required: true,
-    },
-    providerName: {
-      type: String,
-      required: true,
-    },
+    media: { required: true },
+    providerName: { required: true },
     reportService: { required: false },
     closeFn: { required: true },
   },
