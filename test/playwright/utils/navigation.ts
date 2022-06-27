@@ -19,9 +19,6 @@ const buttonSelectors = {
   filter: '[aria-controls="filters"]',
   contentSwitcher: '[aria-controls="content-switcher-modal"]',
 }
-export function sleep(ms: number) {
-  return new Promise<void>((resolve) => setTimeout(async () => resolve(), ms))
-}
 
 export function sleep(ms: number) {
   return new Promise<void>((resolve) => setTimeout(resolve, ms))
@@ -208,18 +205,6 @@ export const searchFromHeader = async (page: Page, term: string) => {
 }
 
 /**
- * Fills the search input in the page header, clicks on submit
- * and waits for navigation.
- */
-export const searchFromHeader = async (page: Page, term: string) => {
-  await page.fill('id=search-bar', term)
-  await Promise.all([
-    page.waitForNavigation(),
-    page.locator('button[type="submit"]').click(),
-  ])
-}
-
-/**
  * Click on the first <mediaType> result: a link that contains
  * /<mediaType>/ in its URL. We cannot use the 'startsWith' `^` matcher
  * because localized routes start with the locale prefix (e.g. /ar/image/).
@@ -282,11 +267,4 @@ export const renderingContexts = [
 export const pathWithDir = (rawPath: string, dir: string) => {
   const path = rawPath.startsWith('/') ? rawPath : `/${rawPath}`
   return dir === 'rtl' ? `/ar${path}` : path
-}
-
-export const scrollToBottom = async (page: Page) => {
-  await page.evaluate(() => {
-    window.scrollTo(0, document.body.scrollHeight)
-  })
-  await sleep(300)
 }
