@@ -30,10 +30,17 @@ describe('VAudioDetails', () => {
 
   it('renders the album title', () => {
     render(VAudioDetails, options)
+    screen.getByText('audio-details.table.album')
     const album = screen.getByText(overrides.audio_set.title)
     expect(album).toHaveAttribute(
       'href',
       overrides.audio_set.foreign_landing_url
     )
+  })
+
+  it('hides the album title tag when it does not exists', () => {
+    options.propsData.audio.audio_set = null
+    render(VAudioDetails, options)
+    expect(screen.queryByText('Album')).toBeNull()
   })
 })
