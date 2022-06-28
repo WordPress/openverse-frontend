@@ -50,7 +50,6 @@ export default defineComponent({
     status: {
       type: String as PropType<'loading' | 'idle'>,
       default: 'idle',
-      required: false,
     },
     autoResize: {
       type: Boolean,
