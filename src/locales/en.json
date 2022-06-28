@@ -331,8 +331,9 @@
       "title": "Search Settings",
       "enable": "Enable Mature Content"
     },
-    "durations": {
+    "lengths": {
       "title": "Durations",
+      "shortest": "Shortest",
       "short": "Short",
       "medium": "Medium",
       "long": "Long"
@@ -539,7 +540,7 @@
       "unsupported-title": "{openverse} does not yet support built-in {type} search.",
       "supported-title": "Not finding what you're looking for? Try additional {type} sources.",
       "no-results-title": "No {type} results for \"{query}\".",
-      "caption": "Click on a source below to directly search other collections of CC-licensed {type}.{break}Please note that \"Use\" filters are not supported for {filter}.",
+      "caption": "Click on a source below to directly search other collections of CC-licensed {type}.",
       "types": {
         "image": "image",
         "audio": "audio",
@@ -583,7 +584,8 @@
   "play-pause": {
     "play": "Play",
     "pause": "Pause",
-    "replay": "Replay"
+    "replay": "Replay",
+    "loading": "Loading"
   },
   "search": {
     "search": "Search",

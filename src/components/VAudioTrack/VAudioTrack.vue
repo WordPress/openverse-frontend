@@ -19,6 +19,7 @@
         <VWaveform
           v-bind="waveformProps"
           :peaks="audio.peaks"
+          :audio-id="audio.id"
           :current-time="currentTime"
           :duration="duration"
           :message="message ? $t(`audio-track.messages.${message}`) : null"
@@ -131,11 +132,13 @@ export default defineComponent({
       // Preserve existing local audio if we plucked it from the global active audio
       if (!localAudio) localAudio = new Audio(props.audio.url)
 
-      localAudio.addEventListener('play', setPlaying)
-      localAudio.addEventListener('pause', setPaused)
-      localAudio.addEventListener('ended', setPlayed)
-      localAudio.addEventListener('timeupdate', setTimeWhenPaused)
-      localAudio.addEventListener('durationchange', setDuration)
+      Object.entries(eventMap).forEach(([name, fn]) =>
+        /**
+         * This cast is safe, it just filters `undefined` that is still present on the
+         * `localAudio`'s type despite the check above to create it if it doesn't exist.
+         */
+        (localAudio as HTMLAudioElement).addEventListener(name, fn)
+      )
 
       /**
        * Similar to the behavior in the global audio track,
@@ -175,7 +178,7 @@ export default defineComponent({
      * We can only create the local audio object on the client,
      * so the initialization of this variable is hidden inside
      * the `initLocalAudio` function which is only called when
-     * playback is first requested or when the track if first seeked.
+     * playback is first requested or when the track is first seeked.
      *
      * However, when navigating to an audio result page, if
      * the globally active audio already matches the result
@@ -188,14 +191,32 @@ export default defineComponent({
         : undefined
 
     const updateTimeLoop = () => {
-      if (localAudio && status.value === 'playing') {
-        currentTime.value = localAudio.currentTime
-        window.requestAnimationFrame(updateTimeLoop)
+      if (localAudio) {
+        if (status.value === 'playing' || status.value === 'loading') {
+          currentTime.value = localAudio.currentTime
+          window.requestAnimationFrame(updateTimeLoop)
+        } else {
+          currentTime.value = localAudio.currentTime
+        }
       }
     }
 
-    const setPlaying = () => {
+    const mediaStore = useMediaStore()
+    const setLoaded = () => {
+      mediaStore.setMediaProperties('audio', props.audio.id, {
+        hasLoaded: true,
+      })
       status.value = 'playing'
+    }
+    const setWaiting = () => {
+      status.value = 'loading'
+    }
+    const setPlaying = () => {
+      if (props.audio.hasLoaded) {
+        status.value = 'playing'
+      } else {
+        status.value = 'loading'
+      }
       activeAudio.obj.value = localAudio
       activeMediaStore.setActiveMediaItem({
         type: 'audio',
@@ -229,6 +250,16 @@ export default defineComponent({
       if (localAudio) duration.value = localAudio.duration
     }
 
+    const eventMap = {
+      play: setPlaying,
+      pause: setPaused,
+      ended: setPlayed,
+      timeupdate: setTimeWhenPaused,
+      durationchange: setDuration,
+      waiting: setWaiting,
+      playing: setLoaded,
+    } as const
+
     /**
      * If we're transforming the globally active audio
      * into our local audio, then we need to initialize
@@ -246,12 +277,10 @@ export default defineComponent({
     onUnmounted(() => {
       if (!localAudio) return
 
-      localAudio.removeEventListener('play', setPlaying)
-      localAudio.removeEventListener('pause', setPaused)
-      localAudio.removeEventListener('ended', setPlayed)
-      localAudio.removeEventListener('timeupdate', setTimeWhenPaused)
-      localAudio.removeEventListener('durationchange', setDuration)
-      const mediaStore = useMediaStore()
+      Object.entries(eventMap).forEach(([name, fn]) =>
+        localAudio?.removeEventListener(name, fn)
+      )
+
       if (
         route.value.params.id === props.audio.id ||
         mediaStore.getItemById(AUDIO, props.audio.id)
@@ -289,7 +318,10 @@ export default defineComponent({
     watch(
       activeAudio.obj,
       (audio) => {
-        if (audio !== localAudio && status.value === 'playing') {
+        if (
+          audio !== localAudio &&
+          (status.value === 'playing' || status.value === 'loading')
+        ) {
           localAudio?.pause()
         }
       },

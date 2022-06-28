@@ -40,6 +40,7 @@
     />
     <VHeaderFilter
       v-if="isSearchRoute"
+      :disabled="areFiltersDisabled"
       @open="openMenuModal(menus.FILTERS)"
       @close="close()"
     />
@@ -58,7 +59,7 @@ import {
   watch,
 } from '@nuxtjs/composition-api'
 
-import { ALL_MEDIA } from '~/constants/media'
+import { ALL_MEDIA, searchPath } from '~/constants/media'
 import { isMinScreen } from '~/composables/use-media-query'
 import { useMatchSearchRoutes } from '~/composables/use-match-routes'
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
@@ -165,12 +166,14 @@ export default defineComponent({
      * - search term hasn't changed:
      *   - on a search route, do nothing.
      *   - on other routes: set searchType to 'All content', reset the media,
-     *     change the path to `/search/` (All content) and fetch media.
+     *     change the path to `/search/` (All content).
      * - search term changed:
      *   - on a search route: Update the store searchTerm value, update query `q` param, reset media,
      *     fetch new media.
      *   - on other routes: Update the store searchTerm value, set searchType to 'All content', reset media,
-     *     update query `q` param, fetch new media.
+     *     update query `q` param.
+     * Updating the path causes the `search.vue` page's route watcher
+     * to run and fetch new media.
      */
     const handleSearch = async () => {
       window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
@@ -193,13 +196,15 @@ export default defineComponent({
       document.activeElement?.blur()
       if (isSearchTypeSupported(searchType)) {
         const newPath = app.localePath({
-          path: `/search/${searchType === 'all' ? '' : searchType}`,
+          path: searchPath(searchType),
           query: searchStore.searchQueryParams,
         })
         router.push(newPath)
-        await mediaStore.fetchMedia()
       }
     }
+    const areFiltersDisabled = computed(
+      () => !searchStore.searchTypeIsSupported
+    )
 
     return {
       closeIcon,
@@ -209,6 +214,7 @@ export default defineComponent({
       isMinScreenMd,
       isSearchRoute,
       headerHasTwoRows,
+      areFiltersDisabled,
 
       menuModalRef,
 

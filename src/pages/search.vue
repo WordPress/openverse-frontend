@@ -26,6 +26,7 @@
     </VSearchGrid>
     <VScrollButton
       v-show="showScrollButton"
+      :is-filter-sidebar-visible="isFilterSidebarVisible"
       data-testid="scroll-button"
       @tab="handleTab($event, 'scroll-button')"
     />
@@ -35,6 +36,8 @@
 <script lang="ts">
 import { isShallowEqualObjects } from '@wordpress/is-shallow-equal'
 import { computed, defineComponent, inject, ref } from '@nuxtjs/composition-api'
+
+import { Context } from '@nuxt/types'
 
 import { isMinScreen } from '~/composables/use-media-query'
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
@@ -53,6 +56,15 @@ export default defineComponent({
     VSearchGrid,
     VSkipToContentContainer,
   },
+  middleware({ route, redirect }) {
+    /**
+     * This anonymous middleware redirects any search without a query to the homepage.
+     * This is meant to block direct access to /search and all sub-routes, with
+     * an exception for the 'creator' filter. The creator filter doesn't send
+     * the search query to the API.
+     */
+    if (!route.query.q && !route.query.searchBy) return redirect('/')
+  },
   scrollToTop: false,
   setup() {
     const searchGridRef = ref(null)
@@ -69,6 +81,14 @@ export default defineComponent({
     const resultCount = computed(() => mediaStore.resultCount)
     const fetchState = computed(() => mediaStore.fetchState)
     const resultItems = computed(() => mediaStore.resultItems)
+
+    const needsFetching = computed(() =>
+      Boolean(
+        searchStore.searchTypeIsSupported &&
+          !mediaStore.resultCount &&
+          searchStore.searchTerm.trim() !== ''
+      )
+    )
 
     const handleTab = (event: KeyboardEvent, element: string) => {
       if (showScrollButton.value && element !== 'scroll-button') {
@@ -89,41 +109,44 @@ export default defineComponent({
       resultCount,
       fetchState,
       resultItems,
+      needsFetching,
       fetchMedia: mediaStore.fetchMedia,
       setSearchStateFromUrl: searchStore.setSearchStateFromUrl,
       handleTab,
     }
   },
+  /**
+   * asyncData blocks the rendering of the page, so we only
+   * update the state from the route here, and do not fetch media.
+   */
   async asyncData({ route, $pinia }) {
     const searchStore = useSearchStore($pinia)
-    const mediaStore = useMediaStore($pinia)
     await searchStore.initProviderFilters()
     searchStore.setSearchStateFromUrl({
       path: route.path,
       urlQuery: route.query,
     })
-    if (
-      searchStore.searchTypeIsSupported &&
-      !mediaStore.resultCount &&
-      searchStore.searchTerm.trim() !== ''
-    ) {
-      await mediaStore.fetchMedia()
+  },
+  /**
+   * Fetch media, if necessary, in a non-blocking way.
+   */
+  async fetch() {
+    if (this.needsFetching) {
+      await this.fetchMedia()
     }
   },
   watch: {
     /**
      * Updates the search type only if the route's path changes.
-     * @param {import('@nuxt/types').Context['route']} newRoute
-     * @param {import('@nuxt/types').Context['route']} oldRoute
      */
-    async $route(newRoute, oldRoute) {
+    async $route(newRoute: Context['route'], oldRoute: Context['route']) {
       if (
         newRoute.path !== oldRoute.path ||
         !isShallowEqualObjects(newRoute.query, oldRoute.query)
       ) {
         const { query, path } = newRoute
-        await this.setSearchStateFromUrl({ urlQuery: query, path })
-        this.fetchMedia()
+        this.setSearchStateFromUrl({ urlQuery: query, path })
+        await this.fetchMedia()
       }
     },
   },
