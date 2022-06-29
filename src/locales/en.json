@@ -334,8 +334,8 @@
     "lengths": {
       "title": "Durations",
       "shortest": "Shortest (<30s)",
-      "short": "Short (30s - 2min)",
-      "medium": "Medium (2 - 10min)",
+      "short": "Short (30s-2min)",
+      "medium": "Medium (2-10min)",
       "long": "Long (>10 min)"
     },
     "creator": {
