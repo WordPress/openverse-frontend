@@ -18,7 +18,7 @@ jobs:
         run: pnpm i18n:generate-pot
 
       - name: Copy to root
-        run: cp ./src/locales/po-files/openverse.pot /tmp/openverse.pot
+        run: cp ./openverse.pot /tmp/openverse.pot
 
       - name: Update POT on translations branch
         run: |
