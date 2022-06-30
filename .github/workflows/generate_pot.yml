@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          ref: main
 
       - uses: ./.github/actions/setup-node-env
 
@@ -33,3 +35,8 @@ jobs:
           git config --global user.email 'openverse@wordpress.org'
           git commit -am 'Update POT file'
           git push
+
+      - name: Re-checkout `main` branch to allow for cleanup to work
+        uses: actions/checkout@v3
+        with:
+          ref: main
