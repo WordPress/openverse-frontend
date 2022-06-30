@@ -1,9 +1,10 @@
-name: Generate translation POT file
+name: Generate translation PO file
 
 on:
   push:
     branches:
       - main
+  pull_request: # testing
 
 jobs:
   deploy:
@@ -14,15 +15,19 @@ jobs:
 
       - uses: ./.github/actions/setup-node-env
 
-      - name: Generate POT
+      - name: Generate PO
         run: pnpm i18n:generate-pot
 
       - name: Copy to root
         run: cp ./openverse.pot /tmp/openverse.pot
 
-      - name: Update POT on translations branch
+      - name: Checkout `translations` branch
+        uses: actions/checkout@v3
+        with:
+          ref: translations
+
+      - name: Update POT on `translations` branch
         run: |
-          git checkout translations
           rm openverse.pot
           cp /tmp/openverse.pot openverse.pot
           git config --global user.name 'POT Updater'
