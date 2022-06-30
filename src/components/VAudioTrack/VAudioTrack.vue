@@ -1,12 +1,13 @@
 <template>
-  <Component
-    :is="isBoxed ? 'VLink' : 'VWarningSuppressor'"
+  <VLink
+    v-bind="containerAttributes"
     class="audio-track group"
     :aria-label="ariaLabel"
     role="region"
-    v-bind="layoutBasedProps"
+    :href="`/audio/${audio.id}`"
     @keydown.native.shift.tab.exact="$emit('shift-tab', $event)"
-    @keydown.native.space="handleSpace"
+    @keydown.native.prevent.space="togglePlayback"
+    v-on="seekListeners"
   >
     <Component
       :is="layoutComponent"
@@ -36,7 +37,7 @@
         />
       </template>
     </Component>
-  </Component>
+  </VLink>
 </template>
 
 <script lang="ts">
@@ -66,6 +67,7 @@ import {
   AudioStatus,
   layoutMappings,
 } from '~/constants/audio'
+import { useSeekable } from '~/composables/use-seekable'
 
 import VPlayPause from '~/components/VAudioTrack/VPlayPause.vue'
 import VWaveform from '~/components/VAudioTrack/VWaveform.vue'
@@ -348,7 +350,7 @@ export default defineComponent({
      * Sets default size if not provided.
      */
     const _size = computed(() => {
-      if (isBoxed && !props.size) {
+      if (isBoxed.value && !props.size) {
         return undefined
       }
       return props.size ?? 'm'
@@ -369,28 +371,34 @@ export default defineComponent({
      */
     const isBoxed = computed(() => props.layout === 'box')
     const i18n = useI18n()
-    const layoutBasedProps = computed(() => {
-      if (!isBoxed.value) return {}
-      return {
-        href: `/audio/${props.audio.id}`,
-        class:
-          'block focus:bg-white focus:border-tx focus:ring-[3px] focus:ring-pink focus:ring-offset-[3px] focus:outline-none rounded-sm overflow-hidden cursor-pointer',
-      }
-    })
+    const layoutBasedProps = computed(() => ({
+      href: `/audio/${props.audio.id}`,
+      class:
+        'block focus:bg-white focus:border-tx focus:ring-[3px] focus:ring-pink focus:ring-offset-[3px] focus:outline-none rounded-sm overflow-hidden cursor-pointer',
+    }))
     const ariaLabel = computed(() =>
-      isBoxed.value
-        ? i18n.t('audio-track.aria-label-interactive', {
-            title: props.audio.title,
-          })
-        : i18n.t('audio-track.aria-label', { title: props.audio.title })
+      i18n.t('audio-track.aria-label-interactive', {
+        title: props.audio.title,
+      })
     )
 
-    const handleSpace = (event: KeyboardEvent) => {
-      if (!isBoxed.value) return
-      event.preventDefault()
+    const togglePlayback = () => {
       status.value = status.value === 'playing' ? 'paused' : 'playing'
       handleToggle(status.value)
     }
+
+    const seekable = useSeekable({
+      duration,
+      currentTime,
+      isReady: ref(true),
+      onSeek: handleSeeked,
+      onTogglePlayback: togglePlayback,
+    })
+
+    const containerAttributes = computed(() => ({
+      ...seekable.attributes,
+      ...layoutBasedProps.value,
+    }))
 
     return {
       status,
@@ -398,7 +406,8 @@ export default defineComponent({
       ariaLabel,
       handleToggle,
       handleSeeked,
-      handleSpace,
+      togglePlayback,
+      seekListeners: seekable.listeners,
 
       currentTime,
       duration,
@@ -407,7 +416,7 @@ export default defineComponent({
       _size,
 
       isBoxed,
-      layoutBasedProps,
+      containerAttributes,
 
       playPauseRef,
     }

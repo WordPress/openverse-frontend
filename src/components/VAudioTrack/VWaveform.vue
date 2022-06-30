@@ -1,5 +1,6 @@
 <template>
   <div
+    v-bind="seekAttributes"
     ref="el"
     class="waveform group relative bg-background-var focus:outline-none overflow-hidden"
     :style="heightProperties"
@@ -7,11 +8,6 @@
     :role="isInteractive ? 'slider' : undefined"
     :aria-disabled="!isInteractive"
     :aria-label="$t('waveform.label').toString()"
-    aria-orientation="horizontal"
-    aria-valuemin="0"
-    :aria-valuemax="duration"
-    :aria-valuenow="currentTime"
-    :aria-valuetext="currentTimeText"
     v-on="eventHandlers"
   >
     <!-- Focus ring -->
@@ -165,10 +161,12 @@ import {
   onMounted,
   PropType,
   ref,
+  toRef,
 } from '@nuxtjs/composition-api'
 
 import { downsampleArray, upsampleArray } from '~/utils/resampling'
-import { keycodes } from '~/constants/key-codes'
+import { timeFmt } from '~/utils/time-fmt'
+import { useSeekable } from '~/composables/use-seekable'
 
 import type { AudioFeature } from '~/constants/audio'
 
@@ -251,16 +249,6 @@ export default defineComponent({
   setup(props, { emit }) {
     /* Utils */
 
-    /**
-     * Format the time as hh:mm:ss, dropping the hour part if it is zero.
-     * @param seconds - the number of seconds in the duration
-     * @returns the duration in a human-friendly format
-     */
-    const timeFmt = (seconds: number): string => {
-      const date = new Date(0)
-      date.setSeconds(Number.isFinite(seconds) ? seconds : 0)
-      return date.toISOString().substr(11, 8).replace(/^00:/, '')
-    }
     /**
      * Get the x-coordinate of the event with respect to the bounding box of the
      * waveform.
@@ -367,10 +355,6 @@ export default defineComponent({
       waveformDimens.value.height - normalizedPeaks.value[index]
 
     /* Progress bar */
-
-    const currentFrac = computed(() =>
-      isReady.value ? props.currentTime / props.duration : 0
-    )
     const progressBarWidth = computed(() => {
       const frac = isDragging.value ? seekFrac.value ?? 0 : currentFrac.value
       return waveformDimens.value.width * frac
@@ -411,19 +395,23 @@ export default defineComponent({
       return barWidth < timestampWidth + 2
     })
 
+    const seekable = useSeekable({
+      duration: toRef(props, 'duration'),
+      currentTime: toRef(props, 'currentTime'),
+      isReady,
+      onSeek: (frac) => {
+        clearSeekProgress()
+        emit('seeked', frac)
+      },
+      onTogglePlayback: () => emit('toggle-playback'),
+    })
+
     /* Seeking */
 
-    const seekDelta = 1 // s
-    const modSeekDelta = 15 // s
     /**
      * the seek jump length as a % of the track
      */
-    const seekDeltaFrac = computed(() => {
-      return isReady.value ? seekDelta / props.duration : 0
-    })
-    const modSeekDeltaFrac = computed(() =>
-      isReady.value ? modSeekDelta / props.duration : 0
-    )
+    const { currentFrac } = seekable.meta
     const setSeekProgress = (event: MouseEvent) => {
       seekFrac.value = getPositionFrac(event)
     }
@@ -462,64 +450,6 @@ export default defineComponent({
       clearSeekProgress()
     }
 
-    /* Keyboard */
-
-    const handlePosKeys = (frac: number) => {
-      clearSeekProgress()
-      emit('seeked', frac)
-    }
-    const handleArrowKeys = (event: KeyboardEvent) => {
-      const { key, shiftKey, metaKey } = event
-      if (metaKey) {
-        // Always false on Windows
-        handlePosKeys(key.includes('Left') ? 0 : 1)
-      } else {
-        clearSeekProgress()
-        const direction = key.includes('Left') ? -1 : 1
-        const magnitude = shiftKey
-          ? modSeekDeltaFrac.value
-          : seekDeltaFrac.value
-        const delta = magnitude * direction
-        emit('seeked', currentFrac.value + delta)
-      }
-    }
-
-    const handleSpacebar = () => {
-      emit('toggle-playback')
-    }
-
-    /**
-     * @param event
-     */
-    const willBeHandled = (event: KeyboardEvent) =>
-      (
-        [
-          keycodes.ArrowLeft,
-          keycodes.ArrowRight,
-          keycodes.Home,
-          keycodes.End,
-          keycodes.Spacebar,
-        ] as string[]
-      ).includes(event.key)
-
-    /**
-     * @param event
-     */
-    const handleKeys = (event: KeyboardEvent) => {
-      if (!willBeHandled(event)) return
-
-      event.preventDefault()
-      if (
-        ([keycodes.ArrowLeft, keycodes.ArrowRight] as string[]).includes(
-          event.key
-        )
-      )
-        return handleArrowKeys(event)
-      if (event.key === keycodes.Home) return handlePosKeys(0)
-      if (event.key === keycodes.End) return handlePosKeys(1)
-      if (event.key === keycodes.Spacebar) return handleSpacebar()
-    }
-
     /* v-on */
 
     const eventHandlers = computed(() => {
@@ -529,7 +459,7 @@ export default defineComponent({
           mousemove: handleMouseMove,
           mouseup: handleMouseUp,
           mouseleave: handleMouseLeave,
-          keydown: handleKeys,
+          ...seekable.listeners,
         }
       } else {
         return {}
@@ -583,14 +513,12 @@ export default defineComponent({
       seekTimestamp,
       seekTimestampEl,
       isSeekTimestampCutoff,
+      seekAttributes: seekable.attributes,
 
       handleMouseDown,
       handleMouseMove,
       handleMouseUp,
       handleMouseLeave,
-
-      handlePosKeys,
-      handleArrowKeys,
 
       eventHandlers,
 

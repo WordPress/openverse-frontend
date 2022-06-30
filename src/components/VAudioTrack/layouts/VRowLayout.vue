@@ -21,15 +21,15 @@
       }"
     >
       <div class="flex-shrink-0" :class="{ 'w-70': isMedium }">
-        <VLink
-          :href="`/audio/${audio.id}`"
+        <div
           class="block font-heading font-semibold line-clamp-2 md:line-clamp-1 text-dark-charcoal hover:text-dark-charcoal p-px rounded-sm focus:outline-none focus:ring focus:ring-pink"
           :class="{
             'text-2xl': isMedium || isLarge,
             'leading-snug': isSmall,
           }"
-          >{{ audio.title }}</VLink
         >
+          {{ audio.title }}
+        </div>
 
         <div
           class="flex text-dark-charcoal-70 mt-2"
@@ -96,14 +96,12 @@ import type { AudioSize } from '~/constants/audio'
 
 import VAudioThumbnail from '~/components/VAudioThumbnail/VAudioThumbnail.vue'
 import VLicense from '~/components/VLicense/VLicense.vue'
-import VLink from '~/components/VLink.vue'
 
 export default defineComponent({
   name: 'VRowLayout',
   components: {
     VAudioThumbnail,
     VLicense,
-    VLink,
   },
   props: {
     audio: {

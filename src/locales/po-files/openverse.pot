@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-05-24T15:12:45+00:00\n"
+"POT-Creation-Date: 2022-06-30T06:11:29+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -254,15 +254,20 @@ msgid "Replay"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VAudioTrack/VAudioTrack.vue:385
+#: src/components/VAudioTrack/VGlobalAudioTrack.vue:75
 msgctxt "audio-track.aria-label"
 msgid "###title### - Audio Player"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VAudioTrack/VAudioTrack.vue:382
+#: src/components/VAudioTrack/VAudioTrack.vue:380
 msgctxt "audio-track.aria-label-interactive"
 msgid "###title### - audio player - press the spacebar to play and pause a preview of the audio"
+msgstr ""
+
+#. Do not translate words between ### ###.
+msgctxt "audio-track.aria-label-interactive-seekable"
+msgid "###title### - audio player - press the spacebar to play and pause a preview of the audio; use the left and right arrow keys to seek through the waveform"
 msgstr ""
 
 #. Do not translate words between ### ###.
@@ -271,7 +276,7 @@ msgctxt "audio-track.creator"
 msgid "by ###creator###"
 msgstr ""
 
-#: src/components/VAudioTrack/layouts/VRowLayout.vue:132
+#: src/components/VAudioTrack/layouts/VRowLayout.vue:130
 msgctxt "audio-track.messages.blink_seek_disabled"
 msgid "Seeking for Jamendo tracks is limited to Firefox and Safari."
 msgstr ""
@@ -302,13 +307,13 @@ msgctxt "audio-thumbnail.alt"
 msgid "Cover art for \"###title###\" by ###creator###"
 msgstr ""
 
-#: src/components/VAudioTrack/VWaveform.vue:9
+#: src/components/VAudioTrack/VWaveform.vue:10
 msgctxt "waveform.label"
 msgid "Audio seek bar"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VAudioTrack/VWaveform.vue:609
+#: src/components/VAudioTrack/VWaveform.vue:537
 msgctxt "waveform.current-time"
 msgid "###time### second"
 msgid_plural "###time### seconds"
