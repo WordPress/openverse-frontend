@@ -332,7 +332,7 @@
       "enable": "Enable Mature Content"
     },
     "lengths": {
-      "title": "Durations",
+      "title": "Duration",
       "shortest": "< 30 sec",
       "short": "30 sec-2 min",
       "medium": "2-10 min",
