@@ -1,4 +1,4 @@
-FROM node:16-alpine
+FROM node:18-alpine
 
 RUN npm install -g pnpm pm2@5.2.0
 
