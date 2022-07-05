@@ -303,7 +303,7 @@
       "digitized_artwork": "Digitized Artworks"
     },
     "audio-extensions": {
-      "title": "File type",
+      "title": "Extension",
       "flac": "FLAC",
       "mid": "MID",
       "mp3": "MP3",
@@ -314,11 +314,11 @@
       "webm": "WEBM"
     },
     "image-extensions": {
-      "title": "File type",
-      "jpg": "JPEGs",
-      "png": "PNGs",
-      "gif": "GIFs",
-      "svg": "SVGs"
+      "title": "Extension",
+      "jpg": "JPEG",
+      "png": "PNG",
+      "gif": "GIF",
+      "svg": "SVG"
     },
     "aspect-ratios": {
       "title": "Aspect ratio",
