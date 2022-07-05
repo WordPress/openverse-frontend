@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-07-05T15:09:18+00:00\n"
+"POT-Creation-Date: 2022-07-05T16:31:08+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -791,9 +791,13 @@ msgid_plural "Over ###localeCount### results"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/components/VLoadMore.vue:47
+#: src/pages/meta-search.vue:32
 msgctxt "browse-page.load"
 msgid "Load more results"
+msgstr ""
+
+msgctxt "browse-page.loading"
+msgid "Loading..."
 msgstr ""
 
 #. Do not translate words between ### ###.
