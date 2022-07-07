@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-  pull_request: # testing code
 
 jobs:
   update-task-definition-and-deploy:
