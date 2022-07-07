@@ -29,10 +29,8 @@ runs:
       env:
         SLACK_CHANNEL: openverse-notifications
         SLACK_COLOR: "#1e81b0"
-        SLACK_ICON: https://github.com/openverse-bot.png?size=48
         SLACK_MESSAGE: "Tag: ${{ inputs.tag }}"
         SLACK_TITLE: staging-frontend is being deployed
-        SLACK_USERNAME: Openverse Deployments
         SLACK_WEBHOOK: ${{ inputs.slack-webhook }}
 
     - name: Configure AWS credentials
@@ -71,8 +69,16 @@ runs:
       env:
         SLACK_CHANNEL: openverse-notifications
         SLACK_COLOR: "#38b01e"
-        SLACK_ICON: https://github.com/openverse-bot.png?size=48
         SLACK_MESSAGE: "Tag: ${{ inputs.tag }}"
         SLACK_TITLE: staging-frontend has been deployed
-        SLACK_USERNAME: Openverse Deployments
+        SLACK_WEBHOOK: ${{ inputs.slack-webhook }}
+
+    - name: Notify deployment failure
+      if: failure()
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_CHANNEL: openverse-notifications
+        SLACK_COLOR: "#ff0000"
+        SLACK_MESSAGE: "Tag: ${{ inputs.tag }}"
+        SLACK_TITLE: Failed to deploy staging-frontend
         SLACK_WEBHOOK: ${{ inputs.slack-webhook }}
