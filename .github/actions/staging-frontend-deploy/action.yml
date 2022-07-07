@@ -40,11 +40,11 @@ runs:
         aws-secret-access-key: ${{ inputs.aws-secret-access-key }}
         aws-region: us-east-1
 
-    - name: Download task definition
+    - name: Download task definition template
       shell: bash
       run: |
         aws ecs describe-task-definition \
-          --task-definition staging-frontend \
+          --task-definition staging-frontend-template \
           --query taskDefinition > task-definition.json
 
     - name: Fill in the new image ID in the Amazon ECS task definition
