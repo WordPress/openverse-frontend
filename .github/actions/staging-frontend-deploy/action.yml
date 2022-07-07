@@ -34,7 +34,14 @@ runs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": ":spinning-cd: A deployment of staging-frontend is starting using the `${{ inputs.tag }}` tag. <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|Click here to monitor the deployment>."
+                  "text": ":spinning-cd: A deployment of staging-frontend is starting using the `${{ inputs.tag }}` tag."
+                }
+              },
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|Click here to monitor the deployment>."
                 }
               }
             ]
@@ -84,7 +91,14 @@ runs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": ":tadaco: The deployment of staging-frontend using the `${{ inputs.tag }}` tag *succeeded*. <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|Click here to review the completed deployment workflow>."
+                  "text": ":tadaco: The deployment of staging-frontend using the `${{ inputs.tag }}` tag *succeeded*."
+                }
+              },
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|Click here to review the completed deployment workflow>."
                 }
               }
             ]
@@ -112,7 +126,7 @@ runs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|Click here to review the failed deployment workflow>"
+                  "text": "<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|Click here to review the failed deployment workflow>."
                 }
               }
             ]
