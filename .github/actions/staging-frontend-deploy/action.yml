@@ -41,6 +41,7 @@ runs:
           }
       env:
         SLACK_WEBHOOK_URL: ${{ inputs.slack-webhook }}
+        SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -90,6 +91,7 @@ runs:
           }
       env:
         SLACK_WEBHOOK_URL: ${{ inputs.slack-webhook }}
+        SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
 
     - name: Notify deployment failure
       if: failure()
@@ -117,3 +119,4 @@ runs:
           }
       env:
         SLACK_WEBHOOK_URL: ${{ inputs.slack-webhook }}
+        SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
