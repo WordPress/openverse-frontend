@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-07-05T16:31:08+00:00\n"
+"POT-Creation-Date: 2022-07-07T14:39:16+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1059,39 +1059,59 @@ msgid "Square"
 msgstr ""
 
 msgctxt "filters.image-extensions.title"
-msgid "File type"
+msgid "Extension"
 msgstr ""
 
 msgctxt "filters.image-extensions.jpg"
-msgid "JPEGs"
+msgid "JPEG"
 msgstr ""
 
 msgctxt "filters.image-extensions.png"
-msgid "PNGs"
+msgid "PNG"
 msgstr ""
 
 msgctxt "filters.image-extensions.gif"
-msgid "GIFs"
+msgid "GIF"
 msgstr ""
 
 msgctxt "filters.image-extensions.svg"
-msgid "SVGs"
+msgid "SVG"
 msgstr ""
 
 msgctxt "filters.audio-extensions.title"
-msgid "File type"
-msgstr ""
-
-msgctxt "filters.audio-extensions.mp3"
-msgid "MP3s"
-msgstr ""
-
-msgctxt "filters.audio-extensions.ogg"
-msgid "OGGs"
+msgid "Extension"
 msgstr ""
 
 msgctxt "filters.audio-extensions.flac"
-msgid "FLACs"
+msgid "FLAC"
+msgstr ""
+
+msgctxt "filters.audio-extensions.mid"
+msgid "MID"
+msgstr ""
+
+msgctxt "filters.audio-extensions.mp3"
+msgid "MP3"
+msgstr ""
+
+msgctxt "filters.audio-extensions.oga"
+msgid "OGA"
+msgstr ""
+
+msgctxt "filters.audio-extensions.ogg"
+msgid "OGG"
+msgstr ""
+
+msgctxt "filters.audio-extensions.opus"
+msgid "OPUS"
+msgstr ""
+
+msgctxt "filters.audio-extensions.wav"
+msgid "WAV"
+msgstr ""
+
+msgctxt "filters.audio-extensions.webm"
+msgid "WEBM"
 msgstr ""
 
 msgctxt "filters.image-categories.title"
