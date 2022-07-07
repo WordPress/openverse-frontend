@@ -24,14 +24,22 @@ runs:
 
   steps:
     - name: Notify deployment start
-      if: inputs.slack-webhook
-      uses: rtCamp/action-slack-notify@v2
+      uses: slackapi/slack-github-action@v1.19.0
+      with:
+        payload: |
+          {
+            "blocks": [
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": ":spinning-cd: A deployment of staging-frontend is starting using the `${{ inputs.tag }}` tag. <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|Click here to monitor the deployment>."
+                }
+              }
+            ]
+          }
       env:
-        SLACK_CHANNEL: openverse-notifications
-        SLACK_COLOR: "#1e81b0"
-        SLACK_MESSAGE: "Tag: ${{ inputs.tag }}"
-        SLACK_TITLE: staging-frontend is being deployed
-        SLACK_WEBHOOK: ${{ inputs.slack-webhook }}
+        SLACK_WEBHOOK_URL: ${{ inputs.slack-webhook }}
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -64,21 +72,45 @@ runs:
         wait-for-service-stability: true
 
     - name: Notify deployment finished
-      if: inputs.slack-webhook
-      uses: rtCamp/action-slack-notify@v2
+      uses: slackapi/slack-github-action@v1.19.0
+      with:
+        payload: |
+          {
+            "blocks": [
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": ":tadaco: The deployment of staging-frontend using the `${{ inputs.tag }}` tag *succeeded*. <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|Click here to review the completed deployment workflow>."
+                }
+              }
+            ]
+          }
       env:
-        SLACK_CHANNEL: openverse-notifications
-        SLACK_COLOR: "#38b01e"
-        SLACK_MESSAGE: "Tag: ${{ inputs.tag }}"
-        SLACK_TITLE: staging-frontend has been deployed
-        SLACK_WEBHOOK: ${{ inputs.slack-webhook }}
+        SLACK_WEBHOOK_URL: ${{ inputs.slack-webhook }}
 
     - name: Notify deployment failure
       if: failure()
-      uses: rtCamp/action-slack-notify@v2
+      uses: slackapi/slack-github-action@v1.19.0
+      with:
+        payload: |
+          {
+            "blocks": [
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": ":alert: The deployment of staging-frontend using the `${{ inputs.tag }}` tag *failed* :alert:"
+                }
+              },
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|Click here to review the failed deployment workflow>"
+                }
+              }
+            ]
+          }
       env:
-        SLACK_CHANNEL: openverse-notifications
-        SLACK_COLOR: "#ff0000"
-        SLACK_MESSAGE: "Tag: ${{ inputs.tag }}"
-        SLACK_TITLE: Failed to deploy staging-frontend
-        SLACK_WEBHOOK: ${{ inputs.slack-webhook }}
+        SLACK_WEBHOOK_URL: ${{ inputs.slack-webhook }}
