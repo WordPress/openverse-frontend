@@ -4,14 +4,7 @@ on:
   push:
     branches:
       - main
-  release:
-    types:
-      - "released"
-  workflow_dispatch:
-    inputs:
-      tag:
-        description: Tag of the ghcr.io/wordpress/openverse-frontend image to use.
-        required: true
+  pull_request: # testing code
 
 jobs:
   update-task-definition-and-deploy:
@@ -23,6 +16,7 @@ jobs:
 
       - uses: ./.github/actions/frontend-deploy
         with:
-          tag: ${{ (github.event_name == 'workflow_dispatch' && github.event.inputs.sha) || (github.event_name == 'push' && 'main') || github.event.release.tag_name }}
-          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          tag: "main"
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          slack-webhook: ${{ secrets.SLACK_WEBHOOK }}

@@ -12,21 +12,35 @@ inputs:
   tag:
     required: true
     description: Image tag to deploy.
-  aws_access_key_id:
+  aws-access-key-id:
     required: true
-  aws_secret_access_key:
+  aws-secret-access-key:
     required: true
+  slack-webhook:
+    required: false
 
 runs:
   using: "composite"
 
   steps:
+    - name: Notify deployment start
+      if: inputs.slack-webhook
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_CHANNEL: openverse-notifications
+        SLACK_COLOR: "#1e81b0"
+        SLACK_ICON: https://github.com/openverse-bot.png?size=48
+        SLACK_MESSAGE: "Tag: ${{ inputs.tag }}"
+        SLACK_TITLE: staging-frontend is being deployed
+        SLACK_USERNAME: Openverse Deployments
+        SLACK_WEBHOOK: ${{ inputs.slack-webhook }}
+
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        aws-access-key-id: ${{ inputs.aws_access_key_id }}
-        aws-secret-access-key: ${{ inputs.aws_secret_access_key }}
-        aws-region: us-east-2
+        aws-access-key-id: ${{ inputs.aws-access-key-id }}
+        aws-secret-access-key: ${{ inputs.aws-secret-access-key }}
+        aws-region: us-east-1
 
     - name: Download task definition
       shell: bash
@@ -50,3 +64,15 @@ runs:
         service: staging-frontend
         cluster: staging-default
         wait-for-service-stability: true
+
+    - name: Notify deployment finished
+      if: inputs.slack-webhook
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_CHANNEL: openverse-notifications
+        SLACK_COLOR: "#38b01e"
+        SLACK_ICON: https://github.com/openverse-bot.png?size=48
+        SLACK_MESSAGE: "Tag: ${{ inputs.tag }}"
+        SLACK_TITLE: staging-frontend has been deployed
+        SLACK_USERNAME: Openverse Deployments
+        SLACK_WEBHOOK: ${{ inputs.slack-webhook }}
