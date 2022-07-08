@@ -1,4 +1,4 @@
-name: GitHub Container Registry
+name: GitHub Container Registry/Production Deployment
 
 on:
   push:
@@ -7,15 +7,26 @@ on:
   pull_request:
     branches:
       - main
+  release:
+    types: [published]
 
 jobs:
   push-to-ghcr:
     name: Build and push image for commit
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' || github.event.pull_request.head.repo.owner.login == 'WordPress'
+    # prevent running on fork PRs
+    if: github.event_name == 'push' || github.event_name == 'release' || github.event.pull_request.head.repo.owner.login == 'WordPress'
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout branch or push to main
+        uses: actions/checkout@v3
+        if: github.event_name != 'release'
+
+      - name: Checkout release
+        uses: actions/checkout@v3
+        if: github.event_name == 'release'
+        with:
+          ref: ${{ github.event.release.tag_name }}
 
       - uses: docker/setup-buildx-action@v2
         with:
@@ -42,3 +53,21 @@ jobs:
           tags: ${{ steps.metadata.outputs.tags }}
           labels: ${{ steps.metadata.outputs.labels }}
           push: true
+
+  deploy-production:
+    name: Deploy production frontend
+    runs-on: ubuntu-latest
+    if: github.event_name == 'release'
+    needs: push-to-ghcr
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: main
+
+      - uses: ./.github/actions/production-frontend-deploy
+        with:
+          tag: ${{ github.event.release.tag_name }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          slack-webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
