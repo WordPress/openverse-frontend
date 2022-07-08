@@ -1,4 +1,4 @@
-name: GitHub Container Registry/Production Deployment
+name: GitHub Container Registry & Deployment
 
 on:
   push:
@@ -53,6 +53,22 @@ jobs:
           tags: ${{ steps.metadata.outputs.tags }}
           labels: ${{ steps.metadata.outputs.labels }}
           push: true
+
+  deploy-staging:
+    name: Deploy staging frontend
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    needs: push-to-ghcr
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: ./.github/actions/staging-frontend-deploy
+        with:
+          tag: "main"
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          slack-webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
 
   deploy-production:
     name: Deploy production frontend
