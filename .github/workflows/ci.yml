@@ -90,7 +90,7 @@ jobs:
       - uses: ./.github/actions/setup-node-env
 
       - name: Run Nuxt Playwright tests
-        run: pnpm test:playwright
+        run: pnpm test:playwright --workers=2
 
       - uses: actions/upload-artifact@v3
         if: failure()
