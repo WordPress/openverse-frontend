@@ -24,13 +24,11 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const versions = await github.rest.packages.getAllPackageVersionsForPackageOwnedByOrg({
+            const { data: versions } = await github.rest.packages.getAllPackageVersionsForPackageOwnedByOrg({
               package_type: 'container',
               package_name: 'openverse-frontend',
               org: 'WordPress',
             })
-
-            console.log(versions)
 
             const exists = versions.some(v => v.name === "${{ inputs.tag }}")
 
