@@ -24,7 +24,7 @@ ENV NODE_ENV=production
 ARG API_URL
 ARG RELEASE
 
-RUN echo '{"release":"${RELEASE}""}' > /home/node/app/src/static/version.json
+RUN echo "{\"release\":\"${RELEASE}\"}" > /home/node/app/src/static/version.json
 
 RUN pnpm i18n
 RUN pnpm build:only
