@@ -70,12 +70,7 @@ jobs:
 
           print(f"::set-output name=version::{version}")
 
-      - name: Debugging
-        run: |
-          echo "${{ steps.get-version.outputs.version }}"
-
       - uses: docker/build-push-action@v3
-        if: false
         with:
           context: .
           tags: ${{ steps.metadata.outputs.tags }}

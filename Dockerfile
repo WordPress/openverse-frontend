@@ -22,9 +22,11 @@ ENV NUXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
 
 ARG API_URL
+ARG RELEASE
+
+RUN echo '{"release":"${RELEASE}""}' > /home/node/app/src/static/version.json
 
 RUN pnpm i18n
-# build the application and generate a distribution package
 RUN pnpm build:only
 
 COPY ecosystem.config.js /home/node/app/ecosystem.config.js
