@@ -52,14 +52,37 @@ jobs:
           tags: |
             type=sha
             type=ref,event=tag
-            ${{ github.event_name == 'push' && 'type=raw,value=main' || '' }}
+            type=raw,value=main,enabled=${{ github.event_name == 'push' }}
+            type=raw,value=main
+
+      - name: Get relevant tag for internal image version
+        id: get-version
+        shell: python
+        run: |
+          import json
+          metadata = json.loads('${{ steps.metadata.outputs.json }}')
+          version = metadata["labels"]["org.opencontainers.image.version"]
+          if version == "main":
+              # get first version that isn't main
+              for tag in metadata["tags"]:
+                  if ":main" not in tag:
+                      version = tag.split(":")[1]
+
+          print(f"::set-output name=version::{version}")
+
+      - name: Debugging
+        run: |
+          echo "${{ steps.get-version.outputs.version }}"
 
       - uses: docker/build-push-action@v3
+        if: false
         with:
           context: .
           tags: ${{ steps.metadata.outputs.tags }}
           labels: ${{ steps.metadata.outputs.labels }}
           push: true
+          build-args: |
+            RELEASE=${{ steps.get-version.outputs.version }}
 
   deploy-staging:
     name: Deploy staging frontend
