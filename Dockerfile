@@ -6,13 +6,13 @@ USER node
 
 WORKDIR /home/node/app
 
-COPY pnpm-lock.yaml .
+COPY --chown=node:node pnpm-lock.yaml .
 
 # install dependencies including local development tools
 RUN pnpm fetch
 
 # copy the rest of the content
-COPY --chmod=777 . /home/node/app
+COPY --chown=node:node . /home/node/app
 
 RUN pnpm install -r --offline
 
