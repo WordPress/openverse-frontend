@@ -1,16 +1,14 @@
 name: Rollback Frontend
 
 on:
-  pull_request:
   workflow_dispatch:
     inputs:
       environment:
-        description: The environment to roll back.
-        default: "staging"
+        required: true
+        description: The environment to roll back. `staging` or `production`.
       tag:
-        # required: true  # uncomment after testing
-        description: The GHCR image tag to which production should be rolled back
-        default: "asdf"
+        required: true
+        description: The GHCR image tag to which the environment should be rolled back
 
 jobs:
   rollback:
