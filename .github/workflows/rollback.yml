@@ -34,7 +34,7 @@ jobs:
               throw new Error("`${{ inputs.tag }}` does not appear to be a valid tag for the ghcr.io/wordpress/openverse-frontend image.")
             }
 
-      - uses: ./github/actions/production-frontend-deploy
+      - uses: ./.github/actions/production-frontend-deploy
         if: inputs.environment == 'production'
         with:
           ref: ${{ inputs.tag }}
@@ -42,7 +42,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           slack-webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
 
-      - uses: ./github/actions/staging-frontend-deploy
+      - uses: ./.github/actions/staging-frontend-deploy
         if: inputs.environment == 'staging'
         with:
           ref: ${{ inputs.tag }}
