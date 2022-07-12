@@ -16,6 +16,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Guard workflow to maintainers
+        shell: python
+        run: |
+          # https://github.com/orgs/WordPress/teams/openverse-maintainers/members
+          maintainers = {
+              "zackkrida",
+              "krysal",
+              "AetherUnbound",
+              "obulat",
+              "dhruvkb",
+              "sarayourfriend",
+              "stacimc",
+          }
+
+          if "${{ github.actor }}" not in maintainers:
+              raise Error(
+                  "Only GitHub users in the following "
+                  "list are authorized to run this workflow: "
+                  f"{', '.join(list(maintainers))}. "
+                  "If you need to run this workflow, please reach "
+                  "out to one of those people for help running it."
+              )
+
       - uses: actions/checkout@v3
 
       - name: Validate `tag` input
