@@ -60,7 +60,7 @@ jobs:
       - uses: ./.github/actions/production-frontend-deploy
         if: inputs.environment == 'production'
         with:
-          ref: ${{ inputs.tag }}
+          tag: ${{ inputs.tag }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           slack-webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -68,7 +68,7 @@ jobs:
       - uses: ./.github/actions/staging-frontend-deploy
         if: inputs.environment == 'staging'
         with:
-          ref: ${{ inputs.tag }}
+          tag: ${{ inputs.tag }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           slack-webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
