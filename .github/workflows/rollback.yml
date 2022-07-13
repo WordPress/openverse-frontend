@@ -19,14 +19,14 @@ jobs:
     steps:
       - uses: actions/github-script@v6
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.ACCESS_TOKEN }}
           script: |
             const { data: members } = github.rest.teams.listMembersInOrg({
               org: 'WordPress',
               team_slug: 'openverse-maintainers',
             });
 
-            const isAllowed = members.some(m => m.login === "${{ github.action }}")
+            const isAllowed = members.some(m => m.login === "${{ github.actor }}")
 
             if (!isAllowed) {
               throw new Error(
