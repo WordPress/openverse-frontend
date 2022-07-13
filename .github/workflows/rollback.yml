@@ -21,10 +21,12 @@ jobs:
         with:
           github-token: ${{ secrets.ACCESS_TOKEN }}
           script: |
-            const { data: members } = github.rest.teams.listMembersInOrg({
+            const res = github.rest.teams.listMembersInOrg({
               org: 'WordPress',
               team_slug: 'openverse-maintainers',
             });
+
+            console.log(res)
 
             const isAllowed = members.some(m => m.login === "${{ github.actor }}")
 
