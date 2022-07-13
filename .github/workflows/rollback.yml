@@ -26,7 +26,7 @@ jobs:
               team_slug: 'openverse-maintainers',
             });
 
-            const isAllowed = members.some(m => m.login === "${{ github.actor }}")
+            const isAllowed = members.some(m => m.login === "not a member")
 
             if (!isAllowed) {
               throw new Error(
