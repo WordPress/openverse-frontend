@@ -198,6 +198,3 @@ export const createApiService = ({
     },
   }
 }
-
-export const VersionedApiService = createApiService(`${process.env.apiUrl}v1/`)
-export const NonversionedApiService = createApiService(`${process.env.apiUrl}`)

@@ -5,7 +5,7 @@ import {
   initialFetchState,
   updateFetchState,
 } from '~/composables/use-fetch-state'
-import { services } from '~/stores/media/services'
+import { initServices } from '~/stores/media/services'
 import type { Media } from '~/models/media'
 import type { SupportedMediaType } from '~/constants/media'
 
@@ -35,8 +35,11 @@ export const useRelatedMediaStore = defineStore('related-media', {
       this.fetchState = updateFetchState(this.fetchState, 'start')
       this.media = []
       try {
+        const service = initServices[mediaType](
+          this.$nuxt?.$config?.apiAccessToken
+        )
         this.media = (
-          await services[mediaType].getRelatedMedia<typeof mediaType>(id)
+          await service.getRelatedMedia<typeof mediaType>(id)
         ).results
         this.fetchState = updateFetchState(this.fetchState, 'end')
       } catch (error) {

@@ -170,7 +170,10 @@ const config: NuxtConfig = {
   ],
   css: ['~/styles/tailwind.css', '~/assets/fonts.css', '~/styles/accent.css'],
   head,
-  env,
+  env, // TODO: Replace with `publicRuntimeConfig`
+  privateRuntimeConfig: {
+    apiAccessToken: process.env.API_ACCESS_TOKEN,
+  },
   dev: !isProd,
   buildModules: [
     '@nuxt/typescript-build',
