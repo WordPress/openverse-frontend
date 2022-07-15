@@ -130,10 +130,10 @@ export const createApiService = (baseUrl = process.env.apiUrl) => {
      * @param params - Url parameter object
      * @returns Response The API response object
      */
-    put(
+    put<T = unknown>(
       resource: string,
       params: AxiosRequestConfig
-    ): Promise<AxiosResponse<unknown>> {
+    ): Promise<AxiosResponse<T>> {
       return client.put(getResourceSlug(resource), params)
     },
 
@@ -143,11 +143,11 @@ export const createApiService = (baseUrl = process.env.apiUrl) => {
      * @param headers - Headers object
      * @returns Response The API response object
      */
-    delete(
+    delete<T = unknown>(
       resource: string,
       slug: string,
       headers: AxiosRequestConfig['headers']
-    ): Promise<AxiosResponse<unknown>> {
+    ): Promise<AxiosResponse<T>> {
       return client.delete(`${getResourceSlug(resource)}${slug}`, { headers })
     },
   }
