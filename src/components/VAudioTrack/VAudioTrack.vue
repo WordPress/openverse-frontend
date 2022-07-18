@@ -1,4 +1,3 @@
-activeAudioStatus
 <template>
   <Component
     :is="isBoxed ? 'VLink' : 'VWarningSuppressor'"
