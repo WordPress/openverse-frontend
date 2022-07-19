@@ -6,10 +6,9 @@
  */
 const parser = require('node-html-parser')
 
-const { NetworkService } = require('./network-service')
+const axios = require('./axios')
 
 const baseUrl = 'https://translate.wordpress.org/projects/meta/openverse/'
-const requester = NetworkService()
 
 function parseRow(row, locales) {
   const cells = row.querySelectorAll('td')
@@ -39,7 +38,7 @@ const addFetchedTranslationStatus = async (gpLocales) => {
   const locales = Object.values(gpLocales)
 
   const localesData = {}
-  const raw = await requester.get(baseUrl)
+  const raw = await axios.get(baseUrl)
 
   const parsed = parser.parse(raw.data)
   parsed

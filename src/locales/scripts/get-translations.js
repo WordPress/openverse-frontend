@@ -5,9 +5,8 @@
 const { writeFile } = require('fs/promises')
 const os = require('os')
 
-const { NetworkService } = require('./network-service')
+const axios = require('./axios')
 
-const requester = NetworkService()
 const jed1xJsonToJson = require('./jed1x-json-to-json')
 const localeJSON = require('./wp-locales.json')
 
@@ -39,7 +38,7 @@ const makeTranslationUrl =
  * @param {string} locale
  */
 const fetchJed1xTranslation = (locale) =>
-  requester.get(makeTranslationUrl('jed1x')(locale)).then((res) => res.data)
+  axios.get(makeTranslationUrl('jed1x')(locale)).then((res) => res.data)
 
 const replacePlaceholders = (json) => {
   if (json === null) {
