@@ -23,7 +23,7 @@ const localeJSON = require('./wp-locales.json')
 
 const baseUrl = `https://translate.wordpress.org/projects/meta/openverse`
 const userAgent =
-  'Openverse/0.1 (https://wordpress.com/openverse; openverse@wordpress.org'
+  'Openverse/0.1 (https://wordpress.org/openverse; openverse@wordpress.org)'
 
 /**
  *
