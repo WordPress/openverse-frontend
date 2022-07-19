@@ -22,6 +22,8 @@ const localeJSON = require('./wp-locales.json')
  */
 
 const baseUrl = `https://translate.wordpress.org/projects/meta/openverse`
+const userAgent =
+  'Openverse/0.1 (https://wordpress.com/openverse; openverse@wordpress.org'
 
 /**
  *
@@ -38,7 +40,11 @@ const makeTranslationUrl =
  * @param {string} locale
  */
 const fetchJed1xTranslation = (locale) =>
-  axios.get(makeTranslationUrl('jed1x')(locale)).then((res) => res.data)
+  axios
+    .get(makeTranslationUrl('jed1x')(locale), {
+      headers: { 'User-Agent': userAgent },
+    })
+    .then((res) => res.data)
 
 const replacePlaceholders = (json) => {
   if (json === null) {

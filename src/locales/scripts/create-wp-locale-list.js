@@ -12,13 +12,17 @@ const { addFetchedTranslationStatus } = require('./get-translations-status')
 
 const base_url =
   'https://raw.githubusercontent.com/GlotPress/GlotPress-WP/develop/locales/locales.php'
+const userAgent =
+  'Openverse/0.1 (https://wordpress.com/openverse; openverse@wordpress.org'
 
 /**
  * Fetches the data from GlotPress GitHub.
  * @returns {Promise<any>}
  */
 async function getGpLocalesData() {
-  const res = await axios.get(base_url)
+  const res = await axios.get(base_url, {
+    headers: { 'User-Agent': userAgent },
+  })
   return res.data
 }
 

@@ -7,7 +7,9 @@
 const axios = require('axios')
 const parser = require('node-html-parser')
 
-const baseUrl = `https://translate.wordpress.org/projects/meta/openverse`
+const baseUrl = 'https://translate.wordpress.org/projects/meta/openverse/'
+const userAgent =
+  'Openverse/0.1 (https://wordpress.com/openverse; openverse@wordpress.org'
 
 function parseRow(row, locales) {
   const cells = row.querySelectorAll('td')
@@ -37,7 +39,7 @@ const addFetchedTranslationStatus = async (gpLocales) => {
   const locales = Object.values(gpLocales)
 
   const localesData = {}
-  const raw = await axios.get(baseUrl)
+  const raw = await axios.get(baseUrl, { headers: { 'User-Agent': userAgent } })
 
   const parsed = parser.parse(raw.data)
   parsed
