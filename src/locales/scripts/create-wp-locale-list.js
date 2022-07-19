@@ -13,7 +13,7 @@ const { addFetchedTranslationStatus } = require('./get-translations-status')
 const base_url =
   'https://raw.githubusercontent.com/GlotPress/GlotPress-WP/develop/locales/locales.php'
 const userAgent =
-  'Openverse/0.1 (https://wordpress.com/openverse; openverse@wordpress.org'
+  'Openverse/0.1 (https://wordpress.org/openverse; openverse@wordpress.org)'
 
 /**
  * Fetches the data from GlotPress GitHub.
