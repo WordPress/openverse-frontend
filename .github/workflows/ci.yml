@@ -250,8 +250,8 @@ jobs:
           body: |
             **Storybook and Tailwind configuration previews**: _Ready_
 
-            **Storybook:** <https://wordpress.github.io/openverse-frontend/${{ github.event.pull_request.number }}>
-            **Tailwind:** <https://wordpress.github.io/openverse-frontend/${{ github.event.pull_request.number }}/tailwind>
+            **Storybook:** <https://wordpress.github.io/openverse-frontend/_preview/${{ github.event.pull_request.number }}>
+            **Tailwind:** <https://wordpress.github.io/openverse-frontend/_preview/${{ github.event.pull_request.number }}/tailwind>
 
             Please note that GitHub pages takes a little time to deploy newly pushed code, if the links above don't work or you see old versions, wait 5 minutes and try again.
 
