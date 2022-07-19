@@ -9,7 +9,7 @@ const parser = require('node-html-parser')
 
 const baseUrl = 'https://translate.wordpress.org/projects/meta/openverse/'
 const userAgent =
-  'Openverse/0.1 (https://wordpress.com/openverse; openverse@wordpress.org'
+  'Openverse/0.1 (https://wordpress.org/openverse; openverse@wordpress.org)'
 
 function parseRow(row, locales) {
   const cells = row.querySelectorAll('td')
