@@ -216,15 +216,26 @@ jobs:
 
       # This makes the TCV available at the `/tailwind` directory in the gh-pages
       - name: Merge TCV and Storybook builds
-        run: mv .tcv-export ./storybook-static/tailwind
+        run: |
+          mv .tcv-export ./storybook-static/tailwind
+          mv ./storybook-static /tmp/preview
+
+      - uses: actions/checkout@v3
+        with:
+          ref: gh-pages
+
+      - name: Merge preview with existing gh-pages
+        run: |
+          cd ..
+          mv ./openverse-frontend /tmp/gh-pages
+          mv /tmp/preview /tmp/gh-pages/_preview/${{ github.event.pull_request.number }}
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./storybook-static
-          destination_dir: ${{ github.event.pull_request.number }}
-          keep_files: true
+          publish_dir: /tmp/gh-pages
+          force_orphan: true
 
       - uses: peter-evans/find-comment@v2
         id: final-preview-comment
