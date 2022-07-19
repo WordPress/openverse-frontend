@@ -256,3 +256,6 @@ jobs:
             Please note that GitHub pages takes a little time to deploy newly pushed code, if the links above don't work or you see old versions, wait 5 minutes and try again.
 
             You can check [the GitHub pages deployment action list](https://github.com/WordPress/openverse-frontend/actions/workflows/pages/pages-build-deployment) to see the current status of the deployments.
+
+      - name: Checkout branch again to enable cleaning
+        uses: actions/checkout@v3
