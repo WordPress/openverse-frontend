@@ -259,3 +259,4 @@ jobs:
 
       - name: Checkout branch again to enable cleaning
         uses: actions/checkout@v3
+        if: always()

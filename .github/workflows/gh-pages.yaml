@@ -48,6 +48,7 @@ jobs:
           force_orphan: true
 
       - name: Checkout branch again to enable cleaning
+        if: always()
         uses: actions/checkout@v3
         with:
           ref: main
