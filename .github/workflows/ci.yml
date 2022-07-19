@@ -227,8 +227,9 @@ jobs:
       - name: Merge preview with existing gh-pages
         run: |
           cd ..
-          mv ./openverse-frontend /tmp/gh-pages
+          cp ./openverse-frontend /tmp/gh-pages
           mv /tmp/preview /tmp/gh-pages/_preview/${{ github.event.pull_request.number }}
+          cd openverse-frontend
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
