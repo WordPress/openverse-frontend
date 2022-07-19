@@ -6,23 +6,21 @@ This script extracts data for locales available in GlotPress and translate.wp.or
 
 const fs = require('fs')
 
-const axios = require('axios')
+const { NetworkService } = require('./network-service')
 
 const { addFetchedTranslationStatus } = require('./get-translations-status')
 
+const requester = NetworkService()
+
 const base_url =
   'https://raw.githubusercontent.com/GlotPress/GlotPress-WP/develop/locales/locales.php'
-const userAgent =
-  'Openverse/0.1 (https://wordpress.org/openverse; openverse@wordpress.org)'
 
 /**
  * Fetches the data from GlotPress GitHub.
  * @returns {Promise<any>}
  */
 async function getGpLocalesData() {
-  const res = await axios.get(base_url, {
-    headers: { 'User-Agent': userAgent },
-  })
+  const res = await requester.get(base_url)
   return res.data
 }
 

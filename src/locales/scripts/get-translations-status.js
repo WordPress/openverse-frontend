@@ -4,12 +4,12 @@
  * Update the GP locales object with this data, and removes any of the GP
  * locales that are not available on translate.wordpress.org.
  */
-const axios = require('axios')
 const parser = require('node-html-parser')
 
+const { NetworkService } = require('./network-service')
+
 const baseUrl = 'https://translate.wordpress.org/projects/meta/openverse/'
-const userAgent =
-  'Openverse/0.1 (https://wordpress.org/openverse; openverse@wordpress.org)'
+const requester = NetworkService()
 
 function parseRow(row, locales) {
   const cells = row.querySelectorAll('td')
@@ -39,7 +39,7 @@ const addFetchedTranslationStatus = async (gpLocales) => {
   const locales = Object.values(gpLocales)
 
   const localesData = {}
-  const raw = await axios.get(baseUrl, { headers: { 'User-Agent': userAgent } })
+  const raw = await requester.get(baseUrl)
 
   const parsed = parser.parse(raw.data)
   parsed

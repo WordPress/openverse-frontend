@@ -5,8 +5,9 @@
 const { writeFile } = require('fs/promises')
 const os = require('os')
 
-const axios = require('axios')
+const { NetworkService } = require('./network-service')
 
+const requester = NetworkService()
 const jed1xJsonToJson = require('./jed1x-json-to-json')
 const localeJSON = require('./wp-locales.json')
 
@@ -22,8 +23,6 @@ const localeJSON = require('./wp-locales.json')
  */
 
 const baseUrl = `https://translate.wordpress.org/projects/meta/openverse`
-const userAgent =
-  'Openverse/0.1 (https://wordpress.org/openverse; openverse@wordpress.org)'
 
 /**
  *
@@ -40,11 +39,7 @@ const makeTranslationUrl =
  * @param {string} locale
  */
 const fetchJed1xTranslation = (locale) =>
-  axios
-    .get(makeTranslationUrl('jed1x')(locale), {
-      headers: { 'User-Agent': userAgent },
-    })
-    .then((res) => res.data)
+  requester.get(makeTranslationUrl('jed1x')(locale)).then((res) => res.data)
 
 const replacePlaceholders = (json) => {
   if (json === null) {
