@@ -21,7 +21,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Create locales artifact
-        run: "pnpm i18n"
+        run: "npm i18n"
 
       - name: Upload locales artifact
         uses: actions/upload-artifact@v3
