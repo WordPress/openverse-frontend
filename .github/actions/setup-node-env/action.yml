@@ -35,4 +35,4 @@ runs:
     - name: Copy locale files
       shell: bash
       run: |
-        cp test/locales/ src/locales/
+        cp -r test/locales/* src/locales
