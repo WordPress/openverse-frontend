@@ -184,16 +184,17 @@ export const goToSearchTerm = async (
     await searchInput.type(term)
     // Click search button
     // Wait for navigation
+    const searchLabel = dir === 'ltr' ? 'Search' : 'يبحث'
     await Promise.all([
       page.waitForNavigation(),
-      page.click('[aria-label="Search"]'),
+      page.click(`[aria-label="${searchLabel}"]`),
     ])
     await page.waitForLoadState('networkidle')
   }
   await scrollDownAndUp(page)
   const pageWidth = page.viewportSize()?.width
   if (pageWidth && pageWidth > smWidth) {
-    await page.waitForSelector('[aria-label="menu"]')
+    await page.waitForSelector('[data-testid="page-menu-button"]')
   }
 }
 

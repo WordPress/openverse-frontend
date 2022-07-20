@@ -12,7 +12,7 @@ import {
 test.describe.configure({ mode: 'parallel' })
 
 const headerSelector = '.main-header'
-const loadMoreSelector = 'button:has-text("Load more")'
+const loadMoreSelector = 'button[data-testid="load-more"]'
 
 test.describe('header snapshots', () => {
   for (const dir of languageDirections) {
