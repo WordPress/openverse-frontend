@@ -7,5 +7,14 @@
     "dir": "rtl",
     "translated": 0,
     "file": "ar.json"
+  },
+  {
+    "code": "es",
+    "name": "Spanish (Spain)",
+    "iso": "es",
+    "wpLocale": "es_ES",
+    "dir": "ltr",
+    "translated": 100,
+    "file": "es.json"
   }
 ]
