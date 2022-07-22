@@ -98,7 +98,7 @@ const reports = {
  */
 supportedMediaTypes.forEach((mediaType) => {
   Object.entries(reports).forEach(([reportName, reportAssertion]) => {
-    test(`Files ${reportName} report for ${searchTypeNames[
+    test(`Files ${reportName} report for ${searchTypeNames('ltr')[
       mediaType
     ].toLowerCase()}`, async ({ page, context }) => {
       await goToSearchTerm(page, 'cat', { searchType: mediaType })
