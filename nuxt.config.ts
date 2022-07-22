@@ -172,7 +172,8 @@ const config: NuxtConfig = {
   head,
   env, // TODO: Replace with `publicRuntimeConfig`
   privateRuntimeConfig: {
-    apiAccessToken: process.env.API_ACCESS_TOKEN,
+    apiClientId: process.env.API_CLIENT_ID,
+    apiClientSecret: process.env.API_CLIENT_SECRET,
   },
   dev: !isProd,
   buildModules: [
