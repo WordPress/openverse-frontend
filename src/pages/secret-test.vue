@@ -8,10 +8,14 @@
         <code>{{ $t('secret-test-page.rate-limit.endpoint') }}</code>
       </template>
     </i18n>
-    <pre><code>{{ message }}</code></pre>
+    <pre><code>{{ data }}</code></pre>
     <p>
       {{
-        $t(`secret-test-page.suggestions.${isSuccess ? 'success' : 'failure'}`)
+        $t(
+          `secret-test-page.suggestions.${
+            data.apiRes.isSuccess ? 'success' : 'failure'
+          }`
+        )
       }}
     </p>
   </VContentPage>
@@ -20,29 +24,44 @@
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
 
+import { AxiosError } from 'axios'
+
 import VContentPage from '~/components/VContentPage.vue'
 
 import { createApiService } from '../data/api-service'
+import { warn } from '../utils/console'
 
 export default defineComponent({
   name: 'VSecretTest',
   components: {
     VContentPage,
   },
-  async asyncData({ $config }) {
-    const { apiAccessToken: accessToken = undefined } = $config
-    let message: string
-    let isSuccess = false
-    if (!accessToken) {
-      const data = { error: 'Access token is undefined' }
-      message = JSON.stringify(data, null, 2)
-    } else {
-      const apiService = createApiService({ accessToken })
-      const data = (await apiService.query('rate_limit', {})).data
-      message = JSON.stringify(data, null, 2)
-      isSuccess = true
+  async asyncData({ $getApiAccessToken, $config }) {
+    const { apiClientId, apiClientSecret } = $config
+    const data: unknown = {
+      secrets: {
+        apiClientId,
+        apiClientSecret,
+      },
+      apiRes: {
+        message: { error: 'Something is not working properly.' },
+        isSuccess: false,
+      },
     }
-    return { message, isSuccess }
+    try {
+      const accessToken = await $getApiAccessToken()
+      const apiService = createApiService({ accessToken })
+      data.apiRes.message = (await apiService.query('rate_limit', {})).data
+      data.apiRes.isSuccess = true
+    } catch (exc) {
+      warn(exc)
+      if (exc instanceof TypeError) {
+        data.apiRes.message = '$getApiAccessToken does not exist on the client.'
+      } else if (exc instanceof AxiosError) {
+        data.apiRes.message = `${exc.response.status} ${exc.response.statusText}`
+      } else throw exc
+    }
+    return { data }
   },
 })
 </script>
