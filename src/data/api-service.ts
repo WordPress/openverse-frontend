@@ -86,8 +86,9 @@ export const createApiService = ({
     baseURL: isVersioned ? `${baseUrl}v1/` : baseUrl,
     timeout: DEFAULT_REQUEST_TIMEOUT,
   }
-  if (accessToken)
+  if (accessToken) {
     axiosParams.headers = { Authorization: `Bearer ${accessToken}` }
+  }
   const client = axios.create(axiosParams)
   client.interceptors.request.use(function (config) {
     validateRequest(

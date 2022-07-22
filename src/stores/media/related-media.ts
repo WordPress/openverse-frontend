@@ -35,12 +35,7 @@ export const useRelatedMediaStore = defineStore('related-media', {
       this.fetchState = updateFetchState(this.fetchState, 'start')
       this.media = []
       try {
-        let accessToken: string | undefined = undefined
-        try {
-          accessToken = await this.$nuxt?.$getApiAccessToken()
-        } catch {
-          /* No problem */
-        }
+        const accessToken = this.$nuxt.$openverseApiToken
         const service = initServices[mediaType](accessToken)
         this.media = (
           await service.getRelatedMedia<typeof mediaType>(id)

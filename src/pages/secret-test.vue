@@ -36,9 +36,9 @@ export default defineComponent({
   components: {
     VContentPage,
   },
-  async asyncData({ $getApiAccessToken, $config }) {
+  async asyncData({ $openverseApiToken, $config }) {
     const { apiClientId, apiClientSecret } = $config
-    const data: unknown = {
+    const data = {
       secrets: {
         apiClientId,
         apiClientSecret,
@@ -49,16 +49,16 @@ export default defineComponent({
       },
     }
     try {
-      const accessToken = await $getApiAccessToken()
-      const apiService = createApiService({ accessToken })
-      data.apiRes.message = (await apiService.query('rate_limit', {})).data
+      const apiService = createApiService({ accessToken: $openverseApiToken })
+      data.apiRes.message = (await apiService.query('rate_limit/', {}))
+        .data as typeof data.apiRes.message
       data.apiRes.isSuccess = true
     } catch (exc) {
       warn(exc)
-      if (exc instanceof TypeError) {
-        data.apiRes.message = '$getApiAccessToken does not exist on the client.'
-      } else if (exc instanceof AxiosError) {
-        data.apiRes.message = `${exc.response.status} ${exc.response.statusText}`
+      if (exc instanceof AxiosError) {
+        data.apiRes.message = {
+          error: `${exc.response?.status} ${exc.response?.statusText}`,
+        }
       } else throw exc
     }
     return { data }
