@@ -15,16 +15,41 @@ import { SCREEN_SIZES } from '~/constants/screens'
 import enMessages from '~/locales/en.json'
 import rtlMessages from '~/locales/ar.json'
 
-const messages = {
+const messages: Record<string, Record<string, unknown>> = {
   ltr: enMessages,
   rtl: rtlMessages,
 }
 
-const t = (label: string, dir: string): string | Record<string, unknown> => {
-  if (dir === 'rtl' && (label as keyof typeof messages.rtl) in messages[dir]) {
-    return messages[dir][label as keyof typeof messages.rtl]
+const getNestedProperty = (
+  obj: Record<string, unknown>,
+  path: string
+): string => {
+  const value = path
+    .split('.')
+    .reduce((acc: string | Record<string, unknown>, part) => {
+      if (typeof acc === 'string') {
+        return acc
+      }
+      if (Object.keys(acc as Record<string, unknown>).includes(part)) {
+        return (acc as Record<string, string | Record<string, unknown>>)[part]
+      }
+      return ''
+    }, obj)
+  return typeof value === 'string' ? value : JSON.stringify(value)
+}
+
+/**
+ * Simplified i18n t function that returns English messages for `ltr` and Arabic for `rtl`.
+ * It can also handle nested labels ('header.title').
+ * @param path - The label to translate.
+ * @param dir - The language direction.
+ */
+export const t = (path: string, dir: LanguageDirection = 'ltr'): string => {
+  let value = ''
+  if (dir === 'rtl') {
+    value = getNestedProperty(messages.rtl, path)
   }
-  return messages.ltr[label as keyof typeof messages.ltr]
+  return value === '' ? getNestedProperty(messages.ltr, path) : value
 }
 
 export const languageDirections = ['ltr', 'rtl'] as const
@@ -218,7 +243,7 @@ export const goToSearchTerm = async (
     // Wait for navigation
     await Promise.all([
       page.waitForNavigation(),
-      page.click(`[aria-label="${t(dir, 'search').search}"]`),
+      page.click(`[aria-label="${t('search.search', dir)}"]`),
     ])
     await page.waitForLoadState('networkidle')
   }
