@@ -104,7 +104,13 @@ export const useSingleResultStore = defineStore('single-result', {
     async fetchMediaItem(type: SupportedMediaType, id: string) {
       try {
         this._updateFetchState('start')
-        const service = initServices[type](this.$nuxt?.$config?.apiAccessToken)
+        let accessToken: string | undefined = undefined
+        try {
+          accessToken = await this.$nuxt?.$getApiAccessToken()
+        } catch {
+          /* No problem */
+        }
+        const service = initServices[type](accessToken)
         this.mediaItem = this._addProviderName(await service.getMediaDetail(id))
         this.mediaType = type
 

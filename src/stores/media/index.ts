@@ -346,9 +346,14 @@ export const useMediaStore = defineStore('media', {
       }
       this._updateFetchState(mediaType, 'start')
       try {
-        const service = initServices[mediaType](
-          this.$nuxt?.$config?.apiAccessToken
-        )
+        let accessToken: string | undefined =
+          await this.$nuxt?.$getApiAccessToken()
+        try {
+          accessToken = await this.$nuxt?.$getApiAccessToken()
+        } catch {
+          /* No problem */
+        }
+        const service = initServices[mediaType](accessToken)
         const data = await service.search(queryParams)
         const mediaCount = data.result_count
         let errorMessage

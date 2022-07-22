@@ -78,6 +78,12 @@ const getApiAccessToken =
 
 /* Plugin */
 
+declare module '@nuxt/types' {
+  interface Context {
+    $getApiAccessToken(): Promise<string>
+  }
+}
+
 const apiToken: Plugin = async (context, inject) => {
   inject('getApiAccessToken', getApiAccessToken(context))
 }
