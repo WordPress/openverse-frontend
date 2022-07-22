@@ -669,6 +669,18 @@
     "content-filtering": "Content filtering",
     "explanation": "Shown because {feat-name} is {feat-state}"
   },
+  "secret-test-page": {
+    "title": "Secret test",
+    "rate-limit": {
+      "title": "Rate limit response",
+      "desc": "This is the response from the API {rate-limit} endpoint.",
+      "endpoint": "rate_limit"
+    },
+    "suggestions": {
+      "success": "Try navigating away and coming back to this page using the UI. The token will be gone.",
+      "failure": "Try visiting this page by typing the URL in the browser. The response will appear."
+    }
+  },
   "sketchfab-iframe-title": "{sketchfab} viewer",
   "flag-status": {
     "nonexistent": "Nonexistent",

@@ -49,6 +49,11 @@ export default function usePages() {
       name: 'header.privacy-nav-item',
       link: 'https://wordpress.org/privacy',
     },
+    {
+      id: 'secret-test',
+      name: 'secret-test-page.title',
+      link: app.localePath('/secret-test'),
+    },
   ]
 
   const route = useRoute()
