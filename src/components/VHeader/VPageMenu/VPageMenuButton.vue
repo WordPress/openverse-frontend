@@ -4,6 +4,7 @@
     size="disabled"
     class="font-semibold p-2 w-12 leading-7 focus-visible:border-tx"
     :aria-label="$t('header.aria.menu')"
+    data-testid="page-menu-button"
     v-bind="a11yProps"
     @click="$emit('click')"
   >

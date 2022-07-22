@@ -6,12 +6,63 @@ import {
   IMAGE,
   MediaType,
   MODEL_3D,
+  SearchType,
   SupportedSearchType,
   VIDEO,
 } from '~/constants/media'
 import { SCREEN_SIZES } from '~/constants/screens'
 
-import messages from '~/locales/en.json'
+import enMessages from '~/locales/en.json'
+import rtlMessages from '~/locales/ar.json'
+
+const messages: Record<string, Record<string, unknown>> = {
+  ltr: enMessages,
+  rtl: rtlMessages,
+}
+
+const getNestedProperty = (
+  obj: Record<string, unknown>,
+  path: string
+): string => {
+  const value = path
+    .split('.')
+    .reduce((acc: string | Record<string, unknown>, part) => {
+      if (typeof acc === 'string') {
+        return acc
+      }
+      if (Object.keys(acc as Record<string, unknown>).includes(part)) {
+        return (acc as Record<string, string | Record<string, unknown>>)[part]
+      }
+      return ''
+    }, obj)
+  return typeof value === 'string' ? value : JSON.stringify(value)
+}
+
+/**
+ * Simplified i18n t function that returns English messages for `ltr` and Arabic for `rtl`.
+ * It can also handle nested labels ('header.title').
+ * @param path - The label to translate.
+ * @param dir - The language direction.
+ */
+export const t = (path: string, dir: LanguageDirection = 'ltr'): string => {
+  let value = ''
+  if (dir === 'rtl') {
+    value = getNestedProperty(messages.rtl, path)
+  }
+  return value === '' ? getNestedProperty(messages.ltr, path) : value
+}
+
+export const languageDirections = ['ltr', 'rtl'] as const
+
+export const renderingContexts = [
+  ['SSR', 'ltr'],
+  ['SSR', 'rtl'],
+  ['CSR', 'ltr'],
+  ['CSR', 'rtl'],
+] as const
+
+export type RenderMode = 'SSR' | 'CSR'
+export type LanguageDirection = 'ltr' | 'rtl'
 
 const smWidth = SCREEN_SIZES.get('sm') as number
 
@@ -24,16 +75,21 @@ export function sleep(ms: number) {
   return new Promise<void>((resolve) => setTimeout(resolve, ms))
 }
 
-export type RenderMode = 'SSR' | 'CSR'
 export const searchTypePath = (searchType: SupportedSearchType) =>
   searchType === 'all' ? '' : `${searchType}`
 
-export const searchTypeNames = {
-  [IMAGE]: messages['search-type'][IMAGE],
-  [AUDIO]: messages['search-type'][AUDIO],
-  [VIDEO]: messages['search-type'][VIDEO],
-  [MODEL_3D]: messages['search-type'][MODEL_3D],
-  [ALL_MEDIA]: messages['search-type'][ALL_MEDIA],
+export const searchTypeNames = (dir: LanguageDirection = 'ltr') => {
+  const searchTypes = t('search-type', dir) as unknown as Record<
+    SearchType,
+    string
+  >
+  return {
+    [ALL_MEDIA]: searchTypes[ALL_MEDIA],
+    [AUDIO]: searchTypes[AUDIO],
+    [IMAGE]: searchTypes[IMAGE],
+    [VIDEO]: searchTypes[VIDEO],
+    [MODEL_3D]: searchTypes[MODEL_3D],
+  }
 }
 
 const isButtonPressed = async (page: Page, buttonSelector: string) => {
@@ -140,16 +196,17 @@ export const dismissTranslationBanner = async (page: Page) => {
 
 export const selectHomepageSearchType = async (
   page: Page,
-  searchType: SupportedSearchType
+  searchType: SupportedSearchType,
+  dir: LanguageDirection = 'ltr'
 ) => {
   const pageWidth = page.viewportSize()?.width
   if (pageWidth && pageWidth > smWidth) {
     await page.click('[aria-label="All content"]')
     await page.click(
-      `button[role="radio"]:has-text("${searchTypeNames[searchType]}")`
+      `button[role="radio"]:has-text("${searchTypeNames(dir)[searchType]}")`
     )
   } else {
-    await page.click(`button:has-text("${searchTypeNames[searchType]}")`)
+    await page.click(`button:has-text("${searchTypeNames(dir)[searchType]}")`)
   }
 }
 
@@ -159,7 +216,7 @@ export const goToSearchTerm = async (
   options: {
     searchType?: SupportedSearchType
     mode?: RenderMode
-    dir?: 'ltr' | 'rtl'
+    dir?: LanguageDirection
     query?: string // Only for SSR mode
   } = {}
 ) => {
@@ -177,7 +234,7 @@ export const goToSearchTerm = async (
     await dismissTranslationBanner(page)
     // Select the search type
     if (searchType !== 'all') {
-      await selectHomepageSearchType(page, searchType)
+      await selectHomepageSearchType(page, searchType, dir)
     }
     // Type search term
     const searchInput = page.locator('main input[type="search"]')
@@ -186,14 +243,14 @@ export const goToSearchTerm = async (
     // Wait for navigation
     await Promise.all([
       page.waitForNavigation(),
-      page.click('[aria-label="Search"]'),
+      page.click(`[aria-label="${t('search.search', dir)}"]`),
     ])
     await page.waitForLoadState('networkidle')
   }
   await scrollDownAndUp(page)
   const pageWidth = page.viewportSize()?.width
   if (pageWidth && pageWidth > smWidth) {
-    await page.waitForSelector('[aria-label="menu"]')
+    await page.waitForSelector('[data-testid="page-menu-button"]')
   }
 }
 
@@ -256,15 +313,6 @@ export const scrollDownAndUp = async (page: Page) => {
   await page.waitForLoadState('networkidle')
   await scrollToTop(page)
 }
-
-export const languageDirections = ['ltr', 'rtl'] as const
-
-export const renderingContexts = [
-  ['SSR', 'ltr'],
-  ['SSR', 'rtl'],
-  ['CSR', 'ltr'],
-  ['CSR', 'rtl'],
-] as const
 
 /**
  * Adds '/ar' prefix to a rtl route. The path should start with '/'
