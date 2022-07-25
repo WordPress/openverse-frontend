@@ -1,4 +1,4 @@
-import { createPinia, setActivePinia } from 'pinia'
+import { setActivePinia, createPinia } from '~~/test/unit/test-utils/pinia'
 
 import { warn } from '~/utils/console'
 import { AUDIO, IMAGE, supportedMediaTypes } from '~/constants/media'

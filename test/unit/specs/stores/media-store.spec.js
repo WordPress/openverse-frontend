@@ -1,4 +1,4 @@
-import { createPinia, setActivePinia } from 'pinia'
+import { setActivePinia, createPinia } from '~~/test/unit/test-utils/pinia'
 
 import { deepClone } from '~/utils/clone'
 

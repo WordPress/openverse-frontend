@@ -1,4 +1,4 @@
-import { createPinia, setActivePinia } from 'pinia'
+import { createPinia, setActivePinia } from '~~/test/unit/test-utils/pinia'
 
 import { initialFetchState } from '~/composables/use-fetch-state'
 import { AUDIO, IMAGE, supportedMediaTypes } from '~/constants/media'
