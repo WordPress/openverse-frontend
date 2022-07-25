@@ -1,5 +1,5 @@
 import { createApiService } from '~/data/api-service'
-import { log } from '~/utils/console'
+import { log, error } from '~/utils/console'
 
 import type { Context, Plugin } from '@nuxt/types'
 
@@ -10,10 +10,12 @@ declare let process: NodeJS.Process & {
     accessToken: string
     accessTokenExpiry: number
   }
+
+  tokenFetching: Promise<void>
 }
 
 /**
- * Store this on the `process` to prevent it being
+ * Store the plugin's "state" on the `process` to prevent it being
  * thrown out in dev mode when the plugin's module
  * is mysteriously reloaded (cache-busted) for each request.
  */
@@ -21,6 +23,8 @@ process.tokenData = process.tokenData || {
   accessToken: '', // '' denotes non-existent key
   accessTokenExpiry: 0, // 0 denotes non-existent key
 }
+
+process.tokenFetching = process.tokenFetching || Promise.resolve()
 
 /* Token refresh logic */
 
@@ -41,14 +45,10 @@ const currTimestamp = (): number => Math.floor(Date.now() / 1e3)
  */
 const isApiAccessTokenExpiring = (): boolean => {
   const expiryThreshold = 5 // seconds
-  log(
-    'isApiAccessTokenExpiring:',
-    process.tokenData,
+  const aboutToExpire =
     process.tokenData.accessTokenExpiry - expiryThreshold <= currTimestamp()
-  )
-  return (
-    process.tokenData.accessTokenExpiry - expiryThreshold <= currTimestamp()
-  )
+  log(`isApiAccessTokenExpiring: aboutToExpire=${aboutToExpire}`)
+  return aboutToExpire
 }
 
 /**
@@ -67,16 +67,26 @@ const refreshApiAccessToken = async (
   formData.append('grant_type', 'client_credentials')
 
   const apiService = createApiService()
-  const res = await apiService.post<TokenResponse>(
-    'auth_tokens/token',
-    formData
-  )
-  log('Response data', res.data)
-  process.tokenData.accessToken = res.data.access_token
-  process.tokenData.accessTokenExpiry = currTimestamp() + res.data.expires_in
+  try {
+    const res = await apiService.post<TokenResponse>(
+      'auth_tokens/token',
+      formData
+    )
+    log('Successfully retrieved API token')
+    process.tokenData.accessToken = res.data.access_token
+    process.tokenData.accessTokenExpiry = currTimestamp() + res.data.expires_in
+    log(`Next token expiry for worker expiry=${res.data.expires_in}`)
+  } catch (e) {
+    /**
+     * If an error occurs, serve the current request (and any pending)
+     * anonymously and hope it works. By setting the expiry to 0 we queue
+     * up another token fetch attempt for the next request.
+     */
+    error('Unable to retrieve API token, clearing existing token', e)
+    process.tokenData.accessToken = ''
+    process.tokenData.accessTokenExpiry = 0
+  }
 }
-
-let fetching: null | Promise<void> = null
 
 /**
  * Get an async function that always returns a valid, automatically-refreshed
@@ -94,12 +104,14 @@ const getApiAccessToken = async (
   if (apiClientId && apiClientSecret) {
     log('We have client information')
     if (isApiAccessTokenExpiring()) {
-      log('token is about to expire... requesting a new one')
-      fetching = refreshApiAccessToken(apiClientId, apiClientSecret)
+      process.tokenFetching = refreshApiAccessToken(
+        apiClientId,
+        apiClientSecret
+      )
     }
     log('awaiting the fetching of the api token to resolve')
-    await fetching
-    log('fetching the api token finished, moving on now...')
+    await process.tokenFetching
+    log('done waiting for the token, moving on now...')
 
     return process.tokenData.accessToken
   }
@@ -115,6 +127,14 @@ declare module '@nuxt/types' {
 }
 
 const apiToken: Plugin = async (context, inject) => {
-  inject('openverseApiToken', (await getApiAccessToken(context)) || '')
+  const openverseApiToken = await getApiAccessToken(context)
+
+  if (openverseApiToken) {
+    log('injecting openverseApiToken into request context')
+  } else {
+    log('using empty openverseApiToken')
+  }
+
+  inject('openverseApiToken', openverseApiToken || '')
 }
 export default apiToken
