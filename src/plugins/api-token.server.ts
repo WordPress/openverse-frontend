@@ -3,9 +3,21 @@ import { log } from '~/utils/console'
 
 import type { Context, Plugin } from '@nuxt/types'
 
-/* Module level state */
+/* Process level state */
 
-const tokenData = {
+declare let process: NodeJS.Process & {
+  tokenData: {
+    accessToken: string
+    accessTokenExpiry: number
+  }
+}
+
+/**
+ * Store this on the `process` to prevent it being
+ * thrown out in dev mode when the plugin's module
+ * is mysteriously reloaded (cache-busted) for each request.
+ */
+process.tokenData = process.tokenData || {
   accessToken: '', // '' denotes non-existent key
   accessTokenExpiry: 0, // 0 denotes non-existent key
 }
@@ -31,10 +43,12 @@ const isApiAccessTokenExpiring = (): boolean => {
   const expiryThreshold = 5 // seconds
   log(
     'isApiAccessTokenExpiring:',
-    tokenData,
-    tokenData.accessTokenExpiry - expiryThreshold <= currTimestamp()
+    process.tokenData,
+    process.tokenData.accessTokenExpiry - expiryThreshold <= currTimestamp()
   )
-  return tokenData.accessTokenExpiry - expiryThreshold <= currTimestamp()
+  return (
+    process.tokenData.accessTokenExpiry - expiryThreshold <= currTimestamp()
+  )
 }
 
 /**
@@ -58,8 +72,8 @@ const refreshApiAccessToken = async (
     formData
   )
   log('Response data', res.data)
-  tokenData.accessToken = res.data.access_token
-  tokenData.accessTokenExpiry = currTimestamp() + res.data.expires_in
+  process.tokenData.accessToken = res.data.access_token
+  process.tokenData.accessTokenExpiry = currTimestamp() + res.data.expires_in
 }
 
 let fetching: null | Promise<void> = null
@@ -87,7 +101,7 @@ const getApiAccessToken = async (
     await fetching
     log('fetching the api token finished, moving on now...')
 
-    return tokenData.accessToken
+    return process.tokenData.accessToken
   }
   return undefined
 }
