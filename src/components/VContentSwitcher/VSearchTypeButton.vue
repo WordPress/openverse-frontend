@@ -14,7 +14,7 @@
     <VIcon :icon-path="icon" />
     <span
       class="md:block md:truncate md:text-left md:ms-2"
-      :class="isHeaderScrolled ? 'hidden' : 'ms-2 block truncate text-left'"
+      :class="isHeaderScrolled ? 'hidden' : 'block truncate text-left ms-2'"
       >{{ buttonLabel }}</span
     >
     <VIcon
@@ -29,14 +29,13 @@ import {
   defineComponent,
   inject,
   PropType,
-  Ref,
+  ref,
 } from '@nuxtjs/composition-api'
 
 import { ALL_MEDIA, SearchType } from '~/constants/media'
 import useSearchType from '~/composables/use-search-type'
 import { useI18n } from '~/composables/use-i18n'
 import { isMinScreen } from '~/composables/use-media-query'
-import { isHeaderScrolledKey } from '~/layouts/default.vue'
 
 import VIcon from '~/components/VIcon/VIcon.vue'
 import VButton from '~/components/VButton.vue'
@@ -62,10 +61,7 @@ export default defineComponent({
   },
   setup(props) {
     const i18n = useI18n()
-    const isHeaderScrolled: Ref<boolean> | null = inject(
-      isHeaderScrolledKey,
-      null
-    )
+    const isHeaderScrolled = inject('isHeaderScrolled', ref(null))
     const isMinScreenMd = isMinScreen('md', { shouldPassInSSR: true })
 
     const { icons, activeType: activeItem } = useSearchType()

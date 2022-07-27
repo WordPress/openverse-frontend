@@ -1,8 +1,10 @@
 <script lang="ts">
 import {
+  ComponentInstance,
   defineComponent,
   inject,
   onMounted,
+  Ref,
   ref,
   useContext,
   useRouter,
@@ -17,7 +19,6 @@ import VMobileMenuModal from '~/components/VContentSwitcher/VMobileMenuModal.vue
 import VSearchTypePopover from '~/components/VContentSwitcher/VSearchTypePopover.vue'
 import VDesktopPageMenu from '~/components/VHeader/VPageMenu/VDesktopPageMenu.vue'
 import VMobilePageMenu from '~/components/VHeader/VPageMenu/VMobilePageMenu.vue'
-import { isMinScreenMdKey } from '~/components/VHeader/VHeader.vue'
 
 export default defineComponent({
   name: 'VHeaderMenu',
@@ -34,8 +35,8 @@ export default defineComponent({
     },
   },
   setup() {
-    const isMinScreenMd = inject(isMinScreenMdKey)
-    const menuModalRef = ref<HTMLElement | null>(null)
+    const isMinScreenMd: Ref<boolean> = inject('isMinScreenMd')
+    const menuModalRef = ref<ComponentInstance | null>(null)
     const content = useSearchType()
     const { app } = useContext()
     const mediaStore = useMediaStore()
@@ -57,7 +58,11 @@ export default defineComponent({
       router.push(newPath)
 
       function typeWithoutMedia(mediaType) {
-        return mediaStore.resultCountsPerMediaType[mediaType] === 0
+        return Boolean(
+          mediaStore.resultCountsPerMediaType.filter(
+            (item) => item[0] === mediaType && item[1] === 0
+          ).length
+        )
       }
 
       const shouldFetchMedia =

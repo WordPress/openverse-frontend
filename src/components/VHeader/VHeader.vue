@@ -52,9 +52,7 @@ import {
   computed,
   defineComponent,
   inject,
-  InjectionKey,
   provide,
-  Ref,
   ref,
   useContext,
   useRouter,
@@ -69,7 +67,6 @@ import { useI18n } from '~/composables/use-i18n'
 import { useI18nResultsCount } from '~/composables/use-i18n-utilities'
 import { useMediaStore } from '~/stores/media'
 import { isSearchTypeSupported, useSearchStore } from '~/stores/search'
-import { isHeaderScrolledKey } from '~/layouts/default.vue'
 
 import VLogoButton from '~/components/VHeader/VLogoButton.vue'
 import VHeaderFilter from '~/components/VHeader/VHeaderFilter.vue'
@@ -83,10 +80,6 @@ const menus = {
   CONTENT_SWITCHER: 'content-switcher',
 }
 type HeaderMenu = 'filters' | 'content-switcher'
-
-export const isMinScreenMdKey = Symbol('isMinScreenMd') as InjectionKey<
-  Ref<boolean>
->
 
 export default defineComponent({
   name: 'VHeader',
@@ -105,10 +98,10 @@ export default defineComponent({
 
     const { matches: isSearchRoute } = useMatchSearchRoutes()
 
-    const isHeaderScrolled = inject(isHeaderScrolledKey)
+    const isHeaderScrolled = inject('isHeaderScrolled')
     const isMinScreenMd = isMinScreen('md', { shouldPassInSSR: true })
     const headerHasTwoRows = inject('headerHasTwoRows')
-    provide(isMinScreenMdKey, isMinScreenMd)
+    provide('isMinScreenMd', isMinScreenMd)
 
     const menuModalRef = ref(null)
 

@@ -40,11 +40,8 @@ import { useSearchStore } from '~/stores/search'
 import { defineEvent } from '~/types/emits'
 import { useI18n } from '~/composables/use-i18n'
 
-import { isHeaderScrolledKey } from '~/layouts/default.vue'
-
 import VButton, { ButtonVariant } from '~/components/VButton.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'
-import { isMinScreenMdKey } from '~/components/VHeader/VHeader.vue'
 
 import filterIcon from '~/assets/icons/filter.svg'
 
@@ -72,8 +69,8 @@ export default defineComponent({
     const i18n = useI18n()
     const searchStore = useSearchStore()
     const { pressed } = toRefs(props)
-    const isMinScreenMd = inject(isMinScreenMdKey, ref(false))
-    const isHeaderScrolled = inject(isHeaderScrolledKey, ref(false))
+    const isMinScreenMd = inject('isMinScreenMd', ref(false))
+    const isHeaderScrolled = inject('isHeaderScrolled', ref(false))
     const filterCount = computed(() => searchStore.appliedFilterCount)
     const filtersAreApplied = computed(() => filterCount.value > 0)
 
