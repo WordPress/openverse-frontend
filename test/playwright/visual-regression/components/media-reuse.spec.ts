@@ -5,6 +5,7 @@ import {
   dismissTranslationBanner,
   pathWithDir,
   languageDirections,
+  t,
 } from '~~/test/playwright/utils/navigation'
 
 test.describe.configure({ mode: 'parallel' })
@@ -28,8 +29,7 @@ test.describe('media-reuse', () => {
 
           await page.locator(`#tab-${tab.id}`).click()
           // Make sure the tab is not focused and doesn't have a pink ring
-          const reuseTitle =
-            dir === 'ltr' ? 'Reuse content' : 'إعادة استخدام المحتوى'
+          const reuseTitle = t('media-details.reuse.title', dir)
           await page.locator(`h3:has-text("${reuseTitle}")`).click()
           await expectSnapshot(
             `media-reuse-${dir}-${tab.id}-tab`,

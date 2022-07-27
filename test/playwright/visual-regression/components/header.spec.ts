@@ -23,12 +23,14 @@ test.describe('header snapshots', () => {
       test.describe('header', () => {
         breakpoints.describeEvery(({ expectSnapshot }) => {
           test('resting', async ({ page }) => {
+            // Make sure the header is not hovered on
+            await page.mouse.move(0, 150)
             await expectSnapshot(`resting-${dir}`, page.locator(headerSelector))
           })
 
           test('scrolled', async ({ page }) => {
             await scrollToBottom(page)
-            await page.mouse.move(100, 150)
+            await page.mouse.move(0, 150)
             await sleep(200)
             await expectSnapshot(
               `scrolled-${dir}`,

@@ -6,7 +6,6 @@ import {
   IMAGE,
   MediaType,
   MODEL_3D,
-  SearchType,
   SupportedSearchType,
   VIDEO,
 } from '~/constants/media'
@@ -78,18 +77,21 @@ export function sleep(ms: number) {
 export const searchTypePath = (searchType: SupportedSearchType) =>
   searchType === 'all' ? '' : `${searchType}`
 
-export const searchTypeNames = (dir: LanguageDirection = 'ltr') => {
-  const searchTypes = t('search-type', dir) as unknown as Record<
-    SearchType,
-    string
-  >
-  return {
-    [ALL_MEDIA]: searchTypes[ALL_MEDIA],
-    [AUDIO]: searchTypes[AUDIO],
-    [IMAGE]: searchTypes[IMAGE],
-    [VIDEO]: searchTypes[VIDEO],
-    [MODEL_3D]: searchTypes[MODEL_3D],
-  }
+export const searchTypeNames = {
+  ltr: {
+    [ALL_MEDIA]: t('search-type.all', 'ltr'),
+    [AUDIO]: t('search-type.audio', 'ltr'),
+    [IMAGE]: t('search-type.image', 'ltr'),
+    [VIDEO]: t('search-type.video', 'ltr'),
+    [MODEL_3D]: t('search-type.model-3d', 'ltr'),
+  },
+  rtl: {
+    [ALL_MEDIA]: t('search-type.all', 'rtl'),
+    [AUDIO]: t('search-type.audio', 'rtl'),
+    [IMAGE]: t('search-type.image', 'rtl'),
+    [VIDEO]: t('search-type.video', 'rtl'),
+    [MODEL_3D]: t('search-type.model-3d', 'rtl'),
+  },
 }
 
 const isButtonPressed = async (page: Page, buttonSelector: string) => {
@@ -201,12 +203,12 @@ export const selectHomepageSearchType = async (
 ) => {
   const pageWidth = page.viewportSize()?.width
   if (pageWidth && pageWidth > smWidth) {
-    await page.click('[aria-label="All content"]')
+    await page.click(`[aria-label="${t('search-type.all', dir)}"]`)
     await page.click(
-      `button[role="radio"]:has-text("${searchTypeNames(dir)[searchType]}")`
+      `button[role="radio"]:has-text("${searchTypeNames[dir][searchType]}")`
     )
   } else {
-    await page.click(`button:has-text("${searchTypeNames(dir)[searchType]}")`)
+    await page.click(`button:has-text("${searchTypeNames[dir][searchType]}")`)
   }
 }
 
@@ -250,7 +252,7 @@ export const goToSearchTerm = async (
   await scrollDownAndUp(page)
   const pageWidth = page.viewportSize()?.width
   if (pageWidth && pageWidth > smWidth) {
-    await page.waitForSelector('[data-testid="page-menu-button"]')
+    await page.waitForSelector(`[aria-label="${t('header.aria.menu', dir)}"]`)
   }
 }
 
