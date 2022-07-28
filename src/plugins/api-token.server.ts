@@ -1,6 +1,8 @@
 import { createApiService } from '~/data/api-service'
 import { log, error } from '~/utils/console'
 
+import type { AxiosError } from 'axios'
+
 import type { Context, Plugin } from '@nuxt/types'
 
 /* Process level state */
@@ -85,6 +87,10 @@ const refreshApiAccessToken = async (
     error('Unable to retrieve API token, clearing existing token', e)
     process.tokenData.accessToken = ''
     process.tokenData.accessTokenExpiry = 0
+    ;(e as AxiosError).message = `Unable to retrive API token. ${
+      (e as AxiosError).message
+    }`
+    throw e
   }
 }
 
@@ -127,14 +133,21 @@ declare module '@nuxt/types' {
 }
 
 const apiToken: Plugin = async (context, inject) => {
-  const openverseApiToken = await getApiAccessToken(context)
+  let openverseApiToken: string | undefined
+  try {
+    openverseApiToken = await getApiAccessToken(context)
 
-  if (openverseApiToken) {
-    log('injecting openverseApiToken into request context')
-  } else {
-    log('using empty openverseApiToken')
+    if (openverseApiToken) {
+      log('injecting openverseApiToken into request context')
+    } else {
+      log('using empty openverseApiToken')
+    }
+  } catch (e) {
+    // capture the exception but allow the request to continue with anonymous API requests
+    context.$sentry.captureException(e)
+  } finally {
+    inject('openverseApiToken', openverseApiToken || '')
   }
-
-  inject('openverseApiToken', openverseApiToken || '')
 }
+
 export default apiToken
