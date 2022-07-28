@@ -29,7 +29,7 @@ for (const contentPage of contentPages) {
         test('full page', async ({ page }) => {
           await removeHiddenOverflow(page)
           // Make sure header is not hovered on
-          await page.mouse.move(0, 150)
+          await page.mouse.move(150, 150)
           await expectSnapshot(`${contentPage}-${dir}`, page, {
             fullPage: true,
           })
