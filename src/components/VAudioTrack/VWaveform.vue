@@ -449,6 +449,11 @@ export default defineComponent({
     const handleMouseLeave = () => {
       clearSeekProgress()
     }
+    const handleClick = (event: MouseEvent) => {
+      // Prevent event from bubbling to the parent anchor tag.
+      event.stopPropagation()
+      event.preventDefault()
+    }
 
     /* v-on */
 
@@ -459,6 +464,7 @@ export default defineComponent({
           mousemove: handleMouseMove,
           mouseup: handleMouseUp,
           mouseleave: handleMouseLeave,
+          click: handleClick,
           ...seekable.listeners,
         }
       } else {
@@ -514,11 +520,6 @@ export default defineComponent({
       seekTimestampEl,
       isSeekTimestampCutoff,
       seekAttributes: seekable.attributes,
-
-      handleMouseDown,
-      handleMouseMove,
-      handleMouseUp,
-      handleMouseLeave,
 
       eventHandlers,
 
