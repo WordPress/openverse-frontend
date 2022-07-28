@@ -23,28 +23,34 @@ By default, the application will run using the production API without authentica
 1. You can change your local Nuxt server to point to a local API server that does not have throttling enabled
 2. You can introduce the environment variables necessary for authenticating with an API
 
-For the first, [run the Openverse API locally](https://github.com/WordPress/openverse-api). Then create a `.env` file with the following:
+For the first, [run the Openverse API locally](https://github.com/WordPress/openverse-api). Then create a `.env` file by copying the `.env.template` file and update it with the following:
 
 ```shell
 API_URL="http://localhost:8000/"
 ```
 
-The run the dev server with environment loading:
+Be sure to remove the leading `#` to uncomment the variable from the copied template.
+
+The run the dev server as usual:
 
 ```shell
-pnpm dev:env
+pnpm dev
 ```
 
-For the second, you'll need to follow [the instructions to set up an OAuth application](https://api.openverse.engineering/v1/#section/Register-and-Authenticate) and then set up a `.env` file with the following structure:
+For the second, you'll need to follow [the instructions to set up an OAuth application](https://api.openverse.engineering/v1/#section/Register-and-Authenticate) and then fill in the `API_CLIENT_ID` and `API_CLIENT_SECRET` in the `.env` file copied from `.env.template`. Be sure to remove the leading `#` to uncomment these variables from the copied template.
 
 ```shell
 API_CLIENT_ID=""
 API_CLIENT_SECRET=""
 ```
 
-Then run the API using `pnpm dev:env`. This will load the secrets into the environment and all requests made by your server will be made using an access token retrieved by the `~/plugins/api-token.server.ts` plugin.
+Then run the API as usual using `pnpm dev`. Nuxt automatically loads `.env` files into the environment. With these variables in the environment, all requests made by your server will be made using an access token retrieved by the `~/plugins/api-token.server.ts` plugin.
 
-Similarly, to build the production version of the API with these values, you can use `pnpm build:env && pnpm start:env`.
+Once the `.env` file is set up, you may run the development build the typical way:
+
+```shell
+pnpm build && pnpm start
+```
 
 ## Browsers
 
