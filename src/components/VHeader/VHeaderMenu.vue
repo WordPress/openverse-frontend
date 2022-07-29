@@ -10,7 +10,7 @@ import {
   useRouter,
 } from '@nuxtjs/composition-api'
 
-import { ALL_MEDIA, searchPath, supportedMediaTypes } from '~/constants/media'
+import { ALL_MEDIA, searchPath } from '~/constants/media'
 import useSearchType from '~/composables/use-search-type'
 import { useMediaStore } from '~/stores/media'
 import { useSearchStore } from '~/stores/search'
@@ -57,13 +57,14 @@ export default defineComponent({
       })
       router.push(newPath)
 
-      const typeWithoutMedia = (mediaType) =>
-        mediaStore.mediaTypeResultsCount(mediaType) === 0
-
       const shouldFetchMedia =
         type === ALL_MEDIA
-          ? supportedMediaTypes.every((type) => typeWithoutMedia(type))
-          : typeWithoutMedia(type)
+          ? mediaStore.resultCountsPerMediaType.every(
+              (mediaCount) => mediaCount[1] === 0
+            )
+          : mediaStore.resultCountsPerMediaType.find(
+              (mediaCount) => mediaCount[0] === type
+            )?.[1] === 0
 
       if (shouldFetchMedia) {
         await mediaStore.fetchMedia()
