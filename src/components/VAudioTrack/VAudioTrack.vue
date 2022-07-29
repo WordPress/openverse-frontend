@@ -7,7 +7,7 @@
     :href="`/audio/${audio.id}`"
     @keydown.native.shift.tab.exact="$emit('shift-tab', $event)"
     @keydown.native.prevent.space="togglePlayback"
-    v-on="seekListeners"
+    @keydown.native.exact="handleKeydown"
   >
     <Component
       :is="layoutComponent"
@@ -407,7 +407,7 @@ export default defineComponent({
       handleToggle,
       handleSeeked,
       togglePlayback,
-      seekListeners: seekable.listeners,
+      handleKeydown: seekable.listeners.keydown,
 
       currentTime,
       duration,
