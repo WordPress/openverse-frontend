@@ -97,6 +97,10 @@ export const useMediaStore = defineStore('media', {
       return supportedMediaTypes.map((type) => [type, this.results[type].count])
     },
 
+    mediaTypeResultsCount(state) {
+      return (mediaType: SupportedMediaType) => state.results[mediaType].count
+    },
+
     /**
      * Returns the total count of results for selected search type, sums all media results for ALL_MEDIA or additional types.
      * If the count is more than 10000, returns 10000 to match the API result.
@@ -108,6 +112,7 @@ export const useMediaStore = defineStore('media', {
           ? supportedMediaTypes
           : [this._searchType]
       ) as SupportedMediaType[]
+
       const count = types.reduce(
         (sum, mediaType) => sum + state.results[mediaType].count,
         0

@@ -57,13 +57,8 @@ export default defineComponent({
       })
       router.push(newPath)
 
-      function typeWithoutMedia(mediaType) {
-        return Boolean(
-          mediaStore.resultCountsPerMediaType.filter(
-            (item) => item[0] === mediaType && item[1] === 0
-          ).length
-        )
-      }
+      const typeWithoutMedia = (mediaType) =>
+        mediaStore.mediaTypeResultsCount(mediaType) === 0
 
       const shouldFetchMedia =
         type === ALL_MEDIA
