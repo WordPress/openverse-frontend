@@ -13,7 +13,7 @@
     <!-- Focus ring -->
     <svg
       v-if="isInteractive"
-      class="hidden group-waveform-focus:block absolute inset-0 w-full h-full z-20 shadow-ring-1"
+      class="hidden group-waveform-focus-visible:block absolute inset-0 w-full h-full z-20 shadow-ring-1"
       xmlns="http://www.w3.org/2000/svg"
       :viewBox="viewBox"
       preserveAspectRatio="none"
