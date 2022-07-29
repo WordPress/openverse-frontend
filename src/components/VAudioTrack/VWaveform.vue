@@ -2,7 +2,7 @@
   <div
     v-bind="seekAttributes"
     ref="el"
-    class="waveform group relative bg-background-var focus:outline-none overflow-hidden"
+    class="waveform group-waveform relative bg-background-var focus:outline-none overflow-hidden"
     :style="heightProperties"
     :tabIndex="isTabbable && isInteractive ? 0 : -1"
     :role="isInteractive ? 'slider' : undefined"
@@ -13,7 +13,7 @@
     <!-- Focus ring -->
     <svg
       v-if="isInteractive"
-      class="hidden group-focus:block absolute inset-0 w-full h-full z-20 shadow-ring-1"
+      class="hidden group-waveform-focus:block absolute inset-0 w-full h-full z-20 shadow-ring-1"
       xmlns="http://www.w3.org/2000/svg"
       :viewBox="viewBox"
       preserveAspectRatio="none"
@@ -86,7 +86,7 @@
     <!-- Focus bar -->
     <div
       v-if="isInteractive"
-      class="focus-indicator hidden absolute z-20 top-0 flex flex-col items-center justify-between bg-black h-full"
+      class="group-waveform-focus:flex group-focus:flex hidden absolute z-20 top-0 flex flex-col items-center justify-between bg-black h-full"
       :style="{ width: `${barWidth}px`, left: `${progressBarWidth}px` }"
     >
       <div
@@ -146,7 +146,7 @@
     <!-- Seek disabled message overlay -->
     <div
       v-if="seekDisabledNotice"
-      class="invisible group-hover:visible group-focus:visible absolute w-full inset-0 flex items-center justify-center font-bold text-xsm bg-yellow/75 z-40"
+      class="invisible group-waveform-hover:visible group-waveform-focus:visible absolute w-full inset-0 flex items-center justify-center font-bold text-xsm bg-yellow/75 z-40"
     >
       {{ seekDisabledNotice }}
     </div>
@@ -579,10 +579,6 @@ export default defineComponent({
 
 .seek {
   left: var(--seek-time-left);
-}
-
-.waveform:focus-visible .focus-indicator {
-  display: flex;
 }
 
 .fill-dark-charcoal-20-alpha {
