@@ -8,23 +8,27 @@ import { useActiveMediaStore } from '~/stores/active-media'
 
 import VAudioTrack from '~/components/VAudioTrack/VAudioTrack.vue'
 
+const enMessages = require('~/locales/en.json')
+
+const mockI18n = new Vuei18n({
+  locale: 'en',
+  fallbackLocale: 'en',
+  messages: { en: enMessages },
+})
+
 jest.mock('~/composables/use-browser-detection', () => ({
   useBrowserIsBlink: jest.fn(() => false),
 }))
 
-const enMessages = require('~/locales/en.json')
+jest.mock('~/composables/use-i18n', () => ({
+  useI18n: jest.fn(() => mockI18n),
+}))
 
 const useVueI18n = (vue) => {
   vue.use(Vuei18n)
 
-  const i18n = new Vuei18n({
-    locale: 'en',
-    fallbackLocale: 'en',
-    messages: { en: enMessages },
-  })
-
   return {
-    i18n,
+    i18n: mockI18n,
   }
 }
 const useStore = (vue) => {
