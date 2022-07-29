@@ -5,18 +5,41 @@ import apiTokenPlugin, {
   expiryThreshold,
 } from '~/plugins/api-token.server'
 
+import type { AxiosRequestConfig } from 'axios'
+
 import type { Context } from '@nuxt/types'
+
+// Comment this out if you need to debug the tests as the logs are quite helpful
+jest.mock('~/utils/console', () => ({
+  log: () => {
+    /* noop */
+  },
+  error: () => {
+    /* noop */
+  },
+}))
 
 export declare let process: NodeJS.Process & Process
 
 const matchTokenDataRequest = /auth_tokens\/token/
 
-const getMockContext = (
-  $config: { apiClientId: string; apiClientSecret: string } = {
-    apiClientId: 'abcdefg_client_i_d',
-    apiClientSecret: 'shhhhhhhhh_1234_super_secret',
-  }
-) =>
+type $config = Partial<{
+  apiClientId: string
+  apiClientSecret: string
+}>
+
+const defaultConfig: Required<$config> = {
+  apiClientId: 'abcdefg_client_i_d',
+  apiClientSecret: 'shhhhhhhhh_1234_super_secret',
+}
+
+const matchTokenDataRequestBody = new URLSearchParams({
+  client_id: defaultConfig.apiClientId,
+  client_secret: defaultConfig.apiClientSecret,
+  grant_type: 'client_credentials',
+}).toString()
+
+const getMockContext = ($config: $config = defaultConfig) =>
   ({
     $sentry: {
       captureException: jest.fn(),
@@ -36,10 +59,18 @@ const getMockTokenResponse = (expires_in = twelveHoursInSeconds) => ({
   expires_in,
 })
 
+const mockResponseAndAssertData =
+  (response: [number, unknown?], data = matchTokenDataRequestBody) =>
+  (config: AxiosRequestConfig) => {
+    expect(config.data).toEqual(data)
+    return response
+  }
+
 const defaultPromise = Promise.resolve()
 
 describe('api-token.server plugin', () => {
   afterEach(() => {
+    mockInject.mockReset()
     process.tokenData = {
       accessToken: '',
       accessTokenExpiry: 0,
@@ -48,12 +79,12 @@ describe('api-token.server plugin', () => {
   })
 
   describe('successful token retrieval', () => {
-    it('should save the token into the process', async () => {
+    it('should save the token into the process and inject into the context', async () => {
       const mockTokenResponse = getMockTokenResponse()
       mockCreateApiService((axiosMockAdapter) => {
         axiosMockAdapter
           .onPost(matchTokenDataRequest)
-          .replyOnce(200, mockTokenResponse)
+          .replyOnce(mockResponseAndAssertData([200, mockTokenResponse]))
       })
 
       await apiTokenPlugin(getMockContext(), mockInject)
@@ -62,6 +93,11 @@ describe('api-token.server plugin', () => {
         accessToken: mockTokenResponse.access_token,
         accessTokenExpiry: frozenSeconds + twelveHoursInSeconds,
       })
+
+      expect(mockInject).toHaveBeenCalledWith(
+        'openverseApiToken',
+        process.tokenData.accessToken
+      )
     })
 
     it('should re-retrieve the token when about to expire', async () => {
@@ -70,10 +106,10 @@ describe('api-token.server plugin', () => {
       mockCreateApiService((axiosMockAdapter) => {
         axiosMockAdapter
           .onPost(matchTokenDataRequest)
-          .replyOnce(200, mockTokenResponse)
+          .replyOnce(mockResponseAndAssertData([200, mockTokenResponse]))
 
           .onPost(matchTokenDataRequest)
-          .replyOnce(200, nextMockTokenResponse)
+          .replyOnce(mockResponseAndAssertData([200, nextMockTokenResponse]))
       })
 
       await apiTokenPlugin(getMockContext(), mockInject)
@@ -91,10 +127,10 @@ describe('api-token.server plugin', () => {
       mockCreateApiService((axiosMockAdapter) => {
         axiosMockAdapter
           .onPost(matchTokenDataRequest)
-          .replyOnce(200, mockTokenResponse)
+          .replyOnce(mockResponseAndAssertData([200, mockTokenResponse]))
 
           .onPost(matchTokenDataRequest)
-          .replyOnce(200, nextMockTokenResponse)
+          .replyOnce(mockResponseAndAssertData([200, nextMockTokenResponse]))
       })
 
       await apiTokenPlugin(getMockContext(), mockInject)
@@ -106,7 +142,7 @@ describe('api-token.server plugin', () => {
       })
     })
 
-    it.only('subsequent requests should all block on the same token retrieval promise', async () => {
+    it('subsequent requests should all block on the same token retrieval promise', async () => {
       /**
        * This test is pretty complicated because we need to simulate
        * multiple requests coming in at the same time with requests
@@ -130,7 +166,6 @@ describe('api-token.server plugin', () => {
         undefined
       const resolveFirstRequest = async () => {
         while (!resolveFirstRequestPromise) {
-          console.log('awaiting request resolvability')
           await new Promise((r) => setTimeout(r, 1))
         }
         resolveFirstRequestPromise({})
@@ -140,19 +175,17 @@ describe('api-token.server plugin', () => {
         mockAdapter
           .onPost(matchTokenDataRequest)
           .replyOnce(async () => {
-            console.log('in first request')
             const promise = new Promise((resolve) => {
               resolveFirstRequestPromise = resolve as () => void
             })
 
             await promise
-            console.log('resolving first request')
 
             return [200, mockTokenResponse]
           })
 
-          .onGet(matchTokenDataRequest)
-          .replyOnce(200, nextMockTokenResponse)
+          .onPost(matchTokenDataRequest)
+          .replyOnce(mockResponseAndAssertData([200, nextMockTokenResponse]))
       })
 
       const promises = [
@@ -170,6 +203,103 @@ describe('api-token.server plugin', () => {
       expect(process.tokenData).toMatchObject({
         accessToken: mockTokenResponse.access_token,
         accessTokenExpiry: frozenSeconds + twelveHoursInSeconds,
+      })
+    })
+  })
+
+  describe('unnecessful token retrieval', () => {
+    it('should record the error in sentry', async () => {
+      mockCreateApiService((mockAdapter) => {
+        mockAdapter
+          .onPost(matchTokenDataRequest)
+          .replyOnce(mockResponseAndAssertData([418]))
+      })
+
+      const mockContext = getMockContext()
+      let capturedError: Error | undefined = undefined
+      ;(
+        mockContext.$sentry.captureException as jest.Mock
+      ).mockImplementationOnce((e: Error) => {
+        capturedError = e
+      })
+
+      await apiTokenPlugin(mockContext, mockInject)
+
+      expect(mockContext.$sentry.captureException).toHaveBeenCalledTimes(1)
+      expect(capturedError).not.toBeUndefined()
+      expect((capturedError as unknown as Error).message).toMatch(
+        'Unable to retrieve API token. Request failed with status code 418'
+      )
+    })
+
+    it('should empty the token data', async () => {
+      mockCreateApiService((mockAdapter) => {
+        mockAdapter
+          .onPost(matchTokenDataRequest)
+          .replyOnce(
+            mockResponseAndAssertData([
+              200,
+              getMockTokenResponse(expiryThreshold - 1),
+            ])
+          )
+
+          .onPost(matchTokenDataRequest)
+          .replyOnce(mockResponseAndAssertData([418]))
+      })
+
+      await apiTokenPlugin(getMockContext(), mockInject)
+      expect(process.tokenData.accessToken).not.toEqual('')
+      await apiTokenPlugin(getMockContext(), mockInject)
+      expect(process.tokenData.accessToken).toEqual('')
+    })
+
+    it('should properly release the mutex and allow for subsequent requests to retry the token refresh', async () => {
+      const finalTokenResponse = getMockTokenResponse()
+      mockCreateApiService((mockAdapter) => {
+        mockAdapter
+          .onPost(matchTokenDataRequest)
+          .replyOnce(
+            mockResponseAndAssertData([
+              200,
+              getMockTokenResponse(expiryThreshold - 1),
+            ])
+          )
+
+          .onPost(matchTokenDataRequest)
+          .replyOnce(mockResponseAndAssertData([418]))
+
+          .onPost(matchTokenDataRequest)
+          .replyOnce(mockResponseAndAssertData([200, finalTokenResponse]))
+      })
+
+      await apiTokenPlugin(getMockContext(), mockInject)
+      await apiTokenPlugin(getMockContext(), mockInject)
+      expect(process.fetchingMutex.isLocked()).toBe(false)
+      await apiTokenPlugin(getMockContext(), mockInject)
+      expect(process.tokenData.accessToken).toEqual(
+        finalTokenResponse.access_token
+      )
+    })
+  })
+
+  describe('missing client credentials', () => {
+    describe('completely missing', () => {
+      it('should not make any requests and fall back to tokenless', async () => {
+        await apiTokenPlugin(getMockContext({}), mockInject)
+        expect(mockInject).toHaveBeenCalledWith('openverseApiToken', '')
+      })
+    })
+
+    describe('explicitly undefined', () => {
+      it('should not make any requests and fall back to tokenless', async () => {
+        await apiTokenPlugin(
+          getMockContext({
+            apiClientId: undefined,
+            apiClientSecret: undefined,
+          }),
+          mockInject
+        )
+        expect(mockInject).toHaveBeenCalledWith('openverseApiToken', '')
       })
     })
   })

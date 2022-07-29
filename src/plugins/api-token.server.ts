@@ -101,7 +101,7 @@ const refreshApiAccessToken = async (
     error('Unable to retrieve API token, clearing existing token', e)
     process.tokenData.accessToken = ''
     process.tokenData.accessTokenExpiry = 0
-    ;(e as AxiosError).message = `Unable to retrive API token. ${
+    ;(e as AxiosError).message = `Unable to retrieve API token. ${
       (e as AxiosError).message
     }`
     throw e
