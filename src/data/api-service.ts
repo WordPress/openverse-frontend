@@ -50,6 +50,7 @@ export interface ApiServiceConfig {
  * the schema of the API service
  */
 export interface ApiService {
+  client: AxiosInstance
   query<T = unknown>(
     resource: string,
     params: Record<string, string>
@@ -119,6 +120,8 @@ export const createApiService = ({
   )
 
   return {
+    client,
+
     /**
      * @param resource - The endpoint of the resource
      * @param params - Url parameter object
