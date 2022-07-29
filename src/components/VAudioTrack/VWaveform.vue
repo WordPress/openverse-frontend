@@ -4,7 +4,7 @@
     ref="el"
     class="waveform group relative bg-background-var focus:outline-none overflow-hidden"
     :style="heightProperties"
-    :tabIndex="isInteractive ? 0 : -1"
+    :tabIndex="isTabbable && isInteractive ? 0 : -1"
     :role="isInteractive ? 'slider' : undefined"
     :aria-disabled="!isInteractive"
     :aria-label="$t('waveform.label').toString()"
@@ -233,6 +233,13 @@ export default defineComponent({
     featureNotices: {
       type: Object as PropType<Record<AudioFeature, boolean>>,
       default: () => ({}),
+    },
+    /**
+     * whether the waveform can be focused by using the `Tab` key
+     */
+    isTabbable: {
+      type: Boolean,
+      default: true,
     },
   },
   emits: [

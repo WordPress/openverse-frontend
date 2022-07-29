@@ -80,6 +80,7 @@
           name="controller"
           :features="features"
           :feature-notices="featureNotices"
+          :is-tabbable="false"
         />
       </div>
     </div>
