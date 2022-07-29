@@ -6,7 +6,6 @@
     role="region"
     :href="`/audio/${audio.id}`"
     @keydown.native.shift.tab.exact="$emit('shift-tab', $event)"
-    @keydown.native.prevent.space="togglePlayback"
     @keydown.native.exact="handleKeydown"
   >
     <Component
@@ -406,7 +405,6 @@ export default defineComponent({
       ariaLabel,
       handleToggle,
       handleSeeked,
-      togglePlayback,
       handleKeydown: seekable.listeners.keydown,
 
       currentTime,
