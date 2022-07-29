@@ -5,6 +5,7 @@
         <VWaveform
           v-bind="waveformProps"
           :peaks="audio.peaks"
+          :audio-id="audio.id"
           :current-time="currentTime"
           :duration="duration"
           :message="message"
@@ -15,8 +16,8 @@
 
       <template #play-pause="playPauseProps">
         <VPlayPause
-          :status="status"
           v-bind="playPauseProps"
+          :status="status"
           @toggle="handleToggle"
         />
       </template>
@@ -38,6 +39,7 @@ import { defaultRef } from '~/composables/default-ref'
 import { useI18n } from '~/composables/use-i18n'
 
 import { useActiveMediaStore } from '~/stores/active-media'
+import { useMediaStore } from '~/stores/media'
 
 import type { AudioDetail } from '~/models/media'
 import type { AudioStatus } from '~/constants/audio'
@@ -84,7 +86,11 @@ export default defineComponent({
     })
 
     const setPlaying = () => {
-      status.value = 'playing'
+      if (props.audio.hasLoaded) {
+        status.value = 'playing'
+      } else {
+        status.value = 'loading'
+      }
       updateTimeLoop()
     }
     const setPaused = () => (status.value = 'paused')
@@ -104,21 +110,45 @@ export default defineComponent({
     }
 
     const updateTimeLoop = () => {
-      if (activeAudio.obj.value && status.value === 'playing') {
+      if (
+        activeAudio.obj.value &&
+        (status.value === 'playing' || status.value === 'loading')
+      ) {
         currentTime.value = activeAudio.obj.value.currentTime
         window.requestAnimationFrame(updateTimeLoop)
       }
     }
 
+    const mediaStore = useMediaStore()
+    const setLoaded = () => {
+      mediaStore.setMediaProperties('audio', props.audio.id, {
+        hasLoaded: true,
+      })
+      status.value = 'playing'
+    }
+    const setWaiting = () => {
+      status.value = 'loading'
+    }
+
+    const eventMap = {
+      play: setPlaying,
+      pause: setPaused,
+      ended: setPlayed,
+      timeupdate: setTimeWhenPaused,
+      durationchange: setDuration,
+      waiting: setWaiting,
+      playing: setLoaded,
+    } as const
+
     watch(
       activeAudio.obj,
       (audio, _, onInvalidate) => {
         if (!audio) return
-        audio.addEventListener('play', setPlaying)
-        audio.addEventListener('pause', setPaused)
-        audio.addEventListener('ended', setPlayed)
-        audio.addEventListener('timeupdate', setTimeWhenPaused)
-        audio.addEventListener('durationchange', setDuration)
+
+        Object.entries(eventMap).forEach(([name, fn]) =>
+          audio.addEventListener(name, fn)
+        )
+
         currentTime.value = audio.currentTime
         if (audio.duration && !isNaN(audio.duration)) {
           duration.value = audio.duration
@@ -148,11 +178,9 @@ export default defineComponent({
         }
 
         onInvalidate(() => {
-          audio.removeEventListener('play', setPlaying)
-          audio.removeEventListener('pause', setPaused)
-          audio.removeEventListener('ended', setPlayed)
-          audio.removeEventListener('timeupdate', setTimeWhenPaused)
-          audio.removeEventListener('durationchange', setDuration)
+          Object.entries(eventMap).forEach(([name, fn]) =>
+            audio.removeEventListener(name, fn)
+          )
         })
       },
       { immediate: true }

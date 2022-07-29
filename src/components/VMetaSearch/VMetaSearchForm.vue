@@ -2,7 +2,7 @@
   <section
     :key="type"
     ref="sectionRef"
-    class="p-6 meta-search text-center mt-12"
+    class="meta-search mt-12 p-6 text-center"
     data-testid="meta-search-form"
     @keydown.tab.exact="handleTab"
   >
@@ -15,7 +15,7 @@
             : 'meta-search.form.unsupported-title'
         "
         tag="h4"
-        class="text-4xl mb-2"
+        class="mb-2 text-4xl"
       >
         <template #openverse>Openverse</template>
         <template #type>{{ $t(`meta-search.form.types.${type}`) }}</template>
@@ -24,7 +24,7 @@
         v-else
         path="meta-search.form.no-results-title"
         tag="h4"
-        class="text-4xl mb-2"
+        class="mb-2 text-4xl"
       >
         <template #type>{{ $t(`meta-search.form.types.${type}`) }}</template>
         <template #query>{{ query.q }}</template>
@@ -36,17 +36,16 @@
         <template #break>
           <br />
         </template>
-        <template #filter>{{ unsupportedByUseFilter }}</template>
       </i18n>
     </header>
 
     <VMetaSourceList
-      class="md:justify-center mt-6 mb-10"
+      class="mt-6 mb-10 md:justify-center"
       :type="type"
       :query="query"
     />
 
-    <p class="text-sm font-semibold max-w-3xl my-0 mx-auto">
+    <p class="my-0 mx-auto max-w-3xl text-sm font-semibold">
       {{ $t('meta-search.caption', { openverse: 'Openverse' }) }}
     </p>
   </section>
@@ -62,7 +61,6 @@ import {
 
 import type { MediaType } from '~/constants/media'
 import type { ApiQueryParams } from '~/utils/search-query-transform'
-import { getAdditionalSourceBuilders } from '~/utils/get-additional-sources'
 import { getFocusableElements } from '~/utils/focus-management'
 import { defineEvent } from '~/types/emits'
 
@@ -82,14 +80,8 @@ export default defineComponent({
   emits: {
     tab: defineEvent<[KeyboardEvent]>(),
   },
-  setup(props, { emit }) {
+  setup(_, { emit }) {
     const sectionRef = ref<HTMLElement>()
-    const unsupportedByUseFilter = computed(() =>
-      getAdditionalSourceBuilders(props.type)
-        .filter((source) => !source.supportsUseFilters)
-        .map((source) => source.name)
-        .join(', ')
-    )
 
     /**
      * Find the last focusable element in VSearchGridFilter to add a 'Tab' keydown event
@@ -108,7 +100,6 @@ export default defineComponent({
     }
     return {
       sectionRef,
-      unsupportedByUseFilter,
       handleTab,
     }
   },

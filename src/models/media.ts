@@ -12,6 +12,7 @@ export interface Tag {
 export interface Media {
   id: string
   title: string
+  originalTitle: string
 
   creator?: string
   creator_url?: string
@@ -50,17 +51,31 @@ export interface ImageDetail extends Media {
   width?: number
 }
 
+export interface AudioSet {
+  title: string
+  foreign_landing_url: string
+  creator?: string
+  creator_url?: string
+  url?: string
+  filesize?: number
+  filetype?: string
+}
+
 export interface AudioDetail extends Media {
   frontendMediaType: 'audio'
 
-  audio_set?: string
+  audio_set?: AudioSet
   genres?: string[]
+  length?: string
   duration?: number
   bit_rate?: number
   sample_rate?: number
   alt_files?: { provider: string; filetype: string }[]
   peaks?: number[]
   waveform?: string
+
+  // Set and managed by the frontend client-side
+  hasLoaded?: boolean
 }
 
 export type DetailFromMediaType<T extends SupportedMediaType> =

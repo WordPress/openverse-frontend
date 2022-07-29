@@ -3,7 +3,7 @@
     <!-- eslint-disable vuejs-accessibility/click-events-have-key-events -->
     <div
       ref="triggerContainerRef"
-      class="flex items-stretch flex-shrink-0"
+      class="flex flex-shrink-0 items-stretch"
       @click="onTriggerClick"
     >
       <!-- eslint-enable vuejs-accessibility/click-events-have-key-events -->
@@ -23,7 +23,13 @@
 </template>
 
 <script>
-import { computed, reactive, ref, watch } from '@nuxtjs/composition-api'
+import {
+  computed,
+  defineComponent,
+  reactive,
+  ref,
+  watch,
+} from '@nuxtjs/composition-api'
 
 import { useBodyScrollLock } from '~/composables/use-body-scroll-lock'
 
@@ -31,7 +37,7 @@ import VModalContent from '~/components/VModal/VModalContent.vue'
 import VPageMenuButton from '~/components/VHeader/VPageMenu/VPageMenuButton.vue'
 import VPageList from '~/components/VHeader/VPageMenu/VPageList.vue'
 
-export default {
+export default defineComponent({
   name: 'VMobilePageMenu',
   components: { VModalContent, VPageMenuButton, VPageList },
   setup(_, { emit }) {
@@ -88,5 +94,5 @@ export default {
       visibleRef,
     }
   },
-}
+})
 </script>

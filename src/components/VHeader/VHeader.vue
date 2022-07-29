@@ -1,6 +1,6 @@
 <template>
   <header
-    class="main-header flex px-4 py-3 md:py-4 md:px-7 items-center md:items-stretch z-30 w-full bg-white justify-between gap-x-2 gap-y-4"
+    class="main-header z-30 flex w-full items-center justify-between gap-x-2 gap-y-4 bg-white px-4 py-3 md:items-stretch md:py-4 md:px-7"
     :class="{
       'flex-wrap md:flex-nowrap': !isHeaderScrolled,
       'border-b border-white': !isHeaderScrolled && !isMenuOpen,
@@ -18,16 +18,16 @@
 
     <VSearchBar
       v-model.trim="searchTerm"
-      class="flex-grow lg:flex-grow-0 lg:w-1/2 2xl:w-1/3"
+      class="flex-grow lg:w-1/2 lg:flex-grow-0 2xl:w-1/3"
       :size="isMinScreenMd ? 'medium' : isHeaderScrolled ? 'small' : 'large'"
       :class="{
-        'order-4 md:order-none w-full md:w-auto': !isHeaderScrolled,
+        'order-4 w-full md:order-none md:w-auto': !isHeaderScrolled,
       }"
       @submit="handleSearch"
     >
       <span
         v-show="searchStatus"
-        class="hidden lg:block info font-semibold text-xs text-dark-charcoal-70 group-hover:text-dark-charcoal group-focus:text-dark-charcoal mx-4 whitespace-nowrap"
+        class="info mx-4 hidden whitespace-nowrap text-xs font-semibold text-dark-charcoal-70 group-hover:text-dark-charcoal group-focus:text-dark-charcoal lg:block"
       >
         {{ searchStatus }}
       </span>
@@ -40,6 +40,7 @@
     />
     <VHeaderFilter
       v-if="isSearchRoute"
+      :disabled="areFiltersDisabled"
       @open="openMenuModal(menus.FILTERS)"
       @close="close()"
     />
@@ -58,7 +59,7 @@ import {
   watch,
 } from '@nuxtjs/composition-api'
 
-import { ALL_MEDIA } from '~/constants/media'
+import { ALL_MEDIA, searchPath } from '~/constants/media'
 import { isMinScreen } from '~/composables/use-media-query'
 import { useMatchSearchRoutes } from '~/composables/use-match-routes'
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
@@ -165,12 +166,14 @@ export default defineComponent({
      * - search term hasn't changed:
      *   - on a search route, do nothing.
      *   - on other routes: set searchType to 'All content', reset the media,
-     *     change the path to `/search/` (All content) and fetch media.
+     *     change the path to `/search/` (All content).
      * - search term changed:
      *   - on a search route: Update the store searchTerm value, update query `q` param, reset media,
      *     fetch new media.
      *   - on other routes: Update the store searchTerm value, set searchType to 'All content', reset media,
-     *     update query `q` param, fetch new media.
+     *     update query `q` param.
+     * Updating the path causes the `search.vue` page's route watcher
+     * to run and fetch new media.
      */
     const handleSearch = async () => {
       window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
@@ -193,13 +196,15 @@ export default defineComponent({
       document.activeElement?.blur()
       if (isSearchTypeSupported(searchType)) {
         const newPath = app.localePath({
-          path: `/search/${searchType === 'all' ? '' : searchType}`,
+          path: searchPath(searchType),
           query: searchStore.searchQueryParams,
         })
         router.push(newPath)
-        await mediaStore.fetchMedia()
       }
     }
+    const areFiltersDisabled = computed(
+      () => !searchStore.searchTypeIsSupported
+    )
 
     return {
       closeIcon,
@@ -209,6 +214,7 @@ export default defineComponent({
       isMinScreenMd,
       isSearchRoute,
       headerHasTwoRows,
+      areFiltersDisabled,
 
       menuModalRef,
 

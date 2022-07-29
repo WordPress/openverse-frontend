@@ -303,17 +303,22 @@
       "digitized_artwork": "Digitized Artworks"
     },
     "audio-extensions": {
-      "title": "File type",
-      "mp3": "MP3s",
-      "ogg": "OGGs",
-      "flac": "FLACs"
+      "title": "Extension",
+      "flac": "FLAC",
+      "mid": "MID",
+      "mp3": "MP3",
+      "oga": "OGA",
+      "ogg": "OGG",
+      "opus": "OPUS",
+      "wav": "WAV",
+      "webm": "WEBM"
     },
     "image-extensions": {
-      "title": "File type",
-      "jpg": "JPEGs",
-      "png": "PNGs",
-      "gif": "GIFs",
-      "svg": "SVGs"
+      "title": "Extension",
+      "jpg": "JPEG",
+      "png": "PNG",
+      "gif": "GIF",
+      "svg": "SVG"
     },
     "aspect-ratios": {
       "title": "Aspect ratio",
@@ -331,11 +336,12 @@
       "title": "Search Settings",
       "enable": "Enable Mature Content"
     },
-    "durations": {
-      "title": "Durations",
-      "short": "Short",
-      "medium": "Medium",
-      "long": "Long"
+    "lengths": {
+      "title": "Duration",
+      "shortest": "< 30 sec",
+      "short": "30 sec-2 min",
+      "medium": "2-10 min",
+      "long": "> 10 min"
     },
     "creator": {
       "title": "Search by Creator"
@@ -369,6 +375,7 @@
     "all-result-count": "{localeCount} result|{localeCount} results",
     "all-result-count-more": "Over {localeCount} result|Over {localeCount} results",
     "load": "Load more results",
+    "loading": "Loading...",
     "fetching-error": "Error fetching {type}:",
     "search-rating": {
       "content": "Are these results relevant?",
@@ -539,7 +546,7 @@
       "unsupported-title": "{openverse} does not yet support built-in {type} search.",
       "supported-title": "Not finding what you're looking for? Try additional {type} sources.",
       "no-results-title": "No {type} results for \"{query}\".",
-      "caption": "Click on a source below to directly search other collections of CC-licensed {type}.{break}Please note that \"Use\" filters are not supported for {filter}.",
+      "caption": "Click on a source below to directly search other collections of CC-licensed {type}.",
       "types": {
         "image": "image",
         "audio": "audio",
@@ -584,7 +591,8 @@
   "play-pause": {
     "play": "Play",
     "pause": "Pause",
-    "replay": "Replay"
+    "replay": "Replay",
+    "loading": "Loading"
   },
   "search": {
     "search": "Search",

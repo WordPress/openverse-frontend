@@ -1,14 +1,14 @@
 <template>
-  <div class="global-track flex flex-row w-full">
+  <div class="global-track flex w-full flex-row">
     <div class="flex-shrink-0">
       <VAudioThumbnail :audio="audio" />
-      <slot name="play-pause" size="medium" layout="global" />
+      <slot name="play-pause" :size="size" :layout="layout" />
     </div>
 
     <div class="relative flex-grow">
       <VLink
         :href="`/audio/${audio.id}`"
-        class="absolute inset-x-0 z-10 top-[10.5px] px-4 flex flex-row items-center justify-between line-clamp-2 pe-12 text-sr font-semibold text-dark-charcoal hover-underline"
+        class="hover-underline absolute inset-x-0 top-[10.5px] z-10 flex flex-row items-center justify-between px-4 text-sr font-semibold text-dark-charcoal pe-12 line-clamp-2"
       >
         {{ audio.title }}
       </VLink>
@@ -37,6 +37,12 @@ export default defineComponent({
       type: Object as PropType<AudioDetail>,
       required: true,
     },
+  },
+  setup() {
+    const size = 'medium' as const
+    const layout = 'global' as const
+
+    return { size, layout }
   },
 })
 </script>

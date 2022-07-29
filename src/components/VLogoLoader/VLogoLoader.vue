@@ -4,12 +4,12 @@
     xmlns="http://www.w3.org/2000/svg"
     :class="{
       [$style.loading]: status === 'loading' && !prefersReducedMotion,
-      'w-10 h-10': autoResize,
+      'h-10 w-10': autoResize,
     }"
     aria-hidden="true"
     :data-prefers-reduced-motion="prefersReducedMotion"
     data-testid="logo-loader"
-    class="w-12 h-12 md:w-12 md:h-12 p-3 rounded inline-flex justify-center items-center"
+    class="inline-flex h-12 w-12 items-center justify-center rounded p-3 md:h-12 md:w-12"
     fill="currentColor"
   >
     <path
@@ -39,16 +39,23 @@
   </svg>
 </template>
 
-<script>
-import { defineComponent } from '@nuxtjs/composition-api'
+<script lang="ts">
+import { defineComponent, PropType } from '@nuxtjs/composition-api'
 
 import { useReducedMotion } from '~/composables/use-media-query'
 
-import { propTypes } from './VLogoLoader.types'
-
 export default defineComponent({
   name: 'VLogoLoader',
-  props: propTypes,
+  props: {
+    status: {
+      type: String as PropType<'loading' | 'idle'>,
+      default: 'idle',
+    },
+    autoResize: {
+      type: Boolean,
+      default: true,
+    },
+  },
   setup() {
     const prefersReducedMotion = useReducedMotion()
 

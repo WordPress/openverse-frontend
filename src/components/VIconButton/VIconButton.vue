@@ -2,14 +2,16 @@
   <VButton
     v-bind="buttonProps"
     size="disabled"
-    class="icon-button flex flex-shrink-0 items-center justify-center active:shadow-ring border-1.5"
+    class="icon-button flex flex-shrink-0 items-center justify-center border-1.5 active:shadow-ring"
     :class="buttonSizeClasses"
     :type="type"
     v-on="$listeners"
   >
+    <slot name="default" :icon-size-classes="iconSizeClasses" />
     <VIcon
+      v-if="iconProps"
       class="pointer-events-none"
-      :class="[...iconSizeClasses]"
+      :class="iconSizeClasses"
       v-bind="iconProps"
     />
   </VButton>
@@ -59,7 +61,7 @@ export default defineComponent({
      */
     iconProps: {
       type: Object as PropType<IconProps>,
-      required: true,
+      required: false,
     },
     /**
      * props to pass down to the `VButton` component nested inside the button;

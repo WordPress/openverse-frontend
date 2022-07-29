@@ -2,7 +2,7 @@
   <div
     v-bind="seekAttributes"
     ref="el"
-    class="waveform group-waveform relative bg-background-var focus:outline-none overflow-hidden"
+    class="waveform bg-background-var group-waveform relative overflow-hidden focus:outline-none"
     :style="heightProperties"
     :tabIndex="isTabbable && isInteractive ? 0 : -1"
     :role="isInteractive ? 'slider' : undefined"
@@ -13,7 +13,7 @@
     <!-- Focus ring -->
     <svg
       v-if="isInteractive"
-      class="hidden group-waveform-focus-visible:block absolute inset-0 w-full h-full z-20 shadow-ring-1"
+      class="shadow-ring-1 absolute inset-0 z-20 hidden h-full w-full group-waveform-focus:block"
       xmlns="http://www.w3.org/2000/svg"
       :viewBox="viewBox"
       preserveAspectRatio="none"
@@ -45,7 +45,7 @@
 
     <!-- Progress bar -->
     <svg
-      class="absolute inset-0 w-full h-full"
+      class="absolute inset-0 h-full w-full"
       xmlns="http://www.w3.org/2000/svg"
       :viewBox="viewBox"
       preserveAspectRatio="none"
@@ -71,7 +71,7 @@
       <rect
         v-for="(peak, index) in normalizedPeaks"
         :key="index"
-        class="transform origin-bottom transition-transform duration-500"
+        class="origin-bottom transform transition-transform duration-500"
         :class="[
           isReady ? 'scale-y-100' : 'scale-y-0',
           index <= seekIndex ? 'fill-black' : 'fill-dark-charcoal-20-alpha',
@@ -86,7 +86,7 @@
     <!-- Focus bar -->
     <div
       v-if="isInteractive"
-      class="group-waveform-focus:flex group-focus:flex hidden absolute z-20 top-0 flex flex-col items-center justify-between bg-black h-full"
+      class="absolute top-0 z-20 hidden h-full flex-col items-center justify-between bg-black group-focus:flex group-waveform-focus:flex"
       :style="{ width: `${barWidth}px`, left: `${progressBarWidth}px` }"
     >
       <div
@@ -95,7 +95,7 @@
           bottom: ['translate-y-1/2'],
         }"
         :key="name"
-        class="rounded-full bg-black h-2 w-2 transform"
+        class="h-2 w-2 transform rounded-full bg-black"
         :class="classes"
       >
         &nbsp;
@@ -129,7 +129,7 @@
       </template>
       <div
         v-if="showDuration"
-        class="duration timestamp right-0 bg-background-var"
+        class="duration timestamp bg-background-var right-0"
       >
         {{ timeFmt(duration) }}
       </div>
@@ -138,7 +138,7 @@
     <!-- Message overlay -->
     <div
       v-else
-      class="absolute inset-0 flex items-center justify-center loading font-bold text-xs"
+      class="loading absolute inset-0 flex items-center justify-center text-xs font-bold"
     >
       {{ message }}
     </div>
@@ -146,7 +146,7 @@
     <!-- Seek disabled message overlay -->
     <div
       v-if="seekDisabledNotice"
-      class="invisible group-waveform-hover:visible group-waveform-focus:visible absolute w-full inset-0 flex items-center justify-center font-bold text-xsm bg-yellow/75 z-40"
+      class="text-xsm invisible absolute inset-0 z-40 flex w-full items-center justify-center bg-yellow/75 font-bold group-waveform-hover:visible group-waveform-focus:visible"
     >
       {{ seekDisabledNotice }}
     </div>
@@ -170,7 +170,14 @@ import { useSeekable } from '~/composables/use-seekable'
 
 import type { AudioFeature } from '~/constants/audio'
 
+import { hash, rand as prng } from '~/utils/prng'
+
 import type { CSSProperties } from '@vue/runtime-dom'
+
+/**
+ * If the duration is above this threshold, the progress timestamp will show ms.
+ */
+const MAX_SECONDS_FOR_MS = 1
 
 /**
  * Renders an SVG representation of the waveform given a list of heights for the
@@ -233,6 +240,13 @@ export default defineComponent({
     featureNotices: {
       type: Object as PropType<Record<AudioFeature, boolean>>,
       default: () => ({}),
+    },
+    /**
+     * Audio id to make the randomly-created peaks deterministic.
+     */
+    audioId: {
+      type: String,
+      required: true,
     },
     /**
      * whether the waveform can be focused by using the `Tab` key
@@ -331,10 +345,13 @@ export default defineComponent({
     const peakCount = computed(() =>
       getPeaksInWidth(waveformDimens.value.width)
     )
+
+    const createRandomPeaks = (audioId: string) => {
+      const rand = prng(hash(audioId))
+      return Array.from({ length: 100 }, () => rand())
+    }
     const peaks = computed(() =>
-      props.peaks?.length
-        ? props.peaks
-        : Array.from({ length: 100 }, () => Math.random())
+      props.peaks?.length ? props.peaks : createRandomPeaks(props.audioId)
     )
     const normalizedPeaks = computed(() => {
       let samples = peaks.value
@@ -379,6 +396,15 @@ export default defineComponent({
       const timestampWidth = progressTimestampEl.value.offsetWidth
       return barWidth < timestampWidth + 2
     })
+
+    /**
+     * Whether to show the ms part in the timestamps. True when the duration
+     * is below MAX_SECONDS_FOR_MS seconds.
+     */
+    const showMsInTimestamp = computed(
+      () =>
+        Number.isFinite(props.duration) && props.duration < MAX_SECONDS_FOR_MS
+    )
 
     /* Seek bar */
 
@@ -489,7 +515,7 @@ export default defineComponent({
     }))
 
     const seekTimeLeft = computed<CSSProperties>(() => ({
-      '--seek-time-left': `${seekBarWidth}px`,
+      '--seek-time-left': `${seekBarWidth.value}px`,
     }))
 
     return {
@@ -518,6 +544,7 @@ export default defineComponent({
       progressTimestamp,
       progressTimestampEl,
       isProgressTimestampCutoff,
+      showMsInTimestamp,
 
       seekFrac,
       seekBarWidth,
@@ -557,7 +584,7 @@ export default defineComponent({
 }
 
 .timestamp {
-  @apply absolute font-bold text-xs px-1 pointer-events-none;
+  @apply pointer-events-none absolute px-1 text-xs font-bold;
   top: calc(var(--unusable-height) + theme('spacing[0.5]'));
 }
 

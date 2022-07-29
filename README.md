@@ -10,7 +10,7 @@
 
 This repository is the frontend UI for accessing and exploring the openly-licensed content provided by the [Openverse API](https://github.com/wordpress/openverse-api).
 
-You can view [the application](https://wordpress.org/openverse) live on WordPress.org. You can also view [the production Storybook](https://wordpress.github.io/openverse-frontend)
+You can view [the application](https://wordpress.org/openverse) live on WordPress.org. You can view a gallery of our frontend components on our [Storybook](https://wordpress.github.io/openverse-frontend).
 
 ## Technology
 
@@ -59,7 +59,7 @@ Be sure to replace the IP address in the example with your own. See the next sec
 You can find the local IP address Nuxt uses by looking at the output of `nuxt dev`. Look in your console for a box of configuration details that looks like this:
 
 ```bash
-#  ╭────────────────────────────────────────────╮
+#  ╭───────────────────────────────────────────╮
 #  │                                           │
 #  │   Nuxt @ v2.15.8                          │
 #  │                                           │
@@ -69,7 +69,7 @@ You can find the local IP address Nuxt uses by looking at the output of `nuxt de
 #  │                                           │
 #  │   Listening: http://192.168.50.119:8443/  │ # <-- Use this IP Address
 #  │                                           │
-#  ╰────────────────────────────────────────────╯
+#  ╰───────────────────────────────────────────╯
 ```
 
 You will need to regenerate the certificate if this IP address changes for any reason, like by enabling a VPN or changing networks.

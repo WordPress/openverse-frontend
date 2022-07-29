@@ -6,15 +6,43 @@ on:
       - main
   pull_request:
 
+# Cancels all previous workflow runs for pull requests that have not completed.
+concurrency:
+  # The concurrency group contains the workflow name and the branch name for pull requests
+  # or the commit hash for any other events.
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.sha }}
+  cancel-in-progress: true
+
 jobs:
+  update-locales:
+    name: Update locales
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: ./.github/actions/setup-node-env
+
+      - name: Create locales artifact
+        run: "pnpm i18n"
+
+      - name: Upload locales artifact
+        uses: actions/upload-artifact@v3
+        with:
+          path: src/locales
+          name: locales
+
   types:
     name: Check types
     runs-on: ubuntu-latest
+    needs:
+      - update-locales
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - uses: ./.github/actions/setup-node-env
+        with:
+          downloadLocales: true
 
       - name: Check types
         run: pnpm types
@@ -22,11 +50,15 @@ jobs:
   lint:
     name: Lint files
     runs-on: ubuntu-latest
+    needs:
+      - update-locales
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - uses: ./.github/actions/setup-node-env
+        with:
+          downloadLocales: true
 
       - name: Lint with ESLint and Prettier
         run: pnpm lint
@@ -36,26 +68,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - uses: ./.github/actions/setup-node-env
 
       - name: Check extracted strings
         run: pnpm i18n:check
 
-      - name: Check POT files are updated
-        shell: bash
-        run: pnpm i18n:generate-pot
-
   unit:
     name: Unit tests
     runs-on: ubuntu-latest
 
+    needs:
+      - update-locales
+
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - uses: ./.github/actions/setup-node-env
-
+        with:
+          downloadLocales: true
       - name: Run unit tests
         run: pnpm test:unit
 
@@ -87,14 +119,17 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - build
+      - update-locales
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - uses: ./.github/actions/setup-node-env
+        with:
+          downloadLocales: true
 
       - name: Run Nuxt Playwright tests
-        run: pnpm test:playwright
+        run: pnpm test:playwright --workers=2
 
       - uses: actions/upload-artifact@v3
         if: failure()
@@ -105,11 +140,15 @@ jobs:
   storybook-playwright:
     name: Storybook Playwright tests
     runs-on: ubuntu-latest
+    needs:
+      - update-locales
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - uses: ./.github/actions/setup-node-env
+        with:
+          downloadLocales: true
 
       - name: Run Storybook Playwright tests
         run: pnpm test:storybook
@@ -147,11 +186,15 @@ jobs:
   storybook:
     name: Check Storybook build
     runs-on: ubuntu-latest
+    needs:
+      - update-locales
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - uses: ./.github/actions/setup-node-env
+        with:
+          downloadLocales: true
 
       - name: Run Storybook smoke-test
         run: pnpm storybook:smoke
@@ -161,7 +204,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - uses: ./.github/actions/setup-node-env
 
@@ -170,7 +213,7 @@ jobs:
 
   gh-pages:
     name: PR Storybook and Tailwind Preview
-    if: github.repository == 'WordPress/openverse-frontend' && github.ref != 'refs/heads/main'
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.owner.login == 'WordPress'
     runs-on: ubuntu-latest
 
     steps:
@@ -198,7 +241,7 @@ jobs:
             (This comment will be automatically updated with the preview URLs once they are ready)
 
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - uses: ./.github/actions/setup-node-env
 
@@ -213,15 +256,38 @@ jobs:
 
       # This makes the TCV available at the `/tailwind` directory in the gh-pages
       - name: Merge TCV and Storybook builds
-        run: mv .tcv-export ./storybook-static/tailwind
+        run: |
+          mv .tcv-export ./storybook-static/tailwind
+          mv ./storybook-static /tmp/preview
+
+      # Otherwise we end up with `node_modules` and other things only necessary for building
+      # but not necessary for deploying the `gh-pages` branch
+      - name: Recreate working directory to avoid supurflouous files
+        run: |
+          cd ..
+          rm -rf openverse-frontend
+          mkdir openverse-frontend
+
+      - uses: actions/checkout@v3
+        with:
+          ref: gh-pages
+
+      - name: Merge preview with existing gh-pages
+        run: |
+          cd ..
+          cp -r ./openverse-frontend /tmp/gh-pages
+          # trash the existing preview folder and replace it with the newly generated one
+          # if the preview hasn't been pushed yet this will still exit(0)
+          rm -rf /tmp/gh-pages/_preview/${{ github.event.pull_request.number }}
+          mv /tmp/preview /tmp/gh-pages/_preview/${{ github.event.pull_request.number }}
+          cd openverse-frontend
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./storybook-static
-          destination_dir: ${{ github.event.pull_request.number }}
-          keep_files: true
+          publish_dir: /tmp/gh-pages
+          force_orphan: true
 
       - uses: peter-evans/find-comment@v2
         id: final-preview-comment
@@ -236,9 +302,13 @@ jobs:
           body: |
             **Storybook and Tailwind configuration previews**: _Ready_
 
-            **Storybook:** <https://wordpress.github.io/openverse-frontend/${{ github.event.pull_request.number }}>
-            **Tailwind:** <https://wordpress.github.io/openverse-frontend/${{ github.event.pull_request.number }}/tailwind>
+            **Storybook:** <https://wordpress.github.io/openverse-frontend/_preview/${{ github.event.pull_request.number }}>
+            **Tailwind:** <https://wordpress.github.io/openverse-frontend/_preview/${{ github.event.pull_request.number }}/tailwind>
 
             Please note that GitHub pages takes a little time to deploy newly pushed code, if the links above don't work or you see old versions, wait 5 minutes and try again.
 
             You can check [the GitHub pages deployment action list](https://github.com/WordPress/openverse-frontend/actions/workflows/pages/pages-build-deployment) to see the current status of the deployments.
+
+      - name: Checkout branch again to enable cleaning
+        uses: actions/checkout@v3
+        if: always()

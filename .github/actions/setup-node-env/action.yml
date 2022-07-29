@@ -5,21 +5,25 @@ inputs:
   install:
     default: true
     description: Whether to install dependencies.
+  downloadLocales:
+    required: false
+    default: "false"
+    description: Whether to download locales artifact.
 
 runs:
   using: "composite"
   steps:
-    - uses: pnpm/action-setup@v2.2.1
+    - uses: pnpm/action-setup@v2.2.2
 
     - name: Cache pnpm modules
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: ~/.local/share/pnpm/store
         key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
         restore-keys: |
           ${{ runner.os }}-
 
-    - uses: actions/setup-node@v2.5.1
+    - uses: actions/setup-node@v3.3.0
       with:
         node-version: 16
         cache: pnpm
@@ -32,6 +36,8 @@ runs:
       shell: bash
       run: "pnpm install"
 
-    - name: Get locales
-      shell: bash
-      run: "pnpm i18n"
+    - uses: actions/download-artifact@v3
+      if: inputs.downloadLocales == 'true'
+      with:
+        name: locales
+        path: src/locales

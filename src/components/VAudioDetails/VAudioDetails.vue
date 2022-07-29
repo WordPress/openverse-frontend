@@ -1,17 +1,17 @@
 <template>
   <section class="audio-info">
-    <header class="flex flex-row justify-between items-center mb-6">
-      <h4 class="text-base lg:text-3xl">
+    <header class="mb-6 flex flex-row items-center justify-between">
+      <h4 class="text-2xl lg:text-3xl">
         {{ $t('audio-details.information') }}
       </h4>
       <VContentReportPopover :media="audio" />
     </header>
 
-    <div class="flex flex-col md:flex-row items-start gap-6">
-      <div class="w-[75px] h-[75px] lg:w-30 lg:h-30 rounded-sm overflow-hidden">
+    <div class="flex flex-col items-start gap-6 md:flex-row">
+      <div class="h-[75px] w-[75px] overflow-hidden rounded-sm lg:h-30 lg:w-30">
         <VAudioThumbnail :audio="audio" />
       </div>
-      <div class="flex flex-col gap-4 lg:gap-6 flex-grow">
+      <div class="flex flex-grow flex-col gap-4 lg:gap-6">
         <p v-if="audio.description" class="mb-6">{{ audio.description }}</p>
         <ul class="flex flex-wrap gap-2">
           <VMediaTag
@@ -26,8 +26,8 @@
           <div v-if="audio.audio_set">
             <dt>{{ $t('audio-details.table.album') }}</dt>
             <dd>
-              <VLink :href="audio.audio_set.url">{{
-                audio.audio_set.name
+              <VLink :href="audio.audio_set.foreign_landing_url">{{
+                audio.audio_set.title
               }}</VLink>
             </dd>
           </div>
@@ -85,16 +85,26 @@
   </section>
 </template>
 
-<script>
-import VLink from '~/components/VLink.vue'
+<script lang="ts">
+import { defineComponent, PropType } from '@nuxtjs/composition-api'
+
+import type { AudioDetail } from '~/models/media'
+
 import VAudioThumbnail from '~/components/VAudioThumbnail/VAudioThumbnail.vue'
+import VContentReportPopover from '~/components/VContentReport/VContentReportPopover.vue'
+import VLink from '~/components/VLink.vue'
 import VMediaTag from '~/components/VMediaTag/VMediaTag.vue'
 
-export default {
+export default defineComponent({
   name: 'VAudioDetails',
-  components: { VAudioThumbnail, VLink, VMediaTag },
-  props: ['audio'],
-}
+  components: { VAudioThumbnail, VContentReportPopover, VLink, VMediaTag },
+  props: {
+    audio: {
+      type: Object as PropType<AudioDetail>,
+      required: true,
+    },
+  },
+})
 </script>
 
 <style scoped>

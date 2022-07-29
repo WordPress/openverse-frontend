@@ -2,18 +2,37 @@
   <VIconButton
     v-bind="$attrs"
     :tabindex="-1"
-    class="play-pause flex-shrink-0 bg-dark-charcoal border-dark-charcoal text-white disabled:opacity-70 focus-visible:border-pink focus-visible:outline-none focus-visible:shadow-ring"
-    :icon-props="{ iconPath: icon }"
+    class="play-pause flex-shrink-0 border-dark-charcoal bg-dark-charcoal text-white focus-visible:border-pink focus-visible:shadow-ring focus-visible:outline-none disabled:opacity-70"
+    :icon-props="icon === undefined ? undefined : { iconPath: icon }"
     :aria-label="$t(label)"
     :button-props="buttonProps"
     @click.stop.prevent="handleClick"
-  />
+  >
+    <template #default="{ iconSizeClasses }">
+      <svg
+        v-if="isLoading"
+        class="loading p-2"
+        :class="iconSizeClasses"
+        xmlns="http://www.w3.org/2000/svg"
+        overflow="visible"
+        viewBox="0 0 12 12"
+      >
+        <circle cx="6" cy="6" r="6" vector-effect="non-scaling-stroke" />
+        <path
+          d="m 6 0 a 6 6 0 0 1 6 6"
+          stroke="white"
+          vector-effect="non-scaling-stroke"
+        />
+      </svg>
+    </template>
+  </VIconButton>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
 
-import type { AudioLayout, AudioStatus } from '~/constants/audio'
+import { AudioLayout, AudioStatus, statusVerbMap } from '~/constants/audio'
+import { defineEvent } from '~/types/emits'
 
 import VIconButton from '~/components/VIconButton/VIconButton.vue'
 import type { ButtonConnections, ButtonVariant } from '~/components/VButton.vue'
@@ -22,16 +41,11 @@ import playIcon from '~/assets/icons/play.svg'
 import pauseIcon from '~/assets/icons/pause.svg'
 import replayIcon from '~/assets/icons/replay.svg'
 
-const statusVerbMap = {
-  playing: 'pause',
-  paused: 'play',
-  played: 'replay',
-} as const
-
 const statusIconMap = {
   playing: pauseIcon,
   paused: playIcon,
   played: replayIcon,
+  loading: undefined,
 } as const
 
 const layoutConnectionsMap: Record<AudioLayout, ButtonConnections> = {
@@ -69,8 +83,12 @@ export default defineComponent({
       default: 'full',
     },
   },
+  emits: {
+    toggle: defineEvent<['paused' | 'playing']>(),
+  },
   setup(props, { emit }) {
     const isPlaying = computed(() => props.status === 'playing')
+    const isLoading = computed(() => props.status === 'loading')
     /**
      * Get the button label based on the current status of the player.
      */
@@ -91,15 +109,43 @@ export default defineComponent({
     })
 
     const handleClick = () => {
-      emit('toggle', isPlaying.value ? 'paused' : 'playing')
+      emit('toggle', isPlaying.value || isLoading.value ? 'paused' : 'playing')
     }
     return {
       label,
       icon,
       buttonProps,
+      isLoading,
 
       handleClick,
     }
   },
 })
 </script>
+
+<style scoped>
+@keyframes spinAnimation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading circle,
+.loading path {
+  fill: transparent;
+  stroke-width: 2px;
+}
+
+.loading circle {
+  stroke: #595258;
+}
+
+.loading path {
+  stroke-linecap: round;
+  transform-origin: 50% 50%;
+  animation: spinAnimation 1.4s linear infinite both;
+}
+</style>

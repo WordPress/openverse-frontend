@@ -2,19 +2,21 @@
   <Component
     :is="tag"
     v-bind="$attrs"
-    class="text-dark-blue text-sr md:text-base font-semibold px-3 md:px-4 py-1 md:py-2 bg-dark-charcoal-10 rounded-full leading-[130%] md:leading-[130%] inline-flex"
+    class="inline-flex rounded-full bg-dark-charcoal-10 px-3 py-1 text-sr font-semibold leading-[130%] text-dark-blue md:px-4 md:py-2 md:text-base md:leading-[130%]"
   >
     <!-- @slot Content goes here -->
     <slot />
   </Component>
 </template>
 
-<script>
+<script lang="ts">
 /**
  * Displays a tag associated with a media item. If set up as a link, it can be
  * used as a link to find other items that are similarly tagged.
  */
-export default {
+import { defineComponent } from '@nuxtjs/composition-api'
+
+export default defineComponent({
   name: 'MediaTag',
   props: {
     /**
@@ -26,5 +28,5 @@ export default {
       default: 'span',
     },
   },
-}
+})
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <figure class="w-full mb-4 pt-12 px-6 bg-dark-charcoal-06 relative">
+    <figure class="relative mb-4 w-full bg-dark-charcoal-06 px-6 pt-12">
       <div
         v-if="backToSearchPath"
         class="absolute left-0 top-0 right-0 w-full px-2"
@@ -11,12 +11,13 @@
       <img
         v-if="!sketchFabUid"
         id="main-image"
-        :src="isLoadingFullImage ? image.thumbnail : image.url"
+        :src="imageSrc"
         :alt="image.title"
-        class="h-full w-full max-h-[500px] mx-auto rounded-t-sm object-contain"
+        class="mx-auto h-full max-h-[500px] w-full rounded-t-sm object-contain"
         :width="imageWidth"
         :height="imageHeight"
         @load="onImageLoaded"
+        @error="onImageError"
       />
       <VSketchFabViewer
         v-if="sketchFabUid"
@@ -28,25 +29,22 @@
 
     <section
       id="title-button"
-      class="flex flex-row md:flex-row-reverse flex-wrap justify-between md:mt-6"
+      class="flex flex-row flex-wrap justify-between md:mt-6 md:flex-row-reverse"
     >
       <VButton
         as="VLink"
         :href="image.foreign_landing_url"
-        class="btn-main flex-initial w-full md:w-max mb-4 md:mb-0"
+        class="btn-main mb-4 w-full flex-initial leading-[1.3] md:mb-0 md:w-max"
         size="large"
         >{{ $t('image-details.weblink') }}</VButton
       >
-      <span class="flex-1 flex flex-col justify-center">
-        <h1 class="text-base md:text-3xl font-semibold leading-[130%]">
+      <div
+        class="flex flex-1 flex-col justify-center text-base font-semibold leading-[1.3]"
+      >
+        <h1 class="font-semibold md:text-3xl">
           {{ image.title }}
         </h1>
-        <i18n
-          v-if="image.creator"
-          path="image-details.creator"
-          tag="span"
-          class="font-semibold leading-[130%]"
-        >
+        <i18n v-if="image.creator" path="image-details.creator" tag="span">
           <template #name>
             <VLink
               v-if="image.creator_url"
@@ -61,7 +59,7 @@
             <span v-else>{{ image.creator }}</span>
           </template>
         </i18n>
-      </span>
+      </div>
     </section>
 
     <VMediaReuse :media="image" />
@@ -86,9 +84,9 @@ import {
 } from '@nuxtjs/composition-api'
 
 import { IMAGE } from '~/constants/media'
+import type { ImageDetail } from '~/models/media'
 import { useSingleResultStore } from '~/stores/media/single-result'
 import { useRelatedMediaStore } from '~/stores/media/related-media'
-import type { ImageDetail } from '~/models/media'
 import { createDetailPageMeta } from '~/utils/og'
 
 import VButton from '~/components/VButton.vue'
@@ -98,6 +96,8 @@ import VMediaReuse from '~/components/VMediaInfo/VMediaReuse.vue'
 import VRelatedImages from '~/components/VImageDetails/VRelatedImages.vue'
 import VSketchFabViewer from '~/components/VSketchFabViewer.vue'
 import VBackToSearchResultsLink from '~/components/VBackToSearchResultsLink.vue'
+
+import errorImage from '~/assets/image_not_available_placeholder.png'
 
 export default defineComponent({
   name: 'VImageDetailsPage',
@@ -134,7 +134,12 @@ export default defineComponent({
     const imageWidth = ref(0)
     const imageHeight = ref(0)
     const imageType = ref('Unknown')
-    const isLoadingFullImage = ref(true)
+    /**
+     * To make sure that image is loaded fast, we `src` to `image.thumbnail`,
+     * and then replace it with the provider image once it is loaded.
+     */
+    const imageSrc = ref(image.value.thumbnail)
+    const isLoadingMainImage = ref(true)
     const sketchFabfailure = ref(false)
 
     const sketchFabUid = computed(() => {
@@ -146,16 +151,36 @@ export default defineComponent({
         .split('/')[0]
     })
 
+    /**
+     * On image error, fall back on image thumbnail or the error image.
+     * @param event - image load error event.
+     */
+    const onImageError = (event: Event) => {
+      if (!(event.target instanceof HTMLImageElement)) {
+        return
+      }
+      imageSrc.value =
+        event.target.src === image.value.url
+          ? image.value.thumbnail
+          : errorImage
+    }
+    /**
+     * When the load event is fired for the thumbnail image, we set the dimensions
+     * of the image, and replace the image src attribute with the `image.url`
+     * to load the original provider image.
+     * @param event - the image load event.
+     */
     const onImageLoaded = (event: Event) => {
       if (!(event.target instanceof HTMLImageElement)) {
         return
       }
-      imageWidth.value = image.value?.width || event.target.naturalWidth
-      imageHeight.value = image.value?.height || event.target.naturalHeight
-      if (image.value?.filetype) {
-        imageType.value = image.value.filetype
-      } else {
-        if (event.target) {
+      if (isLoadingMainImage.value) {
+        imageWidth.value = image.value?.width || event.target.naturalWidth
+        imageHeight.value = image.value?.height || event.target.naturalHeight
+
+        if (image.value?.filetype) {
+          imageType.value = image.value.filetype
+        } else {
           axios
             .head(event.target.src)
             .then((res) => {
@@ -168,21 +193,22 @@ export default defineComponent({
                */
             })
         }
+        imageSrc.value = image.value.url
+        isLoadingMainImage.value = false
       }
-      isLoadingFullImage.value = false
     }
-
     return {
       image,
       relatedMedia,
       relatedFetchState,
       imageWidth,
       imageHeight,
+      imageSrc,
       imageType,
-      isLoadingFullImage,
       sketchFabfailure,
       sketchFabUid,
       onImageLoaded,
+      onImageError,
       backToSearchPath,
     }
   },
@@ -212,10 +238,10 @@ export default defineComponent({
 <style scoped>
 section,
 aside {
-  @apply w-full px-6 md:px-16 mb-10 md:mb-16 md:max-w-screen-lg lg:mx-auto;
+  @apply mb-10 w-full px-6 md:mb-16 md:max-w-screen-lg md:px-16 lg:mx-auto;
 }
 
 .btn-main {
-  @apply py-3 md:py-4 md:px-6 text-sr md:text-2xl font-semibold;
+  @apply py-3 text-sr font-semibold md:py-4 md:px-6 md:text-2xl;
 }
 </style>
