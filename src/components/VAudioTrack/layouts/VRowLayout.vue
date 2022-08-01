@@ -92,6 +92,7 @@ import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
 
 import { useBrowserIsBlink } from '~/composables/use-browser-detection'
 import { useI18n } from '~/composables/use-i18n'
+import { timeFmt } from '~/utils/time-fmt'
 import type { AudioDetail } from '~/models/media'
 import type { AudioSize } from '~/constants/audio'
 
@@ -130,20 +131,6 @@ export default defineComponent({
       featureNotices.seek = i18n
         .t('audio-track.messages.blink_seek_disabled')
         .toString()
-    }
-
-    /**
-     * Format the time as hh:mm:ss, dropping the hour part if it is zero.
-     * @param ms - the number of milliseconds in the duration
-     * @returns the duration in a human-friendly format
-     */
-    const timeFmt = (ms: number): string => {
-      if (ms) {
-        const date = new Date(0)
-        date.setSeconds(ms / 1e3)
-        return date.toISOString().substr(11, 8).replace(/^00:/, '')
-      }
-      return '--:--'
     }
 
     const isSmall = computed(() => props.size === 's')
