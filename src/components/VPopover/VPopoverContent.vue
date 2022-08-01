@@ -8,7 +8,7 @@
   >
     <div
       ref="popoverRef"
-      class="max-w-max rounded-sm border border-light-gray bg-white shadow"
+      class="w-64 rounded-sm border border-light-gray bg-white shadow"
       :style="{ zIndex }"
       :tabindex="-1"
       @blur="onBlur"
