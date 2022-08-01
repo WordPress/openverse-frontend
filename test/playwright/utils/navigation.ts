@@ -39,7 +39,7 @@ const getNestedProperty = (
 
 /**
  * Simplified i18n t function that returns English messages for `ltr` and Arabic for `rtl`.
- * It can also handle nested labels ('header.title').
+ * It can also handle nested labels using dot notation ('header.title').
  * @param path - The label to translate.
  * @param dir - The language direction.
  */
