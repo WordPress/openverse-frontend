@@ -1,6 +1,7 @@
 FROM node:16-alpine
 
-RUN npm install -g pnpm pm2@5.2.0
+RUN apk add --no-cache --virtual .gyp python3 make g++ \
+    && npm install -g pnpm pm2@5.2.0
 
 USER node
 
