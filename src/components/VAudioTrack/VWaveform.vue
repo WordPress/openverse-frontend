@@ -562,16 +562,6 @@ export default defineComponent({
       seekTimeLeft,
     }
   },
-  computed: {
-    /**
-     * the waveform current time as a text string; This function was placed
-     * outside because `this` is not accessible inside the `setup`.
-     */
-    currentTimeText(): string {
-      const time = this.timeFmt(this.currentTime)
-      return this.$t('waveform.current-time', { time }).toString()
-    },
-  },
 })
 </script>
 
