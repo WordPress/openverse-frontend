@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-07-26T15:19:17+00:00\n"
+"POT-Creation-Date: 2022-08-01T14:32:16+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1441,6 +1441,7 @@ msgid "Example: ###link######br### This will search for images related to dog bu
 msgstr ""
 
 #. Do not translate words between ### ###.
+#: src/pages/search-help.vue:113
 msgctxt "search-guide.example.or.description"
 msgid "Example: ###link######br### This will search for images related to dog or cat, but not necessarily both."
 msgstr ""
