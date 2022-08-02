@@ -13,9 +13,10 @@ const DEFAULT_REQUEST_TIMEOUT = 30000
  */
 export const getResourceSlug = (resource: string): string => {
   const slug = { [AUDIO]: 'audio', [IMAGE]: 'images' }[resource] ?? resource
-  const noTrailingSlash = ['rate_limit'] // TODO: Ensure all API endpoints have trailing slashes
+  const noTrailingSlash = ['rate_limit']
   return noTrailingSlash.includes(resource) ? slug : `${slug}/`
 }
+
 /**
  * @param errorCondition - if true, the `message` warning is logged in the console
  * @param message - message to display if there is an error in request
