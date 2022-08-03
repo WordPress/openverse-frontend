@@ -24,6 +24,7 @@ vercel.json
 .nuxt
 src/locales/*.json
 !src/locales/en.json
+!src/locales/ar.json
 .nuxt-storybook
 storybook-static
 .vercel
