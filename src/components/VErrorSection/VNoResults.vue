@@ -1,11 +1,11 @@
 <template>
   <div class="no-results text-center md:text-left">
-    <h4 class="break-words text-5xl">
+    <h1 class="break-words text-6xl md:text-4xl">
       {{ $t('no-results.heading', { query: query.q }) }}
-    </h4>
-    <h6 class="mt-10 font-normal md:mt-16 md:font-bold">
+    </h1>
+    <h2 class="mt-10 text-base font-normal md:mt-16 md:text-3xl md:font-bold">
       {{ $t('no-results.alternatives') }}
-    </h6>
+    </h2>
     <VMetaSourceList class="mt-4 md:mt-6" :type="type" :query="query" />
   </div>
 </template>
