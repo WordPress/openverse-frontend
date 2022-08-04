@@ -85,7 +85,7 @@
 
     <!-- Focus bar -->
     <div
-      v-if="isInteractive"
+      v-if="isInteractive && isSeeking"
       class="absolute top-0 z-20 hidden h-full flex-col items-center justify-between bg-black group-focus:flex group-waveform-focus:flex"
       :style="{ width: `${barWidth}px`, left: `${progressBarWidth}px` }"
     >
@@ -337,6 +337,7 @@ export default defineComponent({
 
     const isReady = computed(() => !props.message)
     const isInteractive = computed(() => isSeekable.value && isReady.value)
+    const isSeeking = computed(() => seekable.meta.isSeeking)
 
     /* Resampling */
 
@@ -461,6 +462,7 @@ export default defineComponent({
     let startPos: null | number = null
     const isDragging = ref(false)
     const handleMouseDown = (event: MouseEvent) => {
+      if (!props.isTabbable) event.preventDefault() // to prevent focus
       isDragging.value = false
       startPos = getPosition(event)
       setSeekProgress(event)
@@ -531,6 +533,7 @@ export default defineComponent({
 
       isReady,
       isInteractive,
+      isSeeking,
 
       barWidth,
       normalizedPeaks,

@@ -1,4 +1,4 @@
-import { computed, ToRefs } from '@nuxtjs/composition-api'
+import { computed, ToRefs, ref } from '@nuxtjs/composition-api'
 
 import { useI18n } from '~/composables/use-i18n'
 import { timeFmt } from '~/utils/time-fmt'
@@ -46,6 +46,7 @@ export const useSeekable = ({
   const currentFrac = computed(() =>
     isReady.value ? currentTime.value / duration.value : 0
   )
+  const isSeeking = ref(false)
 
   const handleArrowKeys = (event: KeyboardEvent) => {
     const { key, shiftKey, metaKey } = event
@@ -60,30 +61,26 @@ export const useSeekable = ({
     }
   }
 
+  const arrowKeys = [keycodes.ArrowLeft, keycodes.ArrowRight]
+  const seekingKeys = [...arrowKeys, keycodes.Home, keycodes.End]
+  const handledKeys = [...seekingKeys, keycodes.Spacebar]
   const willBeHandled = (event: KeyboardEvent) =>
-    (
-      [
-        keycodes.ArrowLeft,
-        keycodes.ArrowRight,
-        keycodes.Home,
-        keycodes.End,
-        keycodes.Spacebar,
-      ] as string[]
-    ).includes(event.key)
+    (handledKeys as string[]).includes(event.key)
 
   const handleKeys = (event: KeyboardEvent) => {
     if (!willBeHandled(event)) return
 
     event.preventDefault()
-    if (
-      ([keycodes.ArrowLeft, keycodes.ArrowRight] as string[]).includes(
-        event.key
-      )
-    )
+
+    isSeeking.value = (seekingKeys as string[]).includes(event.key)
+
+    if ((arrowKeys as string[]).includes(event.key))
       return handleArrowKeys(event)
     if (event.key === keycodes.Home) return onSeek(0)
     if (event.key === keycodes.End) return onSeek(1)
-    if (event.key === keycodes.Spacebar) return onTogglePlayback()
+    if (event.key === keycodes.Spacebar) {
+      return onTogglePlayback()
+    }
   }
 
   const listeners = {
@@ -94,6 +91,7 @@ export const useSeekable = ({
     modSeekDeltaFrac,
     seekDeltaFrac,
     currentFrac,
+    isSeeking,
   }
 
   return { attributes, listeners, meta }
