@@ -20,7 +20,7 @@ describe('VWaveform', () => {
   let props = null
 
   beforeEach(() => {
-    useI18n.mockImplementation(() => ({ t: (v) => v }))
+    useI18n.mockImplementation(() => ({ t: (v) => v, tc: (v) => v }))
     props = {
       peaks: [],
       audioId: 'test',

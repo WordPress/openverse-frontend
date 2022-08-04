@@ -1,7 +1,6 @@
 import { computed, ToRefs, ref } from '@nuxtjs/composition-api'
 
 import { useI18n } from '~/composables/use-i18n'
-import { timeFmt } from '~/utils/time-fmt'
 import { keycodes } from '~/constants/key-codes'
 
 export interface UseSeekableOptions
@@ -27,8 +26,8 @@ export const useSeekable = ({
     'aria-valuemax': duration.value,
     'aria-valuenow': currentTime.value,
     'aria-valuetext': i18n
-      .t('waveform.current-time', {
-        time: timeFmt(currentTime.value),
+      .tc('waveform.current-time', currentTime.value, {
+        time: currentTime.value,
       })
       .toString(),
     'aria-orientation': 'horizontal' as const,
