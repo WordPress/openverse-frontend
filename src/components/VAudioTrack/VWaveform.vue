@@ -574,7 +574,7 @@ export default defineComponent({
 }
 
 .timestamp {
-  @apply pointer-events-none absolute px-1 text-xs font-bold;
+  @apply pointer-events-none absolute px-1 text-xs font-bold text-dark-charcoal;
   top: calc(var(--unusable-height) + theme('spacing[0.5]'));
 }
 
