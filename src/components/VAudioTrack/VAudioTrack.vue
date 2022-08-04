@@ -1,7 +1,7 @@
 <template>
   <VLink
     v-bind="containerAttributes"
-    class="audio-track group"
+    class="audio-track group block cursor-pointer overflow-hidden rounded-sm focus:border-tx focus:bg-white focus:outline-none focus:ring-[1.5px] focus:ring-pink focus:ring-offset-[3px]"
     :aria-label="ariaLabel"
     role="region"
     :href="`/audio/${audio.id}`"
@@ -409,8 +409,6 @@ export default defineComponent({
     const i18n = useI18n()
     const layoutBasedProps = computed(() => ({
       href: `/audio/${props.audio.id}`,
-      class:
-        'block focus:bg-white focus:border-tx focus:ring-[1.5px] focus:ring-pink focus:ring-offset-[3px] focus:outline-none rounded-sm overflow-hidden cursor-pointer',
     }))
     const ariaLabel = computed(() =>
       i18n.t('audio-track.aria-label-interactive', {
