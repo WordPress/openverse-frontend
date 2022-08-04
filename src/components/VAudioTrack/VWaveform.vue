@@ -2,7 +2,7 @@
   <div
     v-bind="seekAttributes"
     ref="el"
-    class="waveform bg-background-var group-waveform relative overflow-hidden focus:outline-none"
+    class="waveform bg-background-var group-waveform relative overflow-hidden text-dark-charcoal focus:outline-none"
     :style="heightProperties"
     :tabIndex="isTabbable && isInteractive ? 0 : -1"
     :role="isInteractive ? 'slider' : undefined"
@@ -577,7 +577,7 @@ export default defineComponent({
 }
 
 .timestamp {
-  @apply pointer-events-none absolute px-1 text-xs font-bold text-dark-charcoal;
+  @apply pointer-events-none absolute px-1 text-xs font-bold;
   top: calc(var(--unusable-height) + theme('spacing[0.5]'));
 }
 
