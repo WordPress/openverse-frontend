@@ -577,7 +577,7 @@
   "audio-track": {
     "aria-label": "{title} - Audio Player",
     "aria-label-interactive": "{title} - audio player - press the spacebar to play and pause a preview of the audio",
-    "aria-label-interactive-seekable": "{title} - audio player - press the spacebar to play and pause a preview of the audio; use the left and right arrow keys to seek through the waveform",
+    "aria-label-interactive-seekable": "{title} - audio player - press the spacebar to play and pause a preview of the audio; use the left and right arrow keys to seek through the track.",
     "messages": {
       "blink_seek_disabled": "Seeking for Jamendo tracks is limited to Firefox and Safari.",
       "err_aborted": "You aborted playback.",
