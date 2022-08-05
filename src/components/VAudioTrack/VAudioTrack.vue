@@ -1,10 +1,10 @@
 <template>
-  <VLink
+  <Component
+    :is="isComposite ? 'VLink' : 'VWarningSuppressor'"
     v-bind="containerAttributes"
-    class="audio-track group block cursor-pointer overflow-hidden rounded-sm focus:border-tx focus:bg-white focus:outline-none focus:ring-[1.5px] focus:ring-pink focus:ring-offset-[3px]"
+    class="audio-track group block overflow-hidden rounded-sm focus:border-tx focus:bg-white focus:outline-none focus:ring-[1.5px] focus:ring-pink focus:ring-offset-[3px]"
     :aria-label="ariaLabel"
     role="region"
-    :href="`/audio/${audio.id}`"
     @keydown.native.shift.tab.exact="$emit('shift-tab', $event)"
     @keydown.native.exact="handleKeydown"
   >
@@ -37,7 +37,7 @@
         />
       </template>
     </Component>
-  </VLink>
+  </Component>
 </template>
 
 <script lang="ts">
@@ -122,6 +122,8 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const i18n = useI18n()
+
     const activeMediaStore = useActiveMediaStore()
     const route = useRoute()
 
@@ -386,7 +388,7 @@ export default defineComponent({
      * Sets default size if not provided.
      */
     const _size = computed(() => {
-      if (isBoxed.value && !props.size) {
+      if (props.layout === 'box' && !props.size) {
         return undefined
       }
       return props.size ?? 'm'
@@ -402,18 +404,23 @@ export default defineComponent({
     /**
      * These layout-conditional props and listeners allow us
      * to set properties on the parent element depending on
-     * the layout in use. This is currently relevant for the
-     * boxed layout exclusively.
+     * the layout in use.
      */
-    const isBoxed = computed(() => props.layout === 'box')
-    const i18n = useI18n()
-    const layoutBasedProps = computed(() => ({
-      href: `/audio/${props.audio.id}`,
-    }))
+    const isComposite = computed(() => ['box', 'row'].includes(props.layout))
+    const layoutBasedProps = computed(() =>
+      isComposite
+        ? {
+            href: `/audio/${props.audio.id}`,
+            class: 'cursor-pointer',
+          }
+        : {}
+    )
     const ariaLabel = computed(() =>
-      i18n.t('audio-track.aria-label-interactive', {
-        title: props.audio.title,
-      })
+      isComposite
+        ? i18n.t('audio-track.aria-label-interactive', {
+            title: props.audio.title,
+          })
+        : i18n.t('audio-track.aria-label', { title: props.audio.title })
     )
 
     const togglePlayback = () => {
@@ -450,7 +457,7 @@ export default defineComponent({
       layoutComponent,
       _size,
 
-      isBoxed,
+      isComposite,
       containerAttributes,
 
       playPauseRef,

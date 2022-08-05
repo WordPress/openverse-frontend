@@ -12,12 +12,7 @@
         aria-hidden
       />
       <div class="md:mx-4 lg:mx-10">
-        <slot
-          name="controller"
-          :is-tabbable="false"
-          :features="audioFeatures"
-          :usable-frac="0.8"
-        />
+        <slot name="controller" :features="audioFeatures" :usable-frac="0.8" />
       </div>
     </div>
     <div
