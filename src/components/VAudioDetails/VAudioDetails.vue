@@ -123,8 +123,6 @@ dt {
 }
 
 dd {
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 130%;
+  @apply text-sm md:text-base;
 }
 </style>
