@@ -9,7 +9,7 @@
     >
       <VAudioThumbnail :audio="audio" />
       <div v-show="isSmall" class="absolute bottom-0 ltr:right-0 rtl:left-0">
-        <slot name="play-pause" size="tiny" layout="row" />
+        <slot name="play-pause" size="tiny" layout="row" :is-tabbable="false" />
       </div>
     </div>
 
@@ -75,6 +75,7 @@
           name="play-pause"
           :size="isLarge ? 'medium' : 'large'"
           :layout="'row'"
+          :is-tabbable="false"
         />
         <slot
           name="controller"
