@@ -90,8 +90,7 @@ export const useSeekable = ({
     modSeekDeltaFrac,
     seekDeltaFrac,
     currentFrac,
-    isSeeking,
   }
 
-  return { attributes, listeners, meta }
+  return { attributes, listeners, meta, isSeeking }
 }

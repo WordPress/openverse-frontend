@@ -337,7 +337,6 @@ export default defineComponent({
 
     const isReady = computed(() => !props.message)
     const isInteractive = computed(() => isSeekable.value && isReady.value)
-    const isSeeking = computed(() => seekable.meta.isSeeking)
 
     /* Resampling */
 
@@ -429,7 +428,7 @@ export default defineComponent({
       return barWidth < timestampWidth + 2
     })
 
-    const seekable = useSeekable({
+    const { isSeeking, ...seekable } = useSeekable({
       duration: toRef(props, 'duration'),
       currentTime: toRef(props, 'currentTime'),
       isReady,
