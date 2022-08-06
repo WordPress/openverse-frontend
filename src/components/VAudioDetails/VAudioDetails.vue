@@ -124,5 +124,6 @@ dt {
 
 dd {
   @apply text-sm md:text-base;
+  font-weight: 600;
 }
 </style>
