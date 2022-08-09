@@ -12,6 +12,11 @@ import {
 import { SCREEN_SIZES } from '~/constants/screens'
 
 import enMessages from '~/locales/en.json'
+/*Ignore this line as ar.json might not be installed on freshly cloned repos. See issue nr #1612 for more details
+If you need to install it run: pnpm i18n
+ */
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import rtlMessages from '~/locales/ar.json'
 
 const messages: Record<string, Record<string, unknown>> = {
