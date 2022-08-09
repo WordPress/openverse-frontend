@@ -51,9 +51,11 @@ export const useActiveMediaStore = defineStore(ACTIVE_MEDIA, {
       this.id = id
       this.status = status
     },
+
     pauseActiveMediaItem() {
       this.status = 'paused'
     },
+
     ejectActiveMediaItem() {
       this.status = 'ejected'
       this.id = null
