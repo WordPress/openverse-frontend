@@ -123,6 +123,6 @@ dt {
 }
 
 dd {
-  font-weight: bold;
+  @apply text-sm md:text-base font-semibold;
 }
 </style>
