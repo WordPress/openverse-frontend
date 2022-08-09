@@ -4,9 +4,9 @@
       {{ $t('sources.title') }}
     </h1>
 
-    <h3>
+    <h2>
       {{ $t('sources.cc-content.where', { openverse: 'Openverse' }) }}
-    </h3>
+    </h2>
     <p>
       {{ $t('sources.cc-content.content', { openverse: 'Openverse' }) }}
     </p>
