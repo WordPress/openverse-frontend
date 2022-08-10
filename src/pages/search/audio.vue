@@ -1,5 +1,6 @@
 <template>
-  <section>
+  <!-- Negative margin compensates for the `p-4` padding in row layout. -->
+  <section class="-mx-4">
     <VGridSkeleton
       v-if="results.length === 0 && !fetchState.isFinished"
       is-for-tab="audio"
