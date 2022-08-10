@@ -3,7 +3,7 @@
   <Component
     :is="isComposite ? 'VLink' : 'VWarningSuppressor'"
     v-bind="containerAttributes"
-    class="audio-track group block overflow-hidden rounded-sm focus:border-tx focus:bg-white focus:outline-none focus:ring-[1.5px] focus:ring-pink focus:ring-offset-[3px]"
+    class="audio-track group block overflow-hidden rounded-sm hover:no-underline focus:border-tx focus:bg-white focus:outline-none focus:ring-[1.5px] focus:ring-pink focus:ring-offset-[3px]"
     :aria-label="ariaLabel"
     role="region"
     @keydown.native.shift.tab.exact="$emit('shift-tab', $event)"
