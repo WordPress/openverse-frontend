@@ -7,6 +7,7 @@
     role="region"
     @keydown.native.shift.tab.exact="$emit('shift-tab', $event)"
     @keydown.native.exact="handleKeydown"
+    @blur.native="handleBlur"
   >
     <Component
       :is="layoutComponent"
@@ -18,6 +19,7 @@
       <template #controller="waveformProps">
         <VWaveform
           v-bind="waveformProps"
+          :is-parent-seeking="isSeeking"
           :peaks="audio.peaks"
           :audio-id="audio.id"
           :current-time="currentTime"
@@ -430,7 +432,7 @@ export default defineComponent({
       handleToggle(status.value)
     }
 
-    const seekable = useSeekable({
+    const { isSeeking, ...seekable } = useSeekable({
       duration,
       currentTime,
       isReady: ref(true),
@@ -450,6 +452,9 @@ export default defineComponent({
       handleToggle,
       handleSeeked,
       handleKeydown: seekable.listeners.keydown,
+      handleBlur: seekable.listeners.blur,
+
+      isSeeking,
 
       currentTime,
       duration,

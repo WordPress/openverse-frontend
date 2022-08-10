@@ -255,6 +255,14 @@ export default defineComponent({
       type: Boolean,
       default: true,
     },
+    /**
+     * whether the waveform should render as seeking when it is controlled by
+     * the parent audio track
+     */
+    isParentSeeking: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: [
     /**
@@ -337,6 +345,9 @@ export default defineComponent({
 
     const isReady = computed(() => !props.message)
     const isInteractive = computed(() => isSeekable.value && isReady.value)
+    const isSeeking = computed(
+      () => (!props.isTabbable && props.isParentSeeking) || isSelfSeeking.value
+    )
 
     /* Resampling */
 
@@ -428,7 +439,7 @@ export default defineComponent({
       return barWidth < timestampWidth + 2
     })
 
-    const { isSeeking, ...seekable } = useSeekable({
+    const { isSeeking: isSelfSeeking, ...seekable } = useSeekable({
       duration: toRef(props, 'duration'),
       currentTime: toRef(props, 'currentTime'),
       isReady,
