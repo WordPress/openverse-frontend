@@ -81,9 +81,13 @@ export const useSeekable = ({
       return onTogglePlayback()
     }
   }
+  const handleBlur = () => {
+    isSeeking.value = false
+  }
 
   const listeners = {
     keydown: handleKeys,
+    blur: handleBlur,
   }
 
   const meta = {
