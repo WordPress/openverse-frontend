@@ -411,7 +411,7 @@ export default defineComponent({
      */
     const isComposite = computed(() => ['box', 'row'].includes(props.layout))
     const layoutBasedProps = computed(() =>
-      isComposite
+      isComposite.value
         ? {
             href: `/audio/${props.audio.id}`,
             class: 'cursor-pointer',
