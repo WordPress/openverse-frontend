@@ -1,4 +1,5 @@
 <template>
+  <!-- eslint-disable vue/use-v-on-exact -->
   <Component
     :is="isComposite ? 'VLink' : 'VWarningSuppressor'"
     v-bind="containerAttributes"
@@ -6,7 +7,7 @@
     :aria-label="ariaLabel"
     role="region"
     @keydown.native.shift.tab.exact="$emit('shift-tab', $event)"
-    @keydown.native.exact="handleKeydown"
+    @keydown.native="handleKeydown"
     @blur.native="handleBlur"
   >
     <Component
