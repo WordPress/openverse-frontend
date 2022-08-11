@@ -34,4 +34,4 @@ runs:
 
     - name: Copy locale files
       shell: bash
-      run: "cp -r test/locales/scripts/* src/locales/scripts"
+      run: "cp -r test/locales/* src/locales"
