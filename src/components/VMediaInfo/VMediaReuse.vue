@@ -3,9 +3,9 @@
     :aria-label="$t('media-details.reuse.title').toString()"
     class="media-reuse"
   >
-    <h1 class="mb-6 text-2xl md:text-3xl">
+    <h2 class="mb-6 text-2xl md:text-3xl">
       {{ $t('media-details.reuse.title') }}
-    </h1>
+    </h2>
     <div v-if="media.license_url" class="grid gap-6 md:grid-cols-2">
       <VMediaLicense
         :license="media.license"
