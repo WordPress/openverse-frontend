@@ -14,8 +14,8 @@
             ? 'meta-search.form.supported-title'
             : 'meta-search.form.unsupported-title'
         "
-        tag="h4"
-        class="mb-2 text-4xl"
+        tag="p"
+        class="mb-2 text-base"
       >
         <template #openverse>Openverse</template>
         <template #type>{{ $t(`meta-search.form.types.${type}`) }}</template>
@@ -23,8 +23,8 @@
       <i18n
         v-else
         path="meta-search.form.no-results-title"
-        tag="h4"
-        class="mb-2 text-4xl"
+        tag="p"
+        class="mb-2 text-base"
       >
         <template #type>{{ $t(`meta-search.form.types.${type}`) }}</template>
         <template #query>{{ query.q }}</template>
