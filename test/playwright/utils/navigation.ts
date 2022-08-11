@@ -19,7 +19,8 @@ import enMessages from '~/locales/en.json'
  */
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import rtlMessages from '~/locales/ar.json'
+
+import rtlMessages from '../../locales/ar.json'
 
 const messages: Record<string, Record<string, unknown>> = {
   ltr: enMessages,
