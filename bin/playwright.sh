@@ -15,5 +15,3 @@ cp -r test/locales/scripts/valid-locales.json src/locales/scripts
 echo Running Playwright v$PLAYWRIGHT_VERSION as $USER_ID with Playwright arguments $PLAYWRIGHT_ARGS
 
 docker-compose -f docker-compose.playwright.yml up --build --force-recreate --exit-code-from playwright --remove-orphans
-
-docker-compose -f docker-compose.playwright.yml down
