@@ -54,7 +54,7 @@
       </template>
     </div>
     <div class="mb-30 flex flex-col items-center">
-      <h2 class="max-w-[40rem] text-center text-3xl lg:text-6xl">
+      <h2 class="max-w-[40rem] text-center text-3xl md:text-6xl">
         {{ $t('extension.conclusion') }}
       </h2>
       <ExtensionBrowsers class="mt-6" />
