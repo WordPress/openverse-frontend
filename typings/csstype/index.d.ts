@@ -8,5 +8,8 @@ declare module 'csstype' {
     '--unusable-height'?: string
     '--progress-time-left'?: string
     '--seek-time-left'?: string
+    '--cell-idx'?: number
   }
 }
+
+export {}
