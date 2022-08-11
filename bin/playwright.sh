@@ -9,8 +9,11 @@ export PLAYWRIGHT_ARGS=$@
 export PLAYWRIGHT_VERSION=$(version)
 export TEST_COMMAND=${TEST_COMMAND:-test:playwright:local}
 
+cp -r test/locales/*.json src/locales
+cp -r test/locales/scripts/valid-locales.json src/locales/scripts
+
 echo Running Playwright v$PLAYWRIGHT_VERSION as $USER_ID with Playwright arguments $PLAYWRIGHT_ARGS
 
-docker-compose -f docker-compose.playwright.yml up --build --force-recreate --abort-on-container-exit --exit-code-from playwright --remove-orphans
+docker-compose -f docker-compose.playwright.yml up --build --force-recreate --exit-code-from playwright --remove-orphans
 
 docker-compose -f docker-compose.playwright.yml down
