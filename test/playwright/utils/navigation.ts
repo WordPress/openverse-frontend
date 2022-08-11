@@ -12,7 +12,8 @@ import {
 import { SCREEN_SIZES } from '~/constants/screens'
 
 import enMessages from '~/locales/en.json'
-import rtlMessages from '~/locales/ar.json'
+
+import rtlMessages from '~~/test/locales/ar.json'
 
 const messages: Record<string, Record<string, unknown>> = {
   ltr: enMessages,
