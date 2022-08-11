@@ -9,8 +9,7 @@ export PLAYWRIGHT_ARGS=$@
 export PLAYWRIGHT_VERSION=$(version)
 export TEST_COMMAND=${TEST_COMMAND:-test:playwright:local}
 
-cp -r test/locales/*.json src/locales
-cp -r test/locales/scripts/valid-locales.json src/locales/scripts
+cp -r test/locales/* src/locales
 
 echo Running Playwright v$PLAYWRIGHT_VERSION as $USER_ID with Playwright arguments $PLAYWRIGHT_ARGS
 
