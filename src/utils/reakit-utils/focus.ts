@@ -145,27 +145,6 @@ export function hasFocusWithin(element: Node | Element) {
 }
 
 /**
- * Restores tabbable elements inside container that were affected by
- * disableFocusIn.
- */
-export function restoreFocusIn(container: HTMLElement) {
-  const elements = container.querySelectorAll<HTMLElement>('[data-tabindex]')
-  const restoreTabIndex = (element: HTMLElement) => {
-    const tabindex = element.getAttribute('data-tabindex')
-    element.removeAttribute('data-tabindex')
-    if (tabindex) {
-      element.setAttribute('tabindex', tabindex)
-    } else {
-      element.removeAttribute('tabindex')
-    }
-  }
-  if (container.hasAttribute('data-tabindex')) {
-    restoreTabIndex(container)
-  }
-  elements.forEach(restoreTabIndex)
-}
-
-/**
  * Ensures `element` will receive focus if it's not already.
  * @example
  * ensureFocus(document.activeElement); // does nothing
