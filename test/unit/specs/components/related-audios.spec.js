@@ -32,7 +32,7 @@ describe('RelatedAudios', () => {
   it('should render content when finished loading related audios', async () => {
     const wrapper = await doRender()
 
-    const header = wrapper.find('h4').text()
+    const header = wrapper.find('h3').text()
     expect(header).toEqual('audio-details.related-audios')
 
     const audioTracks = wrapper.findAll('vaudiotrack-stub')
