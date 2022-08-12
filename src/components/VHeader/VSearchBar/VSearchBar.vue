@@ -76,7 +76,7 @@ export default defineComponent({
     const { matches: isHomeRoute } = useMatchHomeRoute()
 
     const route = computed(() => {
-      return isHomeRoute.value ? 'home' : props.is404 ? '404' : undefined
+      return isHomeRoute?.value ? 'home' : props.is404 ? '404' : undefined
     })
 
     const searchText = computed(() => props.value)
