@@ -26,10 +26,7 @@ export const useActiveMediaStore = defineStore(ACTIVE_MEDIA, {
     status: 'ejected',
     message: null,
   }),
-  /**
-   * Only the properties used by components are exported as refs.
-   * `status` is not used anywhere in the components.
-   */
+
   actions: {
     /**
      * Sets a new media item as the active one.
