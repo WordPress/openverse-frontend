@@ -8,7 +8,7 @@
       :placeholder="placeholder || $t('hero.search.placeholder')"
       v-bind="$attrs"
       class="search-field flex-grow"
-      :class="{ 'border-transparent': isHomeRoute }"
+      :class="{ '!border-tx': isHomeRoute }"
       :label-text="
         $t('search.search-bar-label', { openverse: 'Openverse' }).toString()
       "
