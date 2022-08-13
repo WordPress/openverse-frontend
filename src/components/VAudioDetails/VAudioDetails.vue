@@ -118,11 +118,11 @@ dl div {
 }
 
 dt {
-  font-weight: 400;
+  @apply text-base font-normal;
   display: inline-block;
 }
 
 dd {
-  @apply text-sm font-semibold md:text-base;
+  @apply text-sm text-base font-semibold;
 }
 </style>
