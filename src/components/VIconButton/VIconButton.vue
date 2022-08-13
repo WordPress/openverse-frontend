@@ -72,9 +72,9 @@ export default defineComponent({
       default: () => ({ variant: 'plain' }),
     },
   },
+
   setup(props, { attrs }) {
     const type = (attrs['type'] ?? 'button') as ButtonType
-
     const buttonSizeClasses = computed(() => SIZE_MAP[props.size].button)
     const iconSizeClasses = computed(() => SIZE_MAP[props.size].icon)
 
@@ -83,6 +83,15 @@ export default defineComponent({
 
       buttonSizeClasses,
       iconSizeClasses,
+    }
+  },
+
+  mounted() {
+    /* Throw an error if the element has no aria-label attribute */
+    if (!this.$el.hasAttribute('aria-label')) {
+      throw new Error(
+        'VIconButton must have aria-label attribute to be accessible'
+      )
     }
   },
 })
