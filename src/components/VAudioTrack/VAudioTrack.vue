@@ -5,7 +5,6 @@
     v-bind="containerAttributes"
     class="audio-track group block overflow-hidden rounded-sm ring-pink hover:no-underline focus:border-tx focus:bg-white focus:outline-none"
     :aria-label="ariaLabel"
-    role="region"
     @keydown.native.shift.tab.exact="$emit('shift-tab', $event)"
     @keydown.native="handleKeydown"
     @blur.native="handleBlur"
@@ -427,7 +426,7 @@ export default defineComponent({
         : {}
     )
     const ariaLabel = computed(() =>
-      isComposite
+      isComposite.value
         ? i18n.t('audio-track.aria-label-interactive', {
             title: props.audio.title,
           })
@@ -450,7 +449,8 @@ export default defineComponent({
     })
 
     const containerAttributes = computed(() => ({
-      ...seekable.attributes,
+      // ARIA slider attributes are only added when interactive
+      ...(isComposite.value ? seekable.attributes.value : {}),
       ...layoutBasedProps.value,
     }))
 

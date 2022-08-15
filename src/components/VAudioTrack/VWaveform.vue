@@ -1,11 +1,10 @@
 <template>
   <div
-    v-bind="seekAttributes"
+    v-bind="waveformAttributes"
     ref="el"
     class="waveform bg-background-var group-waveform relative overflow-hidden text-dark-charcoal focus:outline-none"
     :style="heightProperties"
     :tabIndex="isTabbable && isInteractive ? 0 : -1"
-    :role="isInteractive ? 'slider' : undefined"
     :aria-disabled="!isInteractive"
     :aria-label="$t('waveform.label').toString()"
     v-on="eventHandlers"
@@ -449,6 +448,10 @@ export default defineComponent({
       },
       onTogglePlayback: () => emit('toggle-playback'),
     })
+    const waveformAttributes = computed(() => ({
+      // ARIA slider attributes are only added when interactive
+      ...(isInteractive.value ? seekable.attributes.value : {}),
+    }))
 
     /* Seeking */
 
@@ -566,7 +569,7 @@ export default defineComponent({
       seekTimestamp,
       seekTimestampEl,
       isSeekTimestampCutoff,
-      seekAttributes: seekable.attributes,
+      waveformAttributes,
 
       eventHandlers,
 

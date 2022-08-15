@@ -23,6 +23,7 @@ export const useSeekable = ({
   const i18n = useI18n()
 
   const attributes = computed(() => ({
+    'aria-role': 'slider',
     'aria-valuemax': duration.value,
     'aria-valuenow': currentTime.value,
     'aria-valuetext': i18n
