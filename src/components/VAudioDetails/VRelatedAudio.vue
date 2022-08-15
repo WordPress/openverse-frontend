@@ -26,8 +26,8 @@
 import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
 
 import { isMinScreen } from '~/composables/use-media-query'
-import { FetchState } from '~/composables/use-fetch-state'
-import { AudioDetail } from '~/models/media'
+import type { FetchState } from '~/composables/use-fetch-state'
+import type { AudioDetail } from '~/models/media'
 
 import LoadingIcon from '~/components/LoadingIcon.vue'
 import VAudioTrack from '~/components/VAudioTrack/VAudioTrack.vue'

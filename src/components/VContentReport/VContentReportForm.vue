@@ -129,7 +129,7 @@ import {
   ReportReason,
 } from '~/constants/content-report'
 
-import { Media } from '~/models/media'
+import type { Media } from '~/models/media'
 
 import VButton from '~/components/VButton.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'
