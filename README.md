@@ -128,6 +128,12 @@ docker run -it -p 127.0.0.1:8443:8443/tcp openverse-frontend:latest
 
 The app will be available at http://localhost:8443.
 
+## Types
+
+Openverse is in the process of converting the code to TypeScript. To check that the types are used correctly, run `pnpm types`. This command is also run during the pre-commit check. You might see vaious warnings in your IDE, but if `pnpm types` shows no errors, then you are good to go!
+
+The warnings are caused by incompatibility between the type checker(`vue-tsc`), Vue, Nuxt and Composition API types, and can include `Cannot find module<x> or its type annotations`, `Object <x> is of type unknown` or `Type '{ class: string; }' is not assignable to type 'DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>'`.
+
 ## Formatting and Linting
 
 The code in this repository is formatted using `prettier`. If you have prettier setup in your code editor it should work out of the box; otherwise you can use the `pnpm lint:fix` script to format and fix lint errors in your code. Checks are run to lint your code and validate the formatting on git precommit using [husky](https://github.com/typicode/husky).
