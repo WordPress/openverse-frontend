@@ -10,7 +10,7 @@ import {
   useRouter,
 } from '@nuxtjs/composition-api'
 
-import { ALL_MEDIA, searchPath } from '~/constants/media'
+import { ALL_MEDIA, searchPath, SupportedMediaType } from '~/constants/media'
 import useSearchType from '~/composables/use-search-type'
 import { useMediaStore } from '~/stores/media'
 import { useSearchStore } from '~/stores/search'
@@ -47,7 +47,8 @@ export default defineComponent({
     onMounted(() => {
       isMounted.value = true
     })
-    const selectSearchType = async (type) => {
+
+    const selectSearchType = async (type: SupportedMediaType) => {
       menuModalRef.value?.closeMenu()
       content.setActiveType(type)
 
@@ -62,9 +63,7 @@ export default defineComponent({
           ? mediaStore.resultCountsPerMediaType.every(
               (mediaCount) => mediaCount[1] === 0
             )
-          : mediaStore.resultCountsPerMediaType.find(
-              (mediaCount) => mediaCount[0] === type
-            )?.[1] === 0
+          : mediaStore.results[type].count === 0
 
       if (shouldFetchMedia) {
         await mediaStore.fetchMedia()
