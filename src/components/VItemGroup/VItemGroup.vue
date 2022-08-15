@@ -35,10 +35,13 @@ import { useI18n } from '~/composables/use-i18n'
 
 import { keycodes } from '~/constants/key-codes'
 
+const directions = ['vertical', 'horizontal', 'columns'] as const
+const itemGroupType = ['menu', 'radiogroup'] as const
+
 type VItemGroupContext = {
-  direction: 'vertical' | 'horizontal'
+  direction: typeof directions[number]
   bordered: boolean
-  type: 'menu' | 'radiogroup'
+  type: typeof itemGroupType[number]
   size: 'small' | 'medium'
 }
 
@@ -56,9 +59,6 @@ type VItemGroupFocusContext = {
 export const VItemGroupFocusContextKey = Symbol(
   'VItemGroupFocusContext'
 ) as InjectionKey<VItemGroupFocusContext>
-
-const directions = ['vertical', 'horizontal', 'columns'] as const
-const itemGroupType = ['menu', 'radiogroup'] as const
 
 const arrows = [
   keycodes.ArrowUp,
