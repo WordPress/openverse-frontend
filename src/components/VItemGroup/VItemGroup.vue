@@ -65,7 +65,7 @@ const arrows = [
   keycodes.ArrowDown,
   keycodes.ArrowLeft,
   keycodes.ArrowRight,
-]
+] as const
 
 export default defineComponent({
   name: 'VItemGroup',
@@ -78,6 +78,7 @@ export default defineComponent({
     direction: {
       type: String as PropType<typeof directions[number]>,
       default: 'vertical',
+      validator: (v: string) => (directions as unknown as string[]).includes(v),
     },
     /**
      * Whether to render a bordered, separated list of items. When false each
@@ -106,6 +107,8 @@ export default defineComponent({
     type: {
       type: String as PropType<typeof itemGroupType[number]>,
       default: 'menu',
+      validator: (v: string) =>
+        (itemGroupType as unknown as string[]).includes(v),
     },
     /**
      * Size of the item group corresponds to the size of the component.
@@ -115,6 +118,7 @@ export default defineComponent({
     size: {
       type: String as PropType<'small' | 'medium'>,
       default: 'small',
+      validator: (v: string) => ['small', 'medium'].includes(v),
     },
   },
   setup(props) {
@@ -140,7 +144,7 @@ export default defineComponent({
     }
 
     const onItemKeyPress = (event: KeyboardEvent) => {
-      if (!Array.from(arrows).includes(event.key) || !nodeRef.value) return
+      if (!(arrows.includes(event.key) || !nodeRef.value)) return
 
       event.preventDefault()
 
@@ -148,8 +152,8 @@ export default defineComponent({
 
       // While VItem ultimately renders a button at the moment, that could change in the future, so using a data attribute selector makes it more flexible for the future
       const items = Array.from(
-        nodeRef.value.querySelectorAll('[data-item-group-item]')
-      )
+        nodeRef.value?.querySelectorAll('[data-item-group-item]') ?? []
+      ) as HTMLElement[]
 
       const targetIndex = items.findIndex((item) => item === target)
 
@@ -171,11 +175,7 @@ export default defineComponent({
 
     const selectedCount = ref(0)
 
-    /**
-     * @param {boolean} selected
-     * @param {boolean} previousSelected
-     */
-    const setSelected = (selected, previousSelected) => {
+    const setSelected = (selected: boolean, previousSelected: boolean) => {
       if (previousSelected && !selected) selectedCount.value -= 1
       if (!previousSelected && selected) selectedCount.value += 1
     }
