@@ -12,7 +12,6 @@
     <VIcon
       class="radiomark absolute text-dark-charcoal opacity-0 transition-opacity start-0"
       :icon-path="radiomark"
-      view-box="0 0 20 20"
       width="20"
       height="20"
       :size="5"
