@@ -46,7 +46,7 @@
             $t('interpunct')
           }}</span>
 
-          <div>{{ timeFmt(audio.duration || 0) }}</div>
+          <div>{{ timeFmt(audio.duration || 0, true) }}</div>
         </div>
       </div>
 
