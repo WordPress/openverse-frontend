@@ -55,10 +55,21 @@ export default defineComponent({
       }, 2000)
 
       e.clearSelection()
+
+      /* Set the focus back on the button */
+      const button = document.getElementById(props.id)
+      if (button) {
+        button.focus()
+      }
     }
     const onCopyError = (e: Clipboard.Event) => {
       emit('copy-failed')
       e.clearSelection()
+      /* Set the focus back on the button */
+      const button = document.getElementById(props.id)
+      if (button) {
+        button.focus()
+      }
     }
 
     onMounted(() => {
