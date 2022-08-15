@@ -1,5 +1,5 @@
 <template>
-  <aside :aria-label="$t('audio-details.related-audios')">
+  <aside :aria-label="$t('audio-details.related-audios').toString()">
     <h4 class="mb-6 text-2xl lg:text-3xl">
       {{ $t('audio-details.related-audios') }}
     </h4>
