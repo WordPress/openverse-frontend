@@ -1,8 +1,10 @@
+<!-- We ignore prettier formating on this file due to conflicting behaviour -->
+<!-- with the vue template compiler. -->
+<!-- See issue #1658-->
 <template>
   <div ref="containerNode">
     <slot />
     <VTeleport to="skip-to-content">
-      <!-- prettier-ignore -->
       <VButton
         class="ms-2 z-50 mt-2 focus:fixed focus:absolute"
         :class="$style.skipButton"
