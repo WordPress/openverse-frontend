@@ -49,7 +49,6 @@ runs:
       with:
         images: ${{ inputs.aws_account_id }}.dkr.ecr.${{ inputs.aws_region }}.amazonaws.com/openverse/frontend
         tags: |
-          type=raw,value=latest
           type=ref,event=branch
 
     # build a docker image
