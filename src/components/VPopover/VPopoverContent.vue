@@ -18,18 +18,29 @@
   </div>
 </template>
 
-<script>
-import { defineComponent, toRefs, ref, provide } from '@nuxtjs/composition-api'
+<script lang="ts">
+import {
+  defineComponent,
+  toRefs,
+  ref,
+  provide,
+  InjectionKey,
+  PropType,
+} from '@nuxtjs/composition-api'
 
-import { placements as popoverPlacements } from '@popperjs/core'
+import {
+  Placement,
+  placements as popoverPlacements,
+  PositioningStrategy,
+} from '@popperjs/core'
 
 import { usePopoverContent } from '~/composables/use-popover-content'
 import { warn } from '~/utils/console'
+import { defineEvent } from '~/types/emits'
 
-/**
- * @type {import('@nuxtjs/composition-api').InjectionKey<boolean>}
- */
-export const VPopoverContentContextKey = Symbol('VPopoverContentContextKey')
+export const VPopoverContentContextKey = Symbol(
+  'VPopoverContentContextKey'
+) as InjectionKey<boolean>
 
 export default defineComponent({
   name: 'VPopoverContent',
@@ -39,9 +50,7 @@ export default defineComponent({
       required: true,
     },
     hide: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<() => void>} */ (
-        Function
-      ),
+      type: Function as PropType<() => void>,
       required: true,
     },
     hideOnEsc: {
@@ -61,21 +70,15 @@ export default defineComponent({
       default: true,
     },
     triggerElement: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<HTMLElement>} */ (
-        process.server ? Object : HTMLElement
-      ),
+      type: (process.server ? Object : HTMLElement) as PropType<HTMLElement>,
     },
     placement: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<import('@popperjs/core').Placement>} */ (
-        String
-      ),
+      type: String as PropType<Placement>,
       default: 'bottom-end',
       validate: (v) => popoverPlacements.includes(v),
     },
     strategy: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<import('@popperjs/core').PositioningStrategy>} */ (
-        String
-      ),
+      type: String as PropType<PositioningStrategy>,
       default: 'absolute',
       validate: (v) => ['absolute', 'fixed'].includes(v),
     },
@@ -88,7 +91,7 @@ export default defineComponent({
    * to the underlying element so anything and everything is emitted. `@keydown` is the
    * only one this component overrides and controls (but ultimately still emits).
    */
-  emits: ['keydown', 'blur'],
+  emits: { keydown: defineEvent(), blur: defineEvent() },
   setup(props, { emit, attrs }) {
     provide(VPopoverContentContextKey, true)
     if (!attrs['aria-label'] && !attrs['aria-labelledby']) {
@@ -96,7 +99,8 @@ export default defineComponent({
     }
 
     const propsRefs = toRefs(props)
-    const popoverRef = ref()
+    const popoverRef = ref<HTMLElement | undefined>()
+
     const { onKeyDown, onBlur, popoverMaxHeightRef } = usePopoverContent({
       popoverRef,
       popoverPropsRefs: propsRefs,
