@@ -150,7 +150,11 @@ export default defineComponent({
       'aria-haspopup': 'dialog',
     })
 
-    const triggerRef = computed(() => triggerContainerRef.value?.firstChild)
+    const triggerRef = computed(() =>
+      triggerContainerRef.value?.firstChild
+        ? /** @type {HTMLElement} */ (triggerContainerRef.value.firstChild)
+        : undefined
+    )
 
     watch([visibleRef], ([visible]) => {
       triggerA11yProps['aria-expanded'] = visible
