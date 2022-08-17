@@ -10,7 +10,7 @@ import {
   useRouter,
 } from '@nuxtjs/composition-api'
 
-import { ALL_MEDIA, searchPath, SupportedMediaType } from '~/constants/media'
+import { ALL_MEDIA, searchPath, SupportedSearchType } from '~/constants/media'
 import useSearchType from '~/composables/use-search-type'
 import { useMediaStore } from '~/stores/media'
 import { useSearchStore } from '~/stores/search'
@@ -35,7 +35,7 @@ export default defineComponent({
     },
   },
   setup() {
-    const isMinScreenMd: Ref<boolean> = inject('isMinScreenMd')
+    const isMinScreenMd: Ref<boolean> = inject('isMinScreenMd', ref(false))
     const menuModalRef = ref<ComponentInstance | null>(null)
     const content = useSearchType()
     const { app } = useContext()
@@ -48,7 +48,7 @@ export default defineComponent({
       isMounted.value = true
     })
 
-    const selectSearchType = async (type: SupportedMediaType) => {
+    const selectSearchType = async (type: SupportedSearchType) => {
       menuModalRef.value?.closeMenu()
       content.setActiveType(type)
 

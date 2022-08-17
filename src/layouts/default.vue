@@ -20,8 +20,14 @@
     <VGlobalAudioSection />
   </div>
 </template>
-<script lang="ts">
-import { computed, provide, ref, watch } from '@nuxtjs/composition-api'
+<script>
+import {
+  computed,
+  defineComponent,
+  provide,
+  ref,
+  watch,
+} from '@nuxtjs/composition-api'
 
 import { useWindowScroll } from '~/composables/use-window-scroll'
 import { useMatchSearchRoutes } from '~/composables/use-match-routes'
@@ -36,8 +42,8 @@ import VSidebarTarget from '~/components/VModal/VSidebarTarget.vue'
 import VGlobalAudioSection from '~/components/VGlobalAudioSection/VGlobalAudioSection.vue'
 import VTeleportTarget from '~/components/VTeleport/VTeleportTarget.vue'
 
-const embeddedPage = {
-  name: 'embedded',
+export default defineComponent({
+  name: 'EmbeddedPage',
   components: {
     VMigrationNotice,
     VTranslationStatusBanner,
@@ -48,9 +54,6 @@ const embeddedPage = {
     VGlobalAudioSection,
   },
   layout: 'embedded',
-  head() {
-    return this.$nuxtI18nHead({ addSeoAttributes: true, addDirAttribute: true })
-  },
   setup() {
     const { isVisible: isFilterVisible } = useFilterSidebarVisibility()
     const isMinScreenMd = isMinScreen('md')
@@ -84,8 +87,10 @@ const embeddedPage = {
       headerHasTwoRows,
     }
   },
-}
-export default embeddedPage
+  head() {
+    return this.$nuxtI18nHead({ addSeoAttributes: true, addDirAttribute: true })
+  },
+})
 </script>
 
 <style scoped>

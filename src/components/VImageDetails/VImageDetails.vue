@@ -47,7 +47,7 @@
 import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
 
 import { useI18n } from '~/composables/use-i18n'
-import { ImageDetail } from '~/models/media'
+import type { ImageDetail } from '~/models/media'
 
 import VContentReportPopover from '~/components/VContentReport/VContentReportPopover.vue'
 import VLink from '~/components/VLink.vue'
