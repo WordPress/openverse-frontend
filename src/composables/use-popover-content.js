@@ -25,10 +25,10 @@ export function usePopoverContent({ popoverRef, popoverPropsRefs, emit }) {
     emit,
   })
 
-  const popperMaxHeightRef = usePopper({
+  const { maxHeightRef } = usePopper({
     popoverRef,
     popoverPropsRefs,
   })
 
-  return { onKeyDown, onBlur, popoverMaxHeightRef: popperMaxHeightRef }
+  return { onKeyDown, onBlur, maxHeightRef }
 }

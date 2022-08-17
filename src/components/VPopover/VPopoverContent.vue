@@ -8,8 +8,9 @@
   >
     <div
       ref="popoverRef"
-      class="max-w-max rounded-sm border border-light-gray bg-white shadow"
-      :style="{ zIndex }"
+      class="popover-content max-w-max overflow-y-auto rounded-sm border border-light-gray bg-white shadow"
+      :class="`z-index-${zIndex}`"
+      :style="heightProperties"
       :tabindex="-1"
       @blur="onBlur"
     >
@@ -26,6 +27,7 @@ import {
   provide,
   InjectionKey,
   PropType,
+  computed,
 } from '@nuxtjs/composition-api'
 
 import {
@@ -37,6 +39,8 @@ import {
 import { usePopoverContent } from '~/composables/use-popover-content'
 import { warn } from '~/utils/console'
 import { defineEvent } from '~/types/emits'
+
+import type { CSSProperties } from '@vue/runtime-dom'
 
 export const VPopoverContentContextKey = Symbol(
   'VPopoverContentContextKey'
@@ -84,6 +88,11 @@ export default defineComponent({
     },
     zIndex: {
       type: Number,
+      required: true,
+    },
+    clippable: {
+      type: Boolean,
+      default: false,
     },
   },
   /**
@@ -101,14 +110,27 @@ export default defineComponent({
     const propsRefs = toRefs(props)
     const popoverRef = ref<HTMLElement | undefined>()
 
-    const { onKeyDown, onBlur, popoverMaxHeightRef } = usePopoverContent({
+    const { onKeyDown, onBlur, maxHeightRef } = usePopoverContent({
       popoverRef,
       popoverPropsRefs: propsRefs,
       emit,
     })
-    console.log('popoverMaxHeightRef: ', popoverMaxHeightRef.value)
 
-    return { popoverRef, onKeyDown, onBlur }
+    const heightProperties = computed(() => {
+      // extracting this to ensure that computed is updated when the value changes
+      const maxHeight = maxHeightRef.value
+
+      return maxHeight && props.clippable
+        ? ({ '--popover-height': `${maxHeight}px` } as CSSProperties)
+        : ({} as CSSProperties)
+    })
+
+    return { popoverRef, onKeyDown, onBlur, heightProperties }
   },
 })
 </script>
+<style>
+.popover-content {
+  height: var(--popover-height, auto);
+}
+</style>

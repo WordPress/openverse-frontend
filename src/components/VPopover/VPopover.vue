@@ -24,6 +24,7 @@
       :trigger-element="triggerRef"
       :placement="placement"
       :strategy="strategy"
+      :clippable="clippable"
       :hide-on-esc="hideOnEsc"
       :hide-on-click-outside="hideOnClickOutside"
       :auto-focus-on-show="autoFocusOnShow"
@@ -129,6 +130,11 @@ export default defineComponent({
      * the z-index to apply to the popover content
      */
     zIndex: { type: Number, default: 999 },
+    /**
+     * Whether the popover height should be clipped and made scrollable
+     * if the window height is too small.
+     */
+    clippable: { type: Boolean, default: false },
   },
   emits: [
     /**

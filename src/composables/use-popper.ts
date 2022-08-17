@@ -27,7 +27,7 @@ type Props = {
 
 export function usePopper({ popoverRef, popoverPropsRefs }: Props) {
   const popperInstanceRef = ref<Instance | undefined>()
-  const popperMaxHeightRef = ref<number | null>(null)
+  const maxHeightRef = ref<number | null>(null)
 
   watch(
     [
@@ -96,8 +96,8 @@ export function usePopper({ popoverRef, popoverPropsRefs }: Props) {
   watch(popperInstanceRef, (popper) => {
     if (!popper) return
 
-    popperMaxHeightRef.value = detectMaxHeight(popper)
+    maxHeightRef.value = detectMaxHeight(popper)
   })
 
-  return popperMaxHeightRef
+  return { maxHeightRef }
 }
