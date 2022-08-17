@@ -80,7 +80,7 @@ export function usePopper({ popoverRef, popoverPropsRefs }: Props) {
    * and sets the max-height of the popover accordingly.
    * If there is no overflow, the max-height is set to null.
    **/
-  const detectVerticalOverflow = (popper: Instance) => {
+  const detectMaxHeight = (popper: Instance) => {
     popper.forceUpdate() // make sure that `rects` are set
 
     const overflow = detectOverflow(popper.state)
@@ -88,19 +88,15 @@ export function usePopper({ popoverRef, popoverPropsRefs }: Props) {
       0,
       Math.max(overflow.bottom, overflow.top)
     )
-    const maxHeight =
-      verticalOverflow > 0
-        ? popper.state.rects.popper.height - verticalOverflow
-        : null
-    return { verticalOverflow, maxHeight }
+    return verticalOverflow > 0
+      ? popper.state.rects.popper.height - verticalOverflow
+      : null
   }
 
   watch(popperInstanceRef, (popper) => {
     if (!popper) return
 
-    popperMaxHeightRef.value = detectVerticalOverflow(popper).maxHeight
-
-    console.log('maxHeight:', popperMaxHeightRef.value)
+    popperMaxHeightRef.value = detectMaxHeight(popper)
   })
 
   return popperMaxHeightRef
