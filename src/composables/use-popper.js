@@ -11,7 +11,7 @@ import { createPopper } from '@popperjs/core'
  * @param {Props} props
  */
 export function usePopper({ popoverRef, popoverPropsRefs }) {
-  /** @type {import('./types').Ref<import('@popperjs/core').Instance>} */
+  /** @type {import('@nuxtjs/composition-api').Ref<import('@popperjs/core').Instance>} */
   const popperInstanceRef = ref()
 
   watch(

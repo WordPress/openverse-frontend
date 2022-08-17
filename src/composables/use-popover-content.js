@@ -1,3 +1,7 @@
+import { ref, watch } from '@nuxtjs/composition-api'
+
+import { detectOverflow } from '@popperjs/core'
+
 import { usePopper } from '~/composables/use-popper'
 
 import { useDialogContent } from './use-dialog-content'
@@ -24,10 +28,43 @@ export function usePopoverContent({ popoverRef, popoverPropsRefs, emit }) {
     hideOnEscRef: popoverPropsRefs.hideOnEsc,
     emit,
   })
-  usePopper({
+
+  /** @type {import('@nuxtjs/composition-api').Ref<import('@popperjs/core').Instance>} */
+  const popperInstanceRef = usePopper({
     popoverRef,
     popoverPropsRefs,
   })
 
-  return { onKeyDown, onBlur }
+  /**
+   * Detects if the popover is overflowing the viewport,
+   * and sets the max-height of the popover accordingly.
+   * If there is no overflow, the max-height is set to null.
+   * @param {import('@popperjs/core').Instance} popper
+   **/
+  const detectVerticalOverflow = (popper) => {
+    popper.forceUpdate() // make sure that `rects` are set
+
+    const overflow = detectOverflow(popper.state)
+    const verticalOverflow = Math.max(
+      0,
+      Math.max(overflow.bottom, overflow.top)
+    )
+    const maxHeight =
+      verticalOverflow > 0
+        ? popper.state.rects.popper.height - verticalOverflow
+        : null
+    return { verticalOverflow, maxHeight }
+  }
+
+  const popoverMaxHeightRef = ref(null)
+
+  watch(popperInstanceRef, (popper) => {
+    if (!popper) return
+
+    popoverMaxHeightRef.value = detectVerticalOverflow(popper).maxHeight
+
+    console.log('maxHeight:', popoverMaxHeightRef.value)
+  })
+
+  return { onKeyDown, onBlur, popoverMaxHeightRef }
 }
