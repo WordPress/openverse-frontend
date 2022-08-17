@@ -188,7 +188,7 @@ export default defineComponent({
     )
     const handleSubmit = async (event) => {
       event.preventDefault()
-      if (selectedReason.value === DMCA) return
+      if (selectedReason.value === DMCA || !selectedReason.value) return
       // Submit report
       try {
         await service.sendReport({
