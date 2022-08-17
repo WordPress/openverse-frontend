@@ -1,3 +1,6 @@
+import fs from 'node:fs'
+import path from 'node:path'
+
 import { test, expect, Page } from '@playwright/test'
 
 import audio from '~~/test/playwright/utils/audio'
@@ -42,11 +45,22 @@ const locateFocusedResult = async (page: Page) => {
   return page.locator(`[href="${url.pathname}"]`)
 }
 
+const sampleAudio = fs.readFileSync(
+  path.resolve(__dirname, 'resources', 'sample-audio.mp3')
+)
+const sampleAudioInfo = require('./resources/sample-audio-info.json')
+
 test.describe.configure({ mode: 'parallel' })
 
 test.describe('all results grid keyboard accessibility test', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/search?q=birds')
+    await page.route(/jamendo.?mp32/, (route) =>
+      route.fulfill({
+        body: sampleAudio,
+        headers: sampleAudioInfo.headers,
+      })
+    )
   })
 
   test('should open image results as links', async ({ page }) => {
