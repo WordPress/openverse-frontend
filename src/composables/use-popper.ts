@@ -7,6 +7,8 @@ import {
   PositioningStrategy,
 } from '@popperjs/core'
 
+import { useWindowSize } from '~/composables/use-window-size'
+
 export type PopoverContentProps = {
   visible: boolean
   hide: () => void
@@ -92,10 +94,11 @@ export function usePopper({ popoverRef, popoverPropsRefs }: Props) {
       ? popper.state.rects.popper.height - verticalOverflow
       : null
   }
-
-  watch(popperInstanceRef, (popper) => {
+  const { height: windowHeight } = useWindowSize()
+  // We only use `windowHeight` to call update the popper max height when it changes, we don't need the actual value
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  watch([popperInstanceRef, windowHeight] as const, ([popper, _]) => {
     if (!popper) return
-
     maxHeightRef.value = detectMaxHeight(popper)
   })
 
