@@ -1,5 +1,5 @@
 <!-- We ignore prettier formating on this file due to conflicting behaviour -->
-<!-- with the vue template compiler. -->
+<!-- with the Vue template compiler. -->
 <!-- See issue #1658-->
 <template>
   <div ref="containerNode">
