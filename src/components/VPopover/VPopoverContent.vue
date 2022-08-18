@@ -8,8 +8,8 @@
   >
     <div
       ref="popoverRef"
-      class="popover-content max-w-max overflow-y-auto rounded-sm border border-light-gray bg-white shadow"
-      :class="`z-index-${zIndex}`"
+      class="popover-content max-w-max overflow-y-auto overflow-x-hidden rounded-sm border border-light-gray bg-white shadow"
+      :class="`z-${zIndex}`"
       :style="heightProperties"
       :tabindex="-1"
       @blur="onBlur"
@@ -89,6 +89,8 @@ export default defineComponent({
     zIndex: {
       type: Number,
       required: true,
+      validator: (v: number | 'auto') =>
+        [0, 10, 20, 30, 40, 50, 'auto'].includes(v),
     },
     clippable: {
       type: Boolean,
@@ -132,5 +134,7 @@ export default defineComponent({
 <style>
 .popover-content {
   height: var(--popover-height, auto);
+  scrollbar-gutter: stable;
+  overflow-x: hidden;
 }
 </style>

@@ -129,7 +129,11 @@ export default defineComponent({
     /**
      * the z-index to apply to the popover content
      */
-    zIndex: { type: Number, default: 999 },
+    zIndex: {
+      type: Number,
+      default: 50,
+      validator: (v) => [0, 10, 20, 30, 40, 50].includes(v),
+    },
     /**
      * Whether the popover height should be clipped and made scrollable
      * if the window height is too small.
