@@ -53,28 +53,6 @@ export function isFrame(element: Element): element is HTMLIFrameElement {
   return element.tagName === 'IFRAME'
 }
 
-type MsElement = Element & {
-  msMatchesSelector: (selector: string) => boolean
-}
-type WebkitElement = Element & {
-  webkitMatchesSelector: (selector: string) => boolean
-}
-/**
- * Ponyfill for `Element.prototype.matches`
- *
- * @see https://developer.mozilla.org/en-US/docs/Web/API/Element/matches
- */
-export function matches(element: Element, selectors: string): boolean {
-  if ('matches' in element) {
-    return element.matches(selectors)
-  }
-  if (!element) return false
-  if ('msMatchesSelector' in element) {
-    return (element as MsElement).msMatchesSelector(selectors)
-  }
-  return (element as WebkitElement).webkitMatchesSelector(selectors)
-}
-
 /**
  * Checks if the element is visible or not.
  */

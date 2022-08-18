@@ -1,4 +1,4 @@
-import { contains, getActiveElement, isFrame, isVisible, matches } from './dom'
+import { contains, getActiveElement, isFrame, isVisible } from './dom'
 
 const selector =
   "input:not([type='hidden']):not([disabled]), select:not([disabled]), " +
@@ -20,7 +20,7 @@ function hasNegativeTabIndex(element: Element) {
  * isFocusable(document.querySelector("input:disabled")); // false
  */
 export function isFocusable(element: Element): element is HTMLElement {
-  return matches(element, selector) && isVisible(element)
+  return element.matches(selector) && isVisible(element)
 }
 
 /**
