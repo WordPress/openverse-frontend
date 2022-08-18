@@ -1,5 +1,5 @@
 <template>
-  <div :class="[$style.snackbar, $style[size]]">
+  <div role="alert" :class="[$style.snackbar, $style[size]]">
     <!-- @slot Your message or subcomponent goes passed here. -->
     <slot />
   </div>
