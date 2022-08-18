@@ -11,5 +11,3 @@ declare module 'csstype' {
     '--cell-idx'?: number
   }
 }
-
-export {}
