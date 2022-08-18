@@ -6,10 +6,10 @@
     <h3 class="mb-6 text-2xl md:text-3xl">
       {{ $t('media-details.reuse.title') }}
     </h3>
-    <div v-if="media.license_url" class="grid gap-6 md:grid-cols-2">
+    <div class="grid gap-6 md:grid-cols-2">
       <VMediaLicense
         :license="media.license"
-        :license-url="media.license_url"
+        :license-url="licenseUrl"
         :full-license-name="fullLicenseName"
       />
       <VCopyLicense :media="media" />
@@ -20,7 +20,7 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
 
-import { getFullLicenseName } from '~/utils/license'
+import { getFullLicenseName, getLicenseUrl } from '~/utils/license'
 
 import type { Media } from '~/models/media'
 
@@ -41,11 +41,16 @@ export default defineComponent({
   setup(props) {
     const i18n = useI18n()
 
+    const licenseUrl = computed(
+      () =>
+        props.media.license_url ??
+        getLicenseUrl(props.media.license, props.media.license_version)
+    )
     const fullLicenseName = computed(() =>
       getFullLicenseName(props.media.license, props.media.license_version, i18n)
     )
 
-    return { fullLicenseName }
+    return { licenseUrl, fullLicenseName }
   },
 })
 </script>
