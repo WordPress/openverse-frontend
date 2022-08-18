@@ -27,6 +27,10 @@ type Props = {
   popoverPropsRefs: ToRefs<PopoverContentProps>
 }
 
+// A constant offset to ensure there's a gap between
+// the popover and the window border.
+const PopperOffset = 20
+
 export function usePopper({ popoverRef, popoverPropsRefs }: Props) {
   const popperInstanceRef = ref<Instance | undefined>()
   const maxHeightRef = ref<number | null>(null)
@@ -91,7 +95,7 @@ export function usePopper({ popoverRef, popoverPropsRefs }: Props) {
       Math.max(overflow.bottom, overflow.top)
     )
     return verticalOverflow > 0
-      ? popper.state.rects.popper.height - verticalOverflow
+      ? popper.state.rects.popper.height - verticalOverflow - PopperOffset
       : null
   }
   const { height: windowHeight } = useWindowSize()
