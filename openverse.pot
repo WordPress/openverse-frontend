@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-08-18T15:10:15+00:00\n"
+"POT-Creation-Date: 2022-08-18T15:46:55+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1242,45 +1242,6 @@ msgctxt "error.audio"
 msgid "audio"
 msgstr ""
 
-#: src/pages/extension.vue:98
-msgctxt "extension.title"
-msgid "Web extension"
-msgstr ""
-
-#: src/pages/extension.vue:58
-msgctxt "extension.conclusion"
-msgid "Have your favourite content while browsing the web"
-msgstr ""
-
-msgctxt "extension.features.use.heading"
-msgid "Use the image and give attribution to the creator easily"
-msgstr ""
-
-msgctxt "extension.features.use.content"
-msgid "Download the image and paste the attribution information on compatible formats."
-msgstr ""
-
-msgctxt "extension.features.bookmark.heading"
-msgid "Bookmark your favorite images without breaking your navigation"
-msgstr ""
-
-msgctxt "extension.features.bookmark.content"
-msgid "Add images to your bookmarks and use them whenever you want without interrupting your navigation. "
-msgstr ""
-
-msgctxt "extension.features.search.heading"
-msgid "Search and filter openly-licensed and public domain content"
-msgstr ""
-
-msgctxt "extension.features.search.content"
-msgid "Browse through millions of content and use filters to find what best meets your needs."
-msgstr ""
-
-#: src/pages/extension.vue:6
-msgctxt "extension.description.intro"
-msgid "A browser extension that lets you search and use open-licensed and public domain images."
-msgstr ""
-
 #: src/pages/feedback.vue:4
 msgctxt "feedback.title"
 msgid "Feedback"
@@ -1929,10 +1890,6 @@ msgstr ""
 
 msgctxt "header.support-nav-item"
 msgid "Support Us"
-msgstr ""
-
-msgctxt "header.extension-nav-item"
-msgid "Web extension"
 msgstr ""
 
 msgctxt "header.placeholder"
