@@ -46,6 +46,13 @@ export default defineComponent({
     const clipboard = ref<Clipboard | null>(null)
     const success = ref(false)
 
+    function setFocusOnButton(): void {
+      const button = document.getElementById(props.id)
+      if (button) {
+        button.focus()
+      }
+    }
+
     const onCopySuccess = (e: Clipboard.Event) => {
       success.value = true
       emit('copied', { content: e.text })
@@ -57,19 +64,14 @@ export default defineComponent({
       e.clearSelection()
 
       /* Set the focus back on the button */
-      const button = document.getElementById(props.id)
-      if (button) {
-        button.focus()
-      }
+      setFocusOnButton()
     }
     const onCopyError = (e: Clipboard.Event) => {
       emit('copy-failed')
       e.clearSelection()
-      /* Set the focus back on the button */
-      const button = document.getElementById(props.id)
-      if (button) {
-        button.focus()
-      }
+
+      /* Set the focus back on the button as it was*/
+      setFocusOnButton()
     }
 
     onMounted(() => {
