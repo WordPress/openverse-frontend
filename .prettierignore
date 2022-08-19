@@ -7,4 +7,4 @@ test/tapes
 storybook-static
 pnpm-lock.yaml
 nuxt-template-overrides
-#src/components/VSkipToContentContainer.vue . Ignore this file because of conflicting behavior with eslint
+#src/components/VSkipToContentContainer.vue
