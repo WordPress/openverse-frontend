@@ -2,6 +2,8 @@ import { defineStore } from 'pinia'
 
 import axios from 'axios'
 
+import * as Sentry from '@sentry/browser'
+
 import { warn } from '~/utils/console'
 import { hash, rand as prng } from '~/utils/prng'
 import prepareSearchQueryParams from '~/utils/prepare-search-query-params'
@@ -385,9 +387,13 @@ export const useMediaStore = defineStore('media', {
                 error.response?.status ?? 'unknown'
               }`
       } else {
+        /*Capture the error and all of its details using $sentry */
+        Sentry.captureEvent({
+          message: `Error fetching ${mediaType}`,
+          extra: { error },
+        })
         errorMessage =
-          /*Return info on the error message by appending all details*/
-          error instanceof Error ? error.message : JSON.stringify(error)
+          error instanceof Error ? error.message : 'Oops! Something went wrong'
       }
       this._updateFetchState(mediaType, 'end', errorMessage)
       if (!axios.isAxiosError(error)) {
