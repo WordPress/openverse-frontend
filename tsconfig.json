@@ -63,6 +63,7 @@
     "src/components/VMediaInfo/**.vue",
     "src/components/VMediaTag/**.vue",
     "src/components/VMetaSearch/*.vue",
+    "src/components/VSnackbar.vue",
     "src/components/VSkeleton/**.vue",
     "src/components/VTabs/**.vue",
     "src/components/VAllResultsGrid/VAudioCell.vue",
@@ -77,7 +78,6 @@
     "src/components/VFilters/VLicenseExplanation.vue",
     "src/pages/feedback.vue",
     "src/pages/search-help.vue",
-    "src/pages/extension.vue",
     "src/composables/types.js",
     "src/composables/use-event-listener-outside.js",
 
