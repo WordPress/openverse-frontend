@@ -91,10 +91,11 @@ export function usePopper({ popoverRef, popoverPropsRefs }: Props) {
 
     const overflow = detectOverflow(popper.state)
     const verticalOverflow = Math.max(
-      0,
+      -PopperOffset,
       Math.max(overflow.bottom, overflow.top)
     )
-    return verticalOverflow > 0
+
+    return verticalOverflow + PopperOffset > 0
       ? popper.state.rects.popper.height - verticalOverflow - PopperOffset
       : null
   }
