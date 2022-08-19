@@ -123,6 +123,6 @@ dt {
 }
 
 dd {
-  @apply text-sm text-base font-semibold;
+  @apply text-sm text-base font-semibold capitalize leading-[130%];
 }
 </style>
