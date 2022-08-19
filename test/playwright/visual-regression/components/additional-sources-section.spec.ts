@@ -7,6 +7,8 @@ import {
 
 import { supportedSearchTypes } from '~/constants/media'
 
+test.describe.configure({ mode: 'parallel' })
+
 test.describe('additional sources section', () => {
   for (const dir of languageDirections) {
     for (const searchType of supportedSearchTypes) {
