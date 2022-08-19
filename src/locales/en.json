@@ -521,7 +521,7 @@
     },
     "form": {
       "unsupported-title": "{openverse} does not yet support built-in {type} search.",
-      "supported-title": "Not finding what you're looking for? Try additional {type} sources.",
+      "supported-title": "Not finding what you're looking for? Try another source",
       "no-results-title": "No {type} results for \"{query}\".",
       "caption": "Click on a source below to directly search other collections of CC-licensed {type}.",
       "types": {
