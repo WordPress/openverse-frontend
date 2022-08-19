@@ -35,10 +35,10 @@
           }"
           @click="close"
         />
-        <h2 class="mb-2 px-4 pt-5 text-left text-base font-semibold">
+        <h2 class="mb-2 px-4 pt-5 text-base font-semibold text-start">
           {{ $t('meta-search.title') }}
         </h2>
-        <p class="mb-4 px-4 text-left text-sr">
+        <p class="mb-4 px-4 text-sr text-start">
           {{ $t('meta-search.caption', { openverse: 'Openverse' }) }}
         </p>
         <VButton
