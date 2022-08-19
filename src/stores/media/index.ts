@@ -386,7 +386,8 @@ export const useMediaStore = defineStore('media', {
               }`
       } else {
         errorMessage =
-          error instanceof Error ? error.message : 'Oops! Something went wrong'
+          /*Return info on the error message by appending all details*/
+          error instanceof Error ? error.message : JSON.stringify(error)
       }
       this._updateFetchState(mediaType, 'end', errorMessage)
       if (!axios.isAxiosError(error)) {
