@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-08-19T11:14:07+00:00\n"
+"POT-Creation-Date: 2022-08-19T11:17:20+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -331,7 +331,7 @@ msgid "Edge"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VMetaSearch/VMetaSearchForm.vue:49
+#: src/components/VMetaSearch/VMetaSearchForm.vue:51
 msgctxt "meta-search.caption"
 msgid "###openverse### does not currently index the sources listed above, but through this interface is offering convenient access to search services provided by other independent organizations. ###openverse### has no control over the results that are returned. Do not assume that the results displayed in this search portal are under a CC license. Always verify that the work is actually under a CC license by following the link. If you are in doubt, you should contact the copyright holder directly, or try to contact the site where you found the content."
 msgstr ""
@@ -348,13 +348,13 @@ msgid "Not finding what you're looking for? Try additional ###type### sources."
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VMetaSearch/VMetaSearchForm.vue:10
+#: src/components/VMetaSearch/VMetaSearchForm.vue:9
 msgctxt "meta-search.form.no-results-title"
 msgid "No ###type### results for \"###query###\"."
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VMetaSearch/VMetaSearchForm.vue:32
+#: src/components/VMetaSearch/VMetaSearchForm.vue:31
 msgctxt "meta-search.form.caption"
 msgid "Click on a source below to directly search other collections of CC-licensed ###type###."
 msgstr ""
