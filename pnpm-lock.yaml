@@ -21,7 +21,7 @@ specifiers:
   '@nuxtjs/style-resources': ^1.0.0
   '@nuxtjs/svg': ^0.4.0
   '@pinia/nuxt': 0.2.1
-  '@pinia/testing': ^0.0.11
+  '@pinia/testing': ^0.0.12
   '@playwright/test': ^1.20.2
   '@popperjs/core': ^2.11.2
   '@tailwindcss/line-clamp': ^0.3.1
@@ -112,7 +112,7 @@ dependencies:
   '@nuxtjs/sentry': 5.1.7
   '@nuxtjs/sitemap': 2.4.0
   '@nuxtjs/svg': 0.4.0_6s5yfuw2cucs6uldabpyypzlau
-  '@pinia/nuxt': 0.2.1_pinia@2.0.19+vue@2.6.14
+  '@pinia/nuxt': 0.2.1_pinia@2.0.20+vue@2.6.14
   '@popperjs/core': 2.11.2
   '@tailwindcss/line-clamp': 0.3.1_tailwindcss@3.0.23
   '@tailwindcss/typography': 0.5.2_tailwindcss@3.0.23
@@ -134,7 +134,7 @@ dependencies:
   glob: 8.0.1
   node-html-parser: 5.3.3
   nuxt: 2.15.8_wl2mvxm2ma5s7sz3dfofdm4k7q
-  pinia: 2.0.19_k3kegkzgmpj55t3l5d75ppieg4
+  pinia: 2.0.20_k3kegkzgmpj55t3l5d75ppieg4
   postcss-focus-visible: 6.0.4_postcss@8.4.12
   prom-client: 14.0.1
   rfdc: 1.3.0
@@ -155,7 +155,7 @@ devDependencies:
   '@nuxtjs/eslint-module': 3.0.2_nufgqnzswjkgegnrzqvmbqhove
   '@nuxtjs/storybook': 4.3.0_li6sx5er3n6ni6nfyx7d3q67pi
   '@nuxtjs/style-resources': 1.2.1
-  '@pinia/testing': 0.0.11_pinia@2.0.19+vue@2.6.14
+  '@pinia/testing': 0.0.12_pinia@2.0.20+vue@2.6.14
   '@playwright/test': 1.20.2
   '@testing-library/dom': 8.13.0
   '@testing-library/jest-dom': 5.16.1
@@ -3524,24 +3524,24 @@ packages:
       stack-trace: 0.0.10
     dev: false
 
-  /@pinia/nuxt/0.2.1_pinia@2.0.19+vue@2.6.14:
+  /@pinia/nuxt/0.2.1_pinia@2.0.20+vue@2.6.14:
     resolution: {integrity: sha512-XPsuClG2ag/zSdSDqU8FRkTxwWKVZTYD6TVTzjMon3l9QZKC9YvW+jdZWasQilLCnU+jWpmhx41YpfIoPSwMbg==}
     peerDependencies:
       pinia: '>=2.0.16'
     dependencies:
-      pinia: 2.0.19_k3kegkzgmpj55t3l5d75ppieg4
+      pinia: 2.0.20_k3kegkzgmpj55t3l5d75ppieg4
       vue-demi: 0.12.1_vue@2.6.14
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
     dev: false
 
-  /@pinia/testing/0.0.11_pinia@2.0.19+vue@2.6.14:
-    resolution: {integrity: sha512-iJxUHV0Uj1jS7zvN5oVtSZ2BRI4PlG1xbqPkMeJasPtbqsnoxBmkwputDzqX5Dd1I1z9gEfyYOeE2duK3xGWpQ==}
+  /@pinia/testing/0.0.12_pinia@2.0.20+vue@2.6.14:
+    resolution: {integrity: sha512-OGJ5kZihiuNua9trREAVLiv8wAlxT2+gZAz3Cen1L4ch51MbSgY5/nbo9htYsP2my9dhbggBhecgYWlhejhRcQ==}
     peerDependencies:
-      pinia: '>=2.0.13'
+      pinia: '>=2.0.14'
     dependencies:
-      pinia: 2.0.19_k3kegkzgmpj55t3l5d75ppieg4
+      pinia: 2.0.20_k3kegkzgmpj55t3l5d75ppieg4
       vue-demi: 0.12.1_vue@2.6.14
     transitivePeerDependencies:
       - '@vue/composition-api'
@@ -14964,8 +14964,8 @@ packages:
     engines: {node: '>=10'}
     dev: false
 
-  /pinia/2.0.19_k3kegkzgmpj55t3l5d75ppieg4:
-    resolution: {integrity: sha512-Q/UQrmFLDMdlCkLfM5rGw1Ug0A7dy0G7NtBusMQSK+TNjf3CV/pO0RqblNIfuurWl42byTjM6HIemCWOfo8KXA==}
+  /pinia/2.0.20_k3kegkzgmpj55t3l5d75ppieg4:
+    resolution: {integrity: sha512-fdHHumXW/0U5HhxmY1emo3I4z85p8NJPdbtFQSlmJXFe3ktuF0pYNVgVtk2q+j2zCtTufY763xzaEMx0t6T59g==}
     peerDependencies:
       '@vue/composition-api': ^1.4.0
       typescript: '>=4.4.4'
