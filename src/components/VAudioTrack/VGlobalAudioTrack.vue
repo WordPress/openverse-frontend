@@ -22,6 +22,7 @@
         />
       </template>
     </VGlobalLayout>
+    <VSnackbar v-if="!canPlay"> {{ errorMessage }} </VSnackbar>
   </div>
 </template>
 
@@ -47,6 +48,7 @@ import type { AudioStatus } from '~/constants/audio'
 import VPlayPause from '~/components/VAudioTrack/VPlayPause.vue'
 import VWaveform from '~/components/VAudioTrack/VWaveform.vue'
 import VGlobalLayout from '~/components/VAudioTrack/layouts/VGlobalLayout.vue'
+import VSnackbar from '~/components/VSnackbar.vue'
 
 /**
  * Displays the waveform and basic information about the track, along with
@@ -58,6 +60,7 @@ export default defineComponent({
     VPlayPause,
     VWaveform,
     VGlobalLayout,
+    VSnackbar,
   },
   props: {
     /**
@@ -185,9 +188,48 @@ export default defineComponent({
       },
       { immediate: true }
     )
+    /*Try playing the audio, if there is an error catch it as use it as a display for VSnackBar and set the canPlay status to false*/
+    let canPlay = true
+    let errorMessage = ''
+    try {
+      activeAudio.obj.value?.play()
+    } catch (e) {
+      canPlay = false
+      if (e instanceof Error) {
+        errorMessage = e.message
+      } else {
+        errorMessage = 'Unknown Error' + e
+      }
+    }
 
-    const play = () => activeAudio.obj.value?.play()
-    const pause = () => activeAudio.obj.value?.pause()
+    const play = () => {
+      if (activeAudio.obj.value) {
+        try {
+          activeAudio.obj.value.play()
+        } catch (e) {
+          if (e instanceof Error) {
+            errorMessage = e.message
+          } else {
+            errorMessage = 'Unknown Error' + e
+          }
+          canPlay = false
+        }
+      }
+    }
+    const pause = () => {
+      if (activeAudio.obj.value) {
+        try {
+          activeAudio.obj.value.pause()
+        } catch (e) {
+          if (e instanceof Error) {
+            errorMessage = e.message
+          } else {
+            errorMessage = 'Unknown Error' + e
+          }
+          canPlay = false
+        }
+      }
+    }
 
     /* Timekeeping */
     const message = computed<string | undefined>(() =>
@@ -234,7 +276,8 @@ export default defineComponent({
       message,
       handleToggle,
       handleSeeked,
-
+      canPlay,
+      errorMessage,
       currentTime,
       duration,
       ariaLabel,

@@ -312,7 +312,22 @@ export default defineComponent({
     const play = () => {
       // delay initializing the local audio element until playback is requested
       if (!localAudio) initLocalAudio()
-      localAudio?.play()
+      try {
+        localAudio?.play()
+      } catch (e) {
+        if (e instanceof DOMException || e instanceof TypeError) {
+          // This is a workaround for a bug in Safari where
+          // the audio element can throw a DOMException
+          // when trying to play a track that is already
+          // playing. This is a bug in Safari, but we can
+          // work around it by just pausing the track
+          // and then playing it again.
+          localAudio?.pause()
+          localAudio?.play()
+        } else {
+          throw e
+        }
+      }
     }
     const pause = () => localAudio?.pause()
 

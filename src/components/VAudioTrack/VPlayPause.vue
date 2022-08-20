@@ -89,6 +89,8 @@ export default defineComponent({
   setup(props, { emit }) {
     const isPlaying = computed(() => props.status === 'playing')
     const isLoading = computed(() => props.status === 'loading')
+    const isPaused = computed(() => props.status === 'paused')
+
     /**
      * Get the button label based on the current status of the player.
      */
@@ -108,9 +110,15 @@ export default defineComponent({
       return { variant, connections: layoutConnectionsMap[props.layout] }
     })
 
+    /*Handle button click*/
     const handleClick = () => {
-      emit('toggle', isPlaying.value || isLoading.value ? 'paused' : 'playing')
+      if (isPlaying.value) {
+        emit('toggle', 'paused')
+      } else if (isPaused.value) {
+        emit('toggle', 'playing')
+      }
     }
+
     return {
       label,
       icon,
