@@ -14,7 +14,11 @@ You can view [the application](https://wordpress.org/openverse) live on WordPres
 
 ## Technology
 
-The frontend app is built using [Vue.js](https://vuejs.org/) and [Nuxt.js](https://nuxtjs.org).
+The frontend app is built using [Vue.js](https://vuejs.org/) and [Nuxt.js](https://nuxtjs.org).To ensure a consistent code style, we use [Prettier](https://prettier.io/) and [ESLint](https://eslint.org/). We use [Jest](https://jestjs.io/) for unit testing and [Playwright](https://playwright.dev/) for end-to-end testing. We use [Storybook](https://storybook.js.org/) along with [TailwindCSS](https://tailwindcss.com/) for component development and documentation.
+
+## Frontend Components
+
+The frontend app is composed of a number of components that are documented in our [Storybook](https://wordpress.github.io/openverse-frontend). You can also view the [Figma Design Library](https://www.figma.com/file/GIIQ4sDbaToCfFQyKMvzr8/Openverse-Design-Library) for the frontend app. To ease development, we have compiled a list of TailwindCSS classes that are used in the frontend app. You can view the list [here](https://wordpress.github.io/openverse-frontend/tailwind/)
 
 ## Local Development
 
