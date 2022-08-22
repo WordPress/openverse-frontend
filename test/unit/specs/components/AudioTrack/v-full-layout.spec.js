@@ -5,7 +5,7 @@ import { getAudioObj } from '~~/test/unit/fixtures/audio'
 import VFullLayout from '~/components/VAudioTrack/layouts/VFullLayout.vue'
 
 describe('VFullLayout', () => {
-  it('should render the main button with the foreign landing url', () => {
+  it('should render the weblink button with the foreign landing url', () => {
     const audio = getAudioObj()
     render(VFullLayout, {
       props: {
