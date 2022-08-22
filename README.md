@@ -14,7 +14,7 @@ You can view [the application](https://wordpress.org/openverse) live on WordPres
 
 ## Technology
 
-The frontend app is built using [Vue.js](https://vuejs.org/) and [Nuxt.js](https://nuxtjs.org).To ensure a consistent code style, we use [Prettier](https://prettier.io/) and [ESLint](https://eslint.org/). We use [Jest](https://jestjs.io/) for unit testing and [Playwright](https://playwright.dev/) for end-to-end testing. We use [Storybook](https://storybook.js.org/) along with [TailwindCSS](https://tailwindcss.com/) for component development and documentation.
+The frontend app is built using [Vue.js](https://vuejs.org/) and [Nuxt.js](https://nuxtjs.org). To ensure a consistent code style, we use [Prettier](https://prettier.io/) and [ESLint](https://eslint.org/). We use [Jest](https://jestjs.io/) for unit testing and [Playwright](https://playwright.dev/) for end-to-end testing. We use [Storybook](https://storybook.js.org/) along with [TailwindCSS](https://tailwindcss.com/) for component development and documentation.
 
 ## Frontend Components
 
