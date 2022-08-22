@@ -130,7 +130,8 @@ export default defineComponent({
     const currentTime = ref(0)
 
     const initLocalAudio = () => {
-      // Preserve existing local audio if we plucked it from the global active audio
+      // Preserve existing local audio if we plucked it from the global active audio store
+      // otherwise, create a new local audio object
       if (!localAudio) localAudio = new Audio(props.audio.url)
 
       Object.entries(eventMap).forEach(([name, fn]) =>
@@ -186,6 +187,7 @@ export default defineComponent({
      * that was clicked on, hijack that object instead and
      * treat it as the local audio for this instance.
      */
+
     let localAudio =
       activeAudio.obj.value?.src === props.audio.url
         ? activeAudio.obj.value
@@ -445,6 +447,8 @@ export default defineComponent({
         : 'playing'
       handleToggle(status.value)
     }
+
+    //Watch for errors when playing audio object
 
     return {
       status,

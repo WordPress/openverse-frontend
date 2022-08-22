@@ -64,8 +64,6 @@ export default defineComponent({
       return null
     })
 
-    /* Message */
-
     const handleError = (event: Event) => {
       if (!(event.target instanceof HTMLAudioElement)) {
         activeMediaStore.setMessage({ message: 'err_unknown' })
