@@ -97,5 +97,5 @@ export const useSeekable = ({
     currentFrac,
   }
 
-  return { attributes, listeners, meta, isSeeking }
+  return { attributes, listeners, meta, willBeHandled, isSeeking }
 }
