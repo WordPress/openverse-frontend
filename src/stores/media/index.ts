@@ -399,6 +399,13 @@ export const useMediaStore = defineStore('media', {
         errorMessage = `Error fetching ${mediaType} from API. Unknown error`
       }
 
+      this.$nuxt.$sentry.captureEvent({
+        message: errorMessage,
+        extra: {
+          error,
+        },
+      })
+
       this._updateFetchState(mediaType, 'end', errorMessage)
       if (!axios.isAxiosError(error)) {
         throw new Error(errorMessage)
