@@ -70,7 +70,7 @@ export default defineComponent({
       emit('copy-failed')
       e.clearSelection()
 
-      /* Set the focus back on the button as it was*/
+      /* Restore focus on the button */
       setFocusOnButton()
     }
 
