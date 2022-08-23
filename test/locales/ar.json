@@ -127,7 +127,7 @@
     },
     "form": {
       "unsupported-title": "{openverse} لا يدعم حتى الآن البحث المضمن {type}.",
-      "supported-title": "لا تجد ما تبحث عنه؟ جرب مصدر خارجي",
+      "supported-title": "لا تجد ما تبحث عنه؟ جرب مصدر خارجي:",
       "no-results-title": "لا توجد نتائج {type} لـ \"{query}\".",
       "caption": "انقر فوق أحد المصادر أدناه للبحث مباشرة في مجموعات أخرى من {type} المرخصة CC.",
       "types-plural": {
