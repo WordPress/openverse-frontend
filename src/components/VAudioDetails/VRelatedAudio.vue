@@ -1,8 +1,8 @@
 <template>
   <aside :aria-label="$t('audio-details.related-audios')">
-    <h4 class="mb-6 text-2xl lg:text-3xl">
+    <h2 class="mb-6 text-2xl lg:text-3xl">
       {{ $t('audio-details.related-audios') }}
-    </h4>
+    </h2>
     <!-- Negative margin compensates for the `p-4` padding in row layout. -->
     <div v-if="!fetchState.isError" class="-mx-4 mb-12 flex flex-col gap-4">
       <VAudioTrack

@@ -3,7 +3,7 @@
     <slot />
     <VTeleport to="skip-to-content">
       <VButton
-        class="ms-2 z-50 mt-2 focus:fixed focus:absolute"
+        class="z-50 mt-2 ms-2 focus:fixed focus:absolute"
         :class="$style.skipButton"
         @click="skipToContent"
         >{{ $t('skip-to-content') }}</VButton
@@ -14,11 +14,10 @@
 
 <script>
 import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { Portal as VTeleport } from 'portal-vue'
 
-import { getFirstTabbableIn } from 'reakit-utils/tabbable'
-import { ensureFocus } from 'reakit-utils/ensureFocus'
+import { ensureFocus, getFirstTabbableIn } from '~/utils/reakit-utils/focus'
 
-import VTeleport from '~/components/VTeleport/VTeleport.vue'
 import VButton from '~/components/VButton.vue'
 
 /**

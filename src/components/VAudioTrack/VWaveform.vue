@@ -141,14 +141,6 @@
     >
       {{ message }}
     </div>
-
-    <!-- Seek disabled message overlay -->
-    <div
-      v-if="seekDisabledNotice"
-      class="text-xsm invisible absolute inset-0 z-40 flex w-full items-center justify-center bg-yellow/75 font-bold group-waveform-hover:visible group-waveform-focus:visible"
-    >
-      {{ seekDisabledNotice }}
-    </div>
   </div>
 </template>
 
@@ -336,9 +328,6 @@ export default defineComponent({
     const showDuration = computed(() => props.features.includes('duration'))
     const showTimestamps = computed(() => props.features.includes('timestamps'))
     const isSeekable = computed(() => props.features.includes('seek'))
-
-    /* Feature notices */
-    const seekDisabledNotice = computed(() => props.featureNotices?.seek)
 
     /* State */
 
@@ -541,8 +530,6 @@ export default defineComponent({
       showDuration,
       showTimestamps,
       isSeekable,
-
-      seekDisabledNotice,
 
       isReady,
       isInteractive,
