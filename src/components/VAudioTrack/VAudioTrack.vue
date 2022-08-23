@@ -314,6 +314,7 @@ export default defineComponent({
     const play = () => {
       // delay initializing the local audio element until playback is requested
       if (!localAudio) initLocalAudio()
+
       try {
         localAudio?.play()
       } catch (e) {
@@ -333,16 +334,25 @@ export default defineComponent({
     }
     const pause = () => localAudio?.pause()
 
+    //Function that checks if the audio object has changed
     watch(
       activeAudio.obj,
       (audio) => {
-        if (audio !== localAudio && status.value === 'playing') {
-          // pause the local audio if the global audio changes
-          // check if audio has finished loading before pausing
-          if (audio?.readyState === 4) {
-            pause()
+        if (audio !== localAudio) {
+          // If the audio object has changed, pause the old one
+          // Check if the localAudio object can first be paused
+          if (localAudio?.paused) {
+            //If the local audio can be paused, then we can safely pause it
+            localAudio?.pause()
+          } else {
+            //If the local audio cannot be paused, we should check if it is loading
+            if (localAudio?.readyState === 0) {
+              //If the local audio is loading, we should wait for it to load before pausing it
+              localAudio?.addEventListener('canplay', () => {
+                localAudio?.pause()
+              })
+            }
           }
-          localAudio?.pause()
         }
       },
       { immediate: true }
