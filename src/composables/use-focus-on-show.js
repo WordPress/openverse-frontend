@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import { ref, watch } from '@nuxtjs/composition-api'
 
 import { warn } from '~/utils/console'
@@ -35,26 +36,27 @@ export const useFocusOnShow = ({
      */
     ([dialog, visible, autoFocusOnShow, initialFocusElement]) => {
       if (!dialog || !visible || !autoFocusOnShow) return
+      Vue.nextTick(() => {
+        const isActive = () => hasFocusWithin(dialog)
 
-      const isActive = () => hasFocusWithin(dialog)
+        if (initialFocusElement) {
+          ensureFocus(initialFocusElement, {
+            preventScroll: true,
+            isActive,
+          })
+        } else {
+          const tabbable = getFirstTabbableIn(dialog, true)
 
-      if (initialFocusElement) {
-        return ensureFocus(initialFocusElement, {
-          preventScroll: true,
-          isActive,
-        })
-      }
-
-      const tabbable = getFirstTabbableIn(dialog, true)
-
-      if (tabbable) {
-        ensureFocus(tabbable, { preventScroll: true, isActive })
-      } else {
-        ensureFocus(dialog, { preventScroll: true, isActive })
-        if (dialog.tabIndex === undefined || dialog.tabIndex < 0) {
-          warn(noFocusableElementWarning)
+          if (tabbable) {
+            ensureFocus(tabbable, { preventScroll: true, isActive })
+          } else {
+            ensureFocus(dialog, { preventScroll: true, isActive })
+            if (dialog.tabIndex === undefined || dialog.tabIndex < 0) {
+              warn(noFocusableElementWarning)
+            }
+          }
         }
-      }
+      })
     }
   )
 }

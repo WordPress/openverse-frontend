@@ -86,7 +86,7 @@ export const useProviderStore = defineStore('provider', {
      */
     getProviderName(providerCode: string, mediaType: SupportedMediaType) {
       const provider = this.providers[mediaType].find(
-        (p) => p.source_name === providerCode
+        (p: MediaProvider) => p.source_name === providerCode
       )
       return provider?.display_name || capital(providerCode)
     },

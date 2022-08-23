@@ -97,9 +97,9 @@ export const useSearchStore = defineStore('search', {
     /**
      * Returns the number of checked filters, excluding the `mature` filter.
      */
-    appliedFilterCount(state) {
+    appliedFilterCount(state: SearchState) {
       const filterKeys = mediaFilterKeys[state.searchType].filter(
-        (f) => f !== 'mature'
+        (f: FilterCategory) => f !== 'mature'
       )
       return filterKeys.reduce((count, filterCategory) => {
         return (
@@ -111,7 +111,7 @@ export const useSearchStore = defineStore('search', {
     /**
      * Returns the object with filters for selected search type, with codes, names for i18n labels, and checked status.
      */
-    searchFilters(state) {
+    searchFilters(state: SearchState) {
       return mediaFilterKeys[state.searchType]
         .filter((filterKey) => filterKey !== 'mature')
         .reduce((obj, filterKey) => {
@@ -168,10 +168,12 @@ export const useSearchStore = defineStore('search', {
      */
     getBaseFiltersWithProviders() {
       const resetProviders = (mediaType: SupportedMediaType): FilterItem[] => {
-        return this.filters[`${mediaType}Providers`].map((provider) => ({
-          ...provider,
-          checked: false,
-        }))
+        return this.filters[`${mediaType}Providers`].map(
+          (provider: FilterItem) => ({
+            ...provider,
+            checked: false,
+          })
+        )
       }
       return {
         ...(deepClone(filterData) as DeepWriteable<typeof filterData>),
@@ -240,7 +242,8 @@ export const useSearchStore = defineStore('search', {
         )
       }
       const filterItems = this.filters[filterType]
-      const idx = codeIdx ?? filterItems.findIndex((f) => f.code === code)
+      const idx =
+        codeIdx ?? filterItems.findIndex((f: FilterItem) => f.code === code)
       this.filters[filterType][idx].checked = !filterItems[idx].checked
     },
 
@@ -270,22 +273,25 @@ export const useSearchStore = defineStore('search', {
         return [...acc, ...mediaUniqueFilterKeys[type]]
       }, [] as FilterCategory[])
 
-      this.filterCategories.forEach((filterCategory) => {
-        if (filterKeysToClear.includes(filterCategory)) {
-          this.filters[filterCategory] = this.filters[filterCategory].map(
-            (f) => ({ ...f, checked: false })
-          )
+      for (const filterCategory of this.filterCategories) {
+        const fc = filterCategory as FilterCategory
+        if (filterKeysToClear.includes(fc)) {
+          this.filters[fc] = this.filters[fc].map((f: FilterItem) => ({
+            ...f,
+            checked: false,
+          }))
         }
-      })
+      }
     },
     /**
      * Replaces filters with the newFilterData object that was created using initial filters,
      * and setting parameters from the search query to checked.
      */
     replaceFilters(newFilterData: Filters) {
-      this.filterCategories.forEach((filterCategory) => {
-        this.filters[filterCategory] = newFilterData[filterCategory]
-      })
+      for (const filterCategory of this.filterCategories) {
+        const fc = filterCategory as FilterCategory
+        this.filters[fc] = newFilterData[fc]
+      }
     },
     /**
      * Called when a /search path is server-rendered.

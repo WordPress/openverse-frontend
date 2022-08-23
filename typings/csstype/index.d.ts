@@ -1,3 +1,4 @@
+import type * as CSS from 'csstype' // eslint-disable-line @typescript-eslint/no-unused-vars
 /**
  * To use CSS custom properties in a component that uses TypeScript, add them here.
  * See example in `VWaveform.vue`
