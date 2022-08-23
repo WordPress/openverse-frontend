@@ -5,6 +5,12 @@ export const createPinia = () =>
   pinia.createPinia().use(() => ({
     $nuxt: {
       $openverseApiToken: '',
+      $sentry: {
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        captureException: () => {},
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        captureEvent: () => {},
+      },
     },
   }))
 

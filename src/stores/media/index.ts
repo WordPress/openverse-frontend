@@ -2,8 +2,6 @@ import { defineStore } from 'pinia'
 
 import axios from 'axios'
 
-import * as Sentry from '@sentry/browser'
-
 import { warn } from '~/utils/console'
 import { hash, rand as prng } from '~/utils/prng'
 import prepareSearchQueryParams from '~/utils/prepare-search-query-params'
@@ -388,7 +386,7 @@ export const useMediaStore = defineStore('media', {
               }`
       } else {
         /*Capture the error and all of its details using $sentry */
-        Sentry.captureEvent({
+        this.$nuxt.$sentry.captureEvent({
           message: `Error fetching ${mediaType}`,
           extra: { error },
         })
