@@ -369,6 +369,10 @@ export const useMediaStore = defineStore('media', {
       }
     },
 
+    //Handles errors for media fetches and sets the fetch state accordingly
+    //Reported errors are logged to Sentry
+    //TODO: Handle errors for media fetches
+
     async handleMediaError({
       mediaType,
       error,
@@ -378,25 +382,48 @@ export const useMediaStore = defineStore('media', {
     }) {
       let errorMessage
       if (axios.isAxiosError(error)) {
-        errorMessage =
-          error.response?.status === 500
-            ? 'There was a problem with our servers'
-            : `Request failed with status ${
-                error.response?.status ?? 'unknown'
-              }`
+        // If the error is an axios error:
+        // If the error has a response property, and recieved a response that is not in the 2xx range,
+        // then the error is logged to Sentry
+        if (error.response && error.response.status >= 300) {
+          errorMessage = `Error fetching ${mediaType} from API. Request failed with status code: ${error.response.status}`
+          this.$nuxt.$sentry.captureEvent({
+            message: errorMessage,
+            extra: {
+              error,
+            },
+          })
+        } else if (!error.response && error.request) {
+          // If the error has a request property, but no response, then we capture the event in Sentry
+          errorMessage = `Error fetching ${mediaType} from API. No response received from the server`
+          this.$nuxt.$sentry.captureEvent({
+            message: errorMessage,
+            extra: {
+              error,
+            },
+          })
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          errorMessage = `Error fetching ${mediaType} from API. Unknown Axios error`
+          this.$nuxt.$sentry.captureEvent({
+            message: errorMessage,
+            extra: {
+              error,
+            },
+          })
+        }
       } else {
-        /*Capture the error and all of its details using $sentry */
+        // If the error is not an axios error, then we capture the event in Sentry
+        errorMessage = `Error fetching ${mediaType} from API. Unknown error`
         this.$nuxt.$sentry.captureEvent({
-          message: `Error fetching ${mediaType}`,
-          extra: { error },
+          message: errorMessage,
+          extra: {
+            error,
+          },
         })
-        errorMessage =
-          error instanceof Error ? error.message : 'Oops! Something went wrong'
       }
+
       this._updateFetchState(mediaType, 'end', errorMessage)
-      if (!axios.isAxiosError(error)) {
-        throw new Error(errorMessage)
-      }
     },
 
     setMediaProperties(
