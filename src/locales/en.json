@@ -514,14 +514,14 @@
   "meta-search": {
     "caption": "{openverse} has no control over the results, always verify that the work is actually under a CC license.",
     "button": "Source list",
-    "title": "Additional sources",
+    "title": "External sources",
     "card": {
-      "search": "Not finding what you're looking for? Try additional sources",
+      "search": "Not finding what you're looking for? Try external sources",
       "caption": "Click on a source below to directly search other collections of CC-licensed images.{break}Please note that Use filters are not supported for Open Clip Art Library or Nappy."
     },
     "form": {
       "unsupported-title": "{openverse} does not yet support built-in {type} search.",
-      "supported-title": "Not finding what you're looking for? Try another source",
+      "supported-title": "Not finding what you're looking for? Try an external source",
       "no-results-title": "No {type} results for \"{query}\".",
       "caption": "Click on a source below to directly search other collections of CC-licensed {type}.",
       "types": {
@@ -612,7 +612,7 @@
   },
   "no-results": {
     "heading": "We couldn't find anything for \"{query}\".",
-    "alternatives": "Try a different query or use one of the additional sources to expand your search."
+    "alternatives": "Try a different query or use one of the external sources to expand your search."
   },
   "server-timeout": {
     "heading": "Whoops, it looks like that request took too long to complete. Please try again."
