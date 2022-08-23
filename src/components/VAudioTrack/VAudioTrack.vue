@@ -336,10 +336,12 @@ export default defineComponent({
     watch(
       activeAudio.obj,
       (audio) => {
-        if (
-          audio !== localAudio &&
-          (status.value === 'playing' || status.value === 'loading')
-        ) {
+        if (audio !== localAudio && status.value === 'playing') {
+          // pause the local audio if the global audio changes
+          // check if audio has finished loading before pausing
+          if (audio?.readyState === 4) {
+            pause()
+          }
           localAudio?.pause()
         }
       },
