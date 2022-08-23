@@ -424,6 +424,9 @@ export const useMediaStore = defineStore('media', {
       }
 
       this._updateFetchState(mediaType, 'end', errorMessage)
+      if (!axios.isAxiosError(error)) {
+        throw new Error(errorMessage)
+      }
     },
 
     setMediaProperties(

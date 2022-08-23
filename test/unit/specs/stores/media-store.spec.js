@@ -372,7 +372,7 @@ describe('Media Store', () => {
       const mediaStore = useMediaStore()
       mediaStore.handleMediaError({ mediaType, error })
       expect(mediaStore.mediaFetchState[mediaType].fetchingError).toEqual(
-        'There was a problem with our servers'
+        'Error fetching audio from API. Request failed with status code: 500'
       )
     })
 
@@ -382,14 +382,14 @@ describe('Media Store', () => {
       const mediaStore = useMediaStore()
       mediaStore.handleMediaError({ mediaType, error })
       expect(mediaStore.mediaFetchState[mediaType].fetchingError).toEqual(
-        'Request failed with status 403'
+        'Error fetching audio from API. Request failed with status code: 403'
       )
     })
 
     it('handleMediaError throws a new error on error when server did not respond', async () => {
       const mediaStore = useMediaStore()
 
-      const error = new Error('Server did not respond')
+      const error = new Error('Error fetching audio from API. Unknown error')
       await expect(
         mediaStore.handleMediaError({ mediaType: AUDIO, error })
       ).rejects.toThrow(error.message)
