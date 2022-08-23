@@ -393,7 +393,7 @@ export const useMediaStore = defineStore('media', {
               error,
             },
           })
-        } else if (!error.response && error.request) {
+        } else if (error.request) {
           // If the error has a request property, but no response, then we capture the event in Sentry
           errorMessage = `Error fetching ${mediaType} from API. No response received from the server`
           this.$nuxt.$sentry.captureEvent({
