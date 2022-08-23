@@ -346,6 +346,8 @@ export default defineComponent({
             localAudio?.pause()
           } else {
             //If the local audio cannot be paused, we should check if it is loading
+            //For more info about audio ready states check out:
+            //https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/readyState#value
             if (localAudio?.readyState === 0) {
               //If the local audio is loading, we should wait for it to load before pausing it
               localAudio?.addEventListener('canplay', () => {
