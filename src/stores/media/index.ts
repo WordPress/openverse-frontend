@@ -385,7 +385,7 @@ export const useMediaStore = defineStore('media', {
         // If the error is an axios error:
         // If the error has a response property, and recieved a response that is not in the 2xx range,
         // then the error is logged to Sentry
-        if (error.response && error.response.status >= 300) {
+        if (error.response) {
           errorMessage = `Error fetching ${mediaType} from API. Request failed with status code: ${error.response.status}`
           this.$nuxt.$sentry.captureEvent({
             message: errorMessage,
