@@ -50,4 +50,4 @@ ENV PORT=8443
 # expose port 8443 by default
 EXPOSE 8443
 
-ENTRYPOINT [ "npm", "start" ]
+ENTRYPOINT [ "npm", "start", "--" ]
