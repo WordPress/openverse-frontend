@@ -37,7 +37,9 @@ function useMouseDownTargetRef({
       const document = getDocument(popover)
       const onMouseDown = (event) => (mouseDownTargetRef.value = event.target)
       document.addEventListener('mousedown', onMouseDown)
-      onInvalidate(() => {})
+      onInvalidate(() => {
+        document.removeEventListener('mousedown', onMouseDown)
+      })
     },
     { immediate: true }
   )
