@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-08-24T13:26:12+00:00\n"
+"POT-Creation-Date: 2022-08-24T13:35:18+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -160,7 +160,6 @@ msgctxt "modal.close-named"
 msgid "Close ###name###"
 msgstr ""
 
-#: src/components/VAudioTrack/layouts/VFullLayout.vue:59
 msgctxt "download-button.download"
 msgid "Download"
 msgstr ""
@@ -426,6 +425,11 @@ msgctxt "audio-details.information"
 msgid "Audio information"
 msgstr ""
 
+#: src/components/VAudioTrack/layouts/VFullLayout.vue:59
+msgctxt "audio-details.weblink"
+msgid "Use this audio"
+msgstr ""
+
 #: src/components/VAudioDetails/VAudioDetails.vue:27
 msgctxt "audio-details.table.album"
 msgid "Album"
@@ -469,7 +473,7 @@ msgstr ""
 
 #: src/pages/image/_id.vue:39
 msgctxt "image-details.weblink"
-msgid "Go to image's website"
+msgid "Use this image"
 msgstr ""
 
 #: src/components/VImageDetails/VRelatedImages.vue:4
