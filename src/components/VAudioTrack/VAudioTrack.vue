@@ -15,6 +15,10 @@
       :status="status"
       :current-time="currentTime"
     >
+      <VSnackbar v-show="hasError">
+        {{ messageError }}
+      </VSnackbar>
+
       <template #controller="waveformProps">
         <VWaveform
           v-bind="waveformProps"
@@ -77,6 +81,7 @@ import VBoxLayout from '~/components/VAudioTrack/layouts/VBoxLayout.vue'
 import VGlobalLayout from '~/components/VAudioTrack/layouts/VGlobalLayout.vue'
 import VLink from '~/components/VLink.vue'
 import VWarningSuppressor from '~/components/VWarningSuppressor.vue'
+import VSnackbar from '~/components/VSnackbar.vue'
 
 /**
  * Displays the waveform and basic information about the track, along with
@@ -89,12 +94,12 @@ export default defineComponent({
     VWaveform,
     VLink,
     VWarningSuppressor,
-
     // Layouts
     VFullLayout,
     VRowLayout,
     VBoxLayout,
     VGlobalLayout,
+    VSnackbar,
   },
   props: {
     /**
@@ -128,6 +133,10 @@ export default defineComponent({
 
     const status = ref<AudioStatus>('paused')
     const currentTime = ref(0)
+
+    // We need to keep track if there was any error while playing the audio track.
+    let hasError = false // We initialize it to false, because we assume that this is a new track.
+    let messageError = '' // The error message is currently empty.
 
     const initLocalAudio = () => {
       // Preserve existing local audio if we plucked it from the global active audio
@@ -312,7 +321,41 @@ export default defineComponent({
     const play = () => {
       // delay initializing the local audio element until playback is requested
       if (!localAudio) initLocalAudio()
-      localAudio?.play()
+
+      // Check if the audio can be played successfully
+      localAudio?.play().catch((err) => {
+        // If the error is due to the audio being blocked by the browser (e.g. autoplay policy, media not supported, etc.)
+        // then we should show the error message to the user else we should just log the error to sentry
+        switch (err.name) {
+          case 'AbortError': {
+            // This is expected when the user has paused the audio
+            // before it has loaded. We can ignore this error.
+            return
+          }
+          case 'NotAllowedError': {
+            // This error happens when the user has blocked the audio from playing ex: autoplay policy etc.
+            // We should show the error message to the user in this case and not log it to sentry
+            hasError = true
+            messageError =
+              err.message ||
+              "Audio playback is blocked. Please check your browser's settings."
+            alert(messageError)
+            return
+          }
+          case 'NotSupportedError': {
+            // This is expected when the audio is not supported.
+            // We can ignore this error.
+            hasError = true
+            messageError = 'The audio format is not supported by this browser.'
+            alert(messageError)
+            return
+          }
+          default: {
+            // This is an unexpected error. We should log it to sentry
+            throw err
+          }
+        }
+      })
     }
     const pause = () => localAudio?.pause()
 
@@ -449,6 +492,9 @@ export default defineComponent({
       layoutBasedProps,
 
       playPauseRef,
+
+      hasError,
+      messageError,
     }
   },
 })
