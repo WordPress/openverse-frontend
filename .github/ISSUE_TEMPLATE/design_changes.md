@@ -1,7 +1,7 @@
 ---
 name: Design Changes
-about: Propose design Changes
-labels: "🖼️ aspect: design, 🚦 status: awaiting triage"
+about: Propose design changes
+labels: "🖼️ aspect: design, ✨ goal: improvement, 🚦 status: awaiting triage"
 title: "<Replace this with actual title>"
 ---
 
