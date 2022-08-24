@@ -43,10 +43,13 @@ export const Template = (args) => ({
 
 <ArgsTable of={VSnackbar} />
 
+<!-- Use inline={false} to keep the snackbar within the preview area. -->
+
 <Canvas>
   <Story
     name="Default"
     args={{ defaultSlot: 'Your message goes here.', size: 'small' }}
+    inline={false}
   >
     {Template.bind({})}
   </Story>
