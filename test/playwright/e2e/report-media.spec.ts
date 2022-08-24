@@ -14,7 +14,9 @@ test.describe.configure({ mode: 'parallel' })
 const reportingEndpoint = '**/report/'
 
 export const visitFirstResult = (page: Page) =>
-  page.click('[data-testid="search-results"] a:first-of-type')
+  page.click('[data-testid="search-results"] a:first-of-type', {
+    position: { x: 32, y: 32 },
+  })
 export const openReportModal = (page: Page) =>
   page.click('text="Report this content"')
 
