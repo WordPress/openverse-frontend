@@ -1,5 +1,6 @@
 FROM node:16-alpine as builder
 
+# Install system packages needed to build on macOS
 RUN apk add --no-cache --virtual .gyp python3 make g++ \
   && npm install -g pnpm
 
@@ -33,7 +34,7 @@ RUN pnpm build:only
 #    Nuxt app
 ###################
 
-FROM node:alpine as app
+FROM node:16-alpine as app
 
 # Install CURL for the production healthcheck
 RUN apk --no-cache add curl
