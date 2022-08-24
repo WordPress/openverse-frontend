@@ -51,7 +51,7 @@
             <span v-show="isSmall">
               <span
                 class="inline-block rounded-sm bg-dark-charcoal-06 p-1 font-semibold text-dark-charcoal"
-                >{{ timeFmt(audio.duration || 0) }}</span
+                >{{ timeFmt(audio.duration || 0, true) }}</span
               ><span class="mx-2">{{ $t('interpunct') }}</span>
             </span>
 
