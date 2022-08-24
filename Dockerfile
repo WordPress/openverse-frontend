@@ -35,6 +35,9 @@ RUN pnpm build:only
 
 FROM node:alpine as app
 
+# Install CURL for the production healthcheck
+RUN apk --no-cache add curl
+
 WORKDIR /home/node/app
 
 USER node
