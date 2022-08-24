@@ -1,6 +1,18 @@
 <template>
   <!-- Negative margin compensates for the `p-4` padding in row layout. -->
   <section class="-mx-4">
+    <VSnackbar size="large" :is-visible="snackbarIsVisible">
+      <i18n path="audio-results.snackbar.text" tag="p">
+        <template
+          v-for="keyboardKey in ['spacebar', 'left', 'right']"
+          #[keyboardKey]
+        >
+          <kbd :key="keyboardKey">{{
+            $t(`audio-results.snackbar.${keyboardKey}`)
+          }}</kbd>
+        </template>
+      </i18n>
+    </VSnackbar>
     <VGridSkeleton
       v-if="results.length === 0 && !fetchState.isFinished"
       is-for-tab="audio"
@@ -13,6 +25,7 @@
       :size="audioTrackSize"
       layout="row"
       @shift-tab="handleShiftTab($event, i)"
+      @interacted="hideSnackbar"
     />
     <VLoadMore />
   </section>
@@ -22,6 +35,7 @@
 import {
   computed,
   defineComponent,
+  ref,
   toRef,
   useMeta,
 } from '@nuxtjs/composition-api'
@@ -33,6 +47,7 @@ import { useFocusFilters } from '~/composables/use-focus-filters'
 import { useI18n } from '~/composables/use-i18n'
 import { Focus } from '~/utils/focus-management'
 
+import VSnackbar from '~/components/VSnackbar.vue'
 import VAudioTrack from '~/components/VAudioTrack/VAudioTrack.vue'
 import VLoadMore from '~/components/VLoadMore.vue'
 import VGridSkeleton from '~/components/VSkeleton/VGridSkeleton.vue'
@@ -42,6 +57,7 @@ import { propTypes } from './search-page.types'
 export default defineComponent({
   name: 'AudioSearch',
   components: {
+    VSnackbar,
     VAudioTrack,
     VGridSkeleton,
     VLoadMore,
@@ -81,6 +97,11 @@ export default defineComponent({
     const searchTermRef = toRef(props, 'searchTerm')
     const { canLoadMore, onLoadMore } = useLoadMore(searchTermRef)
 
+    const snackbarIsVisible = ref(true)
+    const hideSnackbar = () => {
+      snackbarIsVisible.value = false
+    }
+
     return {
       results,
       audioTrackSize,
@@ -90,6 +111,9 @@ export default defineComponent({
       handleShiftTab,
       canLoadMore,
       onLoadMore,
+
+      snackbarIsVisible,
+      hideSnackbar,
     }
   },
   head: {},

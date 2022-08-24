@@ -123,7 +123,7 @@ export default defineComponent({
       type: String as PropType<AudioSize>,
     },
   },
-  setup(props) {
+  setup(props, { emit }) {
     const i18n = useI18n()
 
     const activeMediaStore = useActiveMediaStore()
@@ -447,6 +447,10 @@ export default defineComponent({
       onSeek: handleSeeked,
       onTogglePlayback: togglePlayback,
     })
+    const handleKeydown = (event: KeyboardEvent) => {
+      if (seekable.willBeHandled(event)) emit('interacted')
+      seekable.listeners.keydown(event)
+    }
 
     const containerAttributes = computed(() => ({
       // ARIA slider attributes are only added when interactive
@@ -460,7 +464,7 @@ export default defineComponent({
       ariaLabel,
       handleToggle,
       handleSeeked,
-      handleKeydown: seekable.listeners.keydown,
+      handleKeydown,
       handleBlur: seekable.listeners.blur,
 
       isSeeking,
