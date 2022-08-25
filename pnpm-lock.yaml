@@ -35,6 +35,7 @@ specifiers:
   '@types/lodash.sortby': ^4.7.7
   '@types/module-alias': ^2.0.1
   '@types/node': ^17.0.32
+  '@types/node-os-utils': ^1.3.0
   '@types/throttle-debounce': ^5.0.0
   '@types/uuid': ^8.3.4
   '@typescript-eslint/eslint-plugin': ^5.20.0
@@ -76,6 +77,7 @@ specifiers:
   lint-staged: ^12.3.7
   module-alias: ^2.2.2
   node-html-parser: ^5.3.3
+  node-os-utils: ^1.3.7
   npm-run-all: ^4.1.5
   nuxt: ^2.15.4
   pinia: ^2.0.16
@@ -109,7 +111,7 @@ dependencies:
   '@nuxt/postcss8': 1.1.3_webpack@4.46.0
   '@nuxt/vue-app': 2.15.8
   '@nuxtjs/composition-api': 0.32.0_efpv4fxq5hpknftnxyzfo2vyxy
-  '@nuxtjs/i18n': 7.2.0_vue@2.6.14
+  '@nuxtjs/i18n': 7.2.0
   '@nuxtjs/redirect-module': 0.3.1
   '@nuxtjs/sentry': 5.1.7
   '@nuxtjs/sitemap': 2.4.0
@@ -135,6 +137,7 @@ dependencies:
   focus-visible: 5.2.0
   glob: 8.0.1
   node-html-parser: 5.3.3
+  node-os-utils: 1.3.7
   nuxt: 2.15.8_wl2mvxm2ma5s7sz3dfofdm4k7q
   pinia: 2.0.20_k3kegkzgmpj55t3l5d75ppieg4
   portal-vue: 2.1.7_vue@2.6.14
@@ -145,7 +148,7 @@ dependencies:
   throttle-debounce: 5.0.0
   uuid: 8.3.2
   vue: 2.6.14
-  vue-i18n: 8.26.7_vue@2.6.14
+  vue-i18n: 8.26.7
 
 devDependencies:
   '@babel/core': 7.17.10
@@ -169,6 +172,7 @@ devDependencies:
   '@types/lodash.sortby': 4.7.7
   '@types/module-alias': 2.0.1
   '@types/node': 17.0.32
+  '@types/node-os-utils': 1.3.0
   '@types/throttle-debounce': 5.0.0
   '@types/uuid': 8.3.4
   '@typescript-eslint/eslint-plugin': 5.23.0_3uxjy4z5k6yagrpaxd7fqvv2xi
@@ -199,7 +203,7 @@ devDependencies:
   prettier-plugin-tailwindcss: 0.1.12_prettier@2.6.0
   rimraf: 3.0.2
   tailwind-config-viewer: 1.6.3_tailwindcss@3.0.23
-  tailwindcss: 3.0.23_2len4mt2evkrddr6nmldbp7wpa
+  tailwindcss: 3.0.23_z4yclaatiobtrs75ftybxflkiu
   tailwindcss-rtl: 0.9.0
   talkback: 3.0.1
   ts-node: 10.7.0_cbygeln5s5sjlseyk3kbidkfny
@@ -3166,7 +3170,7 @@ packages:
       vue-client-only: 2.1.0
       vue-meta: 2.4.0
       vue-no-ssr: 1.1.1
-      vue-router: 3.5.3_vue@2.6.14
+      vue-router: 3.5.3
       vue-template-compiler: 2.6.14
       vuex: 3.6.2_vue@2.6.14
     transitivePeerDependencies:
@@ -3341,7 +3345,7 @@ packages:
       - webpack
     dev: true
 
-  /@nuxtjs/i18n/7.2.0_vue@2.6.14:
+  /@nuxtjs/i18n/7.2.0:
     resolution: {integrity: sha512-fO/QRMxZ0t6LpYJ7ti6mHc0lsog4SMr7Xll3d45zdVSI7+5eBE1YcoG8yXv1sndGQZoq8k0iD1dXuAJA6UL5ww==}
     dependencies:
       '@babel/parser': 7.17.3
@@ -3355,10 +3359,9 @@ packages:
       klona: 2.0.5
       lodash.merge: 4.6.2
       ufo: 0.7.9
-      vue-i18n: 8.26.7_vue@2.6.14
+      vue-i18n: 8.26.7
     transitivePeerDependencies:
       - supports-color
-      - vue
     dev: false
 
   /@nuxtjs/redirect-module/0.3.1:
@@ -5658,7 +5661,7 @@ packages:
     peerDependencies:
       tailwindcss: '>=2.0.0 || >=3.0.0 || >=3.0.0-alpha.1'
     dependencies:
-      tailwindcss: 3.0.23_2len4mt2evkrddr6nmldbp7wpa
+      tailwindcss: 3.0.23_z4yclaatiobtrs75ftybxflkiu
     dev: false
 
   /@tailwindcss/typography/0.5.2_tailwindcss@3.0.23:
@@ -5669,7 +5672,7 @@ packages:
       lodash.castarray: 4.4.0
       lodash.isplainobject: 4.0.6
       lodash.merge: 4.6.2
-      tailwindcss: 3.0.23_2len4mt2evkrddr6nmldbp7wpa
+      tailwindcss: 3.0.23_z4yclaatiobtrs75ftybxflkiu
     dev: false
 
   /@testing-library/dom/7.31.2:
@@ -6007,6 +6010,10 @@ packages:
     dependencies:
       '@types/node': 17.0.32
       form-data: 3.0.1
+    dev: true
+
+  /@types/node-os-utils/1.3.0:
+    resolution: {integrity: sha512-XwVteWQx/XkfRPyaGkw8dEbrCAkoRZ73pI3XznUYIpzbCfpQB3UnDlR5TnmdhetlT889tUJGF8QWo9xrgTpsiA==}
     dev: true
 
   /@types/node-sass/4.11.2:
@@ -14239,6 +14246,10 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: false
 
+  /node-os-utils/1.3.7:
+    resolution: {integrity: sha512-fvnX9tZbR7WfCG5BAy3yO/nCLyjVWD6MghEq0z5FDfN+ZXpLWNITBdbifxQkQ25ebr16G0N7eRWJisOcMEHG3Q==}
+    dev: false
+
   /node-releases/2.0.1:
     resolution: {integrity: sha512-CqyzN6z7Q6aMeF/ktcMVTzhAHCEpf8SOarwpzpf8pNBY2k5/oM34UHldUwp8VKI7uxct2HxSRdJjBaZeESzcxA==}
 
@@ -18184,7 +18195,7 @@ packages:
       open: 7.4.2
       portfinder: 1.0.28
       replace-in-file: 6.3.2
-      tailwindcss: 3.0.23_2len4mt2evkrddr6nmldbp7wpa
+      tailwindcss: 3.0.23_z4yclaatiobtrs75ftybxflkiu
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -18193,13 +18204,12 @@ packages:
     resolution: {integrity: sha512-y7yC8QXjluDBEFMSX33tV6xMYrf0B3sa+tOB5JSQb6/G6laBU313a+Z+qxu55M1Qyn8tDMttjomsA8IsJD+k+w==}
     dev: true
 
-  /tailwindcss/3.0.23_2len4mt2evkrddr6nmldbp7wpa:
+  /tailwindcss/3.0.23_z4yclaatiobtrs75ftybxflkiu:
     resolution: {integrity: sha512-+OZOV9ubyQ6oI2BXEhzw4HrqvgcARY38xv3zKcjnWtMIZstEsXdI9xftd1iB7+RbOnj2HOEzkA0OyB5BaSxPQA==}
     engines: {node: '>=12.13.0'}
     hasBin: true
     peerDependencies:
       autoprefixer: ^10.0.2
-      postcss: ^8.0.9 || 5.2.18
     dependencies:
       arg: 5.0.1
       autoprefixer: 10.4.0_postcss@8.4.12
@@ -19243,12 +19253,8 @@ packages:
       js-yaml: 4.1.0
     dev: true
 
-  /vue-i18n/8.26.7_vue@2.6.14:
+  /vue-i18n/8.26.7:
     resolution: {integrity: sha512-7apa5PvRg1YCLoraE3lOgpCG8hJGupLCtywQWedWsgBbvF0TOgFvhitqK9xRH0PBGG1G8aiJz9oklyNDFfDxLg==}
-    peerDependencies:
-      vue: ^2
-    dependencies:
-      vue: 2.6.14
     dev: false
 
   /vue-inbrowser-compiler-utils/4.44.17_vue@2.6.14:
@@ -19456,12 +19462,8 @@ packages:
     resolution: {integrity: sha512-ZMjqRpWabMPqPc7gIrG0Nw6vRf1+itwf0Itft7LbMXs2g3Zs/NFmevjZGN1x7K3Q95GmIjWbQZTVerxiBxI+0g==}
     dev: false
 
-  /vue-router/3.5.3_vue@2.6.14:
+  /vue-router/3.5.3:
     resolution: {integrity: sha512-FUlILrW3DGitS2h+Xaw8aRNvGTwtuaxrRkNSHWTizOfLUie7wuYwezeZ50iflRn8YPV5kxmU2LQuu3nM/b3Zsg==}
-    peerDependencies:
-      vue: ^2
-    dependencies:
-      vue: 2.6.14
     dev: false
 
   /vue-server-renderer/2.6.14:
