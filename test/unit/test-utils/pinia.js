@@ -6,10 +6,8 @@ export const createPinia = () =>
     $nuxt: {
       $openverseApiToken: '',
       $sentry: {
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        captureException: () => {},
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        captureEvent: () => {},
+        captureException: jest.fn(),
+        captureEvent: jest.fn(),
       },
     },
   }))
