@@ -15,10 +15,6 @@
       :status="status"
       :current-time="currentTime"
     >
-      <VSnackbar v-if="hasError">
-        {{ messageError }}
-      </VSnackbar>
-
       <template #controller="waveformProps">
         <VWaveform
           v-bind="waveformProps"
@@ -81,7 +77,6 @@ import VBoxLayout from '~/components/VAudioTrack/layouts/VBoxLayout.vue'
 import VGlobalLayout from '~/components/VAudioTrack/layouts/VGlobalLayout.vue'
 import VLink from '~/components/VLink.vue'
 import VWarningSuppressor from '~/components/VWarningSuppressor.vue'
-import VSnackbar from '~/components/VSnackbar.vue'
 
 /**
  * Displays the waveform and basic information about the track, along with
@@ -99,7 +94,6 @@ export default defineComponent({
     VRowLayout,
     VBoxLayout,
     VGlobalLayout,
-    VSnackbar,
   },
   props: {
     /**
@@ -134,10 +128,11 @@ export default defineComponent({
     const status = ref<AudioStatus>('paused')
     const currentTime = ref(0)
 
+    //TODO: display the error to the user once we have the VSnackbar component design finalized
     // We need to keep track if there was any error while playing the audio track.
 
-    const hasError = ref<boolean>(false) // We initialize it to false, because we assume that this is a new track.
-    const messageError = ref<string>('') // The error message is currently empty.
+    // const hasError = ref<boolean>(false) // We initialize it to false, because we assume that this is a new track.
+    // const messageError = ref<string>('') // The error message is currently empty.
 
     const initLocalAudio = () => {
       // Preserve existing local audio if we plucked it from the global active audio
@@ -331,28 +326,28 @@ export default defineComponent({
           case 'AbortError': {
             // This is expected when the user has paused the audio
             // before it has loaded. We can ignore this error.
-            hasError.value = true
-            messageError.value = err.message
-            alert(messageError.value)
+            // hasError.value = true
+            // messageError.value = err.message
+            // alert(messageError.value)
             return
           }
           case 'NotAllowedError': {
             // This error happens when the user has blocked the audio from playing ex: autoplay policy etc.
             // We should show the error message to the user in this case and not log it to sentry
-            hasError.value = true
-            messageError.value =
-              err.message ||
-              "Audio playback is blocked. Please check your browser's settings."
-            alert(messageError.value)
+            // hasError.value = true
+            // messageError.value =
+            //   err.message ||
+            //   "Audio playback is blocked. Please check your browser's settings."
+            // alert(messageError.value)
             return
           }
           case 'NotSupportedError': {
             // This is expected when the audio is not supported.
             // We can ignore this error.
-            hasError.value = true
-            messageError.value =
-              'The audio format is not supported by this browser.'
-            alert(messageError.value)
+            // hasError.value = true
+            // messageError.value =
+            //   'The audio format is not supported by this browser.'
+            // alert(messageError.value)
             return
           }
           default: {
@@ -497,9 +492,6 @@ export default defineComponent({
       layoutBasedProps,
 
       playPauseRef,
-
-      hasError,
-      messageError,
     }
   },
 })
