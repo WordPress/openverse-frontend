@@ -3,5 +3,4 @@ ARG PLAYWRIGHT_VERSION
 FROM mcr.microsoft.com/playwright:v${PLAYWRIGHT_VERSION}-focal
 
 COPY package.json .
-COPY test/locales/* src/locales/
 RUN npm install -g $(grep packageManager package.json | awk '{print $2}' | sed 's/[",]//g')
