@@ -15,7 +15,7 @@
       :status="status"
       :current-time="currentTime"
     >
-      <VSnackbar v-show="hasError">
+      <VSnackbar v-if="hasError">
         {{ messageError }}
       </VSnackbar>
 
@@ -135,8 +135,9 @@ export default defineComponent({
     const currentTime = ref(0)
 
     // We need to keep track if there was any error while playing the audio track.
-    let hasError = false // We initialize it to false, because we assume that this is a new track.
-    let messageError = '' // The error message is currently empty.
+
+    const hasError = ref<boolean>(false) // We initialize it to false, because we assume that this is a new track.
+    const messageError = ref<string>('') // The error message is currently empty.
 
     const initLocalAudio = () => {
       // Preserve existing local audio if we plucked it from the global active audio
@@ -330,24 +331,28 @@ export default defineComponent({
           case 'AbortError': {
             // This is expected when the user has paused the audio
             // before it has loaded. We can ignore this error.
+            hasError.value = true
+            messageError.value = err.message
+            alert(messageError.value)
             return
           }
           case 'NotAllowedError': {
             // This error happens when the user has blocked the audio from playing ex: autoplay policy etc.
             // We should show the error message to the user in this case and not log it to sentry
-            hasError = true
-            messageError =
+            hasError.value = true
+            messageError.value =
               err.message ||
               "Audio playback is blocked. Please check your browser's settings."
-            alert(messageError)
+            alert(messageError.value)
             return
           }
           case 'NotSupportedError': {
             // This is expected when the audio is not supported.
             // We can ignore this error.
-            hasError = true
-            messageError = 'The audio format is not supported by this browser.'
-            alert(messageError)
+            hasError.value = true
+            messageError.value =
+              'The audio format is not supported by this browser.'
+            alert(messageError.value)
             return
           }
           default: {
