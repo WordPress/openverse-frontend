@@ -26,14 +26,11 @@ export default function Healthcheck(_, res) {
       const avaliableMemoryIsSufficient =
         avaliableMemory > desiredAvaliableMemory
 
-      // Log memory information in non-production contexts
-      if (process.env.NODE_ENV !== 'production') {
-        console.info(`Healthcheck memory information: `, {
-          avaliableMemory,
-          desiredAvaliableMemory,
-          avaliableMemoryIsSufficient,
-        })
-      }
+      console.info(`Healthcheck memory information: `, {
+        avaliableMemory,
+        desiredAvaliableMemory,
+        avaliableMemoryIsSufficient,
+      })
 
       if (!avaliableMemoryIsSufficient) {
         throw Error(
