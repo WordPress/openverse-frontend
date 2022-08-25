@@ -15,11 +15,12 @@
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
 
+import VModal from '~/components/VModal/VModal.vue'
 import VPageMenuButton from '~/components/VHeader/VPageMenu/VPageMenuButton.vue'
 import VPageList from '~/components/VHeader/VPageMenu/VPageList.vue'
 
 export default defineComponent({
   name: 'VMobilePageMenu',
-  components: { VPageMenuButton, VPageList },
+  components: { VModal, VPageMenuButton, VPageList },
 })
 </script>
