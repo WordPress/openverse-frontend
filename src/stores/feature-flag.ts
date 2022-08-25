@@ -106,12 +106,10 @@ export const useFeatureFlagStore = defineStore(FEATURE_FLAG, {
      * @param cookies - mapping of feature flags and their preferred states
      */
     initFromCookies(cookies: Record<string, FeatureState>) {
-      for (const flagEntry of Object.entries(this.flags)) {
-        const [name, flag] = flagEntry as [string, FeatureFlag]
-        if (getFlagStatus(flag) === SWITCHABLE) {
+      Object.entries(this.flags).forEach(([name, flag]) => {
+        if (getFlagStatus(flag) === SWITCHABLE)
           flag.preferredState = cookies[name]
-        }
-      }
+      })
     },
     /**
      * Toggle the feature flag of the given name to the given preferred state.

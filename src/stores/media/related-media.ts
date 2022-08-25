@@ -24,7 +24,7 @@ export const useRelatedMediaStore = defineStore('related-media', {
 
   getters: {
     getItemById:
-      (state: RelatedMediaState) =>
+      (state) =>
       (id: string): Media | undefined =>
         state.media.find((item) => item.id === id),
   },

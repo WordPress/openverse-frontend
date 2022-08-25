@@ -90,7 +90,7 @@ export const useSingleResultStore = defineStore('single-result', {
       } else {
         useRelatedMediaStore()
           .fetchMedia(type, id)
-          .catch((error: Error) =>
+          .catch((error) =>
             console.warn('Could not load related media: ', error)
           )
       }
