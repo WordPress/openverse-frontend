@@ -20,7 +20,7 @@ export default function Healthcheck(_, res) {
        * of in `nuxt.config.ts` or `utils/env.ts`.
        */
       const desiredAvaliableMemory = Number(
-        process.env.HEALTHCHECK_DESIRED_AVALIABLE_MEMORY_PERCENTAGE ?? '10'
+        process.env.HEALTHCHECK_DESIRED_AVALIABLE_MEMORY_PERCENTAGE ?? '15'
       )
 
       const avaliableMemoryIsSufficient =
