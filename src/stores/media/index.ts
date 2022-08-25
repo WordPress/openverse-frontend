@@ -369,9 +369,8 @@ export const useMediaStore = defineStore('media', {
       }
     },
 
-    //Handles errors for media fetches and sets the fetch state accordingly
-    //Reported errors are logged to Sentry
-    //TODO: Handle errors for media fetches
+    // Handles errors for media fetches and sets the fetch state accordingly
+    // Reported errors are logged to Sentry
 
     async handleMediaError({
       mediaType,
