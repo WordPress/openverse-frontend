@@ -1,5 +1,4 @@
-import Vue from 'vue'
-import { ref, watch } from '@nuxtjs/composition-api'
+import { nextTick, ref, watch } from '@nuxtjs/composition-api'
 
 import { warn } from '~/utils/console'
 import {
@@ -36,7 +35,7 @@ export const useFocusOnShow = ({
      */
     ([dialog, visible, autoFocusOnShow, initialFocusElement]) => {
       if (!dialog || !visible || !autoFocusOnShow) return
-      Vue.nextTick(() => {
+      nextTick(() => {
         const isActive = () => hasFocusWithin(dialog)
 
         if (initialFocusElement) {
