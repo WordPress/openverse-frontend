@@ -132,6 +132,7 @@ export default defineComponent({
     zIndex: {
       type: Number,
       default: 50,
+      // TODO: extract valid z-indexes (these are from the tailwind config)
       validator: (v) => [0, 10, 20, 30, 40, 50].includes(v),
     },
     /**

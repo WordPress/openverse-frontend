@@ -89,6 +89,7 @@ export default defineComponent({
     zIndex: {
       type: Number,
       required: true,
+      // TODO: extract valid z-indexes (these are from the tailwind config)
       validator: (v: number | 'auto') =>
         [0, 10, 20, 30, 40, 50, 'auto'].includes(v),
     },
