@@ -19,20 +19,13 @@ test.beforeEach(async ({ context }) => {
   await mockProviderApis(context)
 })
 
-test('shows the author and title of the audio', async ({ page }) => {
-  await goToCustomAudioPage(page)
-  const author = page.locator('a[aria-label^="author"]')
-  await expect(author).toBeVisible()
-  const audioTitle = page.locator('h1')
-  await expect(audioTitle).toBeVisible()
-})
-
 test('shows the data that is only available in single result, not search response', async ({
   page,
 }) => {
   await goToCustomAudioPage(page)
-  const albumLink = page.locator('a[href*="/album/"]')
-  await expect(albumLink).toHaveText('I Love My Dog You Love Your Cat')
+  await expect(
+    page.locator('dd:has-text("I Love My Dog You Love Your Cat")')
+  ).toBeVisible()
 })
 
 test('shows the 404 error page when no valid id', async ({ page }) => {
