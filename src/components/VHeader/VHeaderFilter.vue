@@ -13,14 +13,16 @@
       @toggle="onTriggerClick"
       @tab="onTab"
     />
-    <Component
-      :is="filterComponent"
-      v-bind="options"
-      :visible="visibleRef"
-      @close="onTriggerClick"
-    >
-      <VSearchGridFilter @close="onTriggerClick" />
-    </Component>
+    <ClientOnly>
+      <Component
+        :is="filterComponent"
+        v-bind="options"
+        :visible="visibleRef"
+        @close="onTriggerClick"
+      >
+        <VSearchGridFilter @close="onTriggerClick" />
+      </Component>
+    </ClientOnly>
   </div>
 </template>
 
