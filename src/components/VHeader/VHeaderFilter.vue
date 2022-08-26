@@ -13,6 +13,7 @@
       @toggle="onTriggerClick"
       @tab="onTab"
     />
+    <!-- Client only here is a hotfix to mitigate frontend issue #1748 and should be removed ASAP. -->
     <ClientOnly>
       <Component
         :is="filterComponent"
