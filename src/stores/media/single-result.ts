@@ -36,38 +36,17 @@ export const useSingleResultStore = defineStore('single-result', {
 
   actions: {
     _endFetching(error?: string) {
-      this.fetchState.fetchingError = error || null
-      if (error) {
-        this.fetchState.isFinished = true
-        this.fetchState.hasStarted = true
-      } else {
-        this.fetchState.hasStarted = true
-      }
       this.fetchState.isFetching = false
+      this.fetchState.fetchingError = error || null
     },
     _startFetching() {
       this.fetchState.isFetching = true
       this.fetchState.hasStarted = true
-    },
-    _finishFetchingForQuery() {
-      this.fetchState.isFinished = true
-      this.fetchState.hasStarted = true
-      this.fetchState.isFetching = false
       this.fetchState.fetchingError = null
     },
 
-    _updateFetchState(action: 'start' | 'end' | 'finish', option?: string) {
-      switch (action) {
-        case 'start':
-          this._startFetching()
-          break
-        case 'end':
-          this._endFetching(option)
-          break
-        case 'finish':
-          this._finishFetchingForQuery()
-          break
-      }
+    _updateFetchState(action: 'start' | 'end', option?: string) {
+      action === 'start' ? this._startFetching() : this._endFetching(option)
     },
 
     _addProviderName(mediaItem: Media) {

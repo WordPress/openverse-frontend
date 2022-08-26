@@ -34,6 +34,7 @@ export const useRelatedMediaStore = defineStore('related-media', {
     _startFetching() {
       this.fetchState.isFetching = true
       this.fetchState.hasStarted = true
+      this.fetchState.fetchingError = null
     },
     _resetFetching() {
       this.fetchState.isFetching = false

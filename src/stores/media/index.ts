@@ -231,6 +231,12 @@ export const useMediaStore = defineStore('media', {
   },
 
   actions: {
+    _startFetching(mediaType: SupportedMediaType) {
+      this.mediaFetchState[mediaType].isFetching = true
+      this.mediaFetchState[mediaType].hasStarted = true
+      this.mediaFetchState[mediaType].isFinished = false
+      this.mediaFetchState[mediaType].fetchingError = null
+    },
     /**
      * Called when the request is finished, regardless of whether it was successful or not.
      * @param mediaType - The media type for which the request was made.
@@ -245,15 +251,23 @@ export const useMediaStore = defineStore('media', {
         this.mediaFetchState[mediaType].isFinished = true
       }
     },
-    _startFetching(mediaType: SupportedMediaType) {
-      this.mediaFetchState[mediaType].isFetching = true
-      this.mediaFetchState[mediaType].hasStarted = true
-      this.mediaFetchState[mediaType].fetchingError = null
-    },
+    /**
+     * This is called when there are no more results available in the API for specific query.
+     * @param mediaType - The media type for which the request was made.
+     */
     _finishFetchingForQuery(mediaType: SupportedMediaType) {
       this.mediaFetchState[mediaType].isFinished = true
       this.mediaFetchState[mediaType].hasStarted = true
       this.mediaFetchState[mediaType].isFetching = false
+    },
+
+    _resetFetchState() {
+      for (const mediaType of supportedMediaTypes) {
+        this.mediaFetchState[mediaType].isFetching = false
+        this.mediaFetchState[mediaType].hasStarted = false
+        this.mediaFetchState[mediaType].isFinished = false
+        this.mediaFetchState[mediaType].fetchingError = null
+      }
     },
 
     _updateFetchState(
@@ -324,15 +338,6 @@ export const useMediaStore = defineStore('media', {
       this.results[mediaType].count = 0
       this.results[mediaType].page = undefined
       this.results[mediaType].pageCount = 0
-    },
-
-    _resetFetchState() {
-      for (const mediaType of supportedMediaTypes) {
-        this.mediaFetchState[mediaType].isFetching = false
-        this.mediaFetchState[mediaType].hasStarted = false
-        this.mediaFetchState[mediaType].isFinished = false
-        this.mediaFetchState[mediaType].fetchingError = null
-      }
     },
 
     /**
