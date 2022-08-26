@@ -4,11 +4,7 @@ import axios from 'axios'
 
 import type { AudioDetail, ImageDetail, Media } from '~/models/media'
 import type { SupportedMediaType } from '~/constants/media'
-import {
-  FetchState,
-  initialFetchState,
-  updateFetchState,
-} from '~/composables/use-fetch-state'
+import type { FetchState } from '~/models/fetch-state'
 import { initServices } from '~/stores/media/services'
 import { useMediaStore } from '~/stores/media/index'
 import { useRelatedMediaStore } from '~/stores/media/related-media'
@@ -35,12 +31,43 @@ export const useSingleResultStore = defineStore('single-result', {
   state: (): MediaItemState => ({
     mediaItem: null,
     mediaType: null,
-    fetchState: initialFetchState,
+    fetchState: { isFetching: false, hasStarted: false, fetchingError: null },
   }),
 
   actions: {
-    _updateFetchState(action: 'end' | 'start', option?: string) {
-      this.fetchState = updateFetchState(this.fetchState, action, option)
+    _endFetching(error?: string) {
+      this.fetchState.fetchingError = error || null
+      if (error) {
+        this.fetchState.isFinished = true
+        this.fetchState.hasStarted = true
+      } else {
+        this.fetchState.hasStarted = true
+      }
+      this.fetchState.isFetching = false
+    },
+    _startFetching() {
+      this.fetchState.isFetching = true
+      this.fetchState.hasStarted = true
+    },
+    _finishFetchingForQuery() {
+      this.fetchState.isFinished = true
+      this.fetchState.hasStarted = true
+      this.fetchState.isFetching = false
+      this.fetchState.fetchingError = null
+    },
+
+    _updateFetchState(action: 'start' | 'end' | 'finish', option?: string) {
+      switch (action) {
+        case 'start':
+          this._startFetching()
+          break
+        case 'end':
+          this._endFetching(option)
+          break
+        case 'finish':
+          this._finishFetchingForQuery()
+          break
+      }
     },
 
     _addProviderName(mediaItem: Media) {
