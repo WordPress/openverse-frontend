@@ -8,7 +8,7 @@ title: "<Replace this with actual title>"
 ## Problem
 <!-- Describe the design problem. -->
 
-### Issues related
+### Related issues
 <!-- List all the issues related to the problem. -->
 
 ## Proposal
