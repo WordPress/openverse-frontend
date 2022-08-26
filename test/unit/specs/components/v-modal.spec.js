@@ -115,7 +115,7 @@ describe('VModal', () => {
     expect(screen.getByText(/custom initial focus/i))
   })
 
-  xit('should hide the modal on escape', async () => {
+  it('should hide the modal on escape', async () => {
     render(TestWrapper, options)
     await doOpen()
 
