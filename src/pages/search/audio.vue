@@ -35,7 +35,6 @@
 import {
   computed,
   defineComponent,
-  ref,
   toRef,
   useMeta,
 } from '@nuxtjs/composition-api'
@@ -46,6 +45,8 @@ import { useBrowserIsMobile } from '~/composables/use-browser-detection'
 import { useFocusFilters } from '~/composables/use-focus-filters'
 import { useI18n } from '~/composables/use-i18n'
 import { Focus } from '~/utils/focus-management'
+
+import { useUiStore } from '~/stores/ui'
 
 import VSnackbar from '~/components/VSnackbar.vue'
 import VAudioTrack from '~/components/VAudioTrack/VAudioTrack.vue'
@@ -97,9 +98,10 @@ export default defineComponent({
     const searchTermRef = toRef(props, 'searchTerm')
     const { canLoadMore, onLoadMore } = useLoadMore(searchTermRef)
 
-    const snackbarIsVisible = ref(true)
+    const uiStore = useUiStore()
+    const snackbarIsVisible = computed(() => uiStore.instructionsVisible)
     const hideSnackbar = () => {
-      snackbarIsVisible.value = false
+      uiStore.dismissInstructions()
     }
 
     return {
