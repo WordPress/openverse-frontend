@@ -93,7 +93,11 @@ export default defineComponent({
     const close = () => (visibleRef.value = false)
 
     onMounted(() => {
-      const localFilterState = local.getItem(env.filterStorageKey) === 'true'
+      // We default to show the filter on desktop, and only close it if the user has
+      // explicitly closed it before.
+      const localFilterState = !(
+        local.getItem(env.filterStorageKey) === 'false'
+      )
       const searchStore = useSearchStore()
       if (!isMinScreenMd.value) {
         local.setItem(env.filterStorageKey, 'false')
