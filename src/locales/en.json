@@ -28,6 +28,7 @@
     }
   },
   "header": {
+    "home-link": "Home",
     "about-nav-item": "Our Story",
     "source-nav-item": "Sources",
     "search-guide-nav-item": "Search Guide",
@@ -480,7 +481,7 @@
   },
   "image-details": {
     "creator": "by {name}",
-    "weblink": "Go to image's website",
+    "weblink": "Use this image",
     "information": {
       "title": "Image information",
       "type": "Type",
@@ -507,7 +508,8 @@
       "source": "Source",
       "genre": "Genre"
     },
-    "information": "Audio information"
+    "information": "Audio information",
+    "weblink": "Use this audio"
   },
   "audio-results": {
     "snackbar": {

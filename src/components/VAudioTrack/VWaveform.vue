@@ -163,6 +163,8 @@ import type { AudioFeature } from '~/constants/audio'
 
 import { hash, rand as prng } from '~/utils/prng'
 
+import { defineEvent } from '~/types/emits'
+
 import type { CSSProperties } from '@vue/runtime-dom'
 
 /**
@@ -255,7 +257,7 @@ export default defineComponent({
       default: false,
     },
   },
-  emits: [
+  emits: {
     /**
      * Emitted when the waveform receives mouse events for seeking,
      * either single clicks on a specific part of the waveform,
@@ -264,8 +266,9 @@ export default defineComponent({
      * Also emitted when the waveform receives arrow key or home/end
      * keyboard events that also correspond to seeking.
      */
-    'seeked',
-  ],
+    seeked: defineEvent<[number]>(),
+    'toggle-playback': defineEvent<[]>(),
+  },
   setup(props, { emit }) {
     /* Utils */
 
