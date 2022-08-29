@@ -22,6 +22,16 @@ test.describe('header snapshots', () => {
       })
 
       test.describe('header', () => {
+        breakpoints.describeEachDesktop(({ expectSnapshot }) => {
+          test('filters open', async ({ page }) => {
+            await page.mouse.move(0, 150)
+            await expectSnapshot(
+              `filters-open-${dir}`,
+              page.locator(headerSelector)
+            )
+          })
+        })
+
         breakpoints.describeEvery(({ expectSnapshot }) => {
           test('resting', async ({ page }) => {
             // By default, filters are open. We need to close them.
@@ -38,14 +48,6 @@ test.describe('header snapshots', () => {
             await sleep(200)
             await expectSnapshot(
               `scrolled-${dir}`,
-              page.locator(headerSelector)
-            )
-          })
-
-          test('filters open', async ({ page }) => {
-            await page.mouse.move(0, 150)
-            await expectSnapshot(
-              `filters-open-${dir}`,
               page.locator(headerSelector)
             )
           })
