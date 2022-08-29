@@ -37,7 +37,7 @@ export const useFocusOnShow = ({
       if (!dialog || !visible || !autoFocusOnShow) return
 
       nextTick(() => {
-      const isActive = () => hasFocusWithin(dialog)
+        const isActive = () => hasFocusWithin(dialog)
 
         if (initialFocusElement) {
           ensureFocus(initialFocusElement, {
