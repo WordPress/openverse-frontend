@@ -365,6 +365,7 @@ export default defineComponent({
           pause()
           break
       }
+      emit('interacted')
     }
 
     /* Interface with VWaveform */
@@ -381,6 +382,7 @@ export default defineComponent({
       if (localAudio) {
         localAudio.currentTime = frac * duration.value
       }
+      emit('interacted')
     }
 
     /* Layout */
