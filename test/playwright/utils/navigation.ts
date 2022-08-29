@@ -110,18 +110,30 @@ const isButtonPressed = async (page: Page, buttonSelector: string) => {
   }
 }
 
-const openMenu = async (page: Page, button: 'filter' | 'contentSwitcher') => {
+const toggleMenu = async (
+  page: Page,
+  button: 'filter' | 'contentSwitcher',
+  status: 'true' | 'false' = 'true'
+) => {
   const selector = buttonSelectors[button]
-  const expectedValue = 'true'
-  if ((await isButtonPressed(page, selector)) !== expectedValue) {
+
+  if ((await isButtonPressed(page, selector)) !== status) {
     await page.click(selector)
-    expect(await isButtonPressed(page, selector)).toEqual(expectedValue)
+    expect(await isButtonPressed(page, selector)).toEqual(status)
   }
 }
-
-export const openFilters = async (page: Page) => {
-  await openMenu(page, 'filter')
+const openMenu = async (page: Page, button: 'filter' | 'contentSwitcher') => {
+  await toggleMenu(page, button, 'true')
 }
+
+const closeMenu = async (page: Page, button: 'filter' | 'contentSwitcher') => {
+  await toggleMenu(page, button, 'false')
+}
+
+export const openFilters = async (page: Page) => await openMenu(page, 'filter')
+
+export const closeFilters = async (page: Page) =>
+  await closeMenu(page, 'filter')
 
 export const openMobileMenu = async (page: Page) => {
   await openMenu(page, 'contentSwitcher')

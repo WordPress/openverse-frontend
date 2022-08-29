@@ -3,6 +3,7 @@ import { test } from '@playwright/test'
 import breakpoints from '~~/test/playwright/utils/breakpoints'
 import { hideInputCursors } from '~~/test/playwright/utils/page'
 import {
+  closeFilters,
   goToSearchTerm,
   languageDirections,
   scrollToBottom,
@@ -34,6 +35,15 @@ test.describe('header snapshots', () => {
             await sleep(200)
             await expectSnapshot(
               `scrolled-${dir}`,
+              page.locator(headerSelector)
+            )
+          })
+
+          test('filters closed', async ({ page }) => {
+            await closeFilters(page)
+            await page.mouse.move(0, 150)
+            await expectSnapshot(
+              `filters-closed-${dir}`,
               page.locator(headerSelector)
             )
           })
