@@ -95,45 +95,42 @@ export const searchTypeNames = {
   },
 }
 
-const isButtonPressed = async (page: Page, buttonSelector: string) => {
+const isButtonPressed = async (
+  page: Page,
+  buttonSelector: string
+): Promise<boolean> => {
   const viewportSize = page.viewportSize()
   if (!viewportSize) {
     return false
   }
   const pageWidth = viewportSize.width
   if (pageWidth > 640) {
-    return await page.getAttribute(buttonSelector, 'aria-pressed')
+    return (await page.getAttribute(buttonSelector, 'aria-pressed')) === 'true'
   } else {
-    return (await page.locator('button', { hasText: 'Close' }).isVisible())
-      ? 'true'
-      : 'false'
+    return await page.locator('button', { hasText: 'Close' }).isVisible()
   }
 }
 
-const toggleMenu = async (
-  page: Page,
-  button: 'filter' | 'contentSwitcher',
-  status: 'true' | 'false' = 'true'
-) => {
-  const selector = buttonSelectors[button]
-
-  if ((await isButtonPressed(page, selector)) !== status) {
-    await page.click(selector)
-    expect(await isButtonPressed(page, selector)).toEqual(status)
-  }
-}
 const openMenu = async (page: Page, button: 'filter' | 'contentSwitcher') => {
-  await toggleMenu(page, button, 'true')
+  const selector = buttonSelectors[button]
+  if (!(await isButtonPressed(page, selector))) {
+    await page.click(selector)
+    expect(await isButtonPressed(page, selector)).toEqual(true)
+  }
 }
 
-const closeMenu = async (page: Page, button: 'filter' | 'contentSwitcher') => {
-  await toggleMenu(page, button, 'false')
+export const openFilters = async (page: Page) => {
+  await openMenu(page, 'filter')
 }
 
-export const openFilters = async (page: Page) => await openMenu(page, 'filter')
+export const closeFilters = async (page: Page) => {
+  const selector = buttonSelectors['filter']
 
-export const closeFilters = async (page: Page) =>
-  await closeMenu(page, 'filter')
+  if (await isButtonPressed(page, selector)) {
+    await page.click(selector)
+    expect(await isButtonPressed(page, selector)).toEqual(false)
+  }
+}
 
 export const openMobileMenu = async (page: Page) => {
   await openMenu(page, 'contentSwitcher')
