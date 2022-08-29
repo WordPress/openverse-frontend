@@ -386,6 +386,21 @@ describe('Media Store', () => {
       )
     })
 
+    it('handleMediaError handles unknown Axios Error', () => {
+      const mediaType = AUDIO
+      //Error is an Axios error with no response or request property
+      const error = {
+        response: undefined,
+        request: undefined,
+        message: 'Unknown Axios Error',
+      }
+      const mediaStore = useMediaStore()
+      mediaStore.handleMediaError({ mediaType, error })
+      expect(mediaStore.mediaFetchState[mediaType].fetchingError).toEqual(
+        'Error fetching audio from API. Unknown Axios error'
+      )
+    })
+
     it('handleMediaError throws a new error on error when server did not respond', async () => {
       const mediaStore = useMediaStore()
 
