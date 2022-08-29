@@ -24,12 +24,15 @@ test.describe('header snapshots', () => {
       test.describe('header', () => {
         breakpoints.describeEvery(({ expectSnapshot }) => {
           test('resting', async ({ page }) => {
+            // By default, filters are open. We need to close them.
+            await closeFilters(page)
             // Make sure the header is not hovered on
             await page.mouse.move(0, 150)
             await expectSnapshot(`resting-${dir}`, page.locator(headerSelector))
           })
 
           test('scrolled', async ({ page }) => {
+            await closeFilters(page)
             await scrollToBottom(page)
             await page.mouse.move(0, 150)
             await sleep(200)
@@ -39,16 +42,16 @@ test.describe('header snapshots', () => {
             )
           })
 
-          test('filters closed', async ({ page }) => {
-            await closeFilters(page)
+          test('filters open', async ({ page }) => {
             await page.mouse.move(0, 150)
             await expectSnapshot(
-              `filters-closed-${dir}`,
+              `filters-open-${dir}`,
               page.locator(headerSelector)
             )
           })
 
           test('searchbar hovered', async ({ page }) => {
+            await closeFilters(page)
             await page.hover('input')
             await hideInputCursors(page)
             await expectSnapshot(
