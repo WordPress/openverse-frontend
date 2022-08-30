@@ -135,7 +135,7 @@ You can also find the latest `openverse-frontend` images on our [GitHub packages
 You can then run using either the locally built image or the `ghcr.io` image from the link above:
 
 ```shell
-docker run -it -p 127.0.0.1:8443:8443/tcp openverse-frontend:latest
+docker run --rm -it -p 127.0.0.1:8443:8443/tcp openverse-frontend:latest
 ```
 
 The app will be available at <http://localhost:8443>.
