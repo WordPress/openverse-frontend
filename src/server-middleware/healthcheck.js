@@ -24,6 +24,7 @@ export default async function Healthcheck(_, res) {
 
     const avaliableMemoryIsSufficient = avaliableMemory > desiredAvaliableMemory
 
+    console.info('Full memory info', info)
     console.info(`Healthcheck memory information: `, {
       avaliableMemory,
       desiredAvaliableMemory,
