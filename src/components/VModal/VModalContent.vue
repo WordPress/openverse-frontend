@@ -1,7 +1,7 @@
 <template>
   <VTeleport v-if="visible" to="modal">
     <!-- Prevent FocusTrap from trying to focus the first element. We already do that in a more flexible, adaptive way in our Dialog composables. -->
-    <FocusTrap :initial-focus="() => false">
+    <VFocusTrap :initial-focus="() => false">
       <div
         class="fixed inset-0 z-40 flex min-h-screen justify-center overflow-y-auto bg-dark-charcoal bg-opacity-75"
       >
@@ -51,13 +51,12 @@
           </div>
         </div>
       </div>
-    </FocusTrap>
+    </VFocusTrap>
   </VTeleport>
 </template>
 
 <script>
 import { defineComponent, toRefs, ref, computed } from '@nuxtjs/composition-api'
-import { FocusTrap } from 'focus-trap-vue'
 import { Portal as VTeleport } from 'portal-vue'
 
 import { useDialogContent } from '~/composables/use-dialog-content'
@@ -66,6 +65,7 @@ import { warn } from '~/utils/console'
 import VButton from '~/components/VButton.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'
 import VLogoButton from '~/components/VHeader/VLogoButton.vue'
+import VFocusTrap from '~/components/VFocusTrap/VFocusTrap.vue'
 
 import closeIcon from '~/assets/icons/close.svg'
 
@@ -74,7 +74,7 @@ import closeIcon from '~/assets/icons/close.svg'
  */
 export default defineComponent({
   name: 'VModalContent',
-  components: { VTeleport, VButton, VIcon, FocusTrap, VLogoButton },
+  components: { VTeleport, VButton, VIcon, VFocusTrap, VLogoButton },
   props: {
     visible: {
       type: Boolean,
