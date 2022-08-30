@@ -89,7 +89,6 @@
     "focus-visible": "^5.2.0",
     "glob": "^8.0.1",
     "node-html-parser": "^5.3.3",
-    "node-os-utils": "^1.3.7",
     "nuxt": "^2.15.4",
     "pinia": "^2.0.16",
     "portal-vue": "^2.1.7",

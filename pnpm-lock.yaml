@@ -79,7 +79,6 @@ specifiers:
   lint-staged: ^12.3.7
   module-alias: ^2.2.2
   node-html-parser: ^5.3.3
-  node-os-utils: ^1.3.7
   npm-run-all: ^4.1.5
   nuxt: ^2.15.4
   pinia: ^2.0.16
@@ -142,7 +141,6 @@ dependencies:
   focus-visible: 5.2.0
   glob: 8.0.1
   node-html-parser: 5.3.3
-  node-os-utils: 1.3.7
   nuxt: 2.15.8_wl2mvxm2ma5s7sz3dfofdm4k7q
   pinia: 2.0.20_bwmvgbrvs54y3u2q642yxns4ge
   portal-vue: 2.1.7_vue@2.7.10
@@ -13421,10 +13419,6 @@ packages:
   /node-object-hash/1.4.2:
     resolution: {integrity: sha512-UdS4swXs85fCGWWf6t6DMGgpN/vnlKeSGEQ7hJcrs7PBFoxoKLmibc3QRb7fwiYsjdL7PX8iI/TMSlZ90dgHhQ==}
     engines: {node: '>=0.10.0'}
-    dev: false
-
-  /node-os-utils/1.3.7:
-    resolution: {integrity: sha512-fvnX9tZbR7WfCG5BAy3yO/nCLyjVWD6MghEq0z5FDfN+ZXpLWNITBdbifxQkQ25ebr16G0N7eRWJisOcMEHG3Q==}
     dev: false
 
   /node-releases/2.0.1:
