@@ -140,6 +140,31 @@ docker run --rm -it -p 127.0.0.1:8443:8443/tcp openverse-frontend:latest
 
 The app will be available at <http://localhost:8443>.
 
+> **Note**: If you are _not_ using HTTPS locally, do not use the URL provided by Nuxt - this will cause certificate errors because it gets rerouted to HTTPS.
+> E.g. this link will not work:
+> ```
+> $ docker run --rm -it -p 127.0.0.1:8443:8443/tcp openverse-frontend:latest
+> 
+> > openverse-frontend@2.2.1 start
+> > nuxt start
+> 
+> ℹ Sentry reporting is disabled ("disabled" option has been set) nuxt:sentry 18:22:32
+> 
+>    ╭─────────────────────────────────────────╮
+>    │                                         │
+>    │   Nuxt @ v2.15.8                        │
+>    │                                         │
+>    │   ▸ Environment: production             │
+>    │   ▸ Rendering:   server-side            │
+>    │   ▸ Target:      server                 │
+>    │                                         │
+>    │   Memory usage: 48.2 MB (RSS: 152 MB)   │
+>    │                                         │
+>    │   Listening: http://172.17.0.2:8443/    │   <-- Won't work unless HTTPS is set up
+>    │                                         │
+>    ╰─────────────────────────────────────────╯
+> ```
+
 ## Formatting and Linting
 
 The code in this repository is formatted using `prettier`. If you have prettier setup in your code editor it should work out of the box; otherwise you can use the `pnpm lint:fix` script to format and fix lint errors in your code. Checks are run to lint your code and validate the formatting on git precommit using [husky](https://github.com/typicode/husky).
