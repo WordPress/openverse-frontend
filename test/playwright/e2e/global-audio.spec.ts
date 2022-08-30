@@ -15,11 +15,10 @@ const play = async (audioRow: Locator) => {
 }
 
 test.describe('global audio', () => {
-  test('track continues to play when navigating from audio search to its details page', async ({
+  test('track continues playing when navigating from audio search to its details page', async ({
     page,
   }) => {
     await page.goto('/search/audio?q=honey')
-
     // Find and play the first audio result
     const firstAudioRow = await getNthAudioRow(page, 0)
     await play(firstAudioRow)
@@ -27,7 +26,22 @@ test.describe('global audio', () => {
     await firstAudioRow.locator('a').click()
     // and confirm is still playing (or loading to play)
     const mainPlayerButton = await page.locator('.main-track >> button')
-    sleep(600) // Doesn't seem to make a difference here
+    sleep(600) // Doesn't seem to make a difference for the satus
     expect(mainPlayerButton).toHaveAttribute('aria-label', /(Loading|Pause)/)
+  })
+
+  test('player does not reproduce an audio different that the current audio in the details page', async ({
+    page,
+  }) => {
+    await page.goto('/search/audio?q=honey')
+    // Find and play the first audio result
+    const firstAudioRow = await getNthAudioRow(page, 0)
+    await play(firstAudioRow)
+    // Navigate to the details page of the second audio track
+    const secondAudioRow = await getNthAudioRow(page, 1)
+    await secondAudioRow.locator('a').click()
+    // and confirm is not playing
+    const mainPlayerButton = await page.locator('.main-track >> button')
+    expect(mainPlayerButton).toHaveAttribute('aria-label', 'Play')
   })
 })
