@@ -1,5 +1,8 @@
 {
   "*.{ts,js,vue,json,yml,yaml,mdx,md}": [
-    "pnpm lint:fix"
+    "prettier --write"
+  ],
+  "*.{ts,js,vue}": [
+    "eslint --ignore-path .gitignore --ignore-path .eslintignore --max-warnings=0 ."
   ]
 }
