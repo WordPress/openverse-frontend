@@ -1,8 +1,5 @@
 {
-  "*.{ts,js,vue}": [
-    "eslint --fix --max-warnings=0"
-  ],
   "*.{ts,js,vue,json,yml,yaml,mdx,md}": [
-    "prettier --write"
+    "pnpm lint:fix"
   ]
 }
