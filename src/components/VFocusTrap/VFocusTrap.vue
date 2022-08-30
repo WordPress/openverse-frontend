@@ -13,10 +13,9 @@ import {
 } from '@nuxtjs/composition-api'
 import { createFocusTrap, Options } from 'focus-trap'
 
-import { unrefElement } from '@vueuse/core'
+import { getDomElement } from '~/utils/dom'
 
 import type { FocusTrap } from 'focus-trap'
-import type { RenderableComponent } from '@vueuse/core'
 
 export interface UseFocusTrapOptions extends Options {
   /**
@@ -25,7 +24,7 @@ export interface UseFocusTrapOptions extends Options {
   immediate?: boolean
 }
 
-export default defineComponent<RenderableComponent>({
+export default defineComponent<{ as?: 'div' | unknown }>({
   name: 'VFocusTrap',
   props: {
     as: {
@@ -44,7 +43,7 @@ export default defineComponent<RenderableComponent>({
     const activate = () => trap && trap.activate()
     const deactivate = () => trap && trap.deactivate()
     watch(
-      () => unrefElement(target),
+      () => getDomElement(target),
       (el) => {
         if (!el) return
         trap = createFocusTrap(el, {})
