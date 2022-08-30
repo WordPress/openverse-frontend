@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-08-29T20:25:47+00:00\n"
+"POT-Creation-Date: 2022-08-30T14:09:50+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -427,7 +427,7 @@ msgstr ""
 
 #: src/components/VAudioTrack/layouts/VFullLayout.vue:59
 msgctxt "audio-details.weblink"
-msgid "Use this audio"
+msgid "Get this audio"
 msgstr ""
 
 #: src/components/VAudioDetails/VAudioDetails.vue:27
@@ -466,14 +466,14 @@ msgid "Genre"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/image/_id.vue:47
+#: src/pages/image/_id.vue:54
 msgctxt "image-details.creator"
 msgid "by ###name###"
 msgstr ""
 
-#: src/pages/image/_id.vue:39
+#: src/pages/image/_id.vue:40
 msgctxt "image-details.weblink"
-msgid "Use this image"
+msgid "Get this image"
 msgstr ""
 
 #: src/components/VImageDetails/VRelatedImages.vue:4
@@ -653,7 +653,7 @@ msgid "Open form"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/image/_id.vue:52
+#: src/pages/image/_id.vue:59
 msgctxt "media-details.aria.creator-url"
 msgid "author ###name###"
 msgstr ""
@@ -1222,7 +1222,7 @@ msgid "An error occurred"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/image/_id.vue:222
+#: src/pages/image/_id.vue:233
 msgctxt "error.image-not-found"
 msgid "Couldn't find image with id ###id###"
 msgstr ""
