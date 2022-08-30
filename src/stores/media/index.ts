@@ -401,6 +401,7 @@ export const useMediaStore = defineStore('media', {
       this.$nuxt.$sentry.captureEvent({
         message: errorMessage,
         extra: {
+          mediaType,
           error,
         },
       })
