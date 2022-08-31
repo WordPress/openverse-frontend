@@ -52,7 +52,7 @@ export function isAdditionalSearchType(
 
 const SUPPORTED = 'supported' // Native search
 const BETA = 'beta' // Native but incomplete search
-const ADDITIONAL = 'additional' // Meta search
+const ADDITIONAL = 'additional' // External sources
 
 export const contentStatus = Object.freeze({
   [ALL_MEDIA]: SUPPORTED,

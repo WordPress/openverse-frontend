@@ -20,7 +20,7 @@ import { mockProviderApis } from '~~/test/playwright/utils/route'
  * 4. Can open 'image' search page from the 'all content' page.
  * 5. Can open 'audio' search from the 'all content' page.
  *
- * Results include search meta information, media grid and Meta search form, can load more media if there are more media items.
+ * Results include search meta information, media grid and External sources form, can load more media if there are more media items.
  */
 
 test.describe.configure({ mode: 'parallel' })

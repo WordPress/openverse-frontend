@@ -230,7 +230,10 @@ const config: NuxtConfig = {
    * See the redirect module for more info.
    * {@link https://github.com/nuxt-community/redirect-module#usage}
    */
-  redirect: [{ from: '^/photos/(.*)$', to: '/image/$1', statusCode: 301 }],
+  redirect: [
+    { from: '^/photos/(.*)$', to: '/image/$1', statusCode: 301 },
+    { from: '/meta-search', to: '/external-sources', statusCode: 301 },
+  ],
   sentry: sentryConfig,
   hooks: {
     render: {
