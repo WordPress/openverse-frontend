@@ -512,7 +512,7 @@
     "weblink": "Get this audio"
   },
   "meta-search": {
-    "caption": "{openverse} has no control over the results, always verify that the work is actually under a CC license.",
+    "caption": "{openverse} can not guarantee the accuracy of license information. Always verify that the work is actually under a CC license.",
     "button": "Source list",
     "title": "External sources",
     "card": {
