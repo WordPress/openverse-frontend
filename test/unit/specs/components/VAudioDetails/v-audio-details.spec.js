@@ -57,4 +57,13 @@ describe('VAudioDetails', () => {
     render(VAudioDetails, options)
     screen.getByText('MP32, WAV, OGG')
   })
+
+  it('displays only distinct filetypes', () => {
+    options.propsData.audio.alt_files = [
+      { filetype: 'ogg' },
+      { filetype: 'ogg' },
+    ]
+    render(VAudioDetails, options)
+    screen.getByText('MP32, OGG')
+  })
 })
