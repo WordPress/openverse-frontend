@@ -117,8 +117,8 @@ export default defineComponent({
      * Router observation
      *
      * The player will continue only within 'search-audio' and 'audio-id' routes,
-     * and on desktop, only if the next route if the 'audio-id' page of the
-     * track currently playing, or the search page where it comes from.
+     * and on desktop, only if the next route is the 'audio-id' page of the
+     * track currently playing, or the original search result page.
      */
     const routeValue = computed(() => route.value)
     watch(routeValue, (newRouteVal, oldRouteVal) => {
