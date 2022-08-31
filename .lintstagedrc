@@ -1,8 +1,7 @@
 {
-  "*.{ts,js,vue,json,yml,yaml,mdx,md}": [
-    "prettier --write"
-  ],
+  "*.{json,yml,yaml,mdx,md}": "prettier --write",
   "*.{ts,js,vue}": [
-    "eslint --ignore-path .gitignore --ignore-path .eslintignore --max-warnings=0 ."
+    "prettier --write",
+    "eslint --ext .js,.vue,.ts --ignore-path .gitignore --ignore-path .eslintignore --max-warnings=0 ."
   ]
 }
