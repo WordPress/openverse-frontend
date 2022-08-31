@@ -111,7 +111,8 @@ export default defineComponent({
         (altFile) => altFile.filetype
       )
       altFormats.unshift(props.audio.filetype)
-      return altFormats.join(', ')
+      const uniqueFormats = new Set(altFormats)
+      return [...uniqueFormats].join(', ')
     })
 
     return { audioFormats }
