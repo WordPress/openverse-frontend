@@ -7,7 +7,7 @@
           v-for="keyboardKey in ['spacebar', 'left', 'right']"
           #[keyboardKey]
         >
-          <kbd :key="keyboardKey">{{
+          <kbd :key="keyboardKey" class="font-sans">{{
             $t(`audio-results.snackbar.${keyboardKey}`)
           }}</kbd>
         </template>
