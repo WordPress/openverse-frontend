@@ -511,6 +511,12 @@
     "information": "Audio information",
     "weblink": "Use this audio"
   },
+  "all-results": {
+    "snackbar": {
+      "text": "Press {spacebar} to play or pause the track.",
+      "spacebar": "Spacebar"
+    }
+  },
   "audio-results": {
     "snackbar": {
       "text": "Press {spacebar} to play or pause, and {left} & {right} to seek through the track.",
