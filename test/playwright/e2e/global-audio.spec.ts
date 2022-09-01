@@ -30,7 +30,8 @@ test.describe('global audio', () => {
     // and confirm is still playing (or loading to play)
     const mainPlayerButton = page.locator('.main-track >> button')
     await sleep(600) // Doesn't seem to make a difference for the status
-    await expect(mainPlayerButton).toHaveAttribute('aria-label', 'Play')
+    // When the audio is playing, the button's aria-label is 'Pause'
+    await expect(mainPlayerButton).toHaveAttribute('aria-label', 'Pause')
   })
 
   test('player does not reproduce an audio different that the current audio in the details page', async ({
@@ -48,9 +49,7 @@ test.describe('global audio', () => {
     ])
     // and confirm is not playing
     const mainPlayerButton = page.locator('.main-track >> button')
-    await expect(mainPlayerButton).toHaveAttribute(
-      'aria-label',
-      /(Loading|Pause)/
-    )
+    // When the audio is playing, the button's aria-label is 'Play'
+    await expect(mainPlayerButton).toHaveAttribute('aria-label', 'Play')
   })
 })
