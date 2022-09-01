@@ -25,7 +25,7 @@
     "generate": "nuxt generate",
     "start": "nuxt start",
     "prod": "pnpm build:only && pnpm start",
-    "prod:playwright": "pnpm i18n:copy-test-locales && pnpm build:only && pnpm start",
+    "prod:playwright": "pnpm i18n:copy-test-locales && prod",
     "storybook": "nuxt storybook --port=54000",
     "storybook:build": "nuxt storybook build",
     "storybook:smoke": "pnpm storybook --ci --smoke-test",
