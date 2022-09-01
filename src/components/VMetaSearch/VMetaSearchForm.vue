@@ -34,7 +34,7 @@
     </i18n>
 
     <VMetaSourceList
-      class="inline-flex ms-2 md:justify-center"
+      class="ms-2 inline-flex md:justify-center"
       :type="type"
       :query="query"
     />
