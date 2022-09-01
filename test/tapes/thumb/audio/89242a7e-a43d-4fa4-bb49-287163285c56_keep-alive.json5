@@ -1,0 +1,77 @@
+{
+    meta: {
+        createdAt: '2022-09-01T14:01:12.215Z',
+        host: 'https://api.openverse.engineering',
+    },
+    req: {
+        headers: {
+            connection: 'keep-alive',
+        },
+        url: '/v1/audio/89242a7e-a43d-4fa4-bb49-287163285c56/thumb/',
+        method: 'GET',
+        body: '',
+    },
+    res: {
+        status: 200,
+        headers: {
+            date: [
+                'Thu, 01 Sep 2022 14:01:13 GMT',
+            ],
+            'content-type': [
+                'image/webp',
+            ],
+            'content-length': [
+                '1468',
+            ],
+            connection: [
+                'keep-alive',
+            ],
+            vary: [
+                'Accept, Authorization, Origin, Accept-Encoding',
+            ],
+            allow: [
+                'GET, HEAD, OPTIONS',
+            ],
+            'x-frame-options': [
+                'DENY',
+            ],
+            'x-content-type-options': [
+                'nosniff',
+            ],
+            'referrer-policy': [
+                'same-origin',
+            ],
+            'cross-origin-opener-policy': [
+                'same-origin',
+            ],
+            'x-request-id': [
+                '58233a6358f94333905bec4a46845a69',
+            ],
+            'cache-control': [
+                'max-age=14400',
+            ],
+            'cf-cache-status': [
+                'MISS',
+            ],
+            'last-modified': [
+                'Thu, 01 Sep 2022 14:01:13 GMT',
+            ],
+            'accept-ranges': [
+                'bytes',
+            ],
+            'strict-transport-security': [
+                'max-age=15552000; includeSubDomains; preload',
+            ],
+            server: [
+                'cloudflare',
+            ],
+            'cf-ray': [
+                '743e895c8ab1df4c-IST',
+            ],
+            'alt-svc': [
+                'h3=":443"; ma=86400, h3-29=":443"; ma=86400',
+            ],
+        },
+        body: 'UklGRrQFAABXRUJQVlA4WAoAAAAIAAAAKwEAKwEAVlA4INQEAAAwOgCdASosASwBPm02mEkkIyKhIzM44IANiWlu/HyZVOtG+7v1nMkciBCzkgnHcY7jHcY7jHcY7jHcY7jHcY7jHcY7jHcY7jHcY7jHcY7jHcY7jHcY7jHcY7i5qQMLwkPJaZREjrJGCaWOQBe8KzkdNxkZ5W79+h22OTq6+67xTGViN9PiTl5cRuS2LH+Vjs16+Tsuwr1ibTMWMxr2HY9xUPzL+X5ILL2XJFJeTmm6AKdNM1dSA+RmKh6usfYMbc2om33wyhkiduISSKgxeLBd4F7ipAM1ekL3fNL+zoXfGXeWLV8Jpf/Omw3KtfgZnK3u0nFE9Gq9mcdP3C4zN2PYnrGhf0MGGzmY9ur02WKpqW6PiIrtS5i3YhBh0c7zAZh69ydcXKyGcamTVXLjk3eSLEi8OuNxjxpHTOyYYE1RHk5ughlZ4qvKLo3xmYmCcGmWV8Rpa2pDyIM89AIUdAbdKBon1Lh2kake18/Z5GDkrAgaJvRxip+EUh8KdylDfYgwoCTQhNqtYQs1QscPCREBfxT6gqIVRxBUZeMdxjuMdxjuMdxjuMdxjuMdxjuMdxjuMdxjuMdxjuMdxjuMdxjuMdxjuMdxjuMdxjuMdxjuMdxjuMdxjuMdxaAA/v6fxP0Hxcv87HtcAAAADU1XrZLZlQjU7Cwfuwwr5VEWzj+BbjkBh4oj9ZvxvDaMVCcW0W2C6H1qu/BcfYktvXG2aaYeoFLB5UlT+7XxvVBdQ0EoRCE/1fi37xTFCJJFyIzyU609ggH8ZKimdPd+Dupnjh7ozbmdLcLePySYJxic9QmZyg+Aoh2jrHVRqmHHZRj93mBiUjzi6Q6iuO86se2D2pWBf/4vPe2isMlUqvEO73idSnrll6RxsVUutLJu2ve1D/YPnINyP7/6f0mTtOn+6FR+m7/i9HBB9qnQuKQVCg9oqpzJ8kLILRQer336V4bhHaoADycJ/X6bvBCRcvI9DzIzkc20ORAhAGVJGQ4TfEHDrlP/UIAj08tbOQXSGDLhM05+zBTFsVhd0ZGx4eRsSDc5d6C66ThX3gmjaDy2Cujzr8EO7AzvvtrwhosL8WEluqmJJaCgttAZGVH1F9/YhFOiGyG4qpcRmddXrH1YX2QR0JFFNzBS4shWv84kOC4Jwm8UtRPVstCCeVBBXTMrhOWl/KDw+RDlm0FyZxKNo9s8ttwBaTCAf4DB0Cu1fRLK53xja4ilnDOCBLD0qUcTNTdMxWIrzrQ4qWFDijPUKiKWBjZhGBll5NvEze/z6BPFg+Bf2USEOqaqbeSYNtUHTlJ88e+N3mEE0kc98Wv9a/IIue+fWL1tWnk6q/iIi6F2hZVOe5NdwSAizkNcL+/gX+jH7IL5TMwLj4cX8XgC9+ttlO054U94pNyZPm+vWw9iacR5m6WPaM0C5Da6Gb/Sc9PGSDOTj8UQrNp7JuqsD3+SdEgLLIrCL5qid4mduNvLXG+K0Pp8iE8axpoeaUGfrg0fsEqLDM2H3p8GbF7sg6NCbaNyu6+5K1g5f3eqDBLmywkbXUkcAH4IB2djUYkc4jxwFYP9W13MU8X9z46ey3FwCzF5OpERPpJyLwRCnIKDS2rwDHricLoQCR2icLWNwdE5cPBNMuBiwP9wEuBBQAAAAAAAAABFWElGugAAAEV4aWYAAElJKgAIAAAABgASAQMAAQAAAAEAAAAaAQUAAQAAAFYAAAAbAQUAAQAAAF4AAAAoAQMAAQAAAAIAAAATAgMAAQAAAAEAAABphwQAAQAAAGYAAAAAAAAASAAAAAEAAABIAAAAAQAAAAYAAJAHAAQAAAAwMjEwAZEHAAQAAAABAgMAAKAHAAQAAAAwMTAwAaADAAEAAAD//wAAAqAEAAEAAAAsAQAAA6AEAAEAAAAsAQAAAAAAAA==',
+    },
+}
