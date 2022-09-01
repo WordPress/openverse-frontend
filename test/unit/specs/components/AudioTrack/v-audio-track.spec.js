@@ -1,4 +1,4 @@
-import { render } from '@testing-library/vue'
+import { fireEvent, render } from '@testing-library/vue'
 import Vuei18n from 'vue-i18n'
 
 import {
@@ -14,6 +14,10 @@ import { useActiveMediaStore } from '~/stores/active-media'
 import VAudioTrack from '~/components/VAudioTrack/VAudioTrack.vue'
 
 const enMessages = require('~/locales/en.json')
+
+window.HTMLMediaElement.prototype.play = () => {
+  /* mock */
+}
 
 const useVueI18n = (vue) => {
   vue.use(Vuei18n)
@@ -90,10 +94,7 @@ describe('AudioTrack', () => {
   })
 
   it('should render the row audio track component even without duration', () => {
-    options.propsData = {
-      ...options.propsData,
-      layout: 'row',
-    }
+    options.propsData.layout = 'row'
     const { getByText } = render(VAudioTrack, options, configureVue)
     getByText('by ' + props.audio.creator)
   })
@@ -110,5 +111,15 @@ describe('AudioTrack', () => {
     const element = getByText(props.audio.creator)
     expect(element).toBeInstanceOf(HTMLAnchorElement)
     expect(element).toHaveAttribute('href', props.audio.creator_url)
+  })
+
+  it.skip('on play error displays a message instead of the waveform', async () => {
+    options.propsData.audio.url = 'bad.url'
+    options.propsData.layout = 'row'
+    options.stubs.VPlayPause = false
+    const { debug, getByRole } = render(VAudioTrack, options, configureVue)
+    await fireEvent.click(getByRole('button'))
+    debug()
+    // TODO: Fix error when trying to access route params
   })
 })

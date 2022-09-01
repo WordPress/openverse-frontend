@@ -31,6 +31,7 @@ export const getAudioObj = (overrides = {}) =>
         },
       ],
       fields_matched: ['tags.name'],
+      duration: 270000,
       thumbnail:
         'https://localhost:8000/v1/audio/e19345b8-6937-49f7-a0fd-03bf057efc28/thumb',
       waveform:
