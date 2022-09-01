@@ -42,7 +42,7 @@ export default defineComponent({
 }
 
 .large {
-  @apply w-max max-w-full flex-row items-center py-4 px-8 text-sm;
+  @apply w-max max-w-full flex-row items-center py-4 px-6 text-sm;
 }
 
 .small {
