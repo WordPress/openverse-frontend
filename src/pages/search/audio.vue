@@ -1,7 +1,7 @@
 <template>
   <!-- Negative margin compensates for the `p-4` padding in row layout. -->
   <section class="-mx-4">
-    <VSnackbar size="large" :is-visible="snackbarIsVisible">
+    <VSnackbar size="large" :is-visible="isSnackbarVisible">
       <i18n path="audio-results.snackbar.text" tag="p">
         <template
           v-for="keyboardKey in ['spacebar', 'left', 'right']"
@@ -26,6 +26,7 @@
       layout="row"
       @shift-tab="handleShiftTab($event, i)"
       @interacted="hideSnackbar"
+      @focus.native="showSnackbar"
     />
     <VLoadMore />
   </section>
@@ -99,9 +100,12 @@ export default defineComponent({
     const { canLoadMore, onLoadMore } = useLoadMore(searchTermRef)
 
     const uiStore = useUiStore()
-    const snackbarIsVisible = computed(() => uiStore.instructionsVisible)
+    const isSnackbarVisible = computed(() => uiStore.areInstructionsVisible)
+    const showSnackbar = () => {
+      uiStore.showInstructionsSnackbar()
+    }
     const hideSnackbar = () => {
-      uiStore.dismissInstructions()
+      uiStore.hideInstructionsSnackbar()
     }
 
     return {
@@ -114,7 +118,8 @@ export default defineComponent({
       canLoadMore,
       onLoadMore,
 
-      snackbarIsVisible,
+      isSnackbarVisible,
+      showSnackbar,
       hideSnackbar,
     }
   },
