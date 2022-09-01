@@ -1,6 +1,6 @@
 <template>
   <!-- Negative margin compensates for the `p-4` padding in row layout. -->
-  <section class="-mx-4">
+  <section class="-mx-2 md:-mx-4">
     <VSnackbar size="large" :is-visible="isSnackbarVisible">
       <i18n path="audio-results.snackbar.text" tag="p">
         <template
@@ -20,7 +20,7 @@
     <VAudioTrack
       v-for="(audio, i) in results"
       :key="audio.id"
-      class="mb-4"
+      class="mb-2 md:mb-1"
       :audio="audio"
       :size="audioTrackSize"
       layout="row"

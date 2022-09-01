@@ -1,7 +1,7 @@
 <template>
   <!-- `pages/search/audio` has negative margin `-mx-4` to compensate for this padding. -->
   <article
-    class="row-track flex flex-row p-4 hover:bg-dark-charcoal-06"
+    class="row-track flex flex-row p-2 hover:bg-dark-charcoal-06 md:p-4"
     :class="[`size-${size}`, { 'items-start': isSmall }]"
   >
     <div
