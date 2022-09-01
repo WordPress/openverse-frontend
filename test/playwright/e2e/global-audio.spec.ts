@@ -15,7 +15,7 @@ const play = async (audioRow: Locator) => {
 }
 
 test.describe('global audio', () => {
-  test('track continues playing when navigating from audio search to its details page', async ({
+  test.skip('track continues playing when navigating from audio search to its details page', async ({
     page,
   }) => {
     await page.goto('/search/audio?q=honey')
@@ -33,7 +33,7 @@ test.describe('global audio', () => {
     )
   })
 
-  test('player does not reproduce an audio different that the current audio in the details page', async ({
+  test.skip('player does not reproduce an audio different that the current audio in the details page', async ({
     page,
   }) => {
     await page.goto('/search/audio?q=honey')
