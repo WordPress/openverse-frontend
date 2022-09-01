@@ -481,7 +481,7 @@
   },
   "image-details": {
     "creator": "by {name}",
-    "weblink": "Use this image",
+    "weblink": "Get this image",
     "information": {
       "title": "Image information",
       "type": "Type",
@@ -509,7 +509,7 @@
       "genre": "Genre"
     },
     "information": "Audio information",
-    "weblink": "Use this audio"
+    "weblink": "Get this audio"
   },
   "all-results": {
     "snackbar": {

@@ -1,7 +1,10 @@
 import { test, expect, Page, BrowserContext } from '@playwright/test'
 
 import { mockProviderApis } from '~~/test/playwright/utils/route'
-import { goToSearchTerm } from '~~/test/playwright/utils/navigation'
+import {
+  goToSearchTerm,
+  openFirstResult,
+} from '~~/test/playwright/utils/navigation'
 
 import { supportedMediaTypes } from '~/constants/media'
 
@@ -13,10 +16,6 @@ test.describe.configure({ mode: 'parallel' })
 
 const reportingEndpoint = '**/report/'
 
-export const visitFirstResult = (page: Page) =>
-  page.click('[data-testid="search-results"] a:first-of-type', {
-    position: { x: 32, y: 32 },
-  })
 export const openReportModal = (page: Page) =>
   page.click('text="Report this content"')
 
@@ -102,7 +101,7 @@ supportedMediaTypes.forEach((mediaType) => {
       context,
     }) => {
       await goToSearchTerm(page, 'cat', { searchType: mediaType })
-      await visitFirstResult(page)
+      await openFirstResult(page, mediaType)
       await openReportModal(page)
       await reportAssertion(page, context)
     })

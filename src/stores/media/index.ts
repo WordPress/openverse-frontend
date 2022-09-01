@@ -75,6 +75,13 @@ export const useMediaStore = defineStore('media', {
       }
       return searchType
     },
+    /**
+     * Returns a media item that exists either in the search results
+     * or in the related media store.
+     * This makes the single result page rendering faster by providing initial data.
+     * We still need to fetch the single result from the API to get the full data.
+     * @param state - the media store state
+     */
     getItemById: (state) => {
       return (mediaType: SupportedMediaType, id: string): Media | undefined => {
         const itemFromSearchResults = state.results[mediaType].items[id]
@@ -425,6 +432,8 @@ export const useMediaStore = defineStore('media', {
       }
     },
 
+    // Handles errors for media fetches and sets the fetch state accordingly
+    // Reported errors are logged to Sentry
     async handleMediaError({
       mediaType,
       error,
@@ -434,16 +443,31 @@ export const useMediaStore = defineStore('media', {
     }) {
       let errorMessage
       if (axios.isAxiosError(error)) {
-        errorMessage =
-          error.response?.status === 500
-            ? 'There was a problem with our servers'
-            : `Request failed with status ${
-                error.response?.status ?? 'unknown'
-              }`
+        // If the error is an axios error:
+        // If the error has a response property, and recieved a response that is not in the 2xx range,
+        // then the error is logged to Sentry
+        if (error.response) {
+          errorMessage = `Error fetching ${mediaType} from API. Request failed with status code: ${error.response.status}`
+        } else if (error.request) {
+          // If the error has a request property, but no response, then we capture the event in Sentry
+          errorMessage = `Error fetching ${mediaType} from API. No response received from the server`
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          errorMessage = `Error fetching ${mediaType} from API. Unknown Axios error`
+        }
       } else {
-        errorMessage =
-          error instanceof Error ? error.message : 'Oops! Something went wrong'
+        // If the error is not an axios error, then we capture the event in Sentry
+        errorMessage = `Error fetching ${mediaType} from API. Unknown error`
       }
+
+      this.$nuxt.$sentry.captureEvent({
+        message: errorMessage,
+        extra: {
+          mediaType,
+          error,
+        },
+      })
+
       this._updateFetchState(mediaType, 'end', errorMessage)
       if (!axios.isAxiosError(error)) {
         throw new Error(errorMessage)
