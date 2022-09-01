@@ -22,7 +22,7 @@
           :audio-id="audio.id"
           :current-time="currentTime"
           :duration="duration"
-          :message="message ? $t(`audio-track.messages.${message}`) : null"
+          :message="message"
           @seeked="handleSeeked"
           @toggle-playback="handleToggle"
         />
@@ -89,6 +89,7 @@ export default defineComponent({
     VWaveform,
     VLink,
     VWarningSuppressor,
+
     // Layouts
     VFullLayout,
     VRowLayout,
@@ -127,12 +128,6 @@ export default defineComponent({
 
     const status = ref<AudioStatus>('paused')
     const currentTime = ref(0)
-
-    //TODO: display the error to the user once we have the VSnackbar component design finalized
-    // We need to keep track if there was any error while playing the audio track.
-
-    // const hasError = ref<boolean>(false) // We initialize it to false, because we assume that this is a new track.
-    // const messageError = ref<string>('') // The error message is currently empty.
 
     const initLocalAudio = () => {
       // Preserve existing local audio if we plucked it from the global active audio
@@ -315,46 +310,26 @@ export default defineComponent({
     })
 
     const play = () => {
-      // delay initializing the local audio element until playback is requested
+      // Delay initializing the local audio element until playback is requested
       if (!localAudio) initLocalAudio()
 
       // Check if the audio can be played successfully
       localAudio?.play().catch((err) => {
-        // If the error is due to the audio being blocked by the browser (e.g. autoplay policy, media not supported, etc.)
-        // then we should show the error message to the user else we should just log the error to sentry
+        let errorMsg = ''
         switch (err.name) {
-          case 'AbortError': {
-            // This is expected when the user has paused the audio
-            // before it has loaded. We can ignore this error.
-            // hasError.value = true
-            // messageError.value = err.message
-            // alert(messageError.value)
-            return
-          }
-          case 'NotAllowedError': {
-            // This error happens when the user has blocked the audio from playing ex: autoplay policy etc.
-            // We should show the error message to the user in this case and not log it to sentry
-            // hasError.value = true
-            // messageError.value =
-            //   err.message ||
-            //   "Audio playback is blocked. Please check your browser's settings."
-            // alert(messageError.value)
-            return
-          }
-          case 'NotSupportedError': {
-            // This is expected when the audio is not supported.
-            // We can ignore this error.
-            // hasError.value = true
-            // messageError.value =
-            //   'The audio format is not supported by this browser.'
-            // alert(messageError.value)
-            return
-          }
-          default: {
-            // This is an unexpected error. We should log it to sentry
+          case 'NotAllowedError':
+            errorMsg = 'err_unallowed'
+            break
+          case 'NotSupportedError':
+            errorMsg = 'err_unsupported'
+            break
+          default:
+            errorMsg = 'err_unknown'
             throw err
-          }
         }
+        errorMsg = i18n.t(`audio-track.messages.${errorMsg}`).toString()
+        activeMediaStore.setMessage({ message: errorMsg })
+        localAudio?.pause()
       })
     }
     const pause = () => localAudio?.pause()
