@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-09-01T19:39:38+00:00\n"
+"POT-Creation-Date: 2022-09-02T03:59:07+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -109,7 +109,7 @@ msgid "Content types"
 msgstr ""
 
 msgctxt "search-type.additional"
-msgid "Additional sources"
+msgid "Coming soon"
 msgstr ""
 
 #: src/components/VContentSwitcher/VSearchTypeItem.vue:13
@@ -138,7 +138,7 @@ msgstr ""
 
 #: src/components/VErrorSection/VNoResults.vue:9
 msgctxt "no-results.alternatives"
-msgid "Try a different query or use one of the additional sources to expand your search."
+msgid "Try a different query or use one of the external sources to expand your search."
 msgstr ""
 
 msgctxt "error-images.depressed-musician"
@@ -330,30 +330,39 @@ msgid "Edge"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VMetaSearch/VMetaSearchForm.vue:51
+#: src/components/VMetaSearch/VMetaSourceList.vue:42
 msgctxt "meta-search.caption"
-msgid "###openverse### does not currently index the sources listed above, but through this interface is offering convenient access to search services provided by other independent organizations. ###openverse### has no control over the results that are returned. Do not assume that the results displayed in this search portal are under a CC license. Always verify that the work is actually under a CC license by following the link. If you are in doubt, you should contact the copyright holder directly, or try to contact the site where you found the content."
+msgid "###openverse### can not guarantee the accuracy of license information. Always verify that the work is actually under a CC license."
+msgstr ""
+
+#: src/components/VMetaSearch/VMetaSourceList.vue:5
+msgctxt "meta-search.button"
+msgid "Source list"
+msgstr ""
+
+#: src/components/VMetaSearch/VMetaSourceList.vue:39
+msgctxt "meta-search.title"
+msgid "External sources"
 msgstr ""
 
 #. Do not translate words between ### ###.
+#: src/components/VMetaSearch/VMetaSearchForm.vue:16
 msgctxt "meta-search.form.unsupported-title"
 msgid "###openverse### does not yet support built-in ###type### search."
 msgstr ""
 
-#. Do not translate words between ### ###.
-#: src/pages/meta-search.vue:40
+#: src/components/VMetaSearch/VMetaSearchForm.vue:9
 msgctxt "meta-search.form.supported-title"
-msgid "Not finding what you're looking for? Try additional ###type### sources."
+msgid "Not finding what you're looking for? Try an external source:"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VMetaSearch/VMetaSearchForm.vue:9
+#: src/components/VMetaSearch/VMetaSearchForm.vue:26
 msgctxt "meta-search.form.no-results-title"
 msgid "No ###type### results for \"###query###\"."
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VMetaSearch/VMetaSearchForm.vue:31
 msgctxt "meta-search.form.caption"
 msgid "Click on a source below to directly search other collections of CC-licensed ###type###."
 msgstr ""
@@ -391,24 +400,12 @@ msgid "3D model"
 msgstr ""
 
 msgctxt "meta-search.card.search"
-msgid "Not finding what you're looking for? Try additional sources"
+msgid "Not finding what you're looking for? Try external sources"
 msgstr ""
 
 #. Do not translate words between ### ###.
 msgctxt "meta-search.card.caption"
 msgid "Click on a source below to directly search other collections of CC-licensed images.###break###Please note that Use filters are not supported for Open Clip Art Library or Nappy."
-msgstr ""
-
-msgctxt "meta-search.card.checkboxes.title"
-msgid "Use"
-msgstr ""
-
-msgctxt "meta-search.card.checkboxes.commercial"
-msgid "Use for commercial purposes"
-msgstr ""
-
-msgctxt "meta-search.card.checkboxes.modify"
-msgid "Modify or adapt"
 msgstr ""
 
 msgctxt "audio-details.genre-label"
