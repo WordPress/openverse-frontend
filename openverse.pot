@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-09-02T16:09:49+00:00\n"
+"POT-Creation-Date: 2022-09-02T18:32:05+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -257,15 +257,20 @@ msgid "Loading"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VAudioTrack/VAudioTrack.vue:422
+#: src/components/VAudioTrack/VAudioTrack.vue:442
 msgctxt "audio-track.aria-label"
 msgid "###title### - Audio Player"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VAudioTrack/VAudioTrack.vue:419
+#: src/components/VAudioTrack/VAudioTrack.vue:439
 msgctxt "audio-track.aria-label-interactive"
 msgid "###title### - audio player - press the spacebar to play and pause a preview of the audio"
+msgstr ""
+
+#. Do not translate words between ### ###.
+msgctxt "audio-track.aria-label-interactive-seekable"
+msgid "###title### - audio player - press the spacebar to play and pause a preview of the audio; use the left and right arrow keys to seek through the track."
 msgstr ""
 
 #. Do not translate words between ### ###.
@@ -306,7 +311,6 @@ msgid "Audio seek bar"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VAudioTrack/VWaveform.vue:634
 msgctxt "waveform.current-time"
 msgid "###time### second"
 msgid_plural "###time### seconds"
@@ -406,6 +410,35 @@ msgstr ""
 #. Do not translate words between ### ###.
 msgctxt "meta-search.card.caption"
 msgid "Click on a source below to directly search other collections of CC-licensed images.###break###Please note that Use filters are not supported for Open Clip Art Library or Nappy."
+msgstr ""
+
+#. Do not translate words between ### ###.
+#: src/pages/search/audio.vue:5
+msgctxt "audio-results.snackbar.text"
+msgid "Press ###spacebar### to play or pause, and ###left### & ###right### to seek through the track."
+msgstr ""
+
+msgctxt "audio-results.snackbar.spacebar"
+msgid "Spacebar"
+msgstr ""
+
+msgctxt "audio-results.snackbar.left"
+msgid "←"
+msgstr ""
+
+msgctxt "audio-results.snackbar.right"
+msgid "→"
+msgstr ""
+
+#. Do not translate words between ### ###.
+#: src/components/VAllResultsGrid/VAllResultsGrid.vue:18
+msgctxt "all-results.snackbar.text"
+msgid "Press ###spacebar### to play or pause the track."
+msgstr ""
+
+#: src/components/VAllResultsGrid/VAllResultsGrid.vue:20
+msgctxt "all-results.snackbar.spacebar"
+msgid "Spacebar"
 msgstr ""
 
 msgctxt "audio-details.genre-label"
@@ -535,7 +568,7 @@ msgctxt "media-details.loading"
 msgid "Loading..."
 msgstr ""
 
-#: src/components/VAudioDetails/VRelatedAudio.vue:20
+#: src/components/VAudioDetails/VRelatedAudio.vue:21
 msgctxt "media-details.related-error"
 msgid "Error fetching related media"
 msgstr ""
@@ -797,7 +830,7 @@ msgid "Loading..."
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VAllResultsGrid/VAllResultsGrid.vue:86
+#: src/components/VAllResultsGrid/VAllResultsGrid.vue:99
 msgctxt "browse-page.fetching-error"
 msgid "Error fetching ###type###:"
 msgstr ""
@@ -877,7 +910,7 @@ msgctxt "browse-page.search-form.image"
 msgid "images"
 msgstr ""
 
-#: src/components/VAllResultsGrid/VAllResultsGrid.vue:85
+#: src/components/VAllResultsGrid/VAllResultsGrid.vue:98
 msgctxt "browse-page.search-form.audio"
 msgid "audio"
 msgstr ""
