@@ -73,6 +73,8 @@ import {
 } from '~/constants/audio'
 import { useSeekable } from '~/composables/use-seekable'
 
+import { defineEvent } from '~/types/emits'
+
 import VPlayPause from '~/components/VAudioTrack/VPlayPause.vue'
 import VWaveform from '~/components/VAudioTrack/VWaveform.vue'
 import VFullLayout from '~/components/VAudioTrack/layouts/VFullLayout.vue'
@@ -123,6 +125,10 @@ export default defineComponent({
     size: {
       type: String as PropType<AudioSize>,
     },
+  },
+  emits: {
+    'shift-tab': defineEvent<[KeyboardEvent]>(),
+    interacted: defineEvent<[]>(),
   },
   setup(props, { emit }) {
     const i18n = useI18n()
