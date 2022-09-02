@@ -58,14 +58,14 @@ import { Focus } from '~/utils/focus-management'
 
 import { useI18n } from '~/composables/use-i18n'
 
+import { useUiStore } from '~/stores/ui'
+
 import VSnackbar from '~/components/VSnackbar.vue'
 import VImageCellSquare from '~/components/VAllResultsGrid/VImageCellSquare.vue'
 import VAudioCell from '~/components/VAllResultsGrid/VAudioCell.vue'
 import VLoadMore from '~/components/VLoadMore.vue'
 import VContentLink from '~/components/VContentLink/VContentLink.vue'
 import VGridSkeleton from '~/components/VSkeleton/VGridSkeleton.vue'
-
-import { useUiStore } from '~/stores/ui'
 
 export default defineComponent({
   name: 'VAllResultsGrid',
