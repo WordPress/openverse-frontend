@@ -1,43 +1,26 @@
-import { watch, ref } from '@nuxtjs/composition-api'
+import { Ref, ref, watch } from '@nuxtjs/composition-api'
 
-import { contains, getDocument } from '~/utils/reakit-utils/dom'
+import { contains, getDocument, isInDocument } from '~/utils/reakit-utils/dom'
 
-/**
- * @param {Element} target
- */
-function isInDocument(target) {
-  const document = getDocument(target)
-  if (target.tagName === 'HTML') return true
-  return contains(document.body, target)
+type Props = {
+  containerRef: Ref<HTMLElement | null>
+  triggerRef: Ref<HTMLElement | null>
+  eventType: string
+  listener: (e: Event) => void
+  shouldListenRef?: Ref<boolean>
 }
 
-/**
- * @typedef Props
- * @property {import('./types').Ref<HTMLElement>} containerRef
- * @property {import('./types').Ref<HTMLElement>} triggerRef
- * @property {string} eventType
- * @property {(e: Event) => void} listener
- * @property {import('./types').Ref<boolean>} [shouldListenRef]
- */
-
-/**
- * @param {Props} props
- */
 export const useEventListenerOutside = ({
   containerRef,
   triggerRef,
   eventType,
   listener,
   shouldListenRef,
-}) => {
+}: Props) => {
   const boundEventRef = ref()
 
   watch(
-    /** @type {const} */ ([
-      containerRef,
-      triggerRef,
-      shouldListenRef || ref(false),
-    ]),
+    [containerRef, triggerRef, shouldListenRef || ref(false)] as const,
     ([container, trigger, shouldListen], _, onInvalidate) => {
       if (boundEventRef.value && !shouldListen) {
         const document = getDocument(container)
@@ -46,10 +29,7 @@ export const useEventListenerOutside = ({
 
       if (!shouldListen) return
 
-      /**
-       * @param {Event} event
-       */
-      const onEvent = (event) => {
+      boundEventRef.value = (event: Event) => {
         if (!listener || !container || !(event.target instanceof Element))
           return
         const target = event.target
@@ -65,8 +45,6 @@ export const useEventListenerOutside = ({
 
         listener(event)
       }
-
-      boundEventRef.value = onEvent
 
       const document = getDocument(container)
       document.addEventListener(eventType, boundEventRef.value)
