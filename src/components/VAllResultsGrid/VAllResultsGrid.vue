@@ -65,7 +65,7 @@ import VLoadMore from '~/components/VLoadMore.vue'
 import VContentLink from '~/components/VContentLink/VContentLink.vue'
 import VGridSkeleton from '~/components/VSkeleton/VGridSkeleton.vue'
 
-import { useUiStore } from '../../stores/ui'
+import { useUiStore } from '~/stores/ui'
 
 export default defineComponent({
   name: 'VAllResultsGrid',
