@@ -55,8 +55,14 @@
   </VTeleport>
 </template>
 
-<script>
-import { defineComponent, toRefs, ref, computed } from '@nuxtjs/composition-api'
+<script lang="ts">
+import {
+  defineComponent,
+  toRefs,
+  ref,
+  computed,
+  PropType,
+} from '@nuxtjs/composition-api'
 import { FocusTrap } from 'focus-trap-vue'
 import { Portal as VTeleport } from 'portal-vue'
 
@@ -81,9 +87,7 @@ export default defineComponent({
       required: true,
     },
     hide: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<() => void>} */ (
-        Function
-      ),
+      type: Function as PropType<() => void>,
       required: true,
     },
     hideOnEsc: {
@@ -103,14 +107,13 @@ export default defineComponent({
       default: true,
     },
     triggerElement: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<HTMLElement>} */ (
-        process.server ? Object : HTMLElement
-      ),
+      type: (process.server
+        ? Object
+        : HTMLElement) as PropType<HTMLElement | null>,
+      required: true,
     },
     initialFocusElement: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<HTMLElement>} */ (
-        process.server ? Object : HTMLElement
-      ),
+      type: (process.server ? Object : HTMLElement) as PropType<HTMLElement>,
       required: false,
     },
   },
@@ -120,11 +123,17 @@ export default defineComponent({
     }
 
     const propsRefs = toRefs(props)
-    const closeButton = ref()
-    const initialFocusElement = computed(
-      () => props.initialFocusElement || closeButton.value?.$el
-    )
-    const dialogRef = ref()
+    const closeButton = ref<InstanceType<typeof VButton> | null>()
+    const initialFocusElement = computed<HTMLElement | null>(() => {
+      const el = props.initialFocusElement || closeButton.value?.$el
+      if (el) {
+        return el as HTMLElement
+      } else {
+        return null
+      }
+    })
+
+    const dialogRef = ref<HTMLElement | null>(null)
     const { onKeyDown, onBlur } = useDialogContent({
       dialogRef,
       visibleRef: propsRefs.visible,
@@ -148,5 +157,3 @@ export default defineComponent({
   },
 })
 </script>
-
-<style module></style>

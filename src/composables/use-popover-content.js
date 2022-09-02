@@ -4,7 +4,7 @@ import { useDialogContent } from './use-dialog-content'
 
 /**
  * @typedef Props
- * @property {import('./types').Ref<HTMLElement>} popoverRef
+ * @property {import('./types').Ref<HTMLElement | NULL>} popoverRef
  * @property {import('./types').ToRefs<import('~/composables/use-popper').PopoverContentProps>} popoverPropsRefs
  * @property {import('@nuxtjs/composition-api').SetupContext['emit']} emit
  */
