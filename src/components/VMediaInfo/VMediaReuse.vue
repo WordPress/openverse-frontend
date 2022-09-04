@@ -6,7 +6,7 @@
     <h2 class="mb-4 text-2xl md:text-3xl">
       {{ $t('media-details.reuse.title') }}
     </h2>
-    <span class="text-base font-normal leading-[130%]">
+    <p class="text-base font-normal leading-[130%]">
       {{
         $t('media-details.reuse.description', {
           media: media.frontendMediaType,
