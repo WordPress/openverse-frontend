@@ -12,7 +12,7 @@
           media: media.frontendMediaType,
         })
       }}
-    </span>
+    </p>
     <div v-if="media.license_url" class="mt-8 grid gap-6 md:grid-cols-2">
       <VMediaLicense
         :license="media.license"
