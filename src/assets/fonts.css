@@ -22,3 +22,24 @@
   src: local('Inter-Bold'), local('Inter Bold') local('Inter'),
     url('~assets/fonts/Inter-Bold.ttf') format('ttf');
 }
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('JetBrainsMono-Regular'), local('JetBrains Mono Regular'),
+    url('~assets/fonts/JetBrainsMono-Regular.woff2') format('woff2'),
+    url('~assets/fonts/JetBrainsMono-Regular.woff') format('woff'),
+    url('~assets/fonts/JetBrainsMono-Regular.otf') format('opentype');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('JetBrainsMono-Bold'), local('JetBrains Mono Bold'),
+    url('~assets/fonts/JetBrainsMono-Bold.woff2') format('woff2'),
+    url('~assets/fonts/JetBrainsMono-Bold.woff') format('woff'),
+    url('~assets/fonts/JetBrainsMono-Bold.otf') format('opentype');
+}
