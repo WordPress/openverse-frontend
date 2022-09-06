@@ -50,6 +50,7 @@ import {
   ref,
   watch,
   onUnmounted,
+  useContext,
   useRoute,
   PropType,
 } from '@nuxtjs/composition-api'
@@ -132,6 +133,7 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const i18n = useI18n()
+    const { $sentry } = useContext()
 
     const activeMediaStore = useActiveMediaStore()
     const route = useRoute()
@@ -337,7 +339,7 @@ export default defineComponent({
             break
           default:
             errorMsg = 'err_unknown'
-            throw err
+            $sentry.captureException(err)
         }
         errorMsg = i18n.t(`audio-track.messages.${errorMsg}`).toString()
         activeMediaStore.setMessage({ message: errorMsg })
