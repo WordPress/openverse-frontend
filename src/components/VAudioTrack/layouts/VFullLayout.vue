@@ -46,17 +46,23 @@
             $t('interpunct')
           }}</span>
 
-          <div>{{ timeFmt(audio.duration || 0) }}</div>
+          <div>{{ timeFmt(audio.duration || 0, true) }}</div>
         </div>
       </div>
 
       <VButton
         as="VLink"
         :href="audio.foreign_landing_url"
-        :size="isSmall ? 'small' : 'medium'"
-        class="order-1 text-sr font-semibold ms-auto lg:order-2 lg:text-2xl"
+        size="disabled"
+        class="order-1 px-6 py-3 text-sr font-semibold ms-auto md:px-6 md:py-4 md:text-2xl lg:order-2"
       >
-        {{ $t('download-button.download') }}
+        {{ $t('audio-details.weblink') }}
+        <VIcon
+          :icon-path="externalIcon"
+          :rtl-flip="true"
+          :size="4"
+          class="ms-2 md:h-6 md:w-6"
+        />
       </VButton>
     </div>
   </div>
@@ -66,14 +72,18 @@
 import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
 
 import type { AudioDetail } from '~/models/media'
+import { timeFmt } from '~/utils/time-fmt'
 import { AudioSize, AudioStatus, audioFeatures } from '~/constants/audio'
 
 import VButton from '~/components/VButton.vue'
+import VIcon from '~/components/VIcon/VIcon.vue'
 import VLink from '~/components/VLink.vue'
+
+import externalIcon from '~/assets/icons/external-link.svg'
 
 export default defineComponent({
   name: 'VFullLayout',
-  components: { VButton, VLink },
+  components: { VButton, VIcon, VLink },
   props: {
     audio: {
       type: Object as PropType<AudioDetail>,
@@ -91,20 +101,6 @@ export default defineComponent({
     },
   },
   setup(props) {
-    /**
-     * Format the time as hh:mm:ss, dropping the hour part if it is zero.
-     * @param ms - the number of milliseconds in the duration
-     * @returns the duration in a human-friendly format
-     */
-    const timeFmt = (ms: number): string => {
-      if (ms) {
-        const date = new Date(0)
-        date.setSeconds(ms / 1e3)
-        return date.toISOString().substr(11, 8).replace(/^00:/, '')
-      }
-      return '--:--'
-    }
-
     const isSmall = computed(() => props.size === 's')
 
     return {
@@ -112,6 +108,7 @@ export default defineComponent({
 
       isSmall,
       audioFeatures,
+      externalIcon,
     }
   },
 })

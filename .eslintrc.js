@@ -38,6 +38,7 @@ module.exports = {
   rules: {
     semi: [2, 'never'],
     'no-console': 'off',
+    'prettier/prettier': 'off',
     'vue/max-attributes-per-line': 'off',
     'vue/require-prop-types': 'off',
     'vue/require-default-prop': 'off',
@@ -121,7 +122,7 @@ module.exports = {
         ],
         pathGroups: [
           {
-            // Treate vue and composition-api as "builtin"
+            // Treat vue and composition-api as "builtin"
             pattern: '(vue|@nuxtjs/composition-api)',
             group: 'builtin',
             position: 'before',

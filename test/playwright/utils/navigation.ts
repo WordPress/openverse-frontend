@@ -95,32 +95,41 @@ export const searchTypeNames = {
   },
 }
 
-const isButtonPressed = async (page: Page, buttonSelector: string) => {
+const isButtonPressed = async (
+  page: Page,
+  buttonSelector: string
+): Promise<boolean> => {
   const viewportSize = page.viewportSize()
   if (!viewportSize) {
     return false
   }
   const pageWidth = viewportSize.width
   if (pageWidth > 640) {
-    return await page.getAttribute(buttonSelector, 'aria-pressed')
+    return (await page.getAttribute(buttonSelector, 'aria-pressed')) === 'true'
   } else {
-    return (await page.locator('button', { hasText: 'Close' }).isVisible())
-      ? 'true'
-      : 'false'
+    return await page.locator('button', { hasText: 'Close' }).isVisible()
   }
 }
 
 const openMenu = async (page: Page, button: 'filter' | 'contentSwitcher') => {
   const selector = buttonSelectors[button]
-  const expectedValue = 'true'
-  if ((await isButtonPressed(page, selector)) !== expectedValue) {
+  if (!(await isButtonPressed(page, selector))) {
     await page.click(selector)
-    expect(await isButtonPressed(page, selector)).toEqual(expectedValue)
+    expect(await isButtonPressed(page, selector)).toEqual(true)
   }
 }
 
 export const openFilters = async (page: Page) => {
   await openMenu(page, 'filter')
+}
+
+export const closeFilters = async (page: Page) => {
+  const selector = buttonSelectors['filter']
+
+  if (await isButtonPressed(page, selector)) {
+    await page.click(selector)
+    expect(await isButtonPressed(page, selector)).toEqual(false)
+  }
 }
 
 export const openMobileMenu = async (page: Page) => {
@@ -248,7 +257,7 @@ export const goToSearchTerm = async (
       page.waitForNavigation(),
       page.click(`[aria-label="${t('search.search', dir)}"]`),
     ])
-    await page.waitForLoadState('networkidle')
+    await page.waitForLoadState('load')
   }
   await scrollDownAndUp(page)
   const pageWidth = page.viewportSize()?.width
@@ -276,7 +285,15 @@ export const searchFromHeader = async (page: Page, term: string) => {
  * Scroll down and up to load all lazy-loaded content.
  */
 export const openFirstResult = async (page: Page, mediaType: MediaType) => {
-  await page.locator(`a[href*="/${mediaType}/"]`).first().click()
+  await Promise.all([
+    page.waitForNavigation(),
+    page
+      .locator(`a[href*="/${mediaType}/"]`)
+      .first()
+      .click({
+        position: { x: 32, y: 32 },
+      }),
+  ])
   await scrollDownAndUp(page)
 }
 
@@ -313,7 +330,7 @@ export const scrollToTop = async (page: Page) => {
  */
 export const scrollDownAndUp = async (page: Page) => {
   await scrollToBottom(page)
-  await page.waitForLoadState('networkidle')
+  await page.waitForLoadState('load')
   await scrollToTop(page)
 }
 
