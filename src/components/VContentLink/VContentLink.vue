@@ -1,7 +1,15 @@
 <template>
+  <!-- We 'disable' the link when there are 0 results by removing the href and setting aria-disabled. -->
   <VLink
-    :href="to"
-    class="flex w-full flex-col items-start overflow-hidden rounded-sm border border-dark-charcoal/20 bg-white py-4 text-dark-charcoal ps-4 pe-12 hover:bg-dark-charcoal hover:text-white hover:no-underline focus:border-tx focus:outline-none focus-visible:ring focus-visible:ring-pink md:flex-row md:items-center md:justify-between md:p-6"
+    :href="noResults ? undefined : to"
+    role="link"
+    :aria-disabled="noResults"
+    class="flex w-full flex-col items-start overflow-hidden rounded-sm border border-dark-charcoal/20 bg-white py-4 text-dark-charcoal ps-4 pe-12 md:flex-row md:items-center md:justify-between md:p-6"
+    :class="
+      noResults
+        ? 'opacity-50'
+        : 'hover:bg-dark-charcoal hover:text-white hover:no-underline focus:border-tx focus:outline-none focus-visible:ring focus-visible:ring-pink'
+    "
     @keydown.native.shift.tab.exact="$emit('shift-tab', $event)"
   >
     <div class="flex flex-col items-start md:flex-row md:items-center">
@@ -48,7 +56,8 @@ export default defineComponent({
       required: true,
     },
     /**
-     * The number of results that the search returned.
+     * The number of results that the search returned. The link
+     * will be disabled if this value is zero.
      */
     resultsCount: {
       type: Number,
@@ -67,9 +76,15 @@ export default defineComponent({
   setup(props) {
     const iconPath = computed(() => iconMapping[props.mediaType])
     const { getI18nCount } = useI18nResultsCount()
+    const noResults = computed(() => props.resultsCount === 0)
     const resultsCountLabel = computed(() => getI18nCount(props.resultsCount))
 
-    return { iconPath, imageIcon, resultsCountLabel }
+    return {
+      iconPath,
+      imageIcon,
+      resultsCountLabel,
+      noResults,
+    }
   },
 })
 </script>
