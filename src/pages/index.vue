@@ -29,10 +29,13 @@
             </span>
           </h1>
         </VLink>
-        <h2 class="mt-auto text-4xl lg:mt-6 lg:text-6xl">
+        <h2
+          class="mt-auto mb-2 text-[27px] font-normal leading-[35px] md:mt-6 md:mb-4 md:text-[46px] md:leading-[60px]"
+        >
           {{ $t('hero.subtitle') }}
         </h2>
-        <div class="mt-4 flex justify-start gap-4 md:hidden">
+        <p class="text-base md:text-3xl">{{ $t('hero.description') }}</p>
+        <div class="mt-8 flex justify-start gap-4 md:hidden">
           <VSearchTypeRadio
             v-for="type in supportedSearchTypes"
             :key="type"
@@ -43,7 +46,7 @@
         </div>
         <VSearchBar
           v-model.trim="searchTerm"
-          class="group mt-4 max-w-[40rem] lg:mt-8"
+          class="group mt-4 max-w-[40rem] md:mt-6"
           size="standalone"
           @submit="handleSearch"
         >
