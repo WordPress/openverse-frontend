@@ -27,7 +27,7 @@
           </h1>
         </VLink>
         <h2
-          class="mt-auto mb-2 text-[27px] font-normal leading-[35px] md:mt-16 md:mb-4 md:text-[46px] md:leading-[60px]"
+          class="mt-auto mb-2 max-w-[80%] text-[27px] font-normal leading-[35px] md:mt-16 md:mb-4 md:text-[46px] md:leading-[60px]"
         >
           {{ $t('hero.subtitle') }}
         </h2>
