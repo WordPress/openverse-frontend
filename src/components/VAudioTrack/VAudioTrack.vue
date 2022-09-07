@@ -297,7 +297,7 @@ export default defineComponent({
       )
 
       if (
-        route.value.params.id === props.audio.id ||
+        route.value?.params?.id === props.audio.id ||
         mediaStore.getItemById(AUDIO, props.audio.id)
       ) {
         /**

@@ -30,7 +30,10 @@ jest.mock('~/composables/use-browser-detection', () => ({
 }))
 
 jest.mock('~/composables/use-i18n', () => ({
-  useI18n: jest.fn(() => mockI18n),
+  useI18n: jest.fn(() => ({
+    t: jest.fn((val) => val),
+    tc: jest.fn((val) => val),
+  })),
 }))
 
 const useVueI18n = (vue) => {
@@ -88,9 +91,6 @@ describe('AudioTrack', () => {
     options = {
       propsData: props,
       stubs,
-      mocks: {
-        $nuxt: { context: { i18n: { t: jest.fn() } } },
-      },
     }
 
     setActivePinia(createPinia())
@@ -121,13 +121,27 @@ describe('AudioTrack', () => {
     expect(element).toHaveAttribute('href', props.audio.creator_url)
   })
 
-  it.skip('on play error displays a message instead of the waveform', async () => {
+  it('on play error displays a message instead of the waveform', async () => {
     options.propsData.audio.url = 'bad.url'
     options.propsData.layout = 'row'
     options.stubs.VPlayPause = false
-    const { debug, getByRole } = render(VAudioTrack, options, configureVue)
+    options.stubs.VWaveform = false
+    options.stubs.VAudioThumbnail = true
+    const pauseStub = jest
+      .spyOn(window.HTMLMediaElement.prototype, 'pause')
+      .mockImplementation(() => undefined)
+
+    const playStub = jest
+      .spyOn(window.HTMLMediaElement.prototype, 'play')
+      .mockImplementation(() =>
+        Promise.reject(new DOMException('msg', 'NotAllowedError'))
+      )
+    const { getByRole, getByText } = render(VAudioTrack, options, configureVue)
+
     await fireEvent.click(getByRole('button'))
-    debug()
-    // TODO: Fix error when trying to access route params
+    await expect(playStub).toHaveBeenCalledTimes(1)
+    await expect(pauseStub).toHaveBeenCalledTimes(1)
+    await expect(getByText('audio-track.messages.err_unallowed')).toBeVisible()
+    // It's not possible to get the vm to test that Sentry has been called
   })
 })
