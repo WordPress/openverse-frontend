@@ -4,11 +4,11 @@
     :href="hasResults ? to : undefined"
     role="link"
     :aria-disabled="!hasResults"
-    class="flex w-full flex-col items-start overflow-hidden rounded-sm border border-dark-charcoal/20 bg-white py-4 text-dark-charcoal ps-4 pe-12 md:flex-row md:items-center md:justify-between md:p-6"
+    class="flex w-full flex-col items-start overflow-hidden rounded-sm border border-dark-charcoal/20 bg-white py-4 ps-4 pe-12 md:flex-row md:items-center md:justify-between md:p-6"
     :class="
       hasResults
-        ? 'hover:bg-dark-charcoal hover:text-white hover:no-underline focus:border-tx focus:outline-none focus-visible:ring focus-visible:ring-pink'
-        : 'opacity-50'
+        ? ' text-dark-charcoal hover:bg-dark-charcoal hover:text-white hover:no-underline focus:border-tx focus:outline-none focus-visible:ring focus-visible:ring-pink'
+        : 'text-dark-charcoal/40'
     "
     @keydown.native.shift.tab.exact="$emit('shift-tab', $event)"
   >
