@@ -22,7 +22,7 @@
               class="flex flex-row items-center text-dark-charcoal"
             >
               <OpenverseLogo class="me-5 xl:me-5" height="46" width="50" />
-              <OpenverseBrand class="h-[46px]" height="35" width="234" />
+              <OpenverseBrand height="46" width="234" />
             </span>
           </h1>
         </VLink>
