@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-09-07T19:08:43+00:00\n"
+"POT-Creation-Date: 2022-09-07T20:50:01+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2011,9 +2011,14 @@ msgctxt "notification.translation.link"
 msgid "contributing a translation"
 msgstr ""
 
-#: src/pages/index.vue:33
+#: src/pages/index.vue:32
 msgctxt "hero.subtitle"
-msgid "Browse through over 600 million items to reuse"
+msgid "Explore more than 600 million creative works"
+msgstr ""
+
+#: src/pages/index.vue:34
+msgctxt "hero.description"
+msgid "An extensive library of free stock photos, images, and audio, available for free use."
 msgstr ""
 
 msgctxt "hero.aria.search"
