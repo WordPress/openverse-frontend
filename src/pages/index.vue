@@ -12,7 +12,7 @@
         :is-search-route="false"
       />
 
-      <div class="z-10 mx-auto w-full px-6 lg:w-auto lg:pe-0 lg:ps-24 xl:px-40">
+      <div class="z-10 mx-auto w-full px-6 lg:w-auto lg:pe-0 lg:ps-24">
         <VLink href="/" class="hidden lg:block">
           <h1>
             <span class="sr-only">Openverse</span>
