@@ -8,7 +8,7 @@
     :class="
       hasResults
         ? ' text-dark-charcoal hover:bg-dark-charcoal hover:text-white hover:no-underline focus:border-tx focus:outline-none focus-visible:ring focus-visible:ring-pink'
-        : 'text-dark-charcoal/40'
+        : 'cursor-not-allowed text-dark-charcoal/40'
     "
     @keydown.native.shift.tab.exact="$emit('shift-tab', $event)"
   >
