@@ -12,11 +12,8 @@
         :is-search-route="false"
       />
 
-      <div class="z-10 mx-auto w-full px-6 lg:w-auto lg:pe-0 lg:ps-30 xl:px-40">
-        <VLink
-          href="/"
-          class="relative -left-[6.25rem] hidden rtl:-right-[6.25rem] lg:block"
-        >
+      <div class="z-10 mx-auto w-full px-6 lg:w-auto lg:pe-0 lg:ps-24 xl:px-40">
+        <VLink href="/" class="hidden lg:block">
           <h1>
             <span class="sr-only">Openverse</span>
             <!-- width and height chosen w.r.t. viewBox "0 0 280 42" -->
@@ -24,13 +21,13 @@
               aria-hidden="true"
               class="flex flex-row items-center text-dark-charcoal"
             >
-              <OpenverseLogo class="h-[70px] w-[70px] me-6 xl:me-7" />
-              <OpenverseBrand class="h-[60px] w-[315px]" />
+              <OpenverseLogo class="me-5 xl:me-5" height="46" width="50" />
+              <OpenverseBrand class="h-[46px]" height="35" width="234" />
             </span>
           </h1>
         </VLink>
         <h2
-          class="mt-auto mb-2 text-[27px] font-normal leading-[35px] md:mt-6 md:mb-4 md:text-[46px] md:leading-[60px]"
+          class="mt-auto mb-2 text-[27px] font-normal leading-[35px] md:mt-16 md:mb-4 md:text-[46px] md:leading-[60px]"
         >
           {{ $t('hero.subtitle') }}
         </h2>
