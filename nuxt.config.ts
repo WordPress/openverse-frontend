@@ -240,17 +240,14 @@ const config: NuxtConfig = {
         statusCode: 301,
       },
     ],
+    // If the URL cannot be decoded, we call next() to show the client-side error page.
     onDecodeError: (
-      error: Error | string,
+      _error: Error,
       _req: IncomingMessage,
       _res: http.ServerResponse,
       next: NextFunction
     ) => {
-      if (error instanceof Error && error.message === 'URI malformed') {
-        return next()
-      } else {
-        return next(error)
-      }
+      return next()
     },
   },
   sentry: sentryConfig,
