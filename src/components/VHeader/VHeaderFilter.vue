@@ -45,12 +45,12 @@ import {
 
 import { Portal as VTeleport } from 'portal-vue'
 
+import { useBodyScrollLock } from '~/composables/use-body-scroll-lock'
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
 import { useFocusFilters } from '~/composables/use-focus-filters'
 
 import { Focus } from '~/utils/focus-management'
 import { defineEvent } from '~/types/emits'
-
 import local from '~/utils/local'
 import { env } from '~/utils/env'
 import { useSearchStore } from '~/stores/search'
@@ -91,6 +91,7 @@ export default defineComponent({
 
     const open = () => (visibleRef.value = true)
     const close = () => (visibleRef.value = false)
+    const { lock, unlock } = useBodyScrollLock({ nodeRef })
 
     onMounted(() => {
       // We default to show the filter on desktop, and only close it if the user has
@@ -112,7 +113,13 @@ export default defineComponent({
 
     watch(visibleRef, (visible) => {
       filterSidebar.setVisibility(visible)
-      visible ? emit('open') : emit('close')
+      if (visible) {
+        emit('open')
+        lock()
+      } else {
+        emit('close')
+        unlock()
+      }
     })
 
     watch(disabledRef, (disabled) => {
