@@ -15,6 +15,8 @@ import { env } from './src/utils/env'
 
 import type { NuxtConfig, ServerMiddleware } from '@nuxt/types'
 import type { LocaleObject } from '@nuxtjs/i18n'
+import type { IncomingMessage, NextFunction } from 'connect'
+import type http from 'http'
 
 /**
  * The default metadata for the site. Can be extended and/or overwritten per page. And even in components!
@@ -230,7 +232,27 @@ const config: NuxtConfig = {
    * See the redirect module for more info.
    * {@link https://github.com/nuxt-community/redirect-module#usage}
    */
-  redirect: [{ from: '^/photos/(.*)$', to: '/image/$1', statusCode: 301 }],
+  redirect: {
+    rules: [
+      {
+        from: '^/photos/(.*)$',
+        to: '/image/$1',
+        statusCode: 301,
+      },
+    ],
+    onDecodeError: (
+      error: Error | string,
+      _req: IncomingMessage,
+      _res: http.ServerResponse,
+      next: NextFunction
+    ) => {
+      if (error instanceof Error && error.message === 'URI malformed') {
+        return next()
+      } else {
+        return next(error)
+      }
+    },
+  },
   sentry: sentryConfig,
   hooks: {
     render: {
