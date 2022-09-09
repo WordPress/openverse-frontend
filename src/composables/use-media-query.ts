@@ -37,7 +37,8 @@ export function useMediaQuery(
   tryOnMounted(() => {
     update()
 
-    if (mediaQuery && 'addEventListener' in mediaQuery) {
+    if (!mediaQuery) return
+    if ('addEventListener' in mediaQuery) {
       mediaQuery.addEventListener('change', update)
     } else {
       // Before Safari 14, MediaQueryList is based on EventTarget,
