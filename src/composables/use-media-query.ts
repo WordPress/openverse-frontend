@@ -1,9 +1,11 @@
 /* this implementation is from https://github.com/vueuse/vueuse/packages/core/useMediaQuery/
  which, in turn, is ported from https://github.com/logaretm/vue-use-web by Abdelrahman Awad */
-import { onBeforeUnmount, ref } from '@nuxtjs/composition-api'
+import { ref } from '@nuxtjs/composition-api'
 
 import { SCREEN_SIZES, Breakpoint } from '~/constants/screens'
 import { defaultWindow } from '~/constants/window'
+import { tryOnMounted } from '~/utils/try-on-mounted'
+import { tryOnScopeDispose } from '~/utils/try-on-scope-dispose'
 
 interface Options {
   shouldPassInSSR?: boolean
@@ -17,33 +19,41 @@ export function useMediaQuery(
   query: string,
   options: Options = { shouldPassInSSR: false }
 ) {
-  const matches = ref(false)
   const { window = defaultWindow } = options
-  if (!window) {
-    matches.value = Boolean(options.shouldPassInSSR)
-    return matches
-  }
 
-  const mediaQuery = window.matchMedia(query)
-  matches.value = mediaQuery.matches
+  let mediaQuery: MediaQueryList | undefined
+  const matches = ref(Boolean(options.shouldPassInSSR))
 
-  const handler = (event: MediaQueryListEvent) => {
-    matches.value = event.matches
-  }
-  // Before Safari 14, MediaQueryList is based on EventTarget,
-  // so we use addListener() and removeListener(), too.
-  if ('addEventListener' in mediaQuery) {
-    mediaQuery.addEventListener('change', handler)
-  } else {
-    mediaQuery.addListener(handler)
-  }
-
-  onBeforeUnmount(() => {
-    if ('removeEventListener' in mediaQuery) {
-      mediaQuery.removeEventListener('change', handler)
-    } else {
-      mediaQuery.removeListener(handler)
+  const update = () => {
+    if (!window) {
+      return
     }
+    if (!mediaQuery) {
+      mediaQuery = window.matchMedia(query)
+    }
+    matches.value = mediaQuery.matches
+  }
+
+  tryOnMounted(() => {
+    update()
+
+    if (mediaQuery && 'addEventListener' in mediaQuery) {
+      mediaQuery.addEventListener('change', update)
+    } else {
+      // Before Safari 14, MediaQueryList is based on EventTarget,
+      // so we use addListener() and removeListener(), too.
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      mediaQuery.addListener(update)
+    }
+
+    tryOnScopeDispose(() => {
+      if ('removeEventListener' in update) {
+        mediaQuery?.removeEventListener('change', update)
+      } else {
+        mediaQuery?.removeListener(update)
+      }
+    })
   })
 
   return matches

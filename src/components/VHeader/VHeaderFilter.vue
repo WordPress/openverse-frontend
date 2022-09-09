@@ -41,6 +41,7 @@ import {
   inject,
   Ref,
   toRef,
+  onBeforeUnmount,
 } from '@nuxtjs/composition-api'
 
 import { Portal as VTeleport } from 'portal-vue'
@@ -111,20 +112,26 @@ export default defineComponent({
       }
     })
 
+    onBeforeUnmount(() => unlock())
+
     watch(visibleRef, (visible) => {
       filterSidebar.setVisibility(visible)
-      if (visible) {
-        emit('open')
-        lock()
-      } else {
-        emit('close')
-        unlock()
+      visible ? emit('open') : emit('close')
+      if (!isMinScreenMd.value) {
+        visible ? lock() : unlock()
       }
     })
 
     watch(disabledRef, (disabled) => {
       if (disabled && visibleRef.value) {
         close()
+      }
+    })
+
+    // Lock the scroll when the screen changes to below Md if filters are open.
+    watch(isMinScreenMd, (isMd) => {
+      if (!isMd && visibleRef.value) {
+        lock()
       }
     })
 
