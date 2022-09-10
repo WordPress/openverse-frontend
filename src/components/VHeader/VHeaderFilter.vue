@@ -88,7 +88,7 @@ export default defineComponent({
     const filterSidebar = useFilterSidebarVisibility()
     const disabledRef = toRef(props, 'disabled')
 
-    const isMinScreenMd: Ref<boolean> = inject('isMinScreenMd', ref(true))
+    const isMinScreenMd: Ref<boolean> = inject('isMinScreenMd')
 
     const open = () => (visibleRef.value = true)
     const close = () => (visibleRef.value = false)
