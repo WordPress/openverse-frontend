@@ -16,17 +16,14 @@ import VContentSettingsButton from '~/components/VHeader/VContentSettingsButton.
     }),
   ]}
   argTypes={{
-    pressed: {
-      type: 'boolean',
-    },
-    areFiltersSelected: {
-      type: 'boolean',
+    click: {
+      action: 'click',
     },
   }}
 />
 
 export const Template = (args, { argTypes }) => ({
-  template: `<VContentSettingsButton v-bind="args" />`,
+  template: `<VContentSettingsButton v-bind="args" v-on="args" />`,
   components: { VContentSettingsButton },
   props: Object.keys(argTypes),
   setup() {
