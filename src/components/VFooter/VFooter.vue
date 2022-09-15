@@ -2,7 +2,7 @@
   <footer class="flex flex-col gap-10 px-6 py-10 lg:px-10 xl:flex-row xl:gap-8">
     <!-- Logo and links -->
     <div
-      v-if="isContent"
+      v-if="isContentMode"
       class="flex flex-col gap-10 md:flex-row md:items-center md:justify-between xl:flex-grow"
     >
       <VLink href="/" class="text-dark-charcoal">
@@ -81,7 +81,7 @@ export default defineComponent({
   setup(props) {
     const { all: allPages, current: currentPage } = usePages(true)
 
-    const isContent = computed(() => {
+    const isContentMode = computed(() => {
       if (props.mode) {
         return props.mode === 'content'
       } else {
@@ -92,7 +92,7 @@ export default defineComponent({
     })
 
     return {
-      isContent,
+      isContentMode,
       allPages,
     }
   },
