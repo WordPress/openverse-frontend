@@ -9,6 +9,7 @@
       :aria-haspopup="true"
       :aria-pressed="isPressed"
       aria-controls="content-settings-modal"
+      @click="$emit('click')"
     />
     <span
       v-if="areFiltersSelected"
@@ -18,6 +19,8 @@
 </template>
 
 <script lang="ts">
+import { defineEvent } from '~/types/emits'
+
 import VIconButton from '~/components/VIconButton/VIconButton.vue'
 
 import sourceIcon from '~/assets/icons/source.svg'
@@ -34,6 +37,9 @@ export default {
       type: Boolean,
       default: false,
     },
+  },
+  emits: {
+    click: defineEvent(),
   },
   setup() {
     return {
