@@ -1,5 +1,5 @@
 <template>
-  <div class="app relative grid">
+  <div class="app flex min-h-screen flex-col">
     <div class="sticky top-0 z-40 block">
       <VTeleportTarget name="skip-to-content" :force-destroy="true" />
       <VMigrationNotice />
@@ -8,7 +8,7 @@
       <VHeaderOld v-else />
     </div>
     <main
-      class="main embedded w-screen md:w-full"
+      class="main embedded w-screen flex-shrink-0 flex-grow md:w-full"
       :class="{ 'has-sidebar': isSidebarVisible }"
     >
       <Nuxt class="main-page min-w-0" />
