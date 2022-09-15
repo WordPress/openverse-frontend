@@ -8,6 +8,7 @@
       :aria-label="$t('header.aria.menu')"
       :aria-haspopup="true"
       :aria-pressed="isPressed"
+      aria-controls="content-settings-modal"
     />
     <span
       v-if="areFiltersSelected"
