@@ -1,13 +1,13 @@
 <template>
   <!-- Using `flex` to center the group of SVGs inside the bounding box. -->
-  <span class="inline-flex flex-row items-center">
+  <div class="flex flex-row items-center">
     <!-- Using `flex` to place two SVGs side by side. -->
     <span class="inline-flex h-[1em] flex-row gap-[0.4em]" aria-hidden="true">
       <OpenverseLogo class="h-full" />
       <OpenverseBrand class="h-full" />
     </span>
     <span v-if="srText" class="sr-only">{{ srText }}</span>
-  </span>
+  </div>
 </template>
 
 <script>

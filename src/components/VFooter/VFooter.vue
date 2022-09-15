@@ -5,7 +5,9 @@
       v-if="isContent"
       class="flex flex-col gap-10 md:flex-row md:items-center md:justify-between xl:flex-grow"
     >
-      <VBrand class="text-[18px]" />
+      <VLink href="/" class="text-dark-charcoal">
+        <VBrand class="text-[18px]" />
+      </VLink>
       <nav>
         <ul class="grid grid-cols-2 gap-6 text-sm sm:flex sm:flex-row sm:gap-8">
           <li v-for="page in allPages" :key="page.id">

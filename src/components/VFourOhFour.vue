@@ -1,9 +1,7 @@
 <template>
   <main class="page-404 relative h-screen overflow-x-hidden bg-yellow">
     <VLink href="/" class="relative z-10 text-dark-charcoal">
-      <div class="py-6 px-6 lg:py-8 lg:px-10">
-        <VBrand class="text-[18px]" />
-      </div>
+      <VBrand class="m-6 text-[18px] lg:mx-10 lg:my-8" />
     </VLink>
     <Oops
       aria-hidden="true"
