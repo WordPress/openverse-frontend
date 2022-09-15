@@ -3,8 +3,8 @@
   <div class="flex flex-row items-center">
     <!-- Using `flex` to place two SVGs side by side. -->
     <span class="inline-flex h-[1em] flex-row gap-[0.4em]" aria-hidden="true">
-      <OpenverseLogo class="h-full" />
-      <OpenverseBrand class="h-full" />
+      <OpenverseLogo class="h-full w-auto" />
+      <OpenverseBrand class="h-full w-auto" />
     </span>
     <span v-if="srText" class="sr-only">{{ srText }}</span>
   </div>
