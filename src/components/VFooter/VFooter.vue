@@ -16,7 +16,7 @@
               class="text-dark-charcoal"
               :href="page.link"
               show-external-icon
-              >{{ $t(page.name) }}</VLink
+              >{{ $t(`navigation.${page.id}`) }}</VLink
             >
           </li>
         </ul>

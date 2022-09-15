@@ -30,12 +30,10 @@
   },
   "header": {
     "home-link": "Home",
-    "about-nav-item": "About",
-    "our-store-nav-item": "Our Story",
+    "about-nav-item": "Our Story",
     "source-nav-item": "Sources",
     "search-guide-nav-item": "Search Guide",
     "meta-search-nav-item": "Meta Search",
-    "get-involved-nav-item": "Get Involved",
     "privacy-nav-item": "Privacy",
     "feedback-nav-item": "Feedback",
     "support-nav-item": "Support Us",
@@ -46,8 +44,7 @@
       "search": "search",
       "sr-search": "search button"
     },
-    "licenses-nav-item": "Licenses",
-    "the-licenses-nav-item": "The Licenses",
+    "licenses-nav-item": "The Licenses",
     "about-tab": "About",
     "resources-tab": "Resources",
     "api-nav-item": "API",
@@ -61,6 +58,14 @@
       "simple": "Filters",
       "with-count": "{count} Filter|{count} Filters"
     }
+  },
+  "navigation": {
+    "about": "About",
+    "licenses": "Licenses",
+    "get-involved": "Get involved",
+    "api": "API",
+    "privacy": "Privacy",
+    "feedback": "Feedback"
   },
   "about": {
     "title": "About {openverse}",
