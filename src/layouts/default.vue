@@ -7,6 +7,7 @@
       <VHeader v-if="isNewHeaderEnabled" />
       <VHeaderOld v-else />
     </div>
+
     <main
       class="main embedded w-screen flex-shrink-0 flex-grow md:w-full"
       :class="{ 'has-sidebar': isSidebarVisible }"
@@ -17,7 +18,11 @@
         :class="{ 'border-dark-charcoal-20 border-s': isSidebarVisible }"
       />
     </main>
-    <VFooter v-if="isNewHeaderEnabled" />
+
+    <VFooter
+      v-if="isNewHeaderEnabled"
+      class="border-t border-dark-charcoal-20"
+    />
     <VModalTarget class="modal" />
     <VGlobalAudioSection />
   </div>
