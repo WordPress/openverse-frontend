@@ -35,6 +35,7 @@
     "source-nav-item": "Sources",
     "search-guide-nav-item": "Search Guide",
     "meta-search-nav-item": "Meta Search",
+    "get-involved-nav-item": "Get Involved",
     "privacy-nav-item": "Privacy",
     "feedback-nav-item": "Feedback",
     "support-nav-item": "Support Us",
@@ -671,5 +672,8 @@
     "nonexistent": "Nonexistent",
     "on": "On",
     "off": "Off"
+  },
+  "footer": {
+    "wordpress-affiliation": "Powered by {wordpress}"
   }
 }
