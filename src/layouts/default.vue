@@ -17,6 +17,7 @@
         :class="{ 'border-dark-charcoal-20 border-s': isSidebarVisible }"
       />
     </main>
+    <VFooter />
     <VModalTarget class="modal" />
     <VGlobalAudioSection />
   </div>
@@ -37,6 +38,7 @@ import VHeaderOld from '~/components/VHeaderOld/VHeaderOld.vue'
 import VModalTarget from '~/components/VModal/VModalTarget.vue'
 import VSidebarTarget from '~/components/VModal/VSidebarTarget.vue'
 import VGlobalAudioSection from '~/components/VGlobalAudioSection/VGlobalAudioSection.vue'
+import VFooter from '~/components/VFooter/VFooter.vue'
 
 const embeddedPage = {
   name: 'embedded',
@@ -45,6 +47,7 @@ const embeddedPage = {
     VTranslationStatusBanner,
     VHeaderOld,
     VHeader: () => import('~/components/VHeader/VHeader.vue'),
+    VFooter,
     VModalTarget,
     VTeleportTarget,
     VSidebarTarget,
