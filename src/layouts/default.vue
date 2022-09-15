@@ -34,11 +34,7 @@ import { isMinScreen } from '~/composables/use-media-query'
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
 import { useFeatureFlagStore } from '~/stores/feature-flag'
 
-import {
-  IsHeaderScrolledKey,
-  IsMinScreenLgKey,
-  IsMinScreenMdKey,
-} from '~/types/provides'
+import { IsMinScreenLgKey, IsMinScreenMdKey } from '~/types/provides'
 
 import VMigrationNotice from '~/components/VMigrationNotice.vue'
 import VTranslationStatusBanner from '~/components/VTranslationStatusBanner.vue'
@@ -86,7 +82,7 @@ const embeddedPage = {
     })
     const showScrollButton = computed(() => scrollY.value > 70)
 
-    provide(IsHeaderScrolledKey, isHeaderScrolled)
+    provide('isHeaderScrolled', isHeaderScrolled)
     provide('showScrollButton', showScrollButton)
     // TODO: remove the untyped `isMinScreenMd` provide after the new header is enabled.
     provide('isMinScreenMd', isMinScreenMd)
