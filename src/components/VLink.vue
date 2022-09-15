@@ -1,7 +1,15 @@
 <template>
-  <Component :is="linkComponent" v-bind="linkProperties" v-on="$listeners"
-    ><slot
-  /></Component>
+  <Component
+    :is="linkComponent"
+    v-bind="linkProperties"
+    class="inline-flex flex-row items-center gap-2"
+    v-on="$listeners"
+  >
+    <slot />
+    <template v-if="showExternalIcon && !isInternal">
+      <VIcon :icon-path="externalLinkIcon" class="inline-block" :size="4" />
+    </template>
+  </Component>
 </template>
 
 <script lang="ts">
@@ -16,6 +24,10 @@
  */
 import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
 
+import VIcon from '~/components/VIcon/VIcon.vue'
+
+import externalLinkIcon from '~/assets/icons/external-link.svg'
+
 const defaultProps = Object.freeze({
   target: '_blank',
   rel: 'noopener noreferrer',
@@ -23,6 +35,7 @@ const defaultProps = Object.freeze({
 
 export default defineComponent({
   name: 'VLink',
+  components: { VIcon },
   props: {
     href: {
       type: String,
@@ -30,10 +43,20 @@ export default defineComponent({
       validator: (v: string | undefined) =>
         (typeof v === 'string' && v.length > 0) || typeof v === 'undefined',
     },
+    /**
+     * whether to render the external link icon next to links that point away
+     * from Openverse
+     */
+    showExternalIcon: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup(props) {
     const { app } = useContext()
-    function checkHref(p: typeof props): p is { href: string } {
+    function checkHref(
+      p: typeof props
+    ): p is { href: string; showExternalIcon: boolean } {
       return typeof p.href === 'string' && !['', '#'].includes(p.href)
     }
 
@@ -53,7 +76,7 @@ export default defineComponent({
         : null
     )
 
-    return { linkProperties, linkComponent }
+    return { linkProperties, linkComponent, isInternal, externalLinkIcon }
   },
 })
 </script>
