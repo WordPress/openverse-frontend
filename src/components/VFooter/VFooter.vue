@@ -25,7 +25,7 @@
     <!-- Locale chooser and WordPress affiliation graphic -->
     <div class="flex flex-col justify-between gap-10 sm:flex-row xl:flex-grow">
       <div
-        class="flex h-10 w-full w-full items-center justify-center border border-dark-charcoal-20 sm:w-50"
+        class="flex h-10 w-full w-full items-center justify-center rounded-sm border border-dark-charcoal-20 bg-white sm:w-50"
       >
         {{ $t('🚧') }}
       </div>
