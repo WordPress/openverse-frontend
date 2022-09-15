@@ -29,16 +29,18 @@
       >
         {{ $t('🚧') }}
       </div>
-      <i18n
-        tag="div"
-        path="footer.wordpress-affiliation"
-        class="flex flex-row items-center gap-2 text-sm"
-      >
-        <template #wordpress>
-          <WordPress class="aria-hidden" />
-          <span class="sr-only">WordPress</span>
-        </template>
-      </i18n>
+      <VLink href="https://wordpress.org" class="text-dark-charcoal">
+        <i18n
+          tag="div"
+          path="footer.wordpress-affiliation"
+          class="flex flex-row items-center gap-2 text-sm"
+        >
+          <template #wordpress>
+            <WordPress class="aria-hidden" />
+            <span class="sr-only">WordPress</span>
+          </template>
+        </i18n>
+      </VLink>
     </div>
   </footer>
 </template>
