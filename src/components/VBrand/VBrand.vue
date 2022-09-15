@@ -1,0 +1,40 @@
+<template>
+  <!-- Using `flex` to center the group of SVGs inside the bounding box. -->
+  <span class="inline-flex flex-row items-center">
+    <!-- Using `flex` to place two SVGs side by side. -->
+    <span class="inline-flex h-[1em] flex-row gap-[0.4em]" aria-hidden="true">
+      <OpenverseLogo class="h-full" />
+      <OpenverseBrand class="h-full" />
+    </span>
+    <span v-if="srText" class="sr-only">{{ srText }}</span>
+  </span>
+</template>
+
+<script>
+import { defineComponent } from '@nuxtjs/composition-api'
+
+import OpenverseLogo from '~/assets/logo.svg?inline'
+import OpenverseBrand from '~/assets/brand.svg?inline'
+
+/**
+ * Render the openverse logo and wordmark next to each other, while being
+ * accessible to screen-readers.
+ */
+export default defineComponent({
+  name: 'VBrand',
+  components: {
+    OpenverseLogo,
+    OpenverseBrand,
+  },
+  props: {
+    /**
+     * the screen-reader text to put inside the component; Can be set to a blank
+     * string to not read anything at all.
+     */
+    srText: {
+      type: String,
+      default: 'Openverse',
+    },
+  },
+})
+</script>

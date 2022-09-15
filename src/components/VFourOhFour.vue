@@ -1,14 +1,9 @@
 <template>
   <main class="page-404 relative h-screen overflow-x-hidden bg-yellow">
     <VLink href="/" class="relative z-10 text-dark-charcoal">
-      <span class="sr-only">Openverse</span>
-      <span
-        class="flex h-auto w-30 flex-row pt-6 text-dark-charcoal ms-6 lg:pt-8 lg:ms-10"
-        aria-hidden="true"
-      >
-        <OpenverseLogo />
-        <OpenverseBrand class="ms-1" />
-      </span>
+      <div class="py-6 px-6 lg:py-8 lg:px-10">
+        <VBrand class="text-[18px]" />
+      </div>
     </VLink>
     <Oops
       aria-hidden="true"
@@ -58,19 +53,17 @@ import { useSearchStore } from '~/stores/search'
 
 import VSearchBar from '~/components/VHeaderOld/VSearchBar/VSearchBar.vue'
 import VLink from '~/components/VLink.vue'
+import VBrand from '~/components/VBrand/VBrand.vue'
 
 import Oops from '~/assets/oops.svg?inline'
-import OpenverseLogo from '~/assets/logo.svg?inline'
-import OpenverseBrand from '~/assets/brand.svg?inline'
 
 export default defineComponent({
   name: 'VFourOhFour',
   components: {
-    OpenverseLogo,
-    OpenverseBrand,
     Oops,
     VLink,
     VSearchBar,
+    VBrand,
   },
   props: ['error'],
   setup() {
