@@ -6,7 +6,7 @@ export default function usePages() {
   const pages = [
     {
       id: 'about',
-      name: 'header.about-nav-item',
+      name: 'header.our-story-nav-item',
       link: app.localePath('/about'),
     },
     {
@@ -16,7 +16,7 @@ export default function usePages() {
     },
     {
       id: 'licenses',
-      name: 'header.licenses-nav-item',
+      name: 'header.the-licenses-nav-item',
       link: 'https://creativecommons.org/about/cclicenses/',
     },
     {

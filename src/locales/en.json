@@ -30,7 +30,8 @@
   },
   "header": {
     "home-link": "Home",
-    "about-nav-item": "Our Story",
+    "about-nav-item": "About",
+    "our-store-nav-item": "Our Story",
     "source-nav-item": "Sources",
     "search-guide-nav-item": "Search Guide",
     "meta-search-nav-item": "Meta Search",
@@ -44,7 +45,8 @@
       "search": "search",
       "sr-search": "search button"
     },
-    "licenses-nav-item": "The Licenses",
+    "licenses-nav-item": "Licenses",
+    "the-licenses-nav-item": "The Licenses",
     "about-tab": "About",
     "resources-tab": "Resources",
     "api-nav-item": "API",
