@@ -5,10 +5,12 @@
     class="inline-flex flex-row items-center gap-2"
     v-on="$listeners"
   >
-    <slot />
-    <template v-if="showExternalIcon && !isInternal">
-      <VIcon :icon-path="externalLinkIcon" class="inline-block" :size="4" />
-    </template>
+    <slot /><VIcon
+      v-if="showExternalIcon && !isInternal"
+      :icon-path="externalLinkIcon"
+      class="inline-block"
+      :size="4"
+    />
   </Component>
 </template>
 
