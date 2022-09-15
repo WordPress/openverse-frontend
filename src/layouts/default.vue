@@ -17,7 +17,7 @@
         :class="{ 'border-dark-charcoal-20 border-s': isSidebarVisible }"
       />
     </main>
-    <VFooter />
+    <VFooter v-if="isNewHeaderEnabled" />
     <VModalTarget class="modal" />
     <VGlobalAudioSection />
   </div>
