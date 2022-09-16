@@ -84,7 +84,7 @@ test.describe('Load more button', () => {
         await expect(page.locator(loadMoreButton)).toBeVisible()
       })
 
-      test(`Renders on All view when images have results but audio don't`, async ({
+      test(`Renders on All view when images have results but audio does not`, async ({
         page,
       }) => {
         await goToSearchTerm(page, 'ecommerce', { mode })
