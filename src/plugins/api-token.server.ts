@@ -1,7 +1,7 @@
 import { Mutex, MutexInterface } from 'async-mutex'
 
 import { createApiService } from '~/data/api-service'
-import { log, error } from '~/utils/console'
+import { error } from '~/utils/console'
 
 import type { AxiosError } from 'axios'
 
@@ -55,13 +55,11 @@ export const expiryThreshold = 5 // seconds
  */
 const isNewTokenNeeded = (): boolean => {
   if (!process.tokenData.accessToken) {
-    log('isNewTokenNeeded: no existing token found')
     return true
   }
 
   const aboutToExpire =
     process.tokenData.accessTokenExpiry - expiryThreshold <= currTimestamp()
-  log(`isNewTokenNeeded: aboutToExpire=${aboutToExpire}`)
   return aboutToExpire
 }
 
@@ -74,7 +72,6 @@ const refreshApiAccessToken = async (
   clientId: string,
   clientSecret: string
 ) => {
-  log('Refreshing access token...')
   const formData = new URLSearchParams()
   formData.append('client_id', clientId)
   formData.append('client_secret', clientSecret)
@@ -86,12 +83,8 @@ const refreshApiAccessToken = async (
       'auth_tokens/token',
       formData
     )
-    log('Successfully retrieved API token')
     process.tokenData.accessToken = res.data.access_token
     process.tokenData.accessTokenExpiry = currTimestamp() + res.data.expires_in
-    log(
-      `Next token expiry for worker expiry=${process.tokenData.accessTokenExpiry}`
-    )
   } catch (e) {
     /**
      * If an error occurs, serve the current request (and any pending)
@@ -126,27 +119,21 @@ const getApiAccessToken = async (
 ): Promise<string | undefined> => {
   const { apiClientId, apiClientSecret } = context.$config
   if (!(apiClientId || apiClientSecret)) {
-    log('No API client secrets found.')
     return undefined
   }
 
-  log('We have client information')
   let release: MutexInterface.Releaser | undefined = undefined
 
   // Only request a new token if one is needed _and_ there is
   // not already another request making the request (represented
   // by the locked mutex).
   if (isNewTokenNeeded() && !process.fetchingMutex.isLocked()) {
-    log('acquiring mutex lock')
     release = await process.fetchingMutex.acquire()
-    log('mutex lock acquired, preparing token refresh request')
     process.tokenFetching = refreshApiAccessToken(apiClientId, apiClientSecret)
   }
 
   try {
-    log('awaiting the fetching of the api token to resolve')
     await process.tokenFetching
-    log('done waiting for the token, moving on now...')
   } finally {
     /**
      * Releasing must be in a `finally` block otherwise if the
@@ -155,9 +142,7 @@ const getApiAccessToken = async (
      * refresh.
      */
     if (release) {
-      log('releasing mutex')
       release()
-      log('mutex released')
     }
   }
 
@@ -176,12 +161,6 @@ const apiToken: Plugin = async (context, inject) => {
   let openverseApiToken: string | undefined
   try {
     openverseApiToken = await getApiAccessToken(context)
-
-    if (openverseApiToken) {
-      log('injecting openverseApiToken into request context')
-    } else {
-      log('using empty openverseApiToken')
-    }
   } catch (e) {
     // capture the exception but allow the request to continue with anonymous API requests
     context.$sentry.captureException(e)
