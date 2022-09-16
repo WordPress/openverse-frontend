@@ -1,5 +1,7 @@
 <template>
-  <div class="error relative flex min-h-screen flex-col bg-yellow">
+  <div
+    class="error relative flex min-h-screen flex-col overflow-x-hidden bg-yellow"
+  >
     <Oops
       aria-hidden="true"
       class="pointer-events-none absolute top-20 z-0 -mt-[10%] -ml-[20%] w-[140%] fill-dark-charcoal px-6 opacity-5 lg:mx-auto lg:w-full lg:px-16"
@@ -12,13 +14,11 @@
     </div>
 
     <main
-      class="page-404 flex flex-shrink-0 flex-grow flex-col overflow-x-hidden"
+      class="page-404 flex w-full flex-shrink-0 flex-grow flex-col overflow-x-hidden px-6 lg:mx-auto lg:max-w-2xl lg:px-0"
     >
       <!-- Push content by 1/4th height without absolute positioning. -->
       <div class="spacer grow" />
-      <div
-        class="inset-x-0 z-10 mx-auto grow-[3] space-y-4 px-6 lg:max-w-2xl lg:space-y-6 lg:px-0"
-      >
+      <div class="z-10 grow-[3] space-y-4 lg:space-y-6">
         <h1 class="mb-6 text-3xl lg:mb-10 lg:text-6xl lg:leading-tight">
           {{ $t('404.title') }}
         </h1>
