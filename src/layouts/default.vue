@@ -17,7 +17,7 @@
     >
       <Nuxt class="main-page min-w-0" />
       <VSidebarTarget
-        class="sidebar fixed overflow-y-auto bg-dark-charcoal-06 end-0"
+        class="sidebar fixed z-10 overflow-y-auto bg-dark-charcoal-06 end-0"
         :class="{ 'border-dark-charcoal-20 border-s': isSidebarVisible }"
       />
     </main>
