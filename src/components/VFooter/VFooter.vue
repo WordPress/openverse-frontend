@@ -27,13 +27,16 @@
       <div
         class="flex h-10 w-full w-full items-center justify-center rounded-sm border border-dark-charcoal-20 bg-white sm:w-50"
       >
-        {{ $t('🚧') }}
+        {{ $t('footer.wip') }}
       </div>
-      <VLink href="https://wordpress.org" class="text-dark-charcoal">
+      <VLink
+        href="https://wordpress.org"
+        class="text-dark-charcoal hover:no-underline"
+      >
         <i18n
           tag="div"
           path="footer.wordpress-affiliation"
-          class="flex flex-row items-center gap-2 text-sm"
+          class="flex h-full flex-row items-center gap-2 text-sm"
         >
           <template #wordpress>
             <WordPress class="aria-hidden" />

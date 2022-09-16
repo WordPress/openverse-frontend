@@ -679,6 +679,7 @@
     "off": "Off"
   },
   "footer": {
-    "wordpress-affiliation": "Powered by {wordpress}"
+    "wordpress-affiliation": "Powered by {wordpress}",
+    "wip": "\uD83D\uDEA7"
   }
 }
