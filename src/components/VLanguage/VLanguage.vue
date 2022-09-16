@@ -1,5 +1,6 @@
 <template>
   <VSelectField
+    v-bind="$attrs"
     v-model="locale"
     class="max-w-[12.5rem]"
     field-id="language"
@@ -43,6 +44,7 @@ interface OpenverseLocale extends LocaleObject {
 export default defineComponent({
   name: 'VLanguage',
   components: { VSelectField, VIcon },
+  inheritAttrs: false,
   setup() {
     const i18n = useI18n()
     const locale = computed({

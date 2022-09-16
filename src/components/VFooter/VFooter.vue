@@ -24,7 +24,7 @@
 
     <!-- Locale chooser and WordPress affiliation graphic -->
     <div class="flex flex-col justify-between gap-10 sm:flex-row xl:flex-grow">
-      <VLanguage />
+      <VLanguage v-bind="languageProps" />
       <VLink
         href="https://wordpress.org"
         class="text-dark-charcoal hover:no-underline"
@@ -77,6 +77,10 @@ export default defineComponent({
       type: String as PropType<'internal' | 'content' | undefined>,
       required: false,
       default: undefined,
+    },
+    languageProps: {
+      type: Object,
+      default: () => ({}),
     },
   },
   setup(props) {

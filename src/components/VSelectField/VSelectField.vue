@@ -1,6 +1,7 @@
 <template>
   <div
-    class="relative m-0.5px block w-fit rounded-sm border border-dark-charcoal-20 text-sm focus-within:m-0 focus-within:border-1.5 focus-within:border-pink hover:border-dark-charcoal focus-within:hover:border-pink"
+    class="relative m-0.5px block w-fit overflow-hidden rounded-sm border text-sm focus-within:m-0 focus-within:border-1.5 focus-within:border-pink hover:border-dark-charcoal focus-within:hover:border-pink"
+    :class="variant === 'borderless' ? 'border-tx' : 'border-dark-charcoal-20'"
   >
     <div class="absolute inset-y-0 my-auto h-fit start-2">
       <slot name="start" />
@@ -91,6 +92,10 @@ export default defineComponent({
     choices: {
       type: Array as PropType<Choice[]>,
       default: () => [],
+    },
+    variant: {
+      type: String as PropType<'regular' | 'borderless'>,
+      default: 'regular',
     },
   },
   // using non-native event name to ensure the two are not mixed

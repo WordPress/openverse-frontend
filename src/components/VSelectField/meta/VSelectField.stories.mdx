@@ -134,3 +134,14 @@ export const ConstraintTemplate = (args) => ({
     {ConstraintTemplate.bind({})}
   </Story>
 </Canvas>
+
+## Without border
+
+There is a variant of the select field without the border, currently used only
+on the 404 page.
+
+<Canvas>
+  <Story name="Without border" args={{ ...baseArgs, variant: 'borderless' }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
