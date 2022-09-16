@@ -24,11 +24,7 @@
 
     <!-- Locale chooser and WordPress affiliation graphic -->
     <div class="flex flex-col justify-between gap-10 sm:flex-row xl:flex-grow">
-      <div
-        class="flex h-10 w-full w-full items-center justify-center rounded-sm border border-dark-charcoal-20 bg-white sm:w-50"
-      >
-        {{ $t('footer.wip') }}
-      </div>
+      <VLanguage />
       <VLink
         href="https://wordpress.org"
         class="text-dark-charcoal hover:no-underline"
@@ -55,6 +51,7 @@ import usePages from '~/composables/use-pages'
 
 import VLink from '~/components/VLink.vue'
 import VBrand from '~/components/VBrand/VBrand.vue'
+import VLanguage from '~/components/VLanguage/VLanguage.vue'
 
 import WordPress from '~/assets/wordpress.svg?inline'
 
@@ -65,6 +62,7 @@ import WordPress from '~/assets/wordpress.svg?inline'
 export default defineComponent({
   name: 'VFooter',
   components: {
+    VLanguage,
     VLink,
     VBrand,
     WordPress,
