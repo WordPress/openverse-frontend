@@ -24,7 +24,12 @@
       :aria-label="label"
       :aria-labelledby="labelledBy"
       :initial-focus-element="initialFocusElement"
+      :variant="variant"
+      :mode="mode"
     >
+      <template #top-bar>
+        <slot name="top-bar" />
+      </template>
       <slot name="default" />
     </VModalContent>
   </div>
@@ -37,6 +42,7 @@ import {
   watch,
   reactive,
   computed,
+  toRef,
 } from '@nuxtjs/composition-api'
 
 import { useBodyScrollLock } from '~/composables/use-body-scroll-lock'
@@ -104,6 +110,22 @@ export default defineComponent({
       ),
       default: undefined,
     },
+    variant: {
+      type: /** @type {import('@nuxtjs/composition-api').PropType<'default' | 'full'>} */ (
+        String
+      ),
+      default: 'default',
+    },
+    mode: {
+      type: /** @type {import('@nuxtjs/composition-api').PropType<'dark' | 'light'>} */ (
+        String
+      ),
+      default: 'light',
+    },
+    externalVisible: {
+      type: Boolean,
+      default: undefined,
+    },
   },
   emits: [
     /**
@@ -115,8 +137,11 @@ export default defineComponent({
      */
     'close',
   ],
-  setup(_, { emit }) {
-    const visibleRef = ref(false)
+  setup(props, { emit }) {
+    const externalVisibleRef = toRef(props, 'externalVisible')
+    const visibleRef = ref(
+      props.externalVisible === undefined ? false : props.externalVisible
+    )
     const nodeRef = ref()
 
     /** @type {import('@nuxtjs/composition-api').Ref<HTMLElement | undefined>} */
@@ -131,6 +156,15 @@ export default defineComponent({
 
     watch(visibleRef, (visible) => {
       triggerA11yProps['aria-expanded'] = !!visible
+    })
+    watch(externalVisibleRef, (visible) => {
+      if (visible === undefined) return
+      visibleRef.value = visible
+      if (visible) {
+        lock()
+      } else {
+        unlock()
+      }
     })
 
     const { lock, unlock } = useBodyScrollLock({ nodeRef })

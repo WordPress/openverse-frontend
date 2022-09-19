@@ -74,7 +74,7 @@ export default function usePages(isNew = false) {
       ]
 
   const route = useRoute()
-  const currentPageId = computed(() => route.value.name)
+  const currentPageId = computed(() => route.value?.name?.split('__')[0])
 
   return { all: pages, current: currentPageId }
 }

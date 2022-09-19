@@ -65,7 +65,10 @@
     "get-involved": "Get involved",
     "api": "API",
     "privacy": "Privacy",
-    "feedback": "Feedback"
+    "feedback": "Feedback",
+    "sources": "Sources",
+    "external-sources": "External sources",
+    "search-help": "Search help"
   },
   "about": {
     "title": "About {openverse}",
