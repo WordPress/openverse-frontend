@@ -10,6 +10,7 @@
       :icon-path="externalLinkIcon"
       class="inline-block"
       :size="4"
+      rtl-flip
     />
   </Component>
 </template>
