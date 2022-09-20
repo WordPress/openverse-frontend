@@ -3,6 +3,7 @@ import { expect, Page, test } from '@playwright/test'
 import {
   goToSearchTerm,
   renderModes,
+  t,
 } from '~~/test/playwright/utils/navigation'
 import { mockProviderApis } from '~~/test/playwright/utils/route'
 
@@ -14,7 +15,7 @@ test.beforeEach(async ({ context }) => {
   await mockProviderApis(context)
 })
 
-const loadMoreButton = 'button:has-text("Load more")'
+const loadMoreButton = `button:has-text("${t('browse-page.load', 'ltr')}")`
 
 const openSingleMediaView = async (
   page: Page,
