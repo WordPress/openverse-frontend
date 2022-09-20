@@ -91,9 +91,6 @@ test.describe('Load more button', () => {
         await goToSearchTerm(page, 'ecommerce', { mode })
 
         await expect(page.locator(loadMoreButton)).toBeVisible()
-        await openSingleMediaView(page, AUDIO)
-
-        await expect(page.locator(loadMoreButton)).not.toBeVisible()
       })
 
       test(`All view when only 1 page of audio: sends only image request when clicked`, async ({
@@ -123,7 +120,8 @@ test.describe('Load more button', () => {
         await goToSearchTerm(page, 'horses snort', { mode })
         await expect(page.locator(loadMoreButton)).toBeVisible()
 
-        await openSingleMediaView(page, AUDIO)
+        // Cannot go to the audio view because the link is disabled.
+        await goToSearchTerm(page, 'horses snort', { mode, searchType: AUDIO })
         await expect(page.locator(loadMoreButton)).not.toBeVisible()
       })
     })
