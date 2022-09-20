@@ -2,7 +2,6 @@
 <template>
   <NuxtLink
     v-if="linkComponent === 'NuxtLink'"
-    v-bind="$attrs"
     :class="{ 'inline-flex flex-row items-center gap-2': showExternalIcon }"
     :to="linkTo"
     v-on="$listeners"
@@ -18,7 +17,6 @@
   </NuxtLink>
   <a
     v-else-if="linkComponent === 'a'"
-    v-bind="$attrs"
     :href="href"
     target="_blank"
     rel="noopener noreferrer"
@@ -33,19 +31,6 @@
       rtl-flip
     />
   </a>
-  <span
-    v-else
-    v-bind="$attrs"
-    :class="{ 'inline-flex flex-row items-center gap-2': showExternalIcon }"
-  >
-    <slot /><VIcon
-      v-if="showExternalIcon && !isInternal"
-      :icon-path="externalLinkIcon"
-      class="inline-block"
-      :size="4"
-      rtl-flip
-    />
-  </span>
 </template>
 
 <script lang="ts">
@@ -67,13 +52,11 @@ import externalLinkIcon from '~/assets/icons/external-link.svg'
 export default defineComponent({
   name: 'VLink',
   components: { VIcon },
-  inheritAttrs: false,
   props: {
     href: {
       type: String,
-      required: false,
-      validator: (v: string | undefined) =>
-        (typeof v === 'string' && v.length > 0) || typeof v === 'undefined',
+      required: true,
+      validator: (v: string) => v.length > 0,
     },
     /**
      * whether to render the external link icon next to links that point away
@@ -89,21 +72,17 @@ export default defineComponent({
     function checkHref(
       p: typeof props
     ): p is { href: string; showExternalIcon: boolean } {
-      return typeof p.href === 'string' && !['', '#'].includes(p.href)
+      return !['', '#'].includes(p.href)
     }
 
     const hasHref = computed(() => checkHref(props))
     const isInternal = computed(
       () => hasHref.value && props.href?.startsWith('/')
     )
-    const linkComponent = computed(() =>
-      hasHref.value ? (isInternal.value ? 'NuxtLink' : 'a') : 'span'
-    )
+    const linkComponent = computed(() => (isInternal.value ? 'NuxtLink' : 'a'))
 
     let linkTo = computed(() =>
-      checkHref(props) && isInternal.value
-        ? app?.localePath(props.href) ?? props.href
-        : null
+      isInternal.value ? app?.localePath(props.href) ?? props.href : null
     )
 
     return {

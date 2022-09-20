@@ -89,6 +89,7 @@
             appear
           >
             <VLink
+              v-if="image.url"
               :href="image.url"
               class="homepage-image block aspect-square h-30 w-30 rounded-full lg:m-[2vh] lg:h-auto lg:w-auto"
               :style="{ '--transition-index': `${index * 0.05}s` }"

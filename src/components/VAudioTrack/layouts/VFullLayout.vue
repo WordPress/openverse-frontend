@@ -34,6 +34,7 @@
           <i18n as="span" path="audio-track.creator" class="font-semibold">
             <template #creator>
               <VLink
+                v-if="audio.creator_url"
                 class="rounded-sm p-px focus:outline-none focus:ring focus:ring-pink"
                 :href="audio.creator_url"
               >
