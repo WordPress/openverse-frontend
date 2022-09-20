@@ -74,6 +74,10 @@ export default function usePages(isNew = false) {
       ]
 
   const route = useRoute()
+  /**
+   * The route name of the current page is localized, so it looks like `index__en`.
+   * We need to remove the locale suffix to match the page id.
+   */
   const currentPageId = computed(() => route.value?.name?.split('__')[0])
 
   return { all: pages, current: currentPageId }
