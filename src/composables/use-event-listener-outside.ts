@@ -3,10 +3,26 @@ import { Ref, ref, watch } from '@nuxtjs/composition-api'
 import { contains, getDocument, isInDocument } from '~/utils/reakit-utils/dom'
 
 interface Props {
+  /**
+   * A click outside of this element will trigger the `listener` function.
+   */
   containerRef: Ref<HTMLElement | null>
+  /**
+   * The element that triggers the dialog and will be focused when modal is closed.
+   */
   triggerRef: Ref<HTMLElement | null>
+  /**
+   * The type of event to listen to.
+   */
   eventType: string
+  /**
+   * The function to be called on a click outside of the `containerRef` element
+   * @param e - the event object
+   */
   listener: (e: Event) => void
+  /**
+   * Whether the listener should be active or not.
+   */
   shouldListenRef?: Ref<boolean>
 }
 
