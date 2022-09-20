@@ -20,10 +20,7 @@
       :class="filtersAreApplied ? 'hidden' : 'block'"
       :icon-path="filterIcon"
     />
-    <span class="hidden md:inline-block">{{ mdMinLabel }}</span>
-    <span class="md:hidden" :class="!filtersAreApplied && 'hidden'">{{
-      smMaxLabel
-    }}</span>
+    <span class="inline-block">{{ mdMinLabel }}</span>
   </VButton>
 </template>
 
@@ -40,7 +37,7 @@ import { useSearchStore } from '~/stores/search'
 import { defineEvent } from '~/types/emits'
 import { useI18n } from '~/composables/use-i18n'
 
-import VButton, { ButtonVariant } from '~/components/VButton.vue'
+import VButton, { type ButtonVariant } from '~/components/VButton.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'
 
 import filterIcon from '~/assets/icons/filter.svg'
@@ -69,7 +66,6 @@ export default defineComponent({
     const i18n = useI18n()
     const searchStore = useSearchStore()
     const { pressed } = toRefs(props)
-    const isMinScreenMd = inject('isMinScreenMd', ref(false))
     const isHeaderScrolled = inject('isHeaderScrolled', ref(false))
     const filterCount = computed(() => searchStore.appliedFilterCount)
     const filtersAreApplied = computed(() => filterCount.value > 0)
@@ -80,9 +76,7 @@ export default defineComponent({
      */
     const variant = computed(() => {
       // Show the bordered state by default, unless below md
-      let value: ButtonVariant = isMinScreenMd.value
-        ? 'tertiary'
-        : 'action-menu'
+      let value: ButtonVariant = 'tertiary'
 
       if (isHeaderScrolled.value) {
         value = 'action-menu'
@@ -109,17 +103,10 @@ export default defineComponent({
         : i18n.t('header.filter-button.simple')
     )
 
-    const smMaxLabel = computed(() =>
-      isHeaderScrolled.value
-        ? filterCount.value
-        : i18n.tc('header.filter-button.with-count', filterCount.value)
-    )
-
     return {
       filterCount,
       filterIcon,
       mdMinLabel,
-      smMaxLabel,
       variant,
       isHeaderScrolled,
       filtersAreApplied,

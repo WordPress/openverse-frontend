@@ -40,6 +40,8 @@ import {
 import type { SearchType } from '~/constants/media'
 import { defineEvent } from '~/types/emits'
 
+import useSearchType from '~/composables/use-search-type'
+
 import VPopover from '~/components/VPopover/VPopover.vue'
 import VSearchTypeButton from '~/components/VContentSwitcher/VSearchTypeButton.vue'
 import VSearchTypes from '~/components/VContentSwitcher/VSearchTypes.vue'
@@ -58,10 +60,6 @@ export default defineComponent({
     event: 'select',
   },
   props: {
-    activeItem: {
-      type: String as PropType<SearchType>,
-      required: true,
-    },
     placement: {
       type: String as PropType<'header' | 'searchbar'>,
       default: 'header',
@@ -72,6 +70,7 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const contentMenuPopover = ref<HTMLElement | null>(null)
+    const { activeType: activeItem } = useSearchType()
 
     /**
      * When in the searchbar, content switcher button has a border when the
@@ -95,6 +94,7 @@ export default defineComponent({
     return {
       checkIcon,
       selectItem,
+      activeItem,
       contentMenuPopover,
       isInSearchBar,
       closeMenu,

@@ -1,24 +1,18 @@
 <template>
   <header
-    class="main-header z-30 flex w-full items-center justify-between gap-x-2 gap-y-4 bg-white px-4 py-3 md:items-stretch md:py-4 md:px-7"
-    :class="{
-      'flex-wrap md:flex-nowrap': !isHeaderScrolled,
-      'border-b border-white': !isHeaderScrolled && !isMenuOpen,
-      'border-b border-dark-charcoal-20':
-        isSearchRoute && (isHeaderScrolled || isMenuOpen),
-      'md:justify-start': !isSearchRoute,
-      'flex-nowrap': !isSearchRoute && isHeaderScrolled,
-    }"
+    class="main-header z-30 flex w-full items-stretch justify-between gap-x-2 border-b bg-white py-4 px-7"
+    :class="
+      isHeaderScrolled || visibleRef
+        ? 'border-dark-charcoal-20'
+        : 'border-white'
+    "
   >
-    <VLogoButton :is-fetching="isFetching" :is-search-route="isSearchRoute" />
+    <VLogoButton :is-fetching="isFetching" :is-search-route="true" />
 
     <VSearchBar
       v-model.trim="searchTerm"
-      class="flex-grow lg:w-1/2 lg:flex-grow-0 2xl:w-1/3"
-      :size="isMinScreenMd ? 'medium' : isHeaderScrolled ? 'small' : 'large'"
-      :class="{
-        'order-4 w-full md:order-none md:w-auto': !isHeaderScrolled,
-      }"
+      class="flex-grow"
+      size="medium"
       @submit="handleSearch"
     >
       <span
@@ -28,6 +22,24 @@
         {{ searchStatus }}
       </span>
     </VSearchBar>
+
+    <VSearchTypePopover />
+
+    <div ref="nodeRef" class="flex items-stretch justify-end text-base">
+      <VFilterButton
+        ref="buttonRef"
+        class="flex self-stretch"
+        :pressed="visibleRef"
+        :disabled="areFiltersDisabled"
+        aria-haspopup="dialog"
+        :aria-expanded="visibleRef"
+        @toggle="onTriggerClick"
+        @tab="onTab"
+      />
+      <VTeleport v-if="visibleRef" to="sidebar">
+        <VSearchGridFilter @close="onTriggerClick" />
+      </VTeleport>
+    </div>
   </header>
 </template>
 
@@ -36,38 +48,51 @@ import {
   computed,
   defineComponent,
   inject,
-  provide,
+  onMounted,
   ref,
   useContext,
   useRouter,
+  watch,
 } from '@nuxtjs/composition-api'
 
-import { ALL_MEDIA, searchPath } from '~/constants/media'
-import { isMinScreen } from '~/composables/use-media-query'
-import { useMatchSearchRoutes } from '~/composables/use-match-routes'
-import { useI18n } from '~/composables/use-i18n'
-import { useI18nResultsCount } from '~/composables/use-i18n-utilities'
+import { Portal as VTeleport } from 'portal-vue'
+
 import { useMediaStore } from '~/stores/media'
 import { isSearchTypeSupported, useSearchStore } from '~/stores/search'
 
+import { ALL_MEDIA, searchPath, supportedMediaTypes } from '~/constants/media'
+import { IsHeaderScrolledKey } from '~/types/provides'
+import { useMatchSearchRoutes } from '~/composables/use-match-routes'
+import { useI18n } from '~/composables/use-i18n'
+import { useI18nResultsCount } from '~/composables/use-i18n-utilities'
+
+import useSearchType from '~/composables/use-search-type'
+import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
+import { useFocusFilters } from '~/composables/use-focus-filters'
+
+import local from '~/utils/local'
+import { env } from '~/utils/env'
+import { Focus } from '~/utils/focus-management'
+
 import VLogoButton from '~/components/VHeader/VLogoButton.vue'
+import VSearchGridFilter from '~/components/VFilters/VSearchGridFilter.vue'
+import VFilterButton from '~/components/VHeader/VFilterButton.vue'
 import VSearchBar from '~/components/VHeader/VSearchBar/VSearchBar.vue'
+import VSearchTypePopover from '~/components/VContentSwitcher/VSearchTypePopover.vue'
 
 import closeIcon from '~/assets/icons/close.svg'
 
-const menus = {
-  FILTERS: 'filters',
-  CONTENT_SWITCHER: 'content-switcher',
-}
-type HeaderMenu = 'filters' | 'content-switcher'
-
 export default defineComponent({
-  name: 'VHeader',
+  name: 'VHeaderDesktop',
   components: {
+    VFilterButton,
     VLogoButton,
+    VSearchGridFilter,
+    VSearchTypePopover,
     VSearchBar,
+    VTeleport,
   },
-  setup() {
+  setup(_, { emit }) {
     const mediaStore = useMediaStore()
     const searchStore = useSearchStore()
     const { app } = useContext()
@@ -76,29 +101,9 @@ export default defineComponent({
 
     const { matches: isSearchRoute } = useMatchSearchRoutes()
 
-    const isHeaderScrolled = inject('isHeaderScrolled', false)
-    const isMinScreenMd = isMinScreen('md', { shouldPassInSSR: true })
-    const headerHasTwoRows = inject('headerHasTwoRows')
-    provide('isMinScreenMd', isMinScreenMd)
+    const isHeaderScrolled = inject(IsHeaderScrolledKey)
 
-    const menuModalRef = ref(null)
-
-    const openMenu = ref<null | HeaderMenu>(null)
-    const isMenuOpen = computed(() => openMenu.value !== null)
-
-    const openMenuModal = (menuName: HeaderMenu) => {
-      if (openMenu.value !== null) {
-        close()
-      }
-      openMenu.value = menuName
-    }
-    const close = () => {
-      openMenu.value = null
-    }
-
-    const isFetching = computed(() => {
-      return mediaStore.fetchState.isFetching
-    })
+    const isFetching = computed(() => mediaStore.fetchState.isFetching)
 
     const resultsCount = computed(() => mediaStore.resultCount)
     const { getI18nCount } = useI18nResultsCount()
@@ -107,7 +112,7 @@ export default defineComponent({
      * Shows the loading state or result count.
      */
     const searchStatus = computed(() => {
-      if (!isSearchRoute.value || searchStore.searchTerm === '') return ''
+      if (searchStore.searchTerm === '') return ''
       if (isFetching.value) return i18n.t('header.loading')
       return getI18nCount(resultsCount.value)
     })
@@ -127,6 +132,31 @@ export default defineComponent({
         localSearchTerm.value = value
       },
     })
+
+    const content = useSearchType()
+
+    const selectSearchType = async (type) => {
+      content.setActiveType(type)
+
+      const newPath = app.localePath({
+        path: searchPath(type),
+        query: searchStore.searchQueryParams,
+      })
+      router.push(newPath)
+
+      function typeWithoutMedia(mediaType) {
+        return mediaStore.resultCountsPerMediaType[mediaType] === 0
+      }
+
+      const shouldFetchMedia =
+        type === ALL_MEDIA
+          ? supportedMediaTypes.every((type) => typeWithoutMedia(type))
+          : typeWithoutMedia(type)
+
+      if (shouldFetchMedia) {
+        await mediaStore.fetchMedia()
+      }
+    }
 
     /**
      * Called when the 'search' button in the header is clicked.
@@ -174,28 +204,66 @@ export default defineComponent({
       () => !searchStore.searchTypeIsSupported
     )
 
+    const nodeRef = ref<HTMLElement | null>(null)
+    const visibleRef = ref(false)
+    const filterSidebar = useFilterSidebarVisibility()
+
+    onMounted(() => {
+      // We default to show the filter on desktop, and only close it if the user has
+      // explicitly closed it before.
+      const localFilterState = !(
+        local.getItem(env.filterStorageKey) === 'false'
+      )
+      const searchStore = useSearchStore()
+      const visible = searchStore.searchTypeIsSupported && localFilterState
+      filterSidebar.setVisibility(visible)
+      if (visible) {
+        open()
+      }
+    })
+
+    watch(visibleRef, (visible) => {
+      filterSidebar.setVisibility(visible)
+      visible ? emit('open') : emit('close')
+    })
+
+    const onTriggerClick = () => {
+      visibleRef.value = !visibleRef.value
+    }
+
+    const focusFilters = useFocusFilters()
+    /**
+     * Focus the first element in the sidebar when navigating from the VFilterButton
+     * using keyboard `Tab` key.
+     */
+    const onTab = (event: KeyboardEvent) => {
+      focusFilters.focusFilterSidebar(event, Focus.First)
+    }
+
+    const triggerElement = computed(() =>
+      nodeRef.value?.firstChild
+        ? (nodeRef.value?.firstChild as HTMLElement)
+        : null
+    )
+
     return {
       closeIcon,
       isFetching,
 
       isHeaderScrolled,
-      isMinScreenMd,
-      isSearchRoute,
-      headerHasTwoRows,
       areFiltersDisabled,
 
-      menuModalRef,
-
-      openMenu,
-      openMenuModal,
-      isMenuOpen,
-
-      menus,
       close,
 
       handleSearch,
+      selectSearchType,
       searchStatus,
       searchTerm,
+      visibleRef,
+
+      triggerElement,
+      onTriggerClick,
+      onTab,
     }
   },
 })
