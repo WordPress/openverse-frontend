@@ -10,11 +10,11 @@
       <slot
         name="trigger"
         :a11y-props="triggerA11yProps"
-        :visible="visibleRef"
+        :visible="internalVisibleRef"
       />
     </div>
     <VModalContent
-      :visible="visibleRef"
+      :visible="internalVisibleRef"
       :trigger-element="triggerRef"
       :hide-on-esc="hideOnEsc"
       :hide-on-click-outside="hideOnClickOutside"
@@ -110,19 +110,42 @@ export default defineComponent({
       ),
       default: undefined,
     },
+    /**
+     * The variant of the modal content.
+     * The `default` variant is a full-screen modal on mobile widths, and is a smaller mobile
+     * on a grayed out backdrop on larger screens.
+     *
+     * The `full` variant is a full-screen modal on all screen widths. It is currently
+     * only used for mobile version of the `VHeaderInternal` component.
+     *
+     * @default 'default'
+     */
     variant: {
       type: /** @type {import('@nuxtjs/composition-api').PropType<'default' | 'full'>} */ (
         String
       ),
       default: 'default',
     },
+    /**
+     * The color mode of the modal content.
+     * The default `light` mode uses dark charcoal content on the white background.
+     * The `dark` mode uses white content on the dark charcoal background.
+     *
+     * @default 'light'
+     */
     mode: {
       type: /** @type {import('@nuxtjs/composition-api').PropType<'dark' | 'light'>} */ (
         String
       ),
       default: 'light',
     },
-    externalVisible: {
+    /**
+     * This props allows for the modal to be opened or closed programmatically.
+     * The modal handles the visibility internally if this prop is not provided.
+     *
+     * @default undefined
+     */
+    visible: {
       type: Boolean,
       default: undefined,
     },
@@ -138,10 +161,11 @@ export default defineComponent({
     'close',
   ],
   setup(props, { emit }) {
-    const externalVisibleRef = toRef(props, 'externalVisible')
-    const visibleRef = ref(
-      props.externalVisible === undefined ? false : props.externalVisible
-    )
+    const visibleRef = toRef(props, 'visible')
+    const internalVisibleRef =
+      /** @type {import('@nuxtjs/composition-api').Ref<boolean>} */ (
+        ref(props.visible === undefined ? false : props.visible)
+      )
     const nodeRef = ref()
 
     /** @type {import('@nuxtjs/composition-api').Ref<HTMLElement | undefined>} */
@@ -152,37 +176,43 @@ export default defineComponent({
       'aria-haspopup': 'dialog',
     })
 
-    const triggerRef = computed(() => triggerContainerRef.value?.firstChild)
+    const triggerRef = computed(
+      () =>
+        /** @type {HTMLElement | undefined} */ (
+          triggerContainerRef.value?.firstChild
+        )
+    )
 
-    watch(visibleRef, (visible) => {
+    watch(internalVisibleRef, (visible) => {
       triggerA11yProps['aria-expanded'] = !!visible
     })
-    watch(externalVisibleRef, (visible) => {
+
+    watch(visibleRef, (visible) => {
       if (visible === undefined) return
-      visibleRef.value = visible
+
       if (visible) {
-        lock()
+        open()
       } else {
-        unlock()
+        close()
       }
     })
 
     const { lock, unlock } = useBodyScrollLock({ nodeRef })
 
     const open = () => {
-      visibleRef.value = true
+      internalVisibleRef.value = true
       emit('open')
       lock()
     }
 
     const close = () => {
-      visibleRef.value = false
+      internalVisibleRef.value = false
       emit('close')
       unlock()
     }
 
     const onTriggerClick = () => {
-      if (visibleRef.value === true) {
+      if (internalVisibleRef.value === true) {
         close()
       } else {
         open()
@@ -191,10 +221,11 @@ export default defineComponent({
 
     return {
       nodeRef,
-      visibleRef,
-      close,
+      internalVisibleRef,
       triggerContainerRef,
       triggerRef,
+
+      close,
       onTriggerClick,
       triggerA11yProps,
     }

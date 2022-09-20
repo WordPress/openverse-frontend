@@ -21,7 +21,7 @@
         :label="$t('header.aria.menu').toString()"
         variant="full"
         mode="dark"
-        :external-visible="isModalVisible"
+        :visible="isModalVisible"
         @open="setModalVisibility(true)"
       >
         <template #trigger="{ a11yProps }">
