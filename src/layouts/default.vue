@@ -15,17 +15,18 @@
         isNewHeaderEnabled ? 'new-layout' : 'old-layout',
       ]"
     >
-      <Nuxt class="main-page min-w-0" />
+      <div v-if="isNewHeaderEnabled">
+        <Nuxt class="main-page min-w-0" />
+        <VFooter class="border-t border-dark-charcoal-20" />
+      </div>
+      <Nuxt v-else class="main-page min-w-0" />
+
       <VSidebarTarget
         class="sidebar fixed overflow-y-auto bg-dark-charcoal-06 end-0"
         :class="{ 'border-dark-charcoal-20 border-s': isSidebarVisible }"
       />
     </main>
 
-    <VFooter
-      v-if="isNewHeaderEnabled"
-      class="border-t border-dark-charcoal-20"
-    />
     <VModalTarget class="modal" />
     <VGlobalAudioSection />
   </div>
@@ -126,16 +127,11 @@ export default embeddedPage
   width: var(--filter-sidebar-width);
 }
 
-.app {
-  grid-template-rows: auto 1fr;
-}
 /* TODO: remove these styles when new header is enabled */
 @screen md {
   /** Display the search filter sidebar and results as independently-scrolling. **/
   .main.old-layout {
-    height: 100%;
-    display: grid;
-    grid-template-columns: 1fr var(--filter-sidebar-width);
+    @apply grid h-full grid-cols-[1fr_var(--filter-sidebar-width)];
   }
   /** Make the main content area span both grid columns when the sidebar is closed... **/
   .main.old-layout > *:first-child {
@@ -150,9 +146,7 @@ export default embeddedPage
 @screen lg {
   /** Display the search filter sidebar and results as independently-scrolling. **/
   .main.new-layout {
-    height: 100%;
-    display: grid;
-    grid-template-columns: 1fr var(--filter-sidebar-width);
+    @apply grid h-full grid-cols-[1fr_var(--filter-sidebar-width)];
   }
   /** Make the main content area span both grid columns when the sidebar is closed... **/
   .main.new-layout > *:first-child {
