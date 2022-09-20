@@ -1,6 +1,6 @@
 {
     meta: {
-        createdAt: '2022-09-07T06:34:30.248Z',
+        createdAt: '2022-09-20T11:58:53.634Z',
         host: 'https://api.openverse.engineering',
         resHumanReadable: true,
     },
@@ -8,7 +8,7 @@
         headers: {
             connection: 'close',
         },
-        url: '/v1/audio/?q=ecommerce',
+        url: '/v1/audio/?q=ecommerce&peaks=true',
         method: 'GET',
         body: '',
     },
@@ -16,7 +16,7 @@
         status: 200,
         headers: {
             date: [
-                'Wed, 07 Sep 2022 06:34:30 GMT',
+                'Tue, 20 Sep 2022 11:58:54 GMT',
             ],
             'content-type': [
                 'application/json',
@@ -28,7 +28,7 @@
                 'close',
             ],
             vary: [
-                'Accept, Authorization, Origin',
+                'Accept, Authorization, Origin, Cookie',
             ],
             allow: [
                 'GET, HEAD, OPTIONS',
@@ -46,19 +46,10 @@
                 'same-origin',
             ],
             'x-request-id': [
-                'b40a7d97df474c0e8763dc54b2386c24',
-            ],
-            'cache-control': [
-                'max-age=14400',
+                'b7c8ea7873384c18a4f38d802c2620af',
             ],
             'cf-cache-status': [
-                'HIT',
-            ],
-            age: [
-                '94524',
-            ],
-            'last-modified': [
-                'Tue, 06 Sep 2022 04:19:06 GMT',
+                'BYPASS',
             ],
             'accept-ranges': [
                 'bytes',
@@ -70,7 +61,7 @@
                 'cloudflare',
             ],
             'cf-ray': [
-                '746d6b449835df37-IST',
+                '74da6451ba57cc08-IST',
             ],
             'alt-svc': [
                 'h3=":443"; ma=86400, h3-29=":443"; ma=86400',
