@@ -10,7 +10,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
 
 import OpenverseLogo from '~/assets/logo.svg?inline'
@@ -33,6 +33,7 @@ export default defineComponent({
      */
     srText: {
       type: String,
+      required: false,
       default: 'Openverse',
     },
   },

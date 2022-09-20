@@ -1,15 +1,16 @@
 <template>
-  <footer class="flex flex-col gap-10 px-6 py-10 lg:px-10 xl:flex-row xl:gap-8">
+  <footer
+    ref="footerEl"
+    class="footer flex flex-col gap-10 px-6 py-10"
+    :class="variantNames"
+  >
     <!-- Logo and links -->
-    <div
-      v-if="isContentMode"
-      class="flex flex-col gap-10 md:flex-row md:items-center md:justify-between xl:flex-grow"
-    >
+    <div v-if="isContentMode" class="logo-and-links flex flex-col gap-10">
       <VLink href="/" class="text-dark-charcoal">
         <VBrand class="text-[18px]" />
       </VLink>
       <nav>
-        <ul class="grid grid-cols-2 gap-6 text-sm sm:flex sm:flex-row sm:gap-8">
+        <ul class="nav-list grid grid-cols-2 gap-6 text-sm">
           <li v-for="page in allPages" :key="page.id">
             <VLink
               class="text-dark-charcoal"
@@ -23,8 +24,8 @@
     </div>
 
     <!-- Locale chooser and WordPress affiliation graphic -->
-    <div class="flex flex-col justify-between gap-10 sm:flex-row xl:flex-grow">
-      <VLanguage v-bind="languageProps" />
+    <div class="locale-and-wp flex flex-col justify-between gap-10">
+      <VLanguage v-bind="languageProps" class="language" />
       <VLink
         href="https://wordpress.org"
         class="text-dark-charcoal hover:no-underline"
@@ -45,9 +46,18 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, PropType } from '@nuxtjs/composition-api'
+import {
+  computed,
+  defineComponent,
+  PropType,
+  ref,
+} from '@nuxtjs/composition-api'
 
 import usePages from '~/composables/use-pages'
+
+import useResizeObserver from '~/composables/use-resize-observer'
+
+import { SCREEN_SIZES } from '~/constants/screens'
 
 import VLink from '~/components/VLink.vue'
 import VBrand from '~/components/VBrand/VBrand.vue'
@@ -74,7 +84,7 @@ export default defineComponent({
      * displayed.
      */
     mode: {
-      type: String as PropType<'internal' | 'content' | undefined>,
+      type: String as PropType<'internal' | 'content'>,
       required: false,
       default: undefined,
     },
@@ -91,15 +101,61 @@ export default defineComponent({
         return props.mode === 'content'
       } else {
         return ['search', 'audio', 'image'].some((prefix) =>
-          currentPage.value.startsWith(prefix)
+          currentPage.value?.startsWith(prefix)
         )
       }
     })
 
+    /** JS-based responsiveness */
+    const footerEl = ref<HTMLElement | null>(null)
+    const { dimens: footerDimens } = useResizeObserver(footerEl)
+    const variantNames = computed(() =>
+      Array.from(SCREEN_SIZES)
+        .filter(([, val]) => footerDimens.value.width >= val)
+        .map(([key]) => `footer-${key}`)
+    )
+
     return {
       isContentMode,
       allPages,
+
+      footerEl,
+      variantNames,
     }
   },
 })
 </script>
+
+<style>
+.footer.footer-sm .nav-list {
+  @apply flex flex-row gap-8;
+}
+
+.footer.footer-sm .locale-and-wp {
+  @apply flex-row;
+}
+
+.footer.footer-sm .language {
+  @apply w-50;
+}
+
+.footer.footer-md .logo-and-links {
+  @apply flex-row items-center justify-between;
+}
+
+.footer.footer-lg {
+  @apply px-10;
+}
+
+.footer.footer-xl {
+  @apply flex-row gap-8;
+}
+
+.footer.footer-xl .logo-and-links {
+  @apply flex-grow;
+}
+
+.footer.footer-xl .locale-and-wp {
+  @apply flex-grow;
+}
+</style>
