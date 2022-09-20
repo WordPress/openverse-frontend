@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-09-20T04:41:03+00:00\n"
+"POT-Creation-Date: 2022-09-20T10:48:36+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2030,9 +2030,14 @@ msgctxt "header.aria.primary"
 msgid "primary"
 msgstr ""
 
-#: src/components/VHeader/VPageMenu/VDesktopPageMenu.vue:6
+#: src/components/VHeader/VContentSettingsButton.vue:11
 msgctxt "header.aria.menu"
 msgid "menu"
+msgstr ""
+
+#: src/components/VHeader/VContentSettingsButton.vue:10
+msgctxt "header.aria.menu-notification"
+msgid "Some filters are applied"
 msgstr ""
 
 msgctxt "header.aria.search"
