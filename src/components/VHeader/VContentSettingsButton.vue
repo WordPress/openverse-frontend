@@ -5,7 +5,11 @@
       :icon-props="{ iconPath: sourceIcon }"
       :button-props="{ variant: 'menu', pressed: isPressed }"
       :has-dot="areFiltersSelected"
-      :aria-label="$t('header.aria.menu')"
+      :aria-label="
+        areFiltersSelected
+          ? $t('header.aria.menu-notification')
+          : $t('header.aria.menu')
+      "
       :aria-haspopup="true"
       :aria-pressed="isPressed"
       aria-controls="content-settings-modal"
