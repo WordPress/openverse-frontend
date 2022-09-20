@@ -76,7 +76,7 @@ export default defineComponent({
      * displayed.
      */
     mode: {
-      type: String as PropType<'internal' | 'content' | undefined>,
+      type: String as PropType<'internal' | 'content'>,
       required: false,
       default: undefined,
     },
@@ -89,7 +89,7 @@ export default defineComponent({
         return props.mode === 'content'
       } else {
         return ['search', 'audio', 'image'].some((prefix) =>
-          currentPage.value.startsWith(prefix)
+          currentPage.value?.startsWith(prefix)
         )
       }
     })
