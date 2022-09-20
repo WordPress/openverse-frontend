@@ -2,7 +2,6 @@
   <VSelectField
     v-bind="$attrs"
     v-model="locale"
-    class="max-w-[12.5rem]"
     field-id="language"
     :choices="choices"
     :blank-text="$t('language.language')"

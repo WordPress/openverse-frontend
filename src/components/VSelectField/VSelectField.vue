@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative m-0.5px block w-fit overflow-hidden rounded-sm border text-sm focus-within:m-0 focus-within:border-1.5 focus-within:border-pink hover:border-dark-charcoal focus-within:hover:border-pink"
+    class="relative m-0.5px box-content block w-fit overflow-hidden rounded-sm border text-sm focus-within:m-0 focus-within:border-1.5 focus-within:border-pink hover:border-dark-charcoal focus-within:hover:border-pink"
     :class="variant === 'borderless' ? 'border-tx' : 'border-dark-charcoal-20'"
   >
     <div class="pointer-events-none absolute inset-y-0 my-auto h-fit start-2">
@@ -12,7 +12,7 @@
     <select
       :id="fieldId"
       v-model="modelMedium"
-      class="flex h-10 max-w-full appearance-none bg-white pe-10"
+      class="flex h-[calc(theme(spacing.10)_-_2_*_theme(borderWidth.DEFAULT))] w-full appearance-none bg-white pe-10"
       :class="hasStartContent ? 'ps-10' : 'ps-2'"
       :name="fieldName"
       v-bind="$attrs"

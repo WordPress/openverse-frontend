@@ -25,7 +25,7 @@
 
     <!-- Locale chooser and WordPress affiliation graphic -->
     <div class="locale-and-wp flex flex-col justify-between gap-10">
-      <VLanguage v-bind="languageProps" class="language" />
+      <VLanguage v-bind="languageProps" class="language max-w-full" />
       <VLink
         href="https://wordpress.org"
         class="text-dark-charcoal hover:no-underline"
@@ -136,7 +136,7 @@ export default defineComponent({
 }
 
 .footer.footer-sm .language {
-  @apply w-50;
+  @apply max-w-[12.5rem];
 }
 
 .footer.footer-md .logo-and-links {
