@@ -2,7 +2,7 @@ import { Ref, ref, watch } from '@nuxtjs/composition-api'
 
 import { contains, getDocument, isInDocument } from '~/utils/reakit-utils/dom'
 
-type Props = {
+interface Props {
   containerRef: Ref<HTMLElement | null>
   triggerRef: Ref<HTMLElement | null>
   eventType: string
