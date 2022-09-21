@@ -59,6 +59,8 @@ import useResizeObserver from '~/composables/use-resize-observer'
 
 import { SCREEN_SIZES } from '~/constants/screens'
 
+import type { SelectFieldProps } from '~/components/VSelectField/VSelectField.vue'
+
 import VLink from '~/components/VLink.vue'
 import VBrand from '~/components/VBrand/VBrand.vue'
 import VLanguage from '~/components/VLanguage/VLanguage.vue'
@@ -89,7 +91,7 @@ export default defineComponent({
       default: undefined,
     },
     languageProps: {
-      type: Object,
+      type: Object as PropType<SelectFieldProps>,
       default: () => ({}),
     },
   },

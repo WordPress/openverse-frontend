@@ -34,6 +34,8 @@ import { defineEvent } from '~/types/emits'
 
 import VIcon from '~/components/VIcon/VIcon.vue'
 
+import { ProperlyExtractPropTypes } from '../../types/prop-extraction'
+
 import caretDownIcon from '~/assets/icons/caret-down.svg'
 
 /**
@@ -46,10 +48,14 @@ export interface Choice {
   text: string
 }
 
+export type SelectFieldProps = ProperlyExtractPropTypes<
+  NonNullable<typeof VSelectField['props']>
+>
+
 /**
  * This field present many viable choices of which any one may be selected.
  */
-export default defineComponent({
+const VSelectField = defineComponent({
   name: 'VSelectField',
   components: { VIcon },
   inheritAttrs: false,
@@ -123,4 +129,6 @@ export default defineComponent({
     }
   },
 })
+
+export default VSelectField
 </script>
