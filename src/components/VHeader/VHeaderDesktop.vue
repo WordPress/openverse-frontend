@@ -11,7 +11,7 @@
 
     <VSearchBar
       v-model.trim="searchTerm"
-      class="flex-grow"
+      class="flex-grow me-4"
       size="medium"
       @submit="handleSearch"
     >
@@ -248,8 +248,7 @@ export default defineComponent({
       selectSearchType,
       searchStatus,
       searchTerm,
-      sidebarVisibleRef: sidebarVisibleRef,
-
+      sidebarVisibleRef,
       toggleSidebar,
       onTab,
     }
