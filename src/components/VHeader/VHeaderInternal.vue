@@ -42,7 +42,6 @@
             <VBrand :is-fetching="false" />
             <VIconButton
               ref="closeButton"
-              variant="plain"
               :button-props="{ variant: 'plain' }"
               :icon-props="{ iconPath: closeIcon }"
               size="search-medium"
