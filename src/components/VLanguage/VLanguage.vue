@@ -53,10 +53,12 @@ export default defineComponent({
       },
     })
     const choices = computed<Choice[]>(() =>
-      i18n.locales.map((locale: OpenverseLocale) => ({
-        key: locale.code,
-        text: locale.nativeName ?? locale.name,
-      }))
+      i18n.locales
+        .map((locale: OpenverseLocale) => ({
+          key: locale.code,
+          text: locale.nativeName ?? locale.name,
+        }))
+        .sort((a, b) => a.key.localeCompare(b.key))
     )
 
     return {
