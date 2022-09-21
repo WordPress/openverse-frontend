@@ -7,6 +7,7 @@
         :class="[
           $style[`modal-backdrop-${variant}`],
           $style[`modal-backdrop-${mode}`],
+          contentClasses,
         ]"
       >
         <div
@@ -134,6 +135,14 @@ export default defineComponent({
         String
       ),
       default: 'light',
+    },
+    /**
+     * The tailwind classes to apply to the modal backdrop element.
+     * Can be used to make the modal hidden on some breakpoint.
+     */
+    contentClasses: {
+      type: String,
+      default: '',
     },
   },
   setup(props, { emit, attrs }) {

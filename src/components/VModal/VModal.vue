@@ -26,6 +26,7 @@
       :initial-focus-element="initialFocusElement"
       :variant="variant"
       :mode="mode"
+      :content-classes="modalContentClasses"
     >
       <template #top-bar>
         <slot name="top-bar" />
@@ -148,6 +149,10 @@ export default defineComponent({
     visible: {
       type: Boolean,
       default: undefined,
+    },
+    modalContentClasses: {
+      type: String,
+      default: '',
     },
   },
   emits: [
