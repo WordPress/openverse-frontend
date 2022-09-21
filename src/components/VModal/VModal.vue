@@ -192,8 +192,12 @@ export default defineComponent({
       triggerA11yProps['aria-expanded'] = !!visible
     })
 
+    /**
+     * When the `visible` prop is set to a different value than internalVisibleRef,
+     * we update the internalVisibleRef to match the prop.
+     */
     watch(visibleRef, (visible) => {
-      if (visible === undefined) return
+      if (visible === undefined || visible === internalVisibleRef.value) return
 
       if (visible) {
         open()
@@ -206,14 +210,16 @@ export default defineComponent({
 
     const open = () => {
       internalVisibleRef.value = true
-      emit('open')
       lock()
+      if (props.visible !== internalVisibleRef.value) {
+        emit('open')
+      }
     }
 
     const close = () => {
       internalVisibleRef.value = false
-      emit('close')
       unlock()
+      emit('close')
     }
 
     const onTriggerClick = () => {
