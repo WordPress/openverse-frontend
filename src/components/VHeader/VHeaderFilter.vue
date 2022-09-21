@@ -156,7 +156,7 @@ export default defineComponent({
 
     return {
       nodeRef,
-      sidebarVisibleRef: visibleRef,
+      visibleRef,
       triggerElement,
 
       open,
