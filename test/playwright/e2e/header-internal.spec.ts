@@ -1,12 +1,16 @@
 import { test, expect } from '@playwright/test'
 
-import { enableNewHeader, t } from '~~/test/playwright/utils/navigation'
+import {
+  enableNewHeader,
+  scrollToBottom,
+  t,
+} from '~~/test/playwright/utils/navigation'
 
 test.use({
-  viewport: { width: 640, height: 700 },
+  viewport: { width: 640, height: 600 },
 })
 
-test('can open a modal on md breakpoint', async ({ page }) => {
+test('can open and close the modal on md breakpoint', async ({ page }) => {
   await enableNewHeader(page)
 
   await page.goto('/about')
@@ -23,4 +27,18 @@ test('can open a modal on md breakpoint', async ({ page }) => {
 
   await page.locator('div[role="dialog"] >> [aria-label="Close"]').click()
   await expect(page.locator(`[aria-label="${menuAriaLabel}"]`)).toBeVisible()
+})
+
+test('the modal locks the scroll on md breakpoint', async ({ page }) => {
+  await enableNewHeader(page)
+
+  await page.goto('/about')
+  const menuAriaLabel = t('header.aria.menu')
+
+  await scrollToBottom(page)
+  await page.locator(`[aria-label="${menuAriaLabel}"]`).click()
+  await page.locator('div[role="dialog"] >> [aria-label="Close"]').click()
+
+  const scrollPosition = await page.evaluate(() => window.scrollY)
+  expect(scrollPosition).toBeGreaterThan(100)
 })
