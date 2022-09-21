@@ -19,20 +19,9 @@
   </VButton>
 </template>
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  inject,
-  PropType,
-} from '@nuxtjs/composition-api'
+import { computed, defineComponent, inject } from '@nuxtjs/composition-api'
 
-import {
-  ALL_MEDIA,
-  AUDIO,
-  IMAGE,
-  type SearchType,
-  VIDEO,
-} from '~/constants/media'
+import { ALL_MEDIA, AUDIO, IMAGE, VIDEO } from '~/constants/media'
 import { IsMinScreenLgKey } from '~/types/provides'
 import useSearchType from '~/composables/use-search-type'
 import { useI18n } from '~/composables/use-i18n'
@@ -62,12 +51,8 @@ export default defineComponent({
       type: Object,
       required: true,
     },
-    activeItem: {
-      type: String as PropType<SearchType>,
-      default: ALL_MEDIA,
-    },
   },
-  setup(props) {
+  setup() {
     const i18n = useI18n()
     const isMinScreenLg = inject(IsMinScreenLgKey)
 
@@ -81,7 +66,7 @@ export default defineComponent({
       isIconButton.value ? 'w-10 h-10' : 'ps-2 pe-3 md:px-2'
     )
 
-    const buttonLabel = computed(() => i18n.t(labels[props.activeItem]))
+    const buttonLabel = computed(() => i18n.t(labels[activeItem]))
 
     return {
       sizeClasses,
