@@ -11,34 +11,25 @@
         :a11y-props="a11yProps"
         aria-controls="content-switcher-popover"
         :active-item="activeItem"
-        :class="{
-          '!border-tx': isInSearchBar,
-          '!bg-white group-hover:!border-dark-charcoal-20 group-hover:focus:!border-tx':
-            isInSearchBar && !a11yProps['aria-expanded'],
-        }"
-        :type="placement"
       />
     </template>
     <VSearchTypes
       id="content-switcher-popover"
       size="medium"
       :active-item="activeItem"
-      :use-links="placement === 'header'"
+      :use-links="true"
       @select="selectItem"
     />
   </VPopover>
 </template>
 
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  PropType,
-  ref,
-} from '@nuxtjs/composition-api'
+import { defineComponent, ref } from '@nuxtjs/composition-api'
 
 import type { SearchType } from '~/constants/media'
 import { defineEvent } from '~/types/emits'
+
+import useSearchType from '~/composables/use-search-type'
 
 import VPopover from '~/components/VPopover/VPopover.vue'
 import VSearchTypeButton from '~/components/VContentSwitcher/VSearchTypeButton.vue'
@@ -57,46 +48,30 @@ export default defineComponent({
     prop: 'activeItem',
     event: 'select',
   },
-  props: {
-    activeItem: {
-      type: String as PropType<SearchType>,
-      required: true,
-    },
-    placement: {
-      type: String as PropType<'header' | 'searchbar'>,
-      default: 'header',
-    },
-  },
   emits: {
     select: defineEvent<SearchType>(),
   },
   setup(props, { emit }) {
     const contentMenuPopover = ref<HTMLElement | null>(null)
-
-    /**
-     * When in the searchbar, content switcher button has a border when the
-     * search bar group is hovered on.
-     */
-    const isInSearchBar = computed(() => props.placement === 'searchbar')
+    const { activeType: activeItem } = useSearchType()
 
     /**
      * Only the contentMenuPopover needs to be closed programmatically
      */
     const closeMenu = () => {
-      if (contentMenuPopover.value) {
-        contentMenuPopover.value.close()
-      }
+      contentMenuPopover.value?.close()
     }
 
     const selectItem = (item: SearchType) => {
       emit('select', item)
+      closeMenu()
     }
 
     return {
       checkIcon,
       selectItem,
+      activeItem,
       contentMenuPopover,
-      isInSearchBar,
       closeMenu,
     }
   },
