@@ -30,6 +30,7 @@
             ref="menuButtonRef"
             :icon-props="{ iconPath: menuIcon }"
             :button-props="{ variant: 'plain' }"
+            :aria-label="$t('header.aria.menu')"
             v-bind="a11yProps"
             class="border-tx"
             size="search-medium"
