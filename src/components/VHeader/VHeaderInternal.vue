@@ -16,71 +16,73 @@
         </li>
       </ul>
     </nav>
-    <VModal
-      :label="$t('header.aria.menu').toString()"
-      variant="full"
-      mode="dark"
-      modal-content-classes="flex md:hidden"
-      :visible="isModalVisible"
-      @open="setModalVisibility(true)"
-    >
-      <template #trigger="{ a11yProps }">
-        <VIconButton
-          ref="menuButtonRef"
-          :icon-props="{ iconPath: menuIcon }"
-          :button-props="{ variant: 'plain' }"
-          v-bind="a11yProps"
-          class="border-tx"
-          size="search-medium"
-        />
-      </template>
-
-      <template #top-bar>
-        <div
-          class="flex h-20 w-full justify-between bg-dark-charcoal py-4 text-white pe-3 ps-6"
-        >
-          <VBrand :is-fetching="false" />
+    <div class="flex md:hidden">
+      <VModal
+        :label="$t('header.aria.menu').toString()"
+        variant="full"
+        mode="dark"
+        modal-content-classes="flex md:hidden"
+        :visible="isModalVisible"
+        @open="setModalVisibility(true)"
+      >
+        <template #trigger="{ a11yProps }">
           <VIconButton
-            ref="closeButton"
+            ref="menuButtonRef"
+            :icon-props="{ iconPath: menuIcon }"
             :button-props="{ variant: 'plain' }"
-            :icon-props="{ iconPath: closeIcon }"
+            v-bind="a11yProps"
+            class="border-tx"
             size="search-medium"
-            class="border-tx text-white"
-            :aria-label="$t('modal.close')"
-            @click="setModalVisibility(false)"
           />
-        </div>
-      </template>
-      <template #default>
-        <ul class="flex flex-col items-end bg-dark-charcoal text-white">
-          <li v-for="page in allPages" :key="page.id" class="mt-6">
-            <VLink
-              class="heading-5 text-white"
-              :class="currentPage === page.id ? 'font-bold' : ''"
-              :href="page.link"
-              show-external-icon
-              @click="setModalVisibility(false)"
-              >{{ $t(`navigation.${page.id}`) }}</VLink
-            >
-          </li>
-        </ul>
-        <VLink
-          href="https://wordpress.org"
-          class="text-white hover:no-underline"
-        >
-          <i18n
-            tag="p"
-            path="footer.wordpress-affiliation"
-            class="mt-auto flex flex-row items-center text-sm"
+        </template>
+
+        <template #top-bar>
+          <div
+            class="flex h-20 w-full justify-between bg-dark-charcoal py-4 text-white pe-3 ps-6"
           >
-            <template #wordpress>
-              <WordPress class="aria-hidden text-white" />
-              <span class="sr-only">WordPress</span>
-            </template>
-          </i18n>
-        </VLink>
-      </template>
-    </VModal>
+            <VBrand :is-fetching="false" />
+            <VIconButton
+              ref="closeButton"
+              :button-props="{ variant: 'plain' }"
+              :icon-props="{ iconPath: closeIcon }"
+              size="search-medium"
+              class="border-tx text-white"
+              :aria-label="$t('modal.close')"
+              @click="setModalVisibility(false)"
+            />
+          </div>
+        </template>
+        <template #default>
+          <ul class="flex flex-col items-end bg-dark-charcoal text-white">
+            <li v-for="page in allPages" :key="page.id" class="mt-6">
+              <VLink
+                class="heading-5 text-white"
+                :class="currentPage === page.id ? 'font-bold' : ''"
+                :href="page.link"
+                show-external-icon
+                @click="onClick(page.link)"
+                >{{ $t(`navigation.${page.id}`) }}</VLink
+              >
+            </li>
+          </ul>
+          <VLink
+            href="https://wordpress.org"
+            class="text-white hover:no-underline"
+          >
+            <i18n
+              tag="p"
+              path="footer.wordpress-affiliation"
+              class="mt-auto flex flex-row items-center text-sm"
+            >
+              <template #wordpress>
+                <WordPress class="aria-hidden text-white" />
+                <span class="sr-only">WordPress</span>
+              </template>
+            </i18n>
+          </VLink>
+        </template>
+      </VModal>
+    </div>
   </header>
 </template>
 <script lang="ts">
@@ -118,6 +120,17 @@ export default defineComponent({
       }
     })
 
+    /**
+     * Close the modal when the user clicks on an internal link.
+     * @param link - the link URL.
+     */
+    const onClick = (link: string) => {
+      const isLinkInternal = link.startsWith('/')
+      if (isLinkInternal && isModalVisible.value) {
+        setModalVisibility(false)
+      }
+    }
+
     return {
       menuButtonRef,
 
@@ -129,6 +142,7 @@ export default defineComponent({
 
       isModalVisible,
       setModalVisibility,
+      onClick,
     }
   },
 })
