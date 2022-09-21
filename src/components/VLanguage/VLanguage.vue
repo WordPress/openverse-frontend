@@ -28,15 +28,6 @@ import type { LocaleObject } from '@nuxtjs/i18n'
 import globeIcon from '~/assets/icons/globe.svg'
 
 /**
- * We put a little extra information in the Vue-i18n `locales` field such as the
- * locale's name and native name, which comes in use here.
- */
-interface OpenverseLocale extends LocaleObject {
-  name: string
-  nativeName?: string
-}
-
-/**
  * Presents a way for the users to change the app locale and use a translated
  * version of the app.
  */
@@ -54,7 +45,7 @@ export default defineComponent({
     })
     const choices = computed<Choice[]>(() =>
       i18n.locales
-        .map((locale: OpenverseLocale) => ({
+        .map((locale: LocaleObject) => ({
           key: locale.code,
           text: locale.nativeName ?? locale.name,
         }))
