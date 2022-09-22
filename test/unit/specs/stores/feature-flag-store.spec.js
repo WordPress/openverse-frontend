@@ -83,6 +83,26 @@ describe('Feature flag store', () => {
   )
 
   it.each`
+    cookieState | queryState | finalState
+    ${'off'}    | ${'on'}    | ${'on'}
+    ${'on'}     | ${'off'}   | ${'off'}
+  `(
+    'cascades flag from cookies and query params',
+    ({ cookieState, queryState, finalState }) => {
+      const flagName = 'feat_switchable_optout'
+      const featureFlagStore = useFeatureFlagStore()
+      featureFlagStore.initFromCookies({
+        [flagName]: cookieState,
+      })
+      featureFlagStore.initFromQuery({
+        [`ff_${flagName}`]: queryState,
+      })
+
+      expect(featureFlagStore.featureState(flagName)).toEqual(finalState)
+    }
+  )
+
+  it.each`
     environment     | featureState
     ${'local'}      | ${'on'}
     ${'staging'}    | ${'off'}
