@@ -1,7 +1,7 @@
 import { Mutex, MutexInterface } from 'async-mutex'
 
 import { createApiService } from '~/data/api-service'
-import { error } from '~/utils/console'
+import { error, log } from '~/utils/console'
 
 import type { AxiosError } from 'axios'
 
@@ -128,12 +128,16 @@ const getApiAccessToken = async (
   // not already another request making the request (represented
   // by the locked mutex).
   if (isNewTokenNeeded() && !process.fetchingMutex.isLocked()) {
+    log('acquiring mutex lock')
     release = await process.fetchingMutex.acquire()
+    log('mutex lock acquired, preparing token refresh request')
     process.tokenFetching = refreshApiAccessToken(apiClientId, apiClientSecret)
   }
 
   try {
+    log('awaiting the fetching of the api token to resolve')
     await process.tokenFetching
+    log('done waiting for the token, moving on now...')
   } finally {
     /**
      * Releasing must be in a `finally` block otherwise if the
@@ -142,7 +146,9 @@ const getApiAccessToken = async (
      * refresh.
      */
     if (release) {
+      log('releasing mutex')
       release()
+      log('mutex released')
     }
   }
 
