@@ -103,6 +103,22 @@ describe('Feature flag store', () => {
   )
 
   it.each`
+    flagName           | queryState | finalState
+    ${'feat_disabled'} | ${'on'}    | ${'off'}
+    ${'feat_enabled'}  | ${'off'}   | ${'on'}
+  `(
+    'does not cascade non-switchable flags from query params',
+    ({ flagName, queryState, finalState }) => {
+      const featureFlagStore = useFeatureFlagStore()
+      featureFlagStore.initFromQuery({
+        [`ff_${flagName}`]: queryState,
+      })
+
+      expect(featureFlagStore.featureState(flagName)).toEqual(finalState)
+    }
+  )
+
+  it.each`
     environment     | featureState
     ${'local'}      | ${'on'}
     ${'staging'}    | ${'off'}
