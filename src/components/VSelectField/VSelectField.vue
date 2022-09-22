@@ -12,7 +12,7 @@
     <select
       :id="fieldId"
       v-model="modelMedium"
-      class="flex h-[calc(theme(spacing.10)_-_2_*_theme(borderWidth.DEFAULT))] w-full appearance-none bg-white pe-10"
+      class="flex h-[calc(theme(spacing.10)_-_2_*_theme(borderWidth.DEFAULT))] w-full appearance-none bg-white pe-10 truncate"
       :class="hasStartContent ? 'ps-10' : 'ps-2'"
       :name="fieldName"
       v-bind="$attrs"
