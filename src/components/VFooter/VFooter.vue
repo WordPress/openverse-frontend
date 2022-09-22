@@ -25,7 +25,7 @@
 
     <!-- Locale chooser and WordPress affiliation graphic -->
     <div class="locale-and-wp flex flex-col justify-between gap-10">
-      <VLanguage v-bind="languageProps" class="language max-w-full" />
+      <VLanguageSelect v-bind="languageProps" class="language max-w-full" />
       <VLink
         href="https://wordpress.org"
         class="text-dark-charcoal hover:no-underline"
@@ -63,7 +63,8 @@ import type { SelectFieldProps } from '~/components/VSelectField/VSelectField.vu
 
 import VLink from '~/components/VLink.vue'
 import VBrand from '~/components/VBrand/VBrand.vue'
-import VLanguage from '~/components/VLanguage/VLanguage.vue'
+
+import VLanguageSelect from '~/components/VLanguageSelect/VLanguageSelect.vue'
 
 import WordPress from '~/assets/wordpress.svg?inline'
 
@@ -74,7 +75,7 @@ import WordPress from '~/assets/wordpress.svg?inline'
 export default defineComponent({
   name: 'VFooter',
   components: {
-    VLanguage,
+    VLanguageSelect,
     VLink,
     VBrand,
     WordPress,

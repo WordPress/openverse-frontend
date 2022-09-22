@@ -32,7 +32,7 @@ import globeIcon from '~/assets/icons/globe.svg'
  * version of the app.
  */
 export default defineComponent({
-  name: 'VLanguage',
+  name: 'VLanguageSelect',
   components: { VSelectField, VIcon },
   inheritAttrs: false,
   setup() {
