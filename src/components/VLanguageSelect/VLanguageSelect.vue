@@ -47,7 +47,7 @@ export default defineComponent({
       i18n.locales
         .map((locale: LocaleObject) => ({
           key: locale.code,
-          text: locale.nativeName ?? locale.name,
+          text: locale.nativeName,
         }))
         .sort((a, b) => a.key.localeCompare(b.key))
     )
