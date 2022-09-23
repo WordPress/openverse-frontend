@@ -14,10 +14,11 @@
       :class="{ 'heading-5 mt-3': variant === 'column' }"
     >
       <VLink
-        class="rounded-sm py-3 ps-3 focus-visible:outline-none focus-visible:ring focus-visible:ring-pink focus-visible:ring-offset-1 focus-visible:ring-offset-tx"
+        class="rounded-sm py-3 focus-visible:outline-none focus-visible:ring focus-visible:ring-pink focus-visible:ring-offset-1 focus-visible:ring-offset-tx"
         :class="[
           { 'font-bold': currentPage === page.id },
           mode === 'dark' ? 'text-dark-charcoal' : 'text-white',
+          variant === 'inline' ? '' : 'ps-3',
         ]"
         :href="page.link"
         show-external-icon
