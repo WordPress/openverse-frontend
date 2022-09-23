@@ -7,26 +7,32 @@ export default function usePages(isNew = false) {
     ? [
         {
           id: 'about',
+          name: 'navigation.about',
           link: app.localePath('/about'),
         },
         {
           id: 'licenses',
+          name: 'navigation.licenses',
           link: 'https://creativecommons.org/about/cclicenses/',
         },
         {
           id: 'get-involved',
+          name: 'navigation.get-involved',
           link: 'https://github.com/WordPress/openverse/',
         },
         {
           id: 'api',
+          name: 'navigation.api',
           link: 'https://api.openverse.engineering/v1/',
         },
         {
           id: 'privacy',
+          name: 'navigation.privacy',
           link: 'https://wordpress.org/privacy',
         },
         {
           id: 'feedback',
+          name: 'navigation.feedback',
           link: app.localePath('/feedback'),
         },
       ]
