@@ -86,6 +86,7 @@
     </div>
   </header>
 </template>
+
 <script lang="ts">
 import { defineComponent, ref, useRoute, watch } from '@nuxtjs/composition-api'
 
