@@ -31,10 +31,9 @@
 import { defineComponent, computed, PropType } from '@nuxtjs/composition-api'
 
 import { defineEvent } from '~/types/emits'
+import { ProperlyExtractPropTypes } from '~/types/prop-extraction'
 
 import VIcon from '~/components/VIcon/VIcon.vue'
-
-import { ProperlyExtractPropTypes } from '../../types/prop-extraction'
 
 import caretDownIcon from '~/assets/icons/caret-down.svg'
 
