@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 
+import { env } from '~/utils/env'
 import { deepClone } from '~/utils/clone'
 import type { DeepWriteable } from '~/types/utils'
 
@@ -32,6 +33,10 @@ import { useProviderStore } from '~/stores/provider'
 
 import { useFeatureFlagStore } from '~/stores/feature-flag'
 
+import { useStorage } from '~/composables/use-storage'
+
+import type { Ref } from '~/composables/types'
+
 import type { Dictionary } from 'vue-router/types/router'
 
 export const isSearchTypeSupported = (
@@ -42,6 +47,7 @@ export const isSearchTypeSupported = (
 
 export interface SearchState {
   searchType: SearchType
+  recentSearches: Ref<string[]>
   searchTerm: string
   filters: Filters
 }
@@ -71,8 +77,13 @@ export const useSearchStore = defineStore('search', {
   state: (): SearchState => ({
     searchType: ALL_MEDIA,
     searchTerm: '',
+    recentSearches: useStorage<string[]>('recent-searches', []),
     filters: deepClone(filterData as DeepWriteable<typeof filterData>),
   }),
+  hydrate(state) {
+    // @ts-expect-error https://github.com/microsoft/TypeScript/issues/43826
+    state.recentSearches = useStorage<string[]>('recent-searches', [])
+  },
   getters: {
     filterCategories(state) {
       return Object.keys(state.filters) as FilterCategory[]
@@ -156,10 +167,30 @@ export const useSearchStore = defineStore('search', {
       this.clearOtherMediaTypeFilters(type)
     },
     setSearchTerm(term: string) {
-      this.searchTerm = term.trim()
+      const formattedTerm = term.trim()
+      this.searchTerm = formattedTerm
+      this.addRecentSearch(formattedTerm)
+    },
+    /** Add a new term to the list of recent search terms */
+    addRecentSearch(
+      search: string /** A search term to add to the saved list.*/
+    ) {
+      /**
+       * Here we add our latest search to the top of the stack,
+       * and add the remaining items, making sure not to exceed
+       * our max count and removing and old occurences of the
+       * most recent term.
+       */
+      this.recentSearches = [
+        search,
+        ...this.recentSearches.filter((i) => i !== search),
+      ].slice(0, parseInt(env.savedSearchCount))
     },
     computeQueryParams(type: SupportedSearchType) {
       return computeQueryParams(type, this.filters, this.searchTerm)
+    },
+    clearRecentSearches() {
+      this.recentSearches = []
     },
     /**
      * Initial filters do not include the provider filters. We create the provider filters object
