@@ -26,7 +26,7 @@ const icons = {
   [IMAGE]: imageIcon,
   [VIDEO]: videoIcon,
   [MODEL_3D]: model3dIcon,
-} as const
+}
 
 export default function useSearchType() {
   const activeType = computed(() => useSearchStore().searchType)
@@ -54,5 +54,3 @@ export default function useSearchType() {
     additionalTypes,
   }
 }
-
-export type UseSearchTypeReturn = ReturnType<typeof useSearchType>
