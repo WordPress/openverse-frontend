@@ -5,13 +5,13 @@
       mode === 'dark' ? 'text-dark-charcoal' : 'bg-dark-charcoal text-white',
       variant === 'inline'
         ? 'flex-row items-center gap-8 text-sm'
-        : 'flex-col items-end',
+        : 'mt-3 flex-col items-end',
     ]"
   >
     <li
       v-for="page in allPages"
       :key="page.id"
-      :class="{ 'heading-5 mt-3': variant === 'column' }"
+      :class="{ 'heading-5': variant === 'column' }"
     >
       <VLink
         class="rounded-sm py-3 focus-visible:outline-none focus-visible:ring focus-visible:ring-pink focus-visible:ring-offset-1 focus-visible:ring-offset-tx"
@@ -38,8 +38,13 @@ import {
 
 import usePages from '~/composables/use-pages'
 
+import VLink from '~/components/VLink.vue'
+
 export default defineComponent({
   name: 'VPageLinks',
+  components: {
+    VLink,
+  },
   props: {
     /**
      * In `light` mode, the links are white and the background is dark charcoal.
