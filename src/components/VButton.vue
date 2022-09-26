@@ -2,7 +2,7 @@
   <Component
     :is="as"
     :type="typeRef"
-    class="flex appearance-none items-center justify-center rounded-sm no-underline ring-offset-1 transition-shadow duration-100 ease-linear focus:outline-none disabled:opacity-70"
+    class="flex appearance-none items-center justify-center rounded-sm no-underline ring-offset-1 transition-shadow duration-100 ease-linear focus:outline-none"
     :class="[
       $style.button,
       $style[variant],
@@ -37,38 +37,16 @@ import {
 import { warn } from '~/utils/console'
 
 import type { ProperlyExtractPropTypes } from '~/types/prop-extraction'
+import {
+  ButtonConnections,
+  buttonForms,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
+} from '~/types/button'
+import type { ButtonForm } from '~/types/button'
 
 import VLink from '~/components/VLink.vue'
-
-export const buttonForms = ['VLink', 'button'] as const
-
-type ButtonForm = typeof buttonForms[number]
-
-export const buttonVariants = [
-  'primary',
-  'secondary',
-  'secondary-bordered',
-  'secondary-filled',
-  'menu',
-  'action-menu',
-  'action-menu-bordered',
-  'action-menu-bordered-pressed',
-  'action-menu-muted',
-  'action-menu-muted-pressed',
-  'plain',
-  'plain--avoid',
-  'full',
-] as const
-export type ButtonVariant = typeof buttonVariants[number]
-
-export const buttonSizes = ['large', 'medium', 'small', 'disabled'] as const
-export type ButtonSize = typeof buttonSizes[number]
-
-export const buttonTypes = ['button', 'submit', 'reset'] as const
-export type ButtonType = typeof buttonTypes[number]
-
-export const buttonConnections = ['start', 'end', 'none', 'all'] as const
-export type ButtonConnections = typeof buttonConnections[number]
 
 export type ButtonProps = ProperlyExtractPropTypes<
   NonNullable<typeof VButton['props']>
@@ -266,7 +244,7 @@ export default VButton
 <style module>
 .button[disabled='disabled'],
 .button[aria-disabled='true'] {
-  @apply opacity-50;
+  @apply cursor-not-allowed;
 }
 
 .size-small {
@@ -296,7 +274,11 @@ a.button {
   @apply border-tx bg-tx hover:bg-dark-charcoal hover:text-white focus-visible:ring focus-visible:ring-pink;
 }
 .secondary-pressed {
-  @apply border border-tx bg-dark-charcoal-80 hover:border-tx;
+  @apply border border-tx bg-dark-charcoal text-white hover:border-tx hover:bg-dark-charcoal-80;
+}
+.secondary[disabled='disabled'],
+.secondary[aria-disabled='true'] {
+  @apply border-tx bg-tx text-dark-charcoal-40;
 }
 
 .secondary-filled {
@@ -309,10 +291,11 @@ a.button {
 .secondary-bordered-pressed {
   @apply bg-dark-charcoal text-white hover:border-tx hover:bg-dark-charcoal-80 focus-visible:bg-dark-charcoal-80;
 }
-
-.secondary[disabled='disabled'],
-.secondary[aria-disabled='true'] {
-  @apply border-tx bg-tx text-dark-charcoal-40;
+.secondary-filled[disabled='disabled'],
+.secondary-bordered[disabled='disabled'],
+.secondary-filled[aria-disabled='true'],
+.secondary-bordered[aria-disabled='true'] {
+  @apply border-tx bg-dark-charcoal-10 text-dark-charcoal-40;
 }
 
 .action-menu[disabled='disabled'],
@@ -354,10 +337,10 @@ https://www.figma.com/file/GIIQ4sDbaToCfFQyKMvzr8/Openverse-Design-Library?node-
 Borderless button with white background; border on hover, dark-charcoal background when pressed.
 Used in the homepage searchbar content switcher.
  */
-.action-menu-reversed {
+.action-menu-inner {
   @apply border border-tx bg-white text-dark-charcoal hover:border-dark-charcoal-20;
 }
-.action-menu-reversed-pressed {
+.action-menu-inner-pressed {
   @apply bg-dark-charcoal text-white hover:border-tx hover:bg-dark-charcoal-80 focus-visible:bg-dark-charcoal;
 }
 

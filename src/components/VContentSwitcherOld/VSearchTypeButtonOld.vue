@@ -35,7 +35,8 @@ import {
   ref,
 } from '@nuxtjs/composition-api'
 
-import { ALL_MEDIA, SearchType } from '~/constants/media'
+import { ALL_MEDIA, type SearchType } from '~/constants/media'
+import type { ButtonVariant } from '~/types/button'
 import useSearchType from '~/composables/use-search-type'
 import { useI18n } from '~/composables/use-i18n'
 import { isMinScreen } from '~/composables/use-media-query'
@@ -85,9 +86,9 @@ export default defineComponent({
       }
     })
 
-    const buttonVariant = computed(() => {
+    const buttonVariant = computed<ButtonVariant>(() => {
       if (props.type === 'searchbar') {
-        return 'action-menu-reversed'
+        return 'action-menu-inner'
       } else {
         return isMinScreenMd.value && !isHeaderScrolled?.value
           ? 'action-menu-bordered'

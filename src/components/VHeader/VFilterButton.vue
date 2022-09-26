@@ -32,9 +32,10 @@ import { computed, defineComponent, inject, ref } from '@nuxtjs/composition-api'
 
 import { useSearchStore } from '~/stores/search'
 import { defineEvent } from '~/types/emits'
+import type { ButtonVariant } from '~/types/button'
 import { useI18n } from '~/composables/use-i18n'
 
-import VButton, { ButtonVariant } from '~/components/VButton.vue'
+import VButton from '~/components/VButton.vue'
 import VIcon from '~/components/VIcon/VIcon.vue'
 
 import filterIcon from '~/assets/icons/filter.svg'
