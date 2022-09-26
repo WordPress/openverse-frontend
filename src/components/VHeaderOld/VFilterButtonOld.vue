@@ -28,13 +28,7 @@
 </template>
 
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  inject,
-  toRefs,
-  ref,
-} from '@nuxtjs/composition-api'
+import { computed, defineComponent, inject, ref } from '@nuxtjs/composition-api'
 
 import { useSearchStore } from '~/stores/search'
 import { defineEvent } from '~/types/emits'
@@ -65,10 +59,9 @@ export default defineComponent({
     tab: defineEvent<[KeyboardEvent]>(),
     toggle: defineEvent(),
   },
-  setup(props) {
+  setup() {
     const i18n = useI18n()
     const searchStore = useSearchStore()
-    const { pressed } = toRefs(props)
     const isMinScreenMd = inject('isMinScreenMd', ref(false))
     const isHeaderScrolled = inject('isHeaderScrolled', ref(false))
     const filterCount = computed(() => searchStore.appliedFilterCount)
@@ -81,7 +74,7 @@ export default defineComponent({
     const variant = computed(() => {
       // Show the bordered state by default, unless below md
       let value: ButtonVariant = isMinScreenMd.value
-        ? 'tertiary'
+        ? 'action-menu-bordered'
         : 'action-menu'
 
       if (isHeaderScrolled.value) {
@@ -89,10 +82,6 @@ export default defineComponent({
       }
       if (filtersAreApplied.value) {
         value = 'action-menu-muted'
-      }
-      // Override the default VButton pressed style
-      if (pressed.value) {
-        value = 'action-menu-muted-pressed'
       }
       return value
     })

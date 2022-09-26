@@ -47,10 +47,12 @@ type ButtonForm = typeof buttonForms[number]
 export const buttonVariants = [
   'primary',
   'secondary',
-  'tertiary',
+  'secondary-bordered',
+  'secondary-filled',
   'menu',
   'action-menu',
-  'action-menu-secondary',
+  'action-menu-bordered',
+  'action-menu-bordered-pressed',
   'action-menu-muted',
   'action-menu-muted-pressed',
   'plain',
@@ -286,33 +288,38 @@ a.button {
 .primary {
   @apply bg-pink text-white  hover:bg-dark-pink hover:text-white;
 }
-
 .primary-pressed {
   @apply bg-dark-pink;
 }
 
 .secondary {
-  @apply bg-dark-charcoal font-bold text-white hover:bg-dark-charcoal-80 hover:text-white;
+  @apply border-tx bg-tx hover:bg-dark-charcoal hover:text-white focus-visible:ring focus-visible:ring-pink;
 }
-
 .secondary-pressed {
   @apply border border-tx bg-dark-charcoal-80 hover:border-tx;
 }
 
-.tertiary {
-  @apply border border-dark-charcoal-20 bg-white text-dark-charcoal ring-offset-0 focus-visible:border-tx;
+.secondary-filled {
+  @apply bg-dark-charcoal text-white hover:bg-dark-charcoal-80 hover:text-white focus-visible:ring focus-visible:ring-pink disabled:bg-dark-charcoal-10 disabled:text-dark-charcoal-40;
 }
 
-.tertiary[disabled='disabled'],
-.tertiary[aria-disabled='true'],
+.secondary-bordered {
+  @apply border border-dark-charcoal bg-tx hover:bg-dark-charcoal hover:text-white focus-visible:border-tx disabled:bg-dark-charcoal-10 disabled:text-dark-charcoal-40;
+}
+.secondary-bordered-pressed {
+  @apply bg-dark-charcoal text-white hover:border-tx hover:bg-dark-charcoal-80 focus-visible:bg-dark-charcoal-80;
+}
+
+.secondary[disabled='disabled'],
+.secondary[aria-disabled='true'] {
+  @apply border-tx bg-tx text-dark-charcoal-40;
+}
+
 .action-menu[disabled='disabled'],
 .action-menu[aria-disabled='true'] {
   @apply border-dark-charcoal-10 bg-dark-charcoal-10;
 }
 
-.tertiary-pressed {
-  @apply border-tx bg-dark-charcoal text-white;
-}
 .menu {
   @apply border border-tx bg-white text-dark-charcoal ring-offset-0;
 }
@@ -321,27 +328,37 @@ a.button {
 }
 
 .action-menu {
-  @apply border border-tx bg-tx text-dark-charcoal hover:border-dark-charcoal-20;
+  @apply border border-tx bg-tx text-dark-charcoal hover:border-dark-charcoal hover:bg-dark-charcoal hover:text-white;
 }
-
-.action-menu-secondary {
-  @apply border border-tx bg-white text-dark-charcoal hover:border-dark-charcoal-20;
-}
-
-.action-menu-secondary-pressed {
-  @apply border-tx bg-dark-charcoal text-white;
-}
-
 .action-menu-pressed {
-  @apply border-tx bg-dark-charcoal text-white hover:border-tx;
+  @apply border-tx bg-dark-charcoal text-white hover:bg-dark-charcoal-80;
+}
+/**
+Similar to `action-menu`, but always has a border, not only on hover.
+https://www.figma.com/file/GIIQ4sDbaToCfFQyKMvzr8/Openverse-Design-Library?node-id=1684%3A3678
+ */
+.action-menu-bordered {
+  @apply border border-dark-charcoal-20 bg-white text-dark-charcoal hover:border-dark-charcoal hover:bg-dark-charcoal hover:text-white focus-visible:border-tx;
+}
+.action-menu-bordered-pressed {
+  @apply border-dark-charcoal bg-dark-charcoal text-white hover:bg-dark-charcoal-80;
 }
 
 .action-menu-muted {
   @apply border border-tx bg-dark-charcoal-10 text-dark-charcoal hover:border-dark-charcoal-20;
 }
-
 .action-menu-muted-pressed {
   @apply border border-tx bg-dark-charcoal text-white;
+}
+/**
+Borderless button with white background; border on hover, dark-charcoal background when pressed.
+Used in the homepage searchbar content switcher.
+ */
+.action-menu-reversed {
+  @apply border border-tx bg-white text-dark-charcoal hover:border-dark-charcoal-20;
+}
+.action-menu-reversed-pressed {
+  @apply bg-dark-charcoal text-white hover:border-tx hover:bg-dark-charcoal-80 focus-visible:bg-dark-charcoal;
 }
 
 .full {

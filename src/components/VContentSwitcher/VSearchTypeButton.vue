@@ -1,6 +1,6 @@
 <template>
   <VButton
-    class="flex flex-row py-2 text-sr font-semibold md:text-base"
+    class="group flex flex-row py-2 text-sr font-semibold md:text-base"
     :class="[
       sizeClasses,
       isHeaderScrolled ? 'max-w-[10rem] sm:max-w-[20rem] md:max-w-[16rem]' : '',
@@ -18,7 +18,7 @@
       >{{ buttonLabel }}</span
     >
     <VIcon
-      class="hidden text-dark-charcoal-40 md:block md:ms-2"
+      class="hidden text-dark-charcoal-40 group-hover:text-white md:block md:ms-2"
       :icon-path="caretDownIcon"
     />
   </VButton>
@@ -87,7 +87,7 @@ export default defineComponent({
         return 'action-menu'
       } else {
         return isMinScreenMd.value && !isHeaderScrolled?.value
-          ? 'tertiary'
+          ? 'action-menu-bordered'
           : 'action-menu'
       }
     })

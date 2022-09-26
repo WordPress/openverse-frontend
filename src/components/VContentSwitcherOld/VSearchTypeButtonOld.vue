@@ -1,9 +1,12 @@
 <template>
   <VButton
-    class="flex flex-row py-2 text-sr font-semibold md:text-base"
+    class="group flex flex-row py-2 text-sr font-semibold md:text-base"
     :class="[
       sizeClasses,
-      isHeaderScrolled ? 'max-w-[10rem] sm:max-w-[20rem] md:max-w-[16rem]' : '',
+      {
+        'max-w-[10rem] sm:max-w-[20rem] md:max-w-[16rem]': isHeaderScrolled,
+        'group-hover:border-dark-charcoal-20': isInSearchBar && !isPressed,
+      },
     ]"
     :variant="buttonVariant"
     size="disabled"
@@ -84,16 +87,19 @@ export default defineComponent({
 
     const buttonVariant = computed(() => {
       if (props.type === 'searchbar') {
-        return 'action-menu'
+        return 'action-menu-reversed'
       } else {
         return isMinScreenMd.value && !isHeaderScrolled?.value
-          ? 'tertiary'
+          ? 'action-menu-bordered'
           : 'action-menu'
       }
     })
     const buttonLabel = computed(() => {
       return i18n.t(`search-type.${props.activeItem}`)
     })
+
+    const isInSearchBar = computed(() => props.type === 'searchbar')
+    const isPressed = computed(() => Boolean(props.a11yProps['aria-expanded']))
 
     return {
       buttonVariant,
@@ -102,6 +108,8 @@ export default defineComponent({
       caretDownIcon,
       isHeaderScrolled,
       isMinScreenMd,
+      isInSearchBar,
+      isPressed,
       icon: computed(() => icons[activeItem.value]),
     }
   },
