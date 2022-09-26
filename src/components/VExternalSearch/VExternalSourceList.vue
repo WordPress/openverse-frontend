@@ -84,7 +84,7 @@ import closeSmallIcon from '~/assets/icons/close-small.svg'
  * when there are insufficient or zero search results.
  */
 export default defineComponent({
-  name: 'VMetaSourceList',
+  name: 'VExternalSourceList',
   components: { VButton, VIcon, VIconButton, VPopover },
   props: {
     /**

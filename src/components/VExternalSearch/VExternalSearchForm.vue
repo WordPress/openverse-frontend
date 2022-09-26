@@ -33,7 +33,7 @@
       <template #query>{{ query.q }}</template>
     </i18n>
 
-    <VMetaSourceList
+    <VExternalSourceList
       class="inline-flex ms-2 md:justify-center"
       :type="type"
       :query="query"
@@ -54,12 +54,12 @@ import type { ApiQueryParams } from '~/utils/search-query-transform'
 import { getFocusableElements } from '~/utils/focus-management'
 import { defineEvent } from '~/types/emits'
 
-import VMetaSourceList from './VMetaSourceList.vue'
+import VExternalSourceList from './VExternalSourceList.vue'
 
 export default defineComponent({
-  name: 'VMetaSearchForm',
+  name: 'VExternalSearchForm',
   components: {
-    VMetaSourceList,
+    VExternalSourceList,
   },
   props: {
     query: { type: Object as PropType<ApiQueryParams>, required: true },
