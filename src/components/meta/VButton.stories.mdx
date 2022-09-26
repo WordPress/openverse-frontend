@@ -37,7 +37,9 @@ export const Template = (args) => ({
 <Canvas>
   <Story
     name="VButton"
-    args={{}}
+    parameters={{
+      viewport: { defaultViewport: 'sm' },
+    }}
     argTypes={{
       as: {
         options: buttonForms,
