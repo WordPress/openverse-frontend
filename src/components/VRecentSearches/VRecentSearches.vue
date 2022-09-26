@@ -10,8 +10,7 @@
       </span>
       <VButton
         v-show="entries.length"
-        variant="plain"
-        size="small"
+        variant="text"
         class="caption-bold hover:underline"
         :aria-label="$t('recent-searches.clear.label').toString()"
         @click="handleClear"

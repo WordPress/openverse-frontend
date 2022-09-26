@@ -469,6 +469,9 @@ describe('Search Store', () => {
         // Clear up front in case of any preserved searches
         searchStore.clearRecentSearches()
 
+        // Clear up front in case of any preserved searches
+        searchStore.clearRecentSearches()
+
         searchStore.setSearchTerm('boop')
         searchStore.setSearchTerm('bar')
 

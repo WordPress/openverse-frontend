@@ -42,12 +42,14 @@ export function useDialogContent({ emit, ...props }) {
   })
 
   /**
+   * Close the dialog when the user presses the escape key.
    * @param {KeyboardEvent} event
    */
   const onKeyDown = (event) => {
     emit('keydown', event)
 
-    if (event.defaultPrevented) return
+    // FocusTrap by default deactivates on escape, and it prevents default on this event
+    // if (event.defaultPrevented) return
     if (event.key !== 'Escape') return
     if (!props.hideOnEscRef.value) return
 

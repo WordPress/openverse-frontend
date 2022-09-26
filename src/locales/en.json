@@ -58,7 +58,9 @@
     "filter-button": {
       "simple": "Filters",
       "with-count": "{count} Filter|{count} Filters"
-    }
+    },
+    "see-results": "See results",
+    "back-button": "Go back"
   },
   "navigation": {
     "about": "About",
@@ -348,6 +350,7 @@
     "filter-by": "Filter by",
     "hide": "Hide filters",
     "clear": "Clear filters",
+    "clear-numbered": "Clear filters ({number})",
     "show": "Show results",
     "category-aria": "filters list for {categoryName} category"
   },
@@ -372,7 +375,8 @@
       "model-3d": "3D Models",
       "all": "content",
       "collection-placeholder": "Search this collection",
-      "button": "Search"
+      "button": "Search",
+      "clear": "Clear"
     },
     "license-description": {
       "title": "License CC",

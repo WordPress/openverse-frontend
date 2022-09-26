@@ -79,7 +79,7 @@
     "src/components/VErrorSection/VErrorImage.vue",
     "src/components/VFilters/VLicenseExplanation.vue",
     "src/components/VHeader/VFilterButton.vue",
-    "src/components/VHeader/VSearchBar/**.vue",
+    //    "src/components/VHeader/VSearchBar/**.vue",
     "src/components/VHeader/VPageLinks.vue",
     "src/components/VImageDetails/VRelatedImages.vue",
     "src/pages/feedback.vue",
