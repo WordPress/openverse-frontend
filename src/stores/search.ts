@@ -176,10 +176,10 @@ export const useSearchStore = defineStore('search', {
       search: string /** A search term to add to the saved list.*/
     ) {
       /**
-       * Here we add our latest search to the top of the stack,
-       * and add the remaining items, making sure not to exceed
-       * our max count and removing and old occurences of the
-       * most recent term.
+       * Add the latest search to the top of the stack,
+       * then add the existing items, making sure not to exceed
+       * the max count, and removing existing occurrences of the
+       * most latest search term, if there are any.
        */
       this.recentSearches = [
         search,
