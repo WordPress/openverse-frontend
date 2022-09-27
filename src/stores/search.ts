@@ -171,6 +171,15 @@ export const useSearchStore = defineStore('search', {
       this.searchTerm = formattedTerm
       this.addRecentSearch(formattedTerm)
     },
+    /**
+     * This method need not exist and is only used to fix an odd
+     * hydration bug in the search route. After navigating from
+     * the homepage, the watcher in useStorage doesn't work.
+     */
+    refreshRecentSearches() {
+      // @ts-expect-error https://github.com/microsoft/TypeScript/issues/43826
+      this.recentSearches = useStorage<string[]>('recent-searches', [])
+    },
     /** Add a new term to the list of recent search terms */
     addRecentSearch(
       search: string /** A search term to add to the saved list.*/
