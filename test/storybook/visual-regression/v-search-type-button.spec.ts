@@ -3,8 +3,8 @@ import { test } from '@playwright/test'
 import breakpoints from '~~/test/playwright/utils/breakpoints'
 
 const defaultUrl =
-  '/iframe.html?id=components-vheader-vsearchtypebutton--default-story'
-const pressedUrl = `${defaultUrl}&args=a11yProps.aria-pressed:true;a11yProps.aria-haspopup:dialog`
+  '/iframe.html?id=components-vcontentswitcher-vsearchtypebutton--default-story'
+const pressedUrl = `${defaultUrl}&args=pressed:true`
 
 const searchTypeButtonLocator = 'button[aria-haspopup="dialog"]'
 
