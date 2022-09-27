@@ -47,7 +47,7 @@
           <VPageLinks mode="light" variant="column" @close="closeModal" />
           <VLink
             href="https://wordpress.org"
-            class="text-white hover:no-underline"
+            class="text-white hover:no-underline focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring focus-visible:ring-pink focus-visible:ring-offset-1 focus-visible:ring-offset-tx"
           >
             <i18n
               tag="p"
