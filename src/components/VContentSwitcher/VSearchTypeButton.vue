@@ -1,7 +1,7 @@
 <template>
   <VButton
     class="group flex h-12 w-12 flex-row xl:w-auto xl:px-2 xl:ps-3"
-    variant="new-action-menu"
+    variant="action-menu"
     size="disabled"
     :aria-label="buttonLabel"
     v-bind="a11yProps"
@@ -16,19 +16,10 @@
   </VButton>
 </template>
 <script lang="ts">
-import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
+import { computed, defineComponent } from '@nuxtjs/composition-api'
 
-import {
-  ALL_MEDIA,
-  AUDIO,
-  IMAGE,
-  MODEL_3D,
-  VIDEO,
-  type SupportedSearchType,
-} from '~/constants/media'
-import useSearchType, {
-  UseSearchTypeReturn,
-} from '~/composables/use-search-type'
+import { ALL_MEDIA, AUDIO, IMAGE, MODEL_3D, VIDEO } from '~/constants/media'
+import useSearchType from '~/composables/use-search-type'
 import { useI18n } from '~/composables/use-i18n'
 
 import VIcon from '~/components/VIcon/VIcon.vue'
@@ -58,32 +49,16 @@ export default defineComponent({
         'aria-haspopup': 'dialog',
       }),
     },
-    /**
-     * The prop is used for Storybook (I don't know how to mock a composable in the Storybook)
-     */
-    activeItemProp: {
-      type: String as PropType<SupportedSearchType>,
-    },
-    /**
-     * The prop is used for Storybook (I don't know how to mock a composable in the Storybook)
-     */
-    iconsProp: {
-      type: Object as PropType<UseSearchTypeReturn['icons']>,
-    },
   },
-  setup(props) {
+  setup() {
     const i18n = useI18n()
     const { icons, activeType } = useSearchType()
 
-    const activeItem = computed(() => props.activeItemProp || activeType.value)
+    const activeItem = computed(() => activeType.value)
 
     const buttonLabel = computed(() => i18n.t(labels[activeItem.value]))
 
-    const icon = computed(() =>
-      props.iconsProp
-        ? props.iconsProp[activeItem.value]
-        : icons[activeItem.value]
-    )
+    const icon = computed(() => icons[activeItem.value])
 
     return {
       buttonLabel,

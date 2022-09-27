@@ -21,12 +21,28 @@ export const icons = {
 }
 
 import VSearchTypeButton from '~/components/VContentSwitcher/VSearchTypeButton.vue'
-import { ALL_MEDIA, AUDIO, IMAGE, MODEL_3D, VIDEO } from '~/constants/media'
+import {
+  ALL_MEDIA,
+  AUDIO,
+  IMAGE,
+  MODEL_3D,
+  supportedSearchTypes,
+  VIDEO,
+} from '~/constants/media'
+import useSearchType from '~/composables/use-search-type'
 
 <Meta
-  title="Components/VHeader/VSearchTypeButton"
+  title="Components/VContentSwitcher/VSearchTypeButton"
   components={VSearchTypeButton}
   argTypes={{
+    activeItem: {
+      defaultValue: 'all',
+      options: supportedSearchTypes,
+      control: 'select',
+    },
+    pressed: {
+      control: 'boolean',
+    },
     click: {
       action: 'click',
     },
@@ -34,9 +50,16 @@ import { ALL_MEDIA, AUDIO, IMAGE, MODEL_3D, VIDEO } from '~/constants/media'
 />
 
 export const Template = (args) => ({
-  template: `<VSearchTypeButton v-bind="args" v-on="args"/>`,
+  template: `<VSearchTypeButton v-bind="args" v-on="args" />`,
   components: { VSearchTypeButton },
   setup() {
+    const searchType = useSearchType()
+    searchType.setActiveType(args.activeItem)
+    const a11yProps = { 'aria-haspopup': 'dialog' }
+    if (args.pressed) {
+      a11yProps['aria-expanded'] = true
+    }
+    args.a11yProps = a11yProps
     return { args }
   },
 })
@@ -55,9 +78,7 @@ export const Template = (args) => ({
       viewport: { defaultViewport: 'lg' },
     }}
     args={{
-      iconsProp: icons,
-      activeItemProp: ALL_MEDIA,
-      a11yProps: undefined,
+      activeItem: ALL_MEDIA,
     }}
   >
     {Template.bind({})}
@@ -72,8 +93,7 @@ export const Template = (args) => ({
       viewport: { defaultViewport: 'lx' },
     }}
     args={{
-      iconsProp: icons,
-      activeItemProp: ALL_MEDIA,
+      activeItem: ALL_MEDIA,
       a11yProps: { 'aria-pressed': true },
     }}
   >
