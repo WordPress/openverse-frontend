@@ -317,7 +317,7 @@ Similar to `action-menu`, but always has a border, not only on hover.
 https://www.figma.com/file/GIIQ4sDbaToCfFQyKMvzr8/Openverse-Design-Library?node-id=1684%3A3678
  */
 .action-menu-bordered {
-  @apply border border-dark-charcoal-20 bg-white text-dark-charcoal hover:border-dark-charcoal hover:bg-dark-charcoal hover:text-white focus-visible:border-tx;
+  @apply border border-dark-charcoal-20 bg-white text-dark-charcoal focus-visible:border-tx;
 }
 .action-menu-bordered-pressed {
   @apply border-dark-charcoal bg-dark-charcoal text-white hover:bg-dark-charcoal-80;
