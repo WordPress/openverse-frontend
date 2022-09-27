@@ -35,7 +35,7 @@ import { useFeatureFlagStore } from '~/stores/feature-flag'
 
 import { useStorage } from '~/composables/use-storage'
 
-import type { Ref } from '~/composables/types'
+import type { Ref } from '@nuxtjs/composition-api'
 
 import type { Dictionary } from 'vue-router/types/router'
 
