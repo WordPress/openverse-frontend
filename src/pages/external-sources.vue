@@ -11,83 +11,14 @@
       </template>
     </i18n>
     <p>{{ $t('external-sources-page.license', { openverse: 'Openverse' }) }}</p>
-    <h2>
-      {{ $t('external-sources-page.content') }}
-    </h2>
+    <p>
+      {{ $t('external-sources-page.explanation', { openverse: 'Openverse' }) }}
+    </p>
     <p>
       {{
-        $t('external-sources-page.content-types', { openverse: 'Openverse' })
+        $t('external-sources-page.relationships', { openverse: 'Openverse' })
       }}
     </p>
-
-    <h2>
-      {{ $t('external-sources-page.images.title') }}
-    </h2>
-    <p>
-      {{
-        $t('external-sources-page.images.content', { openverse: 'Openverse' })
-      }}
-    </p>
-    <div>
-      <ol>
-        <li>
-          <i18n path="external-sources-page.images.continue">
-            <template #load-more>
-              <strong>{{ $t('browse-page.load') }}</strong>
-            </template>
-          </i18n>
-        </li>
-        <li>
-          <i18n path="external-sources-page.images.not-finding">
-            <template #not-finding>
-              <strong>{{
-                $t('external-sources.form.supported-title', { type: ' ' })
-              }}</strong>
-            </template>
-          </i18n>
-        </li>
-      </ol>
-    </div>
-    <i18n path="external-sources-page.images.info" tag="p">
-      <template #use>
-        <strong>{{ $t('external-sources-page.use') }}</strong>
-      </template>
-      <template #not-finding>
-        <strong>{{
-          $t('external-sources.form.supported-title', { type: ' ' })
-        }}</strong>
-      </template>
-    </i18n>
-    <figure>
-      <img
-        :alt="$t('external-sources-page.images.demo-label', { type: ' ' })"
-        src="~/assets/screenshots/supported.png"
-        aria-hidden="true"
-      />
-    </figure>
-
-    <h2>
-      {{ $t('external-sources-page.audio-video.title') }}
-    </h2>
-    <p>
-      {{
-        $t('external-sources-page.audio-video.content', {
-          openverse: 'Openverse',
-        })
-      }}
-    </p>
-    <i18n path="external-sources-page.audio-video.filter" tag="p">
-      <template #use>
-        <strong>{{ $t('external-sources-page.use') }}</strong>
-      </template>
-    </i18n>
-    <figure>
-      <img
-        :alt="$t('external-sources-page.audio-video.demo-label', { type: ' ' })"
-        src="~/assets/screenshots/unsupported.png"
-        aria-hidden="true"
-      />
-    </figure>
     <h2>
       {{ $t('external-sources-page.new.title') }}
     </h2>
@@ -108,7 +39,16 @@
     <h2>
       {{ $t('external-sources-page.why.title') }}
     </h2>
-    <p>{{ $t('external-sources-page.why.content') }}</p>
+    <i18n path="external-sources-page.why.content" tag="p">
+      <template #old>
+        <VLink
+          aria-label="email"
+          href="https://oldsearch.creativecommons.org"
+          >{{ $t('external-sources-page.why.old') }}</VLink
+        >
+      </template>
+    </i18n>
+
     <p>
       {{ $t('external-sources-page.why.new', { openverse: 'Openverse' }) }}
     </p>
@@ -131,7 +71,7 @@ import VContentPage from '~/components/VContentPage.vue'
 import VLink from '~/components/VLink.vue'
 
 export default defineComponent({
-  name: 'MetaSearchPage',
+  name: 'ExternalSourcesPage',
   components: { VContentPage, VLink },
   head() {
     return {

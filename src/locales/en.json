@@ -129,10 +129,8 @@
   "external-sources-page": {
     "title": "External Sources",
     "intro": "{openverse} is built on top of a catalog that indexes CC-licensed and public domain content from selected sources. Learn more about our {link}.",
-    "link": "sources",
-    "license": "The internet is a big place! There are plenty of search portals and collections, hosting CC-licensed and public domain content, which we aren’t able to index or surface results from within the {openverse} interface. These are important sources of CC-licensed and public domain content, and we want to make sure that you are able to find the best openly licensed materials possible, regardless of where they are located.",
-    "content": "What content types can I search for using the External Sources feature?",
-    "content-types": "External Sources on {openverse} currently supports image, audio, and video search on external sites.",
+    "link": "sources here",
+    "license": "However, there are many sources of CC-licensed and public domain media which we aren’t able to surface results from within the {openverse} interface yet. This might be because they do not offer a public API, or that our contributors have not yet had time to integrate them into Openverse. These are valued sources and we want to make sure that you are able to find the best openly licensed materials possible, regardless of where they are located.",
     "use": " Use ",
     "images": {
       "title": "How does the External Sources feature work for indexed media types?",
@@ -156,12 +154,15 @@
     },
     "why": {
       "title": "Why did you build this?",
-      "content": "For many years, CC has offered its users a dedicated search portal for searching platforms that have CC licensing filters built in. These platforms included Europeana, Google Images, Flickr, Jamendo, Open Clip Art Library, SpinXpress, Wikimedia Commons, YouTube, ccMixter, and SoundCloud. The search experience looked like this:",
-      "new": "For users of the legacy CC External Sources site, the External Sources feature on {openverse} will look familiar. The goal was to ensure that the functionality is not lost, but is updated and embedded within our new search engine for openly licensed content. In addition, the External Sources feature builds on this functionality, allowing us to quickly add new sources to External Sources as we discover them, and support new content types in the future, as we expand.",
+      "content": "For many years, Creative Commons has offered its users a dedicated search portal for searching platforms that have CC licensing filters built in. In fact, this is still maintained at {old}.",
+      "old": "oldsearch.creativecommons.org",
+      "new": "For users of the legacy CC Meta Search site, the External Sources feature on {openverse} will look familiar. The goal was to ensure that the functionality is not lost, but is updated and embedded within our new search engine for openly licensed content. In addition, the External Sources feature builds on this functionality, allowing us to quickly add new sources to External Sources as we discover them, and support new content types in the future, as we expand.",
       "aria-label": "feedback",
       "feedback-suggestions": "We hope you enjoy, and if you have suggestions for improvement, leave us {feedback}.",
       "feedback-link": "feedback"
-    }
+    },
+    "relationships": "This functionality also allows us to start conversations and build relationships with sources that may like to be included in {openverse} in the future. Finally, we can also offer external sources of media types we do not include in {openverse} yet, but plan to.",
+    "explanation": "You can find links to external sources at the bottom of every {openverse} search results page; on pages for searches which return no results; and on pages for media types we do not yet support but intend to."
   },
   "search-guide": {
     "title": "{openverse} Syntax Guide",
@@ -683,7 +684,7 @@
   },
   "footer": {
     "wordpress-affiliation": "Powered by {wordpress}",
-    "wip": "\uD83D\uDEA7"
+    "wip": "🚧"
   },
   "language": {
     "language": "Language"
