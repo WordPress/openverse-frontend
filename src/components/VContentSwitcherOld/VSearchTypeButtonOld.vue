@@ -88,7 +88,7 @@ export default defineComponent({
 
     const buttonVariant = computed<ButtonVariant>(() => {
       if (props.type === 'searchbar') {
-        return 'action-menu-inner'
+        return 'action-menu'
       } else {
         return isMinScreenMd.value && !isHeaderScrolled?.value
           ? 'action-menu-bordered'

@@ -11,8 +11,6 @@ export const buttonVariants = [
   'action-menu',
   'action-menu-bordered',
   'action-menu-bordered-pressed',
-  'action-menu-inner',
-  'action-menu-inner-pressed',
   'action-menu-muted',
   'action-menu-muted-pressed',
   'plain',

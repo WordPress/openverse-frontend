@@ -136,11 +136,9 @@ There are three variants of secondary buttons: filled, bordered and text (withou
 
 The styles used for header 'action-menu' buttons.
 
-'action-menu' has no border and no background; on hover the background becomes dark-charcoal. It is used in the desktop header buttons.
+'action-menu' also has no border and no background. On hover, there is a light border. It is used in the desktop header buttons and for the content type switcher inside the searchbar.
 
-'action-menu-inner' also has no border and no background. On hover, there is a light border. It is used inside the searchbar.
-
-'action-menu-bordered' has a border but no background. On hover, the background becomes dark-charcoal. It is used in the desktop header buttons when the (old) header is scrolled.
+'action-menu-bordered' has a border but no background. It is used in the desktop header buttons when the (old) header is scrolled.
 
 'action-menu-muted' has a light charcoal background. It is used for filters when some filters are applied.
 
@@ -148,12 +146,7 @@ The styles used for header 'action-menu' buttons.
   <Story
     name="action-menu"
     args={{
-      variants: [
-        'action-menu',
-        'action-menu-inner',
-        'action-menu-bordered',
-        'action-menu-muted',
-      ],
+      variants: ['action-menu', 'action-menu-bordered', 'action-menu-muted'],
     }}
     argTypes={{
       pressed: { control: 'boolean' },
