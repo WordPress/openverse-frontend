@@ -688,7 +688,7 @@
   },
   "footer": {
     "wordpress-affiliation": "Powered by {wordpress}",
-    "wip": "🚧"
+    "wip": "\uD83D\uDEA7"
   },
   "language": {
     "language": "Language"
