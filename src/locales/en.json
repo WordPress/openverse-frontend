@@ -33,7 +33,7 @@
     "about-nav-item": "Our Story",
     "source-nav-item": "Sources",
     "search-guide-nav-item": "Search Guide",
-    "meta-search-nav-item": "External Sources",
+    "external-sources-nav-item": "External Sources",
     "privacy-nav-item": "Privacy",
     "feedback-nav-item": "Feedback",
     "support-nav-item": "Support Us",
@@ -126,7 +126,7 @@
       "audio": "Audio Sources"
     }
   },
-  "meta-search-page": {
+  "external-sources-page": {
     "title": "External Sources",
     "intro": "{openverse} is built on top of a catalog that indexes CC-licensed and public domain content from selected sources. Learn more about our {link}.",
     "link": "sources",
@@ -538,7 +538,7 @@
       "right": "→"
     }
   },
-  "meta-search": {
+  "external-sources": {
     "caption": "{openverse} can not guarantee the accuracy of license information. Always verify that the work is actually under a CC license.",
     "button": "Source list",
     "title": "External sources",

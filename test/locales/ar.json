@@ -117,7 +117,7 @@
     "opera": "Opera",
     "edge": "حافة"
   },
-  "meta-search": {
+  "external-sources": {
     "caption": "{openverse} لا يتحكم في النتائج ، تحقق دائمًا من أن العمل في الواقع خاضع لترخيص CC.",
     "button": "قائمة مصدر",
     "title": "مصادر خارجية",
@@ -526,7 +526,7 @@
       "content": "ضع كلمة أو عبارة داخل علامات الاقتباس. على سبيل المثال ، {link}."
     }
   },
-  "meta-search-page": {
+  "external-sources-page": {
     "title": "بحث ميتا",
     "intro": "تم إنشاء {openverse} فوق كتالوج يقوم بفهرسة المحتوى المرخص لـ CC والمحتوى العام من مصادر محددة. تعرف على المزيد حول {link} الخاص بنا.",
     "link": "مصادر",
@@ -625,7 +625,7 @@
     "about-nav-item": "قصتنا",
     "source-nav-item": "مصادر",
     "search-guide-nav-item": "دليل البحث",
-    "meta-search-nav-item": "بحث ميتا",
+    "external-sources-nav-item": "بحث ميتا",
     "privacy-nav-item": "خصوصية",
     "feedback-nav-item": "استجابة",
     "support-nav-item": "ادعمنا",
