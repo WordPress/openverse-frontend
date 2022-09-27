@@ -33,7 +33,7 @@
 </template>
 
 <script lang="ts">
-import { PropType } from '@nuxtjs/composition-api'
+import { defineComponent, type PropType } from '@nuxtjs/composition-api'
 
 import { defineEvent } from '~/types/emits'
 
@@ -43,7 +43,7 @@ import VButton from '~/components/VButton.vue'
  * List the recent searches of the user allowing them to go back to a previous
  * search. These searches are saved locally and never shared with the server.
  */
-export default {
+export default defineComponent({
   name: 'VRecentSearches',
   components: { VButton },
   props: {
@@ -72,5 +72,5 @@ export default {
       handleClear,
     }
   },
-}
+})
 </script>
