@@ -687,5 +687,9 @@
   },
   "language": {
     "language": "Language"
+  },
+  "recent-searches": {
+    "heading": "Recent searches",
+    "clear": "Clear"
   }
 }
