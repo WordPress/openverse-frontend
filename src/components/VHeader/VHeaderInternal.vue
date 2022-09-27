@@ -67,9 +67,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useRoute, watch } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  inject,
+  ref,
+  useRoute,
+  watch,
+} from '@nuxtjs/composition-api'
 
 import usePages from '~/composables/use-pages'
+
+import { IsMinScreenMdKey } from '~/types/provides'
 
 import VHomeLink from '~/components/VHeader/VHomeLink.vue'
 import VIconButton from '~/components/VIconButton/VIconButton.vue'
@@ -90,6 +98,8 @@ export default defineComponent({
     const { all: allPages, current: currentPage } = usePages(true)
     const route = useRoute()
 
+    const isMinScreenMd = inject(IsMinScreenMdKey)
+
     const isModalVisible = ref(false)
     const closeModal = () => (isModalVisible.value = false)
     const openModal = () => (isModalVisible.value = true)
@@ -97,6 +107,12 @@ export default defineComponent({
     // When clicking on an internal link in the modal, close the modal
     watch(route, () => {
       if (isModalVisible.value) {
+        closeModal()
+      }
+    })
+
+    watch(isMinScreenMd, (isMd) => {
+      if (isMd && isModalVisible.value) {
         closeModal()
       }
     })
