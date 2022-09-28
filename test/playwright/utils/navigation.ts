@@ -14,6 +14,7 @@ import {
 import { SCREEN_SIZES } from '~/constants/screens'
 
 import enMessages from '~/locales/en.json'
+import type { FlagName } from '~/stores/feature-flag'
 
 const messages: Record<string, Record<string, unknown>> = {
   ltr: enMessages,
@@ -231,19 +232,21 @@ export const goToSearchTerm = async (
     mode?: RenderMode
     dir?: LanguageDirection
     query?: string // Only for SSR mode
+    flag?: FlagName
   } = {}
 ) => {
   const searchType = options.searchType || ALL_MEDIA
   const dir = options.dir || 'ltr'
   const mode = options.mode ?? 'SSR'
   const query = options.query ? `&${options.query}` : ''
+  const flag = options.flag ? `&ff_${options.flag}=on` : ''
 
   if (mode === 'SSR') {
-    const path = `search/${searchTypePath(searchType)}?q=${term}${query}`
+    const path = `search/${searchTypePath(searchType)}?q=${term}${query}${flag}`
     await page.goto(pathWithDir(path, dir))
     await dismissTranslationBanner(page)
   } else {
-    await page.goto(pathWithDir('/', dir))
+    await page.goto(pathWithDir(`/${flag}`, dir))
     await dismissTranslationBanner(page)
     // Select the search type
     if (searchType !== 'all') {
@@ -261,10 +264,6 @@ export const goToSearchTerm = async (
     await page.waitForLoadState('load')
   }
   await scrollDownAndUp(page)
-  const pageWidth = page.viewportSize()?.width
-  if (pageWidth && pageWidth > smWidth) {
-    await page.waitForSelector(`[aria-label="${t('header.aria.menu', dir)}"]`)
-  }
 }
 
 /**

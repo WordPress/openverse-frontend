@@ -21,6 +21,7 @@ type BreakpointBlock = (options: {
   expectSnapshot: ExpectSnapshot
 }) => void
 
+// TODO: move the `md` breakpoint to the mobileBreakpoints list.
 const desktopBreakpoints = ['2xl', 'xl', 'lg', 'md'] as const
 const mobileBreakpoints = ['sm', 'xs'] as const
 
@@ -139,6 +140,10 @@ const describeEvery = describeEachBreakpoint(
   Object.keys(VIEWPORTS) as Breakpoint[]
 )
 const describeEachDesktop = describeEachBreakpoint(desktopBreakpoints)
+// TODO: remove this function after `md` is moved to mobileBreakpoints
+const describeEachDesktopFromLg = describeEachBreakpoint(
+  desktopBreakpoints.filter((bp) => bp !== 'md')
+)
 const describeEachMobile = describeEachBreakpoint(mobileBreakpoints)
 
 export default {
@@ -146,5 +151,6 @@ export default {
   describeEachBreakpoint,
   describeEvery,
   describeEachDesktop,
+  describeEachDesktopFromLg,
   describeEachMobile,
 }

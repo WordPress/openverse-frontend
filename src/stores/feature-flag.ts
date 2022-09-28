@@ -18,7 +18,7 @@ import { LOCAL, DEPLOY_ENVS, DeployEnv } from '~/constants/deploy-env'
 
 import type { Dictionary } from 'vue-router/types/router'
 
-type FlagName = keyof typeof featureData['features']
+export type FlagName = keyof typeof featureData['features']
 export interface FeatureFlagState {
   flags: Record<FlagName, FeatureFlag>
 }
