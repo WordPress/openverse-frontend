@@ -52,7 +52,6 @@ module.exports = {
         60: '#837d82',
         70: '#6e686d',
         80: '#595258',
-        90: '#453D43',
       },
 
       // Special keywords

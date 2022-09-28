@@ -1,5 +1,5 @@
 <template>
-  <span class="relative inline-block flex h-8 w-8 self-center">
+  <span class="relative inline-block h-8 w-8">
     <VIconButton
       size="new-small"
       :icon-props="{ iconPath: sourceIcon }"
