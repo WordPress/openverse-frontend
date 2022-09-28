@@ -44,7 +44,7 @@
           {{ provider.display_name }}
         </td>
         <td class="truncate font-semibold">
-          <VLink v-if="provider.source_url" :href="provider.source_url">
+          <VLink :href="provider.source_url">
             {{ cleanSourceUrlForPresentation(provider.source_url) }}
           </VLink>
         </td>

@@ -35,8 +35,7 @@ describe('VContentLink', () => {
     expect(btn).not.toHaveAttribute('aria-disabled')
   })
 
-  // TODO: Fix the component disabled a11y
-  xit('is disabled when there are no results', () => {
+  it('is disabled when there are no results', () => {
     options.props.resultsCount = 0
     render(VContentLink, options)
     const btn = screen.getByRole('link')

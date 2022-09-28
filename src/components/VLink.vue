@@ -1,25 +1,21 @@
 <!-- eslint-disable vue/no-restricted-syntax -->
 <template>
   <NuxtLink
-    v-if="linkComponent === 'NuxtLink'"
+    v-if="isNuxtLink"
     :class="{ 'inline-flex flex-row items-center gap-2': showExternalIcon }"
     :to="linkTo"
     v-on="$listeners"
     @click.native="$emit('click', $event)"
   >
-    <slot /><VIcon
-      v-if="showExternalIcon && !isInternal"
-      :icon-path="externalLinkIcon"
-      class="inline-block"
-      :size="4"
-      rtl-flip
-    />
+    <slot />
   </NuxtLink>
   <a
-    v-else-if="linkComponent === 'a'"
+    v-else
     :href="href"
     target="_blank"
     rel="noopener noreferrer"
+    :role="href ? undefined : 'link'"
+    :aria-disabled="!href"
     :class="{ 'inline-flex flex-row items-center gap-2': showExternalIcon }"
     v-on="$listeners"
   >
@@ -35,9 +31,9 @@
 
 <script lang="ts">
 /**
- * This is a wrapper component for all links. If a link is dynamically generated and doesn't have
- * an `href` prop (as the links for detail pages when the image detail hasn't loaded yet),
- * it is rendered as a `span`.
+ * This is a wrapper component for all links. If `href` prop is undefined,
+ * the link will be rendered as a disabled: an `<a>` element without `href`
+ * attribute and with `role="link"` and `aria-disabled="true"` attributes.
  * Links with `href` starting with `/` are treated as internal links.
  *
  * Internal links use `NuxtLink` component with `to` attribute set to `localePath(href)`
@@ -55,8 +51,9 @@ export default defineComponent({
   props: {
     href: {
       type: String,
-      required: true,
-      validator: (v: string) => v.length > 0,
+      required: false,
+      validator: (v: string | undefined) =>
+        (typeof v === 'string' && v.length > 0) || typeof v === 'undefined',
     },
     /**
      * whether to render the external link icon next to links that point away
@@ -72,22 +69,24 @@ export default defineComponent({
     function checkHref(
       p: typeof props
     ): p is { href: string; showExternalIcon: boolean } {
-      return !['', '#'].includes(p.href)
+      return typeof p.href === 'string' && !['', '#'].includes(p.href)
     }
 
     const hasHref = computed(() => checkHref(props))
     const isInternal = computed(
       () => hasHref.value && props.href?.startsWith('/')
     )
-    const linkComponent = computed(() => (isInternal.value ? 'NuxtLink' : 'a'))
+    const isNuxtLink = computed(() => hasHref.value && isInternal.value)
 
     let linkTo = computed(() =>
-      isInternal.value ? app?.localePath(props.href) ?? props.href : null
+      checkHref(props) && isInternal.value
+        ? app?.localePath(props.href) ?? props.href
+        : null
     )
 
     return {
       linkTo,
-      linkComponent,
+      isNuxtLink,
       isInternal,
       externalLinkIcon,
     }

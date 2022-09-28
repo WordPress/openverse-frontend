@@ -32,7 +32,6 @@
       class="flex flex-row flex-wrap justify-between md:mt-6 md:flex-row-reverse"
     >
       <VButton
-        v-if="!!image.foreign_landing_url"
         as="VLink"
         :href="image.foreign_landing_url"
         class="description-bold md:heading-6 mb-4 w-full flex-initial md:mb-0 md:w-max"

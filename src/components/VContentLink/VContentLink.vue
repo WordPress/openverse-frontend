@@ -1,6 +1,15 @@
 <template>
-  <!-- We 'disable' the link when there are 0 results by using a div and setting aria-disabled. -->
-  <VContentLinkWrapper :results-count="resultsCount" :to="to">
+  <!-- We 'disable' the link when there are 0 results by removing the href and setting aria-disabled. -->
+  <VLink
+    :href="hasResults ? to : undefined"
+    class="flex w-full flex-col items-start overflow-hidden rounded-sm border border-dark-charcoal/20 bg-white py-4 ps-4 pe-12 md:flex-row md:items-center md:justify-between md:p-6"
+    :class="
+      hasResults
+        ? ' text-dark-charcoal hover:bg-dark-charcoal hover:text-white hover:no-underline focus:border-tx focus:outline-none focus-visible:ring focus-visible:ring-pink'
+        : 'cursor-not-allowed text-dark-charcoal/40'
+    "
+    @keydown.native.shift.tab.exact="$emit('shift-tab', $event)"
+  >
     <div class="flex flex-col items-start md:flex-row md:items-center">
       <VIcon :icon-path="iconPath" />
       <p class="hidden pt-1 font-semibold md:block md:pt-0 md:text-2xl md:ps-2">
@@ -11,7 +20,7 @@
       </p>
     </div>
     <span class="text-sr">{{ resultsCountLabel }}</span>
-  </VContentLinkWrapper>
+  </VLink>
 </template>
 
 <script lang="ts">
@@ -23,7 +32,7 @@ import { AUDIO, IMAGE, SupportedMediaType } from '~/constants/media'
 import { defineEvent } from '~/types/emits'
 
 import VIcon from '~/components/VIcon/VIcon.vue'
-import VContentLinkWrapper from '~/components/VContentLink/VContentLinkWrapper.vue'
+import VLink from '~/components/VLink.vue'
 
 import audioIcon from '~/assets/icons/audio-wave.svg'
 import imageIcon from '~/assets/icons/image.svg'
@@ -35,7 +44,7 @@ const iconMapping = {
 
 export default defineComponent({
   name: 'VContentLink',
-  components: { VIcon, VContentLinkWrapper },
+  components: { VIcon, VLink },
   props: {
     /**
      * One of the media types supported.
@@ -57,7 +66,6 @@ export default defineComponent({
      */
     to: {
       type: String,
-      required: true,
     },
   },
   emits: {
