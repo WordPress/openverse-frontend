@@ -690,6 +690,7 @@
   },
   "recent-searches": {
     "heading": "Recent searches",
-    "clear": "Clear"
+    "clear": "Clear",
+    "none": "No recent searches to show."
   }
 }

@@ -1,13 +1,14 @@
 <template>
   <div
-    class="flex flex-col gap-1 rounded-sm border border-dark-charcoal-20 p-4 shadow-el-2"
+    class="flex flex-col gap-1 rounded-sm border border-dark-charcoal-20 bg-white p-4 shadow-el-2"
   >
     <div class="flex flex-row items-center justify-between py-2">
       <!-- Left margin to align with the text of recent searches. -->
-      <span class="category ml-2">
+      <span class="category mx-2 my-1">
         {{ $t('recent-searches.heading') }}
       </span>
       <VButton
+        v-show="entries.length"
         variant="plain"
         size="small"
         class="caption-bold hover:underline"
@@ -17,18 +18,23 @@
       </VButton>
     </div>
 
-    <VButton
-      v-for="(entry, idx) in entries"
-      :key="idx"
-      variant="plain"
-      size="small"
-      class="description-regular hover:bg-dark-charcoal-10"
-      @click="handleSelect(idx)"
-    >
-      <div class="w-full py-1 text-left">
-        {{ entry }}
-      </div>
-    </VButton>
+    <template v-if="entries.length">
+      <VButton
+        v-for="(entry, idx) in entries"
+        :key="idx"
+        variant="plain"
+        size="small"
+        class="description-regular hover:bg-dark-charcoal-10"
+        @click="handleSelect(idx)"
+      >
+        <div class="w-full py-1 text-start">
+          {{ entry }}
+        </div>
+      </VButton>
+    </template>
+    <span v-else class="description-regular m-2">
+      {{ $t('recent-searches.none') }}
+    </span>
   </div>
 </template>
 
