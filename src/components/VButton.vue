@@ -276,7 +276,7 @@ a.button {
   @apply border-tx bg-tx hover:bg-dark-charcoal hover:text-white focus-visible:ring focus-visible:ring-pink;
 }
 .secondary-pressed {
-  @apply border-tx bg-dark-charcoal text-white hover:border-tx hover:bg-dark-charcoal-80;
+  @apply border-tx bg-dark-charcoal text-white hover:border-tx hover:bg-dark-charcoal-90;
 }
 .secondary[disabled='disabled'],
 .secondary[aria-disabled='true'] {
@@ -284,14 +284,14 @@ a.button {
 }
 
 .secondary-filled {
-  @apply bg-dark-charcoal text-white hover:bg-dark-charcoal-80 hover:text-white focus-visible:ring focus-visible:ring-pink disabled:bg-dark-charcoal-10 disabled:text-dark-charcoal-40;
+  @apply border-tx bg-dark-charcoal text-white hover:bg-dark-charcoal-80 hover:text-white focus-visible:ring focus-visible:ring-pink disabled:bg-dark-charcoal-10 disabled:text-dark-charcoal-40;
 }
 
 .secondary-bordered {
   @apply border-dark-charcoal bg-tx hover:bg-dark-charcoal hover:text-white focus-visible:border-tx disabled:bg-dark-charcoal-10 disabled:text-dark-charcoal-40;
 }
 .secondary-bordered-pressed {
-  @apply bg-dark-charcoal text-white hover:border-tx hover:bg-dark-charcoal-80 focus-visible:bg-dark-charcoal-80;
+  @apply bg-dark-charcoal text-white hover:border-tx hover:bg-dark-charcoal-90 focus-visible:bg-dark-charcoal-90;
 }
 .secondary-filled[disabled='disabled'],
 .secondary-bordered[disabled='disabled'],
@@ -322,7 +322,7 @@ https://www.figma.com/file/GIIQ4sDbaToCfFQyKMvzr8/Openverse-Design-Library?node-
   @apply border-dark-charcoal-20 bg-white text-dark-charcoal focus-visible:border-tx;
 }
 .action-menu-bordered-pressed {
-  @apply border-dark-charcoal bg-dark-charcoal text-white hover:bg-dark-charcoal-80;
+  @apply border-dark-charcoal bg-dark-charcoal text-white hover:bg-dark-charcoal-90;
 }
 
 .action-menu-muted {
