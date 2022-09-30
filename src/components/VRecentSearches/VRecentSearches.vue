@@ -18,21 +18,29 @@
       </VButton>
     </div>
 
-    <template v-if="entries.length">
-      <VButton
+    <ul
+      v-if="entries.length"
+      id="recent-searches-list"
+      role="listbox"
+      :aria-label="$t('recent-searches.heading').toString()"
+    >
+      <!-- eslint-disable vuejs-accessibility/interactive-supports-focus Combobox descendants only have visual focus. -->
+      <!-- eslint-disable vuejs-accessibility/click-events-have-key-events Key events handled by input field of combobox. -->
+      <li
         v-for="(entry, idx) in entries"
+        :id="`option-${idx}`"
         :key="idx"
-        variant="plain"
-        size="small"
-        class="description-regular hover:bg-dark-charcoal-10"
-        @click="handleSelect(idx)"
+        role="option"
+        class="description-regular my-1 rounded-sm border-1.5 p-2 hover:bg-dark-charcoal-10"
+        :class="idx === selectedIdx ? 'border-pink' : 'border-tx'"
+        :aria-selected="idx === selectedIdx"
+        @click="handleClick(idx)"
       >
-        <div class="w-full py-1 text-start">
-          {{ entry }}
-        </div>
-      </VButton>
-    </template>
-    <span v-else class="description-regular m-2">
+        {{ entry }}
+      </li>
+      <!-- eslint-enable -->
+    </ul>
+    <span v-else class="description-regular mx-2 my-3">
       {{ $t('recent-searches.none') }}
     </span>
   </div>
@@ -60,21 +68,27 @@ export default defineComponent({
       type: Array as PropType<string[]>,
       default: () => [],
     },
+    /**
+     * the index of the currently selected entry
+     */
+    selectedIdx: {
+      type: Number,
+    },
   },
   emits: {
-    select: defineEvent<[string]>(),
+    select: defineEvent<[number]>(),
     clear: defineEvent(),
   },
-  setup(props, { emit }) {
-    const handleSelect = (idx: number) => {
-      emit('select', props.entries[idx])
+  setup(_, { emit }) {
+    const handleClick = (idx: number) => {
+      emit('select', idx)
     }
     const handleClear = () => {
       emit('clear')
     }
 
     return {
-      handleSelect,
+      handleClick,
       handleClear,
     }
   },
