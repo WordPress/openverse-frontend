@@ -9,7 +9,9 @@
       isConnected && $style[`connection-${connections}`],
       isActive && $style[`${variant}-pressed`],
       $style[`size-${size}`],
-      isPlainDangerous ? '' : 'focus-visible:ring focus-visible:ring-pink',
+      isPlainDangerous
+        ? ''
+        : 'border focus-visible:ring focus-visible:ring-pink',
     ]"
     :aria-pressed="pressed"
     :aria-disabled="ariaDisabledRef"
@@ -274,7 +276,7 @@ a.button {
   @apply border-tx bg-tx hover:bg-dark-charcoal hover:text-white focus-visible:ring focus-visible:ring-pink;
 }
 .secondary-pressed {
-  @apply border border-tx bg-dark-charcoal text-white hover:border-tx hover:bg-dark-charcoal-80;
+  @apply border-tx bg-dark-charcoal text-white hover:border-tx hover:bg-dark-charcoal-80;
 }
 .secondary[disabled='disabled'],
 .secondary[aria-disabled='true'] {
@@ -286,7 +288,7 @@ a.button {
 }
 
 .secondary-bordered {
-  @apply border border-dark-charcoal bg-tx hover:bg-dark-charcoal hover:text-white focus-visible:border-tx disabled:bg-dark-charcoal-10 disabled:text-dark-charcoal-40;
+  @apply border-dark-charcoal bg-tx hover:bg-dark-charcoal hover:text-white focus-visible:border-tx disabled:bg-dark-charcoal-10 disabled:text-dark-charcoal-40;
 }
 .secondary-bordered-pressed {
   @apply bg-dark-charcoal text-white hover:border-tx hover:bg-dark-charcoal-80 focus-visible:bg-dark-charcoal-80;
@@ -299,14 +301,14 @@ a.button {
 }
 
 .menu {
-  @apply border border-tx bg-white text-dark-charcoal ring-offset-0;
+  @apply border-tx bg-white text-dark-charcoal ring-offset-0;
 }
 .menu-pressed {
-  @apply border border-tx bg-dark-charcoal text-white;
+  @apply border-tx bg-dark-charcoal text-white;
 }
 
 .action-menu {
-  @apply border border-tx bg-tx text-dark-charcoal hover:border-dark-charcoal-20;
+  @apply border-tx bg-tx text-dark-charcoal hover:border-dark-charcoal-20;
 }
 .action-menu-pressed {
   @apply border-tx bg-dark-charcoal text-white hover:bg-dark-charcoal-90;
@@ -317,17 +319,17 @@ Similar to `action-menu`, but always has a border, not only on hover.
 https://www.figma.com/file/GIIQ4sDbaToCfFQyKMvzr8/Openverse-Design-Library?node-id=1684%3A3678
  */
 .action-menu-bordered {
-  @apply border border-dark-charcoal-20 bg-white text-dark-charcoal focus-visible:border-tx;
+  @apply border-dark-charcoal-20 bg-white text-dark-charcoal focus-visible:border-tx;
 }
 .action-menu-bordered-pressed {
   @apply border-dark-charcoal bg-dark-charcoal text-white hover:bg-dark-charcoal-80;
 }
 
 .action-menu-muted {
-  @apply border border-tx bg-dark-charcoal-10 text-dark-charcoal hover:border-dark-charcoal-20;
+  @apply border-tx bg-dark-charcoal-10 text-dark-charcoal hover:border-dark-charcoal-20;
 }
 .action-menu-muted-pressed {
-  @apply border border-tx bg-dark-charcoal text-white;
+  @apply border-tx bg-dark-charcoal text-white;
 }
 
 .action-menu[disabled='disabled'],
