@@ -40,7 +40,6 @@
     </VTeleport>
   </header>
 </template>
-
 <script lang="ts">
 import {
   computed,
@@ -80,6 +79,9 @@ import VSearchTypePopover from '~/components/VContentSwitcher/VSearchTypePopover
 
 import closeIcon from '~/assets/icons/close.svg'
 
+/**
+ * The desktop search header.
+ */
 export default defineComponent({
   name: 'VHeaderDesktop',
   components: {
