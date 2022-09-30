@@ -11,7 +11,7 @@
       $style[`size-${size}`],
       isPlainDangerous
         ? ''
-        : 'border focus-visible:ring focus-visible:ring-pink',
+        : 'border border-tx focus-visible:ring focus-visible:ring-pink',
     ]"
     :aria-pressed="pressed"
     :aria-disabled="ariaDisabledRef"
@@ -248,6 +248,9 @@ export default VButton
 .button[aria-disabled='true'] {
   @apply cursor-not-allowed;
 }
+.plain {
+  @apply border-tx hover:border-tx;
+}
 
 .size-small {
   @apply py-1 px-2;
@@ -266,7 +269,7 @@ a.button {
 }
 
 .primary {
-  @apply bg-pink text-white  hover:bg-dark-pink hover:text-white;
+  @apply border-tx bg-pink text-white hover:border-tx hover:bg-dark-pink hover:text-white;
 }
 .primary-pressed {
   @apply bg-dark-pink;
