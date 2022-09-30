@@ -254,7 +254,7 @@ export default VButton
 }
 
 .size-medium {
-  @apply h-12 py-2 px-4;
+  @apply py-2 px-4;
 }
 
 .size-large {
