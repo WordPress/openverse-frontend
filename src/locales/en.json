@@ -151,7 +151,7 @@
       "filter": "The Filters bar on the left includes the {use} filter, which may be supported by some external Sources sources. Apply these before clicking on the button for the external source you’d like to search."
     },
     "new": {
-      "title": "Can I suggest new sources for External Sources?",
+      "title": "Can I suggest new external sources?",
       "content": "Yes, please! Create an {issue} in our GitHub repository or send us an {email} and tell us about the new sources you’d like to see included.",
       "issue": "issue",
       "email": "email"
