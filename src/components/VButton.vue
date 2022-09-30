@@ -248,16 +248,13 @@ export default VButton
 .button[aria-disabled='true'] {
   @apply cursor-not-allowed;
 }
-.plain {
-  @apply border-tx hover:border-tx;
-}
 
 .size-small {
   @apply py-1 px-2;
 }
 
 .size-medium {
-  @apply py-2 px-4;
+  @apply h-12 py-2 px-4;
 }
 
 .size-large {
