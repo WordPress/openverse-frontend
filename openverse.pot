@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-09-29T07:32:37+00:00\n"
+"POT-Creation-Date: 2022-09-30T12:05:57+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -646,7 +646,7 @@ msgctxt "media-details.content-report.form.question"
 msgid "What is the reason?"
 msgstr ""
 
-#: src/components/VContentReport/VContentReportForm.vue:102
+#: src/components/VContentReport/VContentReportForm.vue:100
 msgctxt "media-details.content-report.form.submit"
 msgid "Report"
 msgstr ""
@@ -700,7 +700,7 @@ msgctxt "media-details.content-report.form.dmca.form"
 msgid "DMCA form"
 msgstr ""
 
-#: src/components/VContentReport/VContentReportForm.vue:92
+#: src/components/VContentReport/VContentReportForm.vue:90
 msgctxt "media-details.content-report.form.dmca.open"
 msgid "Open form"
 msgstr ""
@@ -2029,7 +2029,7 @@ msgid "Filters"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VHeader/VFilterButton.vue:108
+#: src/components/VHeader/VFilterButton.vue:98
 msgctxt "header.filter-button.with-count"
 msgid "###count### Filter"
 msgid_plural "###count### Filters"
