@@ -135,21 +135,6 @@
     "intro": "{openverse} is built on top of a catalog that indexes CC-licensed and public domain content from selected sources. Learn more about our {link}.",
     "link": "sources here",
     "license": "However, there are many sources of CC-licensed and public domain media which we aren’t able to surface results from within the {openverse} interface yet. This might be because they do not offer a public API, or that our contributors have not yet had time to integrate them into Openverse. These are valued sources and we want to make sure that you are able to find the best openly licensed materials possible, regardless of where they are located.",
-    "use": " Use ",
-    "images": {
-      "title": "How does the External Sources feature work for indexed media types?",
-      "demo-label": "Layout of External Sources for indexed media type, like images",
-      "content": "{openverse} supports built-in search for some media types, such as images. When you enter a query on the {openverse} homepage, a page of results will be displayed. Scrolling to the bottom of the page, you have two choices:",
-      "continue": "{load-more}, and continue browsing in {openverse}.",
-      "not-finding": "See the section “{not-finding}” below the results.",
-      "info": "The “{not-finding}” section lists other sources of CC-licensed and public domain content. Your search query will be preloaded, and if supported, you can select a {use} filter to proactively filter your results. Click on the button for the external source you’d like to search, and your results will open in a new tab."
-    },
-    "audio-video": {
-      "title": "How does the External Sources feature work for non-indexed media types?",
-      "demo-label": "Layout of External Sources for non-indexed media type, like video",
-      "content": "{openverse} does not yet support built-in search for some media types, such as videos. For these media types, click on the appropriate tab and you’ll see sources where you can find CC-licensed content.",
-      "filter": "The Filters bar on the left includes the {use} filter, which may be supported by some external Sources sources. Apply these before clicking on the button for the external source you’d like to search."
-    },
     "new": {
       "title": "Can I suggest new external sources?",
       "content": "Yes, please! Create an {issue} in our GitHub repository or send us an {email} and tell us about the new sources you’d like to see included.",
@@ -160,7 +145,7 @@
       "title": "Why did you build this?",
       "content": "For many years, Creative Commons has offered its users a dedicated search portal for searching platforms that have CC licensing filters built in. In fact, this is still maintained at {old}.",
       "old": "oldsearch.creativecommons.org",
-      "new": "For users of the legacy CC Meta Search site, the External Sources feature on {openverse} will look familiar. The goal was to ensure that the functionality is not lost, but is updated and embedded within our new search engine for openly licensed content. In addition, the External Sources feature builds on this functionality, allowing us to quickly add new sources to External Sources as we discover them, and support new content types in the future, as we expand.",
+      "new": "For users of the legacy CC Meta Search site, the \"External Sources\" feature on {openverse} will look familiar. The goal was to ensure that the functionality is not lost, but is updated and embedded within our new search engine for openly licensed content. In addition, the \"External Sources\" feature builds on this functionality, allowing us to quickly add new external sources as we discover them, and support new content types in the future, as we expand.",
       "aria-label": "feedback",
       "feedback-suggestions": "We hope you enjoy, and if you have suggestions for improvement, leave us {feedback}.",
       "feedback-link": "feedback"
