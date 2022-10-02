@@ -466,6 +466,9 @@ describe('Search Store', () => {
         const featureFlagStore = useFeatureFlagStore()
         featureFlagStore.toggleFeature('new_header', 'on')
 
+        // Clear up front in case of any preserved searches
+        searchStore.clearRecentSearches()
+
         searchStore.setSearchTerm('boop')
         searchStore.setSearchTerm('bar')
 

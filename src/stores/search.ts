@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia'
 
+import { useStorage } from '@vueuse/core'
+
 import { env } from '~/utils/env'
 import { deepClone } from '~/utils/clone'
 import type { DeepWriteable } from '~/types/utils'
@@ -32,8 +34,6 @@ import {
 import { useProviderStore } from '~/stores/provider'
 
 import { useFeatureFlagStore } from '~/stores/feature-flag'
-
-import { useStorage } from '~/composables/use-storage'
 
 import type { Ref } from '@nuxtjs/composition-api'
 
