@@ -37,7 +37,7 @@
       <VSearchButton type="submit" :size="size" :route="route" />
     </form>
     <VRecentSearches
-      v-show="isRecentVisible"
+      v-show="isNewHeaderEnabled && isRecentVisible"
       :selected-idx="selectedIdx"
       :entries="entries"
       class="absolute inset-x-0 lg:flex"
@@ -63,6 +63,8 @@ import { useSearchStore } from '~/stores/search'
 import { keycodes } from '~/constants/key-codes'
 
 import { cyclicShift } from '~/utils/math'
+
+import { useFeatureFlagStore } from '~/stores/feature-flag'
 
 import VInputField, {
   FIELD_SIZES,
@@ -131,6 +133,9 @@ export default defineComponent({
     }
 
     /* Recent searches */
+    const featureFlagStore = useFeatureFlagStore()
+    const isNewHeaderEnabled = featureFlagStore.isOn('new_header')
+
     const searchStore = useSearchStore()
 
     const isRecentVisible = ref(false)
@@ -215,6 +220,7 @@ export default defineComponent({
       handleFocus,
       handleBlur,
 
+      isNewHeaderEnabled,
       isRecentVisible,
       recentClasses,
       selectedIdx,
