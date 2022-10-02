@@ -1,42 +1,74 @@
 <template>
-  <form
-    class="search-bar group flex flex-row items-center rounded-sm border-tx bg-white"
-    :class="{ 'h-[57px] md:h-[69px]': size === 'standalone' }"
-    @submit.prevent="handleSearch"
-  >
-    <VInputField
-      :placeholder="placeholder || $t('hero.search.placeholder')"
-      v-bind="$attrs"
-      class="search-field flex-grow focus:border-pink"
-      :class="[route === 'home' ? 'border-tx' : 'border-dark-charcoal-20']"
-      :label-text="
-        $t('search.search-bar-label', { openverse: 'Openverse' }).toString()
-      "
-      :connection-sides="['end']"
-      :size="size"
-      field-id="search-bar"
-      type="search"
-      name="q"
-      :model-value="searchText"
-      @update:modelValue="updateSearchText"
+  <div class="relative">
+    <form
+      class="search-bar group flex flex-row items-center rounded-sm border-tx bg-white"
+      :class="{ 'h-[57px] md:h-[69px]': size === 'standalone' }"
+      @submit.prevent="handleSearch"
+      @blur="handleBlur"
     >
-      <!-- @slot Extra information such as loading message or result count goes here. -->
-      <slot />
-    </VInputField>
-    <VSearchButton type="submit" :size="size" :route="route" />
-  </form>
+      <VInputField
+        v-bind="$attrs"
+        v-model="modelMedium"
+        :placeholder="placeholder || $t('hero.search.placeholder')"
+        class="search-field flex-grow focus:border-pink"
+        :class="[route === 'home' ? 'border-tx' : 'border-dark-charcoal-20']"
+        :label-text="
+          $t('search.search-bar-label', { openverse: 'Openverse' }).toString()
+        "
+        :connection-sides="['end']"
+        :size="size"
+        field-id="search-bar"
+        type="search"
+        autocomplete="off"
+        name="q"
+        role="combobox"
+        aria-autocomplete="none"
+        :aria-expanded="isRecentVisible"
+        aria-controls="recent-searches-list"
+        :aria-activedescendant="
+          selectedIdx !== undefined ? `option-${selectedIdx}` : undefined
+        "
+        @focus="handleFocus"
+        @keydown="handleKeydown"
+      >
+        <!-- @slot Extra information such as loading message or result count goes here. -->
+        <slot />
+      </VInputField>
+      <VSearchButton type="submit" :size="size" :route="route" />
+    </form>
+    <VRecentSearches
+      v-show="isRecentVisible"
+      :selected-idx="selectedIdx"
+      :entries="entries"
+      class="absolute inset-x-0 lg:flex"
+      :class="recentClasses"
+      @select="handleSelect"
+    />
+  </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
+import {
+  computed,
+  defineComponent,
+  PropType,
+  ref,
+} from '@nuxtjs/composition-api'
 
 import { useMatchHomeRoute } from '~/composables/use-match-routes'
 import { defineEvent } from '~/types/emits'
+
+import { useSearchStore } from '~/stores/search'
+
+import { keycodes } from '~/constants/key-codes'
+
+import { cyclicShift } from '~/utils/math'
 
 import VInputField, {
   FIELD_SIZES,
 } from '~/components/VInputField/VInputField.vue'
 import VSearchButton from '~/components/VHeader/VSearchBar/VSearchButton.vue'
+import VRecentSearches from '~/components/VRecentSearches/VRecentSearches.vue'
 
 /**
  * Displays a text field for a search query and is attached to an action button
@@ -45,7 +77,7 @@ import VSearchButton from '~/components/VHeader/VSearchBar/VSearchButton.vue'
  */
 export default defineComponent({
   name: 'VSearchBar',
-  components: { VInputField, VSearchButton },
+  components: { VRecentSearches, VInputField, VSearchButton },
   inheritAttrs: false,
   props: {
     /**
@@ -79,21 +111,117 @@ export default defineComponent({
       return isHomeRoute?.value ? 'home' : props.is404 ? '404' : undefined
     })
 
-    const searchText = computed(() => props.value)
-
-    const updateSearchText = (val: string) => {
-      emit('input', val)
-    }
+    const modelMedium = computed<string>({
+      get: () => props.value ?? '',
+      set: (value: string) => {
+        emit('input', value)
+      },
+    })
 
     const handleSearch = () => {
       emit('submit')
     }
 
+    /* Focus */
+    const handleFocus = () => {
+      isRecentVisible.value = true
+    }
+    const handleBlur = () => {
+      isRecentVisible.value = false
+    }
+
+    /* Recent searches */
+    const searchStore = useSearchStore()
+
+    const isRecentVisible = ref(false)
+    const recentClasses = computed(() => {
+      // Calculated by adding 8px to all heights defined in `VInputField.vue`.
+      const FIELD_OFFSETS = {
+        small: 'top-12',
+        medium: 'top-14',
+        large: 'top-16',
+        standalone: 'top-[65px] md:top-[77px]',
+      } as const
+      return FIELD_OFFSETS[props.size]
+    })
+    /**
+     * Refers to the current suggestion that has visual focus (not DOM focus)
+     * and is the active descendant. This should be set to `undefined` when the
+     * visual focus is on the input field.
+     */
+    const selectedIdx = ref<number | undefined>(undefined)
+    const entries = computed(() => searchStore.recentSearches)
+
+    const handleVerticalArrows = (event: KeyboardEvent) => {
+      event.preventDefault() // Prevent the cursor from moving horizontally.
+      const { key, altKey } = event
+
+      // Show the recent searches.
+      isRecentVisible.value = true
+      if (altKey) return
+
+      // Shift selection (if Alt was not pressed with arrow keys)
+      let defaultValue: number
+      let offset: number
+      if (key == keycodes.ArrowUp) {
+        defaultValue = 0
+        offset = -1
+      } else {
+        defaultValue = -1
+        offset = 1
+      }
+      selectedIdx.value = cyclicShift(
+        selectedIdx.value ?? defaultValue,
+        offset,
+        0,
+        entries.value.length
+      )
+    }
+
+    const handleOtherKeys = (event: KeyboardEvent) => {
+      const { key } = event
+
+      if (key === keycodes.Enter && selectedIdx.value)
+        // If a recent search is selected, populate its value into the input.
+        modelMedium.value = entries.value[selectedIdx.value]
+
+      if (([keycodes.Escape, keycodes.Enter] as string[]).includes(key))
+        // Hide the recent searches.
+        isRecentVisible.value = false
+
+      selectedIdx.value = undefined // Lose visual focus from entries.
+    }
+    const handleKeydown = (event: KeyboardEvent) => {
+      const { key } = event
+
+      return ([keycodes.ArrowUp, keycodes.ArrowDown] as string[]).includes(key)
+        ? handleVerticalArrows(event)
+        : handleOtherKeys(event)
+    }
+    /* Populate the input with the clicked entry and execute the search. */
+    const handleSelect = (idx: number) => {
+      modelMedium.value = entries.value[idx]
+
+      isRecentVisible.value = false
+      selectedIdx.value = undefined // Lose visual focus from entries.
+      handleSearch() // Immediately execute the search manually.
+    }
+
     return {
       handleSearch,
       route,
-      searchText,
-      updateSearchText,
+      modelMedium,
+
+      handleFocus,
+      handleBlur,
+
+      isRecentVisible,
+      recentClasses,
+      selectedIdx,
+      entries,
+
+      handleKeydown,
+      handleSelect,
     }
   },
 })
