@@ -17,11 +17,11 @@
     <i18n path="about.planning.content" tag="p">
       <template #openverse>Openverse</template>
       <template #meta>
-        <VLink href="/meta-search">{{ $t('about.planning.meta') }}</VLink>
+        <VLink href="/external-sources">{{ $t('about.planning.meta') }}</VLink>
       </template>
-      <template #search>
+      <template #frontend>
         <VLink href="https://github.com/wordpress/openverse-frontend/">{{
-          $t('about.planning.meta')
+          $t('about.planning.frontend', { openverse: 'Openverse' })
         }}</VLink>
       </template>
       <template #api>
