@@ -4,7 +4,7 @@
       class="search-bar group flex flex-row items-center rounded-sm border-tx bg-white"
       :class="{ 'h-[57px] md:h-[69px]': size === 'standalone' }"
       @submit.prevent="handleSearch"
-      @blur="handleBlur"
+      @focusout="handleBlur"
     >
       <VInputField
         v-bind="$attrs"
