@@ -43,6 +43,10 @@
     <span v-else class="description-regular mx-2 my-3">
       {{ $t('recent-searches.none') }}
     </span>
+
+    <span class="caption-regular mx-2 my-3 text-dark-charcoal-70">
+      {{ $t('recent-searches.disclaimer') }}
+    </span>
   </div>
 </template>
 
