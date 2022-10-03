@@ -42,6 +42,7 @@
       class="absolute inset-x-0 lg:flex"
       :class="recentClasses"
       @select="handleSelect"
+      @clear="handleClear"
     />
   </div>
 </template>
@@ -207,6 +208,7 @@ export default defineComponent({
         ? handleVerticalArrows(event)
         : handleOtherKeys(event)
     }
+
     /* Populate the input with the clicked entry and execute the search. */
     const handleSelect = (idx: number) => {
       modelMedium.value = entries.value[idx]
@@ -214,6 +216,10 @@ export default defineComponent({
       isRecentVisible.value = false
       selectedIdx.value = undefined // Lose visual focus from entries.
       handleSearch() // Immediately execute the search manually.
+    }
+    /* Clear all recent searches from the store. */
+    const handleClear = () => {
+      searchStore.clearRecentSearches()
     }
 
     return {
@@ -234,6 +240,7 @@ export default defineComponent({
 
       handleKeydown,
       handleSelect,
+      handleClear,
     }
   },
 })
