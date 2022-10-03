@@ -1,10 +1,9 @@
 <template>
-  <div class="relative">
+  <div ref="searchBarEl" class="relative">
     <form
       class="search-bar group flex flex-row items-center rounded-sm border-tx bg-white"
       :class="{ 'h-[57px] md:h-[69px]': size === 'standalone' }"
       @submit.prevent="handleSearch"
-      @focusout="handleBlur"
     >
       <VInputField
         v-bind="$attrs"
@@ -54,6 +53,8 @@ import {
   PropType,
   ref,
 } from '@nuxtjs/composition-api'
+
+import { onClickOutside } from '@vueuse/core'
 
 import { useMatchHomeRoute } from '~/composables/use-match-routes'
 import { defineEvent } from '~/types/emits'
@@ -107,6 +108,8 @@ export default defineComponent({
     submit: defineEvent(),
   },
   setup(props, { emit }) {
+    const searchBarEl = ref<HTMLElement | null>(null)
+
     const { matches: isHomeRoute } = useMatchHomeRoute()
 
     const route = computed(() => {
@@ -131,6 +134,7 @@ export default defineComponent({
     const handleBlur = () => {
       isRecentVisible.value = false
     }
+    onClickOutside(searchBarEl, handleBlur)
 
     /* Recent searches */
     const featureFlagStore = useFeatureFlagStore()
@@ -213,6 +217,8 @@ export default defineComponent({
     }
 
     return {
+      searchBarEl,
+
       handleSearch,
       route,
       modelMedium,
