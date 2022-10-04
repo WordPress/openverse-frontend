@@ -61,12 +61,11 @@ import { useMatchHomeRoute } from '~/composables/use-match-routes'
 import { defineEvent } from '~/types/emits'
 
 import { useSearchStore } from '~/stores/search'
+import { useFeatureFlagStore } from '~/stores/feature-flag'
 
 import { keycodes } from '~/constants/key-codes'
 
 import { cyclicShift } from '~/utils/math'
-
-import { useFeatureFlagStore } from '~/stores/feature-flag'
 
 import VInputField, {
   FIELD_SIZES,
