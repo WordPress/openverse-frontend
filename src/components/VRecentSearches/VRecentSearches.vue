@@ -12,9 +12,10 @@
         variant="plain"
         size="small"
         class="caption-bold hover:underline"
+        :aria-label="$t('recent-searches.clear.label').toString()"
         @click="handleClear"
       >
-        {{ $t('recent-searches.clear') }}
+        {{ $t('recent-searches.clear.text') }}
       </VButton>
     </div>
 
