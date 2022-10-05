@@ -1,6 +1,7 @@
 <template>
   <div
     class="flex flex-col gap-1 rounded-sm border border-dark-charcoal-20 bg-white p-4 shadow-el-2"
+    data-testid="recent-searches"
   >
     <div class="flex flex-row items-center justify-between py-2">
       <!-- Left margin to align with the text of recent searches. -->
