@@ -14,7 +14,7 @@
     </template>
     <VTabs
       :selected-id="selectedTab"
-      tablist-style="px-6"
+      tablist-style="ps-6 pe-2"
       variant="plain"
       label="content-settings"
       class="flex min-h-0 flex-col"
