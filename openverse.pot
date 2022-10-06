@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-10-06T18:57:01+00:00\n"
+"POT-Creation-Date: 2022-10-06T22:25:45+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2003,7 +2003,7 @@ msgctxt "header.loading"
 msgid "Loading..."
 msgstr ""
 
-#: src/components/VHeader/VHeaderMobile/VShowResultsButton.vue:7
+#: src/components/VHeader/VHeaderMobile/VShowResultsButton.vue:39
 msgctxt "header.see-results"
 msgid "See results"
 msgstr ""
