@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-10-06T06:57:41+00:00\n"
+"POT-Creation-Date: 2022-10-06T11:18:53+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -144,6 +144,7 @@ msgctxt "search-type.label"
 msgid "Type of content to search"
 msgstr ""
 
+#: src/components/VHeader/VHeaderMobile/VContentSettingsModal.vue:26
 msgctxt "search-type.heading"
 msgid "Content types"
 msgstr ""
@@ -890,6 +891,7 @@ msgctxt "browse-page.fetching-error"
 msgid "Error fetching ###type###:"
 msgstr ""
 
+#: src/components/VHeader/VHeaderMobile/VContentSettingsModal.vue:35
 msgctxt "browse-page.aria.close"
 msgid "close"
 msgstr ""
@@ -1006,7 +1008,7 @@ msgctxt "browse-page.search-rating.feedback-thanks"
 msgid "Thank you for the feedback!"
 msgstr ""
 
-#: src/components/VFilters/VSearchGridFilter.vue:12
+#: src/components/VFilters/VSearchGridFilter.vue:15
 msgctxt "filter-list.filter-by"
 msgid "Filter by"
 msgstr ""
@@ -1015,12 +1017,18 @@ msgctxt "filter-list.hide"
 msgid "Hide filters"
 msgstr ""
 
-#: src/components/VFilters/VSearchGridFilter.vue:22
+#: src/components/VFilters/VSearchGridFilter.vue:25
 msgctxt "filter-list.clear"
 msgid "Clear filters"
 msgstr ""
 
-#: src/components/VFilters/VSearchGridFilter.vue:42
+#. Do not translate words between ### ###.
+#: src/components/VHeader/VHeaderMobile/VContentSettingsModal.vue:122
+msgctxt "filter-list.clear-numbered"
+msgid "Clear filters (###number###)"
+msgstr ""
+
+#: src/components/VFilters/VSearchGridFilter.vue:48
 msgctxt "filter-list.show"
 msgid "Show results"
 msgstr ""
@@ -1030,6 +1038,7 @@ msgctxt "filter-list.category-aria"
 msgid "filters list for ###categoryName### category"
 msgstr ""
 
+#: src/components/VHeader/VHeaderMobile/VContentSettingsModal.vue:29
 msgctxt "filters.title"
 msgid "Filters"
 msgstr ""
@@ -1994,6 +2003,11 @@ msgctxt "header.loading"
 msgid "Loading..."
 msgstr ""
 
+#: src/components/VHeader/VHeaderMobile/VShowResultsButton.vue:7
+msgctxt "header.see-results"
+msgid "See results"
+msgstr ""
+
 #: src/components/VContentSwitcherOld/VMobileMenuModal.vue:5
 msgctxt "header.filter-button.simple"
 msgid "Filters"
@@ -2023,12 +2037,12 @@ msgctxt "header.aria.primary"
 msgid "primary"
 msgstr ""
 
-#: src/components/VHeader/VContentSettingsButton.vue:11
+#: src/components/VHeader/VHeaderInternal.vue:11
 msgctxt "header.aria.menu"
 msgid "menu"
 msgstr ""
 
-#: src/components/VHeader/VContentSettingsButton.vue:10
+#: src/components/VHeader/VHeaderMobile/VContentSettingsButton.vue:9
 msgctxt "header.aria.menu-notification"
 msgid "Some filters are applied"
 msgstr ""
