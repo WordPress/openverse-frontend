@@ -2,6 +2,7 @@
   <VModal
     ref="contentSettingsModalRef"
     :label="$t('header.aria.menu').toString()"
+    :hide-on-click-outside="true"
     variant="two-thirds"
     class="flex items-center"
   >
