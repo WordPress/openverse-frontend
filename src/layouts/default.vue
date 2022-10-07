@@ -92,7 +92,9 @@ const embeddedPage = {
   },
   setup() {
     const featureFlagStore = useFeatureFlagStore()
-    const isNewHeaderEnabled = featureFlagStore.isOn('new_header')
+    const isNewHeaderEnabled = computed(() =>
+      featureFlagStore.isOn('new_header')
+    )
 
     const { isVisible: isFilterVisible } = useFilterSidebarVisibility()
     const { matches: isSearchRoute } = useMatchSearchRoutes()
