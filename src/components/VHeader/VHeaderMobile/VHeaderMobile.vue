@@ -230,7 +230,9 @@ export default defineComponent({
         /**
          * Without `nextTick`, the search bar is not focused on click in Firefox
          */
-        nextTick(() => ensureFocus(searchInputRef.value))
+        nextTick(() => {
+          if (searchInputRef.value) ensureFocus(searchInputRef.value)
+        })
       } else {
         isRecentSearchesModalOpen.value = false
         if (localSearchTerm.value === '' && searchStore.searchTerm !== '') {
@@ -245,7 +247,9 @@ export default defineComponent({
 
     const clearSearchText = () => {
       searchTerm.value = ''
-      ensureFocus(searchInputRef.value)
+      if (searchInputRef.value) {
+        ensureFocus(searchInputRef.value)
+      }
     }
 
     const handleBack = () => {
@@ -308,7 +312,9 @@ export default defineComponent({
     /* Clear all recent searches from the store. */
     const handleClear = () => {
       searchStore.clearRecentSearches()
-      ensureFocus(searchInputRef.value)
+      if (searchInputRef.value) {
+        ensureFocus(searchInputRef.value)
+      }
     }
 
     const showRecentSearches = computed(

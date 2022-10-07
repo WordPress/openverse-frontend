@@ -2,8 +2,6 @@
   <div ref="nodeRef">
     <div v-if="!isActive" class="flex w-full"><slot /></div>
     <VTeleport v-else to="modal">
-      <!-- Prevent FocusTrap from trying to focus the first element.
-      We already do that in a more flexible, adaptive way in our Dialog composables. -->
       <FocusTrap :initial-focus="() => false">
         <div
           class="fixed inset-0 z-40 flex min-h-screen w-full justify-center overflow-y-auto bg-white"
@@ -24,15 +22,22 @@
     </VTeleport>
   </div>
 </template>
-<script>
-import { defineComponent, ref, watch, toRef } from '@nuxtjs/composition-api'
+<script lang="ts">
+import {
+  defineComponent,
+  ref,
+  watch,
+  toRef,
+  ComponentInstance,
+} from '@nuxtjs/composition-api'
 
 import { Portal as VTeleport } from 'portal-vue'
-
 import { FocusTrap } from 'focus-trap-vue'
 
 import { useBodyScrollLock } from '~/composables/use-body-scroll-lock'
 import { useDialogContent } from '~/composables/use-dialog-content'
+
+import type { SetupContext } from 'vue'
 
 export default defineComponent({
   name: 'VInputModal',
@@ -65,19 +70,14 @@ export default defineComponent({
     'close',
   ],
   setup(props, { emit }) {
-    const focusTrapRef =
-      /** @type {import('@nuxtjs/composition-api').Ref<InstanceType<typeof FocusTrap> | null>} */ (
-        ref(null)
-      )
+    const focusTrapRef = ref<ComponentInstance | null>(null)
+
     const visibleRef = toRef(props, 'isActive')
-    const internalVisibleRef =
-      /** @type {import('@nuxtjs/composition-api').Ref<boolean>} */ (
-        ref(props.isActive === undefined ? false : visibleRef.value)
-      )
-    const nodeRef =
-      /** @type {import ('@nuxtjs/composition-api').Ref<HTMLElement | null>} */ (
-        ref(null)
-      )
+    const internalVisibleRef = ref<boolean>(
+      props.isActive === undefined ? false : visibleRef.value
+    )
+
+    const nodeRef = ref<HTMLElement | null>(null)
 
     /**
      * When the `visible` prop is set to a different value than internalVisibleRef,
@@ -109,10 +109,7 @@ export default defineComponent({
       emit('close')
     }
 
-    const dialogRef =
-      /** @type {import ('@nuxtjs/composition-api').Ref<HTMLElement | null>} */ (
-        ref(null)
-      )
+    const dialogRef = ref<HTMLElement | null>(null)
 
     const { onKeyDown, onBlur } = useDialogContent({
       dialogRef,
@@ -123,7 +120,7 @@ export default defineComponent({
       hideOnClickOutsideRef: ref(false),
       hideRef: ref(close),
       hideOnEscRef: ref(true),
-      emit,
+      emit: emit as SetupContext['emit'],
     })
 
     return {
