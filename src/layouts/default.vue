@@ -123,7 +123,7 @@ const embeddedPage = {
     )
 
     const isSidebarVisible = computed(() => {
-      return isNewHeaderEnabled
+      return isNewHeaderEnabled.value
         ? isSearchRoute.value && isMinScreenLg.value && isFilterVisible.value
         : isSearchRoute.value && isMinScreenMd.value && isFilterVisible.value
     })
