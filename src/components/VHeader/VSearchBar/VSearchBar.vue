@@ -43,6 +43,7 @@
       :class="recentClasses"
       @select="handleSelect"
       @clear="handleClear"
+      @keydown.tab.native="handleBlur"
     />
   </div>
 </template>
