@@ -21,12 +21,19 @@
         >
           <slot name="start">
             <VLogoButton
-              v-if="!searchBarIsActive"
+              v-show="!searchBarIsActive"
               :is-fetching="isFetching"
               :is-search-route="true"
               class="w-12"
             />
-            <VBackButton v-else @click="handleBack" />
+            <VSearchBarButton
+              v-show="searchBarIsActive"
+              :icon-path="chevronLeftIcon"
+              :inner-size="8"
+              :aria-label="$t('header.back-button')"
+              :rtl-flip="true"
+              @click="handleBack"
+            />
           </slot>
 
           <input
@@ -55,9 +62,11 @@
             @keydown="handleKeydown"
           />
           <slot>
-            <VClearButton
+            <VSearchBarButton
               v-show="searchBarIsActive && searchTerm"
-              class="me-2"
+              :icon-path="closeIcon"
+              :aria-label="$t('browse-page.search-form.clear')"
+              inner-area-classes="bg-white"
               @click="clearSearchText"
             />
             <span
@@ -110,14 +119,14 @@ import { useI18nResultsCount } from '~/composables/use-i18n-utilities'
 import { useMediaStore } from '~/stores/media'
 import { isSearchTypeSupported, useSearchStore } from '~/stores/search'
 
-import VBackButton from '~/components/VHeader/VHeaderMobile/VBackButton.vue'
-import VClearButton from '~/components/VHeader/VSearchBar/VClearButton.vue'
 import VLogoButton from '~/components/VHeader/VLogoButton.vue'
 import VInputModal from '~/components/VModal/VInputModal.vue'
 import VContentSettingsModal from '~/components/VHeader/VHeaderMobile/VContentSettingsModal.vue'
 import VRecentSearches from '~/components/VRecentSearches/VRecentSearches.vue'
+import VSearchBarButton from '~/components/VHeader/VHeaderMobile/VSearchBarButton.vue'
 
 import closeIcon from '~/assets/icons/close-small.svg'
+import chevronLeftIcon from '~/assets/icons/chevron-left.svg'
 
 /**
  * Displays a text field for a search query and is attached to an action button
@@ -128,11 +137,10 @@ export default defineComponent({
   name: 'VHeaderMobile',
   components: {
     VContentSettingsModal,
-    VBackButton,
-    VClearButton,
     VInputModal,
     VLogoButton,
     VRecentSearches,
+    VSearchBarButton,
   },
   setup() {
     const searchInputRef = ref<HTMLInputElement | null>(null)
@@ -320,7 +328,8 @@ export default defineComponent({
     )
 
     return {
-      closeIcon,
+      chevronLeftIcon: chevronLeftIcon as unknown as string,
+      closeIcon: closeIcon as unknown as string,
       searchInputRef,
 
       isHeaderScrolled,
@@ -348,5 +357,3 @@ export default defineComponent({
   },
 })
 </script>
-
-<style scoped></style>
