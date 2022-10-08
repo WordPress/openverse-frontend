@@ -18,8 +18,7 @@
         <VIcon
           v-if="isLinkExternal(page)"
           :icon-path="externalLinkIcon"
-          :size="5"
-          class="mb-0.5 self-center"
+          class="mb-0.5 h-5 w-5 self-center"
         />
       </div>
     </VItem>

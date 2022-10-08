@@ -2,16 +2,16 @@
   <VButton
     v-bind="buttonProps"
     size="disabled"
-    class="icon-button flex flex-shrink-0 items-center justify-center border-1.5 active:shadow-ring"
+    class="icon-button flex flex-shrink-0 items-center justify-center border-1.5"
     :class="buttonSizeClasses"
     :type="type"
     v-on="$listeners"
   >
-    <slot name="default" :icon-size-classes="iconSizeClasses" />
+    <slot name="default" :icon-size="iconSize" />
     <VIcon
       v-if="iconProps"
       class="pointer-events-none"
-      :class="iconSizeClasses"
+      :class="iconSize"
       v-bind="iconProps"
     />
   </VButton>
@@ -80,13 +80,13 @@ export default defineComponent({
     const type = (attrs['type'] ?? 'button') as ButtonType
 
     const buttonSizeClasses = computed(() => SIZE_MAP[props.size].button)
-    const iconSizeClasses = computed(() => SIZE_MAP[props.size].icon)
+    const iconSize = computed(() => SIZE_MAP[props.size].icon)
 
     return {
       type,
 
       buttonSizeClasses,
-      iconSizeClasses,
+      iconSize,
     }
   },
 })

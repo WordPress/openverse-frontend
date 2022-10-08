@@ -88,7 +88,7 @@
             :href="DMCA_FORM_URL"
           >
             {{ $t('media-details.content-report.form.dmca.open') }}
-            <VIcon :size="4" class="ms-1" :icon-path="icons.externalLink" />
+            <VIcon class="h-4 w-4 ms-1" :icon-path="icons.externalLink" />
           </VButton>
           <VButton
             v-else

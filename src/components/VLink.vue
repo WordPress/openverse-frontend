@@ -22,8 +22,7 @@
     <slot /><VIcon
       v-if="showExternalIcon && !isInternal"
       :icon-path="externalLinkIcon"
-      class="inline-block"
-      :size="4"
+      class="inline-block h-4 w-4"
       rtl-flip
     />
   </a>

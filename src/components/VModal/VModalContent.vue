@@ -47,7 +47,7 @@
                 @click="hide()"
               >
                 {{ $t('modal.close') }}
-                <VIcon :icon-path="closeIcon" class="ms-2" :size="5" />
+                <VIcon :icon-path="closeIcon" class="ms-2 h-5 w-5" />
               </VButton>
             </div>
           </slot>

@@ -41,8 +41,7 @@
         <VIcon
           :icon-path="externalIcon"
           :rtl-flip="true"
-          class="ms-2 md:h-6 md:w-6"
-          :size="4"
+          class="h-4 w-4 ms-2 md:h-6 md:w-6"
         />
       </VButton>
       <div class="description-bold flex flex-1 flex-col justify-center">
