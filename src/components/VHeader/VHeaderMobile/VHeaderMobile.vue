@@ -11,11 +11,11 @@
     >
       <div class="flex w-full" :class="isRecentSearchesModalOpen ? 'px-2' : ''">
         <form
-          class="search-bar group flex h-12 w-full flex-row items-center overflow-hidden rounded-sm border border-1.5"
+          class="search-bar group flex h-12 w-full flex-row items-center overflow-hidden rounded-sm"
           :class="
             searchBarIsActive
-              ? 'border-pink bg-white'
-              : 'border-tx bg-dark-charcoal-06'
+              ? 'bg-white ring ring-pink'
+              : 'bg-dark-charcoal-06'
           "
           @submit.prevent="handleSearch"
         >
@@ -35,7 +35,7 @@
             name="q"
             :placeholder="$t('hero.search.placeholder').toString()"
             type="search"
-            class="search-field h-full w-full flex-grow appearance-none rounded-none border-tx bg-tx text-2xl text-dark-charcoal-70 placeholder-dark-charcoal-70 ms-1 focus-visible:outline-none"
+            class="search-field h-full w-full flex-grow appearance-none rounded-none border-tx bg-tx text-2xl text-dark-charcoal-70 placeholder-dark-charcoal-70 ms-1 hover:text-dark-charcoal hover:placeholder-dark-charcoal focus-visible:outline-none"
             :value="searchTerm"
             :aria-label="
               $t('search.search-bar-label', {
@@ -56,19 +56,17 @@
           />
           <slot>
             <VClearButton
-              v-if="searchBarIsActive"
+              v-show="searchBarIsActive && searchTerm"
               class="me-2"
               @click="clearSearchText"
             />
-            <template v-else>
-              <span
-                v-show="searchStatus"
-                class="info mx-4 hidden whitespace-nowrap text-xs group-hover:text-dark-charcoal group-focus:text-dark-charcoal md:flex"
-              >
-                {{ searchStatus }}
-              </span>
-              <VContentSettingsModal />
-            </template>
+            <span
+              v-show="!searchBarIsActive && searchStatus"
+              class="info mx-4 hidden whitespace-nowrap text-xs group-hover:text-dark-charcoal group-focus:text-dark-charcoal md:flex"
+            >
+              {{ searchStatus }}
+            </span>
+            <VContentSettingsModal v-show="!searchBarIsActive" />
           </slot>
         </form>
       </div>
