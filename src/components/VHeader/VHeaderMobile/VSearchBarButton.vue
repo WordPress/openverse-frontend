@@ -41,7 +41,7 @@ export default defineComponent({
     },
     innerAreaClasses: {
       type: String,
-      default: 'bg-dark-charcoal-10',
+      default: '',
     },
     rtlFlip: {
       type: Boolean,

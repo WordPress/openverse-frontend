@@ -32,7 +32,7 @@
               :inner-size="8"
               :aria-label="$t('header.back-button')"
               :rtl-flip="true"
-              inner-area-classes="hover:bg-dark-charcoal hover:text-white"
+              inner-area-classes="bg-dark-charcoal-10 hover:bg-dark-charcoal hover:text-white"
               @click="handleBack"
             />
           </slot>
