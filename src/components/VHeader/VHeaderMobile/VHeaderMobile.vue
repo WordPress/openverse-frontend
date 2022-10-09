@@ -32,6 +32,7 @@
               :inner-size="8"
               :aria-label="$t('header.back-button')"
               :rtl-flip="true"
+              inner-area-classes="hover:bg-dark-charcoal hover:text-white"
               @click="handleBack"
             />
           </slot>
@@ -66,7 +67,7 @@
               v-show="searchBarIsActive && searchTerm"
               :icon-path="closeIcon"
               :aria-label="$t('browse-page.search-form.clear')"
-              inner-area-classes="bg-white"
+              inner-area-classes="bg-white hover:bg-dark-charcoal-10"
               @click="clearSearchText"
             />
             <span
