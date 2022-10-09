@@ -76,7 +76,10 @@
             >
               {{ searchStatus }}
             </span>
-            <VContentSettingsModal v-show="!searchBarIsActive" />
+            <VContentSettingsModal
+              v-show="!searchBarIsActive"
+              :is-fetching="isFetching"
+            />
           </slot>
         </form>
       </div>
