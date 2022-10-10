@@ -33,7 +33,12 @@
         <!-- @slot Extra information such as loading message or result count goes here. -->
         <slot />
       </VInputField>
-      <VSearchButton type="submit" :size="size" :route="route" />
+      <VSearchButton
+        type="submit"
+        :size="size"
+        :route="route"
+        @keydown.tab="handleSearchBlur"
+      />
     </form>
     <VRecentSearches
       v-show="isNewHeaderEnabled && isRecentVisible"
@@ -135,6 +140,9 @@ export default defineComponent({
     const handleBlur = () => {
       isRecentVisible.value = false
     }
+    const handleSearchBlur = () => {
+      if (!entries.value.length) handleBlur()
+    }
     onClickOutside(searchBarEl, handleBlur)
 
     /* Recent searches */
@@ -231,6 +239,7 @@ export default defineComponent({
 
       handleFocus,
       handleBlur,
+      handleSearchBlur,
 
       isNewHeaderEnabled,
       isRecentVisible,
