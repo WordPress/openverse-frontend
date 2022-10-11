@@ -4,11 +4,12 @@
     :size="size"
     :bordered="bordered"
     type="radiogroup"
-    class="z-10 max-w-full"
+    class="z-10 min-w-[262px] max-w-full"
   >
     <div
       v-for="(category, index) in contentTypeGroups"
       :key="index"
+      class="flex flex-col lg:gap-y-1"
       :class="{
         'mt-2': index > 0,
         'border-t border-dark-charcoal-20 bg-dark-charcoal-06':
@@ -25,11 +26,12 @@
       <VSearchTypeItem
         v-for="(item, idx) in category.items"
         :key="item"
-        class="md:mb-1"
         :item="item"
         :item-id="idx"
+        :size="size"
         :icon="content.icons[item]"
         :use-links="useLinks"
+        :class="{ 'mb-2': idx === category.items.length - 1 && index !== 0 }"
         :selected="isActive(item)"
         @click="selectItem(item)"
       />
@@ -75,7 +77,7 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const content = useSearchType()
-    const bordered = computed(() => props.size === 'small')
+    const bordered = computed(() => props.size === 'medium')
 
     const isActive = (item: SearchType) => item === content.activeType.value
 
