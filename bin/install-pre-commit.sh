@@ -1,8 +1,8 @@
-#! /usr/bin/env bash
+#! /usr/bin/env sh
 
 set -e
 
-if [[ -z "$SKIP_PRE_COMMIT" ]]
+if [ -z "$SKIP_PRE_COMMIT" ]
 then
   echo "installing pre-commit"
   pnpm pc:download && pnpm pc:install
