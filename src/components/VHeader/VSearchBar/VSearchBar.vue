@@ -45,16 +45,18 @@
         @keydown.tab="handleSearchBlur"
       />
     </form>
-    <VRecentSearches
-      v-show="isNewHeaderEnabled && isRecentVisible"
-      :selected-idx="selectedIdx"
-      :entries="entries"
-      class="absolute inset-x-0 lg:flex"
-      :class="recentClasses"
-      @select="handleSelect"
-      @clear="handleClear"
-      @keydown.tab.native="handleBlur"
-    />
+    <ClientOnly>
+      <VRecentSearches
+        v-show="isNewHeaderEnabled && isRecentVisible"
+        :selected-idx="selectedIdx"
+        :entries="entries"
+        class="absolute inset-x-0 lg:flex"
+        :class="recentClasses"
+        @select="handleSelect"
+        @clear="handleClear"
+        @keydown.tab.native="handleBlur"
+      />
+    </ClientOnly>
   </div>
 </template>
 
