@@ -6,6 +6,7 @@
       @submit.prevent="handleSearch"
     >
       <VInputField
+        ref="inputFieldRef"
         v-bind="$attrs"
         v-model="modelMedium"
         :placeholder="placeholder || $t('hero.search.placeholder')"
@@ -115,6 +116,7 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const searchBarEl = ref<HTMLElement | null>(null)
+    const inputFieldRef = ref<InstanceType<typeof VInputField> | null>(null)
 
     const { matches: isHomeRoute } = useMatchHomeRoute()
 
@@ -227,11 +229,13 @@ export default defineComponent({
     }
     /* Clear all recent searches from the store. */
     const handleClear = () => {
+      inputFieldRef.value?.focusInput()
       searchStore.clearRecentSearches()
     }
 
     return {
       searchBarEl,
+      inputFieldRef,
 
       handleSearch,
       route,
