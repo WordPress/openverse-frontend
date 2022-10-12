@@ -211,6 +211,11 @@ export default defineComponent({
         // If a recent search is selected, populate its value into the input.
         modelMedium.value = entries.value[selectedIdx.value]
 
+      // Hide the recent searches popover when the user presses shift+tab on the input.
+      if (key === keycodes.Tab && event.shiftKey) {
+        handleBlur()
+      }
+
       if (([keycodes.Escape, keycodes.Enter] as string[]).includes(key))
         // Hide the recent searches.
         isRecentVisible.value = false
