@@ -32,7 +32,7 @@
         :aria-activedescendant="
           selectedIdx !== undefined ? `option-${selectedIdx}` : undefined
         "
-        @focus="handleFocus"
+        @focus="showRecentSearches"
         @keydown="handleKeydown"
       >
         <!-- @slot Extra information such as loading message or result count goes here. -->
@@ -54,7 +54,7 @@
         :class="recentClasses"
         @select="handleSelect"
         @clear="handleClear"
-        @keydown.tab.native="handleBlur"
+        @keydown.tab.native="hideRecentSearches"
       />
     </ClientOnly>
   </div>
@@ -141,18 +141,6 @@ export default defineComponent({
       emit('submit')
     }
 
-    /* Focus */
-    const handleFocus = () => {
-      isRecentVisible.value = true
-    }
-    const handleBlur = () => {
-      isRecentVisible.value = false
-    }
-    const handleSearchBlur = () => {
-      if (!entries.value.length) handleBlur()
-    }
-    onClickOutside(searchBarEl, handleBlur)
-
     /* Recent searches */
     const featureFlagStore = useFeatureFlagStore()
     const isNewHeaderEnabled = featureFlagStore.isOn('new_header')
@@ -170,6 +158,24 @@ export default defineComponent({
       } as const
       return FIELD_OFFSETS[props.size]
     })
+
+    /**
+     * Show and hide recent searches.
+     */
+    const showRecentSearches = () => {
+      isRecentVisible.value = true
+    }
+    const hideRecentSearches = () => {
+      isRecentVisible.value = false
+    }
+    /**
+     * Hide recent searches on blur and click outside.
+     */
+    const handleSearchBlur = () => {
+      if (!entries.value.length) hideRecentSearches()
+    }
+    onClickOutside(searchBarEl, hideRecentSearches)
+
     /**
      * Refers to the current suggestion that has visual focus (not DOM focus)
      * and is the active descendant. This should be set to `undefined` when the
@@ -213,12 +219,12 @@ export default defineComponent({
 
       // Hide the recent searches popover when the user presses shift+tab on the input.
       if (key === keycodes.Tab && event.shiftKey) {
-        handleBlur()
+        hideRecentSearches()
       }
 
       if (([keycodes.Escape, keycodes.Enter] as string[]).includes(key))
         // Hide the recent searches.
-        isRecentVisible.value = false
+        hideRecentSearches()
 
       selectedIdx.value = undefined // Lose visual focus from entries.
     }
@@ -252,8 +258,8 @@ export default defineComponent({
       route,
       modelMedium,
 
-      handleFocus,
-      handleBlur,
+      showRecentSearches,
+      hideRecentSearches,
       handleSearchBlur,
 
       isNewHeaderEnabled,
