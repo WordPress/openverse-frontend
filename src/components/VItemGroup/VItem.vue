@@ -15,7 +15,7 @@
     <VButton
       data-item-group-item
       :as="as"
-      class="group relative flex min-w-full justify-between py-2 hover:bg-dark-charcoal-10 focus:z-10"
+      class="group relative flex min-w-full justify-between py-2 px-6 hover:bg-dark-charcoal-10 focus:z-10 lg:px-2"
       :class="[
         $style[`${contextProps.direction}-button`],
         $style[`${contextProps.size}-button`],
@@ -44,8 +44,7 @@
       </div>
       <VIcon
         v-if="selected && contextProps.direction === 'vertical'"
-        class="absolute"
-        :class="contextProps.size === 'small' ? 'end-2' : 'end-5'"
+        class="absolute end-2 lg:end-5"
         :icon-path="checkmark"
       />
     </VButton>
@@ -229,11 +228,5 @@ export default defineComponent({
 
 .horizontal-popover-item:last-of-type {
   @apply pe-2;
-}
-.medium-button {
-  @apply px-6;
-}
-.small-button {
-  @apply px-2;
 }
 </style>
