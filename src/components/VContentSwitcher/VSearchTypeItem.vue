@@ -1,7 +1,7 @@
 <template>
   <VItem
     :selected="selected"
-    :is-first="itemId === 0"
+    :is-first="isFirst"
     :as="component"
     :class="size === 'small' ? 'h-12' : 'h-16'"
     class="text-base"
@@ -24,7 +24,7 @@ import {
   PropType,
 } from '@nuxtjs/composition-api'
 
-import { ALL_MEDIA, BETA, contentStatus, SearchType } from '~/constants/media'
+import { BETA, contentStatus, searchPath, SearchType } from '~/constants/media'
 import { isSearchTypeSupported, useSearchStore } from '~/stores/search'
 
 import VIcon from '~/components/VIcon/VIcon.vue'
@@ -37,26 +37,45 @@ export default defineComponent({
   name: 'VSearchTypeItem',
   components: { VIcon, VItem, VPill },
   props: {
+    /**
+     * The search type to render.
+     */
     item: {
       type: String as PropType<SearchType>,
       required: true,
     },
-    itemId: {
-      type: Number,
-      required: true,
+    /**
+     * Used for correctly handling keyboard navigation in VItem.
+     */
+    isFirst: {
+      type: Boolean,
+      default: false,
     },
+    /**
+     * Whether the item is selected.
+     */
     selected: {
       type: Boolean,
       default: false,
     },
+    /**
+     * The icon used for the search type.
+     */
     icon: {
       type: String,
       required: true,
     },
+    /**
+     * Whether to use a `/search/image/?<query>` link or a button.
+     */
     useLinks: {
       type: Boolean,
       default: true,
     },
+    /**
+     * 'Small' size for larger screens,
+     * 'medium' size for mobile screens.
+     */
     size: {
       type: String as PropType<'small' | 'medium'>,
       default: 'small',
@@ -66,24 +85,22 @@ export default defineComponent({
     const { app } = useContext()
     const searchStore = useSearchStore()
 
-    // Currently, there are no Beta search types, so TS raises an error saying
-    // that this condition will always return false.
+    /**
+     * Currently, there are no Beta search types, so TS raises an error saying
+     * that this condition will always return false.
+     */
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
     const isBeta = computed(() => contentStatus[props.item] === BETA)
 
-    const href = computed(() =>
-      props.useLinks
-        ? app.localePath({
-            path: `/search/${props.item === ALL_MEDIA ? '' : props.item}`,
-            query: isSearchTypeSupported(props.item)
-              ? (searchStore.computeQueryParams(
-                  props.item
-                ) as Dictionary<string>)
-              : undefined,
-          })
-        : undefined
-    )
+    const href = computed(() => {
+      if (!props.useLinks || !isSearchTypeSupported(props.item)) {
+        return undefined
+      }
+      const query = searchStore.computeQueryParams(props.item)
+      const path = searchPath(props.item)
+      return app.localePath({ path, query: query as Dictionary<string> })
+    })
 
     /**
      * The query sets the filters that are applicable for the specific search type.

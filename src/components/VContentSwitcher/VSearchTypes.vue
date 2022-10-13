@@ -27,11 +27,16 @@
         v-for="(item, idx) in category.items"
         :key="item"
         :item="item"
-        :item-id="idx"
+        :is-first="index === 0 && idx === 0"
         :size="size"
         :icon="content.icons[item]"
         :use-links="useLinks"
-        :class="{ 'mb-2': idx === category.items.length - 1 && index !== 0 }"
+        :class="{
+          'mb-2':
+            idx === category.items.length - 1 &&
+            ((contentTypeGroups.length > 1 && index !== 0) ||
+              contentTypeGroups.length === 1),
+        }"
         :selected="isActive(item)"
         @click="selectItem(item)"
       />
@@ -65,7 +70,7 @@ export default defineComponent({
       default: 'small',
     },
     /**
-     * Whether to use buttons for search type selection, or links to the specific search type search for the items.
+     * Whether to use buttons for search type selection, or links to the specific search type search pages.
      */
     useLinks: {
       type: Boolean,
