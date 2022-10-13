@@ -188,8 +188,7 @@ export default defineComponent({
       event.preventDefault() // Prevent the cursor from moving horizontally.
       const { key, altKey } = event
 
-      // Show the recent searches.
-      isRecentVisible.value = true
+      showRecentSearches()
       if (altKey) return
 
       // Shift selection (if Alt was not pressed with arrow keys)
@@ -217,14 +216,13 @@ export default defineComponent({
         // If a recent search is selected, populate its value into the input.
         modelMedium.value = entries.value[selectedIdx.value]
 
-      // Hide the recent searches popover when the user presses shift+tab on the input.
-      if (key === keycodes.Tab && event.shiftKey) {
+      // Hide the recent searches popover when the user presses Enter, Escape or Shift+Tab on the input.
+      if (
+        (key === keycodes.Tab && event.shiftKey) ||
+        ([keycodes.Escape, keycodes.Enter] as string[]).includes(key)
+      ) {
         hideRecentSearches()
       }
-
-      if (([keycodes.Escape, keycodes.Enter] as string[]).includes(key))
-        // Hide the recent searches.
-        hideRecentSearches()
 
       selectedIdx.value = undefined // Lose visual focus from entries.
     }
@@ -240,7 +238,7 @@ export default defineComponent({
     const handleSelect = (idx: number) => {
       modelMedium.value = entries.value[idx]
 
-      isRecentVisible.value = false
+      hideRecentSearches()
       selectedIdx.value = undefined // Lose visual focus from entries.
       handleSearch() // Immediately execute the search manually.
     }
