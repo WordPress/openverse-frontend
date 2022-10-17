@@ -2,11 +2,11 @@
   <section
     id="filters"
     aria-labelledby="filters-heading"
-    class="filters py-8 px-10"
+    class="filters px-10 pt-1 pb-8"
   >
     <header
       v-if="showFilterHeader"
-      class="mt-2 mb-6 flex items-center justify-between"
+      class="mt-2 mb-2 flex items-center justify-between"
     >
       <h4
         id="filters-heading"
