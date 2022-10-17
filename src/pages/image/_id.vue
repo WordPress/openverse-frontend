@@ -46,7 +46,7 @@
         />
       </VButton>
       <div class="description-bold flex flex-1 flex-col justify-center">
-        <h1 class="description-bold md:heading-5">
+        <h1 class="description-bold md:heading-5 lg:line-clamp-2">
           {{ image.title }}
         </h1>
         <i18n v-if="image.creator" path="image-details.creator" tag="span">
@@ -240,6 +240,9 @@ export default defineComponent({
   },
   head() {
     return createDetailPageMeta(this.image.title, this.image.url)
+  },
+  created() {
+    console.log('test anton')
   },
 })
 </script>
