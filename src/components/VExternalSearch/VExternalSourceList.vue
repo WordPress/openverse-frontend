@@ -53,9 +53,8 @@
           {{ source.name }}
           <VIcon
             :icon-path="icons.externalLink"
-            :size="4"
             :rtl-flip="true"
-            class="ms-2"
+            class="h-4 w-4 ms-2"
           />
         </VButton>
       </div>

@@ -10,7 +10,7 @@
       isActive && $style[`${variant}-pressed`],
       $style[`size-${size}`],
       isPlainDangerous
-        ? ''
+        ? 'border border-tx'
         : 'border border-tx focus-visible:ring focus-visible:ring-pink',
     ]"
     :aria-pressed="pressed"

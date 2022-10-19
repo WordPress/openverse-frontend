@@ -7,7 +7,7 @@
     >
       <VIcon
         view-box="0 0 30 30"
-        :size="isSmall ? 5 : 6"
+        :class="isSmall ? 'h-5 w-5' : 'h-6 w-6'"
         :icon-path="icons[element]"
       />
       <span v-if="elementNames.length > 1" class="sr-only">{{

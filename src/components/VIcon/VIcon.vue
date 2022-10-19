@@ -1,7 +1,7 @@
 <template>
   <svg
-    class="v-icon flex-shrink-0 flex-grow-0"
-    :class="[`w-${size}`, `h-${size}`, { 'rtl-flip': rtlFlip }]"
+    class="v-icon h-6 w-6 flex-shrink-0 flex-grow-0"
+    :class="{ 'rtl-flip': rtlFlip }"
     xmlns="http://www.w3.org/2000/svg"
     :viewBox="viewBox"
     aria-hidden="true"
@@ -56,17 +56,6 @@ export default defineComponent({
     gId: {
       type: String,
       default: 'icon',
-    },
-    /**
-     * The size of the icon based on tailwind values. Possible values:
-     * 4 - 1rem, 5 - 1.25rem, 6 - 1.5rem.
-     *
-     * @default 6
-     */
-    size: {
-      type: Number,
-      default: 6,
-      validator: (val: number) => [4, 5, 6].includes(val),
     },
     /**
      * whether to flip the icon for RTL languages; This generally makes sense

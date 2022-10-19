@@ -9,10 +9,9 @@
     />
     <VIcon
       v-show="localCheckedState"
-      class="absolute text-white start-0"
+      class="absolute h-5 w-5 text-white start-0"
       :icon-path="checkmark"
       view-box="0 0 20 20"
-      :size="5"
     />
     <!--  @slot The checkbox label  --><slot />
   </label>

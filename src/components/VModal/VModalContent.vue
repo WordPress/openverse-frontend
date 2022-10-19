@@ -47,7 +47,7 @@
                 @click="hide()"
               >
                 {{ $t('modal.close') }}
-                <VIcon :icon-path="closeIcon" class="ms-2" :size="5" />
+                <VIcon :icon-path="closeIcon" class="h-5 w-5 ms-2" />
               </VButton>
             </div>
           </slot>
@@ -67,8 +67,14 @@
   </VTeleport>
 </template>
 
-<script>
-import { defineComponent, toRefs, ref, computed } from '@nuxtjs/composition-api'
+<script lang="ts">
+import {
+  defineComponent,
+  toRefs,
+  ref,
+  computed,
+  PropType,
+} from '@nuxtjs/composition-api'
 import { FocusTrap } from 'focus-trap-vue'
 import { Portal as VTeleport } from 'portal-vue'
 
@@ -80,6 +86,8 @@ import VIcon from '~/components/VIcon/VIcon.vue'
 import VLogoButtonOld from '~/components/VHeaderOld/VLogoButtonOld.vue'
 
 import closeIcon from '~/assets/icons/close.svg'
+
+type ModalVariant = 'default' | 'full' | 'two-thirds'
 
 /**
  * Renders the inner content of a modal and manages focus.
@@ -93,9 +101,7 @@ export default defineComponent({
       required: true,
     },
     hide: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<() => void>} */ (
-        Function
-      ),
+      type: Function as PropType<() => void>,
       required: true,
     },
     hideOnEsc: {
@@ -115,26 +121,19 @@ export default defineComponent({
       default: true,
     },
     triggerElement: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<HTMLElement>} */ (
-        process.server ? Object : HTMLElement
-      ),
+      type: (process.server ? Object : HTMLElement) as PropType<HTMLElement>,
+      default: null,
     },
     initialFocusElement: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<HTMLElement>} */ (
-        process.server ? Object : HTMLElement
-      ),
-      required: false,
+      type: (process.server ? Object : HTMLElement) as PropType<HTMLElement>,
+      default: null,
     },
     variant: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<'default' | 'full' | 'two-thirds'>} */ (
-        String
-      ),
+      type: String as PropType<ModalVariant>,
       default: 'default',
     },
     mode: {
-      type: /** @type {import('@nuxtjs/composition-api').PropType<'dark' | 'light'>} */ (
-        String
-      ),
+      type: String as PropType<'dark' | 'light'>,
       default: 'light',
     },
     /**
@@ -152,11 +151,11 @@ export default defineComponent({
     }
 
     const propsRefs = toRefs(props)
-    const closeButton = ref()
+    const closeButton = ref<InstanceType<typeof VButton> | null>(null)
     const initialFocusElement = computed(
       () => props.initialFocusElement || closeButton.value?.$el
     )
-    const dialogRef = ref()
+    const dialogRef = ref<HTMLElement | null>(null)
     const { onKeyDown, onBlur } = useDialogContent({
       dialogRef,
       visibleRef: propsRefs.visible,

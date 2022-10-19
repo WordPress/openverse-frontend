@@ -86,6 +86,7 @@
     "src/components/VHeader/VSearchBar/**.vue",
     "src/components/VImageDetails/VRelatedImages.vue",
     "src/components/VModal/VInputModal.vue",
+    "src/components/VModal/VModalContent.vue",
     "src/pages/feedback.vue",
     "src/pages/search-help.vue",
     "src/composables/types.js",

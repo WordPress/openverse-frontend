@@ -4,10 +4,9 @@
       <VIcon
         v-for="(name, index) in iconNames"
         :key="index"
-        :class="['icon', bgFilled ? 'bg-filled text-black' : '']"
+        :class="['icon h-4 w-4', { 'bg-filled text-black': bgFilled }]"
         view-box="0 0 30 30"
         :icon-path="icons[name]"
-        :size="4"
       />
     </div>
     <span v-show="!hideName" class="name" :aria-label="licenseName.readable">
