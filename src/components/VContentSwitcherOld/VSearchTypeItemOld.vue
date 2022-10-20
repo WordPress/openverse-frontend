@@ -7,7 +7,7 @@
     @click.native="$emit('click', item)"
   >
     <div class="flex w-full flex-row items-center gap-2 py-2 text-base">
-      <VIcon :icon-path="icon" />
+      <VIcon :icon-path="icon" class="h-6 w-6" />
       <span class="font-semibold">{{ $t(`search-type.${item}`) }}</span>
       <VPill v-if="isBeta" class="ms-auto">{{
         $t('search-type.status-beta')

@@ -7,7 +7,7 @@
       <slot name="start" />
     </div>
     <div class="pointer-events-none absolute inset-y-0 my-auto h-fit end-2">
-      <VIcon :icon-path="caretDownIcon" />
+      <VIcon class="h-6 w-6" :icon-path="caretDownIcon" />
     </div>
     <select
       :id="fieldId"

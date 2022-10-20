@@ -14,7 +14,7 @@ import externalLinkIcon from '~/assets/icons/external-link.svg'
 <Meta title="Components/VIcon" component={VIcon} />
 
 export const Template = (args) => ({
-  template: `<VIcon v-bind="args" />`,
+  template: `<VIcon v-bind="args" class="h-6 w-6" />`,
   components: { VIcon },
   setup() {
     return { args }

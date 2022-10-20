@@ -15,7 +15,7 @@
         class="caption-regular justify-between py-1 px-3 text-dark-charcoal pe-2"
         >{{ $t('external-sources.button').toString() }}
         <VIcon
-          class="text-dark-charcoal-40 ms-1"
+          class="h-6 w-6 text-dark-charcoal-40 ms-1"
           :class="a11yProps['aria-expanded'] ? 'rotate-180' : 'rotate-0'"
           :icon-path="icons.caretDown"
       /></VButton>

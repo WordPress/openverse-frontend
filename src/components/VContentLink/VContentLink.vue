@@ -11,7 +11,7 @@
     @keydown.native.shift.tab.exact="$emit('shift-tab', $event)"
   >
     <div class="flex flex-col items-start md:flex-row md:items-center">
-      <VIcon :icon-path="iconPath" />
+      <VIcon :icon-path="iconPath" class="h-6 w-6" />
       <p class="hidden pt-1 font-semibold md:block md:pt-0 md:text-2xl md:ps-2">
         {{ $t(`search-type.see-${mediaType}`) }}
       </p>

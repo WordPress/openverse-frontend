@@ -17,7 +17,7 @@
     v-on="$listeners"
   >
     <template v-if="isIcon">
-      <VIcon :icon-path="searchIcon" />
+      <VIcon :icon-path="searchIcon" class="h-6 w-6" />
     </template>
     <template v-else>
       <span>{{ $t('search.search') }}</span>

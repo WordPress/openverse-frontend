@@ -36,7 +36,7 @@
             class="text-dark-charcoal-70"
             type="button"
           >
-            <VIcon :icon-path="icons.help" />
+            <VIcon :icon-path="icons.help" class="h-6 w-6" />
           </VButton>
         </template>
         <template #default="{ close }">

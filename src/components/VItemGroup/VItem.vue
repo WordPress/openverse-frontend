@@ -44,7 +44,7 @@
       </div>
       <VIcon
         v-if="selected && contextProps.direction === 'vertical'"
-        class="absolute end-2 lg:end-5"
+        class="absolute h-6 w-6 end-2 lg:end-5"
         :icon-path="checkmark"
       />
     </VButton>

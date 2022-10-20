@@ -15,14 +15,14 @@
     v-bind="a11yProps"
     @click="$emit('click')"
   >
-    <VIcon :icon-path="icon" />
+    <VIcon :icon-path="icon" class="h-6 w-6" />
     <span
       class="md:block md:truncate md:ms-2 md:text-start"
       :class="isHeaderScrolled ? 'hidden' : 'block truncate ms-2 text-start'"
       >{{ buttonLabel }}</span
     >
     <VIcon
-      class="hidden text-dark-charcoal-40 md:block md:ms-2"
+      class="hidden h-6 w-6 text-dark-charcoal-40 md:block md:ms-2"
       :icon-path="caretDownIcon"
     />
   </VButton>

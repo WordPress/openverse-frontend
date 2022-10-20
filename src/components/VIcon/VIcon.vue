@@ -1,6 +1,6 @@
 <template>
   <svg
-    class="v-icon h-6 w-6 flex-shrink-0 flex-grow-0"
+    class="v-icon flex-shrink-0 flex-grow-0"
     :class="{ 'rtl-flip': rtlFlip }"
     xmlns="http://www.w3.org/2000/svg"
     :viewBox="viewBox"

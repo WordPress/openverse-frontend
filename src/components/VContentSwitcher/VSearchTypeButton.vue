@@ -7,12 +7,12 @@
     v-bind="a11yProps"
     @click="$emit('click')"
   >
-    <VIcon :icon-path="icon" />
+    <VIcon :icon-path="icon" class="h-6 w-6" />
     <span
       class="label-regular hidden truncate xl:block xl:ms-2 xl:text-start"
       >{{ buttonLabel }}</span
     >
-    <VIcon class="hidden xl:block xl:ms-2" :icon-path="caretDownIcon" />
+    <VIcon class="hidden h-6 w-6 xl:block xl:ms-2" :icon-path="caretDownIcon" />
   </VButton>
 </template>
 <script lang="ts">

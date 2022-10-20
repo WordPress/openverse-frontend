@@ -7,7 +7,7 @@
     :aria-pressed="selected"
     @click="handleClick"
   >
-    <VIcon :icon-path="iconPath" class="flex-shrink-0 me-1" />
+    <VIcon :icon-path="iconPath" class="h-6 w-6 flex-shrink-0 me-1" />
     <span>{{ $t(labelMapping[searchType]) }}</span>
   </VButton>
 </template>

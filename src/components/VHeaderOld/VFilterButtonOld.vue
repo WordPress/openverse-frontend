@@ -17,7 +17,7 @@
     @keydown.tab.exact="$emit('tab', $event)"
   >
     <VIcon
-      :class="filtersAreApplied ? 'hidden' : 'block'"
+      :class="['h-6 w-6', filtersAreApplied ? 'hidden' : 'block']"
       :icon-path="filterIcon"
     />
     <span class="hidden md:inline-block">{{ mdMinLabel }}</span>

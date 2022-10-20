@@ -8,7 +8,7 @@
     :label-text="$t('language.language')"
   >
     <template #start>
-      <VIcon :icon-path="globeIcon" />
+      <VIcon class="h-6 w-6" :icon-path="globeIcon" />
     </template>
   </VSelectField>
 </template>

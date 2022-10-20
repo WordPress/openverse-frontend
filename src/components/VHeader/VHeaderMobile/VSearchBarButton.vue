@@ -13,7 +13,7 @@
         <VIcon
           :icon-path="iconPath"
           :rtl-flip="rtlFlip"
-          class="pointer-events-none"
+          class="pointer-events-none h-6 w-6"
           :class="iconSize"
         />
         <!--  @slot The element that can show a notification label for the button, can be absolutely positioned  -->

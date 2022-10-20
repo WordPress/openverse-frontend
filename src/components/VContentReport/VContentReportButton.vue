@@ -9,7 +9,7 @@
     <span class="hidden text-sr md:inline md:text-base">{{
       $t('media-details.content-report.long')
     }}</span>
-    <VIcon :icon-path="icons.flag" class="ms-2" />
+    <VIcon :icon-path="icons.flag" class="h-6 w-6 ms-2" />
   </VButton>
 </template>
 

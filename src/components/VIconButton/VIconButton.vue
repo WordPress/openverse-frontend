@@ -10,7 +10,7 @@
     <slot name="default" :icon-size="iconSize" />
     <VIcon
       v-if="iconProps"
-      class="pointer-events-none"
+      class="pointer-events-none h-6 w-6"
       :class="iconSize"
       v-bind="iconProps"
     />

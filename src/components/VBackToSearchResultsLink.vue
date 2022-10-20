@@ -4,7 +4,7 @@
     class="flex flex-row items-center px-2 py-3 text-xs font-semibold text-dark-charcoal md:px-6 md:pt-4 md:pb-2 md:text-sr"
     :href="path"
   >
-    <VIcon :icon-path="chevronIcon" class="-ms-2" />
+    <VIcon :icon-path="chevronIcon" class="h-6 w-6 -ms-2" />
     {{ $t('single-result.back') }}
   </VLink>
 </template>

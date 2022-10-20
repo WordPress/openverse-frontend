@@ -8,7 +8,7 @@
     v-bind="a11yProps"
     @click="$emit('click')"
   >
-    <VIcon :icon-path="ellipsisIcon" />
+    <VIcon :icon-path="ellipsisIcon" class="h-6 w-6" />
   </VButton>
 </template>
 <script lang="ts">

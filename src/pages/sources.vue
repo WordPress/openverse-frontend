@@ -63,7 +63,11 @@
         href="https://github.com/WordPress/openverse-catalog/issues/new?assignees=&labels=%F0%9F%9A%A6+status%3A+awaiting+triage%2C+%F0%9F%A7%B9+status%3A+ticket+work+required%2C+%E2%98%81%EF%B8%8F+provider%3A+any&template=new-source-suggestion.md&title=%5BSource+Suggestion%5D+Insert+source+name+here"
       >
         {{ $t('sources.issue-button') }}
-        <VIcon :icon-path="externalLinkIcon" :rtl-flip="true" class="mx-2" />
+        <VIcon
+          :icon-path="externalLinkIcon"
+          :rtl-flip="true"
+          class="mx-2 h-6 w-6"
+        />
       </VButton>
     </p>
 
