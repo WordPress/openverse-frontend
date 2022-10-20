@@ -89,8 +89,13 @@
     "src/pages/feedback.vue",
     "src/pages/search-help.vue",
 
-    // Some files from this section cannot be converted to TypeScript because they are
-    // used in non-TS contexts (like Tailwind configuration)
+    /**
+     * Some files from this section cannot be converted to TypeScript because they are
+     * used in non-TS contexts (like Tailwind configuration). Therefore they're left as
+     * "vanilla JavaScript" with JSDoc based type annotations. This allows us to check
+     * them with TypeScript without introducing syntax changes that are not compatible
+     * with other tools we rely on.
+     */
     "src/constants/**/*",
     "src/server-middleware/healthcheck.js"
   ],
