@@ -57,6 +57,7 @@ import {
 } from '~/composables/use-match-routes'
 import { isMinScreen } from '~/composables/use-media-query'
 import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
+import { useBrowserIsMobile } from '~/composables/use-browser-detection'
 import { useFeatureFlagStore } from '~/stores/feature-flag'
 
 import {
@@ -123,7 +124,9 @@ const embeddedPage = {
     const isMinScreenLg = computed(() =>
       Boolean(innerIsMinScreenLg.value && mounted.value)
     )
-    const innerIsMinScreenMd = isMinScreen('md')
+
+    const isMobile = useBrowserIsMobile()
+    const innerIsMinScreenMd = isMinScreen('md', { shouldPassInSSR: !isMobile })
     const isMinScreenMd = computed(() =>
       Boolean(innerIsMinScreenMd.value && mounted.value)
     )

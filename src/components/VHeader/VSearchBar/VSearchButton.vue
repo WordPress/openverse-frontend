@@ -3,42 +3,58 @@
     v-bind="$attrs"
     :aria-label="$t('search.search')"
     size="disabled"
-    :variant="isIcon ? 'plain' : 'primary'"
-    class="flex-shrink-0 text-2xl font-semibold transition-none rounded-s-none hover:bg-pink hover:text-white focus-visible:ring focus-visible:ring-pink"
+    :variant="route === 'home' ? 'primary' : 'plain'"
+    class="heading-6 flex-shrink-0 transition-none rounded-s-none"
     :class="[
-      isIcon
-        ? 'search-button ps-[1.5px] p-[0.5px] focus-visible:bg-pink focus-visible:text-white'
-        : 'h-full whitespace-nowrap py-6 px-10',
       sizeClasses,
       route === 'home'
-        ? 'border-b border-tx border-b-pink bg-pink text-white group-hover:border-pink group-hover:bg-pink group-hover:text-white'
-        : 'border-tx bg-dark-charcoal-10 group-focus-within:bg-pink group-focus-within:text-white group-focus-within:hover:bg-dark-pink',
+        ? 'h-full whitespace-nowrap text-white md:py-6 md:px-10'
+        : 'search-button ps-[1.5px] p-[0.5px] -ms-1 hover:text-white focus-visible:bg-pink focus-visible:text-white',
+      {
+        'hover:bg-dark-pink group-hover:border-pink group-hover:bg-pink group-hover:text-white':
+          route === '404',
+        'bg-dark-charcoal-10 hover:bg-pink group-focus-within:border-pink group-focus-within:bg-pink group-focus-within:text-white':
+          route === 'search',
+      },
     ]"
     v-on="$listeners"
   >
-    <template v-if="isIcon">
-      <VIcon :icon-path="searchIcon" />
-    </template>
-    <template v-else>
-      <span>{{ $t('search.search') }}</span>
-    </template>
+    <VIcon
+      class="flex"
+      :class="{ 'md:hidden': route === 'home' }"
+      :icon-path="searchIcon"
+    />
+    <span class="hidden" :class="{ 'md:flex': route === 'home' }">{{
+      $t('search.search')
+    }}</span>
   </VButton>
 </template>
-
 <script lang="ts">
-import { defineComponent, computed, PropType } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  computed,
+  PropType,
+  inject,
+} from '@nuxtjs/composition-api'
 
+import { IsMinScreenMdKey } from '~/types/provides'
 import { isMinScreen } from '~/composables/use-media-query'
-import { useBrowserIsMobile } from '~/composables/use-browser-detection'
 
 import VIcon from '~/components/VIcon/VIcon.vue'
 import VButton from '~/components/VButton.vue'
-import type { FieldSize } from '~/components/VInputField/VInputField.vue'
+import type { FieldSize } from '~/components/VInputFieldOld/VInputFieldOld.vue'
 
 import searchIcon from '~/assets/icons/search.svg'
-
+/**
+ * Displays a search button at the end of the search bar.
+ * It displays the text 'Search' on the homepage on screens above `md`,
+ * or a search icon in other cases.
+ * The button uses `primary` variant on the homepage; on other pages it is
+ * `plain` when resting, and pink on hover/focus/active.
+ *
+ */
 export default defineComponent({
-  name: 'VSearchButton',
+  name: 'VSearchButtonOld',
   components: { VIcon, VButton },
   inheritAttrs: false,
   props: {
@@ -47,27 +63,16 @@ export default defineComponent({
       required: true,
     },
     route: {
-      type: String as PropType<'home' | '404'>,
-      validator: (v: string) => ['home', '404'].includes(v),
+      type: String as PropType<'home' | '404' | 'search'>,
+      validator: (v: string) => ['home', '404', 'search'].includes(v),
     },
   },
   setup(props) {
-    const isMobile = useBrowserIsMobile()
+    const isMinScreenMd = inject(IsMinScreenMdKey, isMinScreen('md'))
 
-    const isMinScreenMd = isMinScreen('md', { shouldPassInSSR: !isMobile })
-
-    const isIcon = computed(() => {
-      // split the evaluation of the isMinScreenMd ref
-      // out to prevent short-circuiting from creating
-      // problems with `computed`'s dependency detection
-      const currentIsMinScreenMd = isMinScreenMd.value
-
-      return (
-        props.route === '404' ||
-        props.size !== 'standalone' ||
-        (props.size === 'standalone' && !currentIsMinScreenMd)
-      )
-    })
+    const isIcon = computed(
+      () => props.route !== 'home' || !isMinScreenMd.value
+    )
 
     const sizeClasses = computed(() => {
       return isIcon.value
@@ -75,29 +80,19 @@ export default defineComponent({
             small: 'w-10 md:w-12 h-10 md:h-12',
             medium: 'w-12 h-12',
             large: 'w-14 h-14',
-            standalone: 'w-[57px] md:w-[69px] h-[57px] md:h-[69px]',
+            standalone: 'w-[57px] md:w-[69px] h-full',
           }[props.size]
         : undefined
     })
 
-    return { isMinScreenMd, searchIcon, sizeClasses, isIcon }
+    return { searchIcon, sizeClasses, isIcon }
   },
 })
 </script>
-
 <style scoped>
+/* Negative margin removes a tiny gap between the button and the input borders. */
 .search-button {
-  /* Negative margin removes a tiny gap between the button and the input borders */
   margin-inline-start: -1px;
   border-inline-start-color: transparent;
-  border-width: 1px;
-}
-.search-button.search-button:not(:hover):not(:focus):not(:focus-within) {
-  border-inline-start-color: transparent;
-  border-width: 1px;
-}
-.search-button.search-button:hover {
-  border-inline-start-color: rgba(214, 212, 213, 1);
-  border-width: 1px;
 }
 </style>

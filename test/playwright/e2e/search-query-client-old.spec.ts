@@ -4,6 +4,7 @@ import {
   changeContentType,
   goToSearchTerm,
   OLD_HEADER,
+  searchFromHeader,
 } from '~~/test/playwright/utils/navigation'
 import { mockProviderApis } from '~~/test/playwright/utils/route'
 
@@ -70,8 +71,8 @@ test('url filter types not used by current mediaType are discarded', async ({
 
 test('can search for a different term', async ({ page }) => {
   await goToSearchTerm(page, 'cat', { searchType: IMAGE })
-  await page.fill('header input[type="search"]', 'dog')
-  await page.keyboard.press('Enter')
+  await searchFromHeader(page, 'dog')
+
   await expect(page).toHaveURL('/search/image?q=dog')
 })
 
@@ -80,7 +81,6 @@ test('search for a different term keeps query parameters', async ({ page }) => {
     searchType: IMAGE,
     query: 'license=by&extension=jpg',
   })
-  await page.fill('header input[type="search"]', 'dog')
-  await page.keyboard.press('Enter')
+  await searchFromHeader(page, 'dog')
   await expect(page).toHaveURL('/search/image?q=dog&license=by&extension=jpg')
 })

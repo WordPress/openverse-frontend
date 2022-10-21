@@ -126,9 +126,9 @@ export default defineComponent({
 
     const { matches: isHomeRoute } = useMatchHomeRoute()
 
-    const route = computed(() => {
-      return isHomeRoute?.value ? 'home' : props.is404 ? '404' : undefined
-    })
+    const route = computed(() =>
+      isHomeRoute?.value ? 'home' : props.is404 ? '404' : 'search'
+    )
 
     const modelMedium = computed<string>({
       get: () => props.value ?? '',
@@ -273,13 +273,3 @@ export default defineComponent({
   },
 })
 </script>
-
-<style>
-/* Removes the cross icon to clear the field */
-.search-field input[type='search']::-webkit-search-decoration,
-.search-field input[type='search']::-webkit-search-cancel-button,
-.search-field input[type='search']::-webkit-search-results-button,
-.search-field input[type='search']::-webkit-search-results-decoration {
-  -webkit-appearance: none;
-}
-</style>

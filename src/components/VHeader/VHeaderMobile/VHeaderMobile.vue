@@ -5,7 +5,6 @@
   >
     <VInputModal
       class="flex w-full"
-      variant="recent-searches"
       :is-active="isRecentSearchesModalOpen"
       @close="deactivate"
     >

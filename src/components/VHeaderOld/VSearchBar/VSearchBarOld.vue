@@ -24,7 +24,7 @@
     <VSearchButtonOld
       type="submit"
       :size="size"
-      :route="is404 ? '404' : undefined"
+      :route="is404 ? '404' : 'search'"
     />
   </form>
 </template>
