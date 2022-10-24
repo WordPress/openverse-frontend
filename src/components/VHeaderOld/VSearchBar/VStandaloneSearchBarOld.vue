@@ -46,9 +46,11 @@ import { defineEvent } from '~/types/emits'
 import VSearchButtonOld from '~/components/VHeaderOld/VSearchBar/VSearchButtonOld.vue'
 
 /**
- * Displays a text field for a search query and is attached to an action button
- * that fires a search request. The loading state and number of hits are also
- * displayed in the bar itself.
+ * Displays a search input for a search query and is attached to an action button
+ * that fires a search request. Can contain other elements like the search type
+ * popover. Is uncontrolled: Vue code does not try to set a default value when
+ * hydrating the server-rendered code, so the value entered before full hydration
+ * is not removed.
  */
 export default defineComponent({
   name: 'VStandaloneSearchBarOld',

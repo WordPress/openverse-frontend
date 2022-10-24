@@ -34,13 +34,13 @@
           />
         </div>
         <VStandaloneSearchBarOld
-          class="group mt-4 max-w-[40rem] md:mt-6"
+          class="mt-4 max-w-[40rem] md:mt-6"
           @submit="handleSearch"
         >
           <VSearchTypePopoverOld
             v-show="isMinScreenMd"
             ref="contentSwitcher"
-            class="mx-3"
+            class="mx-3 group-focus-within:bg-white group-hover:bg-white"
             :active-item="searchType"
             placement="searchbar"
             @select="setSearchType"
