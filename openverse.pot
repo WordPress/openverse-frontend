@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-10-25T15:16:53+00:00\n"
+"POT-Creation-Date: 2022-10-25T15:23:20+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2111,12 +2111,12 @@ msgid "I want something I can"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/index.vue:55
+#: src/pages/index.vue:51
 msgctxt "hero.disclaimer.content"
 msgid "All ###openverse### content is under a ###license### or is in the public domain."
 msgstr ""
 
-#: src/pages/index.vue:65
+#: src/pages/index.vue:61
 msgctxt "hero.disclaimer.license"
 msgid "Creative Commons license"
 msgstr ""
@@ -2126,18 +2126,18 @@ msgctxt "hero.search.placeholder"
 msgid "Search for content"
 msgstr ""
 
-#: src/components/VFourOhFour.vue:23
+#: src/components/VFourOhFour.vue:27
 msgctxt "404.title"
 msgid "The content you’re looking for seems to have disappeared."
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VFourOhFour.vue:26
+#: src/components/VFourOhFour.vue:30
 msgctxt "404.main"
 msgid "Go to ###link### or search for something similar from the field below."
 msgstr ""
 
-#: src/components/VFourOhFour.vue:38
+#: src/components/VHeaderOld/VSearchBar/VStandaloneSearchBarOld.vue:26
 msgctxt "404.search-placeholder"
 msgid "Search for content to reuse"
 msgstr ""
