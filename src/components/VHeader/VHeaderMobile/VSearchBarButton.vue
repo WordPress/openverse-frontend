@@ -1,6 +1,5 @@
 <template>
   <VIconButton
-    size="search-medium"
     class="border-tx bg-tx"
     :button-props="{ variant: 'plain--avoid' }"
     v-on="$listeners"
