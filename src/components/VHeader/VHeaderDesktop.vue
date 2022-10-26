@@ -42,7 +42,7 @@
       @tab="onTab"
     />
     <VTeleport v-if="sidebarVisibleRef" to="sidebar">
-      <VSearchGridFilter @close="toggleSidebar" />
+      <VSearchGridFilter class="px-6 pt-[7px] pb-10" @close="toggleSidebar" />
     </VTeleport>
   </header>
 </template>
