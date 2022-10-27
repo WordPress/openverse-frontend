@@ -34,7 +34,7 @@
       <VButton
         as="VLink"
         :href="image.foreign_landing_url"
-        class="description-bold md:heading-6 mb-4 w-full flex-initial md:mb-0 md:w-max"
+        class="description-bold md:heading-6 mb-4 w-full flex-initial self-center md:mb-0 md:w-max"
         size="large"
       >
         {{ $t('image-details.weblink') }}
@@ -46,7 +46,7 @@
         />
       </VButton>
       <div class="description-bold flex flex-1 flex-col justify-center">
-        <h1 class="description-bold md:heading-5">
+        <h1 class="description-bold md:heading-5 line-clamp-2">
           {{ image.title }}
         </h1>
         <i18n v-if="image.creator" path="image-details.creator" tag="span">
