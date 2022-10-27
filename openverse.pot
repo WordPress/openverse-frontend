@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-10-27T15:41:37+00:00\n"
+"POT-Creation-Date: 2022-10-27T18:33:01+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -190,12 +190,12 @@ msgctxt "error-images.waiting-for-a-bite"
 msgid "Three boys sit on a broken log while two of them fish."
 msgstr ""
 
-#: src/components/VContentReport/VContentReportPopover.vue:18
+#: src/components/VContentReport/VContentReportPopover.vue:16
 msgctxt "modal.close"
 msgid "Close"
 msgstr ""
 
-#: src/components/VHeader/VHeaderMobile/VContentSettingsModal.vue:35
+#: src/components/VHeader/VHeaderMobile/VContentSettingsModal.vue:34
 msgctxt "modal.aria-close"
 msgid "Close the modal"
 msgstr ""
@@ -388,7 +388,7 @@ msgid "Edge"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VExternalSearch/VExternalSourceList.vue:42
+#: src/components/VExternalSearch/VExternalSourceList.vue:38
 msgctxt "external-sources.caption"
 msgid "###openverse### can not guarantee the accuracy of license information. Always verify that the work is actually under a CC license."
 msgstr ""
@@ -398,7 +398,7 @@ msgctxt "external-sources.button"
 msgid "Source list"
 msgstr ""
 
-#: src/components/VExternalSearch/VExternalSourceList.vue:39
+#: src/components/VExternalSearch/VExternalSourceList.vue:35
 msgctxt "external-sources.title"
 msgid "External sources"
 msgstr ""
@@ -996,7 +996,7 @@ msgctxt "browse-page.search-form.button"
 msgid "Search"
 msgstr ""
 
-#: src/components/VHeader/VHeaderMobile/VHeaderMobile.vue:69
+#: src/components/VHeader/VHeaderDesktop.vue:22
 msgctxt "browse-page.search-form.clear"
 msgid "Clear"
 msgstr ""
@@ -1032,7 +1032,7 @@ msgid "Clear filters"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VHeader/VHeaderMobile/VContentSettingsModal.vue:126
+#: src/components/VHeader/VHeaderMobile/VContentSettingsModal.vue:125
 msgctxt "filter-list.clear-numbered"
 msgid "Clear filters (###number###)"
 msgstr ""
@@ -2007,7 +2007,7 @@ msgctxt "header.api-nav-item"
 msgid "API"
 msgstr ""
 
-#: src/components/VHeader/VHeaderDesktop.vue:130
+#: src/components/VHeader/VHeaderDesktop.vue:135
 msgctxt "header.loading"
 msgid "Loading..."
 msgstr ""
