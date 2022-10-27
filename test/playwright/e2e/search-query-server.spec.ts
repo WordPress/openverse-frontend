@@ -9,10 +9,9 @@ import {
 } from '~~/test/playwright/utils/navigation'
 import { mockProviderApis } from '~~/test/playwright/utils/route'
 
-import { TestScreen, testScreens } from '~~/test/playwright/utils/breakpoints'
+import breakpoints from '~~/test/playwright/utils/breakpoints'
 
 import { AUDIO, IMAGE } from '~/constants/media'
-import { SCREEN_SIZES } from '~/constants/screens'
 
 /**
  * URL is correctly converted into search state:
@@ -28,12 +27,8 @@ import { SCREEN_SIZES } from '~/constants/screens'
 
 test.describe.configure({ mode: 'parallel' })
 
-for (const breakpoint of testScreens) {
-  test.describe(`search history navigation on ${breakpoint}`, () => {
-    const width = SCREEN_SIZES.get(breakpoint as TestScreen) as number
-
-    test.use({ viewport: { width, height: 700 } })
-
+test.describe('search query on SSR', () => {
+  breakpoints.describeMobileAndDesktop(() => {
     test.beforeEach(async ({ context, page }) => {
       await mockProviderApis(context)
       await enableNewHeader(page)
@@ -113,4 +108,4 @@ for (const breakpoint of testScreens) {
       await expect(page).toHaveURL('/search/image?q=cat')
     })
   })
-}
+})
