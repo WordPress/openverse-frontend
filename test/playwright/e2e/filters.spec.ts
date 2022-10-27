@@ -166,7 +166,7 @@ breakpoints.describeMobileAndDesktop(() => {
     if (isPageDesktop(page)) {
       const filterButtonText = await page
         .locator('[aria-controls="filters"] span:visible')
-        .textContent({ timeout: 100 })
+        .textContent()
       expect(filterButtonText).toContain('1')
     } else {
       const filtersAriaLabel =
