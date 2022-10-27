@@ -16,7 +16,7 @@ import replayIcon from '~/assets/icons/replay.svg'
   argTypes={{
     size: {
       defaultValue: 'medium',
-      options: ['tiny', 'small', 'medium', 'larger', 'large'],
+      options: ['tiny', 'small', 'medium', 'large', 'extra-large'],
       control: 'select',
     },
   }}
@@ -35,7 +35,7 @@ export const Template = (args) => ({
 export const sizesTemplate = (args) => ({
   template: `
     <div class="flex gap-x-2">
-      <div v-for="size in ['tiny', 'small', 'medium', 'larger', 'large']" :key="size" class="flex flex-col items-center p-2">
+      <div v-for="size in ['tiny', 'small', 'medium', 'large', 'extra-large']" :key="size" class="flex flex-col items-center p-2">
         <p>{{ size }}</p>
         <VIconButton
            class="text-white bg-dark-charcoal border-dark-charcoal"

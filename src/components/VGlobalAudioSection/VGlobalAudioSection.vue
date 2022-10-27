@@ -4,7 +4,7 @@
     <VIconButton
       v-if="audio"
       class="absolute top-0 z-20 border-none ltr:right-0 rtl:left-0"
-      size="larger"
+      size="large"
       :icon-props="{ iconPath: icons.closeIcon }"
       @click="handleClose"
     />
