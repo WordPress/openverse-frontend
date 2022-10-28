@@ -153,7 +153,7 @@ export default defineComponent({
       }
       focusIn(document.getElementById('__layout'), Focus.First)
     },
-    fetchMedia({ shouldPersistMedia } = { shouldPersistMedia: false }) {
+    fetchMedia({ shouldPersistMedia } = { shouldPersistMedia: boolean }) {
       const mediaStore = useMediaStore(this.$pinia)
       return mediaStore.fetchMedia({ shouldPersistMedia })
     },
