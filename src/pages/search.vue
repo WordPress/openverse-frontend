@@ -153,9 +153,9 @@ export default defineComponent({
       }
       focusIn(document.getElementById('__layout'), Focus.First)
     },
-    fetchMedia({ shouldPersistMedia } = { shouldPersistMedia: boolean }) {
+    fetchMedia(payload: { shouldPersistMedia?: boolean } = {}) {
       const mediaStore = useMediaStore(this.$pinia)
-      return mediaStore.fetchMedia({ shouldPersistMedia })
+      return mediaStore.fetchMedia(payload)
     },
   },
 })
