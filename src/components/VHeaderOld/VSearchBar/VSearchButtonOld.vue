@@ -9,11 +9,7 @@
       sizeClasses,
       route === 'home'
         ? 'h-full whitespace-nowrap text-white md:py-6 md:px-10'
-        : 'search-button ps-[1.5px] border-dark-charcoal-20 p-[0.5px] -ms-1 border-s hover:bg-pink hover:text-white focus-visible:bg-pink focus-visible:text-white',
-      {
-        'group-hover:border-pink group-hover:bg-pink group-hover:text-white':
-          route === '404',
-      },
+        : 'search-button ps-[1.5px] border-dark-charcoal-20 p-[0.5px] -ms-1 border-s hover:bg-pink hover:text-white focus-visible:bg-pink focus-visible:text-white group-hover:border-pink group-hover:bg-pink group-hover:text-white',
     ]"
     v-on="$listeners"
   >
