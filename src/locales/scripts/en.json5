@@ -680,6 +680,7 @@
     off: 'Off',
   },
   footer: {
+    // Link back to WordPress, the word is replaced by the logo
     'wordpress-affiliation': 'Powered by {wordpress}',
     wip: '\uD83D\uDEA7',
   },
