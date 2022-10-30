@@ -10,7 +10,6 @@ const axios = require('./axios')
 
 const jed1xJsonToJson = require('./jed1x-json-to-json')
 const { parseJson } = require('./read-i18n')
-const localeJSON = require('./wp-locales.json')
 
 /**
  *
@@ -124,9 +123,12 @@ const writeEnglish = () => {
 writeEnglish()
 console.log(`Successfully saved English translation to en.json.`)
 
-if (!process.argv.includes('--en-only'))
+if (!process.argv.includes('--en-only')) {
+  const localeJSON = require('./wp-locales.json')
+
   fetchAndConvertJed1xTranslations(Object.values(localeJSON).map((i) => i.slug))
     .then((res) => {
       console.log(`Successfully saved ${res.length + 1} translations.`)
     })
     .catch(console.error)
+}
