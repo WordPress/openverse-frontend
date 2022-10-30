@@ -114,31 +114,31 @@ const getComment = (entry) => {
  * @return {string} the POT equivalent of the JSON entry
  */
 const toPot = (entry) => {
-  if (entry.value !== undefined) {
-    let poEntry = []
-    let comment = getComment(entry)
-    if (comment) poEntry.push(comment)
-    poEntry.push(`msgctxt "${entry.lineage}"`)
-    if (entry.value.includes('|') && /(count|time)/i.test(entry.value)) {
-      const pluralizedValues = entry.value.split('|')
-      if (pluralizedValues.length === 1) {
-        pluralizedValues.push(pluralizedValues[0])
-      }
-
-      poEntry.push(`msgid "${processValue(pluralizedValues[0])}"
-msgid_plural "${processValue(pluralizedValues[1])}"
-msgstr[0] ""
-msgstr[1] ""`)
-    } else {
-      poEntry.push(`msgid "${processValue(entry.value)}"
-msgstr ""`)
-    }
-    return poEntry.join('\n')
-  } else if (entry.children.length) {
+  if (!entry.value) {
+    // string-object type mapping
     return entry.children.map((child) => toPot(child)).join('\n\n')
   }
 
-  return ''
+  // string-string type mapping
+  let poEntry = []
+  let comment = getComment(entry)
+  if (comment) poEntry.push(comment)
+  poEntry.push(`msgctxt "${entry.lineage}"`)
+  if (entry.value.includes('|') && /(count|time)/i.test(entry.value)) {
+    const pluralizedValues = entry.value.split('|')
+    if (pluralizedValues.length === 1) {
+      pluralizedValues.push(pluralizedValues[0])
+    }
+    poEntry.push(
+      `msgid "${processValue(pluralizedValues[0])}"`,
+      `msgid_plural "${processValue(pluralizedValues[1])}"`,
+      'msgstr[0] ""',
+      'msgstr[1] ""'
+    )
+  } else {
+    poEntry.push(`msgid "${processValue(entry.value)}"`, 'msgstr ""')
+  }
+  return poEntry.join('\n')
 }
 
 /**
@@ -148,8 +148,6 @@ msgstr ""`)
  * @param entry {import('./read-i18n').Entry} the root entry of the JSON file
  * @return {string} the text content of the Openverse POT file
  */
-const makePot = (entry) => {
-  return [POT_FILE_META, toPot(entry)].join('\n')
-}
+const makePot = (entry) => [POT_FILE_META, toPot(entry)].join('\n')
 
 module.exports = { replaceVarsPlaceholders, makePot }
