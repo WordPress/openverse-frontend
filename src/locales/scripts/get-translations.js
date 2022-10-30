@@ -121,9 +121,12 @@ const writeEnglish = () => {
   )
 }
 
-fetchAndConvertJed1xTranslations(Object.values(localeJSON).map((i) => i.slug))
-  .then((res) => {
-    writeEnglish()
-    console.log(`Successfully saved ${res.length + 1} translations.`)
-  })
-  .catch(console.error)
+writeEnglish()
+console.log(`Successfully saved English translation to en.json.`)
+
+if (!process.argv.includes('--en-only'))
+  fetchAndConvertJed1xTranslations(Object.values(localeJSON).map((i) => i.slug))
+    .then((res) => {
+      console.log(`Successfully saved ${res.length + 1} translations.`)
+    })
+    .catch(console.error)

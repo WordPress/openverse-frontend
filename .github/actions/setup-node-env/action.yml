@@ -32,6 +32,10 @@ runs:
       shell: bash
       run: "pnpm install"
 
+    - name: Generate English locale file
+      shell: bash
+      run: "pnpm i18n:get-translations --en-only"
+
     - name: Copy locale files
       shell: bash
       run: "cp -r test/locales/* src/locales"
