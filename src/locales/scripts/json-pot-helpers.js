@@ -14,7 +14,7 @@
 const { getAllPaths, getKeyValue } = require('./json-helpers')
 const { getParsedVueFiles } = require('./parse-vue-files')
 
-const curlyRegex = new RegExp('{[a-zA-Z-]*}')
+const curlyRegex = /\{[a-zA-Z-]*}/
 const containsCurlyWord = (string) => curlyRegex.test(string)
 const checkStringForVars = (string) =>
   containsCurlyWord(string) ? 'Do not translate words between ### ###.' : ''
@@ -65,7 +65,7 @@ const escapeQuotes = (str) => str.replace(/"/g, '\\"')
  * {time} or {localeCount},
  * and a pipe symbol.
  */
-const pluralizedRegex = new RegExp(/(count|time)/i)
+const pluralizedRegex = /(count|time)/i
 
 const pot_creation_date = () => {
   const today = new Date()
