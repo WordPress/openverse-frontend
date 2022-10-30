@@ -3,8 +3,6 @@
  * uses a limited set of features and syntax. This package provides functions
  * to read this format and convert it into regular JSON.
  *
- * - Keys must be always be double-quoted for consistency with hyphenated keys
- *   that need quotes.
  * - All values must be strings. This is okay because we're only dealing with
  *   i18n translation files.
  * - Only single line `// ...` comments are allowed. These comments describe the
@@ -13,9 +11,9 @@
  * ```json5
  * {
  *   // documentation about `key-a`
- *   "key-a": "value-a",
- *   "key-b": {
- *     "key-c": "value-c",
+ *   key: 'value',
+ *   'key-b': {
+ *     'key-c': 'value-c',
  *   },
  * }
  * ```
@@ -28,17 +26,11 @@ const path = require('path')
 
 /**
  * An `Entry` refers to one i18n translation definition. It can be one of two
- * types: string-string. where the value of the key is one string, or
- * string-object, where the key contains other nested key value pairs.
- *
- * ```json5
- * {
- *   "key-a": "value-a",   // string-string type
- *   "key-b": {            // string-object type
- *     "key-c": "value-c",
- *   },
- * }
- * ```
+ * types:
+ * - string-string: where the value of the key is one string (e.g. 'key' in
+ *   the example above)
+ * - string-object: where the key contains other nested key value pairs (e.g.
+ *   'key-b' in the example above)
  */
 class Entry {
   /**
