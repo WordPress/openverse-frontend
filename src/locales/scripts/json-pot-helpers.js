@@ -152,4 +152,4 @@ const makePot = (entry) => {
   return [POT_FILE_META, toPot(entry)].join('\n')
 }
 
-module.exports = { makePot }
+module.exports = { replaceVarsPlaceholders, makePot }
