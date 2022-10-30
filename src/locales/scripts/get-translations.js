@@ -3,11 +3,13 @@
  * convert to our JSON format, and save in the correct folder.
  */
 const { writeFile } = require('fs/promises')
+const { writeFileSync } = require('fs')
 const os = require('os')
 
 const axios = require('./axios')
 
 const jed1xJsonToJson = require('./jed1x-json-to-json')
+const { parseJson } = require('./read-i18n')
 const localeJSON = require('./wp-locales.json')
 
 /**
@@ -108,8 +110,20 @@ const fetchAndConvertJed1xTranslations = (locales) => {
     .then(writeLocaleFiles)
 }
 
+/**
+ * Write `en.json` from `en.json5`.
+ */
+const writeEnglish = () => {
+  const rootEntry = parseJson('en.json5')
+  writeFileSync(
+    process.cwd() + `/src/locales/en.json`,
+    JSON.stringify(rootEntry, null, 2) + os.EOL
+  )
+}
+
 fetchAndConvertJed1xTranslations(Object.values(localeJSON).map((i) => i.slug))
   .then((res) => {
-    console.log(`Successfully saved ${res.length} translations.`)
+    writeEnglish()
+    console.log(`Successfully saved ${res.length + 1} translations.`)
   })
   .catch(console.error)
