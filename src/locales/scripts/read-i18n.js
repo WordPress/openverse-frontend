@@ -130,7 +130,7 @@ const parseJsonLines = (lines) => {
       const entry = new Entry('')
       stack.push(entry)
       if (comment) comment = undefined
-    } else if ((match = line.match(/^'?(?<key>[\w-]+)'?: \{/))) {
+    } else if ((match = line.match(/^'?(?<key>[\w-]+)'?: \{$/))) {
       // start of string-object type mapping
       const key = match.groups?.key ?? '?'
       const entry = new Entry(key, undefined, comment)
@@ -143,7 +143,7 @@ const parseJsonLines = (lines) => {
       if (entry.key === '') return entry
       stack[stack.length - 1].addChild(entry)
     } else if (
-      (match = line.match(/^'?(?<key>[\w-]+)'?:\s["'](?<value>[^"']+)["']/))
+      (match = line.match(/^'?(?<key>[\w-]+)'?:\s["'](?<value>.+)["']$/))
     ) {
       // string-string type mapping
       const key = match.groups?.key ?? ''
