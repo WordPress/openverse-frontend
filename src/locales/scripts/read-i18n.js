@@ -110,7 +110,7 @@ const parseJsonLines = (lines) => {
   /** @type {string | undefined} */
   let comment = undefined
 
-  for (let line of lines) {
+  for (let [idx, line] of lines.entries()) {
     line = line.trim().replace(/,$/, '')
 
     let match = null
@@ -135,7 +135,7 @@ const parseJsonLines = (lines) => {
       if (entry.key === '') return entry
       stack[stack.length - 1].addChild(entry)
     } else if (
-      (match = line.match(/^'?(?<key>[\w-]+)'?:\s["'](?<value>.+)["']$/))
+      (match = line.match(/^'?(?<key>[\w-+]+)'?:\s["'](?<value>.+)["']$/))
     ) {
       // string-string type mapping
       const key = match.groups?.key ?? ''
@@ -143,6 +143,8 @@ const parseJsonLines = (lines) => {
       const entry = new Entry(key, value, comment)
       if (comment) comment = undefined
       stack[stack.length - 1].addChild(entry)
+    } else {
+      throw `Unrecognized pattern on line ${idx + 1}: ${line}`
     }
   }
   throw 'Reached EOF without closure'
