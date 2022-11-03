@@ -1,7 +1,9 @@
 import { sendWindowMessage } from '~/utils/send-message'
+
 import { useNavigationStore } from '~/stores/navigation'
 import { useProviderStore } from '~/stores/provider'
 import { useFeatureFlagStore } from '~/stores/feature-flag'
+import { useUiStore } from '~/stores/ui'
 
 import type { Middleware } from '@nuxt/types'
 
@@ -46,5 +48,12 @@ const middleware: Middleware = async ({ app, query, route, $pinia }) => {
   const featureFlagStore = useFeatureFlagStore($pinia)
   featureFlagStore.initFromCookies(app.$cookies.get('features') ?? {})
   featureFlagStore.initFromQuery(query)
+
+  /* UI store */
+
+  const uiStore = useUiStore($pinia)
+  const isMobileUa = app.$ua ? app.$ua.isMobile : false
+  app.$cookies.set('uiIsMobileUa', isMobileUa)
+  uiStore.initFromCookies(app.$cookies.getAll() ?? {})
 }
 export default middleware
