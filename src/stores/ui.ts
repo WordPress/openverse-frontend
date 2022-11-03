@@ -82,6 +82,7 @@ export const useUiStore = defineStore('ui', {
     hideInstructionsSnackbar() {
       this.instructionsSnackbarState = 'dismissed'
     },
+
     /**
      * Given a list of key value pairs of UI state parameters and their states,
      * populate the store state to match the cookie.

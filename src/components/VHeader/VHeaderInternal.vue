@@ -63,17 +63,10 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  inject,
-  ref,
-  useRoute,
-  watch,
-} from '@nuxtjs/composition-api'
+import { defineComponent, ref, useRoute, watch } from '@nuxtjs/composition-api'
 
 import usePages from '~/composables/use-pages'
-
-import { IsMinScreenMdKey } from '~/types/provides'
+import { isMinScreen } from '~/composables/use-media-query'
 
 import VHomeLink from '~/components/VHeader/VHomeLink.vue'
 import VIconButton from '~/components/VIconButton/VIconButton.vue'
@@ -91,10 +84,9 @@ export default defineComponent({
   setup() {
     const menuButtonRef = ref<InstanceType<typeof VIconButton> | null>(null)
 
-    const { all: allPages, current: currentPage } = usePages(true)
     const route = useRoute()
 
-    const isMinScreenMd = inject(IsMinScreenMdKey)
+    const { all: allPages, current: currentPage } = usePages(true)
 
     const isModalVisible = ref(false)
     const closeModal = () => (isModalVisible.value = false)
@@ -107,8 +99,11 @@ export default defineComponent({
       }
     })
 
-    watch(isMinScreenMd, (isMd) => {
-      if (isMd && isModalVisible.value) {
+    // We cannot use the `isDesktopLayout` from the ui store here because
+    // the threshold there is `lg`, and in `VHeaderInternal` it is `md`.
+    const isMinScreenMd = isMinScreen('md')
+    watch(isMinScreenMd, (isDesktop) => {
+      if (isDesktop && isModalVisible.value) {
         closeModal()
       }
     })

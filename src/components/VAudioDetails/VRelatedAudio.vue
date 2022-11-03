@@ -23,15 +23,17 @@
   </aside>
 </template>
 
-<script>
-import { computed } from '@nuxtjs/composition-api'
+<script lang="ts">
+import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
 
-import { isMinScreen } from '~/composables/use-media-query'
+import { useUiStore } from '~/stores/ui'
+
+import type { FetchState } from '~/models/fetch-state'
 
 import LoadingIcon from '~/components/LoadingIcon.vue'
 import VAudioTrack from '~/components/VAudioTrack/VAudioTrack.vue'
 
-export default {
+export default defineComponent({
   name: 'VRelatedAudio',
   components: { VAudioTrack, LoadingIcon },
   props: {
@@ -40,20 +42,16 @@ export default {
       required: true,
     },
     fetchState: {
-      type: Object,
+      type: Object as PropType<FetchState>,
       required: true,
     },
   },
-  /**
-   * Fetches related audios on `audioId` change
-   * @return {{audioTrackSize: import('@nuxtjs/composition-api').ComputedRef<"l" | "s"> }}
-   */
   setup() {
-    const isMinScreenMd = isMinScreen('md', { shouldPassInSSR: true })
-    const audioTrackSize = computed(() => {
-      return isMinScreenMd.value ? 'l' : 's'
-    })
+    const uiStore = useUiStore()
+
+    const audioTrackSize = computed(() => (uiStore.isDesktopLayout ? 'l' : 's'))
+
     return { audioTrackSize }
   },
-}
+})
 </script>

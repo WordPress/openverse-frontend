@@ -20,12 +20,22 @@ const headerSelector = '.main-header'
 test.describe('header', () => {
   for (const dir of languageDirections) {
     test.describe(dir, () => {
-      test.beforeEach(async ({ page }) => {
-        await enableNewHeader(page)
-        await goToSearchTerm(page, 'birds', { dir })
-      })
-
       breakpoints.describeEvery(({ breakpoint, expectSnapshot }) => {
+        test.beforeEach(async ({ context, page }) => {
+          if (!isMobileBreakpoint(breakpoint)){
+            await context.addCookies([
+              {
+                name: 'ui',
+                value: JSON.stringify({ isDesktopLayout: true }),
+                domain: 'localhost',
+                path: '/',
+              },
+            ])
+
+            await enableNewHeader(page)
+            await goToSearchTerm(page, 'birds', { dir })
+          }
+        })
         test('filters open', async ({ page }) => {
           await page.mouse.move(0, 150)
           await expectSnapshot(

@@ -15,6 +15,8 @@
 <script lang="ts">
 import { defineComponent, computed, PropType } from '@nuxtjs/composition-api'
 
+import { useUiStore } from '~/stores/ui'
+
 import VIcon from '~/components/VIcon/VIcon.vue'
 import VButton from '~/components/VButton.vue'
 import type { FieldSize } from '~/components/VInputFieldOld/VInputFieldOld.vue'
