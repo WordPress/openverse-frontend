@@ -39,8 +39,11 @@ export default defineComponent({
   setup() {
     const { currentLocale, translationLink, needsTranslationBanner } =
       useI18nSync()
+
     const bannerKey = `translation-${currentLocale.value?.code ?? 'en'}`
+
     const name = computed(() => currentLocale.value?.name ?? '')
+
     return {
       needsTranslationBanner,
       bannerKey,

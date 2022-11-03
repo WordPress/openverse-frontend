@@ -4,6 +4,9 @@ import type { OpenverseCookieState, SnackbarState } from '~/types/cookies'
 import { isProd } from '~/utils/node-env'
 
 import type { CookieSerializeOptions } from 'cookie'
+import type { Locale } from 'vue-i18n'
+
+export type BannerId = Locale | 'cc-referral'
 
 export interface UiState {
   /**
@@ -28,6 +31,10 @@ export interface UiState {
    * whether the request user agent is mobile or not.
    */
   isMobileUa: boolean
+  /**
+   * array of banner ids that were dismissed
+   */
+  dismissedBanners: BannerId[]
 }
 
 const cookieOptions: CookieSerializeOptions = {
@@ -44,6 +51,7 @@ export const useUiStore = defineStore('ui', {
     isFilterDismissed: false,
     isDesktopLayout: false,
     isMobileUa: true,
+    dismissedBanners: [],
   }),
 
   getters: {
@@ -138,6 +146,17 @@ export const useUiStore = defineStore('ui', {
      */
     toggleFilters() {
       this.setFiltersState(!this.isFilterVisible)
+    },
+    dismissBanner(bannerId: string) {
+      this.dismissedBanners.push(bannerId)
+      this.$nuxt.$cookies.set(
+        'uiDismissedBanners',
+        this.dismissedBanners,
+        cookieOptions
+      )
+    },
+    isBannerDismissed(bannerId: string): boolean {
+      return this.dismissedBanners.includes(bannerId)
     },
   },
 })

@@ -1,4 +1,5 @@
 import type { FeatureState } from '~/constants/feature-flag'
+import type { BannerId } from '~/stores/ui'
 
 export type SnackbarState = 'not_shown' | 'visible' | 'dismissed'
 
@@ -22,6 +23,10 @@ export interface OpenverseCookieState {
    * Whether the request user agent is mobile or not.
    */
   uiIsMobileUa?: boolean
+  /**
+   * The list of ids of dismissed banners.
+   */
+  uiDismissedBanners?: BannerId[]
   /**
    * The state of the feature flags.
    */
