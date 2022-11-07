@@ -1,14 +1,6 @@
 import { defineStore } from 'pinia'
 
-/**
- * By default, the filters are shown on desktop, and hidden on the mobile widths.
- * `dismissed` is used when the filters are closed on the desktop width.
- */
-export const VISIBLE = 'visible'
-export const DISMISSED = 'dismissed'
-export const NOT_SHOWN = 'not_shown'
-const snackbarStates = [NOT_SHOWN, VISIBLE, DISMISSED] as const
-export type SnackbarState = typeof snackbarStates[number]
+export type SnackbarState = 'not_shown' | 'visible' | 'dismissed'
 
 export interface UiStateCookie {
   isDesktopLayout?: boolean
@@ -45,7 +37,7 @@ type UiCookieSetter = (value: UiStateCookie) => void
 
 export const useUiStore = defineStore('ui', {
   state: (): UiState => ({
-    instructionsSnackbarState: NOT_SHOWN,
+    instructionsSnackbarState: 'not_shown',
     innerFilterVisible: false,
     isFilterDismissed: false,
     isDesktopLayout: false,
@@ -54,7 +46,7 @@ export const useUiStore = defineStore('ui', {
 
   getters: {
     areInstructionsVisible(state): boolean {
-      return state.instructionsSnackbarState === VISIBLE
+      return state.instructionsSnackbarState === 'visible'
     },
     uiCookie(state: UiState): UiStateCookie {
       return {
@@ -87,12 +79,12 @@ export const useUiStore = defineStore('ui', {
 
   actions: {
     showInstructionsSnackbar() {
-      if (this.instructionsSnackbarState === NOT_SHOWN) {
-        this.instructionsSnackbarState = VISIBLE
+      if (this.instructionsSnackbarState === 'not_shown') {
+        this.instructionsSnackbarState = 'visible'
       }
     },
     hideInstructionsSnackbar() {
-      this.instructionsSnackbarState = DISMISSED
+      this.instructionsSnackbarState = 'dismissed'
     },
     /**
      * Given a list of key value pairs of UI state parameters and their states,

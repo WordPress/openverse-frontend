@@ -1,9 +1,9 @@
 import { setActivePinia, createPinia } from '~~/test/unit/test-utils/pinia'
 
-import { DISMISSED, NOT_SHOWN, VISIBLE, useUiStore } from '~/stores/ui'
+import { useUiStore } from '~/stores/ui'
 
 const initialState = {
-  instructionsSnackbarState: NOT_SHOWN,
+  instructionsSnackbarState: 'not_shown',
   innerFilterVisible: false,
   isFilterDismissed: false,
   isDesktopLayout: false,
@@ -46,10 +46,10 @@ describe('Ui Store', () => {
 
   describe('getters', () => {
     test.each`
-      status       | isVisible
-      ${NOT_SHOWN} | ${false}
-      ${VISIBLE}   | ${true}
-      ${DISMISSED} | ${false}
+      status         | isVisible
+      ${'not_shown'} | ${false}
+      ${'visible'}   | ${true}
+      ${'dismissed'} | ${false}
     `(
       'areInstructionsVisible return $isVisible when status is $status',
       ({ status, isVisible }) => {
@@ -115,7 +115,7 @@ describe('Ui Store', () => {
         false
       )
 
-      expect(uiStore.instructionsSnackbarState).toEqual(NOT_SHOWN)
+      expect(uiStore.instructionsSnackbarState).toEqual('not_shown')
       expect(uiStore.isDesktopLayout).toEqual(true)
       expect(uiStore.isMobileUa).toEqual(false)
       expect(uiStore.isFilterVisible).toEqual(false)
@@ -132,7 +132,7 @@ describe('Ui Store', () => {
         true
       )
 
-      expect(uiStore.instructionsSnackbarState).toEqual(NOT_SHOWN)
+      expect(uiStore.instructionsSnackbarState).toEqual('not_shown')
       expect(uiStore.isDesktopLayout).toEqual(false)
       expect(uiStore.isMobileUa).toEqual(true)
       expect(uiStore.isFilterDismissed).toEqual(false)
@@ -141,10 +141,10 @@ describe('Ui Store', () => {
   })
 
   test.each`
-    before       | after
-    ${NOT_SHOWN} | ${VISIBLE}
-    ${VISIBLE}   | ${VISIBLE}
-    ${DISMISSED} | ${DISMISSED}
+    before         | after
+    ${'not_shown'} | ${'visible'}
+    ${'visible'}   | ${'visible'}
+    ${'dismissed'} | ${'dismissed'}
   `(
     'showInstructionsSnackbar changes instructionsSnackbarState from $before to $after',
     ({ before, after }) => {
@@ -157,10 +157,10 @@ describe('Ui Store', () => {
   )
 
   test.each`
-    before       | after
-    ${NOT_SHOWN} | ${DISMISSED}
-    ${VISIBLE}   | ${DISMISSED}
-    ${DISMISSED} | ${DISMISSED}
+    before         | after
+    ${'not_shown'} | ${'dismissed'}
+    ${'visible'}   | ${'dismissed'}
+    ${'dismissed'} | ${'dismissed'}
   `(
     'hideInstructionsSnackbar changes instructionsSnackbarState from $before to $after',
     ({ before, after }) => {
