@@ -56,7 +56,7 @@ export const useUiStore = defineStore('ui', {
     areInstructionsVisible(state): boolean {
       return state.instructionsSnackbarState === VISIBLE
     },
-    uiCookie(state): UiStateCookie {
+    uiCookie(state: UiState): UiStateCookie {
       return {
         isDesktopLayout: state.isDesktopLayout,
         isMobileUa: state.isMobileUa,
