@@ -1,5 +1,9 @@
 import * as Sentry from '@sentry/browser'
 
+/**
+ * adds render context to the error event that is sent to sentry
+ */
+
 Sentry.setContext('render context', {
-  render_context: process.client ? 'client' : 'server',
+  platform: process.client ? 'client' : 'server',
 })
