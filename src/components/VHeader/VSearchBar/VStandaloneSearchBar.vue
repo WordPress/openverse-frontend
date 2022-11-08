@@ -67,9 +67,12 @@ export default defineComponent({
   setup(props, { emit }) {
     const inputRef = ref<HTMLInputElement | null>(null)
 
+    // Only emit `submit` if the input value is not blank
     const handleSearch = () => {
-      const searchTerm = inputRef.value?.value.trim() || ''
-      emit('submit', searchTerm)
+      const searchTerm = inputRef.value?.value.trim()
+      if (searchTerm) {
+        emit('submit', searchTerm)
+      }
     }
 
     const isHomeRoute = computed(() => props.route === 'home')
