@@ -7,4 +7,4 @@ default:
 # Run a pnpm command
 run *args:
     pnpm run {{ args }}
-    
+
