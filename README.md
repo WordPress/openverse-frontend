@@ -184,7 +184,7 @@ All files and folders should be written in `kebab-case`, with the exception of V
 
 ## Just
 
-If [`just`](https://github.com/casey/just) is your preferred command runner, you can also use `just run {script}` to run any pnpm script and `just` on its own to list the available scripts (e.g. `just run docker:build`).
+If [`just`](https://github.com/casey/just) is your preferred command runner, you can also use `just run {script}` to run any pnpm script and `just` on its own to list the available scripts (e.g. `just run docker:build`). Our other projects use `just` as their primary script runner, so this allows parity with both the API and the catalog.
 
 ## Contributing
 
