@@ -4,7 +4,6 @@ set dotenv-load := false
 default:
     pnpm run
 
-# Run a pnpm command
+# Run a package.json script via pnpm
 run *args:
     pnpm run {{ args }}
-
