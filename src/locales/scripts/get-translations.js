@@ -6,6 +6,8 @@ const { writeFile } = require('fs/promises')
 const { writeFileSync } = require('fs')
 const os = require('os')
 
+const chokidar = require('chokidar')
+
 const axios = require('./axios')
 
 const jed1xJsonToJson = require('./jed1x-json-to-json')
@@ -115,13 +117,22 @@ const fetchAndConvertJed1xTranslations = (locales) => {
 const writeEnglish = () => {
   const rootEntry = parseJson('en.json5')
   writeFileSync(
-    process.cwd() + `/src/locales/en.json`,
+    process.cwd() + '/src/locales/en.json',
     JSON.stringify(rootEntry, null, 2) + os.EOL
   )
+  console.log('Successfully saved English translation to en.json.')
 }
 
 writeEnglish()
-console.log(`Successfully saved English translation to en.json.`)
+if (process.argv.includes('--watch')) {
+  console.log('Watching en.json5 for changes...')
+  chokidar
+    .watch(process.cwd() + '/src/locales/scripts/en.json5')
+    .on('all', (event, path) => {
+      console.log(`Event '${event}' for file ${path}`)
+      writeEnglish()
+    })
+}
 
 if (!process.argv.includes('--en-only')) {
   const localeJSON = require('./wp-locales.json')
