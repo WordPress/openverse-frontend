@@ -53,6 +53,7 @@ const middleware: Middleware = async ({ app, query, route, $pinia }) => {
 
   const uiStore = useUiStore($pinia)
   const isMobileUa = app.$ua ? app.$ua.isMobile : false
-  uiStore.initFromCookies(app.$cookies.get('ui') ?? {}, isMobileUa)
+  app.$cookies.set('uiIsMobileUa', isMobileUa)
+  uiStore.initFromCookies(app.$cookies.getAll() ?? {})
 }
 export default middleware

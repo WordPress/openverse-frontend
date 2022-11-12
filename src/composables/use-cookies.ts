@@ -6,13 +6,10 @@
  */
 import { isProd } from '~/utils/node-env'
 
+import type { OpenverseCookies } from '~/types/cookies'
+
 import type { NuxtAppOptions } from '@nuxt/types'
 import type { CookieSerializeOptions } from 'cookie'
-
-export type CookieValue =
-  | string
-  | boolean
-  | Record<string, boolean | string | undefined>
 
 const cookieOptions: CookieSerializeOptions = {
   path: '/',
@@ -21,45 +18,21 @@ const cookieOptions: CookieSerializeOptions = {
   secure: isProd,
 }
 
-export const useCookies = <T extends CookieValue>(
-  app: NuxtAppOptions,
-  name: string
-) => {
-  /**
-   * Sets the cookie with the `value`, using the useCookie's `name`.
-   *
-   * @param value - if not a string, this value is converted to string using
-   * `JSON.stringify`.
-   */
-  const setCookie = (value: T) => {
-    const cookieValue =
-      typeof value === 'string' ? value : JSON.stringify(value)
-
-    app.$cookies.set(name, cookieValue, cookieOptions)
+export const useCookies = (app: NuxtAppOptions) => {
+  const get = <Key extends keyof OpenverseCookies>(
+    key: Key
+  ): OpenverseCookies[Key] => {
+    return app.$cookies.get(key)
   }
 
-  const updateCookie = (value: Omit<T, string>) => {
-    const currentValue = app.$cookies.get(name) ?? {}
-
-    app.$cookies.set(
-      name,
-      JSON.stringify({ ...currentValue, ...value }),
-      cookieOptions
-    )
+  const set = <Key extends keyof OpenverseCookies>(
+    key: Key,
+    value: OpenverseCookies[Key]
+  ) => {
+    app.$cookies.set(key, value, cookieOptions)
   }
 
-  const getCookie = (cookieName: string): string | boolean | undefined => {
-    const cookieValueObject = app.$cookies.get(name)
-    if (cookieValueObject && cookieName in cookieValueObject) {
-      return cookieValueObject[cookieName]
-    }
-    return undefined
-  }
-
-  return {
-    setCookie,
-    getCookie,
-    updateCookie,
-  }
+  return { get, set }
 }
-export default useCookies
+
+export type UseCookies = ReturnType<typeof useCookies>

@@ -109,8 +109,8 @@ describe('Ui Store', () => {
       const uiStore = useUiStore()
       uiStore.initFromCookies(
         {
-          isDesktopLayout: true,
-          isFilterDismissed: true,
+          uiIsDesktopLayout: true,
+          uiIsFilterDismissed: true,
         },
         false
       )
@@ -126,8 +126,8 @@ describe('Ui Store', () => {
       const uiStore = useUiStore()
       uiStore.initFromCookies(
         {
-          isMobileUa: true,
-          isFilterDismissed: false,
+          uiIsMobileUa: true,
+          uiIsFilterDismissed: false,
         },
         true
       )
@@ -173,20 +173,18 @@ describe('Ui Store', () => {
   )
 
   test.each`
-    initialState     | isDesktopLayout | isMobileUa | expected
-    ${[true, false]} | ${false}        | ${true}    | ${{ isDesktopLayout: false, isMobileUa: true }}
-    ${[true, false]} | ${false}        | ${false}   | ${{ isDesktopLayout: false, isMobileUa: false }}
-    ${[false, true]} | ${true}         | ${false}   | ${{ isDesktopLayout: true, isMobileUa: false }}
-    ${[false, true]} | ${true}         | ${true}    | ${{ isDesktopLayout: true, isMobileUa: true }}
+    initialState     | isDesktopLayout | expected
+    ${[true, false]} | ${false}        | ${{ isDesktopLayout: false, isMobileUa: false }}
+    ${[false, true]} | ${true}         | ${{ isDesktopLayout: true, isMobileUa: true }}
   `(
-    'updateBreakpoint gets isDesktopLayout $isDesktopLayout and isMobileUa $isMobileUa and returns $expected',
-    ({ initialState, isDesktopLayout, isMobileUa, expected }) => {
+    'updateBreakpoint gets isDesktopLayout $isDesktopLayout and returns $expected',
+    ({ initialState, isDesktopLayout, expected }) => {
       const uiStore = useUiStore()
       uiStore.$patch({
         isDesktopLayout: initialState[0],
         isMobileUa: initialState[1],
       })
-      uiStore.updateBreakpoint(isDesktopLayout, isMobileUa, uiCookieSetter)
+      uiStore.updateBreakpoint(isDesktopLayout, uiCookieSetter)
       const actualOutput = {
         isDesktopLayout: uiStore.isDesktopLayout,
         isMobileUa: uiStore.isMobileUa,

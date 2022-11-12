@@ -1,12 +1,9 @@
 import { defineStore } from 'pinia'
 
-export type SnackbarState = 'not_shown' | 'visible' | 'dismissed'
+import type { UseCookies } from '~/composables/use-cookies'
+import type { OpenverseCookies, SnackbarState } from '~/types/cookies'
 
-export interface UiStateCookie {
-  isDesktopLayout?: boolean
-  isMobileUa?: boolean
-  isFilterDismissed?: boolean
-}
+export type CookieSetter = UseCookies['set']
 
 export interface UiState {
   /**
@@ -33,8 +30,6 @@ export interface UiState {
   isMobileUa: boolean
 }
 
-type UiCookieSetter = (value: UiStateCookie) => void
-
 export const useUiStore = defineStore('ui', {
   state: (): UiState => ({
     instructionsSnackbarState: 'not_shown',
@@ -47,13 +42,6 @@ export const useUiStore = defineStore('ui', {
   getters: {
     areInstructionsVisible(state): boolean {
       return state.instructionsSnackbarState === 'visible'
-    },
-    uiCookie(state: UiState): UiStateCookie {
-      return {
-        isDesktopLayout: state.isDesktopLayout,
-        isMobileUa: state.isMobileUa,
-        isFilterDismissed: state.isFilterDismissed,
-      }
     },
     /**
      * On desktop, we only hide the filters sidebar if it was
@@ -83,6 +71,7 @@ export const useUiStore = defineStore('ui', {
         this.instructionsSnackbarState = 'visible'
       }
     },
+
     hideInstructionsSnackbar() {
       this.instructionsSnackbarState = 'dismissed'
     },
@@ -90,46 +79,33 @@ export const useUiStore = defineStore('ui', {
      * Given a list of key value pairs of UI state parameters and their states,
      * populate the store state to match the cookie.
      *
-     * Cookie is updated if one of the cookie values (see UiStateCookie) changes.
-     *
      * @param cookies - mapping of UI state parameters and their states.
-     * @param isMobile - whether the request has a mobile user agent, set in middleware.
      */
-    initFromCookies(cookies: UiStateCookie, isMobile: boolean | null) {
-      this.isDesktopLayout = cookies.isDesktopLayout ?? false
-      this.isFilterDismissed = cookies.isFilterDismissed ?? false
+    initFromCookies(cookies: OpenverseCookies) {
+      this.isDesktopLayout = cookies.uiIsDesktopLayout ?? false
+      this.isFilterDismissed = cookies.uiIsFilterDismissed ?? false
 
-      // True if the request has a mobile user agent, or
-      // if the cookie `isMobileUa` value is true.
-      this.isMobileUa = Boolean((isMobile ?? false) || cookies.isMobileUa)
+      // Middleware sets the cookie value before calling `initFromCookies`.
+      this.isMobileUa = cookies.uiIsMobileUa ?? false
       this.innerFilterVisible = this.isDesktopLayout
         ? !this.isFilterDismissed
         : false
     },
+
     /**
-     * If the breakpoint or UA are different from the state,
-     * updates the state, and saves it into app cookies.
+     * If the breakpoint is different from the state, updates the state, and saves it into app cookies.
      *
      * @param isDesktopLayout - whether the layout is desktop (`lg` with the `new_header`
      * and `md` with the `old_header`).
-     * @param isMobileUa - whether the request's user agent is `mobile` or not.
      * @param setCookieFn - sets the app cookie.
      */
-    updateBreakpoint(
-      isDesktopLayout: boolean,
-      isMobileUa: boolean,
-      setCookieFn: UiCookieSetter
-    ) {
-      if (
-        this.isDesktopLayout !== isDesktopLayout ||
-        this.isMobileUa !== isMobileUa
-      ) {
+    updateBreakpoint(isDesktopLayout: boolean, setCookieFn: CookieSetter) {
+      if (this.isDesktopLayout !== isDesktopLayout) {
         this.isDesktopLayout = isDesktopLayout
-        this.isMobileUa = isMobileUa
-
-        setCookieFn(this.uiCookie)
+        setCookieFn('uiIsDesktopLayout', this.isDesktopLayout)
       }
     },
+
     /**
      * Sets the filter state based on the `visible` parameter.
      * If the filter state is changed on desktop, updates the `isFilterDismissed`
@@ -138,17 +114,18 @@ export const useUiStore = defineStore('ui', {
      * @param visible - whether the filters should be visible.
      * @param setCookieFn - the function that sets the app cookies
      */
-    setFiltersState(visible: boolean, setCookieFn: UiCookieSetter) {
+    setFiltersState(visible: boolean, setCookieFn: CookieSetter) {
       this.innerFilterVisible = visible
       if (this.isDesktopLayout) {
         this.isFilterDismissed = !visible
-        setCookieFn(this.uiCookie)
+        setCookieFn('uiIsFilterDismissed', this.isFilterDismissed)
       }
     },
+
     /**
      * Toggles filter state and saves the new state in a cookie.
      */
-    toggleFilters(setCookieFn: UiCookieSetter) {
+    toggleFilters(setCookieFn: CookieSetter) {
       this.setFiltersState(!this.isFilterVisible, setCookieFn)
     },
   },
