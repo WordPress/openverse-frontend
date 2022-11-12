@@ -93,7 +93,7 @@ describe('Ui Store', () => {
   describe('actions', () => {
     it('initFromCookies sets initial state without cookie', () => {
       const uiStore = useUiStore()
-      uiStore.initFromCookies({}, false)
+      uiStore.initFromCookies({})
       for (const key of Object.keys(initialState)) {
         // isMobileUa is set to true only if we explicitly get a mobile UA
         // from cookie or the browser request
@@ -107,13 +107,10 @@ describe('Ui Store', () => {
 
     it('initFromCookies sets initial state with a desktop cookie', () => {
       const uiStore = useUiStore()
-      uiStore.initFromCookies(
-        {
-          uiIsDesktopLayout: true,
-          uiIsFilterDismissed: true,
-        },
-        false
-      )
+      uiStore.initFromCookies({
+        uiIsDesktopLayout: true,
+        uiIsFilterDismissed: true,
+      })
 
       expect(uiStore.instructionsSnackbarState).toEqual('not_shown')
       expect(uiStore.isDesktopLayout).toEqual(true)
@@ -184,7 +181,7 @@ describe('Ui Store', () => {
         isDesktopLayout: initialState[0],
         isMobileUa: initialState[1],
       })
-      uiStore.updateBreakpoint(isDesktopLayout, uiCookieSetter)
+      uiStore._updateBreakpoint(isDesktopLayout, uiCookieSetter)
       const actualOutput = {
         isDesktopLayout: uiStore.isDesktopLayout,
         isMobileUa: uiStore.isMobileUa,
@@ -214,34 +211,7 @@ describe('Ui Store', () => {
         ...currentState,
       })
 
-      uiStore.setFiltersState(visible, uiCookieSetter)
-
-      expect(uiStore.isFilterVisible).toEqual(expectedState.innerFilterVisible)
-      expect(uiStore.isFilterDismissed).toEqual(expectedState.isFilterDismissed)
-    }
-  )
-
-  test.each`
-    isDesktopLayout | currentState                     | expectedState
-    ${true}         | ${VISIBLE_AND_NOT_DISMISSED}     | ${NOT_VISIBLE_AND_DISMISSED}
-    ${true}         | ${VISIBLE_AND_DISMISSED}         | ${NOT_VISIBLE_AND_DISMISSED}
-    ${true}         | ${NOT_VISIBLE_AND_DISMISSED}     | ${VISIBLE_AND_NOT_DISMISSED}
-    ${true}         | ${NOT_VISIBLE_AND_DISMISSED}     | ${VISIBLE_AND_NOT_DISMISSED}
-    ${false}        | ${VISIBLE_AND_NOT_DISMISSED}     | ${NOT_VISIBLE_AND_NOT_DISMISSED}
-    ${false}        | ${NOT_VISIBLE_AND_NOT_DISMISSED} | ${VISIBLE_AND_NOT_DISMISSED}
-    ${false}        | ${NOT_VISIBLE_AND_DISMISSED}     | ${VISIBLE_AND_DISMISSED}
-    ${false}        | ${VISIBLE_AND_NOT_DISMISSED}     | ${NOT_VISIBLE_AND_NOT_DISMISSED}
-    ${false}        | ${NOT_VISIBLE_AND_DISMISSED}     | ${VISIBLE_AND_DISMISSED}
-  `(
-    'toggleFilters sets state to $expectedState when isDesktopLayout is $isDesktopLayout',
-    ({ isDesktopLayout, currentState, expectedState }) => {
-      const uiStore = useUiStore()
-      uiStore.$patch({
-        isDesktopLayout,
-        ...currentState,
-      })
-
-      uiStore.toggleFilters(uiCookieSetter)
+      uiStore._setFiltersState(visible, uiCookieSetter)
 
       expect(uiStore.isFilterVisible).toEqual(expectedState.innerFilterVisible)
       expect(uiStore.isFilterDismissed).toEqual(expectedState.isFilterDismissed)

@@ -2,8 +2,9 @@ import { computed, watch } from '@nuxtjs/composition-api'
 
 import { useUiStore } from '~/stores/ui'
 import { useFeatureFlagStore } from '~/stores/feature-flag'
-import { useCookies } from '~/composables/use-cookies'
 import { isMinScreen } from '~/composables/use-media-query'
+
+import useUiState from '~/composables/use-ui-state'
 
 import type { NuxtAppOptions } from '@nuxt/types'
 
@@ -16,9 +17,8 @@ import type { NuxtAppOptions } from '@nuxt/types'
  */
 export function useLayout({ app }: { app: NuxtAppOptions }) {
   const uiStore = useUiStore()
+  const uiState = useUiState(app)
   const featureFlagStore = useFeatureFlagStore()
-
-  const cookies = useCookies(app)
 
   const isNewHeaderEnabled = computed(() => featureFlagStore.isOn('new_header'))
 
@@ -35,9 +35,7 @@ export function useLayout({ app }: { app: NuxtAppOptions }) {
   })
 
   const updateLayout = (isDesktop: boolean) => {
-    if (isDesktop !== uiStore.isDesktopLayout) {
-      uiStore.updateBreakpoint(isDesktop, cookies.set)
-    }
+    uiState.updateBreakpoint(isDesktop)
   }
 
   return {

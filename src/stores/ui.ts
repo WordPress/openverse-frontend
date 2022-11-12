@@ -93,13 +93,14 @@ export const useUiStore = defineStore('ui', {
     },
 
     /**
-     * If the breakpoint is different from the state, updates the state, and saves it into app cookies.
+     * If the breakpoint is different from the state, updates the state.
+     * Should not be called directly, use `useUiState.updateBreakpoint` instead.
      *
      * @param isDesktopLayout - whether the layout is desktop (`lg` with the `new_header`
      * and `md` with the `old_header`).
      * @param setCookieFn - sets the app cookie.
      */
-    updateBreakpoint(isDesktopLayout: boolean, setCookieFn: CookieSetter) {
+    _updateBreakpoint(isDesktopLayout: boolean, setCookieFn: CookieSetter) {
       if (this.isDesktopLayout !== isDesktopLayout) {
         this.isDesktopLayout = isDesktopLayout
         setCookieFn('uiIsDesktopLayout', this.isDesktopLayout)
@@ -110,23 +111,17 @@ export const useUiStore = defineStore('ui', {
      * Sets the filter state based on the `visible` parameter.
      * If the filter state is changed on desktop, updates the `isFilterDismissed`
      * 'ui' cookie value.
+     * Should not be called directly, use `useUiState.setFiltersState` instead.
      *
      * @param visible - whether the filters should be visible.
      * @param setCookieFn - the function that sets the app cookies
      */
-    setFiltersState(visible: boolean, setCookieFn: CookieSetter) {
+    _setFiltersState(visible: boolean, setCookieFn: CookieSetter) {
       this.innerFilterVisible = visible
       if (this.isDesktopLayout) {
         this.isFilterDismissed = !visible
         setCookieFn('uiIsFilterDismissed', this.isFilterDismissed)
       }
-    },
-
-    /**
-     * Toggles filter state and saves the new state in a cookie.
-     */
-    toggleFilters(setCookieFn: CookieSetter) {
-      this.setFiltersState(!this.isFilterVisible, setCookieFn)
     },
   },
 })
