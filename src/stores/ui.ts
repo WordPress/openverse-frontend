@@ -118,7 +118,7 @@ export const useUiStore = defineStore('ui', {
      */
     _setFiltersState(visible: boolean, setCookieFn: CookieSetter) {
       this.innerFilterVisible = visible
-      if (this.isDesktopLayout) {
+      if (this.isDesktopLayout && this.isFilterDismissed === visible) {
         this.isFilterDismissed = !visible
         setCookieFn('uiIsFilterDismissed', this.isFilterDismissed)
       }

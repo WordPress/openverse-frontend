@@ -1,3 +1,5 @@
+import { computed } from '@nuxtjs/composition-api'
+
 import { useUiStore } from '~/stores/ui'
 
 import { useCookies } from '~/composables/use-cookies'
@@ -7,6 +9,7 @@ import type { NuxtAppOptions } from '@nuxt/types'
 const useUiState = (app: NuxtAppOptions) => {
   const uiStore = useUiStore()
   const cookies = useCookies(app)
+  const isDesktopLayout = computed(() => uiStore.isDesktopLayout)
   /**
    * If the breakpoint is different from the state, updates the state, and saves it into app cookies.
    *
@@ -14,10 +17,7 @@ const useUiState = (app: NuxtAppOptions) => {
    * and `md` with the `old_header`).
    */
   const updateBreakpoint = (isDesktopLayout: boolean) => {
-    if (isDesktopLayout !== uiStore.isDesktopLayout) {
-      uiStore.isDesktopLayout = isDesktopLayout
-      cookies.set('uiIsDesktopLayout', uiStore.isDesktopLayout)
-    }
+    uiStore._updateBreakpoint(isDesktopLayout, cookies.set)
   }
 
   /**
@@ -42,6 +42,7 @@ const useUiState = (app: NuxtAppOptions) => {
     updateBreakpoint,
     setFiltersState,
     toggleFilters,
+    isDesktopLayout,
   }
 }
 

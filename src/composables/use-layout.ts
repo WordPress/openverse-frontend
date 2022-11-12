@@ -1,6 +1,5 @@
 import { computed, watch } from '@nuxtjs/composition-api'
 
-import { useUiStore } from '~/stores/ui'
 import { useFeatureFlagStore } from '~/stores/feature-flag'
 import { isMinScreen } from '~/composables/use-media-query'
 
@@ -15,15 +14,14 @@ import type { NuxtAppOptions } from '@nuxt/types'
  * The threshold for switching between mobile and desktop layout is
  * `lg` for the `new_header` and `md` for the `old_header`.
  */
-export function useLayout({ app }: { app: NuxtAppOptions }) {
-  const uiStore = useUiStore()
+export default function useLayout({ app }: { app: NuxtAppOptions }) {
   const uiState = useUiState(app)
   const featureFlagStore = useFeatureFlagStore()
 
   const isNewHeaderEnabled = computed(() => featureFlagStore.isOn('new_header'))
 
   // `isMobile` is set in the middleware for each server request.
-  const shouldPassInSSR = uiStore.isDesktopLayout
+  const shouldPassInSSR = uiState.isDesktopLayout.value
   const desktopBreakpoint = computed(() =>
     isNewHeaderEnabled.value ? 'lg' : 'md'
   )
