@@ -2,7 +2,7 @@
  which, in turn, is ported from https://github.com/logaretm/vue-use-web by Abdelrahman Awad */
 import { computed, ref, watchEffect } from '@nuxtjs/composition-api'
 
-import { resolveRef } from '@vueuse/core'
+import { resolveUnref } from '@vueuse/core'
 
 import { SCREEN_SIZES, Breakpoint } from '~/constants/screens'
 import { defaultWindow } from '~/constants/window'
@@ -53,7 +53,7 @@ export function useMediaQuery(
 
     cleanup()
 
-    mediaQuery = window.matchMedia(resolveRef(query).value)
+    mediaQuery = window.matchMedia(resolveUnref(query))
     matches.value = mediaQuery.matches
 
     if ('addEventListener' in mediaQuery) {
@@ -70,7 +70,9 @@ export function useMediaQuery(
 
   return matches
 }
-type BreakpointWithoutXs = Exclude<Breakpoint, 'xs'>
+
+const isBpXs = (bp: Breakpoint): bp is 'xs' => bp === 'xs'
+
 /**
  * Check whether the current screen meets
  * or exceeds the provided breakpoint size.
@@ -79,15 +81,15 @@ export const isMinScreen = (
   breakpointName: MaybeComputedRef<Breakpoint>,
   options?: Options
 ) => {
-  if (breakpointName === 'xs') {
+  const resolvedBp = resolveUnref(breakpointName)
+
+  if (isBpXs(resolvedBp)) {
     // `xs` is the "minimum" so it is always true
     return ref(true)
   }
 
   const query = computed(() => {
-    const sizeInPx = SCREEN_SIZES.get(
-      resolveRef(breakpointName as BreakpointWithoutXs).value
-    )
+    const sizeInPx = SCREEN_SIZES.get(resolvedBp)
     return `(min-width: ${sizeInPx}px)`
   })
 
