@@ -5,7 +5,7 @@ export type SnackbarState = 'not_shown' | 'visible' | 'dismissed'
 /**
  * The cookies that Openverse uses to store the UI state.
  */
-export interface OpenverseCookies {
+export interface OpenverseCookieState {
   /**
    * The state of the instructions snackbar for audio component.
    */

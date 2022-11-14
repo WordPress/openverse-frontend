@@ -27,10 +27,6 @@ const NOT_VISIBLE_AND_NOT_DISMISSED = {
   isFilterDismissed: false,
 }
 
-const uiCookieSetter = () => {
-  return () => jest.fn()
-}
-
 describe('Ui Store', () => {
   beforeEach(() => {
     setActivePinia(createPinia())
@@ -93,7 +89,7 @@ describe('Ui Store', () => {
   describe('actions', () => {
     it('initFromCookies sets initial state without cookie', () => {
       const uiStore = useUiStore()
-      uiStore.initFromCookies({}, false)
+      uiStore.initFromCookies({})
       for (const key of Object.keys(initialState)) {
         // isMobileUa is set to true only if we explicitly get a mobile UA
         // from cookie or the browser request
@@ -107,13 +103,10 @@ describe('Ui Store', () => {
 
     it('initFromCookies sets initial state with a desktop cookie', () => {
       const uiStore = useUiStore()
-      uiStore.initFromCookies(
-        {
-          uiIsDesktopLayout: true,
-          uiIsFilterDismissed: true,
-        },
-        false
-      )
+      uiStore.initFromCookies({
+        uiIsDesktopLayout: true,
+        uiIsFilterDismissed: true,
+      })
 
       expect(uiStore.instructionsSnackbarState).toEqual('not_shown')
       expect(uiStore.isDesktopLayout).toEqual(true)
@@ -124,13 +117,10 @@ describe('Ui Store', () => {
 
     it('initFromCookies sets initial state with a mobile cookie', () => {
       const uiStore = useUiStore()
-      uiStore.initFromCookies(
-        {
-          uiIsMobileUa: true,
-          uiIsFilterDismissed: false,
-        },
-        true
-      )
+      uiStore.initFromCookies({
+        uiIsMobileUa: true,
+        uiIsFilterDismissed: false,
+      })
 
       expect(uiStore.instructionsSnackbarState).toEqual('not_shown')
       expect(uiStore.isDesktopLayout).toEqual(false)
@@ -184,7 +174,7 @@ describe('Ui Store', () => {
         isDesktopLayout: initialState[0],
         isMobileUa: initialState[1],
       })
-      uiStore.updateBreakpoint(isDesktopLayout, uiCookieSetter)
+      uiStore.updateBreakpoint(isDesktopLayout)
       const actualOutput = {
         isDesktopLayout: uiStore.isDesktopLayout,
         isMobileUa: uiStore.isMobileUa,
@@ -214,7 +204,7 @@ describe('Ui Store', () => {
         ...currentState,
       })
 
-      uiStore.setFiltersState(visible, uiCookieSetter)
+      uiStore.setFiltersState(visible)
 
       expect(uiStore.isFilterVisible).toEqual(expectedState.innerFilterVisible)
       expect(uiStore.isFilterDismissed).toEqual(expectedState.isFilterDismissed)
@@ -241,7 +231,7 @@ describe('Ui Store', () => {
         ...currentState,
       })
 
-      uiStore.toggleFilters(uiCookieSetter)
+      uiStore.toggleFilters()
 
       expect(uiStore.isFilterVisible).toEqual(expectedState.innerFilterVisible)
       expect(uiStore.isFilterDismissed).toEqual(expectedState.isFilterDismissed)

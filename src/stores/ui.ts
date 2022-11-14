@@ -1,9 +1,9 @@
 import { defineStore } from 'pinia'
 
-import type { UseCookies } from '~/composables/use-cookies'
-import type { OpenverseCookies, SnackbarState } from '~/types/cookies'
+import type { OpenverseCookieState, SnackbarState } from '~/types/cookies'
+import { isProd } from '~/utils/node-env'
 
-export type CookieSetter = UseCookies['set']
+import type { CookieSerializeOptions } from 'cookie'
 
 export interface UiState {
   /**
@@ -28,6 +28,13 @@ export interface UiState {
    * whether the request user agent is mobile or not.
    */
   isMobileUa: boolean
+}
+
+const cookieOptions: CookieSerializeOptions = {
+  path: '/',
+  sameSite: 'strict',
+  maxAge: 60 * 60 * 24 * 60, // 60 days
+  secure: isProd,
 }
 
 export const useUiStore = defineStore('ui', {
@@ -81,7 +88,7 @@ export const useUiStore = defineStore('ui', {
      *
      * @param cookies - mapping of UI state parameters and their states.
      */
-    initFromCookies(cookies: OpenverseCookies) {
+    initFromCookies(cookies: OpenverseCookieState) {
       this.isDesktopLayout = cookies.uiIsDesktopLayout ?? false
       this.isFilterDismissed = cookies.uiIsFilterDismissed ?? false
       this.isMobileUa = cookies.uiIsMobileUa ?? false
@@ -95,12 +102,15 @@ export const useUiStore = defineStore('ui', {
      *
      * @param isDesktopLayout - whether the layout is desktop (`lg` with the `new_header`
      * and `md` with the `old_header`).
-     * @param setCookieFn - sets the app cookie.
      */
-    updateBreakpoint(isDesktopLayout: boolean, setCookieFn: CookieSetter) {
+    updateBreakpoint(isDesktopLayout: boolean) {
       if (this.isDesktopLayout !== isDesktopLayout) {
         this.isDesktopLayout = isDesktopLayout
-        setCookieFn('uiIsDesktopLayout', this.isDesktopLayout)
+        this.$nuxt.app.$cookies.set(
+          'uiIsDesktopLayout',
+          this.isDesktopLayout,
+          cookieOptions
+        )
       }
     },
 
@@ -110,21 +120,24 @@ export const useUiStore = defineStore('ui', {
      * 'ui' cookie value.
      *
      * @param visible - whether the filters should be visible.
-     * @param setCookieFn - the function that sets the app cookies
      */
-    setFiltersState(visible: boolean, setCookieFn: CookieSetter) {
+    setFiltersState(visible: boolean) {
       this.innerFilterVisible = visible
       if (this.isDesktopLayout) {
         this.isFilterDismissed = !visible
-        setCookieFn('uiIsFilterDismissed', this.isFilterDismissed)
+        this.$nuxt.app.$cookies.set(
+          'uiIsFilterDismissed',
+          this.isFilterDismissed,
+          cookieOptions
+        )
       }
     },
 
     /**
      * Toggles filter state and saves the new state in a cookie.
      */
-    toggleFilters(setCookieFn: CookieSetter) {
-      this.setFiltersState(!this.isFilterVisible, setCookieFn)
+    toggleFilters() {
+      this.setFiltersState(!this.isFilterVisible)
     },
   },
 })

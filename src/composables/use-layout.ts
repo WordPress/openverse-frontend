@@ -2,10 +2,7 @@ import { computed, watch } from '@nuxtjs/composition-api'
 
 import { useUiStore } from '~/stores/ui'
 import { useFeatureFlagStore } from '~/stores/feature-flag'
-import { useCookies } from '~/composables/use-cookies'
 import { isMinScreen } from '~/composables/use-media-query'
-
-import type { NuxtAppOptions } from '@nuxt/types'
 
 /**
  * This composable updates the UI store when the screen width changes or
@@ -14,11 +11,9 @@ import type { NuxtAppOptions } from '@nuxt/types'
  * The threshold for switching between mobile and desktop layout is
  * `lg` for the `new_header` and `md` for the `old_header`.
  */
-export function useLayout({ app }: { app: NuxtAppOptions }) {
+export function useLayout() {
   const uiStore = useUiStore()
   const featureFlagStore = useFeatureFlagStore()
-
-  const cookies = useCookies(app)
 
   const isNewHeaderEnabled = computed(() => featureFlagStore.isOn('new_header'))
 
@@ -36,7 +31,7 @@ export function useLayout({ app }: { app: NuxtAppOptions }) {
 
   const updateLayout = (isDesktop: boolean) => {
     if (isDesktop !== uiStore.isDesktopLayout) {
-      uiStore.updateBreakpoint(isDesktop, cookies.set)
+      uiStore.updateBreakpoint(isDesktop)
     }
   }
 
