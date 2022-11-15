@@ -60,10 +60,10 @@
     "i18n:update-locales": "node src/locales/scripts/get-validated-locales",
     "i18n:generate-pot": "node src/locales/scripts/json-to-pot",
     "i18n:check": "vue-i18n-extract report --vueFiles './src/*/**.?(js|ts|vue)' --languageFiles './src/locales/en.json'",
-    "remake:component": "remake component --output=src/components",
-    "remake:component-storybook-test": " remake component-storybook-test --output=test/storybook/visual-regression ",
-    "reamke:component-unit-test": "remake component-unit-test ",
-    "create-component": "npm-run-all \"remake:component-storybook-test -- --fileName={2} --name={1}\"  \"remake:component -- --name={1}\" \"reamke:component-unit-test -- --output=test/unit/specs/components/{1} --name={1} --fileName={2}\" --"
+    "create-component-and-storie": "remake component --output=src/components",
+    "create-component-storybook-test": " remake component-storybook-test --output=test/storybook/visual-regression ",
+    "create-component-unit-test": "remake component-unit-test",
+    "create-component": "npm-run-all \"create-component-storybook-test -- --fileName={2} --name={1}\"  \"create-component-and-storie -- --name={1}\" \"create-component-unit-test -- --output=test/unit/specs/components/{1} --name={1} --fileName={2}\" --"
   },
   "dependencies": {
     "@nuxt/components": "^2.1.6",
