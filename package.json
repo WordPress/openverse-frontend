@@ -62,7 +62,8 @@
     "i18n:check": "vue-i18n-extract report --vueFiles './src/*/**.?(js|ts|vue)' --languageFiles './src/locales/en.json'",
     "remake:component": "remake component --output=src/components",
     "remake:component-storybook-test": " remake component-storybook-test --output=test/storybook/visual-regression ",
-    "create-component": "npm-run-all \"remake:component-storybook-test -- --name={2}\"  \"remake:component -- --name={1}\" --"
+    "reamke:component-unit-test": "remake component-unit-test ",
+    "create-component": "npm-run-all \"remake:component-storybook-test -- --fileName={2} --name={1}\"  \"remake:component -- --name={1}\" \"reamke:component-unit-test -- --output=test/unit/specs/components/{1} --name={1} --fileName={2}\" --"
   },
   "dependencies": {
     "@nuxt/components": "^2.1.6",
