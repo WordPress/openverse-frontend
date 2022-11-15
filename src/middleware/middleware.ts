@@ -5,7 +5,7 @@ import { useProviderStore } from '~/stores/provider'
 import { useFeatureFlagStore } from '~/stores/feature-flag'
 import { useUiStore } from '~/stores/ui'
 
-import type { Middleware } from '@nuxt/types'
+import type { Context, Middleware } from '@nuxt/types'
 
 /**
  * In embedded mode, the app sends its url
@@ -20,7 +20,13 @@ import type { Middleware } from '@nuxt/types'
  * Currently, one event type is used:
  * - `urlChange` sends the relative path of the URL on every URL change.
  */
-const middleware: Middleware = async ({ app, query, route, $pinia }) => {
+const middleware: Middleware = async ({
+  $cookies,
+  $ua,
+  query,
+  route,
+  $pinia,
+}: Context) => {
   /* Nav store */
 
   const navigationStore = useNavigationStore($pinia)
@@ -46,14 +52,14 @@ const middleware: Middleware = async ({ app, query, route, $pinia }) => {
   /* Feature flag store */
 
   const featureFlagStore = useFeatureFlagStore($pinia)
-  featureFlagStore.initFromCookies(app.$cookies.get('features') ?? {})
+  featureFlagStore.initFromCookies($cookies.get('features') ?? {})
   featureFlagStore.initFromQuery(query)
 
   /* UI store */
 
   const uiStore = useUiStore($pinia)
-  const isMobileUa = app.$ua ? app.$ua.isMobile : false
-  app.$cookies.set('uiIsMobileUa', isMobileUa)
-  uiStore.initFromCookies(app.$cookies.getAll() ?? {})
+  const isMobileUa = $ua ? $ua.isMobile : false
+  $cookies.set('uiIsMobileUa', isMobileUa)
+  uiStore.initFromCookies($cookies.getAll() ?? {})
 }
 export default middleware

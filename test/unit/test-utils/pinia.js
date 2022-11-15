@@ -9,11 +9,9 @@ export const createPinia = () =>
         captureException: jest.fn(),
         captureEvent: jest.fn(),
       },
-      app: {
-        $cookies: {
-          set: jest.fn(),
-          get: jest.fn(),
-        },
+      $cookies: {
+        set: jest.fn(),
+        get: jest.fn(),
       },
     },
   }))

@@ -106,7 +106,7 @@ export const useUiStore = defineStore('ui', {
     updateBreakpoint(isDesktopLayout: boolean) {
       if (this.isDesktopLayout !== isDesktopLayout) {
         this.isDesktopLayout = isDesktopLayout
-        this.$nuxt.app.$cookies.set(
+        this.$nuxt.$cookies.set(
           'uiIsDesktopLayout',
           this.isDesktopLayout,
           cookieOptions
@@ -125,7 +125,7 @@ export const useUiStore = defineStore('ui', {
       this.innerFilterVisible = visible
       if (this.isDesktopLayout) {
         this.isFilterDismissed = !visible
-        this.$nuxt.app.$cookies.set(
+        this.$nuxt.$cookies.set(
           'uiIsFilterDismissed',
           this.isFilterDismissed,
           cookieOptions
