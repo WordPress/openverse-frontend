@@ -109,6 +109,7 @@
   "devDependencies": {
     "@babel/core": "^7.17.10",
     "@babel/eslint-parser": "^7.17.0",
+    "@babel/parser": "^7.20.3",
     "@babel/preset-env": "^7.1.6",
     "@babel/preset-typescript": "^7.16.7",
     "@babel/runtime-corejs3": "^7.17.9",

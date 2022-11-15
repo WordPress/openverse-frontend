@@ -3,26 +3,17 @@
  * uses a limited set of features and syntax. This package provides functions
  * to read this format and convert it into regular JSON.
  *
- * - All values must be strings. This is okay because we're only dealing with
- *   i18n translation files.
- * - Only single line `// ...` comments are allowed. These comments describe the
- *   content that follows it. Inline comments are not allowed.
- *
- * ```json5
- * {
- *   // documentation about `key-a`
- *   key: 'value',
- *   'key-b': {
- *     'key-c': 'value-c',
- *   },
- * }
- * ```
+ * The JSON5 file is converted to an AST by Babel, treating it as a JavaScript
+ * `ObjectExpression` which is then converted into an `Entry` instance, which
+ * is capable of emitting regular JSON.
  *
  * @typedef {{ [key: string]: string | SimJson }} SimJson
  */
 
 const fs = require('fs')
 const path = require('path')
+
+const babel = require('@babel/parser')
 
 /**
  * An `Entry` refers to one i18n translation definition. It can be one of two
@@ -37,14 +28,13 @@ class Entry {
    * Create a new `Entry` instance with the given key, value and comment.
    *
    * @param key {string} the key of the mapping
-   * @param value {string | undefined} the value of the mapping, only applies for string-string type
    * @param comment {string | undefined} the documentation comment, if any
    */
-  constructor(key, value = undefined, comment = undefined) {
+  constructor(key, comment = undefined) {
     this.key = key // set to '' for the JSON top-level object
-    this.value = value // populated for string-string entries, `undefined` otherwise
     this.doc = comment
 
+    this.value = undefined // populated for string-string entries, `undefined` otherwise
     this.children = [] // populated for string-object entries, `[]` otherwise
     this.ancestors = []
   }
@@ -90,64 +80,73 @@ class Entry {
 }
 
 /**
- * Read the given file into a list of lines.
+ * Determine the key for the entry, which will be a string literal if quoted,
+ * or an identifier if not quoted.
  *
- * @param filename {string} the name of the JSON file to read
- * @return {string[]} the lines read from the file
+ * @param keyNode {import('@babel/types').StringLiteral|import('@babel/types').Identifier}
+ * @return {string} the text content of the key
  */
-const readLinesFromFile = (filename) =>
-  fs.readFileSync(path.join(__dirname, filename), 'utf-8').split('\n')
+const parseKey = (keyNode) => {
+  if (keyNode === undefined) return ''
+  switch (keyNode.type) {
+    case 'StringLiteral':
+      return keyNode.value
+    case 'Identifier':
+      return keyNode.name
+  }
+}
 
 /**
- * Parse the given lines of JSON into a tree of `Entry` instances.
+ * Parse a single or multi-line comment. If the comment is multi-line, newlines
+ * and asterisks will be removed from the output.
  *
- * @param lines {string[]} the lines read from the JSON file
- * @return {Entry} the root `Entry` instance for the top-level JSON object
+ * @param commentNode {import('@babel/types').CommentLine|import('@babel/types').CommentBlock}
+ * @return {string} the text content of the comment
  */
-const parseJsonLines = (lines) => {
-  /** @type {Entry[]} */
-  const stack = []
-  /** @type {string | undefined} */
-  let comment = undefined
-
-  for (let [idx, line] of lines.entries()) {
-    line = line.trim().replace(/,$/, '')
-
-    let match = null
-    if ((match = line.match(/\/\/\s(?<text>.+)/))) {
-      // comment
-      comment = match.groups?.text
-    } else if (line === '{') {
-      // start of JSON file
-      const entry = new Entry('')
-      stack.push(entry)
-      if (comment) comment = undefined
-    } else if ((match = line.match(/^'?(?<key>[\w-]+)'?: \{$/))) {
-      // start of string-object type mapping
-      const key = match.groups?.key ?? '?'
-      const entry = new Entry(key, undefined, comment)
-      stack.push(entry)
-      if (comment) comment = undefined
-    } else if (line === '}') {
-      // end of string-object type mapping or end of JSON file
-      const entry = stack.pop()
-      if (!entry) throw 'Encountered unmatched closing brace'
-      if (entry.key === '') return entry
-      stack[stack.length - 1].addChild(entry)
-    } else if (
-      (match = line.match(/^'?(?<key>[\w-+]+)'?:\s["'](?<value>.+)["']$/))
-    ) {
-      // string-string type mapping
-      const key = match.groups?.key ?? ''
-      const value = match.groups?.value ?? ''
-      const entry = new Entry(key, value, comment)
-      if (comment) comment = undefined
-      stack[stack.length - 1].addChild(entry)
-    } else {
-      throw `Unrecognized pattern on line ${idx + 1}: ${line}`
-    }
+const parseComment = (commentNode) => {
+  switch (commentNode.type) {
+    case 'CommentLine':
+      return commentNode.value.trim()
+    case 'CommentBlock':
+      return commentNode.value
+        .replace(/\n|\*+/g, '')
+        .replace(/\s+/, ' ')
+        .trim()
   }
-  throw 'Reached EOF without closure'
+}
+
+/**
+ * Populate the value or children of the `Entry` depending on whether the value
+ * is a string or an object expression.
+ *
+ * @param entry {Entry} the entry to populate
+ * @param valueNode {import('@babel/types').StringLiteral|import('@babel/types').ObjectExpression}
+ */
+const parseValue = (entry, valueNode) => {
+  switch (valueNode.type) {
+    case 'StringLiteral':
+      entry.value = valueNode.value
+      break
+    case 'ObjectExpression':
+      valueNode.properties.map(parseObjProperty).forEach((child) => {
+        entry.addChild(child)
+      })
+      break
+  }
+}
+
+/**
+ * Create an `Entry` instance by parsing the AST node from Babel.
+ *
+ * @param node {import('@babel/types').ObjectProperty}
+ * @return {Entry} the entry generated by parsing the node
+ */
+const parseObjProperty = (node) => {
+  let key = parseKey(node.key)
+  let comments = node.leadingComments?.map(parseComment).join('')
+  let entry = new Entry(key, comments)
+  parseValue(entry, node.value)
+  return entry
 }
 
 /**
@@ -155,6 +154,11 @@ const parseJsonLines = (lines) => {
  * @param filename {string} the name of the JSON file to read
  * @return {Entry} the root `Entry` instance for the top-level JSON object
  */
-const parseJson = (filename) => parseJsonLines(readLinesFromFile(filename))
+const parseJson = (filename) =>
+  parseObjProperty({
+    value: babel.parseExpression(
+      fs.readFileSync(path.join(__dirname, filename), 'utf-8')
+    ),
+  })
 
 module.exports = { Entry, parseJson }
