@@ -134,7 +134,6 @@ const embeddedPage = {
         isDesktopLayout.value
     )
 
-
     const closeSidebar = () => {
       uiStore.setFiltersState(false)
     }
