@@ -171,16 +171,6 @@ export default defineComponent({
   },
   layout: 'blank',
   setup() {
-    const featureFlagStore = useFeatureFlagStore()
-    const themeColorMeta = [
-      { hid: 'theme-color', name: 'theme-color', content: '#ffe033' },
-    ]
-    useMeta({
-      meta: featureFlagStore.isOn('new_header')
-        ? [...themeColorMeta, { hid: 'robots', name: 'robots', content: 'all' }]
-        : themeColorMeta,
-    })
-
     const { app } = useContext()
     const router = useRouter()
 
@@ -192,6 +182,15 @@ export default defineComponent({
     const isNewHeaderEnabled = computed(() =>
       featureFlagStore.isOn('new_header')
     )
+    const themeColorMeta = [
+      { hid: 'theme-color', name: 'theme-color', content: '#ffe033' },
+    ]
+    useMeta({
+      meta: isNewHeaderEnabled.value
+        ? [...themeColorMeta, { hid: 'robots', name: 'robots', content: 'all' }]
+        : themeColorMeta,
+    })
+
     const { isDesktopLayout: isDesktop, updateLayout } = useLayout()
 
     /**
