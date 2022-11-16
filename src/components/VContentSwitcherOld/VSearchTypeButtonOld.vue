@@ -97,7 +97,7 @@ export default defineComponent({
       if (props.type === 'searchbar') {
         return 'action-menu'
       } else {
-        return isDesktopLayout.value && !isHeaderScrolled?.value
+        return isDesktopLayout.value && !isHeaderScrolled.value
           ? 'action-menu-bordered'
           : 'action-menu'
       }
