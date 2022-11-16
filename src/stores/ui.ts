@@ -96,6 +96,7 @@ export const useUiStore = defineStore('ui', {
       this.innerFilterVisible = this.isDesktopLayout
         ? !this.isFilterDismissed
         : false
+      this.dismissedBanners = cookies.uiDismissedBanners ?? []
     },
 
     /**
