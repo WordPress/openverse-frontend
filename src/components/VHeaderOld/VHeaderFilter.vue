@@ -16,7 +16,7 @@
     />
     <VModalContent
       v-if="isFilterVisible && !isDesktopLayout"
-      :hide="close"
+      :hide="onTriggerClick"
       :visible="true"
       :trigger-element="triggerElement"
       :aria-label="$t('header.filter-button.simple')"
