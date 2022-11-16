@@ -77,7 +77,7 @@ export default defineComponent({
 
     const { icons, activeType: activeItem } = useSearchType()
     const isIconButton = computed(
-      () => isHeaderScrolled?.value && !isDesktopLayout.value
+      () => isHeaderScrolled.value && !isDesktopLayout.value
     )
     const sizeClasses = computed(() => {
       if (props.type === 'searchbar') {
