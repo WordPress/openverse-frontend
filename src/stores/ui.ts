@@ -1,9 +1,9 @@
 import { defineStore } from 'pinia'
 
 import type { OpenverseCookieState, SnackbarState } from '~/types/cookies'
-import { isProd } from '~/utils/node-env'
 
-import type { CookieSerializeOptions } from 'cookie'
+import { cookieOptions } from '~/types/cookies'
+
 import type { Locale } from 'vue-i18n'
 
 export type BannerId = Locale | 'cc-referral'
@@ -35,13 +35,6 @@ export interface UiState {
    * array of banner ids that were dismissed
    */
   dismissedBanners: BannerId[]
-}
-
-const cookieOptions: CookieSerializeOptions = {
-  path: '/',
-  sameSite: 'strict',
-  maxAge: 60 * 60 * 24 * 60, // 60 days
-  secure: isProd,
 }
 
 export const useUiStore = defineStore('ui', {
