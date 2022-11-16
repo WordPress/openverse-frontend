@@ -1,9 +1,8 @@
 import { defineStore } from 'pinia'
 
 import type { OpenverseCookieState, SnackbarState } from '~/types/cookies'
-import { isProd } from '~/utils/node-env'
 
-import type { CookieSerializeOptions } from 'cookie'
+import { cookieOptions } from '~/types/cookies'
 
 export interface UiState {
   /**
@@ -28,13 +27,6 @@ export interface UiState {
    * whether the request user agent is mobile or not.
    */
   isMobileUa: boolean
-}
-
-const cookieOptions: CookieSerializeOptions = {
-  path: '/',
-  sameSite: 'strict',
-  maxAge: 60 * 60 * 24 * 60, // 60 days
-  secure: isProd,
 }
 
 export const useUiStore = defineStore('ui', {
