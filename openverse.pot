@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-11-16T04:28:48+00:00\n"
+"POT-Creation-Date: 2022-11-16T04:40:29+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -23,7 +23,7 @@ msgctxt "404.main"
 msgid "Go to ###link### or search for something similar from the field below."
 msgstr ""
 
-#: src/components/VHeaderOld/VSearchBar/VStandaloneSearchBarOld.vue:26
+#: src/components/VHeader/VSearchBar/VStandaloneSearchBar.vue:26
 msgctxt "404.search-placeholder"
 msgid "Search for content to reuse"
 msgstr ""
@@ -1739,18 +1739,17 @@ msgid "Loading"
 msgstr ""
 
 #: src/components/VHeader/VSearchBar/VSearchButton.vue:4
-#: src/components/VHeader/VSearchBar/VSearchButton.vue:23
+#: src/components/VHeader/VSearchBar/VSearchButton.vue:25
 #: src/components/VHeaderOld/VSearchBar/VSearchButtonOld.vue:4
-#: src/components/VHeaderOld/VSearchBar/VSearchButtonOld.vue:23
 msgctxt "search.search"
 msgid "Search"
 msgstr ""
 
 #. Do not translate words between ### ###.
 #: src/components/VHeader/VHeaderMobile/VHeaderMobile.vue:49
-#: src/components/VHeader/VSearchBar/VSearchBar.vue:20
+#: src/components/VHeader/VSearchBar/VSearchBar.vue:14
+#: src/components/VHeader/VSearchBar/VStandaloneSearchBar.vue:23
 #: src/components/VHeaderOld/VSearchBar/VSearchBarOld.vue:11
-#: src/components/VHeaderOld/VSearchBar/VStandaloneSearchBarOld.vue:23
 msgctxt "search.search-bar-label"
 msgid "Search for content in ###openverse###"
 msgstr ""
