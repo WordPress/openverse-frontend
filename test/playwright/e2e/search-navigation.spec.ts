@@ -82,7 +82,7 @@ test.describe('search history navigation', () => {
         const url = '/search/?q=galah'
         await page.goto(url)
         await page.locator('a[href^="/image"]').first().click()
-        const link = page.locator('text="Back to search results"')
+        const link = page.locator('text="Back to results"')
         await expect(link).toBeVisible()
         await link.click()
         await expect(page).toHaveURL(url)
