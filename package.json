@@ -60,7 +60,7 @@
     "i18n:update-locales": "node src/locales/scripts/get-validated-locales",
     "i18n:generate-pot": "node src/locales/scripts/json-to-pot",
     "i18n:check": "vue-i18n-extract report --vueFiles './src/*/**.?(js|ts|vue)' --languageFiles './src/locales/en.json'",
-    "create-component-and-storie": "remake component --output=src/components",
+    "create-component-and-story": "remake component --output=src/components",
     "create-component-storybook-test": "remake component-storybook-test --output=test/storybook/visual-regression ",
     "create-component-unit-test": "remake component-unit-test",
     "add-component-to-tsconfig": "node add-entry-to-tsconfig.js",
