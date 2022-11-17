@@ -61,9 +61,10 @@
     "i18n:generate-pot": "node src/locales/scripts/json-to-pot",
     "i18n:check": "vue-i18n-extract report --vueFiles './src/*/**.?(js|ts|vue)' --languageFiles './src/locales/en.json'",
     "create-component-and-storie": "remake component --output=src/components",
-    "create-component-storybook-test": " remake component-storybook-test --output=test/storybook/visual-regression ",
+    "create-component-storybook-test": "remake component-storybook-test --output=test/storybook/visual-regression ",
     "create-component-unit-test": "remake component-unit-test",
-    "create-component": "npm-run-all \"create-component-storybook-test -- --fileName={2} --name={1}\"  \"create-component-and-storie -- --name={1}\" \"create-component-unit-test -- --output=test/unit/specs/components/{1} --name={1} --fileName={2}\" --"
+    "add-component-to-tsconfig": "node add-entry-to-tsconfig.js",
+    "create-component": "npm-run-all \"add-component-to-tsconfig {1}\"  \"create-component-storybook-test -- --fileName={2} --name={1}\"  \"create-component-and-storie -- --name={1}\" \"create-component-unit-test -- --output=test/unit/specs/components/{1} --name={1} --fileName={2}\" --"
   },
   "dependencies": {
     "@nuxt/components": "^2.1.6",
@@ -142,6 +143,7 @@
     "autoprefixer": "^10.4.0",
     "babel-jest": "^26.6.3",
     "babel-loader": "8.2.5",
+    "comment-json": "^4.2.3",
     "css-loader": "^5.2.7",
     "eslint": "^8.13.0",
     "eslint-config-prettier": "^8.5.0",
