@@ -26,7 +26,9 @@ const SCREEN_SIZES = {
  */
 const SCREENS = /** @type {Record<RealBreakpoint, string>} */ (
   Object.fromEntries(
-    Object.entries(SCREEN_SIZES).map(([key, val]) => [key, `${val}px`])
+    Object.entries(SCREEN_SIZES)
+      .map(([key, val]) => [key, `${val}px`])
+      .reverse()
   )
 )
 
