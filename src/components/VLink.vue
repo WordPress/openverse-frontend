@@ -26,6 +26,7 @@
       :size="externalIconSize"
       rtl-flip
     />
+    <span class="sr-only">{$t('aria-new-tab')</span>
   </a>
 </template>
 
