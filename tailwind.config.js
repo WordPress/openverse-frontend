@@ -1,4 +1,4 @@
-const { SCREEN_SIZES } = require('./src/constants/screens')
+const { SCREENS } = require('./src/constants/screens')
 
 module.exports = {
   content: [
@@ -7,12 +7,7 @@ module.exports = {
     './tailwind.safelist.txt',
   ],
   theme: {
-    screens: Object.fromEntries(
-      Array.from(SCREEN_SIZES, ([name, width]) => [
-        name,
-        `${width}px`,
-      ]).reverse()
-    ),
+    screens: SCREENS,
     colors: {
       // Accents
       tomato: '#e23600',
