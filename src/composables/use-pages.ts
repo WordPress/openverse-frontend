@@ -22,7 +22,7 @@ export default function usePages(isNew = false) {
         },
         {
           id: "search-help",
-          name: "header.search-guide-nav-item",
+          name: "navigation.search-help",
           link: app.localePath("/search-help"),
         },
         {
