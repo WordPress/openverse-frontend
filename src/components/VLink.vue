@@ -27,7 +27,7 @@
       rtl-flip
     />
     <span class="sr-only">{$t('aria-new-tab')</span>
-  </a>
+    </a>
 </template>
 
 <script lang="ts">
