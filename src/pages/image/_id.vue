@@ -2,15 +2,14 @@
   <div>
     <div
       v-if="backToSearchPath"
-      class="w-full py-2"
-      :class="{ 'bg-dark-charcoal-06 px-2 md:px-6': !isNewHeaderEnabled }"
+      class="w-full py-2 px-2 md:px-6"
+      :class="{ 'bg-dark-charcoal-06': !isNewHeaderEnabled }"
     >
       <VBackToSearchResultsLink :href="backToSearchPath" />
     </div>
 
-    <!-- Negative margin compensates for the `!px-6` padding on <Nuxt/> component. -->
     <figure
-      class="relative -mx-6 mb-4 px-6"
+      class="relative mb-4 px-6"
       :class="
         isNewHeaderEnabled
           ? 'border-b border-dark-charcoal-20'

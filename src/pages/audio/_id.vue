@@ -1,17 +1,10 @@
 <template>
   <main>
-    <div
-      v-if="backToSearchPath"
-      class="w-full py-2"
-      :class="{ 'px-2 md:px-6': !isNewHeaderEnabled }"
-    >
+    <div v-if="backToSearchPath" class="w-full py-2 px-2 md:px-6">
       <VBackToSearchResultsLink :href="backToSearchPath" />
     </div>
 
-    <!-- Negative margin compensates for the `!px-6` padding on <Nuxt/> component. -->
-    <div :class="{ '-mx-6': isNewHeaderEnabled }">
-      <VAudioTrack layout="full" :audio="audio" class="main-track" />
-    </div>
+    <VAudioTrack layout="full" :audio="audio" class="main-track" />
     <div
       class="mx-auto mt-10 flex flex-col gap-10 px-6 lg:mt-16 lg:max-w-5xl lg:gap-16"
     >
