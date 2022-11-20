@@ -73,7 +73,7 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
 
-import type { AudioDetail } from '~/models/media'
+import type { AudioDetail } from '~/types/media'
 import { timeFmt } from '~/utils/time-fmt'
 import { AudioSize, AudioStatus, audioFeatures } from '~/constants/audio'
 

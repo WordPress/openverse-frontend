@@ -29,7 +29,7 @@ import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
 
 import { getFullLicenseName } from '~/utils/license'
 
-import type { Media } from '~/models/media'
+import type { Media } from '~/types/media'
 
 import { useI18n } from '~/composables/use-i18n'
 
