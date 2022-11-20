@@ -118,6 +118,33 @@ ngrok http 8443 -host-header="localhost:8443"
 
 The frontend app is composed of a number of components that are documented in our [Storybook](https://wordpress.github.io/openverse-frontend).
 
+##### How to create a compoent
+
+To create a component you can run:
+
+```
+npm run create-component [component name in camel case] [component name in kebab-case]
+for example: npm run create-component VButtonGreen v-button-green
+```
+
+This command will create: a component file, a story file for the component, a unit test file, a regression test file and it adds the component name to tsconfig.ts includes property.
+
+you can create all those files manually or by runing this commands:
+
+```
+create a component file:
+npm run create-component-sfc -- --output=[path] --name=[component name]
+
+create a story file:
+npm run create-story -- --output=[path] --name=[component name]
+
+create a unit test file:
+npm run create-component-unit-test -- --output=[path] --name=[component name] --fileName=[component name in kebab-case]
+
+create a regression test file:
+npm run create-component-storybook-test -- --output=[path] --name=[component name kebab-case] --fileName=[component name in kebab-case]
+```
+
 ### CSS Framework
 
 To design our components, we use the [TailwindCSS](https://tailwindcss.com/) utility-first CSS framework. We have compiled a list of TailwindCSS classes that are used in the frontend app. You can view the list [here](https://wordpress.github.io/openverse-frontend/tailwind/).
