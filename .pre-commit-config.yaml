@@ -83,7 +83,6 @@ repos:
           - --ignore-path=.gitignore
           - --ignore-path=.eslintignore
           - --max-warnings=0
-          - --ignore-pattern !*
         additional_dependencies:
           - '@babel/eslint-parser@7.17.0'
           - '@intlify/eslint-plugin-vue-i18n@1.4.0'
