@@ -118,7 +118,7 @@ ngrok http 8443 -host-header="localhost:8443"
 
 The frontend app is composed of a number of components that are documented in our [Storybook](https://wordpress.github.io/openverse-frontend).
 
-##### How to create a compoent
+##### How to create a component
 
 To create a component you can run:
 
@@ -128,8 +128,9 @@ for example: npm run create-component VButtonGreen v-button-green
 ```
 
 This command will create: a component file, a story file for the component, a unit test file, a regression test file and it adds the component name to tsconfig.ts includes property.
+each file will have a basic template to start working with. we use [itsjonq/remake](https://www.npmjs.com/package/@itsjonq/remake?activeTab=readme) package to create files out of templates.
 
-you can create all those files manually or by runing this commands:
+you can also create all those files manually or by runing the following commands:
 
 ```
 create a component file:
@@ -138,10 +139,10 @@ npm run create-component-sfc -- --output=[path] --name=[component name]
 create a story file:
 npm run create-story -- --output=[path] --name=[component name]
 
-create a unit test file:
+create a component unit test file:
 npm run create-component-unit-test -- --output=[path] --name=[component name] --fileName=[component name in kebab-case]
 
-create a regression test file:
+create a component regression test file:
 npm run create-component-storybook-test -- --output=[path] --name=[component name kebab-case] --fileName=[component name in kebab-case]
 ```
 
