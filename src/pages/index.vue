@@ -33,7 +33,7 @@
             @select="setSearchType"
           />
         </div>
-        <VStandaloneSearchBarOld
+        <VStandaloneSearchBar
           class="mt-4 max-w-[40rem] md:mt-6"
           @submit="handleSearch"
         >
@@ -45,7 +45,7 @@
             placement="searchbar"
             @select="setSearchType"
           />
-        </VStandaloneSearchBarOld>
+        </VStandaloneSearchBar>
 
         <!-- Disclaimer for large screens -->
         <i18n
@@ -127,6 +127,7 @@ import {
   onMounted,
   ref,
   useContext,
+  useMeta,
   useRouter,
 } from '@nuxtjs/composition-api'
 
@@ -140,13 +141,16 @@ import { isMinScreen } from '~/composables/use-media-query'
 
 import { useMediaStore } from '~/stores/media'
 import { useSearchStore } from '~/stores/search'
+import { useFeatureFlagStore } from '~/stores/feature-flag'
 
 import VLink from '~/components/VLink.vue'
 import VLogoButtonOld from '~/components/VHeaderOld/VLogoButtonOld.vue'
-import VStandaloneSearchBarOld from '~/components/VHeaderOld/VSearchBar/VStandaloneSearchBarOld.vue'
+import VStandaloneSearchBar from '~/components/VHeader/VSearchBar/VStandaloneSearchBar.vue'
 import VSearchTypeRadio from '~/components/VContentSwitcher/VSearchTypeRadio.vue'
 import VSearchTypePopoverOld from '~/components/VContentSwitcherOld/VSearchTypePopoverOld.vue'
 import VBrand from '~/components/VBrand/VBrand.vue'
+
+import type { Dictionary } from 'vue-router/types/router'
 
 import imageInfo from '~/assets/homepage_images/image_info.json'
 
@@ -156,12 +160,22 @@ export default defineComponent({
     VBrand,
     VSearchTypePopoverOld,
     VSearchTypeRadio,
-    VStandaloneSearchBarOld,
+    VStandaloneSearchBar,
     VLink,
     VLogoButtonOld,
   },
   layout: 'blank',
   setup() {
+    const featureFlagStore = useFeatureFlagStore()
+    const themeColorMeta = [
+      { hid: 'theme-color', name: 'theme-color', content: '#ffe033' },
+    ]
+    useMeta({
+      meta: featureFlagStore.isOn('new_header')
+        ? [...themeColorMeta, { hid: 'robots', name: 'robots', content: 'all' }]
+        : themeColorMeta,
+    })
+
     const { app } = useContext()
     const router = useRouter()
     const mediaStore = useMediaStore()
@@ -197,7 +211,7 @@ export default defineComponent({
     const contentSwitcher = ref<InstanceType<
       typeof VSearchTypePopoverOld
     > | null>(null)
-    const searchType = ref(ALL_MEDIA)
+    const searchType = ref<SupportedSearchType>(ALL_MEDIA)
 
     const setSearchType = (type: SupportedSearchType) => {
       searchType.value = type
@@ -212,7 +226,7 @@ export default defineComponent({
 
       const newPath = app.localePath({
         path: searchPath(searchType.value),
-        query: searchStore.searchQueryParams,
+        query: searchStore.searchQueryParams as Dictionary<string>,
       })
       router.push(newPath)
     }

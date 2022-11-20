@@ -34,7 +34,13 @@ Run the following commands in order to have the code up and running on your mach
 # Builds and serves assets with hot-reload
 # Automatically invokes pnpm install and pnpm i18n
 pnpm dev
+```
 
+If you intend to change any text in the app, you will need to edit `src/locales/scripts/en.json5`. To ensure your changes are reflected immediately, run the following command.
+
+```bash
+# Watches the en.json5 file and updates the en.json file for every change.
+pnpm i18n:watch-en
 ```
 
 ### Using HTTPS Locally
@@ -127,7 +133,7 @@ We do not currently support local development using Docker or `docker-compose`. 
 However, we do build and actively deploy the frontend using Docker images. If you wish to build the production image for yourself, run the following:
 
 ```shell
-docker build . -t openverse-frontend:latest
+pnpm docker:build
 ```
 
 You can also find the latest `openverse-frontend` images on our [GitHub packages page](https://github.com/WordPress/openverse-frontend/pkgs/container/openverse-frontend).
@@ -135,7 +141,7 @@ You can also find the latest `openverse-frontend` images on our [GitHub packages
 You can then run using either the locally built image or the `ghcr.io` image from the link above:
 
 ```shell
-docker run --rm -it -p 127.0.0.1:8443:8443/tcp openverse-frontend:latest
+pnpm docker:run
 ```
 
 The app will be available at <http://localhost:8443>.
@@ -144,7 +150,7 @@ The app will be available at <http://localhost:8443>.
 > E.g. this link will not work:
 >
 > ```
-> $ docker run --rm -it -p 127.0.0.1:8443:8443/tcp openverse-frontend:latest
+> $ pnpm docker:run
 >
 > > openverse-frontend@2.2.1 start
 > > nuxt start
@@ -181,6 +187,10 @@ All files and folders should be written in `kebab-case`, with the exception of V
 | From         | To          | Status code | Setup level            |
 | ------------ | ----------- | ----------- | ---------------------- |
 | /photos/\_id | /image/\_id | 301         | Nuxt server middleware |
+
+## Just
+
+If [`just`](https://github.com/casey/just) is your preferred command runner, you can also use `just run {script}` to run any pnpm script and `just` on its own to list the available scripts (e.g. `just run docker:build`). Our other projects use `just` as their primary script runner, so this allows parity with both the API and the catalog.
 
 ## Contributing
 
