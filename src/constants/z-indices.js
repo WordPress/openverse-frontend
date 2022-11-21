@@ -6,19 +6,19 @@
 /**
  * mapping of z-index names to z-indices; Ensure that these values are also
  * written in the `tailwind.safelist.txt` file in the project root.
- *
- * @type {Record<string, string|number>}
  */
-const Z_INDICES = {
-  auto: 'auto',
-  10: 10,
-  20: 20,
-  30: 30,
-  40: 40,
-  50: 50,
-  // Named indices
-  popover: 50,
-}
+const Z_INDICES = Object.freeze(
+  /** @type {const} */ ({
+    auto: 'auto',
+    10: 10,
+    20: 20,
+    30: 30,
+    40: 40,
+    50: 50,
+    // Named indices
+    popover: 50,
+  })
+)
 
 /**
  * Check whether the given z-index is valid and is configured in Tailwind.
