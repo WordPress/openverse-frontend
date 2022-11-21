@@ -134,16 +134,16 @@ you can also create all those files manually or by runing the following commands
 
 ```
 create a component file:
-npm run create-component-sfc -- --output=[path] --name=[component name]
+pnpm run create-component-sfc -- --output=[path] --name=[component name]
 
 create a story file:
-npm run create-story -- --output=[path] --name=[component name]
+pnpm run create-story -- --output=[path] --name=[component name]
 
 create a component unit test file:
-npm run create-component-unit-test -- --output=[path] --name=[component name] --fileName=[component name in kebab-case]
+pnpm run create-component-unit-test -- --output=[path] --name=[component name] --fileName=[component name in kebab-case]
 
 create a component regression test file:
-npm run create-component-storybook-test -- --output=[path] --name=[component name kebab-case] --fileName=[component name in kebab-case]
+pnpm run create-component-storybook-test -- --output=[path] --name=[component name kebab-case] --fileName=[component name in kebab-case]
 ```
 
 ### CSS Framework
