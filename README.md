@@ -123,8 +123,8 @@ The frontend app is composed of a number of components that are documented in ou
 To create a component you can run:
 
 ```
-npm run create-component [component name in camel case] [component name in kebab-case]
-for example: npm run create-component VButtonGreen v-button-green
+pnpm run create-component [component name in camel case] [component name in kebab-case]
+for example: pnpm run create-component VButtonGreen v-button-green
 ```
 
 This command will create: a component file, a story file for the component, a unit test file, a regression test file and it adds the component name to tsconfig.ts includes property.
