@@ -29,7 +29,7 @@ import { defineComponent, PropType, ref } from '@nuxtjs/composition-api'
 
 import { defineEvent } from '~/types/emits'
 
-import { useUiStore } from '~/stores/ui'
+import { BannerId, useUiStore } from '~/stores/ui'
 
 import VIconButton from '~/components/VIconButton/VIconButton.vue'
 
@@ -46,7 +46,7 @@ export default defineComponent({
       required: true,
     },
     id: {
-      type: String,
+      type: String as PropType<BannerId>,
       required: true,
     },
     enabled: {
