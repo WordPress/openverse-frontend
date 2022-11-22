@@ -16,7 +16,7 @@
       sizeClasses,
     ]"
   >
-    <VIcon v-show="isIcon" :icon-path="searchIcon" :rtl-flip="true" />
+    <VIcon v-show="isIcon" :icon-path="searchIcon" />
     <span v-show="!isIcon">{{ $t('search.search') }}</span>
   </VButton>
 </template>
