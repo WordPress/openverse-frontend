@@ -25,9 +25,8 @@
       class="inline-block"
       :size="externalIconSize"
       rtl-flip
-    />
-    <span class="sr-only">{$t('aria-new-tab')</span>
-    </a>
+    /><span class="sr-only">{{ $t('aria-new-tab') }}</span>
+  </a>
 </template>
 
 <script lang="ts">

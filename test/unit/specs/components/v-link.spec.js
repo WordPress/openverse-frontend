@@ -33,7 +33,7 @@ describe("VLink", () => {
     href                  | component
     ${"/about"}           | ${"NuxtLink"}
     ${"http://localhost"} | ${"A"}
-  `("VLink as a $component handles click", async ({ href }) => {
+  `("VLink as a $component handles click", async ({ href, component }) => {
     const createVLinkWrapper = (href) =>
       // eslint-disable-next-line vue/one-component-per-file
       Vue.component("VLinkWrapper", {
@@ -51,7 +51,9 @@ describe("VLink", () => {
       localVue.component("VLink", VLink)
     })
     const linkBefore = await screen.getByRole("link")
-    expect(linkBefore.textContent).toEqual("Link Text")
+    const expectedLinkTextBefore =
+      component === "A" ? "Link Textaria-new-tab" : "Link Text"
+    expect(linkBefore.textContent).toEqual(expectedLinkTextBefore)
 
     await fireEvent.click(linkBefore)
     const linkAfter = await screen.findByText("Code is Poetry")
