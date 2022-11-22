@@ -16,9 +16,6 @@
 
     <i18n path="about.planning.content" tag="p">
       <template #openverse>Openverse</template>
-      <template #meta>
-        <VLink href="/external-sources">{{ $t('about.planning.meta') }}</VLink>
-      </template>
       <template #frontend>
         <VLink href="https://github.com/wordpress/openverse-frontend/">{{
           $t('about.planning.frontend', { openverse: 'Openverse' })
@@ -71,7 +68,7 @@
     </i18n>
 
     <div v-if="isNewHeaderEnabled">
-      <h2>
+      <h2 id="external-sources">
         {{ $t('external-sources-page.title') }}
       </h2>
 
