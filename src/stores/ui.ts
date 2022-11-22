@@ -141,7 +141,7 @@ export const useUiStore = defineStore('ui', {
     toggleFilters() {
       this.setFiltersState(!this.isFilterVisible)
     },
-    dismissBanner(bannerId: string) {
+    dismissBanner(bannerId: BannerId) {
       this.dismissedBanners.push(bannerId)
       this.$nuxt.$cookies.set(
         'uiDismissedBanners',
@@ -149,7 +149,7 @@ export const useUiStore = defineStore('ui', {
         cookieOptions
       )
     },
-    isBannerDismissed(bannerId: string): boolean {
+    isBannerDismissed(bannerId: BannerId): boolean {
       return this.dismissedBanners.includes(bannerId)
     },
   },
