@@ -1,6 +1,8 @@
 /**
  * This file cannot be converted to TypeScript because it's referenced in the
- * Tailwind config.
+ * Tailwind config. `RealBreakpoints` excludes 'xs' because it's not defined
+ * in Tailwind but is used in JavaScript to refer to mobile screens that are
+ * narrower than 640px ('sm').
  *
  * @typedef {'2xl' | 'xl' | 'lg' | 'md' | 'sm' | 'xs'} Breakpoint
  * @typedef {Exclude<Breakpoint, 'xs'>} RealBreakpoint
