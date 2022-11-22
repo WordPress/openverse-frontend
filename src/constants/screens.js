@@ -40,7 +40,7 @@ const SCREENS = /** @type {Record<RealBreakpoint, string>} */ (
  */
 const VIEWPORTS = /** @type {Record<Breakpoint, Viewport>} */ (
   Object.fromEntries(
-    (/** @type {[Breakpoint, number][]} */ (Object.entries(SCREEN_SIZES)))
+    /** @type {[Breakpoint, number][]} */ (Object.entries(SCREEN_SIZES))
       .concat([['xs', 340]])
       .map(([key, val]) => [
         key,

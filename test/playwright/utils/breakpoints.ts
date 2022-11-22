@@ -113,10 +113,11 @@ const breakpointTests = Array.from(Object.entries(VIEWPORTS)).reduce(
     ]
   ) =>
     Object.assign(tests, {
-      [`describe${capitalize(breakpoint as Breakpoint)}`]: makeBreakpointDescribe(
-        breakpoint as Breakpoint,
-        parseFloat(width.replace('px', ''))
-      ),
+      [`describe${capitalize(breakpoint as Breakpoint)}`]:
+        makeBreakpointDescribe(
+          breakpoint as Breakpoint,
+          parseFloat(width.replace('px', ''))
+        ),
     }),
   {} as Record<
     `describe${Capitalize<Breakpoint>}`,
