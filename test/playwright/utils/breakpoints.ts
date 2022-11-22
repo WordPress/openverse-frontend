@@ -100,7 +100,7 @@ const makeBreakpointDescribe =
   }
 
 const capitalize = (s: string): Capitalize<typeof s> =>
-  `${s[0].toUpperCase()}${s.slice(1)}`
+  `${s[0].toUpperCase()}${s.slice(1)}` as Capitalize<typeof s>
 
 const breakpointTests = Array.from(Object.entries(VIEWPORTS)).reduce(
   (
@@ -113,7 +113,7 @@ const breakpointTests = Array.from(Object.entries(VIEWPORTS)).reduce(
     ]
   ) =>
     Object.assign(tests, {
-      [`describe${capitalize(breakpoint)}`]: makeBreakpointDescribe(
+      [`describe${capitalize(breakpoint as Breakpoint)}`]: makeBreakpointDescribe(
         breakpoint as Breakpoint,
         parseFloat(width.replace('px', ''))
       ),

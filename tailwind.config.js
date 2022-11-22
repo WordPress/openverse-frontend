@@ -1,4 +1,5 @@
 const { SCREENS } = require('./src/constants/screens')
+const { Z_INDICES } = require('./src/constants/z-indices')
 
 module.exports = {
   content: [
@@ -8,6 +9,7 @@ module.exports = {
   ],
   theme: {
     screens: SCREENS,
+    zIndex: Z_INDICES,
     colors: {
       // Accents
       tomato: '#e23600',

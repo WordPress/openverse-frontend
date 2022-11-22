@@ -1,8 +1,8 @@
 /**
  * This file cannot be converted to TypeScript because it's referenced in the
- * Tailwind config. `RealBreakpoints` excludes 'xs' because it's not defined
- * in Tailwind but is used in JavaScript to refer to mobile screens that are
- * narrower than 640px ('sm').
+ * Tailwind config. `RealBreakpoints` excludes 'xs' because it's not defined in
+ * Tailwind (being mobile-first) but is used in JavaScript to refer to mobile
+ * screens that are narrower than 640px ('sm').
  *
  * @typedef {'2xl' | 'xl' | 'lg' | 'md' | 'sm' | 'xs'} Breakpoint
  * @typedef {Exclude<Breakpoint, 'xs'>} RealBreakpoint
@@ -11,16 +11,16 @@
 
 /**
  * mapping of breakpoint names to the lower-bound of their screen width range
- *
- * @type {Record<RealBreakpoint, number>}
  */
-const SCREEN_SIZES = {
-  '2xl': 1536,
-  xl: 1280,
-  lg: 1024,
-  md: 768,
-  sm: 640,
-}
+const SCREEN_SIZES = Object.freeze(
+  /** @type {const} */ ({
+    '2xl': 1536,
+    xl: 1280,
+    lg: 1024,
+    md: 768,
+    sm: 640,
+  })
+)
 
 /**
  * mapping of breakpoint names to the lower-bound of their screen width range,
@@ -40,7 +40,7 @@ const SCREENS = /** @type {Record<RealBreakpoint, string>} */ (
  */
 const VIEWPORTS = /** @type {Record<Breakpoint, Viewport>} */ (
   Object.fromEntries(
-    Object.entries(SCREEN_SIZES)
+    (/** @type {[Breakpoint, number][]} */ (Object.entries(SCREEN_SIZES)))
       .concat([['xs', 340]])
       .map(([key, val]) => [
         key,
