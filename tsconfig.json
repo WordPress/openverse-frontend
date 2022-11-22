@@ -94,7 +94,7 @@
      */
     "src/constants/**/*",
     "src/server-middleware/healthcheck.js"
-    /** ******** */
+    /** End of non TypeScript files section */
   ],
   "exclude": ["node_modules"],
   "vueCompilerOptions": {
