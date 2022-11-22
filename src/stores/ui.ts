@@ -1,12 +1,15 @@
 import { defineStore } from 'pinia'
 
-import type { OpenverseCookieState, SnackbarState } from '~/types/cookies'
-
 import { cookieOptions } from '~/types/cookies'
 
-import type { Locale } from 'vue-i18n'
+import type { OpenverseCookieState, SnackbarState } from '~/types/cookies'
 
-export type BannerId = Locale | 'cc-referral'
+import { needsTranslationBanner } from '~/utils/translation-banner'
+import { useNavigationStore } from '~/stores/navigation'
+
+import type { BannerId, TranslationBannerId } from '~/types/banners'
+
+import type { LocaleObject } from '@nuxtjs/i18n'
 
 export interface UiState {
   /**
@@ -70,6 +73,40 @@ export const useUiStore = defineStore('ui', {
         state.innerFilterVisible = true
       }
       return state.innerFilterVisible
+    },
+    /**
+     * The locale object of the current locale.
+     */
+    currentLocale(): LocaleObject {
+      return this.$nuxt.i18n.localeProperties
+    },
+    /**
+     * The id used in the translation banner and the cookies for dismissed banners.
+     * @example 'translation-ru'
+     */
+    translationBannerId(): TranslationBannerId {
+      return `translation-${this.currentLocale.code as LocaleObject['code']}`
+    },
+    /**
+     * The translation banner is shown if the translated percentage is below 90%,
+     * and the banner for the current locale was not dismissed (status from cookies).
+     */
+    shouldShowTranslationBanner(): boolean {
+      return (
+        !this.dismissedBanners.includes(this.translationBannerId) &&
+        needsTranslationBanner(this.currentLocale)
+      )
+    },
+    /**
+     * The migration banner is shown if the user is referred from CC Search,
+     * and hasn't dismissed it yet.
+     */
+    shouldShowMigrationBanner(): boolean {
+      const navigationStore = useNavigationStore()
+      return (
+        !this.dismissedBanners.includes('cc-referral') &&
+        navigationStore.isReferredFromCc
+      )
     },
   },
 
@@ -141,6 +178,10 @@ export const useUiStore = defineStore('ui', {
     toggleFilters() {
       this.setFiltersState(!this.isFilterVisible)
     },
+    /**
+     * If the banner wasn't dismissed before, dismisses it and saves the new state in a cookie.
+     * @param bannerId - the id of the banner to dismiss.
+     */
     dismissBanner(bannerId: BannerId) {
       if (!this.dismissedBanners.includes(bannerId)) {
         this.dismissedBanners.push(bannerId)
@@ -151,7 +192,7 @@ export const useUiStore = defineStore('ui', {
         )
       }
     },
-    isBannerDismissed(bannerId: BannerId): boolean {
+    isBannerDismissed(bannerId: BannerId) {
       return this.dismissedBanners.includes(bannerId)
     },
   },

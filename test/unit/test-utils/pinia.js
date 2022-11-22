@@ -13,6 +13,13 @@ export const createPinia = () =>
         set: jest.fn(),
         get: jest.fn(),
       },
+      i18n: {
+        localeProperties: {
+          code: 'es',
+          translated: 100,
+          name: 'Spanish',
+        },
+      },
     },
   }))
 

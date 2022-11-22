@@ -1,6 +1,7 @@
 import type { FeatureState } from '~/constants/feature-flag'
-import type { BannerId } from '~/stores/ui'
 import { isProd } from '~/utils/node-env'
+
+import type { BannerId } from '~/types/banners'
 
 import type { CookieSerializeOptions } from 'cookie'
 

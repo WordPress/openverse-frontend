@@ -1,6 +1,5 @@
 <template>
   <div
-    v-show="enabled && shouldShow"
     class="flex items-center justify-between px-4 py-2 md:px-7"
     :class="$style[variant]"
     :data-testid="`banner-${id}`"
@@ -25,11 +24,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref } from '@nuxtjs/composition-api'
+import { defineComponent, PropType } from '@nuxtjs/composition-api'
 
 import { defineEvent } from '~/types/emits'
 
-import { BannerId, useUiStore } from '~/stores/ui'
+import type { BannerId } from '~/types/banners'
 
 import VIconButton from '~/components/VIconButton/VIconButton.vue'
 
@@ -49,36 +48,18 @@ export default defineComponent({
       type: String as PropType<BannerId>,
       required: true,
     },
-    enabled: {
-      type: Boolean,
-      required: true,
-    },
   },
   emits: {
     close: defineEvent(),
   },
-  setup(props, { emit }) {
-    const uiStore = useUiStore()
-
-    /**
-     * We only hide the enabled banner if there is a cookie.
-     */
-    const shouldShow = ref(!uiStore.isBannerDismissed(props.id))
-
-    const dismissBanner = () => {
-      uiStore.dismissBanner(props.id)
-      shouldShow.value = false
-    }
-
+  setup(_, { emit }) {
     const handleClose = () => {
-      dismissBanner()
       emit('close')
     }
 
     return {
       closeIcon,
       handleClose,
-      shouldShow,
     }
   },
 })
