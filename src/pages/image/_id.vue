@@ -13,7 +13,7 @@
       :class="
         isNewHeaderEnabled
           ? 'border-b border-dark-charcoal-20'
-          : 'bg-dark-charcoal-06'
+          : 'bg-dark-charcoal-06 pt-4 md:pt-8'
       "
     >
       <img
