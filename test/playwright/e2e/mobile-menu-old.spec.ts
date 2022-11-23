@@ -50,7 +50,7 @@ test('Selecting a search type closes the modal', async ({ page }) => {
   await goToSearchTerm(page, 'cat')
   await openContentTypes(page, OLD_HEADER)
   await expect(page.locator('button', { hasText: 'Close' })).toBeVisible()
-  await page.locator('text=Audio').click()
+  await page.locator('a[role="radio"]:has-text("Audio")').click()
 
   await expect(page.locator('button', { hasText: 'Close' })).not.toBeVisible()
 })
