@@ -117,6 +117,7 @@ describe('VModal', () => {
   it('should hide the modal on escape', async () => {
     render(TestWrapper, options)
     await doOpen()
+    screen.debug()
 
     expect(getDialog()).toBeVisible()
 
