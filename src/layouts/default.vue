@@ -22,7 +22,7 @@
       ]"
     >
       <div v-if="isNewHeaderEnabled" class="main-page min-w-0">
-        <Nuxt class="!px-6" />
+        <Nuxt />
         <VFooter
           :mode="isSearchHeader ? 'content' : 'search'"
           class="border-t border-dark-charcoal-20"
@@ -35,7 +35,7 @@
         class="sidebar fixed z-10 overflow-y-auto bg-dark-charcoal-06 end-0"
         :class="{ 'border-dark-charcoal-20 border-s': isSidebarVisible }"
       >
-        <VSearchGridFilter class="px-10 pt-1" @close="closeSidebar" />
+        <VSearchGridFilter class="px-10 pt-8 pb-10" @close="closeSidebar" />
       </aside>
     </main>
 
