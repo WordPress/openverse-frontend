@@ -23,17 +23,15 @@
   </aside>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
+<script>
+import { computed } from '@nuxtjs/composition-api'
 
 import { useUiStore } from '~/stores/ui'
-
-import type { FetchState } from '~/models/fetch-state'
 
 import LoadingIcon from '~/components/LoadingIcon.vue'
 import VAudioTrack from '~/components/VAudioTrack/VAudioTrack.vue'
 
-export default defineComponent({
+export default {
   name: 'VRelatedAudio',
   components: { VAudioTrack, LoadingIcon },
   props: {
@@ -42,10 +40,14 @@ export default defineComponent({
       required: true,
     },
     fetchState: {
-      type: Object as PropType<FetchState>,
+      type: Object,
       required: true,
     },
   },
+  /**
+   * Fetches related audios on `audioId` change
+   * @return {{audioTrackSize: import('@nuxtjs/composition-api').ComputedRef<"l" | "s"> }}
+   */
   setup() {
     const uiStore = useUiStore()
 
@@ -53,5 +55,5 @@ export default defineComponent({
 
     return { audioTrackSize }
   },
-})
+}
 </script>
