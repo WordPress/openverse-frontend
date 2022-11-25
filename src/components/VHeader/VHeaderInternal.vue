@@ -63,10 +63,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useRoute, watch } from '@nuxtjs/composition-api'
+import {
+  computed,
+  defineComponent,
+  ref,
+  useRoute,
+  watch,
+} from '@nuxtjs/composition-api'
 
 import usePages from '~/composables/use-pages'
-import { isMinScreen } from '~/composables/use-media-query'
+
+import { useUiStore } from '~/stores/ui'
 
 import VHomeLink from '~/components/VHeader/VHomeLink.vue'
 import VIconButton from '~/components/VIconButton/VIconButton.vue'
@@ -99,10 +106,9 @@ export default defineComponent({
       }
     })
 
-    // We cannot use the `isDesktopLayout` from the ui store here because
-    // the threshold there is `lg`, and in `VHeaderInternal` it is `md`.
-    const isMinScreenMd = isMinScreen('md')
-    watch(isMinScreenMd, (isDesktop) => {
+    const uiStore = useUiStore()
+    const isDesktopLayout = computed(() => uiStore.isDesktopLayout)
+    watch(isDesktopLayout, (isDesktop) => {
       if (isDesktop && isModalVisible.value) {
         closeModal()
       }
