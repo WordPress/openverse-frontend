@@ -102,16 +102,15 @@ const embeddedPage = {
     const isNewHeaderEnabled = computed(() =>
       featureFlagStore.isOn('new_header')
     )
-    const { isDesktopLayout: isDesktop, updateLayout } = useLayout()
+    const { updateBreakpoint } = useLayout()
 
     /**
-     * If cookies state does not match the state on mounted
-     * (e.g., if the cookies were saved when the screen was `sm`,
-     * and then a page is opened on SSR on a `lg` screen),
-     * we update the cookie state.
+     * Update the breakpoint value in the cookie on mounted.
+     * The Pinia state might become different from the cookie state if, for example, the cookies were saved when the screen was `sm`,
+     * and then a page is opened on SSR on a `lg` screen.
      */
     onMounted(() => {
-      updateLayout(isDesktop.value)
+      updateBreakpoint()
     })
 
     const { matches: isSearchRoute } = useMatchSearchRoutes()

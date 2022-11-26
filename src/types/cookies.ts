@@ -1,6 +1,8 @@
 import type { FeatureState } from '~/constants/feature-flag'
 import { isProd } from '~/utils/node-env'
 
+import type { Breakpoint } from '~/types/screens'
+
 import type { CookieSerializeOptions } from 'cookie'
 
 export type SnackbarState = 'not_shown' | 'visible' | 'dismissed'
@@ -24,9 +26,9 @@ export interface OpenverseCookieState {
    */
   uiIsFilterDismissed?: boolean
   /**
-   * Whether the site layout is desktop (or mobile).
+   * The screen's max-width breakpoint.
    */
-  uiIsDesktopLayout?: boolean
+  uiBreakpoint?: Breakpoint
   /**
    * Whether the request user agent is mobile or not.
    */

@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test'
 
-import { Breakpoint, VIEWPORTS } from '~/constants/screens'
+import { VIEWPORTS } from '~/constants/screens'
+import type { Breakpoint } from '~/types/screens'
 
 type ScreenshotAble = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

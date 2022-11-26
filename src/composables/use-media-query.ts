@@ -4,10 +4,12 @@ import { computed, ref, watchEffect } from '@nuxtjs/composition-api'
 
 import { resolveUnref } from '@vueuse/core'
 
-import { SCREEN_SIZES, Breakpoint } from '~/constants/screens'
+import { SCREEN_SIZES } from '~/constants/screens'
 import { defaultWindow } from '~/constants/window'
 import { tryOnScopeDispose } from '~/utils/try-on-scope-dispose'
 import { useSupported } from '~/composables/use-supported'
+
+import type { Breakpoint } from '~/types/screens'
 
 import type { MaybeComputedRef } from '@vueuse/core'
 

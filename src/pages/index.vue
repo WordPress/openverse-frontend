@@ -191,7 +191,7 @@ export default defineComponent({
         : themeColorMeta,
     })
 
-    const { isDesktopLayout: isDesktop, updateLayout } = useLayout()
+    const { updateBreakpoint } = useLayout()
 
     /**
      * Reset the search type, search term and filters when the user navigates [back] to the homepage.
@@ -200,7 +200,7 @@ export default defineComponent({
       searchStore.$reset()
       mediaStore.$reset()
 
-      updateLayout(isDesktop.value)
+      updateBreakpoint()
     })
 
     const featuredSearches = imageInfo.sets.map((setItem) => ({

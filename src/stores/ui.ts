@@ -1,8 +1,14 @@
 import { defineStore } from 'pinia'
 
+import { computed } from '@nuxtjs/composition-api'
+
 import type { OpenverseCookieState, SnackbarState } from '~/types/cookies'
 
 import { cookieOptions } from '~/types/cookies'
+import type { Breakpoint } from '~/types/screens'
+import { useFeatureFlagStore } from '~/stores/feature-flag'
+
+const desktopBreakpoints: Breakpoint[] = ['2xl', 'xl', 'lg']
 
 export interface UiState {
   /**
@@ -24,6 +30,10 @@ export interface UiState {
    */
   isDesktopLayout: boolean
   /**
+   * the screen's max-width breakpoint.
+   */
+  breakpoint: Breakpoint
+  /**
    * whether the request user agent is mobile or not.
    */
   isMobileUa: boolean
@@ -35,12 +45,22 @@ export const useUiStore = defineStore('ui', {
     innerFilterVisible: false,
     isFilterDismissed: false,
     isDesktopLayout: false,
+    breakpoint: 'sm',
     isMobileUa: true,
   }),
 
   getters: {
     areInstructionsVisible(state): boolean {
       return state.instructionsSnackbarState === 'visible'
+    },
+    desktopBreakpoints(): Breakpoint[] {
+      const featureFlagStore = useFeatureFlagStore()
+      const isNewHeaderEnabled = computed(() =>
+        featureFlagStore.isOn('new_header')
+      )
+      return isNewHeaderEnabled.value
+        ? desktopBreakpoints
+        : [...desktopBreakpoints, 'md']
     },
     /**
      * On desktop, we only hide the filters sidebar if it was
@@ -82,28 +102,39 @@ export const useUiStore = defineStore('ui', {
      * @param cookies - mapping of UI state parameters and their states.
      */
     initFromCookies(cookies: OpenverseCookieState) {
-      this.isDesktopLayout = cookies.uiIsDesktopLayout ?? false
+      this.updateBreakpoint(cookies.uiBreakpoint ?? this.breakpoint)
       this.isFilterDismissed = cookies.uiIsFilterDismissed ?? false
       this.isMobileUa = cookies.uiIsMobileUa ?? false
       this.innerFilterVisible = this.isDesktopLayout
         ? !this.isFilterDismissed
         : false
+      this.updateCookies()
+    },
+
+    updateCookies() {
+      const opts = cookieOptions
+      this.$nuxt.$cookies.setAll([
+        {
+          name: 'uiInstructionsSnackbarState',
+          value: this.instructionsSnackbarState,
+          opts,
+        },
+        { name: 'uiIsFilterDismissed', value: this.isFilterDismissed, opts },
+        { name: 'uiBreakpoint', value: this.breakpoint, opts },
+        { name: 'uiIsMobileUa', value: this.isMobileUa, opts },
+      ])
     },
 
     /**
      * If the breakpoint is different from the state, updates the state, and saves it into app cookies.
      *
-     * @param isDesktopLayout - whether the layout is desktop (`lg` with the `new_header`
-     * and `md` with the `old_header`).
+     * @param breakpoint - the `max-width` tailwind breakpoint for the screen width.
      */
-    updateBreakpoint(isDesktopLayout: boolean) {
-      if (this.isDesktopLayout !== isDesktopLayout) {
-        this.isDesktopLayout = isDesktopLayout
-        this.$nuxt.$cookies.set(
-          'uiIsDesktopLayout',
-          this.isDesktopLayout,
-          cookieOptions
-        )
+    updateBreakpoint(breakpoint: Breakpoint) {
+      if (this.breakpoint !== breakpoint) {
+        this.breakpoint = breakpoint
+        this.$nuxt.$cookies.set('uiBreakpoint', this.breakpoint, cookieOptions)
+        this.isDesktopLayout = this.desktopBreakpoints.includes(breakpoint)
       }
     },
 
