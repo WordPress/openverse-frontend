@@ -123,8 +123,8 @@ The frontend app is composed of a number of components that are documented in ou
 To create a component you can run:
 
 ```
-pnpm run create-component [component name in camel case] [component name in kebab-case]
-for example: pnpm run create-component VButtonGreen v-button-green
+pnpm run create:component [component name in PascaleCase]
+for example: pnpm run create:component VButtonGreen
 ```
 
 This command will create a component file, a story file for the component, a unit test file, and a regression test file. It also adds the component name to tsconfig.ts `includes` property.
@@ -134,16 +134,16 @@ You can also create all those files manually or by running the following command
 
 ```
 create a component file:
-pnpm run create-component-sfc -- --output=[path] --name=[component name]
+pnpm run create:component-sfc --output=[path] --name=[component name]
 
 create a story file:
-pnpm run create-story -- --output=[path] --name=[component name]
+pnpm run create:story --output=[path] --name=[component name]
 
 create a component unit test file:
-pnpm run create-component-unit-test -- --output=[path] --name=[component name] --fileName=[component name in kebab-case]
+pnpm run create:component-unit-test --output=[path] --name=[component name] --fileName=[component name in kebab-case]
 
 create a component regression test file:
-pnpm run create-component-storybook-test -- --output=[path] --name=[component name kebab-case] --fileName=[component name in kebab-case]
+pnpm run create:component-storybook-test --output=[path] --name=[component name kebab-case] --fileName=[component name in kebab-case]
 ```
 
 ### CSS Framework
