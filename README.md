@@ -123,7 +123,7 @@ The frontend app is composed of a number of components that are documented in ou
 To create a component you can run:
 
 ```
-pnpm run create:component [component name in PascaleCase]
+pnpm run create:component [component name in PascalCase]
 for example: pnpm run create:component VButtonGreen
 ```
 
