@@ -128,7 +128,7 @@ for example: pnpm run create-component VButtonGreen v-button-green
 ```
 
 This command will create: a component file, a story file for the component, a unit test file, a regression test file and it adds the component name to tsconfig.ts includes property.
-each file will have a basic template to start working with. we use [itsjonq/remake](https://www.npmjs.com/package/@itsjonq/remake?activeTab=readme) package to create files out of templates.
+Each file will have a basic template to start working with. We use [itsjonq/remake](https://www.npmjs.com/package/@itsjonq/remake?activeTab=readme) package to create files out of templates.
 
 You can also create all those files manually or by running the following commands:
 
