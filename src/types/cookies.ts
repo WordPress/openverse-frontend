@@ -1,7 +1,7 @@
 import type { FeatureState } from '~/constants/feature-flag'
 import { isProd } from '~/utils/node-env'
 
-import type { Breakpoint } from '~/types/screens'
+import type { Breakpoint } from '~/constants/screens'
 
 import type { CookieSerializeOptions } from 'cookie'
 

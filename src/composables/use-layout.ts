@@ -1,16 +1,11 @@
 import { useWindowSize, watchThrottled } from '@vueuse/core'
 
-import { useUiStore } from '~/stores/ui'
-
-import { SCREEN_SIZES } from '~/constants/screens'
-import type { Breakpoint } from '~/types/screens'
-
-const sizesReversed = [...Object.values(SCREEN_SIZES), 0]
-const bpsReversed = [...Object.keys(SCREEN_SIZES), 'xs']
+import type { Breakpoint } from '~/constants/screens'
+import { breakpoints, screenSizes, useUiStore } from '~/stores/ui'
 
 const widthToBreakpoint = (width: number): Breakpoint => {
-  return bpsReversed[
-    sizesReversed.findIndex((size) => width >= size)
+  return breakpoints[
+    screenSizes.findIndex((size) => width >= size)
   ] as Breakpoint
 }
 

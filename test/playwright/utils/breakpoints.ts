@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test'
 
 import { VIEWPORTS } from '~/constants/screens'
-import type { Breakpoint } from '~/types/screens'
+import type { Breakpoint } from '~/constants/screens'
 
 type ScreenshotAble = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -162,7 +162,7 @@ export default {
   describeEvery,
   describeEachDesktop,
   describeEachMobile,
-  // For `old_header` layout and for VHeaderInternal, the mobile layout ends at `md` breakpoint
+  // For `old_header` layout, the mobile layout ends at `md` breakpoint
   describeEachMobileWithoutMd,
   describeEachDesktopWithMd,
   // For testing functionality in e2e tests, we need to test mobile and desktop screens.

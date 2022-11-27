@@ -3,9 +3,9 @@ import { defineStore } from 'pinia'
 import { computed } from '@nuxtjs/composition-api'
 
 import type { OpenverseCookieState, SnackbarState } from '~/types/cookies'
-
 import { cookieOptions } from '~/types/cookies'
-import type { Breakpoint } from '~/types/screens'
+import type { Breakpoint } from '~/constants/screens'
+import { SCREEN_SIZES } from '~/constants/screens'
 import { useFeatureFlagStore } from '~/stores/feature-flag'
 
 const desktopBreakpoints: Breakpoint[] = ['2xl', 'xl', 'lg']
@@ -38,6 +38,9 @@ export interface UiState {
    */
   isMobileUa: boolean
 }
+
+export const screenSizes = [...Object.values(SCREEN_SIZES), 0]
+export const breakpoints = [...Object.keys(SCREEN_SIZES), 'xs']
 
 export const useUiStore = defineStore('ui', {
   state: (): UiState => ({
@@ -128,7 +131,7 @@ export const useUiStore = defineStore('ui', {
     /**
      * If the breakpoint is different from the state, updates the state, and saves it into app cookies.
      *
-     * @param breakpoint - the `max-width` tailwind breakpoint for the screen width.
+     * @param breakpoint - the `min-width` tailwind breakpoint for the screen width.
      */
     updateBreakpoint(breakpoint: Breakpoint) {
       if (this.breakpoint !== breakpoint) {
@@ -162,6 +165,16 @@ export const useUiStore = defineStore('ui', {
      */
     toggleFilters() {
       this.setFiltersState(!this.isFilterVisible)
+    },
+    /**
+     * Similar to CSS `@media` queries, this function returns a boolean
+     * indicating whether the current breakpoint is greater than or equal to
+     * the breakpoint passed as a parameter.
+     */
+    isBreakpoint(breakpoint: Breakpoint): boolean {
+      return (
+        breakpoints.indexOf(breakpoint) <= breakpoints.indexOf(this.breakpoint)
+      )
     },
   },
 })
