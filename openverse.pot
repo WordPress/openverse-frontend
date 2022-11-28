@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-11-23T14:08:02+00:00\n"
+"POT-Creation-Date: 2022-11-28T11:47:34+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -233,7 +233,7 @@ msgstr ""
 
 #. Do not translate words between ### ###.
 #: src/pages/about.vue:4
-#: src/pages/about.vue:92
+#: src/pages/about.vue:153
 msgctxt "about.title"
 msgid "About ###openverse###"
 msgstr ""
@@ -250,11 +250,7 @@ msgstr ""
 
 #. Do not translate words between ### ###.
 msgctxt "planning.content"
-msgid "Currently ###openverse### only searches images, with search for audio and video provided through ###meta###. But we plan to add additional media types such as open texts and audio, with the ultimate goal of providing access to all 1.4 billion CC licensed and public domain works on the web. All of our code is open source (###frontend###, ###api###, ###catalog###) and we ###community###. You can see what ###working###."
-msgstr ""
-
-msgctxt "planning.meta"
-msgid "External Sources"
+msgid "Currently ###openverse### only searches images and audio, with search for video provided through External Sources. But we plan to add additional media types such as open texts and 3D models, with the ultimate goal of providing access to all 1.4 billion CC licensed and public domain works on the web. All of our code is open source (###frontend###, ###api###, ###catalog###) and we ###community###. You can see what ###working###."
 msgstr ""
 
 #. Do not translate words between ### ###.
@@ -394,6 +390,7 @@ msgctxt "heading.audio"
 msgid "Audio Sources"
 msgstr ""
 
+#: src/pages/about.vue:71
 #: src/pages/external-sources.vue:4
 #: src/pages/external-sources.vue:84
 msgctxt "external-sources-page.title"
@@ -401,17 +398,20 @@ msgid "External Sources"
 msgstr ""
 
 #. Do not translate words between ### ###.
+#: src/pages/about.vue:74
 #: src/pages/external-sources.vue:7
 msgctxt "external-sources-page.intro"
 msgid "###openverse### is built on top of a catalog that indexes CC-licensed and public domain content from selected sources. Learn more about our ###link###."
 msgstr ""
 
+#: src/pages/about.vue:77
 #: src/pages/external-sources.vue:10
 msgctxt "external-sources-page.link"
 msgid "sources here"
 msgstr ""
 
 #. Do not translate words between ### ###.
+#: src/pages/about.vue:81
 #: src/pages/external-sources.vue:13
 msgctxt "external-sources-page.license"
 msgid "However, there are many sources of CC-licensed and public domain media which we aren’t able to surface results from within the ###openverse### interface yet. This might be because they do not offer a public API, or that our contributors have not yet had time to integrate them into Openverse. These are valued sources and we want to make sure that you are able to find the best openly licensed materials possible, regardless of where they are located."
@@ -466,12 +466,14 @@ msgid "feedback"
 msgstr ""
 
 #. Do not translate words between ### ###.
+#: src/pages/about.vue:88
 #: src/pages/external-sources.vue:19
 msgctxt "external-sources-page.relationships"
 msgid "This functionality also allows us to start conversations and build relationships with sources that may like to be included in ###openverse### in the future. Finally, we can also offer external sources of media types we do not include in ###openverse### yet, but plan to."
 msgstr ""
 
 #. Do not translate words between ### ###.
+#: src/pages/about.vue:84
 #: src/pages/external-sources.vue:15
 msgctxt "external-sources-page.explanation"
 msgid "You can find links to external sources at the bottom of every ###openverse### search results page; on pages for searches which return no results; and on pages for media types we do not yet support but intend to."
