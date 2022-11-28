@@ -39,18 +39,14 @@ import {
   defineComponent,
   useMeta,
   ref,
-  inject,
   watch,
   toRef,
 } from '@nuxtjs/composition-api'
 
-import { useBrowserIsMobile } from '~/composables/use-browser-detection'
 import { useFocusFilters } from '~/composables/use-focus-filters'
 import { Focus } from '~/utils/focus-management'
 
 import { useUiStore } from '~/stores/ui'
-
-import { IsMinScreenMdKey } from '~/types/provides'
 
 import { useFeatureFlagStore } from '~/stores/feature-flag'
 
@@ -82,21 +78,12 @@ export default defineComponent({
 
     const results = computed(() => props.resultItems.audio)
 
-    const isMinScreenMd = inject(IsMinScreenMdKey)
     const filterVisibleRef = toRef(props, 'isFilterVisible')
 
-    // On SSR, we set the size to small if the User Agent is mobile, otherwise we set the size to medium.
-    const isMobile = useBrowserIsMobile()
-    const audioTrackSize = ref(
-      !isMinScreenMd.value || isMobile ? 's' : props.isFilterVisible ? 'l' : 'm'
-    )
+    const audioTrackSize = ref(props.isFilterVisible? 'l' : 'm')
 
-    watch([filterVisibleRef, isMinScreenMd], ([filterVisible, isMd]) => {
-      if (!isMd) {
-        audioTrackSize.value = 's'
-      } else {
+    watch(filterVisibleRef, (filterVisible) => {
         audioTrackSize.value = filterVisible ? 'l' : 'm'
-      }
     })
 
     const focusFilters = useFocusFilters()

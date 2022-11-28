@@ -13,7 +13,7 @@
         :key="audio.id"
         :audio="audio"
         layout="row"
-        :size="audioTrackSize"
+        size="l"
       />
       <LoadingIcon v-show="fetchState.isFetching" />
     </div>
@@ -24,10 +24,6 @@
 </template>
 
 <script>
-import { computed } from '@nuxtjs/composition-api'
-
-import { isMinScreen } from '~/composables/use-media-query'
-
 import LoadingIcon from '~/components/LoadingIcon.vue'
 import VAudioTrack from '~/components/VAudioTrack/VAudioTrack.vue'
 
@@ -43,17 +39,6 @@ export default {
       type: Object,
       required: true,
     },
-  },
-  /**
-   * Fetches related audios on `audioId` change
-   * @return {{audioTrackSize: import('@nuxtjs/composition-api').ComputedRef<"l" | "s"> }}
-   */
-  setup() {
-    const isMinScreenMd = isMinScreen('md', { shouldPassInSSR: true })
-    const audioTrackSize = computed(() => {
-      return isMinScreenMd.value ? 'l' : 's'
-    })
-    return { audioTrackSize }
   },
 }
 </script>

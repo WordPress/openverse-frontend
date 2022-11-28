@@ -1,18 +1,13 @@
 <template>
-  <div class="license flex flex-row items-center gap-2">
-    <div class="flex gap-1">
-      <VIcon
-        v-for="(name, index) in iconNames"
-        :key="index"
-        :class="['icon', bgFilled ? 'bg-filled text-black' : '']"
-        view-box="0 0 30 30"
-        :icon-path="icons[name]"
-        :size="4"
-      />
-    </div>
-    <span v-show="!hideName" class="name" :aria-label="licenseName.readable">
-      {{ licenseName.full }}
-    </span>
+  <div class="flex gap-1" :aria-label="licenseReadableName">
+    <VIcon
+      v-for="(name, index) in iconNames"
+      :key="index"
+      :class="{ 'bg-filled text-black' : bgFilled }"
+      view-box="0 0 30 30"
+      :icon-path="icons[name]"
+      :size="4"
+    />
   </div>
 </template>
 
@@ -20,14 +15,14 @@
 import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
 
 import { License, LICENSE_ICONS } from '~/constants/license'
-import { getFullLicenseName, getElements } from '~/utils/license'
-import { useI18n } from '~/composables/use-i18n'
+import { getElements } from "~/utils/license"
+import { useI18n } from "~/composables/use-i18n"
 
 import VIcon from '~/components/VIcon/VIcon.vue'
 
+
 /**
- * Displays the icons for the license along with a readable display name for the
- * license.
+ * Displays the icons for the license, with a readable license name in the aria-label.
  */
 export default defineComponent({
   name: 'VLicense',
@@ -48,29 +43,19 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
-    /**
-     * Either to show the license name next to the icons or hide it.
-     */
-    hideName: {
-      type: Boolean,
-      default: false,
-    },
   },
   setup(props) {
     const i18n = useI18n()
 
     const iconNames = computed(() => getElements(props.license))
-    const licenseName = computed(() => {
-      return {
-        readable: i18n.t(`license-readable-names.${props.license}`).toString(),
-        full: getFullLicenseName(props.license, '', i18n),
-      }
-    })
+
+    const licenseReadableName = computed(() =>
+       i18n.t(`license-readable-names.${props.license}`).toString())
 
     return {
       icons: LICENSE_ICONS,
       iconNames,
-      licenseName,
+      licenseReadableName,
     }
   },
 })

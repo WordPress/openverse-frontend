@@ -22,7 +22,7 @@
         class="invisible absolute left-0 bottom-0 bg-white p-1 text-dark-charcoal group-hover:visible group-focus:visible"
       >
         <span class="sr-only">{{ image.title }}</span>
-        <VLicense :license="image.license" :hide-name="true" />
+        <VLicense :license="image.license" />
       </figcaption>
     </figure>
     <i :style="`padding-bottom:${iPadding}%`" class="block" aria-hidden />

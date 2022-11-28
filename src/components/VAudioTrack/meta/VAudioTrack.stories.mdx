@@ -143,6 +143,8 @@ specifying a `layout`. The layout can further be customised by the `size` prop.
 
 ### Row
 
+The row layout for both large and small screens is the same on mobile widths.
+
 #### Size L
 
 <Canvas>
@@ -165,23 +167,6 @@ specifying a `layout`. The layout can further be customised by the `size` prop.
     args={{
       layout: 'row',
       // size: 'm', (default)
-    }}
-  >
-    {Template.bind({})}
-  </Story>
-</Canvas>
-
-#### Size S (mobile)
-
-<Canvas>
-  <Story
-    name="Row (small)"
-    args={{
-      layout: 'row',
-      size: 's',
-    }}
-    parameters={{
-      viewport: { defaultViewport: 'sm' },
     }}
   >
     {Template.bind({})}

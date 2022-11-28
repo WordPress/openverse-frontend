@@ -1,96 +1,61 @@
 <template>
   <!-- `pages/search/audio` has negative margin `-mx-4` to compensate for this padding. -->
   <article
-    class="row-track flex flex-row p-2 hover:bg-dark-charcoal-06 md:p-4"
-    :class="[`size-${size}`, { 'items-start': isSmall }]"
+    class="row-track grid p-2 text-dark-charcoal-70 hover:bg-dark-charcoal-06 md:p-4"
   >
     <div
-      class="relative flex-shrink-0 overflow-hidden rounded-sm"
-      :class="isLarge ? 'w-30 me-6' : 'w-20 me-4'"
+      class="row-track-thumbnail flex-shrink-0 overflow-hidden rounded-sm w-18 h-18"
+      :class="{'md:w-26 md:h-26': isLarge }"
     >
       <VAudioThumbnail :audio="audio" />
-      <div v-show="isSmall" class="absolute bottom-0 ltr:right-0 rtl:left-0">
-        <slot name="play-pause" size="tiny" layout="row" :is-tabbable="false" />
-      </div>
+    </div>
+    <div class="block md:hidden play-tiny z-10">
+      <slot name="play-pause" size="tiny" layout="row" :is-tabbable="false" />
     </div>
 
     <div
-      class="flex-grow"
-      :class="{
-        'flex flex-row gap-8': isMedium,
-        'flex flex-col justify-between': isLarge,
-      }"
+      class="row-track-title decoration-inherit md:heading-6 md:leading-none description-bold rounded-sm p-px text-dark-charcoal line-clamp-2 hover:text-dark-charcoal focus:outline-none focus:ring focus:ring-pink group-hover:underline md:line-clamp-1"
     >
-      <div class="flex-shrink-0" :class="{ 'w-70': isMedium }">
-        <div
-          class="decoration-inherit block rounded-sm p-px font-heading font-semibold text-dark-charcoal line-clamp-2 hover:text-dark-charcoal focus:outline-none focus:ring focus:ring-pink group-hover:underline md:line-clamp-1"
-          :class="{
-            'text-2xl': isMedium || isLarge,
-            'leading-snug': isSmall,
-          }"
-        >
-          {{ audio.title }}
-        </div>
+      {{ audio.title }}
+    </div>
+    <div
+      class="row-track-details flex text-sr flex-col gap-y-2"
+      :class="{'flex-col gap-y-2 md:flex-row md:items-center' : isLarge }"
+    >
+        <i18n
+          tag="div"
+          path="audio-track.creator"
+          :class="{ 'flex md-dot-after': isLarge}"
+        ><template #creator>{{ audio.creator }}</template>
+        </i18n>
 
-        <div
-          class="mt-2 flex text-dark-charcoal-70"
-          :class="{
-            'text-sr': isSmall,
-            'leading-snug': isMedium || isLarge,
-            'flex-col gap-2': isSmall || isMedium,
-            'flex-row items-center': isLarge,
-          }"
-        >
-          <div class="part-a">
-            <i18n tag="span" path="audio-track.creator">
-              <template #creator>{{ audio.creator }}</template> </i18n
-            ><span v-show="isLarge" class="mx-2" aria-hidden="true">{{
-              $t('interpunct')
-            }}</span>
-          </div>
+      <div class="flex items-center">
+        <span
+          class="flex md:hidden dot-after"
+          ><span class="flex rounded-sm bg-dark-charcoal-06 p-1 time text-dark-charcoal">{{ timeFmt(audio.duration || 0, true) }}</span
+        ></span>
 
-          <div class="part-b inline-flex flex-row items-center">
-            <span v-show="isSmall">
-              <span
-                class="inline-block rounded-sm bg-dark-charcoal-06 p-1 font-semibold text-dark-charcoal"
-                >{{ timeFmt(audio.duration || 0, true) }}</span
-              ><span class="mx-2" aria-hidden="true">{{
-                $t('interpunct')
-              }}</span>
-            </span>
+        <span v-if="audio.category" class="flex dot-after">{{ $t(`filters.audio-categories.${audio.category}`) }}</span>
 
-            <span v-if="audio.category">
-              <span>{{ $t(`filters.audio-categories.${audio.category}`) }}</span
-              ><span class="mx-2" aria-hidden="true">{{
-                $t('interpunct')
-              }}</span>
-            </span>
-
-            <VLicense :hide-name="isSmall" :license="audio.license" />
-          </div>
-        </div>
+        <p class="inline-flex items-center gap-x-2">
+          <VLicense :license="audio.license" />
+          <span class="hidden md:inline-flex" aria-hidden>{{ licenseName }}</span>
+        </p>
       </div>
-
-      <div
-        v-show="!isSmall"
-        class="flex flex-row"
-        :class="{
-          'flex-grow': isMedium,
-        }"
-      >
-        <slot
-          name="play-pause"
-          :size="isLarge ? 'large' : 'extra-large'"
-          :layout="'row'"
-          :is-tabbable="false"
-        />
-        <slot
-          name="controller"
-          :features="features"
-          :feature-notices="featureNotices"
-          :is-tabbable="false"
-        />
-      </div>
+    </div>
+    <div class="row-track-controller hidden flex-row md:flex">
+      <slot
+        name="play-pause"
+        :size="isLarge ? 'large' : 'larger'"
+        :layout="'row'"
+        :is-tabbable="false"
+      />
+      <slot
+        name="controller"
+        :features="features"
+        :feature-notices="featureNotices"
+        :is-tabbable="false"
+      />
     </div>
   </article>
 </template>
@@ -102,8 +67,13 @@ import { timeFmt } from '~/utils/time-fmt'
 import type { AudioDetail } from '~/models/media'
 import type { AudioSize } from '~/constants/audio'
 
+import { getFullLicenseName } from "~/utils/license"
+
+import { useI18n } from "~/composables/use-i18n"
+
 import VAudioThumbnail from '~/components/VAudioThumbnail/VAudioThumbnail.vue'
 import VLicense from '~/components/VLicense/VLicense.vue'
+
 
 export default defineComponent({
   name: 'VRowLayout',
@@ -122,6 +92,8 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const i18n = useI18n()
+
     const featureNotices: {
       timestamps?: string
       duration?: string
@@ -129,9 +101,11 @@ export default defineComponent({
     } = {}
     const features = ['timestamps', 'duration', 'seek']
 
-    const isSmall = computed(() => props.size === 's')
     const isMedium = computed(() => props.size === 'm')
     const isLarge = computed(() => props.size === 'l')
+
+    const licenseName = computed(() => getFullLicenseName(props.audio.license, '', i18n))
+
 
     return {
       timeFmt,
@@ -139,7 +113,7 @@ export default defineComponent({
       features,
       featureNotices,
 
-      isSmall,
+      licenseName,
       isMedium,
       isLarge,
     }
@@ -162,10 +136,65 @@ export default defineComponent({
 }
 
 .row-track.size-m .waveform {
-  @apply h-20;
+  @apply h-18;
 }
 
 .row-track.size-l .waveform {
   @apply h-14;
+}
+
+.dot-after {
+  @apply after:content-[''] after:mx-2 after:inline-flex after:self-center after:bg-dark-charcoal-70 after:w-1 after:h-1 after:rounded-sm;
+}
+.md-dot-after {
+  @apply md:after:content-[''] md:after:mx-2 md:after:inline-flex md:after:self-center md:after:bg-dark-charcoal-70 md:after:w-1 md:after:h-1 md:after:rounded-sm;
+}
+.dot-before {
+  @apply before:content-[''] before:mx-2 before:inline-flex before:self-center before:bg-dark-charcoal-70 before:w-1 before:h-1 before:rounded-sm;
+}
+
+.row-track {
+  display: grid;
+  grid-template-columns: 4.6875rem 1fr;
+  grid-template-rows: auto auto;
+  grid-column-gap: 1rem;
+  grid-row-gap: 0.5rem;
+  grid-template-areas: 'thumbnail title' 'thumbnail details';
+}
+.row-track-thumbnail {
+  grid-area: thumbnail;
+}
+.play-tiny {
+  grid-area: thumbnail;
+  margin-top: calc(75px - 1.5rem);
+  margin-inline-start: calc(75px - 1.5rem);
+}
+.row-track-title {
+  grid-area: title;
+}
+.row-track-details {
+  grid-area: details;
+}
+.row-track-controller {
+  grid-area: thumbnail;
+}
+@media (min-width: 768px) {
+  .row-track.size-m {
+    grid-template-columns: 4.6875rem 17.5rem 1fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas: 'thumbnail title controller' 'thumbnail details controller';
+  }
+
+  .row-track.size-l {
+    grid-template-columns: 7.25rem 1fr;
+    grid-column-gap: 1.5rem;
+    grid-template-areas: 'thumbnail title' 'thumbnail details' 'thumbnail controller';
+  }
+  .row-track-controller {
+    grid-area: controller;
+  }
+  .size-m .row-track-controller {
+    @apply ps-2;
+  }
 }
 </style>

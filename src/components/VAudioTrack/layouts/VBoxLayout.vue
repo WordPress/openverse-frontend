@@ -14,7 +14,6 @@
           <div class="info">
             <VLicense
               class="mb-2 hidden md:group-hover:block md:group-focus:block"
-              hide-name
               :license="audio.license"
             />
             <div v-if="audio.category">

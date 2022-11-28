@@ -16,21 +16,12 @@ describe('VLicense', () => {
     },
   }
 
-  it('should render the license name and icons', () => {
+  it('should render the and icons and license name in the aria-label', () => {
     const { container } = render(VLicense, options)
     const licenseName = screen.getByLabelText('license-readable-names.by')
     expect(licenseName).toBeInTheDocument()
     const licenseIcons = container.querySelectorAll('svg')
     expect(licenseIcons).toHaveLength(2) // 'CC' and 'BY' icons
-  })
-
-  it('should render only the license icons', () => {
-    options.props.hideName = true
-    const { container } = render(VLicense, options)
-    const licenseName = screen.queryByLabelText('license-readable-names.by')
-    expect(licenseName).not.toBeVisible()
-    const licenseIcons = container.querySelectorAll('svg')
-    expect(licenseIcons).toHaveLength(2)
   })
 
   it('should have background filled with black text', () => {
