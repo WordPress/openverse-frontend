@@ -51,9 +51,9 @@ export default {
   setup() {
     const uiStore = useUiStore()
 
-    const audioTrackSize = computed(() =>
-      uiStore.isBreakpoint('md') ? 'l' : 's'
-    )
+    const audioTrackSize = computed(() => {
+      return uiStore.isBreakpoint('md') ? 'l' : 's'
+    })
 
     return { audioTrackSize }
   },
