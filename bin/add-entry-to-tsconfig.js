@@ -4,7 +4,7 @@ const { parse, stringify } = require('comment-json')
 
 let component_name = process.argv[2]
 
-if (comoponent_name === undefined)
+if (component_name === undefined)
   throw new Error('please provide component name')
 
 let tsconfig = parse(fs.readFileSync('./tsconfig.json', 'utf8'))
