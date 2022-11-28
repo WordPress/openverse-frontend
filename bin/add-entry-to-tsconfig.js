@@ -10,7 +10,7 @@ if (component_name === undefined)
 let tsconfig = parse(fs.readFileSync('./tsconfig.json', 'utf8'))
 
 tsconfig.include.push(
-  `src/components/${comoponent_name}/${comoponent_name}.vue`
+  `src/components/${component_name}/${component_name}.vue`
 )
 fs.writeFileSync('./tsconfig.json', stringify(tsconfig, null, 3), { flag: 'w' })
 
