@@ -2,6 +2,7 @@
   <!-- `pages/search/audio` has negative margin `-mx-4` to compensate for this padding. -->
   <article
     class="row-track grid p-2 text-dark-charcoal-70 hover:bg-dark-charcoal-06 md:p-4"
+    :class="`size-${size}`"
   >
     <div
       class="row-track-thumbnail flex-shrink-0 overflow-hidden rounded-sm w-18 h-18"
@@ -14,12 +15,12 @@
     </div>
 
     <div
-      class="row-track-title decoration-inherit md:heading-6 md:leading-none description-bold rounded-sm p-px text-dark-charcoal line-clamp-2 hover:text-dark-charcoal focus:outline-none focus:ring focus:ring-pink group-hover:underline md:line-clamp-1"
+      class="row-track-title decoration-inherit description-bold md:heading-6 md:leading-none  rounded-sm p-px text-dark-charcoal line-clamp-2 hover:text-dark-charcoal focus:outline-none focus:ring focus:ring-pink group-hover:underline md:line-clamp-1"
     >
       {{ audio.title }}
     </div>
     <div
-      class="row-track-details flex text-sr flex-col gap-y-2"
+      class="row-track-details flex flex-col gap-y-2 caption-regular md:description-regular"
       :class="{'flex-col gap-y-2 md:flex-row md:items-center' : isLarge }"
     >
         <i18n
@@ -29,7 +30,7 @@
         ><template #creator>{{ audio.creator }}</template>
         </i18n>
 
-      <div class="flex items-center">
+      <div class="flex items-center ">
         <span
           class="flex md:hidden dot-after"
           ><span class="flex rounded-sm bg-dark-charcoal-06 p-1 time text-dark-charcoal">{{ timeFmt(audio.duration || 0, true) }}</span

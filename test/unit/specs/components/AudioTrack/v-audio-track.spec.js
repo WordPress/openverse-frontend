@@ -135,9 +135,16 @@ describe('AudioTrack', () => {
       .mockImplementation(() =>
         Promise.reject(new DOMException('msg', 'NotAllowedError'))
       )
-    const { getByRole, getByText } = render(VAudioTrack, options, configureVue)
+    const { getAllByRole, getByText } = render(
+      VAudioTrack,
+      options,
+      configureVue
+    )
 
-    await fireEvent.click(getByRole('button'))
+    // There are 2 buttons but one is hidden using tailwind,
+    // which is not reflected in tests, so we manually select the second button
+    const playButton = getAllByRole('button')[1]
+    await fireEvent.click(playButton)
     await expect(playStub).toHaveBeenCalledTimes(1)
     await expect(pauseStub).toHaveBeenCalledTimes(1)
     await expect(getByText('audio-track.messages.err_unallowed')).toBeVisible()
