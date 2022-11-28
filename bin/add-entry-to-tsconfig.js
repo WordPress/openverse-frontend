@@ -2,7 +2,7 @@ const fs = require('fs')
 
 const { parse, stringify } = require('comment-json')
 
-let comoponent_name = process.argv[2]
+let component_name = process.argv[2]
 
 if (comoponent_name === undefined)
   throw new Error('please provide component name')
