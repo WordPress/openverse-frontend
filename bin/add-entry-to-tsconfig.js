@@ -14,4 +14,4 @@ tsconfig.include.push(
 )
 fs.writeFileSync('./tsconfig.json', stringify(tsconfig, null, 3), { flag: 'w' })
 
-console.log(`added component ${comoponent_name} to tsconfig.ts`)
+console.log(`added component ${component_name} to tsconfig.ts`)
