@@ -33,7 +33,9 @@ export default defineComponent({
     },
   },
   setup() {
-    const menuModalRef = ref<InstanceType<typeof  VMobileMenuModal | typeof VSearchTypePopoverOld> | null>(null)
+    const menuModalRef = ref<InstanceType<
+      typeof VMobileMenuModal | typeof VSearchTypePopoverOld
+    > | null>(null)
 
     const { app } = useContext()
     const router = useRouter()

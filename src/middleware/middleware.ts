@@ -5,7 +5,7 @@ import { useProviderStore } from '~/stores/provider'
 import { useFeatureFlagStore } from '~/stores/feature-flag'
 import { useUiStore } from '~/stores/ui'
 
-import { cookieOptions } from '~/types/cookies'
+import { cookieOptions } from '~/utils/cookies'
 
 import type { Context, Middleware } from '@nuxt/types'
 

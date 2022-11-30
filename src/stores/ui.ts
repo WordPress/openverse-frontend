@@ -3,10 +3,10 @@ import { defineStore } from 'pinia'
 import { computed } from '@nuxtjs/composition-api'
 
 import type { OpenverseCookieState, SnackbarState } from '~/types/cookies'
-import { cookieOptions } from '~/types/cookies'
 import type { Breakpoint } from '~/constants/screens'
 import { ALL_SCREEN_SIZES } from '~/constants/screens'
 import { useFeatureFlagStore } from '~/stores/feature-flag'
+import { cookieOptions } from '~/utils/cookies'
 
 const desktopBreakpoints: Breakpoint[] = ['2xl', 'xl', 'lg']
 
