@@ -9,9 +9,7 @@ if (component_name === undefined)
 
 let tsconfig = parse(fs.readFileSync('./tsconfig.json', 'utf8'))
 
-tsconfig.include.push(
-  `src/components/${component_name}/${component_name}.vue`
-)
+tsconfig.include.push(`src/components/${component_name}/${component_name}.vue`)
 fs.writeFileSync('./tsconfig.json', stringify(tsconfig, null, 2), { flag: 'w' })
 
 console.log(`added component ${component_name} to tsconfig.ts`)
