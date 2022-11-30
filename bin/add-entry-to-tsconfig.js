@@ -12,6 +12,6 @@ let tsconfig = parse(fs.readFileSync('./tsconfig.json', 'utf8'))
 tsconfig.include.push(
   `src/components/${comoponent_name}/${comoponent_name}.vue`
 )
-fs.writeFileSync('./tsconfig.json', stringify(tsconfig, null, 3), { flag: 'w' })
+fs.writeFileSync('./tsconfig.json', stringify(tsconfig, null, 2), { flag: 'w' })
 
 console.log(`added component ${comoponent_name} to tsconfig.ts`)
