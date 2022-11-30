@@ -34,9 +34,6 @@ export interface UiState {
    * whether the request user agent is mobile or not.
    */
   isMobileUa: boolean
-  /**
-   * array of banner ids that were dismissed
-   */
   dismissedBanners: BannerId[]
 }
 
@@ -183,10 +180,10 @@ export const useUiStore = defineStore('ui', {
      * @param bannerId - the id of the banner to dismiss.
      */
     dismissBanner(bannerId: BannerId) {
-      if (!this.dismissedBanners.includes(bannerId)) {
+      if (this.dismissedBanners.includes(bannerId)) {
         return
       }
-      
+
       this.dismissedBanners.push(bannerId)
       this.$nuxt.$cookies.set(
         'uiDismissedBanners',
