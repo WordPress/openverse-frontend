@@ -173,7 +173,7 @@ export const useUiStore = defineStore('ui', {
      */
     isBreakpoint(breakpoint: Breakpoint): boolean {
       return (
-        breakpoints.indexOf(breakpoint) > breakpoints.indexOf(this.breakpoint)
+        breakpoints.indexOf(breakpoint) >= breakpoints.indexOf(this.breakpoint)
       )
     },
   },
