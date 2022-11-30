@@ -1,11 +1,13 @@
 import type { LocaleObject } from '@nuxtjs/i18n'
 
 const BASE_URL = 'https://translate.wordpress.org/projects/meta/openverse/'
+// We show the banner if the translation is less than this percentage
+const MINIMUM_TRANSLATION_PERCENTAGE = 90
 
 export const needsTranslationBanner = (locale: LocaleObject) => {
   if (!locale || locale.code === 'en') return false
 
-  return (locale.translated ?? 100) <= 90
+  return (locale.translated ?? 100) <= MINIMUM_TRANSLATION_PERCENTAGE
 }
 
 export const createTranslationLink = (locale: LocaleObject) =>
