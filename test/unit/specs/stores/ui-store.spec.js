@@ -283,7 +283,7 @@ describe('Ui Store', () => {
     ${['es']}                | ${'es'}  | ${true}
     ${['cc-referral', 'es']} | ${'de'}  | ${false}
   `(
-    'isBannerDismissed($bannerId) for $originalState returns $expectedState ',
+    'isBannerDismissed($bannerId) for $originalState returns $expectedState',
     ({ originalState, bannerId, expectedState }) => {
       const uiStore = useUiStore()
       uiStore.$patch({ dismissedBanners: originalState })
