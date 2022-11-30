@@ -5,7 +5,7 @@ import { computed } from '@nuxtjs/composition-api'
 import type { OpenverseCookieState, SnackbarState } from '~/types/cookies'
 import { cookieOptions } from '~/types/cookies'
 import type { Breakpoint } from '~/constants/screens'
-import { SCREEN_SIZES } from '~/constants/screens'
+import { ALL_SCREEN_SIZES } from '~/constants/screens'
 import { useFeatureFlagStore } from '~/stores/feature-flag'
 
 const desktopBreakpoints: Breakpoint[] = ['2xl', 'xl', 'lg']
@@ -39,8 +39,7 @@ export interface UiState {
   isMobileUa: boolean
 }
 
-export const screenSizes = [...Object.values(SCREEN_SIZES), 0]
-export const breakpoints = [...Object.keys(SCREEN_SIZES), 'xs']
+export const breakpoints = Object.keys(ALL_SCREEN_SIZES)
 
 export const useUiStore = defineStore('ui', {
   state: (): UiState => ({
@@ -137,7 +136,7 @@ export const useUiStore = defineStore('ui', {
       if (this.breakpoint === breakpoint) {
         return
       }
-      
+
       this.breakpoint = breakpoint
       this.$nuxt.$cookies.set('uiBreakpoint', this.breakpoint, cookieOptions)
       this.isDesktopLayout = this.desktopBreakpoints.includes(breakpoint)
