@@ -184,13 +184,15 @@ export const useUiStore = defineStore('ui', {
      */
     dismissBanner(bannerId: BannerId) {
       if (!this.dismissedBanners.includes(bannerId)) {
-        this.dismissedBanners.push(bannerId)
-        this.$nuxt.$cookies.set(
-          'uiDismissedBanners',
-          this.dismissedBanners,
-          cookieOptions
-        )
+        return
       }
+      
+      this.dismissedBanners.push(bannerId)
+      this.$nuxt.$cookies.set(
+        'uiDismissedBanners',
+        this.dismissedBanners,
+        cookieOptions
+      )
     },
     isBannerDismissed(bannerId: BannerId) {
       return this.dismissedBanners.includes(bannerId)
