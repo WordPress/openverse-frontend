@@ -1,6 +1,5 @@
 <template>
   <VContentPage>
-    <!-- eslint-disable @intlify/vue-i18n/no-raw-text -->
     <h1>
       {{ $t('privacy.title', { openverse: 'Openverse' }) }}
     </h1>
@@ -42,7 +41,6 @@
         >
       </template>
     </i18n>
-    <!-- eslint-enable @intlify/vue-i18n/no-raw-text -->
   </VContentPage>
 </template>
 
