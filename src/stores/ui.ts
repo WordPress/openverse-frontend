@@ -134,11 +134,13 @@ export const useUiStore = defineStore('ui', {
      * @param breakpoint - the `min-width` tailwind breakpoint for the screen width.
      */
     updateBreakpoint(breakpoint: Breakpoint) {
-      if (this.breakpoint !== breakpoint) {
-        this.breakpoint = breakpoint
-        this.$nuxt.$cookies.set('uiBreakpoint', this.breakpoint, cookieOptions)
-        this.isDesktopLayout = this.desktopBreakpoints.includes(breakpoint)
+      if (this.breakpoint === breakpoint) {
+        return
       }
+      
+      this.breakpoint = breakpoint
+      this.$nuxt.$cookies.set('uiBreakpoint', this.breakpoint, cookieOptions)
+      this.isDesktopLayout = this.desktopBreakpoints.includes(breakpoint)
     },
 
     /**
