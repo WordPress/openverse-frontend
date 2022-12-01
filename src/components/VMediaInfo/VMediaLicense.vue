@@ -8,7 +8,7 @@
       <i18n
         path="media-details.reuse.attribution"
         tag="span"
-        class="mb-2 block text-sm md:text-base"
+        class="mb-2 block text-sm md:mb-4 md:text-base"
       >
         <template #link>
           <VLink class="uppercase" :href="licenseUrl">
