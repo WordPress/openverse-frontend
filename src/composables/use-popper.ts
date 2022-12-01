@@ -6,8 +6,7 @@ import {
   Placement,
   PositioningStrategy,
 } from '@popperjs/core'
-
-import { useWindowSize } from '~/composables/use-window-size'
+import { useWindowSize } from '@vueuse/core'
 
 export type PopoverContentProps = {
   visible: boolean
@@ -19,7 +18,7 @@ export type PopoverContentProps = {
   triggerElement: HTMLElement | null
   placement: Placement
   strategy: PositioningStrategy
-  zIndex: number
+  zIndex: number | string
 }
 
 type Props = {

@@ -85,8 +85,7 @@
       content: '{openverse} searches across more than 300 million images from open APIs and the {common-crawl} dataset. It goes beyond simple search to aggregate results across multiple public repositories into a single catalog, and facilitates reuse through features like machine-generated tags and one-click attribution.',
     },
     planning: {
-      content: 'Currently {openverse} only searches images, with search for audio and video provided through {meta}. But we plan to add additional media types such as open texts and audio, with the ultimate goal of providing access to all 1.4 billion CC licensed and public domain works on the web. All of our code is open source ({frontend}, {api}, {catalog}) and we {community}. You can see what {working}.',
-      meta: 'External Sources',
+      content: 'Currently {openverse} only searches images and audio, with search for video provided through External Sources. But we plan to add additional media types such as open texts and 3D models, with the ultimate goal of providing access to all 1.4 billion CC licensed and public domain works on the web. All of our code is open source ({frontend}, {api}, {catalog}) and we {community}. You can see what {working}.',
       frontend: '{openverse} frontend',
       api: '{openverse} API',
       catalog: '{openverse} Catalog',
@@ -157,6 +156,23 @@
     },
     relationships: 'This functionality also allows us to start conversations and build relationships with sources that may like to be included in {openverse} in the future. Finally, we can also offer external sources of media types we do not include in {openverse} yet, but plan to.',
     explanation: 'You can find links to external sources at the bottom of every {openverse} search results page; on pages for searches which return no results; and on pages for media types we do not yet support but intend to.',
+  },
+  privacy: {
+    title: 'Privacy',
+    intro: {
+      content: 'The {openverse} project seeks to make the privacy and safety of our users a priority. {openverse} adheres to the {link}. Please see that document for a full description of how {openverse} uses and protects any information that you give us.',
+      link: 'privacy policy of all WordPress.org websites',
+    },
+    cookies: {
+      title: 'Cookies',
+      content: '{openverse} uses cookies to store information about visitor\'s preferences and information about their web browsers. We use this information to improve the user experience of the site. These are considered "Necessary" or "Strictly necessary cookies" and you may disable these by changing your browser settings, but this may affect how {openverse} functions.',
+    },
+    contact: {
+      title: 'Contact Us',
+      content: 'Any questions about {openverse} and privacy can be sent to {email}, shared as a {issue}, or discussed with our community in the #openverse channel of the {chat}.',
+      issue: 'GitHub issue',
+      chat: 'Making WordPress Chat',
+    },
   },
   'search-guide': {
     title: '{openverse} Syntax Guide',
@@ -487,7 +503,7 @@
     },
   },
   'single-result': {
-    back: 'Back to search results',
+    back: 'Back to results',
   },
   'image-details': {
     creator: 'by {name}',

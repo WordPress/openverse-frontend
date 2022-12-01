@@ -5,6 +5,8 @@ import type { BannerId } from '~/types/banners'
 
 import type { CookieSerializeOptions } from 'cookie'
 
+import type { Breakpoint } from '~/constants/screens'
+
 export type SnackbarState = 'not_shown' | 'visible' | 'dismissed'
 
 export const cookieOptions: CookieSerializeOptions = {
@@ -26,9 +28,9 @@ export interface OpenverseCookieState {
    */
   uiIsFilterDismissed?: boolean
   /**
-   * Whether the site layout is desktop (or mobile).
+   * The screen's max-width breakpoint.
    */
-  uiIsDesktopLayout?: boolean
+  uiBreakpoint?: Breakpoint
   /**
    * Whether the request user agent is mobile or not.
    */

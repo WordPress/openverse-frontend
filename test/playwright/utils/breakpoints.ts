@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test'
 
-import { Breakpoint, VIEWPORTS } from '~/constants/screens'
+import { VIEWPORTS } from '~/constants/screens'
+import type { Breakpoint } from '~/constants/screens'
 
 type ScreenshotAble = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -100,7 +101,7 @@ const makeBreakpointDescribe =
   }
 
 const capitalize = (s: string): Capitalize<typeof s> =>
-  `${s[0].toUpperCase()}${s.slice(1)}`
+  `${s[0].toUpperCase()}${s.slice(1)}` as Capitalize<typeof s>
 
 const breakpointTests = Array.from(Object.entries(VIEWPORTS)).reduce(
   (
@@ -113,10 +114,11 @@ const breakpointTests = Array.from(Object.entries(VIEWPORTS)).reduce(
     ]
   ) =>
     Object.assign(tests, {
-      [`describe${capitalize(breakpoint)}`]: makeBreakpointDescribe(
-        breakpoint as Breakpoint,
-        parseFloat(width.replace('px', ''))
-      ),
+      [`describe${capitalize(breakpoint as Breakpoint)}`]:
+        makeBreakpointDescribe(
+          breakpoint as Breakpoint,
+          parseFloat(width.replace('px', ''))
+        ),
     }),
   {} as Record<
     `describe${Capitalize<Breakpoint>}`,
@@ -160,7 +162,7 @@ export default {
   describeEvery,
   describeEachDesktop,
   describeEachMobile,
-  // For `old_header` layout and for VHeaderInternal, the mobile layout ends at `md` breakpoint
+  // For `old_header` layout, the mobile layout ends at `md` breakpoint
   describeEachMobileWithoutMd,
   describeEachDesktopWithMd,
   // For testing functionality in e2e tests, we need to test mobile and desktop screens.

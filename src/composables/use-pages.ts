@@ -18,7 +18,7 @@ export default function usePages(isNew = false) {
         {
           id: 'get-involved',
           name: 'navigation.get-involved',
-          link: 'https://github.com/WordPress/openverse/',
+          link: 'https://make.wordpress.org/openverse/handbook/',
         },
         {
           id: 'api',
@@ -28,7 +28,7 @@ export default function usePages(isNew = false) {
         {
           id: 'privacy',
           name: 'navigation.privacy',
-          link: 'https://wordpress.org/privacy',
+          link: app.localePath('/privacy'),
         },
         {
           id: 'feedback',
@@ -58,11 +58,6 @@ export default function usePages(isNew = false) {
           link: app.localePath('/search-help'),
         },
         {
-          id: 'external-sources',
-          name: 'header.external-sources-nav-item',
-          link: app.localePath('/external-sources'),
-        },
-        {
           id: 'feedback',
           name: 'header.feedback-nav-item',
           link: app.localePath('/feedback'),
@@ -74,8 +69,8 @@ export default function usePages(isNew = false) {
         },
         {
           id: 'privacy',
-          name: 'header.privacy-nav-item',
-          link: 'https://wordpress.org/privacy',
+          name: 'navigation.privacy',
+          link: app.localePath('/privacy'),
         },
       ]
 
