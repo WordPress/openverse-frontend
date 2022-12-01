@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-12-01T15:04:10+00:00\n"
+"POT-Creation-Date: 2022-12-01T15:55:51+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1842,18 +1842,18 @@ msgid "Dropdown"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VMigrationNotice.vue:8
+#: src/components/VBanner/VMigrationNotice.vue:8
 msgctxt "migration-notice.intro"
 msgid "###cc-search### is now called ###openverse### and joins ###wordpress### as an open source project."
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VMigrationNotice.vue:14
+#: src/components/VBanner/VMigrationNotice.vue:14
 msgctxt "migration-notice.more"
 msgid "###read-more### about this announcement."
 msgstr ""
 
-#: src/components/VMigrationNotice.vue:20
+#: src/components/VBanner/VMigrationNotice.vue:20
 msgctxt "migration-notice.read"
 msgid "Read more"
 msgstr ""
@@ -1874,11 +1874,11 @@ msgctxt "interpunct"
 msgid "•"
 msgstr ""
 
+#: src/components/VBanner/VNotificationBanner.vue:15
 #: src/components/VContentReport/VContentReportPopover.vue:16
 #: src/components/VExternalSearch/VExternalSourceList.vue:31
 #: src/components/VHeader/VHeaderInternal.vue:37
 #: src/components/VModal/VModalContent.vue:49
-#: src/components/VNotificationBanner.vue:69
 msgctxt "modal.close"
 msgid "Close"
 msgstr ""
