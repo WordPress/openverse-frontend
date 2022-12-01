@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
 
-
 import { computed } from '@nuxtjs/composition-api'
 
 import { useNavigationStore } from '~/stores/navigation'
@@ -13,6 +12,7 @@ import { ALL_SCREEN_SIZES } from '~/constants/screens'
 import { useFeatureFlagStore } from '~/stores/feature-flag'
 import { cookieOptions } from '~/utils/cookies'
 import { needsTranslationBanner } from '~/utils/translation-banner'
+
 import type { LocaleObject } from '@nuxtjs/i18n'
 
 const desktopBreakpoints: Breakpoint[] = ['2xl', 'xl', 'lg']
@@ -168,7 +168,7 @@ export const useUiStore = defineStore('ui', {
         { name: 'uiIsFilterDismissed', value: this.isFilterDismissed, opts },
         { name: 'uiBreakpoint', value: this.breakpoint, opts },
         { name: 'uiIsMobileUa', value: this.isMobileUa, opts },
-        { name: 'uiDismissedBanners': value: this.dismissedBanners, opts },
+        { name: 'uiDismissedBanners', value: this.dismissedBanners, opts },
       ])
     },
 
@@ -231,6 +231,7 @@ export const useUiStore = defineStore('ui', {
     isBannerDismissed(bannerId: BannerId) {
       return this.dismissedBanners.includes(bannerId)
     },
+    /**
      * Similar to CSS `@media` queries, this function returns a boolean
      * indicating whether the current breakpoint is greater than or equal to
      * the breakpoint passed as a parameter.
