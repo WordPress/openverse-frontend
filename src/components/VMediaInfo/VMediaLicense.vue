@@ -41,10 +41,10 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
 
-import { isLicense as isLicenseFn } from '~/utils/license'
+import { getFullLicenseName, isLicense as isLicenseFn } from '~/utils/license'
 import { useI18n } from '~/composables/use-i18n'
 
-import type { License } from '~/constants/license'
+import type { License, LicenseVersion } from '~/constants/license'
 
 import VLicenseElements from '~/components/VLicense/VLicenseElements.vue'
 import VLink from '~/components/VLink.vue'
@@ -53,12 +53,12 @@ export default defineComponent({
   name: 'VMediaLicense',
   components: { VLicenseElements, VLink },
   props: {
-    fullLicenseName: {
-      type: String,
-      required: true,
-    },
     license: {
       type: String as PropType<License>,
+      required: true,
+    },
+    licenseVersion: {
+      type: String as PropType<LicenseVersion>,
       required: true,
     },
     licenseUrl: {
@@ -73,9 +73,13 @@ export default defineComponent({
       const licenseOrTool = isLicense.value ? 'license' : 'tool'
       return i18n.t(`media-details.reuse.${licenseOrTool}-header`)
     })
+    const fullLicenseName = computed(() =>
+      getFullLicenseName(props.license, props.licenseVersion, i18n)
+    )
     return {
       isLicense,
       headerText,
+      fullLicenseName,
     }
   },
 })
