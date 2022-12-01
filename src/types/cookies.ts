@@ -2,10 +2,9 @@ import type { FeatureState } from '~/constants/feature-flag'
 import { isProd } from '~/utils/node-env'
 
 import type { BannerId } from '~/types/banners'
+import type { Breakpoint } from '~/constants/screens'
 
 import type { CookieSerializeOptions } from 'cookie'
-
-import type { Breakpoint } from '~/constants/screens'
 
 export type SnackbarState = 'not_shown' | 'visible' | 'dismissed'
 
