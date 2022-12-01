@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-12-01T14:24:12+00:00\n"
+"POT-Creation-Date: 2022-12-01T14:56:56+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -477,6 +477,47 @@ msgstr ""
 #: src/pages/external-sources.vue:15
 msgctxt "external-sources-page.explanation"
 msgid "You can find links to external sources at the bottom of every ###openverse### search results page; on pages for searches which return no results; and on pages for media types we do not yet support but intend to."
+msgstr ""
+
+#: src/pages/privacy.vue:4
+#: src/pages/privacy.vue:64
+msgctxt "privacy.title"
+msgid "Privacy"
+msgstr ""
+
+#. Do not translate words between ### ###.
+msgctxt "intro.content"
+msgid "The ###openverse### project seeks to make the privacy and safety of our users a priority. ###openverse### adheres to the ###link###. Please see that document for a full description of how ###openverse### uses and protects any information that you give us."
+msgstr ""
+
+msgctxt "intro.link"
+msgid "privacy policy of all WordPress.org websites"
+msgstr ""
+
+msgctxt "cookies.title"
+msgid "Cookies"
+msgstr ""
+
+#. Do not translate words between ### ###.
+msgctxt "cookies.content"
+msgid "###openverse### uses cookies to store information about visitor's preferences and information about their web browsers. We use this information to improve the user experience of the site. These are considered \"Necessary\" or \"Strictly necessary cookies\" and you may disable these by changing your browser settings, but this may affect how ###openverse### functions."
+msgstr ""
+
+msgctxt "contact.title"
+msgid "Contact Us"
+msgstr ""
+
+#. Do not translate words between ### ###.
+msgctxt "contact.content"
+msgid "Any questions about ###openverse### and privacy can be sent to ###email###, shared as a ###issue###, or discussed with our community in the #openverse channel of the ###chat###."
+msgstr ""
+
+msgctxt "contact.issue"
+msgid "GitHub issue"
+msgstr ""
+
+msgctxt "contact.chat"
+msgid "Making WordPress Chat"
 msgstr ""
 
 #. Do not translate words between ### ###.
