@@ -2,11 +2,10 @@
   <div class="app flex min-h-screen flex-col">
     <div class="sticky top-0 z-40 block">
       <VTeleportTarget name="skip-to-content" :force-destroy="true" />
-      <VMigrationNotice />
-      <VTranslationStatusBanner />
+      <VBanners />
       <template v-if="isNewHeaderEnabled">
         <template v-if="isSearchHeader">
-          <VHeaderDesktop v-if="isMinScreenLg" />
+          <VHeaderDesktop v-if="isDesktopLayout" />
           <VHeaderMobile v-else />
         </template>
         <VHeaderInternal v-else />
@@ -58,35 +57,30 @@ import {
   useMatchSearchRoutes,
   useMatchSingleResultRoutes,
 } from '~/composables/use-match-routes'
-import { isMinScreen } from '~/composables/use-media-query'
-import { useFilterSidebarVisibility } from '~/composables/use-filter-sidebar-visibility'
+import { useLayout } from '~/composables/use-layout'
+
 import { useFeatureFlagStore } from '~/stores/feature-flag'
+import { useUiStore } from '~/stores/ui'
+import { useSearchStore } from '~/stores/search'
 
-import {
-  IsHeaderScrolledKey,
-  IsMinScreenLgKey,
-  IsMinScreenMdKey,
-} from '~/types/provides'
+import { IsHeaderScrolledKey, IsSidebarVisibleKey } from '~/types/provides'
 
-import VMigrationNotice from '~/components/VMigrationNotice.vue'
-import VTranslationStatusBanner from '~/components/VTranslationStatusBanner.vue'
+import VBanners from '~/components/VBanner/VBanners.vue'
 import VHeaderOld from '~/components/VHeaderOld/VHeaderOld.vue'
 import VModalTarget from '~/components/VModal/VModalTarget.vue'
 import VGlobalAudioSection from '~/components/VGlobalAudioSection/VGlobalAudioSection.vue'
-import VFooter from '~/components/VFooter/VFooter.vue'
 import VSearchGridFilter from '~/components/VFilters/VSearchGridFilter.vue'
 
 const embeddedPage = {
   name: 'embedded',
   components: {
-    VMigrationNotice,
-    VTranslationStatusBanner,
-    VHeaderOld,
+    VBanners,
     VHeaderDesktop: () => import('~/components/VHeader/VHeaderDesktop.vue'),
     VHeaderInternal: () => import('~/components/VHeader/VHeaderInternal.vue'),
     VHeaderMobile: () =>
       import('~/components/VHeader/VHeaderMobile/VHeaderMobile.vue'),
-    VFooter,
+    VFooter: () => import('~/components/VFooter/VFooter.vue'),
+    VHeaderOld,
     VModalTarget,
     VTeleportTarget,
     VGlobalAudioSection,
@@ -97,49 +91,46 @@ const embeddedPage = {
     return this.$nuxtI18nHead({ addSeoAttributes: true, addDirAttribute: true })
   },
   setup() {
+    const uiStore = useUiStore()
     const featureFlagStore = useFeatureFlagStore()
+    const searchStore = useSearchStore()
+
     const isNewHeaderEnabled = computed(() =>
       featureFlagStore.isOn('new_header')
     )
+    const { updateBreakpoint } = useLayout()
 
-    const { isVisible: isFilterVisible, setVisibility } =
-      useFilterSidebarVisibility()
+    /**
+     * Update the breakpoint value in the cookie on mounted.
+     * The Pinia state might become different from the cookie state if, for example, the cookies were saved when the screen was `sm`,
+     * and then a page is opened on SSR on a `lg` screen.
+     */
+    onMounted(() => {
+      updateBreakpoint()
+    })
+
     const { matches: isSearchRoute } = useMatchSearchRoutes()
     const { matches: isSingleResultRoute } = useMatchSingleResultRoutes()
     const isSearchHeader = computed(
       () => isSearchRoute.value || isSingleResultRoute.value
     )
-    const mounted = ref(false)
-    onMounted(() => {
-      mounted.value = true
-    })
+
+    const isDesktopLayout = computed(() => uiStore.isDesktopLayout)
 
     /**
-     * If we use the `isMinScreen('lg')` composable for conditionally
-     * rendering components, we get a server-client side rendering
-     * mismatch.
-     * To prevent that, we initially render mobile components, and
-     * after the `mounted` ref is true, we re-render the desktop if
-     * the width is `lg`.
-     * @type {Ref<UnwrapRef<boolean>>}
+     * Filters sidebar is visible only on desktop layouts
+     * on search result pages for supported search types.
      */
-    const innerIsMinScreenLg = isMinScreen('lg')
-    const isMinScreenLg = computed(() =>
-      Boolean(innerIsMinScreenLg.value && mounted.value)
+    const isSidebarVisible = computed(
+      () =>
+        isSearchRoute.value &&
+        searchStore.searchTypeIsSupported &&
+        uiStore.isFilterVisible &&
+        isDesktopLayout.value
     )
-    const innerIsMinScreenMd = isMinScreen('md')
-    const isMinScreenMd = computed(() =>
-      Boolean(innerIsMinScreenMd.value && mounted.value)
-    )
-
-    const isSidebarVisible = computed(() => {
-      return isNewHeaderEnabled.value
-        ? isSearchRoute.value && isMinScreenLg.value && isFilterVisible.value
-        : isSearchRoute.value && isMinScreenMd.value && isFilterVisible.value
-    })
 
     const closeSidebar = () => {
-      setVisibility(false)
+      uiStore.setFiltersState(false)
     }
 
     const isHeaderScrolled = ref(false)
@@ -151,28 +142,25 @@ const embeddedPage = {
 
     provide('isHeaderScrolled', isHeaderScrolled)
     provide('showScrollButton', showScrollButton)
-    // TODO: remove the untyped `isMinScreenMd` provide after the new header is enabled.
-    provide('isMinScreenMd', isMinScreenMd)
-    provide(IsMinScreenMdKey, isMinScreenMd)
-    provide(IsMinScreenLgKey, isMinScreenLg)
     provide(IsHeaderScrolledKey, isHeaderScrolled)
+    provide(IsSidebarVisibleKey, isSidebarVisible)
 
     // TODO: remove `headerHasTwoRows` provide after the new header is enabled.
     const headerHasTwoRows = computed(
       () =>
-        isSearchRoute.value && !isHeaderScrolled.value && !isMinScreenMd.value
+        isSearchRoute.value && !isHeaderScrolled.value && !isDesktopLayout.value
     )
     provide('headerHasTwoRows', headerHasTwoRows)
 
     return {
       isHeaderScrolled,
-      isMinScreenMd,
-      isMinScreenLg,
+      isDesktopLayout,
       isSidebarVisible,
       isSearchRoute,
       isSearchHeader,
       headerHasTwoRows,
       isNewHeaderEnabled,
+
       closeSidebar,
     }
   },

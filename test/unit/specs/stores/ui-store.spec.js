@@ -8,6 +8,7 @@ const initialState = {
   isFilterDismissed: false,
   isDesktopLayout: false,
   isMobileUa: true,
+  dismissedBanners: [],
 }
 
 const VISIBLE_AND_DISMISSED = {
@@ -25,6 +26,13 @@ const VISIBLE_AND_NOT_DISMISSED = {
 const NOT_VISIBLE_AND_NOT_DISMISSED = {
   innerFilterVisible: false,
   isFilterDismissed: false,
+}
+
+const cookieOptions = {
+  maxAge: 5184000,
+  path: '/',
+  sameSite: 'strict',
+  secure: false,
 }
 
 describe('Ui Store', () => {
@@ -104,11 +112,12 @@ describe('Ui Store', () => {
     it('initFromCookies sets initial state with a desktop cookie', () => {
       const uiStore = useUiStore()
       uiStore.initFromCookies({
-        uiIsDesktopLayout: true,
+        uiBreakpoint: 'lg',
         uiIsFilterDismissed: true,
       })
 
       expect(uiStore.instructionsSnackbarState).toEqual('not_shown')
+      expect(uiStore.breakpoint).toEqual('lg')
       expect(uiStore.isDesktopLayout).toEqual(true)
       expect(uiStore.isMobileUa).toEqual(false)
       expect(uiStore.isFilterVisible).toEqual(false)
@@ -124,9 +133,20 @@ describe('Ui Store', () => {
 
       expect(uiStore.instructionsSnackbarState).toEqual('not_shown')
       expect(uiStore.isDesktopLayout).toEqual(false)
+      expect(uiStore.breakpoint).toEqual('sm')
       expect(uiStore.isMobileUa).toEqual(true)
       expect(uiStore.isFilterDismissed).toEqual(false)
       expect(uiStore.isFilterVisible).toEqual(false)
+    })
+
+    it('initFromCookies sets initial state with a dismissed banner', () => {
+      const uiStore = useUiStore()
+      const dismissedBanners = ['ru', 'ar', 'cc-referral']
+      uiStore.initFromCookies({
+        uiDismissedBanners: dismissedBanners,
+      })
+
+      expect(uiStore.dismissedBanners).toEqual(dismissedBanners)
     })
   })
 
@@ -163,18 +183,18 @@ describe('Ui Store', () => {
   )
 
   test.each`
-    initialState     | isDesktopLayout | expected
-    ${[true, false]} | ${false}        | ${{ isDesktopLayout: false, isMobileUa: false }}
-    ${[false, true]} | ${true}         | ${{ isDesktopLayout: true, isMobileUa: true }}
+    initialState     | breakpoint | expected
+    ${[true, false]} | ${'xm'}    | ${{ isDesktopLayout: false, isMobileUa: false }}
+    ${[false, true]} | ${'lg'}    | ${{ isDesktopLayout: true, isMobileUa: true }}
   `(
-    'updateBreakpoint gets isDesktopLayout $isDesktopLayout and returns $expected',
-    ({ initialState, isDesktopLayout, expected }) => {
+    'updateBreakpoint gets breakpoint $breakpoint and returns $expected',
+    ({ initialState, breakpoint, expected }) => {
       const uiStore = useUiStore()
       uiStore.$patch({
         isDesktopLayout: initialState[0],
         isMobileUa: initialState[1],
       })
-      uiStore.updateBreakpoint(isDesktopLayout)
+      uiStore.updateBreakpoint(breakpoint)
       const actualOutput = {
         isDesktopLayout: uiStore.isDesktopLayout,
         isMobileUa: uiStore.isMobileUa,
@@ -235,6 +255,42 @@ describe('Ui Store', () => {
 
       expect(uiStore.isFilterVisible).toEqual(expectedState.innerFilterVisible)
       expect(uiStore.isFilterDismissed).toEqual(expectedState.isFilterDismissed)
+    }
+  )
+  it.each`
+    originalState            | bannerId | expectedState                  | areCookiesSet
+    ${[]}                    | ${'es'}  | ${['es']}                      | ${true}
+    ${['es']}                | ${'es'}  | ${['es']}                      | ${false}
+    ${['cc-referral', 'es']} | ${'de'}  | ${['cc-referral', 'es', 'de']} | ${true}
+  `(
+    'dismissBanner($bannerId): $originalState -> $expectedState',
+    ({ originalState, bannerId, expectedState, areCookiesSet }) => {
+      const uiStore = useUiStore()
+      uiStore.$patch({ dismissedBanners: originalState })
+      uiStore.dismissBanner(bannerId)
+
+      expect(uiStore.dismissedBanners).toEqual(expectedState)
+      if (areCookiesSet) {
+        expect(uiStore.$nuxt.$cookies.set).toHaveBeenCalledWith(
+          'uiDismissedBanners',
+          expectedState,
+          cookieOptions
+        )
+      }
+    }
+  )
+  it.each`
+    originalState            | bannerId | expectedState
+    ${[]}                    | ${'es'}  | ${false}
+    ${['es']}                | ${'es'}  | ${true}
+    ${['cc-referral', 'es']} | ${'de'}  | ${false}
+  `(
+    'isBannerDismissed($bannerId) for $originalState returns $expectedState',
+    ({ originalState, bannerId, expectedState }) => {
+      const uiStore = useUiStore()
+      uiStore.$patch({ dismissedBanners: originalState })
+
+      expect(uiStore.isBannerDismissed(bannerId)).toEqual(expectedState)
     }
   )
 })
