@@ -1,5 +1,4 @@
-/**
- */
+/* eslint-disable import/order */
 
 export * from '~~/.nuxt-storybook/storybook/preview'
 import {
@@ -7,9 +6,10 @@ import {
   decorators as nuxtDecorators,
 } from '~~/.nuxt-storybook/storybook/preview'
 
-// eslint-disable-next-line import/order
 import { WithRTL } from './decorators/with-rtl'
 import { WithUiStore } from './decorators/with-ui-store'
+
+/* eslint-enable import/order */
 
 export const globalTypes = {
   ...nuxtGlobalTypes,
