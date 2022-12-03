@@ -25,7 +25,7 @@ import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
 
 import type { License } from '~/constants/license'
 import { LICENSE_ICONS } from '~/constants/license'
-import { isMinScreen } from '~/composables/use-media-query'
+import { useUiStore } from '~/stores/ui'
 import { getElements } from '~/utils/license'
 
 import VIcon from '~/components/VIcon/VIcon.vue'
@@ -56,7 +56,8 @@ export default defineComponent({
     )
 
     const isSmall = computed(() => props.size === 'small')
-    const isMobile = computed(() => !isMinScreen('md').value)
+    const uiStore = useUiStore()
+    const isMobile = computed(() => !uiStore.isDesktopLayout)
 
     return {
       icons: LICENSE_ICONS,

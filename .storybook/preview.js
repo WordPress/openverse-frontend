@@ -9,6 +9,7 @@ import {
 
 // eslint-disable-next-line import/order
 import { WithRTL } from './decorators/with-rtl'
+import { WithUiStore } from './decorators/with-ui-store'
 
 export const globalTypes = {
   ...nuxtGlobalTypes,
@@ -26,4 +27,4 @@ export const globalTypes = {
   },
 }
 
-export const decorators = [...nuxtDecorators, WithRTL]
+export const decorators = [...nuxtDecorators, WithRTL, WithUiStore]
