@@ -159,7 +159,7 @@ export const useUiStore = defineStore('ui', {
     },
 
     updateCookies() {
-      const opts = cookieOptions
+      const opts = { ...cookieOptions }
       if (useFeatureFlagStore().isOn('new_header')) {
         opts.sameSite = 'none'
       }
