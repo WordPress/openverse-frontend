@@ -144,10 +144,16 @@ export default defineComponent({
 <style>
 /* wrapper element styles */
 .footer-sm {
-  @apply p-6 pt-10;
+  @apply px-6;
 }
 .footer-lg {
   @apply gap-y-8 px-10;
+}
+.footer-internal {
+  @apply pt-6;
+}
+.footer-internal.footer-lg {
+  @apply pt-10;
 }
 
 /* footer > logo-and-links styles */
@@ -162,11 +168,11 @@ export default defineComponent({
 /* logo-and-links > nav-list styles */
 
 .nav-list {
-  @apply grid grid-flow-col grid-cols-2;
+  @apply grid grid-flow-col grid-cols-2 items-center gap-y-2 gap-x-10;
   /*
   We set the number of rows in JS to have 2 equally distributed link columns.
   */
-  grid-template-rows: repeat(var(--link-col-height, 3), 1fr);
+  grid-template-rows: repeat(var(--link-col-height, 3), auto);
 }
 
 .footer-lg .nav-list {

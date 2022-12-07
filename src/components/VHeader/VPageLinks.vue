@@ -5,27 +5,20 @@
       mode === 'dark' ? 'text-dark-charcoal' : 'bg-dark-charcoal text-white',
       variant === 'inline'
         ? 'flex-row items-center gap-8 text-sm'
-        : 'mt-3 flex-col items-end',
+        : 'mt-3 flex-col items-end gap-y-2',
     ]"
   >
-    <li
+    <VNavLink
       v-for="page in allPages"
       :key="page.id"
-      :class="{ 'heading-5': variant === 'column' }"
+      :link="page.link"
+      :mode="mode"
+      :variant="variant"
+      :is-active="currentPage === page.id"
+      :class="variant === 'inline' ? 'ps-3' : 'heading-5'"
+      @click="onClick(page.link)"
+      >{{ $t(page.name) }}</VNavLink
     >
-      <VLink
-        class="rounded-sm py-3 focus-visible:outline-none focus-visible:ring focus-visible:ring-pink focus-visible:ring-offset-1 focus-visible:ring-offset-tx"
-        :class="[
-          { 'font-bold': currentPage === page.id },
-          mode === 'dark' ? 'text-dark-charcoal' : 'text-white',
-          variant === 'inline' ? '' : 'ps-3',
-        ]"
-        :href="page.link"
-        show-external-icon
-        @click="onClick(page.link)"
-        >{{ $t(page.name) }}</VLink
-      >
-    </li>
   </ul>
 </template>
 
@@ -38,12 +31,12 @@ import {
 
 import usePages from '~/composables/use-pages'
 
-import VLink from '~/components/VLink.vue'
+import VNavLink from '~/components/VNavLink/VNavLink.vue'
 
 export default defineComponent({
   name: 'VPageLinks',
   components: {
-    VLink,
+    VNavLink,
   },
   props: {
     /**
