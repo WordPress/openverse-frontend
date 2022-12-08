@@ -143,4 +143,7 @@ export default defineComponent({
   scrollbar-gutter: stable;
   overflow-x: hidden;
 }
+.popover-content > div{
+  margin-bottom:0.5rem;
+}
 </style>
