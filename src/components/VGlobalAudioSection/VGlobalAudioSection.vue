@@ -1,9 +1,9 @@
 <template>
-  <div class="global-audio sticky bottom-0 sm:hidden">
+  <div class="global-audio sticky bottom-0 z-global-audio sm:hidden">
     <VGlobalAudioTrack v-if="audio" :audio="audio" />
     <VIconButton
       v-if="audio"
-      class="absolute top-0 z-20 border-none ltr:right-0 rtl:left-0"
+      class="absolute top-0 z-10 border-none ltr:right-0 rtl:left-0"
       size="large"
       :icon-props="{ iconPath: icons.closeIcon }"
       @click="handleClose"
@@ -21,12 +21,13 @@ import {
 
 import { AUDIO } from '~/constants/media'
 import { useActiveAudio } from '~/composables/use-active-audio'
-import { isMinScreen } from '~/composables/use-media-query'
+
 import { useActiveMediaStore } from '~/stores/active-media'
 import { useMediaStore } from '~/stores/media'
 import { useSingleResultStore } from '~/stores/media/single-result'
+import { useUiStore } from '~/stores/ui'
 
-import type { AudioDetail } from '~/models/media'
+import type { AudioDetail } from '~/types/media'
 
 import VIconButton from '~/components/VIconButton/VIconButton.vue'
 import VGlobalAudioTrack from '~/components/VAudioTrack/VGlobalAudioTrack.vue'
@@ -40,9 +41,11 @@ export default defineComponent({
     VIconButton,
   },
   setup() {
+    const route = useRoute()
+
     const activeMediaStore = useActiveMediaStore()
     const mediaStore = useMediaStore()
-    const route = useRoute()
+    const uiStore = useUiStore()
 
     const activeAudio = useActiveAudio()
 
@@ -126,7 +129,7 @@ export default defineComponent({
       if (
         (oldRouteVal.name?.includes('audio') &&
           !newRouteVal.name?.includes('audio')) ||
-        (isMinScreen('md') &&
+        (uiStore.isDesktopLayout &&
           newRouteVal.name?.includes('audio-id') &&
           newRouteVal.params.id != activeMediaStore.id)
       ) {

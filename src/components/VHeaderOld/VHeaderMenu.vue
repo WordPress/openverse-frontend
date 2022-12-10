@@ -1,10 +1,7 @@
 <script lang="ts">
 import {
-  ComponentInstance,
+  computed,
   defineComponent,
-  inject,
-  onMounted,
-  Ref,
   ref,
   useContext,
   useRouter,
@@ -14,6 +11,7 @@ import { ALL_MEDIA, searchPath, supportedMediaTypes } from '~/constants/media'
 import useSearchType from '~/composables/use-search-type'
 import { useMediaStore } from '~/stores/media'
 import { useSearchStore } from '~/stores/search'
+import { useUiStore } from '~/stores/ui'
 
 import VMobileMenuModal from '~/components/VContentSwitcherOld/VMobileMenuModal.vue'
 import VSearchTypePopoverOld from '~/components/VContentSwitcherOld/VSearchTypePopoverOld.vue'
@@ -35,18 +33,21 @@ export default defineComponent({
     },
   },
   setup() {
-    const isMinScreenMd: Ref<boolean> = inject('isMinScreenMd')
-    const menuModalRef = ref<ComponentInstance | null>(null)
-    const content = useSearchType()
+    const menuModalRef = ref<InstanceType<
+      typeof VMobileMenuModal | typeof VSearchTypePopoverOld
+    > | null>(null)
+
     const { app } = useContext()
-    const mediaStore = useMediaStore()
-    const searchStore = useSearchStore()
     const router = useRouter()
 
-    const isMounted = ref(false)
-    onMounted(() => {
-      isMounted.value = true
-    })
+    const mediaStore = useMediaStore()
+    const searchStore = useSearchStore()
+    const uiStore = useUiStore()
+
+    const isDesktopLayout = computed(() => uiStore.isDesktopLayout)
+
+    const content = useSearchType()
+
     const selectSearchType = async (type) => {
       menuModalRef.value?.closeMenu()
       content.setActiveType(type)
@@ -72,9 +73,8 @@ export default defineComponent({
     }
 
     return {
-      isMinScreenMd,
+      isDesktopLayout,
       menuModalRef,
-      isMounted,
 
       content,
       selectSearchType,
@@ -82,10 +82,8 @@ export default defineComponent({
   },
   render(h) {
     if (!this.isSearchRoute) {
-      return this.isMinScreenMd && this.isMounted
-        ? h(VDesktopPageMenu)
-        : h(VMobilePageMenu)
-    } else if (this.isMinScreenMd && this.isMounted) {
+      return this.isDesktopLayout ? h(VDesktopPageMenu) : h(VMobilePageMenu)
+    } else if (this.isDesktopLayout) {
       return h('div', { class: 'flex flex-grow justify-between gap-x-2' }, [
         h(VDesktopPageMenu),
         h(VSearchTypePopoverOld, {

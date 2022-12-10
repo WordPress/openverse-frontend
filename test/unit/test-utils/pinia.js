@@ -12,6 +12,14 @@ export const createPinia = () =>
       $cookies: {
         set: jest.fn(),
         get: jest.fn(),
+        setAll: jest.fn(),
+      },
+      i18n: {
+        localeProperties: {
+          code: 'es',
+          translated: 100,
+          name: 'Spanish',
+        },
       },
     },
   }))

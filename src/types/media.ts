@@ -27,6 +27,8 @@ export interface Media {
 
   frontendMediaType: SupportedMediaType
 
+  description?: string
+
   category: string | null
   provider: string
   source?: string
@@ -80,3 +82,13 @@ export interface AudioDetail extends Media {
 
 export type DetailFromMediaType<T extends SupportedMediaType> =
   T extends 'audio' ? AudioDetail : ImageDetail
+
+/**
+ * This interface is a subset of `Media` that types dictionaries sent by the API
+ * being decoded in the `decodeMediaData` function.
+ */
+export interface ApiMedia
+  extends Omit<Media, 'frontendMediaType' | 'title' | 'originalTitle'> {
+  title?: string
+  originalTitle?: string
+}
