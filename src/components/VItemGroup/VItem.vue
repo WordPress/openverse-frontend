@@ -10,6 +10,7 @@
       'px-2': isInPopover,
       'hover:bg-dark-charcoal-10': !isInPopover,
       [$style[`${contextProps.direction}-popover-item`]]: isInPopover,
+      'has-check': contextProps.showCheck,
     }"
   >
     <VButton
@@ -43,7 +44,11 @@
         <slot name="default" />
       </div>
       <VIcon
-        v-if="selected && contextProps.direction === 'vertical'"
+        v-if="
+          selected &&
+          contextProps.direction === 'vertical' &&
+          contextProps.showCheck
+        "
         class="absolute end-2 lg:end-5"
         :icon-path="checkmark"
       />
@@ -191,7 +196,11 @@ export default defineComponent({
 }
 
 .vertical-content {
-  @apply flex flex-row items-center pe-8 lg:pe-8;
+  @apply flex flex-row items-center;
+}
+
+.has-check .vertical-content {
+  @apply pe-8 lg:pe-8;
 }
 
 .vertical-popover-item {
