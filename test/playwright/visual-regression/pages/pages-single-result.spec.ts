@@ -3,11 +3,9 @@ import { test } from '@playwright/test'
 import { removeHiddenOverflow } from '~~/test/playwright/utils/page'
 import breakpoints from '~~/test/playwright/utils/breakpoints'
 import {
-  closeFilters,
   dismissTranslationBanner,
   enableNewHeader,
   goToSearchTerm,
-  isPageDesktop,
   languageDirections,
   openFirstResult,
 } from '~~/test/playwright/utils/navigation'
@@ -19,11 +17,30 @@ test.describe.configure({ mode: 'parallel' })
 for (const mediaType of supportedMediaTypes) {
   for (const dir of languageDirections) {
     test.describe(`${mediaType} ${dir} single-result page snapshots`, () => {
-      breakpoints.describeEvery(({ expectSnapshot }) => {
+      breakpoints.describeEvery(({ breakpoint, expectSnapshot }) => {
         test.beforeEach(async ({ page }) => {
           await enableNewHeader(page)
+          await page.context().addCookies([
+            {
+              name: 'uiBreakpoint',
+              value: JSON.stringify(breakpoint),
+              domain: 'localhost',
+              path: '/',
+            },
+            {
+              name: 'uiIsFilterDismissed',
+              value: 'true',
+              domain: 'localhost',
+              path: '/',
+            },
+            {
+              name: 'uiDismissedBanners',
+              value: JSON.stringify(['translation-ar']),
+              domain: 'localhost',
+              path: '/',
+            },
+          ])
           await goToSearchTerm(page, 'birds', { dir })
-          if (isPageDesktop(page)) await closeFilters(page)
           await dismissTranslationBanner(page)
         })
 
