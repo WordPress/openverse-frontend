@@ -6,6 +6,7 @@ import {
   dismissTranslationBanner,
   pathWithDir,
   languageDirections,
+  setCookies,
 } from '~~/test/playwright/utils/navigation'
 
 test.describe.configure({ mode: 'parallel' })
@@ -15,8 +16,13 @@ for (const contentPage of contentPages) {
   for (const dir of languageDirections) {
     test.describe(`${contentPage} ${dir} page snapshots`, () => {
       breakpoints.describeEvery(({ breakpoint, expectSnapshot }) => {
-        test('full page', async ({ page }) => {
-          await page.context().addCookies([
+        test('full page', async ({ context, page }) => {
+          await setCookies(context, {
+            uiBreakpoint: breakpoint,
+            uiDismissedBanners: ['translation-ar'],
+          })
+
+          await context.addCookies([
             {
               name: 'uiBreakpoint',
               value: JSON.stringify(breakpoint),

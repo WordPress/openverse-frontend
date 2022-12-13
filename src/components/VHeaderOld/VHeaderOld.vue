@@ -106,11 +106,7 @@ export default defineComponent({
     const isSidebarVisible = inject(IsSidebarVisibleKey)
 
     const isDesktopLayout = computed(() => uiStore.isDesktopLayout)
-    console.log(
-      'in header, isDesktop:',
-      isDesktopLayout.value,
-      app.$cookies.getAll()
-    )
+
     const searchBarSize = computed(() => {
       if (isDesktopLayout.value) {
         return 'medium'
