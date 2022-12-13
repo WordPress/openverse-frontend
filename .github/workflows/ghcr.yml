@@ -70,7 +70,7 @@ jobs:
               for tag in metadata["tags"]:
                   if ":main" not in tag:
                       version = tag.split(":")[1]
-          with open(os.environ.get("GITHUB_STATE"), "a") as state:
+          with open(os.environ.get("GITHUB_OUTPUT"), "a") as state:
               state.write(f"version={version}\n")
 
       - uses: docker/build-push-action@v3
