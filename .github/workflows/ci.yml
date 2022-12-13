@@ -89,7 +89,7 @@ jobs:
         if: failure()
         with:
           name: nuxt-e2e-test-results
-          path: test-results-e2e
+          path: test-results
 
   nuxt-playwright-vr:
     name: Nuxt Playwright VR tests
