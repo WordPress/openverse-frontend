@@ -39,7 +39,7 @@ Run the following commands in order to have the code up and running on your mach
 ```bash
 # Builds and serves assets with hot-reload
 # Automatically invokes pnpm install and pnpm i18n
-Run volta run pnpm dev
+volta run pnpm dev
 ```
 
 If you intend to change any text in the app, you will need to edit `src/locales/scripts/en.json5`. To ensure your changes are reflected immediately, run the following command.
