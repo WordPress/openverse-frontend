@@ -1,21 +1,16 @@
 <template>
   <ul
-    class="flex"
-    :class="[
-      mode === 'dark' ? 'text-dark-charcoal' : 'bg-dark-charcoal text-white',
-      variant === 'inline'
-        ? 'flex-row items-center gap-8 text-sm'
-        : 'mt-3 flex-col items-end gap-y-2',
-    ]"
+    :class="
+      mode === 'light' ? 'text-dark-charcoal' : 'bg-dark-charcoal text-white'
+    "
   >
     <VNavLink
       v-for="page in allPages"
       :key="page.id"
       :link="page.link"
       :mode="mode"
-      :variant="variant"
       :is-active="currentPage === page.id"
-      :class="variant === 'inline' ? 'ps-3' : 'heading-5'"
+      :class="navLinkClasses"
       @click="onClick(page.link)"
       >{{ $t(page.name) }}</VNavLink
     >
@@ -40,8 +35,8 @@ export default defineComponent({
   },
   props: {
     /**
-     * In `light` mode, the links are white and the background is dark charcoal.
-     * In `dark` mode (in the modal), the links are dark charcoal and the background is transparent.
+     * In `dark` mode (in the modal), the links are white and the background is dark charcoal.
+     * In `light` mode, the links are dark charcoal and the background is transparent.
      *
      * @default 'light'
      */
@@ -50,14 +45,13 @@ export default defineComponent({
       default: 'light',
     },
     /**
-     * In `inline` mode, the links are displayed horizontally. It is used in the desktop header.
-     * In `column` mode, the links are displayed vertically. It is used in the mobile modal.
+     * Pass the tailwind classes to style the nav links.
      *
-     * @default 'inline'
+     * @default ''
      */
-    variant: {
-      type: String as PropType<'inline' | 'column'>,
-      default: 'inline',
+    navLinkClasses: {
+      type: String,
+      default: '',
     },
   },
   setup(_, { emit }) {

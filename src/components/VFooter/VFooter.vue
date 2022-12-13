@@ -13,38 +13,18 @@
         <VBrand class="text-[18px]" />
       </VLink>
       <nav>
-        <ul class="nav-list label-regular" :style="linkColumnHeight">
-          <li v-for="page in allPages" :key="page.id">
-            <VLink
-              class="py-2 text-dark-charcoal"
-              :class="{ active: page.id === currentPage }"
-              :href="page.link"
-              show-external-icon
-              >{{ $t(page.name) }}</VLink
-            >
-          </li>
-        </ul>
+        <VPageLinks
+          class="nav-list label-regular"
+          :style="linkColumnHeight"
+          nav-link-classes="py-2"
+        />
       </nav>
     </div>
 
     <!-- Locale chooser and WordPress affiliation graphic -->
     <div class="locale-and-wp flex flex-col justify-between gap-y-10">
       <VLanguageSelect v-bind="languageProps" class="language max-w-full" />
-      <VLink
-        href="https://wordpress.org"
-        class="text-dark-charcoal hover:no-underline"
-      >
-        <i18n
-          tag="p"
-          path="footer.wordpress-affiliation"
-          class="label-regular flex h-full flex-row gap-2 !leading-[25px]"
-        >
-          <template #wordpress>
-            <WordPress class="aria-hidden" />
-            <span class="sr-only">WordPress</span>
-          </template>
-        </i18n>
-      </VLink>
+      <VWordPressLink mode="light" />
     </div>
   </footer>
 </template>
@@ -70,8 +50,8 @@ import type { SelectFieldProps } from '~/components/VSelectField/VSelectField.vu
 import VLink from '~/components/VLink.vue'
 import VBrand from '~/components/VBrand/VBrand.vue'
 import VLanguageSelect from '~/components/VLanguageSelect/VLanguageSelect.vue'
-
-import WordPress from '~/assets/wordpress.svg?inline'
+import VPageLinks from '~/components/VHeader/VPageLinks.vue'
+import VWordPressLink from '~/components/VHeader/VWordPressLink.vue'
 
 /**
  * The footer is the section displayed at the bottom of a page. It can contain
@@ -80,10 +60,11 @@ import WordPress from '~/assets/wordpress.svg?inline'
 export default defineComponent({
   name: 'VFooter',
   components: {
+    VWordPressLink,
+    VPageLinks,
     VLanguageSelect,
     VLink,
     VBrand,
-    WordPress,
   },
   props: {
     /**
