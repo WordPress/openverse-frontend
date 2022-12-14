@@ -43,7 +43,7 @@ repos:
       - id: eslint
         files: \.(js|ts|vue)$
         exclude: ^nuxt-template-overrides/.*$ # ESLint raises warnings for ignored files.
-        'types': [file] # ESLint only accepts [javascript] by default.
+        "types": [file] # ESLint only accepts [javascript] by default.
         args:
           - --ignore-path=.gitignore
           - --ignore-path=.eslintignore
@@ -70,7 +70,6 @@ repos:
     rev: v2.6.0
     hooks:
       - id: prettier
-        exclude: \.md$ # TODO: https://github.com/WordPress/openverse/issues/333
         additional_dependencies:
           - prettier@2.6.0
           - prettier-plugin-tailwindcss@0.1.12
