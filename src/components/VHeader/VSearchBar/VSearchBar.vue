@@ -46,7 +46,7 @@
         :entries="entries"
         class="absolute inset-x-0 lg:flex"
         :class="recentClasses"
-        @select="handleSelect"
+        @select="handleRecentSelect"
         @clear="handleClear"
         @keydown.tab.native="hideRecentSearches"
       />
@@ -66,12 +66,9 @@ import { onClickOutside } from "@vueuse/core"
 
 import { defineEvent } from "~/types/emits"
 
-import { useSearchStore } from "~/stores/search"
+import { useRecentSearches } from '~/composables/use-recent-searches'
+
 import { useFeatureFlagStore } from "~/stores/feature-flag"
-
-import { keycodes } from "~/constants/key-codes"
-
-import { cyclicShift } from "~/utils/math"
 
 import VInputField, {
   FIELD_SIZES,
@@ -132,9 +129,21 @@ export default defineComponent({
     const featureFlagStore = useFeatureFlagStore()
     const isNewHeaderEnabled = featureFlagStore.isOn("new_header")
 
-    const searchStore = useSearchStore()
+    const searchInput = computed(() => inputFieldRef.value?.inputEl ?? null)
+    const {
+      isRecentVisible,
+      hideRecentSearches,
+      showRecentSearches,
+      entries,
+      selectedIdx,
+      handleSelect,
+      handleKeydown,
+      handleClear,
+    } = useRecentSearches({
+      searchTerm: modelMedium,
+      searchInput,
+    })
 
-    const isRecentVisible = ref(false)
     const recentClasses = computed(() => {
       // Calculated by adding 8px to all heights defined in `VInputField.vue`.
       const FIELD_OFFSETS = {
@@ -147,15 +156,6 @@ export default defineComponent({
     })
 
     /**
-     * Show and hide recent searches.
-     */
-    const showRecentSearches = () => {
-      isRecentVisible.value = true
-    }
-    const hideRecentSearches = () => {
-      isRecentVisible.value = false
-    }
-    /**
      * Hide recent searches on blur and click outside.
      */
     const handleSearchBlur = () => {
@@ -163,76 +163,10 @@ export default defineComponent({
     }
     onClickOutside(searchBarEl, hideRecentSearches)
 
-    /**
-     * Refers to the current suggestion that has visual focus (not DOM focus)
-     * and is the active descendant. This should be set to `undefined` when the
-     * visual focus is on the input field.
-     */
-    const selectedIdx = ref<number | undefined>(undefined)
-    const entries = computed(() => searchStore.recentSearches)
-
-    const handleVerticalArrows = (event: KeyboardEvent) => {
-      event.preventDefault() // Prevent the cursor from moving horizontally.
-      const { key, altKey } = event
-
-      showRecentSearches()
-      if (altKey) return
-
-      // Shift selection (if Alt was not pressed with arrow keys)
-      let defaultValue: number
-      let offset: number
-      if (key == keycodes.ArrowUp) {
-        defaultValue = 0
-        offset = -1
-      } else {
-        defaultValue = -1
-        offset = 1
-      }
-      selectedIdx.value = cyclicShift(
-        selectedIdx.value ?? defaultValue,
-        offset,
-        0,
-        entries.value.length
-      )
-    }
-
-    const handleOtherKeys = (event: KeyboardEvent) => {
-      const { key } = event
-
-      if (key === keycodes.Enter && selectedIdx.value)
-        // If a recent search is selected, populate its value into the input.
-        modelMedium.value = entries.value[selectedIdx.value]
-
-      // Hide the recent searches popover when the user presses Enter, Escape or Shift+Tab on the input.
-      if (
-        (key === keycodes.Tab && event.shiftKey) ||
-        ([keycodes.Escape, keycodes.Enter] as string[]).includes(key)
-      ) {
-        hideRecentSearches()
-      }
-
-      selectedIdx.value = undefined // Lose visual focus from entries.
-    }
-    const handleKeydown = (event: KeyboardEvent) => {
-      const { key } = event
-
-      return ([keycodes.ArrowUp, keycodes.ArrowDown] as string[]).includes(key)
-        ? handleVerticalArrows(event)
-        : handleOtherKeys(event)
-    }
-
     /* Populate the input with the clicked entry and execute the search. */
-    const handleSelect = (idx: number) => {
-      modelMedium.value = entries.value[idx]
-
-      hideRecentSearches()
-      selectedIdx.value = undefined // Lose visual focus from entries.
+    const handleRecentSelect = (idx: number) => {
+      handleSelect(idx)
       handleSearch() // Immediately execute the search manually.
-    }
-    /* Clear all recent searches from the store. */
-    const handleClear = () => {
-      inputFieldRef.value?.focusInput()
-      searchStore.clearRecentSearches()
     }
 
     return {
@@ -253,7 +187,7 @@ export default defineComponent({
       entries,
 
       handleKeydown,
-      handleSelect,
+      handleRecentSelect,
       handleClear,
     }
   },

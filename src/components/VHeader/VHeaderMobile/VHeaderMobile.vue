@@ -55,7 +55,7 @@
             autocomplete="off"
             role="combobox"
             aria-autocomplete="none"
-            :aria-expanded="showRecentSearches"
+            :aria-expanded="shouldShowRecentSearches"
             aria-controls="recent-searches-list"
             :aria-activedescendant="
               selectedIdx !== undefined ? `option-${selectedIdx}` : undefined
@@ -96,15 +96,17 @@
         </form>
       </div>
 
-      <VRecentSearches
-        v-show="showRecentSearches"
-        :selected-idx="selectedIdx"
-        :entries="entries"
-        :bordered="false"
-        class="mt-4"
-        @select="handleSelect"
-        @clear="handleClear"
-      />
+      <ClientOnly>
+        <VRecentSearches
+          v-show="shouldShowRecentSearches"
+          :selected-idx="selectedIdx"
+          :entries="entries"
+          :bordered="false"
+          class="mt-4"
+          @select="handleSelect"
+          @clear="handleClear"
+        />
+      </ClientOnly>
     </VInputModal>
   </header>
 </template>
@@ -120,12 +122,10 @@ import {
 } from "@nuxtjs/composition-api"
 
 import { ensureFocus } from "~/utils/reakit-utils/focus"
-import { cyclicShift } from "~/utils/math"
-
-import { keycodes } from "~/constants/key-codes"
 
 import { IsHeaderScrolledKey } from "~/types/provides"
 
+import { useRecentSearches } from '~/composables/use-recent-searches'
 import { useDialogControl } from "~/composables/use-dialog-control"
 import { useSearch } from "~/composables/use-search"
 
@@ -179,7 +179,16 @@ export default defineComponent({
       deactivate()
     }
 
-    const isRecentSearchesModalOpen = ref(false)
+    const {
+      isRecentVisible: isRecentSearchesModalOpen,
+      hideRecentSearches,
+      showRecentSearches,
+      entries,
+      selectedIdx,
+      handleSelect,
+      handleKeydown,
+      handleClear,
+    } = useRecentSearches({ searchTerm, searchInput: searchInputRef })
 
     const activate = () => (searchBarIsActive.value = true)
     const deactivate = () => {
@@ -188,7 +197,7 @@ export default defineComponent({
 
     watch(searchBarIsActive, (active) => {
       if (active) {
-        isRecentSearchesModalOpen.value = true
+        showRecentSearches()
         /**
          * Without `nextTick`, the search bar is not focused on click in Firefox
          */
@@ -196,7 +205,7 @@ export default defineComponent({
           if (searchInputRef.value) ensureFocus(searchInputRef.value)
         })
       } else {
-        isRecentSearchesModalOpen.value = false
+        hideRecentSearches()
         if (searchTerm.value === "" && searchStore.searchTerm !== "") {
           searchTerm.value = searchStore.searchTerm
         }
@@ -219,68 +228,7 @@ export default defineComponent({
       deactivate()
     }
 
-    /**
-     * Refers to the current suggestion that has visual focus (not DOM focus)
-     * and is the active descendant. This should be set to `undefined` when the
-     * visual focus is on the input field.
-     */
-    const selectedIdx = ref<number | undefined>(undefined)
-    const entries = computed(() => searchStore.recentSearches)
-    const handleVerticalArrows = (event: KeyboardEvent) => {
-      event.preventDefault() // Prevent the cursor from moving horizontally.
-      const { key, altKey } = event
-      // Show the recent searches.
-      isRecentSearchesModalOpen.value = true
-      if (altKey) return
-      // Shift selection (if Alt was not pressed with arrow keys)
-      let defaultValue: number
-      let offset: number
-      if (key == keycodes.ArrowUp) {
-        defaultValue = 0
-        offset = -1
-      } else {
-        defaultValue = -1
-        offset = 1
-      }
-      selectedIdx.value = cyclicShift(
-        selectedIdx.value ?? defaultValue,
-        offset,
-        0,
-        entries.value.length
-      )
-    }
-    const handleOtherKeys = (event: KeyboardEvent) => {
-      const { key } = event
-      if (key === keycodes.Enter && selectedIdx.value)
-        // If a recent search is selected, populate its value into the input.
-        searchTerm.value = entries.value[selectedIdx.value]
-      if (([keycodes.Escape] as string[]).includes(key))
-        // Hide the recent searches.
-        isRecentSearchesModalOpen.value = false
-      selectedIdx.value = undefined // Lose visual focus from entries.
-    }
-    const handleKeydown = (event: KeyboardEvent) => {
-      const { key } = event
-      return ([keycodes.ArrowUp, keycodes.ArrowDown] as string[]).includes(key)
-        ? handleVerticalArrows(event)
-        : handleOtherKeys(event)
-    }
-    /* Populate the input with the clicked entry and execute the search. */
-    const handleSelect = (idx: number) => {
-      searchTerm.value = entries.value[idx]
-      isRecentSearchesModalOpen.value = false
-      selectedIdx.value = undefined // Lose visual focus from entries.
-      handleSearch() // Immediately execute the search manually.
-    }
-    /* Clear all recent searches from the store. */
-    const handleClear = () => {
-      searchStore.clearRecentSearches()
-      if (searchInputRef.value) {
-        ensureFocus(searchInputRef.value)
-      }
-    }
-
-    const showRecentSearches = computed(
+    const shouldShowRecentSearches = computed(
       () => isRecentSearchesModalOpen.value && entries.value.length > 0
     )
 
@@ -313,7 +261,7 @@ export default defineComponent({
       triggerA11yProps,
 
       isRecentSearchesModalOpen,
-      showRecentSearches,
+      shouldShowRecentSearches,
       searchBarIsActive,
       activate,
       deactivate,
