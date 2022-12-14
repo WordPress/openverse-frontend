@@ -64,23 +64,23 @@ test.describe("search history navigation", () => {
       ).toBe(true)
     })
 
-    test('should update search term when back button is clicked', async ({
+    test("should update search term when back button is clicked", async ({
       page,
     }) => {
-      await goToSearchTerm(page, 'galah')
+      await goToSearchTerm(page, "galah")
 
-      await searchFromHeader(page, 'cat')
-      expect(await page.locator('input[name="q"]').inputValue()).toBe('cat')
+      await searchFromHeader(page, "cat")
+      expect(await page.locator('input[name="q"]').inputValue()).toBe("cat")
 
       await page.goBack()
       await page.waitForSelector('a:has-text("See all images")')
-      expect(await page.locator('input[name="q"]').inputValue()).toBe('galah')
+      expect(await page.locator('input[name="q"]').inputValue()).toBe("galah")
     })
 
-    test('navigates to the image detail page correctly', async ({ page }) => {
-      await goToSearchTerm(page, 'honey')
-      const figure = page.locator('figure').first()
-      const imgTitle = await figure.locator('img').getAttribute('alt')
+    test("navigates to the image detail page correctly", async ({ page }) => {
+      await goToSearchTerm(page, "honey")
+      const figure = page.locator("figure").first()
+      const imgTitle = await figure.locator("img").getAttribute("alt")
 
       await page.locator('a[href^="/image"]').first().click()
       // Until the image is loaded, the heading is 'Image' instead of the actual title
