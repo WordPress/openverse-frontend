@@ -54,6 +54,16 @@ export default defineComponent({
     VSearchGrid,
     VSkipToContentContainer,
   },
+  beforeRouteUpdate(to, from, next) {
+    /**
+     * When the user presses the back button, we need to update the search term.
+     */
+    const searchStore = useSearchStore()
+    if (to.query.q !== searchStore.searchTerm) {
+      searchStore.setSearchTerm(to.query.q)
+    }
+    next()
+  },
   middleware({ route, redirect }) {
     /**
      * This anonymous middleware redirects any search without a query to the homepage.
