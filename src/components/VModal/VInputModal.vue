@@ -27,14 +27,13 @@ import {
   watch,
   toRef,
   ComponentInstance,
+  SetupContext,
 } from "@nuxtjs/composition-api"
 
 import { Portal as VTeleport } from "portal-vue"
 
 import { useBodyScrollLock } from "~/composables/use-body-scroll-lock"
 import { useDialogContent } from "~/composables/use-dialog-content"
-
-import type { SetupContext } from "vue"
 
 export default defineComponent({
   name: "VInputModal",
@@ -66,7 +65,7 @@ export default defineComponent({
      */
     "close",
   ],
-  setup(props, { emit }) {
+  setup(props, { attrs, emit }) {
     const focusTrapRef = ref<ComponentInstance | null>(null)
 
     const visibleRef = toRef(props, "isActive")
@@ -109,16 +108,21 @@ export default defineComponent({
     const dialogRef = ref<HTMLElement | null>(null)
 
     const { onKeyDown, onBlur } = useDialogContent({
-      dialogRef,
+      dialogElements: {
+        dialogRef,
+        triggerElementRef: ref(null),
+        initialFocusElementRef: ref(null),
+      },
+      dialogOptions: {
+        autoFocusOnHideRef: ref(false),
+        hideOnClickOutsideRef: ref(false),
+        hideOnEscRef: ref(true),
+        trapFocusRef: ref(true),
+      },
       visibleRef: toRef(props, "isActive"),
-      autoFocusOnShowRef: ref(true),
-      autoFocusOnHideRef: ref(false),
-      triggerElementRef: ref(null),
-      hideOnClickOutsideRef: ref(false),
-      trapFocusRef: ref(true),
       hideRef: ref(close),
-      hideOnEscRef: ref(true),
       emit: emit as SetupContext["emit"],
+      attrs,
     })
 
     return {
