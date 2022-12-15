@@ -1,7 +1,7 @@
 <template>
   <VItemGroup
     v-if="variant === 'itemgroup'"
-    class="min-w-50 mt-2"
+    class="min-w-50 my-2 gap-y-2"
     :bordered="false"
     :show-check="false"
   >
@@ -15,13 +15,13 @@
       class="w-full"
       @click="onClick(page.link)"
     >
-      <div class="flex flex-row">
+      <div class="flex w-full flex-row justify-between">
         <span class="pe-2">{{ $t(page.name) }}</span>
         <VIcon
           v-if="isLinkExternal(page)"
           :icon-path="externalLinkIcon"
-          :size="5"
-          class="mb-0.5 self-center"
+          :size="4"
+          class="self-center"
         />
       </div>
     </VItem>

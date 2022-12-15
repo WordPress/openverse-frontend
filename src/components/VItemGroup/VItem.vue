@@ -6,11 +6,13 @@
       [`border border-dark-charcoal-20 ${
         $style[`${contextProps.direction}-bordered`]
       }`]: contextProps.bordered,
-      'bg-dark-charcoal-10': selected && contextProps.bordered,
+      'bg-dark-charcoal-10':
+        selected && contextProps.bordered && contextProps.showCheck,
       'px-2': isInPopover,
       'hover:bg-dark-charcoal-10': !isInPopover,
       [$style[`${contextProps.direction}-popover-item`]]: isInPopover,
       'has-check': contextProps.showCheck,
+      'font-bold': selected && !contextProps.showCheck,
     }"
   >
     <VButton
@@ -20,8 +22,11 @@
       :class="[
         $style[`${contextProps.direction}-button`],
         $style[`${contextProps.size}-button`],
-        selected && 'bg-dark-charcoal-10 ring-offset-dark-charcoal-10',
+        selected &&
+          contextProps.showCheck &&
+          'bg-dark-charcoal-10 ring-offset-dark-charcoal-10',
         as === 'VLink' && 'text-dark-charcoal',
+        !contextProps.showCheck && 'px-2',
       ]"
       variant="plain"
       size="disabled"

@@ -19,6 +19,7 @@
         :aria-label="$t('header.aria.menu')"
         v-bind="triggerA11yProps"
         class="border-tx hover:bg-dark-charcoal hover:text-white"
+        :class="{ 'bg-dark-charcoal text-white': isModalVisible }"
         @click="onTriggerClick"
       />
       <template v-if="triggerElement">
@@ -33,7 +34,7 @@
           <VPageLinks
             mode="dark"
             variant="itemgroup"
-            class="w-50 items-start p-2"
+            class="label-regular w-50 items-start"
             @close="closePageMenu"
           />
         </VPopoverContent>
