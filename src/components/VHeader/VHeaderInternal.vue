@@ -52,11 +52,14 @@
             <div
               class="flex h-20 w-full justify-between bg-dark-charcoal py-4 text-white pe-3 ps-6"
             >
-              <VHomeLink variant="light" />
+              <VHomeLink
+                variant="light"
+                class="focus-visible:ring-yellow focus-visible:ring-offset-0"
+              />
               <VIconButton
                 ref="closeButton"
                 :icon-props="{ iconPath: closeIcon }"
-                class="border-tx text-white focus-visible:ring-offset-tx"
+                class="border-tx text-white focus-visible:ring-yellow focus-visible:ring-offset-0"
                 :aria-label="$t('modal.close')"
                 @click="closePageMenu"
               />
@@ -67,11 +70,14 @@
               <VPageLinks
                 mode="dark"
                 class="mt-3 flex flex-col items-end gap-y-2"
-                nav-link-classes="heading-5 py-3"
+                nav-link-classes="text-3xl py-3"
                 @close="closePageMenu"
               />
             </nav>
-            <VWordPressLink class="mt-auto" mode="dark" />
+            <VWordPressLink
+              class="mt-auto focus-visible:ring-yellow focus-visible:ring-offset-0"
+              mode="dark"
+            />
           </template>
         </VModalContent>
       </template>
@@ -117,20 +123,22 @@ export default defineComponent({
     const menuButtonRef = ref<InstanceType<typeof VIconButton> | null>(null)
     const nodeRef = ref<HTMLElement | null>(null)
 
+    const uiStore = useUiStore()
+
     const route = useRoute()
 
     const { all: allPages, current: currentPage } = usePages(true)
 
     const isModalVisible = ref(false)
-    const uiStore = useUiStore()
+
+    const isMd = computed(() => uiStore.isBreakpoint("md"))
+
     const isLg = computed(() => uiStore.isBreakpoint("lg"))
     watch(isLg, (isLg) => {
       if (isLg && isModalVisible.value) {
         closePageMenu()
       }
     })
-
-    const isMd = computed(() => uiStore.isBreakpoint("md"))
 
     const triggerElement = computed(
       () => (menuButtonRef.value?.$el as HTMLElement) || null
