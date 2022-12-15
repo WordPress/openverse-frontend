@@ -19,6 +19,7 @@
       />
     </div>
     <VPopoverContent
+      v-if="triggerRef"
       :z-index="zIndex"
       :visible="visibleRef"
       :trigger-element="triggerRef"

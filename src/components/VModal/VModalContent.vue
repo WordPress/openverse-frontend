@@ -76,7 +76,6 @@ import {
 import { Portal as VTeleport } from "portal-vue"
 
 import { useDialogContent } from "~/composables/use-dialog-content"
-import { warn } from "~/utils/console"
 
 import type { ModalColorMode, ModalVariant } from "~/types/modal"
 
@@ -147,10 +146,6 @@ export default defineComponent({
     },
   },
   setup(props, { emit, attrs }) {
-    if (!attrs["aria-label"] && !attrs["aria-labelledby"]) {
-      warn("You should provide either `aria-label` or `aria-labelledby` props.")
-    }
-
     const propsRefs = toRefs(props)
     const closeButton = ref<InstanceType<typeof VButton> | null>(null)
     const initialFocusElement = computed(
@@ -158,17 +153,22 @@ export default defineComponent({
     )
     const dialogRef = ref<HTMLElement | null>(null)
     const { onKeyDown, onBlur } = useDialogContent({
-      dialogRef,
+      dialogElements: {
+        dialogRef,
+        initialFocusElementRef: initialFocusElement,
+        triggerElementRef: propsRefs.triggerElement,
+      },
       visibleRef: propsRefs.visible,
-      autoFocusOnShowRef: propsRefs.autoFocusOnShow,
-      autoFocusOnHideRef: propsRefs.autoFocusOnHide,
-      trapFocusRef: propsRefs.trapFocus,
-      triggerElementRef: propsRefs.triggerElement,
-      hideOnClickOutsideRef: propsRefs.hideOnClickOutside,
+      dialogOptions: {
+        hideOnEscRef: propsRefs.hideOnEsc,
+        hideOnClickOutsideRef: propsRefs.hideOnClickOutside,
+        autoFocusOnShowRef: propsRefs.autoFocusOnShow,
+        autoFocusOnHideRef: propsRefs.autoFocusOnHide,
+        trapFocusRef: propsRefs.trapFocus,
+      },
       hideRef: propsRefs.hide,
-      hideOnEscRef: propsRefs.hideOnEsc,
-      initialFocusElementRef: initialFocusElement,
       emit,
+      attrs,
     })
 
     return {
