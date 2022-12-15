@@ -9,7 +9,7 @@
         mode="light"
         class="md:justify-stretch flex hidden flex-row items-center gap-8 text-sm ms-auto md:flex"
         nav-link-classes="ps-3"
-        @close="closeModal"
+        @close="closePageMenu"
       />
     </nav>
     <div class="flex lg:hidden">
@@ -62,12 +62,14 @@
             </div>
           </template>
           <template #default>
-            <VPageLinks
-              mode="light"
-              variant="column"
-              class="heading-5 mt-3 items-end"
-              @close="closePageMenu"
-            />
+            <nav>
+              <VPageLinks
+                mode="dark"
+                class="mt-3 flex flex-col items-end gap-y-2"
+                nav-link-classes="heading-5 py-3"
+                @close="closePageMenu"
+              />
+            </nav>
             <VWordPressLink class="mt-auto" mode="dark" />
           </template>
         </VModalContent>
@@ -90,18 +92,18 @@ import usePages from "~/composables/use-pages"
 
 import { useUiStore } from "~/stores/ui"
 
-import VHomeLink from '~/components/VHeader/VHomeLink.vue'
-import VIconButton from '~/components/VIconButton/VIconButton.vue'
-import VPageLinks from '~/components/VHeader/VPageLinks.vue'
-import VModalContent from '~/components/VModal/VModalContent.vue'
-import VPopoverContent from '~/components/VPopover/VPopoverContent.vue'
+import VHomeLink from "~/components/VHeader/VHomeLink.vue"
+import VIconButton from "~/components/VIconButton/VIconButton.vue"
+import VPageLinks from "~/components/VHeader/VPageLinks.vue"
+import VModalContent from "~/components/VModal/VModalContent.vue"
+import VPopoverContent from "~/components/VPopover/VPopoverContent.vue"
 import VWordPressLink from "~/components/VHeader/VWordPressLink.vue"
 
 import closeIcon from "~/assets/icons/close.svg"
 import menuIcon from "~/assets/icons/menu.svg"
 
 export default defineComponent({
-  name: 'VHeaderInternal',
+  name: "VHeaderInternal",
   components: {
     VModalContent,
     VPopoverContent,
@@ -110,7 +112,7 @@ export default defineComponent({
     VPageLinks,
     VWordPressLink,
   },
-  setup() {
+  setup(_, { emit }) {
     const menuButtonRef = ref<InstanceType<typeof VIconButton> | null>(null)
     const nodeRef = ref<HTMLElement | null>(null)
 
@@ -120,14 +122,14 @@ export default defineComponent({
 
     const isModalVisible = ref(false)
     const uiStore = useUiStore()
-    const isLg = computed(() => uiStore.isBreakpoint('lg'))
+    const isLg = computed(() => uiStore.isBreakpoint("lg"))
     watch(isLg, (isLg) => {
       if (isLg && isModalVisible.value) {
         closePageMenu()
       }
     })
 
-    const isMd = computed(() => uiStore.isBreakpoint('md'))
+    const isMd = computed(() => uiStore.isBreakpoint("md"))
 
     const triggerElement = computed(
       () => (menuButtonRef.value?.$el as HTMLElement) || null
@@ -141,6 +143,7 @@ export default defineComponent({
       visibleRef: isModalVisible,
       nodeRef,
       shouldLockBodyScrollRef: computed(() => !isMd.value),
+      emit,
     })
 
     // When clicking on an internal link in the modal, close the modal

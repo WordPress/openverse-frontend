@@ -76,7 +76,6 @@ import {
 import { Portal as VTeleport } from "portal-vue"
 
 import { useDialogContent } from "~/composables/use-dialog-content"
-import { warn } from "~/utils/console"
 
 import type { ModalColorMode, ModalVariant } from "~/types/modal"
 

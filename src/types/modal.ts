@@ -1,4 +1,4 @@
-import type { Ref } from '@nuxtjs/composition-api'
+import type { Ref } from "@nuxtjs/composition-api"
 
 export type ModalVariant = "default" | "full" | "two-thirds"
 export type ModalColorMode = "dark" | "light"

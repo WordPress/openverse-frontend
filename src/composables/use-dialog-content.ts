@@ -1,13 +1,13 @@
-import { ref } from '@nuxtjs/composition-api'
+import { ref } from "@nuxtjs/composition-api"
 
-import { useFocusOnShow } from '~/composables/use-focus-on-show'
-import { useFocusOnHide } from '~/composables/use-focus-on-hide'
-import { useHideOnClickOutside } from '~/composables/use-hide-on-click-outside'
-import { useFocusOnBlur } from '~/composables/use-focus-on-blur'
+import { useFocusOnShow } from "~/composables/use-focus-on-show"
+import { useFocusOnHide } from "~/composables/use-focus-on-hide"
+import { useHideOnClickOutside } from "~/composables/use-hide-on-click-outside"
+import { useFocusOnBlur } from "~/composables/use-focus-on-blur"
 
-import { warn } from '~/utils/console'
+import { warn } from "~/utils/console"
 
-import type { Ref, SetupContext } from '@nuxtjs/composition-api'
+import type { Ref, SetupContext } from "@nuxtjs/composition-api"
 
 type Props = {
   dialogElements: {
@@ -25,7 +25,7 @@ type Props = {
   visibleRef: Ref<boolean>
   hideRef: Ref<() => void>
   emit: SetupContext["emit"]
-  attrs: SetupContext['attrs']
+  attrs: SetupContext["attrs"]
 }
 
 export function useDialogContent({
@@ -36,8 +36,8 @@ export function useDialogContent({
   dialogOptions,
   dialogElements: { dialogRef, initialFocusElementRef, triggerElementRef },
 }: Props) {
-  if (!attrs['aria-label'] && !attrs['aria-labelledby']) {
-    warn('You should provide either `aria-label` or `aria-labelledby` props.')
+  if (!attrs["aria-label"] && !attrs["aria-labelledby"]) {
+    warn("You should provide either `aria-label` or `aria-labelledby` props.")
   }
 
   const autoFocusOnShowRef = dialogOptions?.autoFocusOnShowRef || ref(true)
@@ -45,7 +45,6 @@ export function useDialogContent({
   const autoFocusOnHideRef = dialogOptions?.autoFocusOnHideRef || ref(true)
   const hideOnClickOutsideRef =
     dialogOptions?.hideOnClickOutsideRef || ref(true)
-  console.log('hideOnClickOutsideRef', hideOnClickOutsideRef.value)
   const hideOnEscRef = dialogOptions?.hideOnEscRef || ref(true)
 
   const focusOnBlur = useFocusOnBlur({

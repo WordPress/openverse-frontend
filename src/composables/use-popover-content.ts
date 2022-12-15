@@ -4,15 +4,15 @@ import { PopoverContentProps, usePopper } from "~/composables/use-popper"
 
 import { useDialogContent } from "~/composables/use-dialog-content"
 
-import type { CSSProperties } from '@vue/runtime-dom'
+import type { CSSProperties } from "@vue/runtime-dom"
 
 import type { Ref, ToRefs, SetupContext } from "@nuxtjs/composition-api"
 
 type Props = {
   popoverRef: Ref<HTMLElement | null>
   popoverPropsRefs: ToRefs<PopoverContentProps>
-  emit: SetupContext['emit']
-  attrs: SetupContext['attrs']
+  emit: SetupContext["emit"]
+  attrs: SetupContext["attrs"]
 }
 
 export function usePopoverContent({
@@ -50,7 +50,7 @@ export function usePopoverContent({
     const maxHeight = maxHeightRef.value
 
     return maxHeight && popoverPropsRefs.clippable
-      ? ({ '--popover-height': `${maxHeight}px` } as CSSProperties)
+      ? ({ "--popover-height": `${maxHeight}px` } as CSSProperties)
       : ({} as CSSProperties)
   })
 

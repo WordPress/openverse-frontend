@@ -1,33 +1,67 @@
-import { reactive, ref, Ref, watch } from '@nuxtjs/composition-api'
+import {
+  reactive,
+  ref,
+  Ref,
+  SetupContext,
+  watch,
+} from "@nuxtjs/composition-api"
 
-import { useBodyScrollLock } from '~/composables/use-body-scroll-lock'
+import { useBodyScrollLock } from "~/composables/use-body-scroll-lock"
 
 export function useDialogControl({
   visibleRef,
   nodeRef,
   shouldLockBodyScrollRef = ref(true),
+  emit,
 }: {
-  visibleRef: Ref<boolean>
+  visibleRef?: Ref<boolean>
   nodeRef?: Ref<HTMLElement | null>
   shouldLockBodyScrollRef?: Ref<boolean>
+  emit: SetupContext["emit"]
 }) {
+  const internalVisibleRef =
+    typeof visibleRef === "undefined" ? ref(false) : visibleRef
+
   const triggerA11yProps = reactive({
-    'aria-expanded': false,
-    'aria-haspopup': 'dialog',
+    "aria-expanded": false,
+    "aria-haspopup": "dialog",
   })
 
-  /**
-   * When the `visible` prop is set to a different value than internalVisibleRef,
-   * we update the internalVisibleRef to match the prop.
-   */
-  watch(visibleRef, (visible) => {
-    triggerA11yProps['aria-expanded'] = visible
+  watch(internalVisibleRef, (visible) => {
+    triggerA11yProps["aria-expanded"] = visible
     if (visible) {
       open()
     } else {
       close()
     }
   })
+
+  const open = () => {
+    console.log(
+      "opening, setting internal visible to true",
+      internalVisibleRef.value,
+      visibleRef?.value
+    )
+    internalVisibleRef.value = true
+    lock()
+    console.log(
+      "now, internal:",
+      internalVisibleRef.value,
+      "prop: ",
+      visibleRef?.value
+    )
+    if (typeof visibleRef === "undefined") {
+      emit("open")
+    }
+  }
+
+  const close = () => {
+    internalVisibleRef.value = false
+    unlock()
+    if (typeof visibleRef === "undefined") {
+      emit("open")
+    }
+  }
 
   const { lock, unlock } =
     shouldLockBodyScrollRef.value && nodeRef
@@ -40,19 +74,8 @@ export function useDialogControl({
             /** */
           },
         }
-
-  const open = () => {
-    lock()
-    visibleRef.value = true
-  }
-
-  const close = () => {
-    visibleRef.value = false
-    unlock()
-  }
-
   const onTriggerClick = () => {
-    if (visibleRef.value) {
+    if (internalVisibleRef.value) {
       close()
     } else {
       open()

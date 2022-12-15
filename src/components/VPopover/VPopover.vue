@@ -53,7 +53,7 @@ import {
 
 import { zIndexValidator } from "~/constants/z-indices"
 
-import { useDialogControl } from '~/composables/use-dialog-control'
+import { useDialogControl } from "~/composables/use-dialog-control"
 
 import VPopoverContent from "~/components/VPopover/VPopoverContent.vue"
 
@@ -142,7 +142,7 @@ export default defineComponent({
      */
     clippable: { type: Boolean, default: false },
   },
-  setup() {
+  setup(_, { emit }) {
     const visibleRef = ref(false)
     const triggerContainerRef = ref<HTMLElement | null>(null)
 
@@ -155,6 +155,7 @@ export default defineComponent({
     const { close, open, onTriggerClick, triggerA11yProps } = useDialogControl({
       visibleRef,
       nodeRef: ref(null),
+      emit,
     })
 
     return {

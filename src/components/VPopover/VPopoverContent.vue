@@ -27,16 +27,16 @@ import {
   provide,
   InjectionKey,
   PropType,
-} from '@nuxtjs/composition-api'
+} from "@nuxtjs/composition-api"
 
-import { usePopoverContent } from '~/composables/use-popover-content'
-import { defineEvent } from '~/types/emits'
+import { usePopoverContent } from "~/composables/use-popover-content"
+import { defineEvent } from "~/types/emits"
 
 import { zIndexValidator } from "~/constants/z-indices"
 
-import type { Placement, PositioningStrategy } from '@popperjs/core'
+import type { Placement, PositioningStrategy } from "@popperjs/core"
 
-import type { SetupContext } from 'vue'
+import type { SetupContext } from "vue"
 
 export const VPopoverContentContextKey = Symbol(
   "VPopoverContentContextKey"
@@ -77,11 +77,11 @@ export default defineComponent({
     },
     placement: {
       type: String as PropType<Placement>,
-      default: 'bottom-end',
+      default: "bottom-end",
     },
     strategy: {
       type: String as PropType<PositioningStrategy>,
-      default: 'absolute',
+      default: "absolute",
     },
     zIndex: {
       type: [String, Number],
@@ -108,7 +108,7 @@ export default defineComponent({
     const { onKeyDown, onBlur, heightProperties } = usePopoverContent({
       popoverRef,
       popoverPropsRefs: propsRefs,
-      emit: emit as SetupContext['emit'],
+      emit: emit as SetupContext["emit"],
       attrs,
     })
 

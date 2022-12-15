@@ -43,13 +43,13 @@ import {
   computed,
   toRef,
   PropType,
-} from '@nuxtjs/composition-api'
+} from "@nuxtjs/composition-api"
 
-import type { ModalColorMode, ModalVariant } from '~/types/modal'
+import type { ModalColorMode, ModalVariant } from "~/types/modal"
 
-import { useDialogControl } from '~/composables/use-dialog-control'
+import { useDialogControl } from "~/composables/use-dialog-control"
 
-import VModalContent from '~/components/VModal/VModalContent.vue'
+import VModalContent from "~/components/VModal/VModalContent.vue"
 
 export default defineComponent({
   name: "VModal",
@@ -143,8 +143,8 @@ export default defineComponent({
       default: "",
     },
   },
-  setup(props) {
-    const visibleRef = toRef(props, 'visible')
+  setup(props, { emit }) {
+    const visibleRef = toRef(props, "visible")
 
     const nodeRef = ref<null | HTMLElement>(null)
 
@@ -157,6 +157,7 @@ export default defineComponent({
     const { close, open, onTriggerClick, triggerA11yProps } = useDialogControl({
       visibleRef,
       nodeRef,
+      emit,
     })
 
     return {

@@ -129,19 +129,19 @@ import { keycodes } from "~/constants/key-codes"
 
 import { IsHeaderScrolledKey } from "~/types/provides"
 
-import { useDialogControl } from '~/composables/use-dialog-control'
+import { useDialogControl } from "~/composables/use-dialog-control"
 import { useI18n } from "~/composables/use-i18n"
 import { useI18nResultsCount } from "~/composables/use-i18n-utilities"
 
 import { useMediaStore } from "~/stores/media"
 import { isSearchTypeSupported, useSearchStore } from "~/stores/search"
 
-import VLogoButton from '~/components/VHeader/VLogoButton.vue'
-import VInputModal from '~/components/VModal/VInputModal.vue'
-import VContentSettingsModalContent from '~/components/VHeader/VHeaderMobile/VContentSettingsModalContent.vue'
-import VContentSettingsButton from '~/components/VHeader/VHeaderMobile/VContentSettingsButton.vue'
-import VRecentSearches from '~/components/VRecentSearches/VRecentSearches.vue'
-import VSearchBarButton from '~/components/VHeader/VHeaderMobile/VSearchBarButton.vue'
+import VLogoButton from "~/components/VHeader/VLogoButton.vue"
+import VInputModal from "~/components/VModal/VInputModal.vue"
+import VContentSettingsModalContent from "~/components/VHeader/VHeaderMobile/VContentSettingsModalContent.vue"
+import VContentSettingsButton from "~/components/VHeader/VHeaderMobile/VContentSettingsButton.vue"
+import VRecentSearches from "~/components/VRecentSearches/VRecentSearches.vue"
+import VSearchBarButton from "~/components/VHeader/VHeaderMobile/VSearchBarButton.vue"
 
 import closeIcon from "~/assets/icons/close-small.svg"
 import chevronLeftIcon from "~/assets/icons/chevron-left.svg"
@@ -161,7 +161,7 @@ export default defineComponent({
     VRecentSearches,
     VSearchBarButton,
   },
-  setup() {
+  setup(_, { emit }) {
     const searchInputRef = ref<HTMLInputElement | null>(null)
     const headerRef = ref<HTMLElement | null>(null)
 
@@ -357,6 +357,7 @@ export default defineComponent({
     } = useDialogControl({
       visibleRef: contentSettingsOpen,
       nodeRef: headerRef,
+      emit,
     })
 
     return {

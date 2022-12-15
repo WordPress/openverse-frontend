@@ -31,8 +31,8 @@ import {
 
 import { Portal as VTeleport } from "portal-vue"
 
-import { useDialogContent } from '~/composables/use-dialog-content'
-import { useDialogControl } from '~/composables/use-dialog-control'
+import { useDialogContent } from "~/composables/use-dialog-content"
+import { useDialogControl } from "~/composables/use-dialog-control"
 
 export default defineComponent({
   name: "VInputModal",
@@ -67,12 +67,13 @@ export default defineComponent({
   setup(props, { attrs, emit }) {
     const focusTrapRef = ref<ComponentInstance | null>(null)
 
-    const visibleRef = toRef(props, 'isActive')
+    const visibleRef = toRef(props, "isActive")
 
     const nodeRef = ref<HTMLElement | null>(null)
     const { close } = useDialogControl({
       visibleRef,
       nodeRef,
+      emit: emit as SetupContext["emit"],
     })
 
     const dialogRef = ref<HTMLElement | null>(null)
@@ -88,9 +89,9 @@ export default defineComponent({
         hideOnClickOutsideRef: ref(false),
         trapFocusRef: ref(true),
       },
-      visibleRef: toRef(props, 'isActive'),
+      visibleRef: toRef(props, "isActive"),
       hideRef: ref(close),
-      emit: emit as SetupContext['emit'],
+      emit: emit as SetupContext["emit"],
       attrs,
     })
 

@@ -40,7 +40,7 @@
       :is-active="currentPage === page.id"
       :class="navLinkClasses"
       @click="onClick(page.link)"
-    >{{ $t(page.name) }}</VNavLink
+      >{{ $t(page.name) }}</VNavLink
     >
   </ul>
 </template>
@@ -91,7 +91,7 @@ export default defineComponent({
     },
     variant: {
       type: String as PropType<"links" | "itemgroup">,
-      default: "links"
+      default: "links",
     },
   },
   setup(_, { emit }) {
