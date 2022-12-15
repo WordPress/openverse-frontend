@@ -18,6 +18,6 @@ module.exports = {
     },
   ],
   vueIndentScriptAndStyle: false,
-  plugins: [require('prettier-plugin-tailwindcss')],
-  tailwindConfig: 'tailwind.config.js',
+  plugins: [require("prettier-plugin-tailwindcss")],
+  tailwindConfig: "tailwind.config.js",
 }
