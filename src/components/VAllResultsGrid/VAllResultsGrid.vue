@@ -53,7 +53,7 @@
 import { computed, defineComponent } from "@nuxtjs/composition-api"
 
 import { useMediaStore } from "~/stores/media"
-import { useSearchStore } from '~/stores/search'
+import { useSearchStore } from "~/stores/search"
 import { useUiStore } from "~/stores/ui"
 
 import { useFocusFilters } from "~/composables/use-focus-filters"

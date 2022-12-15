@@ -168,10 +168,7 @@ export const useSearchStore = defineStore("search", {
         this.setSearchTerm(searchTerm)
       }
 
-      return this.$nuxt.localePath({
-        path: searchPath(this.searchType),
-        query: this.searchQueryParams as Dictionary<string>,
-      })
+      return this.getSearchPath()
     },
     /**
      * Returns localized search path for the given search type.

@@ -111,7 +111,7 @@ import {
 import { ensureFocus } from "~/utils/reakit-utils/focus"
 import { cyclicShift } from "~/utils/math"
 
-import { keycodes } from '~/constants/key-codes'
+import { keycodes } from "~/constants/key-codes"
 
 import { IsHeaderScrolledKey } from "~/types/provides"
 

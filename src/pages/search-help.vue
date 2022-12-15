@@ -226,7 +226,7 @@
 import { defineComponent, useMeta } from "@nuxtjs/composition-api"
 
 import { useFeatureFlagStore } from "~/stores/feature-flag"
-import { useSearchStore } from '~/stores/search'
+import { useSearchStore } from "~/stores/search"
 
 import { useI18n } from "~/composables/use-i18n"
 

@@ -59,8 +59,8 @@ import { useMediaStore } from "~/stores/media"
 import { isSearchTypeSupported, useSearchStore } from "~/stores/search"
 import { useUiStore } from "~/stores/ui"
 
-import { ALL_MEDIA, supportedMediaTypes } from '~/constants/media'
-import { IsHeaderScrolledKey, IsSidebarVisibleKey } from '~/types/provides'
+import { ALL_MEDIA, supportedMediaTypes } from "~/constants/media"
+import { IsHeaderScrolledKey, IsSidebarVisibleKey } from "~/types/provides"
 
 import { useI18n } from "~/composables/use-i18n"
 import { useI18nResultsCount } from "~/composables/use-i18n-utilities"

@@ -6,11 +6,11 @@ import {
   useRouter,
 } from "@nuxtjs/composition-api"
 
-import { ALL_MEDIA, supportedMediaTypes, SearchType } from '~/constants/media'
-import useSearchType from '~/composables/use-search-type'
-import { useMediaStore } from '~/stores/media'
-import { useSearchStore } from '~/stores/search'
-import { useUiStore } from '~/stores/ui'
+import { ALL_MEDIA, supportedMediaTypes, SearchType } from "~/constants/media"
+import useSearchType from "~/composables/use-search-type"
+import { useMediaStore } from "~/stores/media"
+import { useSearchStore } from "~/stores/search"
+import { useUiStore } from "~/stores/ui"
 
 import VMobileMenuModal from "~/components/VContentSwitcherOld/VMobileMenuModal.vue"
 import VSearchTypePopoverOld from "~/components/VContentSwitcherOld/VSearchTypePopoverOld.vue"
