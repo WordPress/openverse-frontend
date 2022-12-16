@@ -14,24 +14,22 @@ const currentPageLink = 'div[role="dialog"] >> [aria-current="page"]'
 const currentPageLinkInPopover = '.popover-content >> [aria-current="page"]'
 const menuButton = `[aria-label="${t("header.aria.menu")}"]`
 
-const openMenu = async (page: Page) => await page.click(menuButton)
+const clickMenuButton = async (page: Page) => await page.click(menuButton)
 const closeMenu = async (page: Page) => await page.click(modalCloseButton)
 
 const isPagesPopoverOpen = async (page: Page) =>
   page.locator(".popover-content").isVisible({ timeout: 100 })
 
 test.describe("Header internal", () => {
-  breakpoints.describeXs(() => {
+  breakpoints.describeSm(() => {
     test.beforeEach(async ({ context, page }) => {
-      await setCookies(context, { breakpoint: "sm" })
+      await setCookies(context, { uiBreakpoint: "sm" })
       await enableNewHeader(page)
       await page.goto("/about")
     })
 
-    test("can open and close the modal under sm breakpoint", async ({
-      page,
-    }) => {
-      await openMenu(page)
+    test("can open and close the modal on sm breakpoint", async ({ page }) => {
+      await clickMenuButton(page)
       expect(await isMobileMenuOpen(page)).toBe(true)
       await expect(page.locator(currentPageLink)).toBeVisible()
       await expect(page.locator(currentPageLink)).toHaveText("About")
@@ -41,16 +39,19 @@ test.describe("Header internal", () => {
       await expect(page.locator(menuButton)).toBeVisible()
     })
 
-    test("the modal locks the scroll under sm breakpoint", async ({
+    test("the modal locks the scroll on sm breakpoint", async ({
       context,
       page,
-      storageState,
     }) => {
       await scrollToBottom(page)
+      const bScrollPosition = await page.evaluate(() => window.scrollY)
+      console.log("first expect", bScrollPosition)
+      expect(bScrollPosition).toBeGreaterThan(100)
 
-      await openMenu(page)
+      await clickMenuButton(page)
       await closeMenu(page)
-      console.log("cookies: ", storageState, context.cookies())
+      const cookies = await context.cookies()
+      console.log("cookies: ", cookies)
 
       const scrollPosition = await page.evaluate(() => window.scrollY)
       expect(scrollPosition).toBeGreaterThan(100)
@@ -60,7 +61,7 @@ test.describe("Header internal", () => {
       page,
     }) => {
       await scrollToBottom(page)
-      await openMenu(page)
+      await clickMenuButton(page)
 
       // Open the external link in a new tab, close the tab
       const [popup] = await Promise.all([
@@ -74,21 +75,19 @@ test.describe("Header internal", () => {
   })
 
   breakpoints.describeMd(() => {
-    test.beforeEach(async ({ context, page }) => {
+    test("can open and close the popover on md breakpoint", async ({
+      context,
+      page,
+    }) => {
       await setCookies(context, { breakpoint: "md" })
       await enableNewHeader(page)
       await page.goto("/about")
-    })
-
-    test("can open and close the popover on md breakpoint", async ({
-      page,
-    }) => {
-      await openMenu(page)
+      await clickMenuButton(page)
       expect(await isPagesPopoverOpen(page)).toBe(true)
       await expect(page.locator(currentPageLinkInPopover)).toBeVisible()
       await expect(page.locator(currentPageLinkInPopover)).toHaveText("About")
 
-      await page.locator('.popover-content >> [aria-label="Close"]').click()
+      await clickMenuButton(page)
       expect(await isPagesPopoverOpen(page)).toBe(false)
       await expect(page.locator(menuButton)).toBeVisible()
     })

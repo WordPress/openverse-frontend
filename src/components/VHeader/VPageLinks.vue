@@ -13,7 +13,7 @@
       :selected="currentPage === page.id"
       :href="page.link"
       class="w-full"
-      @click="onClick(page.link)"
+      @click="onClick"
     >
       <div class="flex w-full flex-row justify-between">
         <span class="pe-2">{{ $t(page.name) }}</span>
@@ -39,18 +39,14 @@
       :mode="mode"
       :is-active="currentPage === page.id"
       :class="navLinkClasses"
-      @click="onClick(page.link)"
+      @click="onClick"
       >{{ $t(page.name) }}</VNavLink
     >
   </ul>
 </template>
 
 <script lang="ts">
-import {
-  type PropType,
-  defineComponent,
-  useRoute,
-} from "@nuxtjs/composition-api"
+import { type PropType, defineComponent } from "@nuxtjs/composition-api"
 
 import usePages from "~/composables/use-pages"
 
@@ -96,13 +92,10 @@ export default defineComponent({
   },
   setup(_, { emit }) {
     const { all: allPages, current: currentPage } = usePages(true)
-    const route = useRoute()
 
-    const onClick = (link: string) => {
-      if (link === route.value.path) {
-        emit("close")
-      }
-    }
+    // The modal isn't closed if we click on the current page link,
+    // so we need to close it manually.
+    const onClick = () => emit("close")
 
     const isLinkExternal = (item: typeof allPages[number]) =>
       !item.link.startsWith("/")

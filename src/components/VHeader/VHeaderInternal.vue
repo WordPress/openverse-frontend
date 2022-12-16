@@ -14,6 +14,7 @@
     </nav>
     <div class="flex lg:hidden">
       <VIconButton
+        id="menu-button"
         ref="menuButtonRef"
         :icon-props="{ iconPath: menuIcon }"
         :aria-label="$t('header.aria.menu')"
@@ -29,7 +30,7 @@
           :hide="closePageMenu"
           :visible="isModalVisible"
           :trigger-element="triggerElement"
-          :aria-label="$t('header.aria.menu')"
+          aria-labelledby="menu-button"
         >
           <VPageLinks
             mode="dark"
@@ -40,7 +41,7 @@
         </VPopoverContent>
         <VModalContent
           v-else-if="!isMd"
-          :label="$t('header.aria.menu').toString()"
+          aria-labelledby="menu-button"
           :hide="closePageMenu"
           variant="full"
           mode="dark"
@@ -133,16 +134,12 @@ export default defineComponent({
 
     const isMd = computed(() => uiStore.isBreakpoint("md"))
 
-    const isLg = computed(() => uiStore.isBreakpoint("lg"))
-    watch(isLg, (isLg) => {
-      if (isLg && isModalVisible.value) {
-        closePageMenu()
-      }
-    })
-
     const triggerElement = computed(
       () => (menuButtonRef.value?.$el as HTMLElement) || null
     )
+
+    const lockBodyScroll = computed(() => !isMd.value)
+
     const {
       close: closePageMenu,
       open: openPageMenu,
@@ -151,7 +148,7 @@ export default defineComponent({
     } = useDialogControl({
       visibleRef: isModalVisible,
       nodeRef,
-      shouldLockBodyScrollRef: computed(() => !isMd.value),
+      lockBodyScroll,
       emit,
     })
 

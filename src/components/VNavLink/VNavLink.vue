@@ -10,6 +10,7 @@
       ]"
       show-external-icon
       :href="link"
+      @click="$emit('click')"
       ><slot
     /></VLink>
   </li>
