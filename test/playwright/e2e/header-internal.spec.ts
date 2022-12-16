@@ -57,7 +57,7 @@ test.describe("Header internal", () => {
       expect(scrollPosition).toBeGreaterThan(100)
     })
 
-    test("the modal opens an external link in a new window and it doesn't close the modal", async ({
+    test("the modal opens an external link in a new window and it closes the modal", async ({
       page,
     }) => {
       await scrollToBottom(page)
@@ -69,8 +69,9 @@ test.describe("Header internal", () => {
         page.locator('div[role="dialog"] >> text=API').click(),
       ])
       await popup.close()
-
-      expect(await isMobileMenuOpen(page)).toBe(true)
+      // If we want the modal to stay open, we'll need to change this to `true`,
+      // and implement the change
+      expect(await isMobileMenuOpen(page)).toBe(false)
     })
   })
 
