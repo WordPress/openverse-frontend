@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2022-12-19T20:37:18+00:00\n"
+"POT-Creation-Date: 2022-12-19T21:22:55+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -155,10 +155,10 @@ msgctxt "notification.okay"
 msgid "OK"
 msgstr ""
 
-#: src/components/VHeader/VHeaderDesktop.vue:121
-#: src/components/VHeader/VHeaderMobile/VHeaderMobile.vue:172
+#: src/components/VHeader/VHeaderDesktop.vue:119
+#: src/components/VHeader/VHeaderMobile/VHeaderMobile.vue:169
 #: src/components/VHeader/VHeaderMobile/VShowResultsButton.vue:32
-#: src/components/VHeaderOld/VHeaderOld.vue:145
+#: src/components/VHeaderOld/VHeaderOld.vue:143
 msgctxt "header.loading"
 msgid "Loading..."
 msgstr ""
@@ -522,7 +522,7 @@ msgstr ""
 
 #. Do not translate words between ### ###.
 #: src/pages/search-help.vue:4
-#: src/pages/search-help.vue:244
+#: src/pages/search-help.vue:245
 msgctxt "search-guide.title"
 msgid "###openverse### Syntax Guide"
 msgstr ""
@@ -1123,7 +1123,7 @@ msgid "Loading..."
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VAllResultsGrid/VAllResultsGrid.vue:99
+#: src/components/VAllResultsGrid/VAllResultsGrid.vue:104
 msgctxt "browse-page.fetching-error"
 msgid "Error fetching ###type###:"
 msgstr ""
