@@ -202,16 +202,18 @@ export default defineComponent({
 
     const featuredSearches = imageInfo.sets.map((setItem) => ({
       ...setItem,
-      images: setItem.images.map((imageItem) => ({
-        ...imageItem,
-        src: require(`~/assets/homepage_images/${setItem.prefix}-${imageItem.index}.jpg`),
-        url: router.resolve(
-          app.localePath({
-            name: "image-id",
-            params: { id: imageItem.identifier },
-          })
-        ).href,
-      })),
+      images: setItem.images
+        .map((imageItem) => ({
+          ...imageItem,
+          src: require(`~/assets/homepage_images/${setItem.key}/${imageItem.index}.png`),
+          url: router.resolve(
+            app.localePath({
+              name: "image-id",
+              params: { id: imageItem.identifier },
+            })
+          ).href,
+        }))
+        .slice(0, 7),
     }))
 
     const featuredSearchIdx = Math.floor(Math.random() * 3)
