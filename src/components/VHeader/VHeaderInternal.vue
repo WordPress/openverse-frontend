@@ -1,9 +1,9 @@
 <template>
   <header
     ref="nodeRef"
-    class="main-header z-30 flex h-20 w-full items-stretch justify-between gap-x-2 bg-white py-4 pe-3 ps-6 md:py-4 md:px-7"
+    class="main-header z-30 flex h-20 w-full items-stretch justify-between gap-x-2 border-b border-tx bg-white py-4 ps-2 pe-3 md:py-4 lg:ps-6 lg:pe-10"
   >
-    <VHomeLink variant="dark" />
+    <VHomeLink variant="dark" class="px-4 hover:bg-yellow" />
     <nav class="lg:justify-stretch hidden ms-auto lg:flex">
       <VPageLinks
         mode="light"
@@ -70,8 +70,9 @@
             <nav>
               <VPageLinks
                 mode="dark"
-                class="mt-3 flex flex-col items-end gap-y-2"
-                nav-link-classes="text-3xl py-3"
+                class="mt-3 flex flex-col items-end gap-y-6"
+                nav-link-classes="text-3xl"
+                :is-in-modal="true"
                 @close="closePageMenu"
               />
             </nav>

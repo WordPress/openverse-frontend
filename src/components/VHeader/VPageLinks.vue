@@ -32,28 +32,42 @@
       mode === 'light' ? 'text-dark-charcoal' : 'bg-dark-charcoal text-white'
     "
   >
-    <VNavLink
-      v-for="page in allPages"
-      :key="page.id"
-      :link="page.link"
-      :mode="mode"
-      :is-active="currentPage === page.id"
-      :class="navLinkClasses"
-      @click="onClick"
-      >{{ $t(page.name) }}</VNavLink
-    >
+    <li v-for="page in allPages" :key="page.id">
+      <VLink
+        class="flex flex-row rounded-sm hover:underline focus-visible:outline-none focus-visible:ring focus-visible:ring-offset-tx disabled:text-dark-charcoal-40"
+        :class="[
+          { 'font-semibold': currentPage === page.id },
+          navLinkClasses,
+          mode === 'light'
+            ? 'text-dark-charcoal focus-visible:ring-pink'
+            : 'text-white focus-visible:ring-yellow',
+        ]"
+        :href="page.link"
+        @click="onClick"
+        >{{ $t(page.name)
+        }}<VIcon
+          v-if="isLinkExternal(page)"
+          :icon-path="externalLinkIcon"
+          :size="externalIconSize"
+          class="self-center ms-2"
+      /></VLink>
+    </li>
   </ul>
 </template>
 
 <script lang="ts">
-import { type PropType, defineComponent } from "@nuxtjs/composition-api"
+import {
+  type PropType,
+  defineComponent,
+  computed,
+} from "@nuxtjs/composition-api"
 
 import usePages from "~/composables/use-pages"
 
 import VItemGroup from "~/components/VItemGroup/VItemGroup.vue"
 import VItem from "~/components/VItemGroup/VItem.vue"
 import VIcon from "~/components/VIcon/VIcon.vue"
-import VNavLink from "~/components/VNavLink/VNavLink.vue"
+import VLink from "~/components/VLink.vue"
 
 import externalLinkIcon from "~/assets/icons/external-link.svg"
 
@@ -63,7 +77,7 @@ export default defineComponent({
     VIcon,
     VItem,
     VItemGroup,
-    VNavLink,
+    VLink,
   },
   props: {
     /**
@@ -89,8 +103,12 @@ export default defineComponent({
       type: String as PropType<"links" | "itemgroup">,
       default: "links",
     },
+    isInModal: {
+      type: Boolean,
+      default: false,
+    },
   },
-  setup(_, { emit }) {
+  setup(props, { emit }) {
     const { all: allPages, current: currentPage } = usePages(true)
 
     // The modal isn't closed if we click on the current page link,
@@ -100,12 +118,15 @@ export default defineComponent({
     const isLinkExternal = (item: typeof allPages[number]) =>
       !item.link.startsWith("/")
 
+    const externalIconSize = computed(() => (props.isInModal ? 6 : 4))
+
     return {
       allPages,
       currentPage,
       onClick,
       isLinkExternal,
       externalLinkIcon,
+      externalIconSize,
     }
   },
 })
