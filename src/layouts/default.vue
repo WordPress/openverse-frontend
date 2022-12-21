@@ -11,7 +11,7 @@
           <VHeaderDesktop v-if="isDesktopLayout" />
           <VHeaderMobile v-else />
         </template>
-        <VHeaderInternal v-else />
+        <VHeaderInternal v-else class="bg-white" />
       </template>
       <VHeaderOld v-else />
     </div>

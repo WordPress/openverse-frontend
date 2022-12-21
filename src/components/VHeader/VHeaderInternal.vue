@@ -1,6 +1,6 @@
 <template>
   <header
-    class="main-header z-30 flex h-20 w-full items-stretch justify-between gap-x-2 bg-white py-4 pe-3 ps-6 md:py-4 md:px-7"
+    class="main-header z-30 flex h-20 w-full items-stretch justify-between gap-x-2 py-4 pe-3 ps-6 md:py-4 md:px-7"
   >
     <VHomeLink variant="dark" />
     <nav class="md:justify-stretch hidden ms-auto md:flex">
