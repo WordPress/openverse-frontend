@@ -25,7 +25,7 @@
       />
       <template v-if="triggerElement">
         <VPopoverContent
-          v-if="isMd"
+          v-if="isSm"
           z-index="popover"
           :hide="closePageMenu"
           :visible="isModalVisible"
@@ -40,12 +40,12 @@
           />
         </VPopoverContent>
         <VModalContent
-          v-else-if="!isMd"
+          v-else-if="!isSm"
           aria-labelledby="menu-button"
           :hide="closePageMenu"
           variant="full"
           mode="dark"
-          modal-content-classes="flex md:hidden"
+          modal-content-classes="flex sm:hidden"
           :visible="isModalVisible"
           @open="openPageMenu"
         >
@@ -132,13 +132,13 @@ export default defineComponent({
 
     const isModalVisible = ref(false)
 
-    const isMd = computed(() => uiStore.isBreakpoint("md"))
+    const isSm = computed(() => uiStore.isBreakpoint("sm"))
 
     const triggerElement = computed(
       () => (menuButtonRef.value?.$el as HTMLElement) || null
     )
 
-    const lockBodyScroll = computed(() => !isMd.value)
+    const lockBodyScroll = computed(() => !isSm.value)
 
     const {
       close: closePageMenu,
@@ -172,7 +172,7 @@ export default defineComponent({
       isModalVisible,
       closePageMenu,
       openPageMenu,
-      isMd,
+      isSm,
       onTriggerClick,
       triggerA11yProps,
       triggerElement,

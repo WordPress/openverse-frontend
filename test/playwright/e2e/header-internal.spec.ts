@@ -21,14 +21,14 @@ const isPagesPopoverOpen = async (page: Page) =>
   page.locator(".popover-content").isVisible({ timeout: 100 })
 
 test.describe("Header internal", () => {
-  breakpoints.describeSm(() => {
+  breakpoints.describeXs(() => {
     test.beforeEach(async ({ context, page }) => {
-      await setCookies(context, { uiBreakpoint: "sm" })
+      await setCookies(context, { uiBreakpoint: "xs" })
       await enableNewHeader(page)
       await page.goto("/about")
     })
 
-    test("can open and close the modal on sm breakpoint", async ({ page }) => {
+    test("can open and close the modal on xs breakpoint", async ({ page }) => {
       await clickMenuButton(page)
       expect(await isMobileMenuOpen(page)).toBe(true)
       await expect(page.locator(currentPageLink)).toBeVisible()
@@ -39,19 +39,11 @@ test.describe("Header internal", () => {
       await expect(page.locator(menuButton)).toBeVisible()
     })
 
-    test("the modal locks the scroll on sm breakpoint", async ({
-      context,
-      page,
-    }) => {
+    test("the modal locks the scroll on xs breakpoint", async ({ page }) => {
       await scrollToBottom(page)
-      const bScrollPosition = await page.evaluate(() => window.scrollY)
-      console.log("first expect", bScrollPosition)
-      expect(bScrollPosition).toBeGreaterThan(100)
 
       await clickMenuButton(page)
       await closeMenu(page)
-      const cookies = await context.cookies()
-      console.log("cookies: ", cookies)
 
       const scrollPosition = await page.evaluate(() => window.scrollY)
       expect(scrollPosition).toBeGreaterThan(100)
@@ -76,11 +68,11 @@ test.describe("Header internal", () => {
   })
 
   breakpoints.describeMd(() => {
-    test("can open and close the popover on md breakpoint", async ({
+    test("can open and close the popover on sm breakpoint", async ({
       context,
       page,
     }) => {
-      await setCookies(context, { breakpoint: "md" })
+      await setCookies(context, { breakpoint: "sm" })
       await enableNewHeader(page)
       await page.goto("/about")
       await clickMenuButton(page)
