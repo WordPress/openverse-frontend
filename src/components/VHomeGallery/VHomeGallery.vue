@@ -19,7 +19,7 @@
           appear
         >
           <VLink
-            class="home-cell"
+            class="home-cell rounded-full p-1 focus:bg-white"
             :class="idx >= imageCount ? 'hidden' : 'block'"
             :style="{ '--transition-delay': `${idx * 0.05}s` }"
             :href="image.url"
@@ -85,7 +85,7 @@ export default defineComponent({
     const prefersReducedMotion = useReducedMotion()
 
     const dimens = 152 // px
-    const space = 32 // px
+    const space = 24 // px; 32px space - 4px padding on both sides
 
     const rowCount = 3
     const columnCount = computed(() => {
