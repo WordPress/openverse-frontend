@@ -31,6 +31,8 @@ runs:
       if: inputs.install
       shell: bash
       run: "pnpm install"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Copy locale files
       shell: bash
