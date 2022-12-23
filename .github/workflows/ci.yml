@@ -13,6 +13,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.sha }}
   cancel-in-progress: true
 
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 jobs:
   types:
     name: Check types
@@ -22,8 +25,6 @@ jobs:
       - uses: actions/checkout@v3
 
       - uses: ./.github/actions/setup-node-env
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Check types
         run: pnpm types
@@ -36,8 +37,6 @@ jobs:
       - uses: actions/checkout@v3
 
       - uses: ./.github/actions/setup-node-env
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Lint with ESLint and Prettier
         run: pnpm pc:lint
@@ -50,8 +49,6 @@ jobs:
       - uses: actions/checkout@v3
 
       - uses: ./.github/actions/setup-node-env
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run unit tests
         run: pnpm test:unit
@@ -87,8 +84,6 @@ jobs:
       - uses: actions/checkout@v3
 
       - uses: ./.github/actions/setup-node-env
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run Nuxt Playwright e2e tests
         run: pnpm test:playwright e2e --workers=2
@@ -107,8 +102,6 @@ jobs:
       - uses: actions/checkout@v3
 
       - uses: ./.github/actions/setup-node-env
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run Nuxt Playwright visual regression tests
         run: pnpm test:playwright visual-regression --workers=2
@@ -127,8 +120,6 @@ jobs:
       - uses: actions/checkout@v3
 
       - uses: ./.github/actions/setup-node-env
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run Storybook Playwright tests
         run: pnpm test:storybook
@@ -172,8 +163,6 @@ jobs:
       - uses: actions/checkout@v3
 
       - uses: ./.github/actions/setup-node-env
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run Storybook smoke-test
         run: pnpm storybook:smoke
@@ -186,8 +175,6 @@ jobs:
       - uses: actions/checkout@v3
 
       - uses: ./.github/actions/setup-node-env
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run build
         run: pnpm build
@@ -225,8 +212,6 @@ jobs:
         uses: actions/checkout@v3
 
       - uses: ./.github/actions/setup-node-env
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Fetch translation files
         run: pnpm i18n
