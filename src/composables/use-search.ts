@@ -1,9 +1,12 @@
-import { computed, ref, useRouter, watch } from "@nuxtjs/composition-api"
+import { computed, useRouter, watch } from "@nuxtjs/composition-api"
 
 import { useSearchStore } from "~/stores/search"
 import { useMediaStore } from "~/stores/media"
 import { useI18nResultsCount } from "~/composables/use-i18n-utilities"
-import { useMatchSearchRoutes } from "~/composables/use-match-routes"
+import {
+  useMatchSearchRoutes,
+  useMatchSingleResultRoutes,
+} from "~/composables/use-match-routes"
 import { ALL_MEDIA } from "~/constants/media"
 
 export const useSearch = () => {
@@ -12,8 +15,10 @@ export const useSearch = () => {
   const router = useRouter()
 
   const { matches: isSearchRoute } = useMatchSearchRoutes()
+  const { matches: isSingleResultRoute } = useMatchSingleResultRoutes()
 
   const storeSearchTerm = computed(() => searchStore.searchTerm)
+
   /**
    * To update the local search term when the route changes, when, for example,
    * the user clicks the back button, we need to watch the store search term.
@@ -22,22 +27,20 @@ export const useSearch = () => {
     searchTerm.value = newSearchTerm
   })
 
-  const localSearchTerm = ref(storeSearchTerm.value)
-
   /**
    * Search term has a getter and setter to be used as a v-model.
    * To prevent sending unnecessary requests, we also keep track of whether
    * the search term was changed.
    */
   const searchTerm = computed({
-    get: () => localSearchTerm.value,
+    get: () => searchStore.localSearchTerm,
     set: (value: string) => {
-      localSearchTerm.value = value
+      searchStore.localSearchTerm = value
     },
   })
 
   const searchTermChanged = computed(
-    () => searchStore.searchTerm !== localSearchTerm.value
+    () => searchStore.searchTerm !== searchTerm.value
   )
 
   /**
@@ -54,15 +57,18 @@ export const useSearch = () => {
    * to run and fetch new media.
    */
   const updateSearchState = () => {
-    if (localSearchTerm.value === "") return
-    if (!searchTermChanged.value && isSearchRoute) return
-    if (!isSearchRoute) {
+    if (searchTerm.value === "") return
+    if (!searchTermChanged.value && isSearchRoute.value) return
+    // With the old header, content pages have a search bar.
+    // Reset the search type to All media when searched from content pages.
+    // TODO: remove when new_header is done
+    if (!isSearchRoute.value && isSingleResultRoute.value) {
       searchStore.setSearchType(ALL_MEDIA)
       mediaStore.clearMedia()
     }
 
     const searchPath = searchStore.updateSearchPath({
-      searchTerm: localSearchTerm.value,
+      searchTerm: searchTerm.value,
     })
     router.push(searchPath)
   }

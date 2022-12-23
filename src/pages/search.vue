@@ -54,7 +54,7 @@ export default defineComponent({
     VSearchGrid,
     VSkipToContentContainer,
   },
-  beforeRouteUpdate(to, from, next) {
+  beforeRouteEnter(to, from, next) {
     /**
      * When the user presses the back button, we need to update the search term.
      */
