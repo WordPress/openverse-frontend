@@ -7,8 +7,8 @@
     <nav class="lg:justify-stretch hidden ms-auto lg:flex">
       <VPageLinks
         mode="light"
-        class="md:justify-stretch flex hidden flex-row items-center gap-8 text-sm ms-auto md:flex"
-        nav-link-classes="ps-3"
+        class="md:justify-stretch hidden items-center gap-8 text-sm ms-auto md:flex"
+        nav-link-classes="ms-3"
         @close="closePageMenu"
       />
     </nav>
@@ -50,9 +50,7 @@
           @open="openPageMenu"
         >
           <template #top-bar>
-            <div
-              class="flex h-20 w-full justify-between bg-dark-charcoal py-4 text-white pe-3 ps-6"
-            >
+            <div class="flex h-20 w-full justify-between py-4 pe-3 ps-6">
               <VHomeLink
                 variant="light"
                 class="focus-visible:ring-yellow focus-visible:ring-offset-0"
@@ -71,7 +69,7 @@
               <VPageLinks
                 mode="dark"
                 class="mt-3 flex flex-col items-end gap-y-6"
-                nav-link-classes="text-3xl"
+                nav-link-classes="text-white text-3xl focus-visible:ring-yellow"
                 :is-in-modal="true"
                 @close="closePageMenu"
               />

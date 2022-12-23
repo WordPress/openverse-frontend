@@ -200,7 +200,7 @@ export default defineComponent({
 }
 
 .modal-dark {
-  @apply bg-dark-charcoal text-white;
+  @apply bg-black text-white;
 }
 .modal-light {
   @apply bg-white text-dark-charcoal;
@@ -218,7 +218,7 @@ export default defineComponent({
   @apply overflow-y-hidden rounded-t-md;
 }
 .modal-content-dark {
-  @apply bg-dark-charcoal text-white;
+  @apply bg-black text-white;
 }
 .modal-content-light {
   @apply bg-white text-dark-charcoal;
