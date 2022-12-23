@@ -88,13 +88,12 @@ export default defineComponent({
     const space = 24 // px; 32px space - 4px padding on both sides
 
     const rowCount = 3
-    const columnCount = computed(() => {
-      console.log(gridDimens.value.width)
-      return Math.min(
+    const columnCount = computed(() =>
+      Math.min(
         5, // Grid cannot exceed 5 columns as we only have 15 images.
         Math.floor((gridDimens.value.width + space) / (dimens + space))
       )
-    })
+    )
 
     const el = ref<HTMLElement | null>(null) // template ref
     const { dimens: gridDimens } = useResizeObserver(el)
