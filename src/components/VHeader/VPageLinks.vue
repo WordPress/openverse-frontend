@@ -22,6 +22,7 @@
           :icon-path="externalLinkIcon"
           :size="4"
           class="self-center"
+          rtl-flip
         />
       </div>
     </VItem>
@@ -43,6 +44,7 @@
           :icon-path="externalLinkIcon"
           :size="externalIconSize"
           class="self-center ms-2"
+          rtl-flip
       /></VLink>
     </li>
   </ul>
