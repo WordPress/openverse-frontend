@@ -56,10 +56,12 @@ export default defineComponent({
   },
   beforeRouteEnter(to, from, next) {
     /**
-     * When the user presses the back button, we need to update the search term.
+     * The order in which beforeRouteEnter and middleware are called is indeterminate.
+     * We need to make sure that query `q` exists before checking if it matches
+     * the store searchTerm.
      */
     const searchStore = useSearchStore()
-    if (to.query.q !== searchStore.searchTerm) {
+    if (to.query.q && to.query.q !== searchStore.searchTerm) {
       searchStore.setSearchTerm(to.query.q)
     }
     next()
