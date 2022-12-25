@@ -9,7 +9,7 @@
         :key="mediaType"
         :media-type="mediaType"
         :results-count="count"
-        :to="localePath({ path: `/search/${mediaType}`, query: $route.query })"
+        :to="contentLinkPath(mediaType)"
         class="lg:col-span-2"
         @shift-tab="handleShiftTab($event, i)"
       />
@@ -50,25 +50,26 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from '@nuxtjs/composition-api'
+import { computed, defineComponent } from "@nuxtjs/composition-api"
 
-import { useMediaStore } from '~/stores/media'
-import { useFocusFilters } from '~/composables/use-focus-filters'
-import { Focus } from '~/utils/focus-management'
+import { useMediaStore } from "~/stores/media"
+import { useSearchStore } from "~/stores/search"
+import { useUiStore } from "~/stores/ui"
 
-import { useI18n } from '~/composables/use-i18n'
+import { useFocusFilters } from "~/composables/use-focus-filters"
+import { useI18n } from "~/composables/use-i18n"
 
-import { useUiStore } from '~/stores/ui'
+import { Focus } from "~/utils/focus-management"
 
-import VSnackbar from '~/components/VSnackbar.vue'
-import VImageCellSquare from '~/components/VAllResultsGrid/VImageCellSquare.vue'
-import VAudioCell from '~/components/VAllResultsGrid/VAudioCell.vue'
-import VLoadMore from '~/components/VLoadMore.vue'
-import VContentLink from '~/components/VContentLink/VContentLink.vue'
-import VGridSkeleton from '~/components/VSkeleton/VGridSkeleton.vue'
+import VSnackbar from "~/components/VSnackbar.vue"
+import VImageCellSquare from "~/components/VAllResultsGrid/VImageCellSquare.vue"
+import VAudioCell from "~/components/VAllResultsGrid/VAudioCell.vue"
+import VLoadMore from "~/components/VLoadMore.vue"
+import VContentLink from "~/components/VContentLink/VContentLink.vue"
+import VGridSkeleton from "~/components/VSkeleton/VGridSkeleton.vue"
 
 export default defineComponent({
-  name: 'VAllResultsGrid',
+  name: "VAllResultsGrid",
   components: {
     VSnackbar,
     VImageCellSquare,
@@ -80,6 +81,7 @@ export default defineComponent({
   setup() {
     const i18n = useI18n()
     const mediaStore = useMediaStore()
+    const searchStore = useSearchStore()
 
     const resultsLoading = computed(() => {
       return (
@@ -88,6 +90,9 @@ export default defineComponent({
       )
     })
 
+    const contentLinkPath = (mediaType: string) =>
+      searchStore.getSearchPath({ type: mediaType })
+
     const allMedia = computed(() => mediaStore.allMedia)
 
     const isError = computed(() => !!mediaStore.fetchState.fetchingError)
@@ -95,8 +100,8 @@ export default defineComponent({
     const fetchState = computed(() => mediaStore.fetchState)
 
     const errorHeader = computed(() => {
-      const type = i18n.t('browse-page.search-form.audio')
-      return i18n.t('browse-page.fetching-error', { type })
+      const type = i18n.t("browse-page.search-form.audio")
+      return i18n.t("browse-page.fetching-error", { type })
     })
 
     const resultCounts = computed(() => mediaStore.resultCountsPerMediaType)
@@ -134,6 +139,8 @@ export default defineComponent({
       resultCounts,
       noResults,
       handleShiftTab,
+
+      contentLinkPath,
 
       isSnackbarVisible,
       showSnackbar,

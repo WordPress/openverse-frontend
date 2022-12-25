@@ -1,7 +1,7 @@
-import { test, expect } from '@playwright/test'
+import { test, expect, Expect } from "@playwright/test"
 
-import { VIEWPORTS } from '~/constants/screens'
-import type { Breakpoint } from '~/constants/screens'
+import { VIEWPORTS } from "~/constants/screens"
+import type { Breakpoint } from "~/constants/screens"
 
 type ScreenshotAble = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -11,7 +11,8 @@ type ScreenshotAble = {
 type ExpectSnapshot = <T extends ScreenshotAble>(
   name: string,
   s: T,
-  options?: Parameters<T['screenshot']>[0]
+  options?: Parameters<T["screenshot"]>[0],
+  snapshotOptions?: Parameters<ReturnType<Expect>["toMatchSnapshot"]>[0]
 ) => Promise<Buffer | void>
 
 type BreakpointBlock = (options: {
@@ -22,8 +23,8 @@ type BreakpointBlock = (options: {
   expectSnapshot: ExpectSnapshot
 }) => void
 
-export const desktopBreakpoints = ['2xl', 'xl', 'lg'] as const
-export const mobileBreakpoints = ['md', 'sm', 'xs'] as const
+export const desktopBreakpoints = ["2xl", "xl", "lg"] as const
+export const mobileBreakpoints = ["md", "sm", "xs"] as const
 
 export const isMobileBreakpoint = (
   bp: Breakpoint
@@ -33,7 +34,7 @@ export const isMobileBreakpoint = (
 // For desktop UA use the default
 const desktopUa = undefined
 const mobileUa =
-  'Mozilla/5.0 (Android 7.0; Mobile; rv:54.0) Gecko/54.0 Firefox/54.0'
+  "Mozilla/5.0 (Android 7.0; Mobile; rv:54.0) Gecko/54.0 Firefox/54.0"
 
 const mockUaStrings: Readonly<Record<Breakpoint, string | undefined>> =
   Object.freeze(
@@ -49,11 +50,18 @@ interface Options {
    *
    * @defaultValue true
    */
-  uaMocking: boolean
+  uaMocking?: boolean
+  /**
+   * Adjust the error tolerance for a single test to avoid
+   * flakiness.
+   * Do not set to a value higher than 0.02.
+   */
+  maxDiffPixelRatio?: number
 }
 
 const defaultOptions = Object.freeze({
   uaMocking: true,
+  maxDiffPixelRatio: 0,
 })
 
 const makeBreakpointDescribe =
@@ -66,10 +74,10 @@ const makeBreakpointDescribe =
       `screen at breakpoint ${breakpoint} with width ${screenWidth}`,
       () => {
         const _block = (
-          typeof blockOrOptions === 'function' ? blockOrOptions : block
+          typeof blockOrOptions === "function" ? blockOrOptions : block
         ) as BreakpointBlock
         const options =
-          typeof blockOrOptions !== 'function'
+          typeof blockOrOptions !== "function"
             ? { ...defaultOptions, ...blockOrOptions }
             : defaultOptions
 
@@ -85,13 +93,15 @@ const makeBreakpointDescribe =
         const expectSnapshot = async <T extends ScreenshotAble>(
           name: string,
           screenshotAble: T,
-          options?: Parameters<T['screenshot']>[0]
+          options?: Parameters<T["screenshot"]>[0],
+          snapshotOptions?: Parameters<ReturnType<Expect>["toMatchSnapshot"]>[0]
         ) => {
           const { name: snapshotName } = getConfigValues(name)
           return expect(
             await screenshotAble.screenshot(options)
           ).toMatchSnapshot({
             name: snapshotName,
+            ...snapshotOptions,
           })
         }
 
@@ -117,7 +127,7 @@ const breakpointTests = Array.from(Object.entries(VIEWPORTS)).reduce(
       [`describe${capitalize(breakpoint as Breakpoint)}`]:
         makeBreakpointDescribe(
           breakpoint as Breakpoint,
-          parseFloat(width.replace('px', ''))
+          parseFloat(width.replace("px", ""))
         ),
     }),
   {} as Record<
@@ -135,7 +145,7 @@ const describeEachBreakpoint =
     Object.entries(breakpointTests).forEach(([bp, describe]) => {
       if (
         breakpoints.includes(
-          bp.replace('describe', '').toLowerCase() as Breakpoint
+          bp.replace("describe", "").toLowerCase() as Breakpoint
         )
       )
         describe(blockOrOptions, block)
@@ -147,14 +157,14 @@ const describeEvery = describeEachBreakpoint(
 )
 const describeEachDesktopWithMd = describeEachBreakpoint([
   ...desktopBreakpoints,
-  'md',
+  "md",
 ])
 const describeEachDesktop = describeEachBreakpoint(desktopBreakpoints)
 const describeEachMobile = describeEachBreakpoint(mobileBreakpoints)
 const describeEachMobileWithoutMd = describeEachBreakpoint(
-  mobileBreakpoints.filter((b) => b !== 'md')
+  mobileBreakpoints.filter((b) => b !== "md")
 )
-const describeMobileAndDesktop = describeEachBreakpoint(['sm', 'xl'])
+const describeMobileAndDesktop = describeEachBreakpoint(["sm", "xl"])
 
 export default {
   ...breakpointTests,

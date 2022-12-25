@@ -1,7 +1,7 @@
 <template>
   <VItemGroup
     :direction="layout"
-    class="mt-10 min-w-[200px] text-base md:mt-2"
+    class="mt-10 min-w-[200px] text-base md:my-2"
     :bordered="false"
   >
     <VItem
@@ -26,30 +26,30 @@
   </VItemGroup>
 </template>
 <script lang="ts">
-import { defineComponent, PropType } from '@nuxtjs/composition-api'
+import { defineComponent, PropType } from "@nuxtjs/composition-api"
 
-import usePages from '~/composables/use-pages'
+import usePages from "~/composables/use-pages"
 
-import VIcon from '~/components/VIcon/VIcon.vue'
-import VItem from '~/components/VItemGroup/VItem.vue'
-import VItemGroup from '~/components/VItemGroup/VItemGroup.vue'
+import VIcon from "~/components/VIcon/VIcon.vue"
+import VItem from "~/components/VItemGroup/VItem.vue"
+import VItemGroup from "~/components/VItemGroup/VItemGroup.vue"
 
-import externalLinkIcon from '~/assets/icons/external-link.svg'
+import externalLinkIcon from "~/assets/icons/external-link.svg"
 
 export default defineComponent({
-  name: 'VPageMenuPopover',
+  name: "VPageMenuPopover",
   components: { VIcon, VItem, VItemGroup },
   props: {
     layout: {
-      type: String as PropType<'vertical' | 'columns'>,
-      default: 'vertical',
+      type: String as PropType<"vertical" | "columns">,
+      default: "vertical",
     },
   },
   setup() {
     const pages = usePages()
 
-    const isLinkExternal = (item) => !item.link.startsWith('/')
-    const getLinkProps = (item) => ({ as: 'VLink', href: item.link })
+    const isLinkExternal = (item) => !item.link.startsWith("/")
+    const getLinkProps = (item) => ({ as: "VLink", href: item.link })
 
     return {
       getLinkProps,

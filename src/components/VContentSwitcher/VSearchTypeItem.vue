@@ -10,30 +10,23 @@
     <VIcon :icon-path="icon" />
     <span>{{ $t(`search-type.${item}`) }}</span>
     <VPill v-if="isBeta" class="ms-auto">{{
-      $t('search-type.status-beta')
+      $t("search-type.status-beta")
     }}</VPill>
   </VItem>
 </template>
 
 <script lang="ts">
-import {
-  computed,
-  useContext,
-  defineComponent,
-  PropType,
-} from '@nuxtjs/composition-api'
+import { computed, defineComponent, PropType } from "@nuxtjs/composition-api"
 
-import { BETA, contentStatus, searchPath, SearchType } from '~/constants/media'
-import { isSearchTypeSupported, useSearchStore } from '~/stores/search'
+import { BETA, contentStatus, SearchType } from "~/constants/media"
+import { isSearchTypeSupported, useSearchStore } from "~/stores/search"
 
-import VIcon from '~/components/VIcon/VIcon.vue'
-import VItem from '~/components/VItemGroup/VItem.vue'
-import VPill from '~/components/VPill.vue'
-
-import type { Dictionary } from 'vue-router/types/router'
+import VIcon from "~/components/VIcon/VIcon.vue"
+import VItem from "~/components/VItemGroup/VItem.vue"
+import VPill from "~/components/VPill.vue"
 
 export default defineComponent({
-  name: 'VSearchTypeItem',
+  name: "VSearchTypeItem",
   components: { VIcon, VItem, VPill },
   props: {
     /**
@@ -76,12 +69,11 @@ export default defineComponent({
      * 'medium' size for mobile screens.
      */
     size: {
-      type: String as PropType<'small' | 'medium'>,
-      default: 'small',
+      type: String as PropType<"small" | "medium">,
+      default: "small",
     },
   },
   setup(props) {
-    const { app } = useContext()
     const searchStore = useSearchStore()
 
     /**
@@ -96,15 +88,13 @@ export default defineComponent({
       if (!props.useLinks || !isSearchTypeSupported(props.item)) {
         return undefined
       }
-      const query = searchStore.computeQueryParams(props.item)
-      const path = searchPath(props.item)
-      return app.localePath({ path, query: query as Dictionary<string> })
+      return searchStore.getSearchPath({ type: props.item })
     })
 
     /**
      * The query sets the filters that are applicable for the specific search type.
      */
-    const component = computed(() => (props.useLinks ? 'VLink' : undefined))
+    const component = computed(() => (props.useLinks ? "VLink" : undefined))
     return {
       component,
       href,

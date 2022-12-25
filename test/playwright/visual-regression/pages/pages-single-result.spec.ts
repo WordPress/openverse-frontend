@@ -1,30 +1,31 @@
-import { test } from '@playwright/test'
+import { test } from "@playwright/test"
 
-import { removeHiddenOverflow } from '~~/test/playwright/utils/page'
-import breakpoints from '~~/test/playwright/utils/breakpoints'
+import { removeHiddenOverflow } from "~~/test/playwright/utils/page"
+import breakpoints from "~~/test/playwright/utils/breakpoints"
 import {
-  closeFilters,
-  dismissTranslationBanner,
   enableNewHeader,
   goToSearchTerm,
-  isPageDesktop,
   languageDirections,
   openFirstResult,
-} from '~~/test/playwright/utils/navigation'
+  setCookies,
+} from "~~/test/playwright/utils/navigation"
 
-import { supportedMediaTypes } from '~/constants/media'
+import { supportedMediaTypes } from "~/constants/media"
 
-test.describe.configure({ mode: 'parallel' })
+test.describe.configure({ mode: "parallel" })
 
 for (const mediaType of supportedMediaTypes) {
   for (const dir of languageDirections) {
     test.describe(`${mediaType} ${dir} single-result page snapshots`, () => {
-      breakpoints.describeEvery(({ expectSnapshot }) => {
-        test.beforeEach(async ({ page }) => {
+      breakpoints.describeEvery(({ breakpoint, expectSnapshot }) => {
+        test.beforeEach(async ({ context, page }) => {
           await enableNewHeader(page)
-          await goToSearchTerm(page, 'birds', { dir })
-          if (isPageDesktop(page)) await closeFilters(page)
-          await dismissTranslationBanner(page)
+          await setCookies(context, {
+            uiBreakpoint: breakpoint,
+            uiIsFilterDismissed: true,
+            uiDismissedBanners: ["translation-ar"],
+          })
+          await goToSearchTerm(page, "birds", { dir })
         })
 
         test(`from search results`, async ({ page }) => {

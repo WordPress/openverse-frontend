@@ -44,7 +44,7 @@
               class="text-sr md:text-base md:text-white"
               @click="hide()"
             >
-              {{ $t('modal.close') }}
+              {{ $t("modal.close") }}
               <VIcon :icon-path="closeIcon" class="ms-2" :size="5" />
             </VButton>
           </div>
@@ -71,26 +71,26 @@ import {
   ref,
   computed,
   PropType,
-} from '@nuxtjs/composition-api'
+} from "@nuxtjs/composition-api"
 
-import { Portal as VTeleport } from 'portal-vue'
+import { Portal as VTeleport } from "portal-vue"
 
-import { useDialogContent } from '~/composables/use-dialog-content'
-import { warn } from '~/utils/console'
+import { useDialogContent } from "~/composables/use-dialog-content"
+import { warn } from "~/utils/console"
 
-import type { ModalColorMode, ModalVariant } from '~/types/modal'
+import type { ModalColorMode, ModalVariant } from "~/types/modal"
 
-import VButton from '~/components/VButton.vue'
-import VIcon from '~/components/VIcon/VIcon.vue'
-import VLogoButtonOld from '~/components/VHeaderOld/VLogoButtonOld.vue'
+import VButton from "~/components/VButton.vue"
+import VIcon from "~/components/VIcon/VIcon.vue"
+import VLogoButtonOld from "~/components/VHeaderOld/VLogoButtonOld.vue"
 
-import closeIcon from '~/assets/icons/close.svg'
+import closeIcon from "~/assets/icons/close.svg"
 
 /**
  * Renders the inner content of a modal and manages focus.
  */
 export default defineComponent({
-  name: 'VModalContent',
+  name: "VModalContent",
   components: { VTeleport, VButton, VIcon, VLogoButtonOld },
   props: {
     visible: {
@@ -117,6 +117,10 @@ export default defineComponent({
       type: Boolean,
       default: true,
     },
+    trapFocus: {
+      type: Boolean,
+      default: true,
+    },
     triggerElement: {
       type: (process.server ? Object : HTMLElement) as PropType<HTMLElement>,
       default: null,
@@ -127,11 +131,11 @@ export default defineComponent({
     },
     variant: {
       type: String as PropType<ModalVariant>,
-      default: 'default',
+      default: "default",
     },
     mode: {
       type: String as PropType<ModalColorMode>,
-      default: 'light',
+      default: "light",
     },
     /**
      * The tailwind classes to apply to the modal backdrop element.
@@ -139,12 +143,12 @@ export default defineComponent({
      */
     contentClasses: {
       type: String,
-      default: '',
+      default: "",
     },
   },
   setup(props, { emit, attrs }) {
-    if (!attrs['aria-label'] && !attrs['aria-labelledby']) {
-      warn('You should provide either `aria-label` or `aria-labelledby` props.')
+    if (!attrs["aria-label"] && !attrs["aria-labelledby"]) {
+      warn("You should provide either `aria-label` or `aria-labelledby` props.")
     }
 
     const propsRefs = toRefs(props)
@@ -158,6 +162,7 @@ export default defineComponent({
       visibleRef: propsRefs.visible,
       autoFocusOnShowRef: propsRefs.autoFocusOnShow,
       autoFocusOnHideRef: propsRefs.autoFocusOnHide,
+      trapFocusRef: propsRefs.trapFocus,
       triggerElementRef: propsRefs.triggerElement,
       hideOnClickOutsideRef: propsRefs.hideOnClickOutside,
       hideRef: propsRefs.hide,

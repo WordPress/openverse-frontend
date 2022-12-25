@@ -62,6 +62,7 @@ jobs:
         shell: python
         run: |
           import json
+          import os
           metadata = json.loads('${{ steps.metadata.outputs.json }}')
           version = metadata["labels"]["org.opencontainers.image.version"]
           if version == "main":
@@ -69,8 +70,8 @@ jobs:
               for tag in metadata["tags"]:
                   if ":main" not in tag:
                       version = tag.split(":")[1]
-
-          print(f"::set-output name=version::{version}")
+          with open(os.environ.get("GITHUB_OUTPUT"), "a") as state:
+              state.write(f"version={version}\n")
 
       - uses: docker/build-push-action@v3
         with:
@@ -98,6 +99,7 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           slack-webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
+          gh-slack-username-map: ${{ secrets.GH_SLACK_USERNAME_MAP }}
 
   deploy-production:
     name: Deploy production frontend
@@ -116,3 +118,4 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           slack-webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
+          gh-slack-username-map: ${{ secrets.GH_SLACK_USERNAME_MAP }}

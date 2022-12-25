@@ -1,10 +1,10 @@
-import { defineStore } from 'pinia'
+import { defineStore } from "pinia"
 
-import { useStorage } from '@vueuse/core'
+import { useStorage } from "@vueuse/core"
 
-import { env } from '~/utils/env'
-import { deepClone } from '~/utils/clone'
-import type { DeepWriteable } from '~/types/utils'
+import { env } from "~/utils/env"
+import { deepClone } from "~/utils/clone"
+import type { DeepWriteable } from "~/types/utils"
 
 import {
   ALL_MEDIA,
@@ -16,13 +16,14 @@ import {
   SupportedSearchType,
   supportedSearchTypes,
   isAdditionalSearchType,
-} from '~/constants/media'
+  searchPath,
+} from "~/constants/media"
 import {
   ApiQueryParams,
   filtersToQueryData,
   queryStringToSearchType,
   queryToFilterData,
-} from '~/utils/search-query-transform'
+} from "~/utils/search-query-transform"
 import {
   FilterCategory,
   FilterItem,
@@ -30,14 +31,14 @@ import {
   filterData,
   mediaFilterKeys,
   mediaUniqueFilterKeys,
-} from '~/constants/filters'
-import { useProviderStore } from '~/stores/provider'
+} from "~/constants/filters"
+import { useProviderStore } from "~/stores/provider"
 
-import { useFeatureFlagStore } from '~/stores/feature-flag'
+import { useFeatureFlagStore } from "~/stores/feature-flag"
 
-import type { Ref } from '@nuxtjs/composition-api'
+import type { Ref } from "@nuxtjs/composition-api"
 
-import type { Dictionary } from 'vue-router/types/router'
+import type { Dictionary } from "vue-router/types/router"
 
 export const isSearchTypeSupported = (
   st: SearchType
@@ -63,7 +64,7 @@ function computeQueryParams(
 
   return queryKeys.reduce(
     (obj, key) => {
-      if (key !== 'q' && query[key]?.length) {
+      if (key !== "q" && query[key]?.length) {
         obj[key] = query[key]
       }
       return obj
@@ -73,16 +74,16 @@ function computeQueryParams(
   )
 }
 
-export const useSearchStore = defineStore('search', {
+export const useSearchStore = defineStore("search", {
   state: (): SearchState => ({
     searchType: ALL_MEDIA,
-    searchTerm: '',
-    recentSearches: useStorage<string[]>('recent-searches', []),
+    searchTerm: "",
+    recentSearches: useStorage<string[]>("recent-searches", []),
     filters: deepClone(filterData as DeepWriteable<typeof filterData>),
   }),
   hydrate(state) {
     // @ts-expect-error https://github.com/microsoft/TypeScript/issues/43826
-    state.recentSearches = useStorage<string[]>('recent-searches', [])
+    state.recentSearches = useStorage<string[]>("recent-searches", [])
   },
   getters: {
     filterCategories(state) {
@@ -110,7 +111,7 @@ export const useSearchStore = defineStore('search', {
      */
     appliedFilterCount(state) {
       const filterKeys = mediaFilterKeys[state.searchType].filter(
-        (f) => f !== 'mature'
+        (f) => f !== "mature"
       )
       return filterKeys.reduce((count, filterCategory) => {
         return (
@@ -124,7 +125,7 @@ export const useSearchStore = defineStore('search', {
      */
     searchFilters(state) {
       return mediaFilterKeys[state.searchType]
-        .filter((filterKey) => filterKey !== 'mature')
+        .filter((filterKey) => filterKey !== "mature")
         .reduce((obj, filterKey) => {
           obj[filterKey] = this.filters[filterKey]
           return obj
@@ -141,7 +142,7 @@ export const useSearchStore = defineStore('search', {
       ][]
       return filterEntries.some(
         ([filterKey, filterItems]) =>
-          filterKey !== 'mature' && filterItems.some((filter) => filter.checked)
+          filterKey !== "mature" && filterItems.some((filter) => filter.checked)
       )
     },
     /**
@@ -152,10 +153,45 @@ export const useSearchStore = defineStore('search', {
     },
   },
   actions: {
+    /**
+     * Updates the search type and search term, and returns the
+     * updated localized search path.
+     */
+    updateSearchPath({
+      type,
+      searchTerm,
+    }: { type?: SearchType; searchTerm?: string } = {}): string {
+      if (type) {
+        this.setSearchType(type)
+      }
+      if (searchTerm) {
+        this.setSearchTerm(searchTerm)
+      }
+
+      return this.getSearchPath()
+    },
+    /**
+     * Returns localized search path for the given search type.
+     *
+     * If search type is not provided, returns the path for the current search type.
+     * If query is not provided, returns current query parameters.
+     */
+    getSearchPath({
+      type,
+      query,
+    }: { type?: SearchType; query?: ApiQueryParams } = {}): string {
+      const searchType = type || this.searchType
+      const queryParams = query || this.searchQueryParams
+
+      return this.$nuxt.localePath({
+        path: searchPath(searchType),
+        query: queryParams as Dictionary<string>,
+      })
+    },
     setSearchType(type: SearchType) {
       const featureFlagStore = useFeatureFlagStore()
       if (
-        !featureFlagStore.isOn('external_sources') &&
+        !featureFlagStore.isOn("external_sources") &&
         isAdditionalSearchType(type)
       ) {
         throw new Error(
@@ -178,7 +214,7 @@ export const useSearchStore = defineStore('search', {
      */
     refreshRecentSearches() {
       // @ts-expect-error https://github.com/microsoft/TypeScript/issues/43826
-      this.recentSearches = useStorage<string[]>('recent-searches', [])
+      this.recentSearches = useStorage<string[]>("recent-searches", [])
     },
     /** Add a new term to the list of recent search terms */
     addRecentSearch(
@@ -186,7 +222,7 @@ export const useSearchStore = defineStore('search', {
     ) {
       // No-op if feature isn't enabled
       const featureFlagStore = useFeatureFlagStore()
-      const saveRecentSearches = featureFlagStore.isOn('new_header')
+      const saveRecentSearches = featureFlagStore.isOn("new_header")
       if (!saveRecentSearches) {
         return
       }
@@ -281,7 +317,7 @@ export const useSearchStore = defineStore('search', {
       codeIdx?: number
       code?: string
     }) {
-      if (typeof codeIdx === 'undefined' && typeof code === 'undefined') {
+      if (typeof codeIdx === "undefined" && typeof code === "undefined") {
         throw new Error(
           `Cannot toggle filter of type ${filterType}. Use code or codeIdx parameter`
         )
@@ -344,7 +380,7 @@ export const useSearchStore = defineStore('search', {
       path: string
       urlQuery: Dictionary<string | (string | null)[]>
     }) {
-      if (urlQuery.q && typeof urlQuery.q === 'string') {
+      if (urlQuery.q && typeof urlQuery.q === "string") {
         this.setSearchTerm(urlQuery.q.trim())
       }
       this.searchType = queryStringToSearchType(path)
@@ -352,8 +388,8 @@ export const useSearchStore = defineStore('search', {
       // When setting filters from URL query, 'mature' has a value of 'true',
       // but we need the 'mature' code. Creating a local shallow copy to prevent mutation.
       const query = { ...urlQuery }
-      if (query.mature === 'true') {
-        query.mature = 'mature'
+      if (query.mature === "true") {
+        query.mature = "mature"
       } else {
         delete query.mature
       }
@@ -376,24 +412,24 @@ export const useSearchStore = defineStore('search', {
       item: FilterItem,
       filterCategory: FilterCategory
     ): boolean | undefined {
-      if (!['licenseTypes', 'licenses'].includes(filterCategory)) {
+      if (!["licenseTypes", "licenses"].includes(filterCategory)) {
         return
       }
-      if (item.code === 'commercial' || item.code === 'modification') {
+      if (item.code === "commercial" || item.code === "modification") {
         const targetCode = {
-          commercial: 'nc',
-          modification: 'nd',
+          commercial: "nc",
+          modification: "nd",
         }[item.code]
         return this.filters.licenses.some(
           (item: FilterItem) => item.code.includes(targetCode) && item.checked
         )
       } else {
         const dependentFilters: string[] = []
-        if (item.code.includes('nc')) {
-          dependentFilters.push('commercial')
+        if (item.code.includes("nc")) {
+          dependentFilters.push("commercial")
         }
-        if (item.code.includes('nd')) {
-          dependentFilters.push('modification')
+        if (item.code.includes("nd")) {
+          dependentFilters.push("modification")
         }
         return this.filters.licenseTypes.some(
           (item: FilterItem) =>

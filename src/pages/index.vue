@@ -21,9 +21,9 @@
         <h2
           class="mt-auto mb-2 max-w-[80%] text-[27px] font-normal leading-[35px] md:mt-16 md:mb-4 md:text-[46px] md:leading-[60px]"
         >
-          {{ $t('hero.subtitle') }}
+          {{ $t("hero.subtitle") }}
         </h2>
-        <p class="text-base md:text-3xl">{{ $t('hero.description') }}</p>
+        <p class="text-base md:text-3xl">{{ $t("hero.description") }}</p>
         <div
           class="mt-8 flex justify-start gap-4"
           :class="isNewHeaderEnabled ? 'lg:hidden' : 'md:hidden'"
@@ -61,7 +61,7 @@
             <VLink
               href="https://creativecommons.org/licenses/"
               class="text-dark-charcoal underline hover:text-dark-charcoal"
-              >{{ $t('hero.disclaimer.license') }}</VLink
+              >{{ $t("hero.disclaimer.license") }}</VLink
             >
           </template>
         </i18n>
@@ -117,7 +117,7 @@
         <VLink
           href="https://creativecommons.org/licenses/"
           class="text-dark-charcoal underline hover:text-dark-charcoal"
-          >{{ $t('hero.disclaimer.license') }}</VLink
+          >{{ $t("hero.disclaimer.license") }}</VLink
         >
       </template>
     </i18n>
@@ -133,34 +133,31 @@ import {
   useContext,
   useMeta,
   useRouter,
-} from '@nuxtjs/composition-api'
+} from "@nuxtjs/composition-api"
 
 import {
   ALL_MEDIA,
-  searchPath,
   SupportedSearchType,
   supportedSearchTypes,
-} from '~/constants/media'
-import { useLayout } from '~/composables/use-layout'
+} from "~/constants/media"
+import { useLayout } from "~/composables/use-layout"
 
-import { useFeatureFlagStore } from '~/stores/feature-flag'
-import { useMediaStore } from '~/stores/media'
-import { useSearchStore } from '~/stores/search'
-import { useUiStore } from '~/stores/ui'
+import { useFeatureFlagStore } from "~/stores/feature-flag"
+import { useMediaStore } from "~/stores/media"
+import { useSearchStore } from "~/stores/search"
+import { useUiStore } from "~/stores/ui"
 
-import VLink from '~/components/VLink.vue'
-import VLogoButtonOld from '~/components/VHeaderOld/VLogoButtonOld.vue'
-import VStandaloneSearchBar from '~/components/VHeader/VSearchBar/VStandaloneSearchBar.vue'
-import VSearchTypeRadio from '~/components/VContentSwitcher/VSearchTypeRadio.vue'
-import VSearchTypePopoverOld from '~/components/VContentSwitcherOld/VSearchTypePopoverOld.vue'
-import VBrand from '~/components/VBrand/VBrand.vue'
+import VLink from "~/components/VLink.vue"
+import VLogoButtonOld from "~/components/VHeaderOld/VLogoButtonOld.vue"
+import VStandaloneSearchBar from "~/components/VHeader/VSearchBar/VStandaloneSearchBar.vue"
+import VSearchTypeRadio from "~/components/VContentSwitcher/VSearchTypeRadio.vue"
+import VSearchTypePopoverOld from "~/components/VContentSwitcherOld/VSearchTypePopoverOld.vue"
+import VBrand from "~/components/VBrand/VBrand.vue"
 
-import type { Dictionary } from 'vue-router/types/router'
-
-import imageInfo from '~/assets/homepage_images/image_info.json'
+import imageInfo from "~/assets/homepage_images/image_info.json"
 
 export default defineComponent({
-  name: 'HomePage',
+  name: "HomePage",
   components: {
     VBrand,
     VSearchTypePopoverOld,
@@ -169,7 +166,7 @@ export default defineComponent({
     VLink,
     VLogoButtonOld,
   },
-  layout: 'blank',
+  layout: "blank",
   setup() {
     const { app } = useContext()
     const router = useRouter()
@@ -180,14 +177,14 @@ export default defineComponent({
     const featureFlagStore = useFeatureFlagStore()
 
     const isNewHeaderEnabled = computed(() =>
-      featureFlagStore.isOn('new_header')
+      featureFlagStore.isOn("new_header")
     )
     const themeColorMeta = [
-      { hid: 'theme-color', name: 'theme-color', content: '#ffe033' },
+      { hid: "theme-color", name: "theme-color", content: "#ffe033" },
     ]
     useMeta({
       meta: isNewHeaderEnabled.value
-        ? [...themeColorMeta, { hid: 'robots', name: 'robots', content: 'all' }]
+        ? [...themeColorMeta, { hid: "robots", name: "robots", content: "all" }]
         : themeColorMeta,
     })
 
@@ -210,7 +207,7 @@ export default defineComponent({
         src: require(`~/assets/homepage_images/${setItem.prefix}-${imageItem.index}.jpg`),
         url: router.resolve(
           app.localePath({
-            name: 'image-id',
+            name: "image-id",
             params: { id: imageItem.identifier },
           })
         ).href,
@@ -232,17 +229,15 @@ export default defineComponent({
       contentSwitcher.value?.closeMenu()
     }
 
-    const handleSearch = async (searchTerm: string) => {
+    const handleSearch = (searchTerm: string) => {
       if (!searchTerm) return
 
-      searchStore.setSearchTerm(searchTerm)
-      searchStore.setSearchType(searchType.value)
-
-      const newPath = app.localePath({
-        path: searchPath(searchType.value),
-        query: searchStore.searchQueryParams as Dictionary<string>,
-      })
-      router.push(newPath)
+      router.push(
+        searchStore.updateSearchPath({
+          type: searchType.value,
+          searchTerm,
+        })
+      )
     }
 
     return {
@@ -262,9 +257,9 @@ export default defineComponent({
   head: {
     meta: [
       {
-        hid: 'theme-color',
-        name: 'theme-color',
-        content: '#ffe033',
+        hid: "theme-color",
+        name: "theme-color",
+        content: "#ffe033",
       },
     ],
   },

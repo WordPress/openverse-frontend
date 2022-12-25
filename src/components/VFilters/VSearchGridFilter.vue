@@ -5,7 +5,7 @@
       class="relative mb-6 flex items-center justify-between"
     >
       <h4 id="filters-heading" class="caption-bold uppercase">
-        {{ $t('filter-list.filter-by') }}
+        {{ $t("filter-list.filter-by") }}
       </h4>
       <VButton
         v-show="isAnyFilterApplied"
@@ -15,7 +15,7 @@
         @click="clearFilters"
         @keydown.shift.tab.exact="focusFilterButton"
       >
-        {{ $t('filter-list.clear') }}
+        {{ $t("filter-list.clear") }}
       </VButton>
     </header>
     <form
@@ -38,7 +38,7 @@
       class="flex justify-between md:hidden"
     >
       <VButton variant="primary" @click="$emit('close')">
-        {{ $t('filter-list.show') }}
+        {{ $t("filter-list.show") }}
       </VButton>
     </footer>
   </section>
@@ -50,24 +50,23 @@ import {
   defineComponent,
   ref,
   useContext,
-  useRoute,
   useRouter,
   watch,
-} from '@nuxtjs/composition-api'
-import { kebab } from 'case'
+} from "@nuxtjs/composition-api"
+import { kebab } from "case"
 
-import { useSearchStore } from '~/stores/search'
-import { areQueriesEqual } from '~/utils/search-query-transform'
-import { Focus, focusIn, getFocusableElements } from '~/utils/focus-management'
-import type { NonMatureFilterCategory } from '~/constants/filters'
-import { useFocusFilters } from '~/composables/use-focus-filters'
-import { defineEvent } from '~/types/emits'
+import { useSearchStore } from "~/stores/search"
+import { areQueriesEqual, ApiQueryParams } from "~/utils/search-query-transform"
+import { Focus, focusIn, getFocusableElements } from "~/utils/focus-management"
+import type { NonMatureFilterCategory } from "~/constants/filters"
+import { useFocusFilters } from "~/composables/use-focus-filters"
+import { defineEvent } from "~/types/emits"
 
-import VFilterChecklist from '~/components/VFilters/VFilterChecklist.vue'
-import VButton from '~/components/VButton.vue'
+import VFilterChecklist from "~/components/VFilters/VFilterChecklist.vue"
+import VButton from "~/components/VButton.vue"
 
 export default defineComponent({
-  name: 'VSearchGridFilter',
+  name: "VSearchGridFilter",
   components: {
     VButton,
     VFilterChecklist,
@@ -97,8 +96,7 @@ export default defineComponent({
   setup(props) {
     const searchStore = useSearchStore()
 
-    const { app, i18n } = useContext()
-    const route = useRoute()
+    const { i18n } = useContext()
     const router = useRouter()
 
     const filtersFormRef = ref<HTMLFormElement>(null)
@@ -109,8 +107,8 @@ export default defineComponent({
       () => Object.keys(filters.value) as NonMatureFilterCategory[]
     )
     const filterTypeTitle = (filterType: string) =>
-      filterType === 'searchBy'
-        ? ''
+      filterType === "searchBy"
+        ? ""
         : i18n.t(`filters.${kebab(filterType)}.title`)
 
     /**
@@ -119,17 +117,9 @@ export default defineComponent({
      */
     watch(
       () => searchStore.searchQueryParams,
-      /**
-       * @param {import('~/utils/search-query-transform').ApiQueryParams} newQuery
-       * @param {import('~/utils/search-query-transform').ApiQueryParams} oldQuery
-       */
-      (newQuery, oldQuery) => {
+      (newQuery: ApiQueryParams, oldQuery: ApiQueryParams) => {
         if (!areQueriesEqual(newQuery, oldQuery)) {
-          const newPath = app.localePath({
-            path: route.value.path,
-            query: searchStore.searchQueryParams,
-          })
-          router.push(newPath)
+          router.push(searchStore.getSearchPath())
         }
       }
     )
@@ -163,7 +153,7 @@ export default defineComponent({
       if (!props.changeTabOrder) return
       if (lastFocusableElement.value === event.target) {
         event.preventDefault()
-        focusIn(document.querySelector('main'), Focus.First)
+        focusIn(document.querySelector("main"), Focus.First)
       }
     }
     /**
