@@ -1,6 +1,9 @@
 <template>
   <!-- Wrapper element to center the grid if space is more than 5 columns. -->
-  <div ref="el" class="mx-10 flex flex-row items-center justify-end me-12">
+  <div
+    ref="el"
+    class="mx-10 flex flex-row items-center justify-end me-12 2xl:justify-center"
+  >
     <!-- Image grid only occupies as much width as needed. -->
     <div
       class="home-gallery inline-grid grid-flow-col grid-rows-3 gap-8"
