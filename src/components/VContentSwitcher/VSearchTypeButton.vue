@@ -1,70 +1,89 @@
 <template>
   <VButton
-    class="group flex h-12 w-12 flex-row xl:w-auto xl:px-2 xl:ps-3"
+    class="group h-12 flex-shrink-0 gap-2"
+    :class="showLabel ? 'button-with-label w-auto px-2 ps-3' : 'w-12'"
     variant="action-menu"
     size="disabled"
-    :aria-label="buttonLabel"
-    v-bind="a11yProps"
+    :aria-label="$t('search-type.select-label', { type: label })"
+    v-bind="$attrs"
     @click="$emit('click')"
   >
     <VIcon :icon-path="icon" />
-    <span
-      class="label-regular hidden truncate xl:block xl:ms-2 xl:text-start"
-      >{{ buttonLabel }}</span
-    >
-    <VIcon class="hidden xl:block xl:ms-2" :icon-path="caretDownIcon" />
+    <template v-if="showLabel">
+      <span class="label label-regular block">{{ label }}</span>
+      <span
+        v-for="hiddenLabel in otherLabels"
+        :key="hiddenLabel"
+        class="label label-regular block text-tx"
+        aria-hidden="true"
+        >{{ hiddenLabel }}</span
+      >
+      <VIcon
+        :class="[
+          'caret',
+          { 'transition-ease rotate-180': $attrs['aria-expanded'] },
+        ]"
+        :icon-path="caretDownIcon"
+      />
+    </template>
   </VButton>
 </template>
 <script lang="ts">
-import { computed, defineComponent } from "@nuxtjs/composition-api"
+import { defineComponent, PropType } from "@nuxtjs/composition-api"
 
-import { ALL_MEDIA, AUDIO, IMAGE, MODEL_3D, VIDEO } from "~/constants/media"
-import useSearchType from "~/composables/use-search-type"
-import { useI18n } from "~/composables/use-i18n"
+import type { SearchType } from "~/constants/media"
 
 import VIcon from "~/components/VIcon/VIcon.vue"
 import VButton from "~/components/VButton.vue"
 
 import caretDownIcon from "~/assets/icons/caret-down.svg"
 
-const labels = {
-  [ALL_MEDIA]: "search-type.all",
-  [IMAGE]: "search-type.image",
-  [AUDIO]: "search-type.audio",
-  [VIDEO]: "search-type.video",
-  [MODEL_3D]: "search-type.model-3d",
-}
-
 /**
- * This is the search type button that appears in the header, not on the homepage.
+ * This is the content switcher button that appears in the header or the homepage.
  */
 export default defineComponent({
   name: "VSearchTypeButton",
   components: { VButton, VIcon },
   props: {
-    a11yProps: {
-      type: Object,
-      default: () => ({
-        "aria-expanded": false,
-        "aria-haspopup": "dialog",
-      }),
+    /**
+     * Whether to show the label or only use the icon.
+     */
+    showLabel: {
+      type: Boolean,
+      default: false,
+    },
+    searchType: {
+      type: String as PropType<SearchType>,
+      required: true,
+    },
+    icon: {
+      type: String,
+      required: true,
+    },
+    label: {
+      type: String,
+      required: true,
+    },
+    otherLabels: {
+      type: Array as PropType<string[]>,
+      default: () => [],
     },
   },
   setup() {
-    const i18n = useI18n()
-    const { icons, activeType } = useSearchType()
-
-    const activeItem = computed(() => activeType.value)
-
-    const buttonLabel = computed(() => i18n.t(labels[activeItem.value]))
-
-    const icon = computed(() => icons[activeItem.value])
-
     return {
-      buttonLabel,
       caretDownIcon,
-      icon,
     }
   },
 })
 </script>
+<style scoped>
+.button-with-label {
+  @apply grid gap-2;
+  grid-template-columns: 1fr auto 1fr;
+  grid-template-areas: "icon label caret";
+}
+.label {
+  @apply max-w-[175px] truncate;
+  grid-area: label;
+}
+</style>

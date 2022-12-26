@@ -323,6 +323,7 @@ export const selectHomepageSearchType = async (
   headerMode: HeaderMode = NEW_HEADER
 ) => {
   const pageWidth = page.viewportSize()?.width
+
   if (headerMode === NEW_HEADER || (pageWidth && pageWidth > SCREEN_SIZES.sm)) {
     await page.getByRole("button", { name: t("search-type.all", dir) }).click()
 
