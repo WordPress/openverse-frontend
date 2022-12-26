@@ -14,14 +14,17 @@
           :is="prefersReducedMotion ? 'div' : 'Transition'"
           v-for="(image, idx) in imageList"
           :key="idx"
-          name="fade"
+          enter-active-class="transition-opacity delay-[var(--delay)] duration-500"
+          leave-active-class="transition-opacity delay-[var(--delay)] duration-500"
+          enter-class="opacity-0"
+          leave-to-class="opacity-0"
           mode="out-in"
           appear
         >
           <VLink
             class="home-cell rounded-full p-1 focus:bg-white"
             :class="idx >= imageCount ? 'hidden' : 'block'"
-            :style="{ '--transition-delay': `${idx * 0.05}s` }"
+            :style="{ '--delay': `${idx * 0.05}s` }"
             :href="image.url"
           >
             <img
@@ -131,19 +134,3 @@ export default defineComponent({
   },
 })
 </script>
-
-<style>
-.home-cell {
-  transition-delay: var(--transition-delay) !important;
-}
-
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: 0.5s;
-}
-</style>
