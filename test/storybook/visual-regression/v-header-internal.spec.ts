@@ -23,22 +23,20 @@ test.describe("VHeaderInternal", () => {
         )
       })
     })
-    breakpoints.describeEachBreakpoint(["xs", "sm", "md"])(
-      ({ expectSnapshot }) => {
-        test(`mobile-header-internal-${dir}`, async ({ page }) => {
-          await page.goto(pageUrl(dir))
-          await page.mouse.move(0, 150)
-          await expectSnapshot(
-            `mobile-header-internal-closed-${dir}`,
-            page.locator(headerSelector)
-          )
-        })
-        test(`mobile-header-internal-modal-${dir}`, async ({ page }) => {
-          await page.goto(pageUrl(dir))
-          await page.locator('button[aria-haspopup="dialog"]').click()
-          await expectSnapshot(`mobile-header-internal-open-${dir}`, page)
-        })
-      }
-    )
+    breakpoints.describeEachMobile(({ expectSnapshot }) => {
+      test(`mobile-header-internal-${dir}`, async ({ page }) => {
+        await page.goto(pageUrl(dir))
+        await page.mouse.move(0, 150)
+        await expectSnapshot(
+          `mobile-header-internal-closed-${dir}`,
+          page.locator(headerSelector)
+        )
+      })
+      test(`mobile-header-internal-modal-${dir}`, async ({ page }) => {
+        await page.goto(pageUrl(dir))
+        await page.locator('button[aria-haspopup="dialog"]').click()
+        await expectSnapshot(`mobile-header-internal-open-${dir}`, page)
+      })
+    })
   }
 })
