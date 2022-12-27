@@ -25,8 +25,8 @@
         </h2>
         <p class="text-base md:text-3xl">{{ $t("hero.description") }}</p>
         <div
-          class="mt-8 flex justify-start gap-4"
-          :class="isNewHeaderEnabled ? 'lg:hidden' : 'md:hidden'"
+          v-if="!isNewHeaderEnabled"
+          class="mt-8 flex justify-start gap-4 md:hidden"
         >
           <VSearchTypeRadio
             v-for="type in supportedSearchTypes"
@@ -41,7 +41,7 @@
           @submit="handleSearch"
         >
           <VSearchTypePopoverOld
-            v-show="isDesktopLayout"
+            v-show="isNewHeaderEnabled || isDesktopLayout"
             ref="contentSwitcher"
             class="mx-3 group-focus-within:bg-white group-hover:bg-white"
             :active-item="searchType"

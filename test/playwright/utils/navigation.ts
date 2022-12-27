@@ -324,10 +324,11 @@ export const selectHomepageSearchType = async (
 ) => {
   const pageWidth = page.viewportSize()?.width
   if (headerMode === NEW_HEADER || (pageWidth && pageWidth > SCREEN_SIZES.sm)) {
-    await page.click(`button:has-text("${t("search-type.all", dir)}")`)
-    await page.click(
-      `button[role="radio"]:has-text("${searchTypeNames[dir][searchType]}")`
-    )
+    await page.getByRole("button", { name: t("search-type.all", dir) }).click()
+
+    await page
+      .getByRole("radio", { name: searchTypeNames[dir][searchType] })
+      .click()
   } else {
     await page.click(`button:has-text("${searchTypeNames[dir][searchType]}")`)
   }
