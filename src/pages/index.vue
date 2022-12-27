@@ -129,8 +129,8 @@ export default defineComponent({
 
     const setSearchType = (type: SupportedSearchType) => {
       searchType.value = type
-      if (!isNewHeaderEnabled) {
-        contentSwitcher.value?.closeMenu()
+      if (!isNewHeaderEnabled.value) {
+        contentSwitcher.value?.close()
       }
     }
 

@@ -66,6 +66,10 @@ export default defineComponent({
       emit("select", searchType)
       contentMenuPopover.value?.close()
     }
+    const handleSelect = (type: string) => {
+      closePopover()
+      emit("select", type)
+    }
 
     return {
       handleSelect,
