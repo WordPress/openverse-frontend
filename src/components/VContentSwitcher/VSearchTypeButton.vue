@@ -11,13 +11,7 @@
     <VIcon :icon-path="icon" />
     <template v-if="showLabel">
       <span class="label-regular block truncate text-start">{{ label }}</span>
-      <VIcon
-        :class="[
-          'caret',
-          { 'transition-ease rotate-180': $attrs['aria-expanded'] },
-        ]"
-        :icon-path="caretDownIcon"
-      />
+      <VIcon :icon-path="caretDownIcon" />
     </template>
   </VButton>
 </template>
