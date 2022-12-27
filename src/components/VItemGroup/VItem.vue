@@ -12,7 +12,7 @@
       'hover:bg-dark-charcoal-10': !isInPopover,
       [$style[`${contextProps.direction}-popover-item`]]: isInPopover,
       'has-check': contextProps.showCheck,
-      'font-bold': selected && !contextProps.showCheck,
+      'font-semibold': selected && !contextProps.showCheck,
     }"
   >
     <VButton
