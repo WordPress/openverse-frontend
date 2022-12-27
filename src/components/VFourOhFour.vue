@@ -37,7 +37,7 @@
             </template>
           </i18n>
         </p>
-        <VStandaloneSearchBar route="404" @submit="handleSearch" />
+        <VStandaloneSearchBarOld route="404" @submit="handleSearch" />
       </div>
     </main>
 
@@ -53,7 +53,7 @@ import { useFeatureFlagStore } from "~/stores/feature-flag"
 
 import { ALL_MEDIA } from "~/constants/media"
 
-import VStandaloneSearchBar from "~/components/VHeader/VSearchBar/VStandaloneSearchBar.vue"
+import VStandaloneSearchBarOld from "~/components/VHeaderOld/VSearchBar/VStandaloneSearchBarOld.vue"
 import VLink from "~/components/VLink.vue"
 import VBrand from "~/components/VBrand/VBrand.vue"
 import VFooter from "~/components/VFooter/VFooter.vue"
@@ -64,7 +64,7 @@ export default defineComponent({
   name: "VFourOhFour",
   components: {
     VLink,
-    VStandaloneSearchBar,
+    VStandaloneSearchBarOld,
     VBrand,
     VFooter,
   },
