@@ -7,10 +7,7 @@
   >
     <template #trigger="{ a11yProps }">
       <VSearchTypeButton
-        v-bind="{
-          ...a11yProps,
-          ...searchTypeProps,
-        }"
+        v-bind="{ ...a11yProps, ...searchTypeProps }"
         :show-label="showLabel"
         aria-controls="content-switcher-popover"
       />

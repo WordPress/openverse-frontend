@@ -16,21 +16,23 @@ import { useFeatureFlagStore } from "~/stores/feature-flag"
   components={VSearchTypeButton}
   argTypes={{
     searchType: {
-      defaultValue: "all",
       options: searchTypes,
       control: "select",
     },
     pressed: {
-      defaultValue: false,
       control: "boolean",
     },
     showLabel: {
-      defaultValue: false,
       control: "boolean",
     },
     click: {
       action: "click",
     },
+  }}
+  args={{
+    searchType: "all",
+    pressed: false,
+    showLabel: false,
   }}
 />
 

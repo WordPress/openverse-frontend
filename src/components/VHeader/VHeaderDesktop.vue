@@ -32,7 +32,7 @@
       </span>
     </VSearchBar>
 
-    <VSearchTypePopover :show-label="isXl" />
+    <VSearchTypePopover :show-label="isXl" placement="header" />
 
     <VFilterButton
       ref="filterButtonRef"
