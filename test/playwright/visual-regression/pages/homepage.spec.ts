@@ -6,6 +6,7 @@ import {
   dismissTranslationBanner,
   pathWithDir,
   languageDirections,
+  enableNewHeader,
 } from "~~/test/playwright/utils/navigation"
 
 test.describe.configure({ mode: "parallel" })
@@ -22,10 +23,9 @@ for (const dir of languageDirections) {
   test.describe(`${dir} homepage snapshots`, () => {
     const path = pathWithDir("/", dir)
     test.beforeEach(async ({ page }) => {
+      await enableNewHeader(page)
       await page.goto(path)
       await dismissTranslationBanner(page)
-      // TODO: Remove this after the cookie-based layout is merged.
-      await page.waitForLoadState("networkidle")
     })
 
     breakpoints.describeEvery(({ expectSnapshot }) =>

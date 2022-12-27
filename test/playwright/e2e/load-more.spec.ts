@@ -1,6 +1,7 @@
 import { expect, Page, test } from "@playwright/test"
 
 import {
+  enableNewHeader,
   goToSearchTerm,
   renderModes,
   t,
@@ -21,8 +22,10 @@ const openSingleMediaView = async (
   page: Page,
   mediaType: SupportedMediaType
 ) => {
-  const contentLinkSelector =
-    mediaType === IMAGE ? "See all images" : "See all audio"
+  const contentLinkSelector = t(
+    mediaType === IMAGE ? "search-type.see-image" : "search-type.see-audio",
+    "ltr"
+  )
   return await Promise.all([
     page.waitForNavigation(),
     page.click(`text=${contentLinkSelector}`),
@@ -45,6 +48,9 @@ const openSingleMediaView = async (
  */
 
 test.describe("Load more button", () => {
+  test.beforeEach(async ({ page }) => {
+    await enableNewHeader(page)
+  })
   test("Clicking sends 2 requests on All view with enough results", async ({
     page,
   }) => {
@@ -59,6 +65,7 @@ test.describe("Load more button", () => {
         }
       }
     })
+    await enableNewHeader(page)
     await goToSearchTerm(page, "cat")
     await expect(page.locator(loadMoreButton)).toBeVisible()
 

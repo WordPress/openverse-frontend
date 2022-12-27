@@ -319,11 +319,12 @@ export const dismissTranslationBanner = async (page: Page) => {
 export const selectHomepageSearchType = async (
   page: Page,
   searchType: SupportedSearchType,
-  dir: LanguageDirection = "ltr"
+  dir: LanguageDirection = "ltr",
+  headerMode: HeaderMode = NEW_HEADER
 ) => {
   const pageWidth = page.viewportSize()?.width
-  if (pageWidth && pageWidth > SCREEN_SIZES.sm) {
-    await page.click(`[aria-label="${t("search-type.all", dir)}"]`)
+  if (headerMode === NEW_HEADER || (pageWidth && pageWidth > SCREEN_SIZES.sm)) {
+    await page.click(`button:has-text("${t("search-type.all", dir)}")`)
     await page.click(
       `button[role="radio"]:has-text("${searchTypeNames[dir][searchType]}")`
     )
@@ -340,12 +341,14 @@ export const goToSearchTerm = async (
     mode?: RenderMode
     dir?: LanguageDirection
     query?: string // Only for SSR mode
+    headerMode?: HeaderMode
   } = {}
 ) => {
   const searchType = options.searchType || ALL_MEDIA
   const dir = options.dir || "ltr"
   const mode = options.mode ?? "SSR"
   const query = options.query ? `&${options.query}` : ""
+  const headerMode = options.headerMode ?? NEW_HEADER
 
   if (mode === "SSR") {
     const path = `search/${searchTypePath(searchType)}?q=${term}${query}`
@@ -356,7 +359,7 @@ export const goToSearchTerm = async (
     await dismissTranslationBanner(page)
     // Select the search type
     if (searchType !== "all") {
-      await selectHomepageSearchType(page, searchType, dir)
+      await selectHomepageSearchType(page, searchType, dir, headerMode)
     }
     // Type search term
     const searchInput = page.locator('main input[type="search"]')
