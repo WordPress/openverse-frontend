@@ -11,7 +11,11 @@
           <VHeaderDesktop v-if="isDesktopLayout" />
           <VHeaderMobile v-else />
         </template>
-        <VHeaderInternal v-else class="bg-white" />
+        <VHeaderInternal
+          v-else
+          class="bg-white"
+          :class="{ 'border-b-dark-charcoal-20': isHeaderScrolled }"
+        />
       </template>
       <VHeaderOld v-else />
     </div>

@@ -11,6 +11,7 @@ concurrency:
 
 jobs:
   deploy:
+    name: Deploy GitHub pages
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -19,6 +20,8 @@ jobs:
           ref: main
 
       - uses: ./.github/actions/setup-node-env
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Fetch translation files
         run: pnpm i18n
