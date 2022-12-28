@@ -42,18 +42,18 @@ for (const dir of languageDirections) {
     })
 
     breakpoints.describeEvery(({ expectSnapshot }) =>
-      test(`${dir} full page`, async ({ page }) => {
+      test(`${dir} full page old design`, async ({ page }) => {
         await deleteImageCarousel(page)
-        await expectSnapshot(`index-${dir}`, page)
+        await expectSnapshot(`index-old-design-${dir}`, page)
       })
     )
 
     breakpoints.describeEvery(({ expectSnapshot }) =>
-      test(`${dir} full page redesigned`, async ({ page }) => {
+      test(`${dir} full page`, async ({ page }) => {
         await enableNewHeader(page)
         await page.reload() // to show the redesigned page
         await cleanImageCarousel(page)
-        await expectSnapshot(`index-redesigned-${dir}`, page)
+        await expectSnapshot(`index-${dir}`, page)
       })
     )
 
