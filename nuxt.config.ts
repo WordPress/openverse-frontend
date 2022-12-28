@@ -379,7 +379,7 @@ const config: NuxtConfig = {
       },
       options: {
         storySort: {
-          order: ["Introduction", ["Openverse UI"]],
+          order: ["Introduction", ["Openverse UI"], "Meta"],
         },
       },
       viewport: {
