@@ -12,7 +12,7 @@
     <input
       :id="id"
       type="checkbox"
-      class="checkbox h-5 w-5 flex-shrink-0 appearance-none rounded-sm border border-dark-charcoal-40 bg-white me-3 focus-slim-tx checked:border-dark-charcoal checked:bg-dark-charcoal hover:border-dark-charcoal checked:focus-visible:border-white disabled:border-dark-charcoal-40 disabled:bg-dark-charcoal-10 checked:disabled:border-dark-charcoal-40 checked:disabled:bg-dark-charcoal-40"
+      class="checkbox h-5 w-5 flex-shrink-0 appearance-none rounded-sm border border-dark-charcoal bg-white me-3 focus-slim-tx checked:bg-dark-charcoal checked:focus-visible:border-white disabled:border-dark-charcoal-40 disabled:bg-dark-charcoal-10 checked:disabled:border-dark-charcoal-40 checked:disabled:bg-dark-charcoal-40"
       v-bind="inputAttrs"
       @change="onChange"
     />
