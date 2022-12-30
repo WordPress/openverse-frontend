@@ -11,7 +11,7 @@
       <div
         ref="dialogRef"
         v-bind="$attrs"
-        class="flex w-full flex-col"
+        class="flex flex-col"
         :class="[$style[`modal-${variant}`], $style[`modal-${mode}`]]"
         role="dialog"
         aria-modal="true"
@@ -193,12 +193,20 @@ export default defineComponent({
 .top-bar-two-thirds {
   @apply bg-tx;
 }
+
 .modal-backdrop-fit-content,
 .modal-backdrop-two-thirds {
   @apply bg-dark-charcoal bg-opacity-75;
 }
+.modal-backdrop-centered {
+  @apply flex-col items-center;
+}
+
 .modal-default {
-  @apply md:max-w-[768px] lg:w-[768px] xl:w-[1024px] xl:max-w-[1024px];
+  @apply w-full md:max-w-[768px] lg:w-[768px] xl:w-[1024px] xl:max-w-[1024px];
+}
+.modal-two-thirds {
+  @apply mt-auto h-2/3 w-full rounded-t-lg bg-white;
 }
 
 .modal-dark {
@@ -207,11 +215,12 @@ export default defineComponent({
 .modal-light {
   @apply bg-white text-dark-charcoal;
 }
+
 .modal-content-default {
   @apply text-left align-bottom md:rounded-t-md;
 }
-.modal-two-thirds {
-  @apply mt-auto h-2/3 w-full rounded-t-lg bg-white;
+.modal-content-centered {
+  @apply w-auto;
 }
 .modal-fit-content {
   @apply mt-auto w-full rounded-t-lg bg-white;
