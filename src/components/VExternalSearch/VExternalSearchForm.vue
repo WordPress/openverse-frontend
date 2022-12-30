@@ -30,13 +30,12 @@
       class="text-base font-normal leading-[130%]"
     >
       <template #type>{{ $t(`external-sources.form.types.${type}`) }}</template>
-      <template #query>{{ query.q }}</template>
+      <template #query>{{ searchTerm }}</template>
     </i18n>
 
     <VExternalSourceList
       class="inline-flex ms-2 md:justify-center"
-      :type="type"
-      :query="query"
+      :external-sources="externalSources"
     />
   </section>
 </template>
@@ -49,12 +48,12 @@ import {
   ref,
 } from "@nuxtjs/composition-api"
 
-import type { MediaType } from "~/constants/media"
-import type { ApiQueryParams } from "~/utils/search-query-transform"
 import { getFocusableElements } from "~/utils/focus-management"
 import { defineEvent } from "~/types/emits"
 
-import VExternalSourceList from "./VExternalSourceList.vue"
+import type { MediaType } from "~/constants/media"
+
+import VExternalSourceList from "~/components/VExternalSearch/VExternalSourceList.vue"
 
 export default defineComponent({
   name: "VExternalSearchForm",
@@ -62,8 +61,9 @@ export default defineComponent({
     VExternalSourceList,
   },
   props: {
-    query: { type: Object as PropType<ApiQueryParams>, required: true },
     type: { type: String as PropType<MediaType>, required: true },
+    searchTerm: { type: String, required: true },
+    externalSources: { type: Array, required: true },
     isSupported: { type: Boolean, default: false },
     hasNoResults: { type: Boolean, required: true },
   },
