@@ -24,7 +24,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@nuxtjs/composition-api"
+import { defineComponent, PropType } from "@nuxtjs/composition-api"
+
+import type { ExternalSource } from "~/types/external-source"
 
 import VButton from "~/components/VButton.vue"
 
@@ -37,7 +39,7 @@ export default defineComponent({
   components: { VIcon, VButton },
   props: {
     externalSources: {
-      type: Array,
+      type: Array as PropType<ExternalSource[]>,
       required: true,
     },
     searchTerm: {

@@ -60,7 +60,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@nuxtjs/composition-api"
+import { defineComponent, PropType } from "@nuxtjs/composition-api"
+
+import type { ExternalSource } from "~/types/external-source"
 
 import VButton from "~/components/VButton.vue"
 import VIcon from "~/components/VIcon/VIcon.vue"
@@ -82,7 +84,10 @@ export default defineComponent({
     /**
      * the media type to use as the criteria for filtering additional sources
      */
-    externalSources: { type: Array, required: true },
+    externalSources: {
+      type: Array as PropType<ExternalSource[]>,
+      required: true,
+    },
   },
   setup() {
     return {

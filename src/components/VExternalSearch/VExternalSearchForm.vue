@@ -53,6 +53,8 @@ import { defineEvent } from "~/types/emits"
 
 import type { MediaType } from "~/constants/media"
 
+import type { ExternalSource } from "~/types/external-source"
+
 import VExternalSourceList from "~/components/VExternalSearch/VExternalSourceList.vue"
 
 export default defineComponent({
@@ -61,11 +63,26 @@ export default defineComponent({
     VExternalSourceList,
   },
   props: {
-    type: { type: String as PropType<MediaType>, required: true },
-    searchTerm: { type: String, required: true },
-    externalSources: { type: Array, required: true },
-    isSupported: { type: Boolean, default: false },
-    hasNoResults: { type: Boolean, required: true },
+    type: {
+      type: String as PropType<MediaType>,
+      required: true,
+    },
+    searchTerm: {
+      type: String,
+      required: true,
+    },
+    externalSources: {
+      type: Array as PropType<ExternalSource[]>,
+      required: true,
+    },
+    isSupported: {
+      type: Boolean,
+      default: false,
+    },
+    hasNoResults: {
+      type: Boolean,
+      required: true,
+    },
   },
   emits: {
     tab: defineEvent<[KeyboardEvent]>(),
