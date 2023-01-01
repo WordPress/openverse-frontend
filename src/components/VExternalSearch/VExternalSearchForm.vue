@@ -38,6 +38,7 @@
       ref="triggerRef"
       :pressed="triggerA11yProps['aria-expanded']"
       aria-haspopup="dialog"
+      aria-controls="external-sources-dialog"
       variant="dropdown-label"
       size="disabled"
       class="caption-regular gap-1 py-1 px-3 text-dark-charcoal pe-1 focus-visible:border-tx"
@@ -52,6 +53,7 @@
     <template v-if="triggerElement">
       <VPopoverContent
         v-if="isMd"
+        id="external-sources-dialog"
         aria-labelledby="external-sources-button"
         :hide="closeDialog"
         :trigger-element="triggerElement"
@@ -66,6 +68,7 @@
       /></VPopoverContent>
       <VModalContent
         v-else
+        id="external-sources-dialog"
         aria-labelledby="external-sources-button"
         :hide="closeDialog"
         :visible="isVisible"
