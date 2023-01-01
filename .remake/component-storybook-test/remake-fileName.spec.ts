@@ -1,11 +1,11 @@
-import { test } from '@playwright/test'
+import { test } from "@playwright/test"
 
-import breakpoints from '~~/test/playwright/utils/breakpoints'
+import breakpoints from "~~/test/playwright/utils/breakpoints"
 
-test.describe('<%= name %>', () => {
+test.describe("<%= name %>", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto(
-      '/iframe.html?id=components-<%= name.toLowerCase() %>--default-story'
+      "/iframe.html?id=components-<%= name.toLowerCase() %>--default-story"
     )
   })
 
