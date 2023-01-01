@@ -165,6 +165,7 @@ devDependencies:
   '@babel/preset-typescript': 7.18.6_@babel+core@7.20.2
   '@babel/runtime-corejs3': 7.20.1
   '@intlify/eslint-plugin-vue-i18n': 1.4.0_eslint@8.28.0
+  '@itsjonq/remake': 2.0.0
   '@nuxt/types': 2.15.8_webpack@4.46.0
   '@nuxt/typescript-build': 2.1.0_pytcdwlevqy2qkfz5nfmtlr7pa
   '@nuxtjs/eslint-module': 3.1.0_4ccfrreed6ckxvste6jnrinore
@@ -6069,6 +6070,7 @@ packages:
     resolution: {integrity: sha512-V/LGr1APy+PXIwKebEWrkZPwoeoF+w1jiOBUmuxuiUIaOHtob8Qc9BTrYo7VuI5fR8tqsy+buA2WFooR5olqvQ==}
     engines: {node: '>=0.4.0'}
     hasBin: true
+    dev: true
 
   /acorn/8.7.1:
     resolution: {integrity: sha512-Xx54uLJQZ19lKygFXOWsscKUbsBZW0CPykPhVQdhIeIwrbPmJzqeASDInc8nKBnp/JT6igTs82qPXz069H8I/A==}
@@ -8834,7 +8836,7 @@ packages:
     dependencies:
       acorn-node: 1.8.2
       defined: 1.0.0
-      minimist: 1.2.5
+      minimist: 1.2.6
 
   /devalue/2.0.1:
     resolution: {integrity: sha512-I2TiqT5iWBEyB8GRfTDP0hiLZ0YeDJZ+upDxjBfOC2lebO5LezQMv7QvIUTzdb64jQyAKLf1AHADtGN+jw6v8Q==}
@@ -14116,6 +14118,13 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       find-up: 5.0.0
+    dev: true
+
+  /pkg-up/2.0.0:
+    resolution: {integrity: sha512-fjAPuiws93rm7mPUu21RdBnkeZNrbfCFCwfAhPWY+rR3zG0ubpe5cEReHOw5fIbfmsxEV/g2kSxGTATY3Bpnwg==}
+    engines: {node: '>=4'}
+    dependencies:
+      find-up: 2.1.0
     dev: true
 
   /playwright-core/1.28.1:
