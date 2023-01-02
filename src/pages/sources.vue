@@ -59,11 +59,11 @@
         as="VLink"
         variant="primary"
         size="disabled"
-        class="not-prose mt-5 px-6 py-4 font-semibold"
+        class="not-prose mt-5 gap-2 px-6 py-4 font-semibold"
         href="https://github.com/WordPress/openverse-catalog/issues/new?assignees=&labels=%F0%9F%9A%A6+status%3A+awaiting+triage%2C+%F0%9F%A7%B9+status%3A+ticket+work+required%2C+%E2%98%81%EF%B8%8F+provider%3A+any&template=new-source-suggestion.md&title=%5BSource+Suggestion%5D+Insert+source+name+here"
+        show-external-link
       >
         {{ $t("sources.issue-button") }}
-        <VIcon :icon-path="externalLinkIcon" :rtl-flip="true" class="mx-2" />
       </VButton>
     </p>
 
@@ -95,15 +95,12 @@ import { useFeatureFlagStore } from "~/stores/feature-flag"
 
 import VButton from "~/components/VButton.vue"
 import VLink from "~/components/VLink.vue"
-import VIcon from "~/components/VIcon/VIcon.vue"
 import VContentPage from "~/components/VContentPage.vue"
 import VSourcesTable from "~/components/VSourcesTable.vue"
 
-import externalLinkIcon from "~/assets/icons/external-link.svg"
-
 export default defineComponent({
   name: "SourcePage",
-  components: { VButton, VContentPage, VIcon, VLink, VSourcesTable },
+  components: { VButton, VContentPage, VLink, VSourcesTable },
   setup() {
     const i18n = useI18n()
     const featureFlagStore = useFeatureFlagStore()
@@ -115,7 +112,7 @@ export default defineComponent({
         : undefined,
     })
 
-    return { externalLinkIcon, supportedMediaTypes }
+    return { supportedMediaTypes }
   },
   head: {},
 })

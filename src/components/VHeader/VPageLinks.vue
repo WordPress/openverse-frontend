@@ -30,22 +30,17 @@
   <ul v-else>
     <li v-for="page in allPages" :key="page.id">
       <VLink
-        class="flex flex-row rounded-sm hover:underline focus-visible:outline-none focus-visible:ring focus-visible:ring-offset-tx disabled:text-dark-charcoal-40"
+        class="flex flex-row gap-2 rounded-sm hover:underline focus-visible:outline-none focus-visible:ring focus-visible:ring-offset-tx disabled:text-dark-charcoal-40"
         :class="[
           { 'font-semibold': currentPage === page.id },
           { 'text-dark-charcoal focus-visible:ring-pink': mode === 'light' },
           navLinkClasses,
         ]"
         :href="page.link"
+        show-external-icon
         @click="onClick"
-        >{{ $t(page.name)
-        }}<VIcon
-          v-if="isLinkExternal(page)"
-          :icon-path="externalLinkIcon"
-          :size="externalIconSize"
-          class="self-center ms-2"
-          rtl-flip
-      /></VLink>
+        >{{ $t(page.name) }}</VLink
+      >
     </li>
   </ul>
 </template>

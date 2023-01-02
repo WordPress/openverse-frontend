@@ -22,12 +22,6 @@
       :href="source.url"
     >
       {{ source.name }}
-      <VIcon
-        :icon-path="icons.externalLink"
-        :size="4"
-        :rtl-flip="true"
-        class="ms-2"
-      />
     </VButton>
   </div>
 </template>
@@ -38,10 +32,8 @@ import { defineComponent, PropType } from "@nuxtjs/composition-api"
 import type { ExternalSource } from "~/types/external-source"
 
 import VButton from "~/components/VButton.vue"
-import VIcon from "~/components/VIcon/VIcon.vue"
 import VIconButton from "~/components/VIconButton/VIconButton.vue"
 
-import externalLinkIcon from "~/assets/icons/external-link.svg"
 import caretDownIcon from "~/assets/icons/caret-down.svg"
 import closeSmallIcon from "~/assets/icons/close-small.svg"
 
@@ -51,7 +43,7 @@ import closeSmallIcon from "~/assets/icons/close-small.svg"
  */
 export default defineComponent({
   name: "VExternalSourceList",
-  components: { VButton, VIcon, VIconButton },
+  components: { VButton, VIconButton },
   props: {
     /**
      * the media type to use as the criteria for filtering additional sources
@@ -64,7 +56,6 @@ export default defineComponent({
   setup() {
     return {
       icons: {
-        externalLink: externalLinkIcon,
         caretDown: caretDownIcon,
         closeSmall: closeSmallIcon,
       },
