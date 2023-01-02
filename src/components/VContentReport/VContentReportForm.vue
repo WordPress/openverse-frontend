@@ -89,6 +89,7 @@
             key="dmca"
             as="VLink"
             variant="secondary-filled"
+            class="gap-2"
             show-external-icon
             :href="DMCA_FORM_URL"
           >
