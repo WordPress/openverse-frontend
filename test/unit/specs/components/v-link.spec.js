@@ -56,7 +56,9 @@ describe("VLink", () => {
     expect(linkBefore.textContent).toEqual(expectedLinkTextBefore)
 
     await fireEvent.click(linkBefore)
-    const linkAfter = await screen.findByText("Code is Poetry")
+    const linkAfter = await screen.findByRole("link", {
+      name: /Code is Poetry/,
+    })
     expect(linkAfter.tagName).toBe("A")
   })
 })

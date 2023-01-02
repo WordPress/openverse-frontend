@@ -18,7 +18,6 @@
       label: "I want something I can",
     },
     aria: {
-      "aria-new-tab": " (opens in a new tab)",
       search: "search",
       "search-type": "search type",
     },
@@ -717,4 +716,5 @@
   report: {
     "image-details": "See image details",
   },
+  "aria-new-tab": ". Opens in a new tab.",
 }

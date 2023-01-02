@@ -16,16 +16,18 @@
     rel="noopener noreferrer"
     :role="href ? undefined : 'link'"
     :aria-disabled="!href"
-    :class="{ 'inline-flex flex-row items-center gap-2': showExternalIcon }"
     v-on="$listeners"
-    ><slot /><VIcon
+    ><span
+      :class="{ 'inline-flex flex-row items-center gap-2': showExternalIcon }"
+      ><slot /><span class="sr-only">{{ $t("aria-new-tab") }}</span></span
+    ><VIcon
       v-if="showExternalIcon && !isInternal"
       :icon-path="externalLinkIcon"
       class="inline-block"
       :size="externalIconSize"
       rtl-flip
-    /><span class="sr-only">{{ $t("aria-new-tab") }}</span></a
-  >
+    />
+  </a>
 </template>
 
 <script lang="ts">

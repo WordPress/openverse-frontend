@@ -114,8 +114,9 @@ describe("AudioTrack", () => {
   })
 
   it("should show audio creator with link", () => {
-    const { getByText } = render(VAudioTrack, options, configureVue)
-    const element = getByText(props.audio.creator)
+    const { getByRole } = render(VAudioTrack, options, configureVue)
+    const linkName = new RegExp(props.audio.creator, "i")
+    const element = getByRole("link", { name: linkName })
     expect(element).toBeInstanceOf(HTMLAnchorElement)
     expect(element).toHaveAttribute("href", props.audio.creator_url)
   })

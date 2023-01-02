@@ -24,7 +24,9 @@ describe("VFullLayout", () => {
       },
     })
 
-    const downloadButton = screen.getByText("audio-details.weblink")
+    const downloadButton = screen.getByRole("link", {
+      name: /audio-details.weblink/i,
+    })
     expect(downloadButton).toHaveAttribute("href", audio.foreign_landing_url)
   })
 })

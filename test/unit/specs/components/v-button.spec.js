@@ -49,7 +49,7 @@ describe("VButton", () => {
     })
     await nextTick()
 
-    const element = await screen.findByText(/code is poetry/i)
+    const element = await screen.findByRole("link", { name: /code is poetry/i })
 
     expect(element.tagName).toBe("A")
     expect(element).not.toHaveAttribute("type")
@@ -90,7 +90,7 @@ describe("VButton", () => {
       slots: { default: "Code is Poetry" },
     })
 
-    const element = await screen.findByText(/code is poetry/i)
+    const element = await screen.findByRole("link", { name: /code is poetry/i })
 
     expect(element).not.toHaveAttribute("disabled")
     expect(element).toHaveAttribute("aria-disabled", "true")
