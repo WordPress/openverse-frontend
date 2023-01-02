@@ -16,7 +16,9 @@
     rel="noopener noreferrer"
     :role="href ? undefined : 'link'"
     :aria-disabled="!href"
-    class="inline-flex flex-row items-center"
+    :class="{
+      'inline-flex flex-row items-center': showExternalIcon && !isInternal,
+    }"
     v-on="$listeners"
     ><span
       ><slot /><span class="sr-only">{{ $t("aria-new-tab") }}</span></span
