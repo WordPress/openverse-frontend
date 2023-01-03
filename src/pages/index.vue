@@ -70,20 +70,6 @@
             />
           </div>
           <VStandaloneSearchBar
-            v-if="isNewHeaderEnabled"
-            class="mt-4 max-w-[40rem] md:mt-6"
-            @submit="handleSearch"
-          >
-            <VSearchTypePopover
-              v-show="isDesktopLayout"
-              ref="contentSwitcher"
-              class="mx-3 group-focus-within:bg-white group-hover:bg-white"
-              placement="searchbar"
-              @select="setSearchType"
-            />
-          </VStandaloneSearchBar>
-          <VStandaloneSearchBarOld
-            v-else
             class="mt-4 md:mt-6"
             :class="{ 'max-w-[40rem]': !isNewHeaderEnabled }"
             @submit="handleSearch"
@@ -96,7 +82,7 @@
               placement="searchbar"
               @select="setSearchType"
             />
-          </VStandaloneSearchBarOld>
+          </VStandaloneSearchBar>
 
           <!-- Disclaimer for large screens -->
           <i18n
@@ -205,14 +191,12 @@ import { useMediaStore } from "~/stores/media"
 import { useSearchStore } from "~/stores/search"
 import { useUiStore } from "~/stores/ui"
 
-import VBrand from "~/components/VBrand/VBrand.vue"
 import VLink from "~/components/VLink.vue"
 import VLogoButtonOld from "~/components/VHeaderOld/VLogoButtonOld.vue"
 import VStandaloneSearchBar from "~/components/VHeader/VSearchBar/VStandaloneSearchBar.vue"
-import VStandaloneSearchBarOld from "~/components/VHeaderOld/VSearchBar/VStandaloneSearchBarOld.vue"
 import VSearchTypeRadio from "~/components/VContentSwitcher/VSearchTypeRadio.vue"
 import VSearchTypePopoverOld from "~/components/VContentSwitcherOld/VSearchTypePopoverOld.vue"
-import VSearchTypePopover from "~/components/VContentSwitcher/VSearchTypePopover.vue"
+import VBrand from "~/components/VBrand/VBrand.vue"
 import VHomeGallery from "~/components/VHomeGallery/VHomeGallery.vue"
 import VFooter from "~/components/VFooter/VFooter.vue"
 import VHeaderInternal from "~/components/VHeader/VHeaderInternal.vue"
@@ -222,7 +206,6 @@ import imageInfo from "~/assets/homepage_images/image_info.json"
 export default defineComponent({
   name: "HomePage",
   components: {
-    VSearchTypePopover,
     VBrand,
     VHeaderInternal,
     VFooter,
@@ -230,7 +213,6 @@ export default defineComponent({
     VSearchTypePopoverOld,
     VSearchTypeRadio,
     VStandaloneSearchBar,
-    VStandaloneSearchBarOld,
     VLink,
     VLogoButtonOld,
   },
