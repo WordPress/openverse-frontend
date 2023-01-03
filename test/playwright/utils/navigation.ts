@@ -323,12 +323,23 @@ export const selectHomepageSearchType = async (
   headerMode: HeaderMode = NEW_HEADER
 ) => {
   const pageWidth = page.viewportSize()?.width
-  if (headerMode === NEW_HEADER || (pageWidth && pageWidth > SCREEN_SIZES.sm)) {
-    await page.getByRole("button", { name: t("search-type.all", dir) }).click()
+  // TODO: replace when the search types can only be selected using the popover/modal
+  console.log("Selecting homepage search type in header mode", headerMode)
+  // if (headerMode === NEW_HEADER || (pageWidth && pageWidth > SCREEN_SIZES.sm)) {
+  //   await page.getByRole("button", { name: t("search-type.all", dir) }).click()
+  //
+  //   await page
+  //     .getByRole("radio", { name: searchTypeNames[dir][searchType] })
+  //     .click()
+  // } else {
+  //   await page.click(`button:has-text("${searchTypeNames[dir][searchType]}")`)
+  // }
 
-    await page
-      .getByRole("radio", { name: searchTypeNames[dir][searchType] })
-      .click()
+  if (pageWidth && pageWidth > SCREEN_SIZES.sm) {
+    await page.click(`[aria-label="${t("search-type.all", dir)}"]`)
+    await page.click(
+      `button[role="radio"]:has-text("${searchTypeNames[dir][searchType]}")`
+    )
   } else {
     await page.click(`button:has-text("${searchTypeNames[dir][searchType]}")`)
   }
