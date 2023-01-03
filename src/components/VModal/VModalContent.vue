@@ -91,6 +91,7 @@ import closeIcon from "~/assets/icons/close.svg"
 export default defineComponent({
   name: "VModalContent",
   components: { VTeleport, VButton, VIcon, VLogoButtonOld },
+  inheritAttrs: false,
   props: {
     visible: {
       type: Boolean,
