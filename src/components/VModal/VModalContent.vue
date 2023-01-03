@@ -206,6 +206,9 @@ export default defineComponent({
 .modal-default {
   @apply w-full md:max-w-[768px] lg:w-[768px] xl:w-[1024px] xl:max-w-[1024px];
 }
+.modal-full {
+  @apply w-full;
+}
 .modal-two-thirds {
   @apply mt-auto h-2/3 w-full rounded-t-lg bg-white;
 }
