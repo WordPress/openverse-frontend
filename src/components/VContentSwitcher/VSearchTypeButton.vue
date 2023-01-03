@@ -20,6 +20,8 @@ import { defineComponent, PropType } from "@nuxtjs/composition-api"
 
 import type { SearchType } from "~/constants/media"
 
+import { warn } from "~/utils/console"
+
 import VIcon from "~/components/VIcon/VIcon.vue"
 import VButton from "~/components/VButton.vue"
 
@@ -52,7 +54,13 @@ export default defineComponent({
       required: true,
     },
   },
-  setup() {
+  setup(_, { attrs }) {
+    if (!attrs["aria-haspopup"] || attrs["aria-expanded"] === undefined) {
+      warn(
+        "You should provide `aria-haspopup` and `aria-expanded` props to VSearchTypeButton."
+      )
+    }
+
     return {
       caretDownIcon,
     }
