@@ -64,10 +64,14 @@ export const useMatchSingleResultRoutes = () => {
   return useMatchRoute(routes)
 }
 
+/**
+ * Matches the content pages (about, search help, etc.) and the preferences page.
+ */
 export const useMatchContentPageRoutes = () => {
   const routes = usePages()
     .all.filter((page) => page.link.startsWith("/"))
     .map((page) => page.id)
+  routes.push("preferences")
   return useMatchRoute(routes)
 }
 export const useMatchHomeRoute = () => useMatchRoute(["index"])

@@ -1,5 +1,6 @@
 <template>
   <div
+    :key="isWhite ? 'white' : 'yellow'"
     class="app flex min-h-screen flex-col"
     :class="[
       isDesktopLayout ? 'desktop' : 'mobile',
@@ -107,10 +108,6 @@ const embeddedPage = {
     VGlobalAudioSection,
     VSearchGridFilter,
   },
-  layout: "embedded",
-  head() {
-    return this.$nuxtI18nHead({ addSeoAttributes: true, addDirAttribute: true })
-  },
   setup() {
     const uiStore = useUiStore()
     const featureFlagStore = useFeatureFlagStore()
@@ -196,6 +193,9 @@ const embeddedPage = {
 
       closeSidebar,
     }
+  },
+  head() {
+    return this.$nuxtI18nHead({ addSeoAttributes: true, addDirAttribute: true })
   },
 }
 export default embeddedPage
