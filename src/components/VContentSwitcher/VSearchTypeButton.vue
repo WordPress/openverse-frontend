@@ -1,7 +1,7 @@
 <template>
   <VButton
     class="group h-12 flex-shrink-0 gap-2"
-    :class="showLabel ? 'w-auto gap-2 px-2 ps-3' : 'w-12'"
+    :class="showLabel ? 'w-auto gap-2 px-3' : 'w-12'"
     variant="action-menu"
     size="disabled"
     :aria-label="$t('search-type.select-label', { type: label })"
