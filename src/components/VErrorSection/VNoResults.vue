@@ -14,7 +14,7 @@
         as="VLink"
         :href="source.url"
         variant="secondary-bordered"
-        class="text-dark-charcoal"
+        class="text-dark-charcoal label-bold justify-between md:justify-start md:gap-x-2"
       >
         {{ source.name }}
         <VIcon :icon-path="externalLinkIcon" :size="4" rtl-flip />
