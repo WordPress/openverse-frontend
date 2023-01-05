@@ -26,7 +26,9 @@ for (const searchType of supportedSearchTypes) {
         })
         await goToSearchTerm(page, "querywithnoresults", { dir, searchType })
 
-        await expectSnapshot(`no-results-${searchType}-${dir}`, page)
+        await expectSnapshot(`no-results-${searchType}-${dir}`, page, {
+          fullPage: true,
+        })
       })
     })
   }
