@@ -19,7 +19,7 @@
         <VTab id="content-settings" size="medium" class="category me-4">{{
           $t("search-type.heading")
         }}</VTab>
-        <VTab id="filters" size="medium" class="category">{{
+        <VTab v-if="showFilters" id="filters" size="medium" class="category">{{
           $t("filters.title")
         }}</VTab>
         <VIconButton
@@ -30,9 +30,13 @@
         />
       </template>
       <VTabPanel id="content-settings">
-        <VSearchTypes size="medium" :use-links="true" />
+        <VSearchTypes
+          size="medium"
+          :use-links="useLinks"
+          @select="$emit('select', $event)"
+        />
       </VTabPanel>
-      <VTabPanel id="filters">
+      <VTabPanel v-if="showFilters" id="filters">
         <VSearchGridFilter
           :show-filter-header="false"
           :change-tab-order="false"
@@ -98,8 +102,16 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    showFilters: {
+      type: Boolean,
+      default: true,
+    },
+    useLinks: {
+      type: Boolean,
+      default: true,
+    },
   },
-  setup() {
+  setup(props) {
     const i18n = useI18n()
     const searchStore = useSearchStore()
     const selectedTab = ref<"content-settings" | "filters">("content-settings")
@@ -110,7 +122,7 @@ export default defineComponent({
     const areFiltersSelected = computed(() => searchStore.isAnyFilterApplied)
 
     const showClearFiltersButton = computed(
-      () => selectedTab.value === "filters"
+      () => props.showFilters && selectedTab.value === "filters"
     )
     const isClearButtonDisabled = computed(
       () => !searchStore.isAnyFilterApplied
