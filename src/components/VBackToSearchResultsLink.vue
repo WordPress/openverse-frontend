@@ -5,12 +5,14 @@
     v-bind="$attrs"
   >
     <VIcon :icon-path="chevronIcon" :rtl-flip="true" />
-    {{ $t("single-result.back") }}
+    {{ label }}
   </VLink>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@nuxtjs/composition-api"
+import { defineComponent, ref } from "@nuxtjs/composition-api"
+
+import { useI18n } from "~/composables/use-i18n"
 
 import VIcon from "~/components/VIcon/VIcon.vue"
 import VLink from "~/components/VLink.vue"
@@ -27,8 +29,16 @@ export default defineComponent({
     VLink,
   },
   inheritAttrs: false,
-  setup() {
-    return { chevronIcon }
+  props: {
+    text: {
+      required: false,
+      type: String,
+    },
+  },
+  setup(props) {
+    const i18n = useI18n()
+    const label = ref(props.text ?? i18n.t("single-result.back"))
+    return { label, chevronIcon }
   },
 })
 </script>

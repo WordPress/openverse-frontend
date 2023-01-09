@@ -56,11 +56,13 @@ export const useMatchSearchRoutes = () => {
  * Homepage, single image result and other content pages return `false`
  */
 export const useMatchSingleResultRoutes = () => {
-  const routes = [
+  let routes = [
     ...supportedSearchTypes
       .filter((name) => name !== ALL_MEDIA)
       .map((name) => `${name}-id`),
   ]
+  routes = routes.concat(routes.map((name) => `${name}-report`))
+
   return useMatchRoute(routes)
 }
 
