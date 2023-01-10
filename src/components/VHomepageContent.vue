@@ -10,7 +10,12 @@
       {{ $t("hero.description") }}
     </p>
 
-    <VStandaloneSearchBar class="mt-4 md:mt-6" @submit="handleSearch">
+    <VStandaloneSearchBar
+      ref="searchBarRef"
+      class="mt-4 md:mt-6"
+      :has-popover="triggerElement && isContentSwitcherVisible"
+      @submit="handleSearch"
+    >
       <VSearchTypeButton
         id="search-type-button"
         ref="searchTypeButtonRef"
@@ -29,7 +34,11 @@
           :trigger-element="triggerElement"
           aria-labelledby="search-type-button"
         >
-          <VSearchTypes size="small" @select="handleSelect" />
+          <VSearchTypes
+            size="small"
+            class="w-[260px] pt-2"
+            @select="handleSelect"
+          />
         </VPopoverContent>
 
         <VContentSettingsModalContent
@@ -38,6 +47,7 @@
           :close="closeContentSwitcher"
           :visible="isContentSwitcherVisible"
           :use-links="false"
+          :show-filters="false"
           @open="openContentSwitcher"
           @select="handleSelect"
         />
@@ -61,19 +71,19 @@
 import { computed, ref, PropType } from "@nuxtjs/composition-api"
 
 import type { SearchType } from "~/constants/media"
+import { ensureFocus } from "~/utils/reakit-utils/focus"
 
 import useSearchType from "~/composables/use-search-type"
 import { useDialogControl } from "~/composables/use-dialog-control"
 
 import { useUiStore } from "~/stores/ui"
 
+import VContentSettingsModalContent from "~/components/VHeader/VHeaderMobile/VContentSettingsModalContent.vue"
 import VLink from "~/components/VLink.vue"
 import VPopoverContent from "~/components/VPopover/VPopoverContent.vue"
 import VSearchTypeButton from "~/components/VContentSwitcher/VSearchTypeButton.vue"
 import VSearchTypes from "~/components/VContentSwitcher/VSearchTypes.vue"
 import VStandaloneSearchBar from "~/components/VHeader/VSearchBar/VStandaloneSearchBar.vue"
-
-import VContentSettingsModalContent from "./VHeader/VHeaderMobile/VContentSettingsModalContent.vue"
 
 export default {
   name: "VHomepageContent",
@@ -101,7 +111,13 @@ export default {
   },
   setup(props, { emit }) {
     const nodeRef = ref<HTMLElement | null>(null)
-    const searchTypeButtonRef = ref<InstanceType<typeof VSearchTypeButton>>()
+    const searchTypeButtonRef = ref<InstanceType<
+      typeof VSearchTypeButton
+    > | null>(null)
+    const searchBarRef = ref<InstanceType<typeof VStandaloneSearchBar> | null>(
+      null
+    )
+
     const { getSearchTypeProps } = useSearchType()
     const uiStore = useUiStore()
 
@@ -118,8 +134,18 @@ export default {
 
     const lockBodyScroll = computed(() => !isLg.value)
 
+    /**
+     * When a search type is selected, we close the popover or modal,
+     * and focus the search input.
+     *
+     * @param searchType
+     */
     const handleSelect = (searchType: SearchType) => {
       props.setSearchType(searchType)
+      const searchInput = searchBarRef.value?.$el.getElementsByTagName("input")
+      if (searchInput) {
+        ensureFocus(searchInput[0])
+      }
       closeContentSwitcher()
     }
 
@@ -138,10 +164,11 @@ export default {
     return {
       nodeRef,
       searchTypeButtonRef,
+      searchBarRef,
 
       isLg,
-
       isSm,
+
       triggerElement,
       onTriggerClick,
       handleSelect,

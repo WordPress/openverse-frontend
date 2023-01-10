@@ -4,7 +4,7 @@
     :hide-on-click-outside="true"
     :hide="close"
     :visible="visible"
-    variant="two-thirds"
+    :variant="showFilters ? 'two-thirds' : 'fit-content'"
     class="flex items-center"
   >
     <VTabs
@@ -44,6 +44,7 @@
       </VTabPanel>
     </VTabs>
     <footer
+      v-if="showFilters"
       class="mt-auto flex h-20 flex-shrink-0 items-center justify-between border-t border-t-dark-charcoal-20 px-6 py-4"
     >
       <VButton

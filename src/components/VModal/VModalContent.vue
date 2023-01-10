@@ -192,6 +192,7 @@ export default defineComponent({
 .top-bar-two-thirds {
   @apply bg-tx;
 }
+.modal-backdrop-fit-content,
 .modal-backdrop-two-thirds {
   @apply bg-dark-charcoal bg-opacity-75;
 }
@@ -213,6 +214,9 @@ export default defineComponent({
 }
 .modal-two-thirds {
   @apply mt-auto h-2/3 w-full rounded-t-lg bg-white;
+}
+.modal-fit-content {
+  @apply mt-auto w-full rounded-t-lg bg-white;
 }
 .modal-content-two-thirds {
   @apply overflow-y-hidden rounded-t-md;
