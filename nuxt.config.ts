@@ -278,15 +278,6 @@ const config: NuxtConfig = {
         .listen(parseFloat(process.env.METRICS_PORT || "54641"), "0.0.0.0")
     },
     render: {
-      /**
-       * When modifying this function in development with automatic rebuilds enabled
-       * it _will_ crash your server with an error about duplicate metric name registration.
-       * To debug this function's behavior locally you will have to tolerate stopping and
-       * starting `pnpm dev` between each change to nuxt.config.ts. To prevent this from
-       * being a _general_ problem the metrics middleware is disabled in development
-       * mode, otherwise any change to `nuxt.config.ts` would cause this crash. If you
-       * need to debug metrics locally, comment out the early return in development.
-       */
       setupMiddleware: (app) => {
         const bypassMetricsPathParts = [
           /**
