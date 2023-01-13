@@ -191,18 +191,22 @@ You can also create all those files manually by running the following
 commands:
 
 ```
-create a component file:
-pnpm run create:component-sfc --output=[path] --name=[component name]
 
-create a story file:
-pnpm run create:story --output=[path] --name=[component name]
+create a component file: pnpm run create:component-sfc --output=[path]
+--name=[component name]
 
-create a component unit test file:
-pnpm run create:component-unit-test --output=[path] --name=[component name] --fileName=[component name in kebab-case]
+create a story file: pnpm run create:story --output=[path] --name=[component
+name]
 
-create a component regression test file:
-pnpm run create:component-storybook-test --output=[path] --name=[component name kebab-case] --fileName=[component name in kebab-case]
-```
+create a component unit test file: pnpm run create:component-unit-test
+--output=[path] --name=[component name] --fileName=[component name in
+kebab-case]
+
+create a component regression test file: pnpm run
+create:component-storybook-test --output=[path] --name=[component name
+kebab-case] --fileName=[component name in kebab-case]
+
+````
 
 ### CSS Framework
 
@@ -231,7 +235,7 @@ you wish to build the production image for yourself, run the following:
 
 ```shell
 pnpm docker:build
-```
+````
 
 You can also find the latest `openverse-frontend` images on our
 [GitHub packages page](https://github.com/WordPress/openverse-frontend/pkgs/container/openverse-frontend).
