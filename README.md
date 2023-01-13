@@ -187,7 +187,7 @@ working with. We use the
 [itsjonq/remake](https://www.npmjs.com/package/@itsjonq/remake?activeTab=readme)
 package to create files out of templates.
 
-You can also create all those files manually or by running the following
+You can also create all those files manually by running the following
 commands:
 
 ```
