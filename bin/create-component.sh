@@ -12,7 +12,7 @@ if [ -z "$1" ]
     pnpm run create:component-scaffolding "$1" "$componentNameInKebabCase"
 
     # comment-json package changes the code style of tsconfig.json.
-    # if you`ll try to commit your newly created component,
+    # if you try to commit your newly created component,
     # it will fail the first time because it won`t pass prettier checks.
     # to avoid this, we are runing prettier at the end of the component creation proccess.
     echo "runing Prettier on tsconfig.json..."
