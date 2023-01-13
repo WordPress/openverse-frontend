@@ -171,7 +171,7 @@ ngrok http 8443 -host-header="localhost:8443"
 The frontend app is composed of a number of components that are documented in
 our [Storybook](https://wordpress.github.io/openverse-frontend).
 
-##### How to create a component
+### How to create a component
 
 To create a component you can run:
 
