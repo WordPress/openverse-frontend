@@ -36,7 +36,7 @@
         >
           <VSearchTypes
             size="small"
-            class="w-[260px] pt-2"
+            class="pt-2"
             :use-links="false"
             @select="handleSelect"
           />
