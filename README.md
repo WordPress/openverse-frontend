@@ -175,10 +175,10 @@ our [Storybook](https://wordpress.github.io/openverse-frontend).
 
 To create a component you can run:
 
-```
+```shell
+# Make sure you have run `pnpm install` at least once before.
 pnpm run create:component [component name in PascalCase]
 for example: pnpm run create:component VButtonGreen
-```
 
 This command will create a component file, a story file for the component, a
 unit test file, and a regression test file. It also adds the component name to
