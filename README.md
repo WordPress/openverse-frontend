@@ -179,6 +179,7 @@ To create a component you can run:
 # Make sure you have run `pnpm install` at least once before.
 pnpm run create:component [component name in PascalCase]
 for example: pnpm run create:component VButtonGreen
+```
 
 This command will create a component file, a story file for the component, a
 unit test file, and a regression test file. It also adds the component name to
@@ -187,11 +188,9 @@ working with. We use the
 [itsjonq/remake](https://www.npmjs.com/package/@itsjonq/remake?activeTab=readme)
 package to create files out of templates.
 
-You can also create all those files manually by running the following
-commands:
+You can also create all those files manually by running the following commands:
 
 ```
-
 create a component file: pnpm run create:component-sfc --output=[path]
 --name=[component name]
 
@@ -206,7 +205,7 @@ create a component regression test file: pnpm run
 create:component-storybook-test --output=[path] --name=[component name
 kebab-case] --fileName=[component name in kebab-case]
 
-````
+```
 
 ### CSS Framework
 
@@ -235,7 +234,7 @@ you wish to build the production image for yourself, run the following:
 
 ```shell
 pnpm docker:build
-````
+```
 
 You can also find the latest `openverse-frontend` images on our
 [GitHub packages page](https://github.com/WordPress/openverse-frontend/pkgs/container/openverse-frontend).
