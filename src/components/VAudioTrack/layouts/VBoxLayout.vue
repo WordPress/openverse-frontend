@@ -98,6 +98,10 @@ export default defineComponent({
   @apply border-yellow bg-yellow text-dark-charcoal focus:border-pink;
 }
 
+.play-pause:hover {
+  @apply bg-dark-charcoal text-white;
+}
+
 .box-track .waveform {
   @apply h-10;
 }
