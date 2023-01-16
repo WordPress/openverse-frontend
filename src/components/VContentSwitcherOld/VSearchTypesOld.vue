@@ -50,8 +50,8 @@ export default defineComponent({
   components: { VItemGroup, VSearchTypeItemOld },
   props: {
     /**
-     * 'Small' size for mobile screens,
-     * 'medium' size for larger screens.
+     * 'Small' size for popovers on larger screens,
+     * 'medium' size for modals on mobile screens.
      */
     size: {
       type: String as PropType<"small" | "medium">,
@@ -90,7 +90,7 @@ export default defineComponent({
       return base
     })
 
-    const bordered = computed(() => props.size === "small")
+    const bordered = computed(() => props.size === "medium")
     const handleClick = (item) => {
       emit("select", item)
     }
