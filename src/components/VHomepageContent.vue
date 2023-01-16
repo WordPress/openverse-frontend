@@ -19,7 +19,7 @@
       <VSearchTypeButton
         id="search-type-button"
         ref="searchTypeButtonRef"
-        class="me-2"
+        class="ms-2"
         v-bind="{ ...triggerA11yProps, ...searchTypeProps }"
         :show-label="isSm"
         aria-controls="content-switcher-popover"

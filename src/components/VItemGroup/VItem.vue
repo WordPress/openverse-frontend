@@ -54,8 +54,8 @@
           contextProps.direction === 'vertical' &&
           contextProps.showCheck
         "
-        class="absolute end-2"
-        :class="contextProps.size === 'small' ? 'end-3' : 'end-6'"
+        class="absolute"
+        :class="contextProps.size === 'small' ? 'end-3' : 'end-5'"
         :icon-path="itemIndicator"
       />
     </VButton>
@@ -205,10 +205,6 @@ export default defineComponent({
   @apply flex flex-row items-center;
 }
 
-.has-check .vertical-content {
-  @apply pe-8;
-}
-
 .vertical-popover-item {
   @apply pb-0;
 }
@@ -248,6 +244,6 @@ export default defineComponent({
   @apply p-3;
 }
 .medium-button {
-  @apply px-6 py-5;
+  @apply p-5 ps-6;
 }
 </style>

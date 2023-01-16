@@ -4,7 +4,7 @@
     @submit.prevent="handleSearch"
   >
     <div
-      class="input-field search-field group flex h-full flex-grow items-center overflow-hidden rounded-sm border p-0.5px pe-1.5px rounded-e-none border-e-0 focus-within:border-1.5 focus-within:p-0 focus-within:pe-1.5px"
+      class="input-field search-field group flex h-full flex-grow items-center overflow-hidden rounded-sm border p-0.5px pe-2 rounded-e-none border-e-0 focus-within:border-1.5 focus-within:p-0 focus-within:pe-2 focus-within:border-e-0"
       :class="[
         isHomeRoute ? 'border-tx' : 'border-black',
         hasPopover ? 'focus-within:border-tx' : 'focus-within:border-pink',
