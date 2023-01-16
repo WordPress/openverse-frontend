@@ -4,7 +4,7 @@
     :size="size"
     :bordered="bordered"
     type="radiogroup"
-    class="z-10 max-w-full md:w-[260px]"
+    :class="{ 'w-66 pt-2': size === 'small' }"
   >
     <div
       v-for="(category, index) in contentTypeGroups"
@@ -13,6 +13,7 @@
         'mt-2': index > 0,
         'border-t border-dark-charcoal-20 bg-dark-charcoal-06':
           index > 0 && !bordered,
+        'w-66': size === 'small',
       }"
     >
       <h4
@@ -24,7 +25,7 @@
       <VSearchTypeItemOld
         v-for="(item, idx) in category.items"
         :key="item"
-        class="md:mb-1"
+        :class="{ 'mb-1': size === 'small' }"
         :item="item"
         :item-id="idx"
         :icon="content.icons[item]"

@@ -15,7 +15,6 @@
     </template>
     <VSearchTypes
       id="content-switcher-popover"
-      class="pt-2"
       size="small"
       :use-links="placement === 'header'"
       @select="handleSelect"

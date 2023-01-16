@@ -32,11 +32,11 @@
           :hide="closeContentSwitcher"
           :visible="isContentSwitcherVisible"
           :trigger-element="triggerElement"
+          width="w-66"
           aria-labelledby="search-type-button"
         >
           <VSearchTypes
             size="small"
-            class="pt-2"
             :use-links="false"
             @select="handleSelect"
           />

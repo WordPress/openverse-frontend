@@ -4,8 +4,7 @@
     :size="size"
     :bordered="bordered"
     type="radiogroup"
-    class="z-10"
-    :class="{ 'w-[260px]': size === 'small' }"
+    :class="{ 'w-66 pt-2': size === 'small' }"
   >
     <div
       v-for="(category, index) in contentTypeGroups"
@@ -15,7 +14,7 @@
         'mt-2': index > 0,
         'border-t border-dark-charcoal-20 bg-dark-charcoal-06':
           index > 0 && !bordered,
-        'gap-1': size === 'small',
+        'w-66 gap-1': size === 'small',
       }"
     >
       <h4

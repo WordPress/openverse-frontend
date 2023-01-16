@@ -16,9 +16,20 @@
       @change="changeSelectedTab"
     >
       <template #tabs>
-        <VTab id="content-settings" size="medium" class="category me-4">{{
-          $t("search-type.heading")
-        }}</VTab>
+        <VTab
+          v-if="showFilters"
+          id="content-settings"
+          size="medium"
+          class="category me-4"
+          >{{ $t("search-type.heading") }}</VTab
+        >
+        <h2
+          v-else
+          class="label-regular relative my-2 flex h-12 items-center gap-x-2 px-2 me-4 after:absolute after:right-1/2 after:bottom-[-0.625rem] after:h-0.5 after:w-full after:translate-x-1/2 after:translate-y-[-50%] after:bg-dark-charcoal"
+        >
+          <VIcon :icon-path="searchType.icon" />
+          {{ $t("search-type.heading") }}
+        </h2>
         <VTab v-if="showFilters" id="filters" size="medium" class="category">{{
           $t("filters.title")
         }}</VTab>
@@ -64,10 +75,12 @@ import { computed, defineComponent, ref } from "@nuxtjs/composition-api"
 import { useSearchStore } from "~/stores/search"
 
 import { useI18n } from "~/composables/use-i18n"
+import useSearchType from "~/composables/use-search-type"
 
 import VButton from "~/components/VButton.vue"
-import VModalContent from "~/components/VModal/VModalContent.vue"
+import VIcon from "~/components/VIcon/VIcon.vue"
 import VIconButton from "~/components/VIconButton/VIconButton.vue"
+import VModalContent from "~/components/VModal/VModalContent.vue"
 import VSearchGridFilter from "~/components/VFilters/VSearchGridFilter.vue"
 import VSearchTypes from "~/components/VContentSwitcher/VSearchTypes.vue"
 import VShowResultsButton from "~/components/VHeader/VHeaderMobile/VShowResultsButton.vue"
@@ -80,6 +93,7 @@ import closeIcon from "~/assets/icons/close-small.svg"
 export default defineComponent({
   name: "VContentSettingsModalContent",
   components: {
+    VIcon,
     VModalContent,
     VButton,
     VIconButton,
@@ -114,7 +128,9 @@ export default defineComponent({
   },
   setup(props) {
     const i18n = useI18n()
+
     const searchStore = useSearchStore()
+    const content = useSearchType()
     const selectedTab = ref<"content-settings" | "filters">("content-settings")
     const changeSelectedTab = (tab: "content-settings" | "filters") => {
       selectedTab.value = tab
@@ -131,9 +147,13 @@ export default defineComponent({
     const appliedFilterCount = computed(() => searchStore.appliedFilterCount)
     const clearFiltersLabel = computed(() =>
       searchStore.isAnyFilterApplied
-        ? i18n.tc("filter-list.clear-numbered", appliedFilterCount.value)
+        ? i18n.t("filter-list.clear-numbered", {
+            number: appliedFilterCount.value,
+          })
         : i18n.t("filter-list.clear")
     )
+
+    const searchType = computed(() => content.getSearchTypeProps())
 
     const clearFilters = () => {
       searchStore.clearFilters()
@@ -141,6 +161,7 @@ export default defineComponent({
 
     return {
       closeIcon,
+      searchType,
 
       selectedTab,
       changeSelectedTab,
