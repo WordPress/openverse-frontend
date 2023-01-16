@@ -18,7 +18,7 @@
     >
       <h4
         :class="bordered ? 'ps-0' : 'ps-6'"
-        class="pt-6 pb-4 text-sr font-semibold uppercase pe-6"
+        class="category pt-6 pb-4 text-sr"
       >
         {{ $t(`search-type.${category.heading}`) }}
       </h4>

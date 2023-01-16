@@ -13,7 +13,7 @@
       :class="{
         'border-t border-dark-charcoal-20 bg-dark-charcoal-06':
           index > 0 && !bordered,
-        'gap-1': size === 'small',
+        'w-66 gap-1': size === 'small',
       }"
     >
       <h4

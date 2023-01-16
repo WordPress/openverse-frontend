@@ -3,6 +3,7 @@
     ref="contentMenuPopover"
     :label="$t('search-type.label').toString()"
     placement="bottom-end"
+    width="w-66"
     :clippable="true"
   >
     <template #trigger="{ a11yProps }">
