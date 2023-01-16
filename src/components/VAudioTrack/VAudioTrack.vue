@@ -61,6 +61,7 @@ import { useI18n } from "~/composables/use-i18n"
 
 import { useActiveMediaStore } from "~/stores/active-media"
 import { useMediaStore } from "~/stores/media"
+import { useSearchStore } from "~/stores/search"
 
 import { AUDIO } from "~/constants/media"
 
@@ -136,6 +137,7 @@ export default defineComponent({
     const { $sentry } = useContext()
 
     const activeMediaStore = useActiveMediaStore()
+    const searchStore = useSearchStore()
     const route = useRoute()
 
     const activeAudio = useActiveAudio()
@@ -441,7 +443,7 @@ export default defineComponent({
     const layoutBasedProps = computed(() =>
       isComposite.value
         ? {
-            href: `/audio/${props.audio.id}`,
+            href: `/audio/${props.audio.id}/?q=${searchStore.searchTerm}`,
             class: [
               "cursor-pointer",
               {
