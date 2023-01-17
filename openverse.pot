@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2023-01-17T14:03:57+00:00\n"
+"POT-Creation-Date: 2023-01-17T16:34:43+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -23,7 +23,7 @@ msgctxt "404.main"
 msgid "Go to ###link### or search for something similar from the field below."
 msgstr ""
 
-#: src/components/VHeader/VSearchBar/VStandaloneSearchBar.vue:26
+#: src/components/VHeader/VSearchBar/VStandaloneSearchBar.vue:29
 #: src/components/VHeaderOld/VSearchBar/VStandaloneSearchBarOld.vue:26
 msgctxt "404.search-placeholder"
 msgid "Search for content to reuse"
@@ -794,7 +794,7 @@ msgctxt "error.audio"
 msgid "audio"
 msgstr ""
 
-#: src/components/VHeader/VHeaderMobile/VContentSettingsModalContent.vue:23
+#: src/components/VHeader/VHeaderMobile/VContentSettingsModalContent.vue:34
 msgctxt "filters.title"
 msgid "Filters"
 msgstr ""
@@ -1073,13 +1073,13 @@ msgid "Hide filters"
 msgstr ""
 
 #: src/components/VFilters/VSearchGridFilter.vue:18
-#: src/components/VHeader/VHeaderMobile/VContentSettingsModalContent.vue:122
+#: src/components/VHeader/VHeaderMobile/VContentSettingsModalContent.vue:153
 msgctxt "filter-list.clear"
 msgid "Clear filters"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VHeader/VHeaderMobile/VContentSettingsModalContent.vue:121
+#: src/components/VHeader/VHeaderMobile/VContentSettingsModalContent.vue:150
 msgctxt "filter-list.clear-numbered"
 msgid "Clear filters (###number###)"
 msgstr ""
@@ -1783,7 +1783,7 @@ msgstr ""
 
 #: src/components/VHeader/VSearchBar/VSearchButton.vue:3
 #: src/components/VHeader/VSearchBar/VSearchButton.vue:20
-#: src/components/VHeader/VSearchBar/VStandaloneSearchBar.vue:34
+#: src/components/VHeader/VSearchBar/VStandaloneSearchBar.vue:37
 #: src/components/VHeaderOld/VSearchBar/VSearchButtonOld.vue:4
 msgctxt "search.search"
 msgid "Search"
@@ -1792,7 +1792,7 @@ msgstr ""
 #. Do not translate words between ### ###.
 #: src/components/VHeader/VHeaderMobile/VHeaderMobile.vue:51
 #: src/components/VHeader/VSearchBar/VSearchBar.vue:14
-#: src/components/VHeader/VSearchBar/VStandaloneSearchBar.vue:23
+#: src/components/VHeader/VSearchBar/VStandaloneSearchBar.vue:26
 #: src/components/VHeaderOld/VSearchBar/VSearchBarOld.vue:11
 #: src/components/VHeaderOld/VSearchBar/VStandaloneSearchBarOld.vue:23
 msgctxt "search.search-bar-label"
@@ -1885,7 +1885,7 @@ msgctxt "modal.close"
 msgid "Close"
 msgstr ""
 
-#: src/components/VHeader/VHeaderMobile/VContentSettingsModalContent.vue:28
+#: src/components/VHeader/VHeaderMobile/VContentSettingsModalContent.vue:39
 msgctxt "modal.aria-close"
 msgid "Close the modal"
 msgstr ""
@@ -1946,7 +1946,8 @@ msgctxt "search-type.label"
 msgid "Type of content to search"
 msgstr ""
 
-#: src/components/VHeader/VHeaderMobile/VContentSettingsModalContent.vue:20
+#: src/components/VHeader/VHeaderMobile/VContentSettingsModalContent.vue:24
+#: src/components/VHeader/VHeaderMobile/VContentSettingsModalContent.vue:31
 msgctxt "search-type.heading"
 msgid "Content types"
 msgstr ""
