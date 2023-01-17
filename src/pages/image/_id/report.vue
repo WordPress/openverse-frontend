@@ -1,30 +1,30 @@
 <template>
   <div
-    class="mx-auto mt-4 mb-6 max-w-none gap-x-10 px-6 md:grid md:max-w-4xl md:grid-cols-2 lg:mb-30 lg:px-0 xl:max-w-5xl"
+    class="mx-auto mt-8 mb-6 max-w-none gap-x-10 px-4 md:grid md:max-w-4xl md:grid-cols-2 md:px-6 lg:mb-30 lg:px-0 xl:max-w-4xl"
   >
-    <div class="col-span-2">
-      <VBackToSearchResultsLink
-        text="Go to single result"
-        :href="`/image/${image.id}`"
-      />
-    </div>
-
-    <figure class="mb-6">
+    <figure class="mb-6 flex flex-col items-start gap-y-4">
       <img
         id="main-image"
         :src="imageSrc"
         :alt="image.title"
-        class="mx-auto h-auto w-full"
+        class="mx-auto h-auto w-full rounded-sm"
         :width="imageWidth"
         :height="imageHeight"
       />
       <!-- Disable reason: We control the attribution HTML generation so this is safe and will not lead to XSS attacks -->
       <!-- eslint-disable vue/no-v-html -->
       <caption
-        class="block w-full"
+        class="block w-full text-left text-sr"
         v-html="getAttributionMarkup({ includeIcons: false })"
       />
       <!-- eslint-enable vue/no-v-html -->
+      <VLink
+        v-link
+        class="rounded-sm border border-black p-2 text-sr font-bold text-black"
+        :href="`/image/${image.id}`"
+      >
+        {{ $t("report.view-single-result") }}
+      </VLink>
     </figure>
 
     <VContentReportForm

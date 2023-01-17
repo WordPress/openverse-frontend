@@ -56,12 +56,16 @@ export const useMatchSearchRoutes = () => {
  * Homepage, single image result and other content pages return `false`
  */
 export const useMatchSingleResultRoutes = () => {
-  let routes = [
+  const routes = [
     ...supportedSearchTypes
       .filter((name) => name !== ALL_MEDIA)
       .map((name) => `${name}-id`),
   ]
-  routes = routes.concat(routes.map((name) => `${name}-report`))
+  // @TODO Switch to more generic implementation once
+  // an Audio reporting page is designed.
+  //
+  // routes = routes.concat(routes.map((name) => `${name}-report`))
+  routes.push("image-id-report")
 
   return useMatchRoute(routes)
 }
