@@ -18,13 +18,14 @@
         v-html="getAttributionMarkup({ includeIcons: false })"
       />
       <!-- eslint-enable vue/no-v-html -->
-      <VLink
-        v-link
-        class="rounded-sm border border-black p-2 text-sr font-bold text-black"
+      <VButton
+        variant="secondary-bordered"
         :href="`/image/${image.id}`"
+        size="disabled"
+        class="p-2 text-sr"
       >
-        {{ $t("report.view-single-result") }}
-      </VLink>
+        {{ $t("report.image-details") }}
+      </VButton>
     </figure>
 
     <VContentReportForm
@@ -47,8 +48,13 @@ import { useSingleResultStore } from "~/stores/media/single-result"
 import type { ImageDetail } from "~/types/media"
 import { AttributionOptions, getAttribution } from "~/utils/attribution-html"
 
+import VButton from "~/components/VButton.vue"
+
 export default defineComponent({
   name: "ReportImage",
+  components: {
+    VButton,
+  },
   setup() {
     const i18n = useI18n()
     const singleResultStore = useSingleResultStore()
