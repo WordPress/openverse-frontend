@@ -21,8 +21,9 @@
       <VButton
         variant="secondary-bordered"
         :href="`/image/${image.id}`"
+        as="VLink"
         size="disabled"
-        class="p-2 text-sr"
+        class="p-2 text-sr text-dark-charcoal"
       >
         {{ $t("report.image-details") }}
       </VButton>
