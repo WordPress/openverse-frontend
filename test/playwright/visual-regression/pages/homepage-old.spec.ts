@@ -6,6 +6,7 @@ import {
   dismissTranslationBanner,
   pathWithDir,
   languageDirections,
+  enableOldHeader,
 } from "~~/test/playwright/utils/navigation"
 
 test.describe.configure({ mode: "parallel" })
@@ -23,18 +24,29 @@ for (const dir of languageDirections) {
   test.describe(`${dir} homepage snapshots`, () => {
     const path = pathWithDir("/", dir)
     test.beforeEach(async ({ page }) => {
+      await enableOldHeader(page)
       await page.goto(path)
       await dismissTranslationBanner(page)
+      await deleteImageCarousel(page)
     })
 
     breakpoints.describeEvery(({ expectSnapshot }) =>
       test(`${dir} full page old design`, async ({ page }) => {
-        await deleteImageCarousel(page)
         await expectSnapshot(`index-${dir}`, page)
       })
     )
 
     test.describe("search input", () => {
+      breakpoints.describeEachDesktopWithMd(({ expectSnapshot }) => {
+        test("content switcher open", async ({ page }) => {
+          await page
+            .locator("[aria-controls='content-switcher-popover']")
+            .click()
+
+          await expectSnapshot(`content-switcher-open-${dir}`, page)
+        })
+      })
+
       breakpoints.describeEvery(({ expectSnapshot }) => {
         test("unfocused", async ({ page }) => {
           await expectSnapshot(
