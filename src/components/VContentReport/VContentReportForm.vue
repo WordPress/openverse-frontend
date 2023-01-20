@@ -150,7 +150,7 @@ export default defineComponent({
     providerName: { required: true },
     reportService: { required: false },
     closeFn: { required: true },
-    allowCancel: { required: false, default: true },
+    allowCancel: { type: Boolean, default: true },
   },
   setup(props) {
     const service = props.reportService || ReportService
