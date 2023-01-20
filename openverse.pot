@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2023-01-18T09:38:10+00:00\n"
+"POT-Creation-Date: 2023-01-20T07:29:41+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -775,13 +775,14 @@ msgid "An error occurred"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/image/_id.vue:252
+#: src/pages/image/_id/index.vue:252
+#: src/pages/image/_id/report.vue:95
 msgctxt "error.image-not-found"
 msgid "Couldn't find image with id ###id###"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/audio/_id.vue:89
+#: src/pages/audio/_id/index.vue:89
 msgctxt "error.media-not-found"
 msgid "Couldn't find ###mediaType### with id ###id###"
 msgstr ""
@@ -1479,12 +1480,12 @@ msgid "Back to results"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/image/_id.vue:60
+#: src/pages/image/_id/index.vue:60
 msgctxt "image-details.creator"
 msgid "by ###name###"
 msgstr ""
 
-#: src/pages/image/_id.vue:48
+#: src/pages/image/_id/index.vue:48
 msgctxt "image-details.weblink"
 msgid "Get this image"
 msgstr ""
@@ -2077,4 +2078,9 @@ msgstr ""
 #: src/components/VRecentSearches/VRecentSearches.vue:53
 msgctxt "recent-searches.disclaimer"
 msgid "Openverse does not store your recent searches, this information is kept locally in your browser."
+msgstr ""
+
+#: src/pages/image/_id/report.vue:28
+msgctxt "report.image-details"
+msgid "See image details"
 msgstr ""
