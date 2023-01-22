@@ -24,7 +24,7 @@ test.describe("search history navigation", () => {
 
     // Apply a filter
     await page.click("#modification")
-    // There is a debounce of 500 ms when choosing a filter.
+    // There is a debounce when choosing a filter.
     // we need to wait for the page to reload before running the test
     await page.waitForNavigation()
 
