@@ -123,7 +123,7 @@ export default defineComponent({
           router.push(searchStore.getSearchPath())
         }
       },
-      { debounce: 500, maxWait: 5000 }
+      { debounce: 800, maxWait: 5000 }
     )
 
     const focusableElements = computed(() =>
