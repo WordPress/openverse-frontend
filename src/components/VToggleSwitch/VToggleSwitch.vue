@@ -48,11 +48,11 @@ export default defineComponent({
 #button .checkbox:checked + .knob:before {
   content: "";
   left: 21px;
-  background-color: #ffffff;
+  @apply bg-white;
 }
 
 #button .checkbox:checked ~ .layer {
-  background-color: #3858e9;
+  @apply bg-trans-blue;
   border: none;
 }
 
@@ -70,7 +70,7 @@ export default defineComponent({
   width: 100%;
   background-color: #ffffff;
   border: 1px solid #1e1e1e;
-  transition: 0.3s ease all;
+  transition: 0.15s ease-out;
   z-index: 1;
 }
 
