@@ -1,0 +1,17 @@
+import { Canvas, Meta, Story } from "@storybook/addon-docs"
+
+import VToggleSwitch from "~/components/VToggleSwitch/VToggleSwitch.vue"
+
+export const Template = (args) => ({
+  template: `<VToggleSwitch v-bind="args"/>`,
+  components: { VToggleSwitch },
+  setup() {
+    return { args }
+  },
+})
+
+<Meta title="Components/VToggleSwitch" component={VToggleSwitch} />
+
+<Canvas>
+  <Story name="default">{Template.bind({})}</Story>
+</Canvas>
