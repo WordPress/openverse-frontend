@@ -32,6 +32,8 @@
         :filter-type="filterType"
         @toggle-filter="toggleFilter"
       />
+      <hr />
+      <VSafeBrowsingFilter />
     </form>
     <footer
       v-if="showFilterHeader && isAnyFilterApplied"
@@ -64,12 +66,14 @@ import { defineEvent } from "~/types/emits"
 
 import VFilterChecklist from "~/components/VFilters/VFilterChecklist.vue"
 import VButton from "~/components/VButton.vue"
+import VSafeBrowsingFilter from "~/components/VSafeBrowsingFilter/VSafeBrowsingFilter.vue"
 
 export default defineComponent({
   name: "VSearchGridFilter",
   components: {
     VButton,
     VFilterChecklist,
+    VSafeBrowsingFilter,
   },
   props: {
     /**

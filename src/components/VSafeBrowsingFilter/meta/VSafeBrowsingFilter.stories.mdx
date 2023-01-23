@@ -1,0 +1,17 @@
+import { Canvas, Meta, Story } from "@storybook/addon-docs"
+
+import VSafeBrowsingFilter from "~/components/VSafeBrowsingFilter/VSafeBrowsingFilter.vue"
+
+export const Template = (args) => ({
+  template: `<VSafeBrowsingFilter v-bind="args"/>`,
+  components: { VSafeBrowsingFilter },
+  setup() {
+    return { args }
+  },
+})
+
+<Meta title="Components/VSafeBrowsingFilter" component={VSafeBrowsingFilter} />
+
+<Canvas>
+  <Story name="default">{Template.bind({})}</Story>
+</Canvas>

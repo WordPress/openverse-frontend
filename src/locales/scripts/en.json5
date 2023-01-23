@@ -364,6 +364,9 @@
     aria: {
       "remove-filter": "Remove {label} filter",
     },
+    "safe-browsing-filter": {
+      title: "Safe browsing",
+    },
   },
   "filter-list": {
     "filter-by": "Filter by",
