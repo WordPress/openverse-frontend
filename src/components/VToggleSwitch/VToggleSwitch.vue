@@ -1,5 +1,5 @@
 <template>
-  <div id="button" class="button">
+  <div class="button">
     <label for="toggle-switch" />
     <input id="toggle-switch" type="checkbox" class="checkbox" />
     <div class="knob" />
@@ -27,41 +27,6 @@ export default defineComponent({
   border-radius: 100px;
 }
 
-/* Button 1 */
-#button .knob:before {
-  content: "";
-  position: absolute;
-  top: 3px;
-  left: 4px;
-  width: 12px;
-  height: 12px;
-  color: #fff;
-  font-size: 10px;
-  font-weight: bold;
-  text-align: center;
-  line-height: 1;
-  background-color: #1e1e1e;
-  border-radius: 50%;
-  transition: 0.15s cubic-bezier(0.18, 0.89, 0.35, 1.15) ease-out;
-}
-
-#button .checkbox:checked + .knob:before {
-  content: "";
-  left: 21px;
-  @apply bg-white;
-}
-
-#button .checkbox:checked ~ .layer {
-  @apply bg-trans-blue;
-  border: none;
-}
-
-#button .knob,
-#button .knob:before,
-#button .layer {
-  transition: 0.15s ease-out;
-}
-
 .knob {
   z-index: 2;
 }
@@ -72,6 +37,15 @@ export default defineComponent({
   border: 1px solid #1e1e1e;
   transition: 0.15s ease-out;
   z-index: 1;
+}
+
+.knob,
+.layer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
 
 .checkbox {
@@ -85,13 +59,26 @@ export default defineComponent({
   z-index: 3;
 }
 
-.button-cover,
-.knob,
-.layer {
+.button .knob:before {
+  content: "";
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  top: 3px;
+  left: 4px;
+  width: 12px;
+  height: 12px;
+  background-color: #1e1e1e;
+  border-radius: 50%;
+  transition: 0.15s cubic-bezier(0.18, 0.89, 0.35, 1.15) ease-out;
+}
+
+.button .checkbox:checked + .knob:before {
+  content: "";
+  left: 21px;
+  @apply bg-white;
+}
+
+.button .checkbox:checked ~ .layer {
+  @apply bg-trans-blue;
+  border: none;
 }
 </style>
