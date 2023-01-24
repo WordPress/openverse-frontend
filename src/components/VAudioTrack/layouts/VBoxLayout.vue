@@ -99,7 +99,7 @@ export default defineComponent({
 }
 
 .play-pause:hover {
-  @apply bg-dark-charcoal text-white;
+  @apply border-dark-charcoal bg-dark-charcoal text-white;
 }
 
 .box-track .waveform {
