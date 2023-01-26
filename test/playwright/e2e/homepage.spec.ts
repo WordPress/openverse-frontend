@@ -31,7 +31,7 @@ for (const searchType of supportedSearchTypes) {
   })
 }
 
-const searchTypePopover = "[aria-labelledby='search-type-button'] > div"
+const searchTypePopover = "#content-switcher-popover"
 
 const popoverIsVisible = async (page: Page) =>
   await expect(page.locator(searchTypePopover)).toBeVisible()
