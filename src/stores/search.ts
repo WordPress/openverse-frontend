@@ -113,9 +113,7 @@ export const useSearchStore = defineStore("search", {
      * Returns the number of checked filters, excluding the `mature` filter.
      */
     appliedFilterCount(state) {
-      const filterKeys = mediaFilterKeys[state.searchType].filter(
-        (f) => f !== "mature"
-      )
+      const filterKeys = mediaFilterKeys[state.searchType]
       return filterKeys.reduce((count, filterCategory) => {
         return (
           count + state.filters[filterCategory].filter((f) => f.checked).length
@@ -331,6 +329,7 @@ export const useSearchStore = defineStore("search", {
           `Cannot toggle filter of type ${filterType}. Use code or codeIdx parameter`
         )
       }
+      console.log(this.filters)
       const filterItems = this.filters[filterType]
       const idx = codeIdx ?? filterItems.findIndex((f) => f.code === code)
       this.filters[filterType][idx].checked = !filterItems[idx].checked
