@@ -366,7 +366,7 @@
     },
     "safe-browsing-filter": {
       title: "Safe browsing",
-      description: "By default, content reported as mature is not included in the results.",
+      description: "By default, content reported as sensitive is not included in the results.",
     },
   },
   "filter-list": {
