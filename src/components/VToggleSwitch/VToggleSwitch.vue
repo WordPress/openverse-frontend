@@ -1,7 +1,13 @@
 <template>
   <div class="button">
     <label for="toggle-switch" />
-    <input id="toggle-switch" type="checkbox" class="checkbox" />
+    <input
+      id="toggle-switch"
+      type="checkbox"
+      class="checkbox"
+      :checked="checked"
+      @change="onChange"
+    />
     <div class="knob" />
     <div class="layer" />
   </div>
@@ -12,6 +18,27 @@ import { defineComponent } from "@nuxtjs/composition-api"
 
 export default defineComponent({
   name: "VToggleSwitch",
+  props: {
+    /**
+     * Whether the checkbox is checked or not.
+     *
+     * @default false
+     */
+    checked: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  emit: ["change"],
+  setup(__, { emit }) {
+    const onChange = (event: Event) => {
+      emit("change", (event.target as HTMLInputElement).checked)
+    }
+
+    return {
+      onChange,
+    }
+  },
 })
 </script>
 
