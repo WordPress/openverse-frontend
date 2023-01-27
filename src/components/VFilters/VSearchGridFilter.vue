@@ -33,7 +33,10 @@
         @toggle-filter="toggleFilter"
       />
       <hr />
-      <VSafeBrowsingFilter />
+      <VSafeBrowsingFilter
+        :checked="isMatureFilterChecked"
+        @toggle-filter="toggleFilter"
+      />
     </form>
     <footer
       v-if="showFilterHeader && isAnyFilterApplied"
@@ -109,6 +112,9 @@ export default defineComponent({
     const filters = computed(() => searchStore.searchFilters)
     const filterTypes = computed(
       () => Object.keys(filters.value) as NonMatureFilterCategory[]
+    )
+    const isMatureFilterChecked = computed(
+      () => searchStore.filters.mature[0].checked
     )
     const filterTypeTitle = (filterType: string) =>
       filterType === "searchBy"
@@ -192,6 +198,7 @@ export default defineComponent({
       handleTabKey,
       handleShiftTabKey,
       focusFilterButton,
+      isMatureFilterChecked,
     }
   },
 })
