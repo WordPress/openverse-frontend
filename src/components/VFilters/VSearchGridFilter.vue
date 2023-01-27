@@ -32,9 +32,10 @@
         :filter-type="filterType"
         @toggle-filter="toggleFilter"
       />
-      <hr />
+      <div class="absolute left-0 h-px w-full bg-dark-charcoal-20" />
       <VSafeBrowsingFilter
-        :checked="isMatureFilterChecked"
+        class="pt-10"
+        :checked="isSafeBrowsingFillterChecked"
         @toggle-filter="toggleFilter"
       />
     </form>
@@ -113,7 +114,7 @@ export default defineComponent({
     const filterTypes = computed(
       () => Object.keys(filters.value) as NonMatureFilterCategory[]
     )
-    const isMatureFilterChecked = computed(
+    const isSafeBrowsingFillterChecked = computed(
       () => searchStore.filters.mature[0].checked
     )
     const filterTypeTitle = (filterType: string) =>
@@ -198,7 +199,7 @@ export default defineComponent({
       handleTabKey,
       handleShiftTabKey,
       focusFilterButton,
-      isMatureFilterChecked,
+      isSafeBrowsingFillterChecked,
     }
   },
 })

@@ -62,8 +62,9 @@ export default defineComponent({
   width: 100%;
   background-color: #ffffff;
   border: 1px solid #1e1e1e;
-  transition: 0.15s ease-out;
+  /* transition: 0.3s ease-out; */
   z-index: 1;
+  @apply ease-linear;
 }
 
 .knob,
@@ -95,7 +96,8 @@ export default defineComponent({
   height: 12px;
   background-color: #1e1e1e;
   border-radius: 50%;
-  transition: 0.15s cubic-bezier(0.18, 0.89, 0.35, 1.15) ease-out;
+  /* transition: 0.3s cubic-bezier(0.18, 0.89, 0.35, 1.15) ease-out; */
+  @apply ease-linear;
 }
 
 .button .checkbox:checked + .knob:before {
