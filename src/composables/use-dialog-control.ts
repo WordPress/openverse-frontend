@@ -16,11 +16,13 @@ export function useDialogControl({
   nodeRef,
   lockBodyScroll,
   emit,
+  deactivateFocusTrap,
 }: {
   visibleRef?: Ref<boolean>
   nodeRef?: Ref<HTMLElement | null>
   lockBodyScroll?: ComputedRef<boolean> | boolean
   emit: SetupContext["emit"]
+  deactivateFocusTrap?: Ref<() => void>
 }) {
   const internallyControlled = typeof visibleRef === "undefined"
   const internalVisibleRef = internallyControlled ? ref(false) : visibleRef
@@ -30,12 +32,17 @@ export function useDialogControl({
     "aria-haspopup": "dialog",
   })
 
-  watch(internalVisibleRef, (visible) => {
+  watch(internalVisibleRef, (visible, _, onCleanup) => {
     triggerA11yProps["aria-expanded"] = visible
     if (shouldLockBodyScroll.value) {
       visible ? lock() : unlock()
     }
     if (!internallyControlled) emit(visible ? "open" : "close")
+    onCleanup(() => {
+      if (shouldLockBodyScroll.value) {
+        unlock()
+      }
+    })
   })
 
   let lock = () => {
@@ -49,14 +56,18 @@ export function useDialogControl({
     lock = bodyScroll.lock
     unlock = bodyScroll.unlock
   }
-  const shouldLockBodyScroll = computed(() => unref(lockBodyScroll) ?? true)
-  watch(shouldLockBodyScroll, (shouldLock) => {
-    shouldLock ? lock() : unlock()
-  })
+  const shouldLockBodyScroll = computed(() => unref(lockBodyScroll) ?? false)
 
-  const open = () => (internalVisibleRef.value = true)
+  const open = () => {
+    internalVisibleRef.value = true
+  }
 
-  const close = () => (internalVisibleRef.value = false)
+  const close = () => {
+    if (deactivateFocusTrap?.value) {
+      deactivateFocusTrap.value()
+    }
+    internalVisibleRef.value = false
+  }
 
   const onTriggerClick = () => {
     internalVisibleRef.value = !internalVisibleRef.value

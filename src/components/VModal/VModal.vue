@@ -182,6 +182,7 @@ export default defineComponent({
       visible: visibleRef,
     } = useDialogControl({
       visibleRef: visiblePropRef,
+      lockBodyScroll: true,
       nodeRef,
       emit: emit as SetupContext["emit"],
     })

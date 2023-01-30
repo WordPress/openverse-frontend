@@ -40,6 +40,7 @@
         </VPopoverContent>
         <VModalContent
           v-else-if="!isSm"
+          ref="modalRef"
           aria-labelledby="menu-button"
           :hide="closePageMenu"
           variant="full"
@@ -121,6 +122,7 @@ export default defineComponent({
   setup(_, { emit }) {
     const menuButtonRef = ref<InstanceType<typeof VIconButton> | null>(null)
     const nodeRef = ref<HTMLElement | null>(null)
+    const modalRef = ref<InstanceType<typeof VModalContent> | null>(null)
 
     const uiStore = useUiStore()
 
@@ -138,6 +140,10 @@ export default defineComponent({
 
     const lockBodyScroll = computed(() => !isSm.value)
 
+    const deactivateFocusTrap = computed(
+      () => modalRef.value?.deactivateFocusTrap
+    )
+
     const {
       close: closePageMenu,
       open: openPageMenu,
@@ -148,6 +154,7 @@ export default defineComponent({
       nodeRef,
       lockBodyScroll,
       emit,
+      deactivateFocusTrap,
     })
 
     // When clicking on an internal link in the modal, close the modal

@@ -75,7 +75,7 @@ test.describe("Header internal", () => {
     }) => {
       await page.goto("/")
       await clickMenuButton(page)
-      await page.locator('div[role="dialog"] >> text=About').click()
+      await page.getByRole("link", { name: t("navigation.about") }).click()
       await scrollToBottom(page)
       const scrollPosition = await page.evaluate(() => window.scrollY)
       expect(scrollPosition).toBeGreaterThan(100)
@@ -84,7 +84,7 @@ test.describe("Header internal", () => {
     test("can open a content page from home and go back", async ({ page }) => {
       await page.goto("/")
       await clickMenuButton(page)
-      await page.locator('div[role="dialog"] >> text=About').click()
+      await page.getByRole("link", { name: t("navigation.about") }).click()
       await page.locator("a[href='/']").click()
       expect(page.url()).toBe("/")
     })

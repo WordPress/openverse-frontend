@@ -1,12 +1,14 @@
 import { nextTick, watch, Ref } from "@nuxtjs/composition-api"
 
+import { tryOnScopeDispose, unrefElement } from "@vueuse/core"
+
 import { warn } from "~/utils/console"
 import {
   ensureFocus,
   getFirstTabbableIn,
   hasFocusWithin,
 } from "~/utils/reakit-utils/focus"
-import { useFocusTrap } from "~/composables/use-focus-trap"
+import { useFocusTrap, UseFocusTrapReturn } from "~/composables/use-focus-trap"
 
 export const noFocusableElementWarning =
   "It's recommended to have at least one tabbable element inside dialog. The dialog element has been automatically focused. If this is the intended behavior, pass `tabIndex={0}` to the dialog element to disable this warning."
@@ -29,40 +31,46 @@ export const useFocusOnShow = ({
   trapFocusRef,
   initialFocusElementRef,
 }: Props) => {
-  const { activate: activateFocusTrap, deactivate: deactivateFocusTrap } =
-    trapFocusRef.value
-      ? useFocusTrap(dialogRef, {
-          // Prevent FocusTrap from trying to focus the first element.
-          // We already do that in a more flexible, adaptive way in our Dialog composables.
-          initialFocus: false,
-          // if set to true, focus-trap prevents the default for the keyboard event, and we cannot handle it in our composables.
-          escapeDeactivates: false,
-        })
-      : {
-          activate: () => {
-            /** */
-          },
-          deactivate: () => {
-            /** */
-          },
-        }
+  let activateFocusTrap = () => {
+    /** */
+  }
+  let deactivateFocusTrap = () => {
+    /** */
+  }
+  let trap: UseFocusTrapReturn | undefined
+  if (trapFocusRef.value) {
+    trap = useFocusTrap(dialogRef, {
+      // Prevent FocusTrap from trying to focus the first element.
+      // We already do that in a more flexible, adaptive way in our Dialog composables.
+      initialFocus: false,
+      // if set to true, focus-trap prevents the default for the keyboard event, and we cannot handle it in our composables.
+      escapeDeactivates: false,
+    })
 
-  watch(
+    activateFocusTrap = trap.activate
+    deactivateFocusTrap = trap.deactivate
+  }
+
+  const stopWatcher = watch(
     [
-      dialogRef,
+      () => unrefElement(dialogRef),
       visibleRef,
       autoFocusOnShowRef,
       initialFocusElementRef,
     ] as const,
-    ([dialog, visible, autoFocusOnShow, initialFocusElement]) => {
-      if (!dialog || !visible) {
-        deactivateFocusTrap()
+    (
+      [dialogEl, visible, autoFocusOnShow, initialFocusElement],
+      _,
+      onCleanup
+    ) => {
+      if (!dialogEl || !visible) {
+        if (trap?.isActive) deactivateFocusTrap()
         return
       }
-      if (!dialog || !visible || !autoFocusOnShow) return
+      if (!autoFocusOnShow) return
 
       nextTick(() => {
-        const isActive = () => hasFocusWithin(dialog)
+        const isActive = () => hasFocusWithin(dialogEl)
 
         if (initialFocusElement) {
           ensureFocus(initialFocusElement, {
@@ -70,19 +78,28 @@ export const useFocusOnShow = ({
             isActive,
           })
         } else {
-          const tabbable = getFirstTabbableIn(dialog, true)
+          const tabbable = getFirstTabbableIn(dialogEl, true)
 
           if (tabbable) {
             ensureFocus(tabbable, { preventScroll: true, isActive })
           } else {
-            ensureFocus(dialog, { preventScroll: true, isActive })
-            if (dialog.tabIndex === undefined || dialog.tabIndex < 0) {
+            ensureFocus(dialogEl, { preventScroll: true, isActive })
+            if (dialogEl.tabIndex === undefined || dialogEl.tabIndex < 0) {
               warn(noFocusableElementWarning)
             }
           }
         }
         activateFocusTrap()
       })
+
+      onCleanup(() => {
+        deactivateFocusTrap()
+      })
     }
   )
+  tryOnScopeDispose(() => {
+    deactivateFocusTrap()
+    stopWatcher()
+  })
+  return { deactivateFocusTrap }
 }
