@@ -335,8 +335,9 @@
       large: "Large",
     },
     mature: {
-      title: "Search Settings",
-      enable: "Enable Mature Content",
+      title: "Safe browsing",
+      description: "By default, content reported as sensitive is not included in the results.",
+      enable: "Show Sensitive Content",
     },
     lengths: {
       title: "Duration",
@@ -363,10 +364,6 @@
     },
     aria: {
       "remove-filter": "Remove {label} filter",
-    },
-    "safe-browsing-filter": {
-      title: "Safe browsing",
-      description: "By default, content reported as sensitive is not included in the results.",
     },
   },
   "filter-list": {
