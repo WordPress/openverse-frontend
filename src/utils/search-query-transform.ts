@@ -76,7 +76,7 @@ const filterToString = (filterItem: FilterItem[]) => {
     .filter((f) => f.checked)
     .map((filterItem) => filterItem.code)
     .join(",")
-  return filterString === "enable" ? "true" : filterString
+  return filterString === "mature" ? "true" : filterString
 }
 
 /**

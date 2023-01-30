@@ -103,7 +103,7 @@ const filterCodesPerCategory = deepFreeze<Record<FilterCategory, string[]>>({
   audioProviders: [],
   imageProviders: [],
   searchBy: ["creator"],
-  mature: ["enable"],
+  mature: ["mature"],
 })
 /**
  * Converts the filterCodesPerCategory object into the format that's used by the filter store.

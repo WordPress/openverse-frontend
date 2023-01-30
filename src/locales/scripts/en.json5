@@ -337,7 +337,7 @@
     mature: {
       title: "Safe browsing",
       description: "By default, content reported as sensitive is not included in the results.",
-      enable: "Show Sensitive Content",
+      mature: "Show Sensitive Content",
     },
     lengths: {
       title: "Duration",

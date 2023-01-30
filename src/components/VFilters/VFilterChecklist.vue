@@ -19,9 +19,9 @@
       class="mt-4 flex items-center justify-between"
     >
       <VToggleSwitch
-        v-if="isMatureCategory && item.code === 'enable'"
+        v-if="isMatureCategory && item.code === 'mature'"
         :checked="item.checked"
-        :name="item.code"
+        :name="filterType"
         @change="onValueChange"
       >
         <span class="self-center">{{ itemLabel(item) }}</span>
