@@ -1,14 +1,33 @@
 <template>
-  <fieldset class="mb-8">
-    <legend v-if="title" class="text-sm font-semibold">
+  <fieldset>
+    <legend
+      v-if="title"
+      class="text-sm font-semibold"
+      :class="{ 'pt-10': isMatureCategory }"
+    >
       {{ title }}
     </legend>
+    <p
+      v-if="isMatureCategory"
+      class="mb-4 mt-2 max-w-xs text-sm font-normal leading-4"
+    >
+      {{ $t("filters.mature.description") }}
+    </p>
     <div
       v-for="(item, index) in options"
       :key="index"
       class="mt-4 flex items-center justify-between"
     >
+      <VToggleSwitch
+        v-if="isMatureCategory && item.code === 'enable'"
+        :checked="item.checked"
+        :name="item.code"
+        @change="onValueChange"
+      >
+        <span class="self-center">{{ itemLabel(item) }}</span>
+      </VToggleSwitch>
       <VCheckbox
+        v-else
         :id="item.code"
         :key="index"
         :checked="item.checked"
@@ -61,7 +80,7 @@ import { computed, defineComponent, PropType } from "@nuxtjs/composition-api"
 
 import { useSearchStore } from "~/stores/search"
 import { useI18n } from "~/composables/use-i18n"
-import type { NonMatureFilterCategory, FilterItem } from "~/constants/filters"
+import type { FilterCategory, FilterItem } from "~/constants/filters"
 import { defineEvent } from "~/types/emits"
 import { getElements } from "~/utils/license"
 
@@ -77,7 +96,7 @@ import helpIcon from "~/assets/icons/help.svg"
 import closeSmallIcon from "~/assets/icons/close-small.svg"
 
 type toggleFilterPayload = {
-  filterType: NonMatureFilterCategory
+  filterType: FilterCategory
   code: string
 }
 
@@ -101,7 +120,7 @@ export default defineComponent({
       type: String,
     },
     filterType: {
-      type: String as PropType<NonMatureFilterCategory>,
+      type: String as PropType<FilterCategory>,
       required: true,
     },
     disabled: {
@@ -119,6 +138,7 @@ export default defineComponent({
         ? i18n.t("filters.search-by.title")
         : props.title
     })
+    const isMatureCategory = computed(() => props.filterType === "mature")
 
     const itemLabel = (item: FilterItem) =>
       ["audioProviders", "imageProviders"].indexOf(props.filterType) > -1
@@ -150,6 +170,7 @@ export default defineComponent({
     return {
       icons,
       itemName,
+      isMatureCategory,
       isDisabled,
       itemLabel,
       onValueChange,
