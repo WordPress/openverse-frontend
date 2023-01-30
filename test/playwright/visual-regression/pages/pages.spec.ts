@@ -1,4 +1,4 @@
-import { test } from "@playwright/test"
+import { expect, test } from "@playwright/test"
 
 import breakpoints from "~~/test/playwright/utils/breakpoints"
 import { removeHiddenOverflow } from "~~/test/playwright/utils/page"
