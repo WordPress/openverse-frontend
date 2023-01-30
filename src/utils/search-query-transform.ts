@@ -67,14 +67,16 @@ const getMediaFilterTypes = (searchType: SearchType) => {
 /**
  * Joins all the filters which have the checked property `true`
  * to a string separated by commas for the API request URL, e.g.: "by,nd-nc,nc-sa".
- * Mature is a special case, and is converted to `true`.
+ * 'enable' means, to enable mature content. for now there is no filters
+ * under the Mature category (its named Safe browsing). if there is going to
+ * be more filters this function will need to be changed
  */
 const filterToString = (filterItem: FilterItem[]) => {
   const filterString = filterItem
     .filter((f) => f.checked)
     .map((filterItem) => filterItem.code)
     .join(",")
-  return filterString === "mature" ? "true" : filterString
+  return filterString === "enable" ? "true" : filterString
 }
 
 /**
@@ -91,7 +93,6 @@ export const filtersToQueryData = (
   hideEmpty = true
 ): ApiQueryFilters => {
   const mediaFilterTypes = getMediaFilterTypes(searchType)
-
   return mediaFilterTypes.reduce((query, filterCategory) => {
     const queryKey = filterPropertyMappings[filterCategory]
     const queryValue = filterToString(filters[filterCategory])
