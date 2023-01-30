@@ -1,15 +1,19 @@
 <template>
-  <div class="button">
-    <label for="toggle-switch" />
-    <input
-      id="toggle-switch"
-      type="checkbox"
-      class="checkbox"
-      :checked="checked"
-      @change="onChange"
-    />
-    <div class="knob" />
-    <div class="layer" />
+  <div class="toggle-switch-container text-sm">
+    <div class="button mr-4">
+      <label for="toggle-switch" />
+      <input
+        id="toggle-switch"
+        type="checkbox"
+        class="checkbox"
+        :name="name"
+        :checked="checked"
+        @change="onChange"
+      />
+      <div class="knob" />
+      <div class="layer" />
+    </div>
+    <slot />
   </div>
 </template>
 
@@ -26,13 +30,18 @@ export default defineComponent({
      */
     checked: {
       type: Boolean,
+      required: false,
       default: false,
+    },
+    name: {
+      type: String,
+      required: false,
     },
   },
   emit: ["change"],
-  setup(__, { emit }) {
-    const onChange = (event: Event) => {
-      emit("change", (event.target as HTMLInputElement).checked)
+  setup(props, { emit }) {
+    const onChange = () => {
+      emit("change", { value: props.name })
     }
 
     return {
@@ -43,6 +52,9 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.toggle-switch-container {
+  display: flex;
+}
 .button {
   position: relative;
   width: 36px;
