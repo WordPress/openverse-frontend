@@ -24,20 +24,22 @@
       @keydown.tab.exact="handleTabKey"
       @keydown.shift.tab.exact="handleShiftTabKey"
     >
-      <VFilterChecklist
-        v-for="filterType in filterTypes"
-        :key="filterType"
-        :options="filters[filterType]"
-        :title="filterTypeTitle(filterType)"
-        :filter-type="filterType"
-        @toggle-filter="toggleFilter"
-      />
-      <div class="absolute left-0 h-px w-full bg-dark-charcoal-20" />
-      <VSafeBrowsingFilter
-        class="pt-10"
-        :checked="isSafeBrowsingFillterChecked"
-        @toggle-filter="toggleFilter"
-      />
+      <template v-for="(filterType, index) in filterTypes">
+        <!-- seperation line betwen safe  browsing category and all the rest -->
+        <div
+          v-if="filterType === 'mature'"
+          :key="index"
+          class="absolute left-0 h-px w-full bg-dark-charcoal-20"
+        />
+        <VFilterChecklist
+          :key="filterType"
+          :options="filters[filterType]"
+          :title="filterTypeTitle(filterType)"
+          :filter-type="filterType"
+          :class="[index === filterTypes.length - 2 ? 'mb-10' : 'mb-8']"
+          @toggle-filter="toggleFilter"
+        />
+      </template>
     </form>
     <footer
       v-if="showFilterHeader && isAnyFilterApplied"
@@ -64,20 +66,18 @@ import { kebab } from "case"
 import { useSearchStore } from "~/stores/search"
 import { areQueriesEqual, ApiQueryParams } from "~/utils/search-query-transform"
 import { Focus, focusIn, getFocusableElements } from "~/utils/focus-management"
-import type { NonMatureFilterCategory } from "~/constants/filters"
+import type { FilterCategory } from "~/constants/filters"
 import { useFocusFilters } from "~/composables/use-focus-filters"
 import { defineEvent } from "~/types/emits"
 
 import VFilterChecklist from "~/components/VFilters/VFilterChecklist.vue"
 import VButton from "~/components/VButton.vue"
-import VSafeBrowsingFilter from "~/components/VSafeBrowsingFilter/VSafeBrowsingFilter.vue"
 
 export default defineComponent({
   name: "VSearchGridFilter",
   components: {
     VButton,
     VFilterChecklist,
-    VSafeBrowsingFilter,
   },
   props: {
     /**
@@ -112,10 +112,7 @@ export default defineComponent({
     const isAnyFilterApplied = computed(() => searchStore.isAnyFilterApplied)
     const filters = computed(() => searchStore.searchFilters)
     const filterTypes = computed(
-      () => Object.keys(filters.value) as NonMatureFilterCategory[]
-    )
-    const isSafeBrowsingFillterChecked = computed(
-      () => searchStore.filters.mature[0].checked
+      () => Object.keys(filters.value) as FilterCategory[]
     )
     const filterTypeTitle = (filterType: string) =>
       filterType === "searchBy"
@@ -199,7 +196,6 @@ export default defineComponent({
       handleTabKey,
       handleShiftTabKey,
       focusFilterButton,
-      isSafeBrowsingFillterChecked,
     }
   },
 })
