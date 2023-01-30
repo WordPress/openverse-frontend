@@ -113,7 +113,9 @@ export const useSearchStore = defineStore("search", {
      * Returns the number of checked filters, excluding the `mature` filter.
      */
     appliedFilterCount(state) {
-      const filterKeys = mediaFilterKeys[state.searchType]
+      const filterKeys = mediaFilterKeys[state.searchType].filter(
+        (f) => f !== "mature"
+      )
       return filterKeys.reduce((count, filterCategory) => {
         return (
           count + state.filters[filterCategory].filter((f) => f.checked).length
@@ -125,12 +127,10 @@ export const useSearchStore = defineStore("search", {
      * Returns the object with filters for selected search type, with codes, names for i18n labels, and checked status.
      */
     searchFilters(state) {
-      return mediaFilterKeys[state.searchType]
-        .filter((filterKey) => filterKey !== "mature")
-        .reduce((obj, filterKey) => {
-          obj[filterKey] = this.filters[filterKey]
-          return obj
-        }, {} as Filters)
+      return mediaFilterKeys[state.searchType].reduce((obj, filterKey) => {
+        obj[filterKey] = this.filters[filterKey]
+        return obj
+      }, {} as Filters)
     },
 
     /**
@@ -329,7 +329,6 @@ export const useSearchStore = defineStore("search", {
           `Cannot toggle filter of type ${filterType}. Use code or codeIdx parameter`
         )
       }
-      console.log(this.filters)
       const filterItems = this.filters[filterType]
       const idx = codeIdx ?? filterItems.findIndex((f) => f.code === code)
       this.filters[filterType][idx].checked = !filterItems[idx].checked
