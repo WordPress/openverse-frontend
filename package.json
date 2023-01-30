@@ -43,7 +43,7 @@
     "test:playwright:debug": "PWDEBUG=1 pnpm test:playwright:local",
     "test:playwright:recreate-tapes": "rimraf test/tapes && pnpm test:playwright:update-tapes",
     "test:playwright:update-tapes": "UPDATE_TAPES=true pnpm test:playwright",
-    "test:playwright:gen": "playwright codegen localhost:8443/",
+    "test:playwright:gen": "playwright codegen --viewport-size=340,600 localhost:8443/",
     "test:storybook": "TEST_COMMAND=test:storybook:local ./bin/playwright.sh",
     "test:storybook:local": "playwright test -c test/storybook",
     "test:storybook:debug": "PWDEBUG=1 pnpm test:storybook:local",

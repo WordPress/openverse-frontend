@@ -83,10 +83,11 @@ test.describe("Header internal", () => {
 
     test("can open a content page from home and go back", async ({ page }) => {
       await page.goto("/")
+      const homeUrl = page.url()
       await clickMenuButton(page)
       await page.getByRole("link", { name: t("navigation.about") }).click()
       await page.locator("a[href='/']").click()
-      expect(page.url()).toBe("/")
+      expect(page.url()).toBe(homeUrl)
     })
   })
 
