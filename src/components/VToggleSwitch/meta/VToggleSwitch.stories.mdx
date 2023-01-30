@@ -2,6 +2,8 @@ import { Canvas, Meta, Story } from "@storybook/addon-docs"
 
 import VToggleSwitch from "~/components/VToggleSwitch/VToggleSwitch.vue"
 
+<Meta title="Components/VToggleSwitch" component={VToggleSwitch} />
+
 export const Template = (args) => ({
   template: `<VToggleSwitch v-bind="args"/>`,
   components: { VToggleSwitch },
@@ -10,8 +12,6 @@ export const Template = (args) => ({
   },
 })
 
-<Meta title="Components/VToggleSwitch" component={VToggleSwitch} />
-
 <Canvas>
-  <Story name="default">{Template.bind({})}</Story>
+  <Story name="Default">{Template.bind({})}</Story>
 </Canvas>
