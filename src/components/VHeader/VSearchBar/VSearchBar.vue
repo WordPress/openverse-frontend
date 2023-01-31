@@ -66,7 +66,7 @@ import { onClickOutside } from "@vueuse/core"
 
 import { defineEvent } from "~/types/emits"
 
-import { useRecentSearches } from '~/composables/use-recent-searches'
+import { useRecentSearches } from "~/composables/use-recent-searches"
 
 import { useFeatureFlagStore } from "~/stores/feature-flag"
 

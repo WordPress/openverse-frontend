@@ -1,9 +1,9 @@
-import { computed, Ref, ref } from '@nuxtjs/composition-api'
+import { computed, Ref, ref } from "@nuxtjs/composition-api"
 
-import { useSearchStore } from '~/stores/search'
-import { keycodes } from '~/constants/key-codes'
-import { cyclicShift } from '~/utils/math'
-import { ensureFocus } from '~/utils/reakit-utils/focus'
+import { useSearchStore } from "~/stores/search"
+import { keycodes } from "~/constants/key-codes"
+import { cyclicShift } from "~/utils/math"
+import { ensureFocus } from "~/utils/reakit-utils/focus"
 
 export const useRecentSearches = ({
   searchTerm,

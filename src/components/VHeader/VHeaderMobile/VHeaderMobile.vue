@@ -125,7 +125,7 @@ import { ensureFocus } from "~/utils/reakit-utils/focus"
 
 import { IsHeaderScrolledKey } from "~/types/provides"
 
-import { useRecentSearches } from '~/composables/use-recent-searches'
+import { useRecentSearches } from "~/composables/use-recent-searches"
 import { useDialogControl } from "~/composables/use-dialog-control"
 import { useSearch } from "~/composables/use-search"
 
