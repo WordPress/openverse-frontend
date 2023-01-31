@@ -12,11 +12,6 @@ import { AUDIO, IMAGE, SupportedMediaType } from "~/constants/media"
 
 test.describe.configure({ mode: "parallel" })
 
-test.beforeEach(async ({ context, page }) => {
-  await mockProviderApis(context)
-  await enableNewHeader(page)
-})
-
 const loadMoreButton = `button:has-text("${t("browse-page.load", "ltr")}")`
 
 const openSingleMediaView = async (
@@ -47,6 +42,11 @@ const openSingleMediaView = async (
  */
 
 test.describe("Load more button", () => {
+  test.beforeEach(async ({ context, page }) => {
+    await mockProviderApis(context)
+    await enableNewHeader(page)
+  })
+
   test("Clicking sends 2 requests on All view with enough results", async ({
     page,
   }) => {
