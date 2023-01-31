@@ -64,8 +64,7 @@
       >
         <VExternalSourceList
           class="flex flex-col"
-          :type="type"
-          :query="query"
+          :external-sources="externalSources"
           @close="closeDialog"
       /></VPopoverContent>
       <VModalContent
@@ -92,6 +91,7 @@ import {
   defineComponent,
   PropType,
   ref,
+  SetupContext,
 } from "@nuxtjs/composition-api"
 
 import { getFocusableElements } from "~/utils/focus-management"
@@ -102,13 +102,11 @@ import { useUiStore } from "~/stores/ui"
 import { useDialogControl } from "~/composables/use-dialog-control"
 
 import type { MediaType } from "~/constants/media"
-
 import type { ExternalSource } from "~/types/external-source"
 
 import VExternalSourceList from "~/components/VExternalSearch/VExternalSourceList.vue"
 import VButton from "~/components/VButton.vue"
 import VIcon from "~/components/VIcon/VIcon.vue"
-
 import VPopoverContent from "~/components/VPopover/VPopoverContent.vue"
 import VModalContent from "~/components/VModal/VModalContent.vue"
 
@@ -149,8 +147,8 @@ export default defineComponent({
     tab: defineEvent<[KeyboardEvent]>(),
   },
   setup(_, { emit }) {
-    const sectionRef = ref<HTMLElement>()
-    const triggerRef = ref<InstanceType<typeof VButton>>()
+    const sectionRef = ref<HTMLElement | null>(null)
+    const triggerRef = ref<InstanceType<typeof VButton> | null>(null)
     const uiStore = useUiStore()
 
     const isMd = computed(() => uiStore.isBreakpoint("md"))
@@ -170,7 +168,7 @@ export default defineComponent({
       visibleRef: isVisible,
       nodeRef: sectionRef,
       lockBodyScroll,
-      emit,
+      emit: emit as SetupContext["emit"],
     })
 
     /**
