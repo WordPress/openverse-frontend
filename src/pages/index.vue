@@ -97,13 +97,11 @@ export default defineComponent({
     const isNewHeaderEnabled = computed(() =>
       featureFlagStore.isOn("new_header")
     )
-    const themeColorMeta = [
-      { hid: "theme-color", name: "theme-color", content: "#ffe033" },
-    ]
     useMeta({
-      meta: isNewHeaderEnabled.value
-        ? [...themeColorMeta, { hid: "robots", name: "robots", content: "all" }]
-        : themeColorMeta,
+      meta: [
+        { hid: "theme-color", name: "theme-color", content: "#ffe033" },
+        { hid: "robots", name: "robots", content: "all" },
+      ],
     })
 
     const { updateBreakpoint } = useLayout()
@@ -157,15 +155,7 @@ export default defineComponent({
       handleSearch,
     }
   },
-  head: {
-    meta: [
-      {
-        hid: "theme-color",
-        name: "theme-color",
-        content: "#ffe033",
-      },
-    ],
-  },
+  head: {},
 })
 </script>
 
