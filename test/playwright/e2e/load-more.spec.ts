@@ -1,8 +1,8 @@
 import { expect, Page, test } from "@playwright/test"
 
 import {
+  enableNewHeader,
   goToSearchTerm,
-  OLD_HEADER,
   renderModes,
   t,
 } from "~~/test/playwright/utils/navigation"
@@ -12,8 +12,9 @@ import { AUDIO, IMAGE, SupportedMediaType } from "~/constants/media"
 
 test.describe.configure({ mode: "parallel" })
 
-test.beforeEach(async ({ context }) => {
+test.beforeEach(async ({ context, page }) => {
   await mockProviderApis(context)
+  await enableNewHeader(page)
 })
 
 const loadMoreButton = `button:has-text("${t("browse-page.load", "ltr")}")`
@@ -125,7 +126,6 @@ test.describe("Load more button", () => {
         await goToSearchTerm(page, "horses snort", {
           mode,
           searchType: AUDIO,
-          headerMode: OLD_HEADER,
         })
         await expect(page.locator(loadMoreButton)).not.toBeVisible()
       })
