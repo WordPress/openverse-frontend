@@ -73,12 +73,10 @@ test.describe("Layout color is set correctly", () => {
       await page.goto("/ar")
       await page.getByRole("combobox", { name: "لغة" }).selectOption("en")
 
-      await page.getByPlaceholder("Search for content").fill("cat")
-      await page.getByRole("button", { name: "Search" }).click()
-      await page.waitForNavigation()
+      await page.getByRole("link", { name: "About" }).click()
 
       expect(await page.screenshot({ fullPage: true })).toMatchSnapshot(
-        "about-ltr-lg-linux.png"
+        "about-ltr-lg.png"
       )
     })
 
@@ -86,7 +84,7 @@ test.describe("Layout color is set correctly", () => {
       await page.goto("/image/non-existent")
 
       expect(await page.screenshot({ fullPage: true })).toMatchSnapshot(
-        "non-existent-ltr-lg-linux.png"
+        "non-existent-ltr-lg.png"
       )
     })
   })
