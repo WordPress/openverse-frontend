@@ -20,7 +20,7 @@ for (const dir of languageDirections) {
           page,
         }) => {
           await enableNewHeader(page)
-      await goToSearchTerm(page, "birds", { searchType, dir })
+          await goToSearchTerm(page, "birds", { searchType, dir })
           const sourcesId = `external-sources-${
             breakpoint === "xl" ? "popover" : "modal"
           }`
