@@ -5,7 +5,7 @@ import usePages from "~/composables/use-pages"
 
 /**
  * Reactive property that returns true only on the matching routes.
- * Note that routes are matched by the url path.
+ * Note that routes are matched by their non-localized name.
  *
  */
 export const useMatchRoute = (
@@ -15,8 +15,9 @@ export const useMatchRoute = (
   const router = useRouter()
 
   /**
-   * The route is localized, so it includes the locale code after `__`.
-   * We need to extract the route name to match it with the routes array.
+   * The route name is localized, so it includes the locale code after `__`.
+   * We remove the locale from the route name to match it with the
+   * non-localized routes array.
    *
    * @param route - the localized route name (e.g. `search__en`)
    */
@@ -50,8 +51,8 @@ export const useMatchSearchRoutes = () => {
 }
 
 /**
- * Reactive property that returns true only on the `search` routes.
- * Homepage, single image result and other content pages return `false`
+ * Reactive property that returns true only on the `single result` routes.
+ * Homepage, search results and other content pages return `false`
  */
 export const useMatchSingleResultRoutes = () => {
   const routes = [
@@ -69,7 +70,8 @@ export const useMatchSingleResultRoutes = () => {
 }
 
 /**
- * Matches the content pages (about, search help, etc.) and the preferences page.
+ * Reactive property that returns true only on the 'content' routes:
+ * about, search help, etc. and the preferences page.
  */
 export const useMatchContentPageRoutes = () => {
   const routes = usePages()
