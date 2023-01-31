@@ -58,19 +58,15 @@ export const useFocusOnShow = ({
       autoFocusOnShowRef,
       initialFocusElementRef,
     ] as const,
-    (
-      [dialogEl, visible, autoFocusOnShow, initialFocusElement],
-      _,
-      onCleanup
-    ) => {
-      if (!dialogEl || !visible) {
-        if (trap?.isActive) deactivateFocusTrap()
+    ([dialog, visible, autoFocusOnShow, initialFocusElement], _, onCleanup) => {
+      if (!dialog || !visible) {
+        if (trap?.hasFocus) deactivateFocusTrap()
         return
       }
       if (!autoFocusOnShow) return
 
       nextTick(() => {
-        const isActive = () => hasFocusWithin(dialogEl)
+        const isActive = () => hasFocusWithin(dialog)
 
         if (initialFocusElement) {
           ensureFocus(initialFocusElement, {
@@ -78,13 +74,13 @@ export const useFocusOnShow = ({
             isActive,
           })
         } else {
-          const tabbable = getFirstTabbableIn(dialogEl, true)
+          const tabbable = getFirstTabbableIn(dialog, true)
 
           if (tabbable) {
             ensureFocus(tabbable, { preventScroll: true, isActive })
           } else {
-            ensureFocus(dialogEl, { preventScroll: true, isActive })
-            if (dialogEl.tabIndex === undefined || dialogEl.tabIndex < 0) {
+            ensureFocus(dialog, { preventScroll: true, isActive })
+            if (dialog.tabIndex === undefined || dialog.tabIndex < 0) {
               warn(noFocusableElementWarning)
             }
           }

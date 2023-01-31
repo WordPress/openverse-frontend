@@ -9,8 +9,11 @@ import {
   watch,
 } from "@nuxtjs/composition-api"
 
+import { MaybeComputedRef, resolveUnref } from "@vueuse/core"
+
 import { useBodyScrollLock } from "~/composables/use-body-scroll-lock"
 
+type Fn = () => void
 export function useDialogControl({
   visibleRef,
   nodeRef,
@@ -22,7 +25,7 @@ export function useDialogControl({
   nodeRef?: Ref<HTMLElement | null>
   lockBodyScroll?: ComputedRef<boolean> | boolean
   emit: SetupContext["emit"]
-  deactivateFocusTrap?: Ref<() => void>
+  deactivateFocusTrap?: MaybeComputedRef<Fn | undefined>
 }) {
   const internallyControlled = typeof visibleRef === "undefined"
   const internalVisibleRef = internallyControlled ? ref(false) : visibleRef
@@ -58,14 +61,11 @@ export function useDialogControl({
   }
   const shouldLockBodyScroll = computed(() => unref(lockBodyScroll) ?? false)
 
-  const open = () => {
-    internalVisibleRef.value = true
-  }
+  const open = () => (internalVisibleRef.value = true)
 
   const close = () => {
-    if (deactivateFocusTrap?.value) {
-      deactivateFocusTrap.value()
-    }
+    const fn = resolveUnref(deactivateFocusTrap)
+    if (fn) fn()
     internalVisibleRef.value = false
   }
 

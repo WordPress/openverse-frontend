@@ -5,8 +5,6 @@ import { tryOnScopeDispose, unrefElement } from "@vueuse/core"
 import { ref, watch } from "vue-demi"
 import { createFocusTrap } from "focus-trap"
 
-import { computed } from "@nuxtjs/composition-api"
-
 import type { Ref } from "vue-demi"
 import type { Fn, MaybeElementRef } from "@vueuse/core"
 import type {
@@ -28,11 +26,6 @@ export interface UseFocusTrapReturn {
    * Indicates if the focus trap is currently active
    */
   hasFocus: Ref<boolean>
-
-  /**
-   * The underlying focus trap `active` property
-   */
-  isActive: Ref<boolean | undefined>
 
   /**
    * Indicates if the focus trap is currently paused
@@ -88,14 +81,8 @@ export function useFocusTrap(
   const hasFocus = ref(false)
   const isPaused = ref(false)
 
-  const activate = (opts?: ActivateOptions): FocusTrap | null => {
-    if (!trap) return null
-    return trap.activate(opts)
-  }
-  const deactivate = (opts?: DeactivateOptions): FocusTrap | null => {
-    if (!trap) return null
-    return trap.deactivate(opts)
-  }
+  const activate = (opts?: ActivateOptions) => trap && trap.activate(opts)
+  const deactivate = (opts?: DeactivateOptions) => trap && trap.deactivate(opts)
 
   const pause = () => {
     if (trap) {
@@ -115,6 +102,7 @@ export function useFocusTrap(
     () => unrefElement(target),
     (el) => {
       if (!el) return
+
       trap = createFocusTrap(el, {
         ...focusTrapOptions,
         onActivate() {
@@ -142,12 +130,9 @@ export function useFocusTrap(
     stopWatcher()
   })
 
-  const isActive = computed(() => trap && trap.active)
-
   return {
     hasFocus,
     isPaused,
-    isActive,
     activate,
     deactivate,
     pause,

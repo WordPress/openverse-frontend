@@ -15,6 +15,7 @@
     </div>
     <VModalContent
       v-if="triggerRef"
+      ref="modalContentRef"
       :visible="visibleRef"
       :trigger-element="triggerRef"
       :hide-on-esc="hideOnEsc"
@@ -167,11 +168,15 @@ export default defineComponent({
       typeof props.visible === "undefined" ? undefined : toRef(props, "visible")
 
     const nodeRef = ref<null | HTMLElement>(null)
-
+    const modalContentRef = ref<InstanceType<typeof VModalContent> | null>(null)
     const triggerContainerRef = ref<HTMLElement | null>(null)
 
     const triggerRef = computed(
       () => triggerContainerRef.value?.firstChild as HTMLElement | undefined
+    )
+
+    const deactivateFocusTrap = computed(
+      () => modalContentRef.value?.deactivateFocusTrap
     )
 
     const {
@@ -185,10 +190,12 @@ export default defineComponent({
       lockBodyScroll: true,
       nodeRef,
       emit: emit as SetupContext["emit"],
+      deactivateFocusTrap,
     })
 
     return {
       nodeRef,
+      modalContentRef,
       visibleRef,
       triggerContainerRef,
       triggerRef,
@@ -197,6 +204,7 @@ export default defineComponent({
       open,
       onTriggerClick,
       triggerA11yProps,
+      deactivateFocusTrap,
     }
   },
 })

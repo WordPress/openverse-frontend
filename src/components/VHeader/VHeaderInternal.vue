@@ -40,7 +40,7 @@
         </VPopoverContent>
         <VModalContent
           v-else-if="!isSm"
-          ref="modalRef"
+          ref="modalContentRef"
           aria-labelledby="menu-button"
           :hide="closePageMenu"
           variant="full"
@@ -122,7 +122,7 @@ export default defineComponent({
   setup(_, { emit }) {
     const menuButtonRef = ref<InstanceType<typeof VIconButton> | null>(null)
     const nodeRef = ref<HTMLElement | null>(null)
-    const modalRef = ref<InstanceType<typeof VModalContent> | null>(null)
+    const modalContentRef = ref<InstanceType<typeof VModalContent> | null>(null)
 
     const uiStore = useUiStore()
 
@@ -141,7 +141,7 @@ export default defineComponent({
     const lockBodyScroll = computed(() => !isSm.value)
 
     const deactivateFocusTrap = computed(
-      () => modalRef.value?.deactivateFocusTrap
+      () => modalContentRef.value?.deactivateFocusTrap
     )
 
     const {
@@ -166,6 +166,7 @@ export default defineComponent({
 
     return {
       menuButtonRef,
+      modalContentRef,
       nodeRef,
 
       closeIcon,
