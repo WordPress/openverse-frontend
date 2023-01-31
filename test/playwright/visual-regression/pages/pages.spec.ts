@@ -74,6 +74,7 @@ test.describe("Layout color is set correctly", () => {
       await page.getByRole("combobox", { name: "لغة" }).selectOption("en")
 
       await page.getByRole("link", { name: "About" }).click()
+      await page.mouse.move(100, 100)
 
       expect(await page.screenshot({ fullPage: true })).toMatchSnapshot(
         "about-ltr-lg.png"
