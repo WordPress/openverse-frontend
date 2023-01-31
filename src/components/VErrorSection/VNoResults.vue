@@ -3,11 +3,11 @@
     <h1 class="heading-4 md:heading-2 break-words">
       {{ $t("no-results.heading", { query: searchTerm }) }}
     </h1>
-    <h2 class="description-regular md:heading-5 mt-10 md:mt-16">
+    <h2 class="description-regular md:heading-5 mt-4">
       {{ $t("no-results.alternatives") }}
     </h2>
 
-    <div class="mt-4 flex flex-col flex-wrap gap-4 gap-2 md:mt-6 md:flex-row">
+    <div class="mt-10 flex flex-col flex-wrap gap-4 gap-2 md:flex-row">
       <VButton
         v-for="source in externalSources"
         :key="source.name"
