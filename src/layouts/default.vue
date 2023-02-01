@@ -1,7 +1,7 @@
 <template>
   <div
     :key="isWhite ? 'white' : 'yellow'"
-    class="app flex min-h-screen flex-col"
+    class="app flex flex-col"
     :class="[
       isDesktopLayout ? 'desktop' : 'mobile',
       isWhite ? 'bg-white' : 'bg-yellow',
@@ -207,9 +207,12 @@ export default {
 </script>
 
 <style scoped>
+.app {
+  @apply min-h-screen min-h-[100dvh];
+}
 .sidebar {
   /* Header height above md is 80px plus 1px for bottom border */
-  height: calc(100vh - 81px);
+  @apply h-[calc(100vh-81px)] h-[calc(100dvh-81px)];
 }
 .has-sidebar .sidebar {
   width: var(--filter-sidebar-width);

@@ -1,8 +1,9 @@
 <template>
   <VTeleport v-if="visible" to="modal">
     <div
-      class="fixed inset-0 z-40 flex min-h-screen justify-center overflow-y-auto bg-dark-charcoal bg-opacity-75"
+      class="fixed inset-0 z-40 flex justify-center overflow-y-auto bg-dark-charcoal bg-opacity-75"
       :class="[
+        $style['modal-backdrop'],
         $style[`modal-backdrop-${variant}`],
         $style[`modal-backdrop-${mode}`],
         contentClasses,
@@ -194,7 +195,9 @@ export default defineComponent({
 .top-bar-two-thirds {
   @apply bg-tx;
 }
-
+.modal-backdrop {
+  @apply min-h-screen min-h-[100dvh];
+}
 .modal-backdrop-fit-content,
 .modal-backdrop-two-thirds {
   @apply bg-dark-charcoal bg-opacity-75;
