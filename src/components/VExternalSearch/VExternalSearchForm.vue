@@ -2,7 +2,7 @@
   <section
     :key="type"
     ref="sectionRef"
-    class="external-sources flex flex-row place-items-center justify-center gap-2 p-4"
+    class="external-sources flex flex-row place-items-center justify-center py-4"
     data-testid="external-sources-form"
     @keydown.tab.exact="handleTab"
   >
@@ -43,7 +43,7 @@
       "
       variant="dropdown-label"
       size="disabled"
-      class="caption-regular gap-1 py-1 px-3 text-dark-charcoal pe-1 focus-visible:border-tx"
+      class="caption-regular min-w-max gap-1 py-1 px-3 text-dark-charcoal pe-1 ms-2 focus-visible:border-tx"
       @click="onTriggerClick"
       >{{ $t("external-sources.button").toString()
       }}<VIcon
@@ -71,6 +71,7 @@
         v-else
         id="external-sources-modal"
         aria-labelledby="external-sources-button"
+        :trigger-element="triggerElement"
         :hide="closeDialog"
         :visible="isVisible"
         variant="centered"
