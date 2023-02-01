@@ -247,4 +247,15 @@ export default defineComponent({
 .modal-content-light {
   @apply bg-white text-dark-charcoal;
 }
+/*
+For mobiles that do not support dvh units, we add a fallback padding
+to the modal content to make sure that no clickable elements is hidden
+by the address bar.
+*/
+@supports not (height: 100dvh) {
+  .modal-content-fit-content,
+  .modal-content-two-thirds {
+    @apply pb-10;
+  }
+}
 </style>
