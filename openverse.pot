@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2023-01-31T15:20:55+00:00\n"
+"POT-Creation-Date: 2023-02-01T13:10:07+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1603,18 +1603,17 @@ msgid "→"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VExternalSearch/VExternalSourceList.vue:38
+#: src/components/VExternalSearch/VExternalSourceList.vue:13
 msgctxt "external-sources.caption"
 msgid "###openverse### can not guarantee the accuracy of license information. Always verify that the work is actually under a CC license."
 msgstr ""
 
-#: src/components/VExternalSearch/VExternalSourceList.vue:5
-#: src/components/VExternalSearch/VExternalSourceList.vue:16
+#: src/components/VExternalSearch/VExternalSearchForm.vue:48
 msgctxt "external-sources.button"
 msgid "Source list"
 msgstr ""
 
-#: src/components/VExternalSearch/VExternalSourceList.vue:35
+#: src/components/VExternalSearch/VExternalSourceList.vue:10
 msgctxt "external-sources.title"
 msgid "External sources"
 msgstr ""
@@ -1879,7 +1878,7 @@ msgstr ""
 
 #: src/components/VBanner/VNotificationBanner.vue:15
 #: src/components/VContentReport/VContentReportPopover.vue:16
-#: src/components/VExternalSearch/VExternalSourceList.vue:31
+#: src/components/VExternalSearch/VExternalSourceList.vue:6
 #: src/components/VHeader/VHeaderInternal.vue:62
 #: src/components/VModal/VModalContent.vue:47
 msgctxt "modal.close"
