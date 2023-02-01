@@ -31,7 +31,7 @@
     </div>
 
     <main
-      class="main grid flex-grow"
+      class="main grid h-full flex-grow"
       :class="[
         { 'has-sidebar': isSidebarVisible },
         isSidebarVisible
@@ -46,7 +46,7 @@
         <Nuxt />
         <VFooter
           :mode="isSearchHeader ? 'content' : 'search'"
-          :class="{ 'border-t border-dark-charcoal-20': isWhite }"
+          :class="isWhite ? 'border-t border-dark-charcoal-20' : 'bg-yellow'"
         />
       </div>
       <Nuxt v-else class="main-page flex h-full w-full min-w-0 flex-col" />
@@ -208,7 +208,7 @@ export default {
 
 <style scoped>
 .app {
-  @apply min-h-screen min-h-[100dvh];
+  @apply h-screen h-[100dvh];
 }
 .sidebar {
   /* Header height above md is 80px plus 1px for bottom border */

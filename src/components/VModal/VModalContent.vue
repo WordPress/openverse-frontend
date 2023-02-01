@@ -196,7 +196,7 @@ export default defineComponent({
   @apply bg-tx;
 }
 .modal-backdrop {
-  @apply min-h-screen min-h-[100dvh];
+  @apply h-screen h-[100dvh];
 }
 .modal-backdrop-fit-content,
 .modal-backdrop-two-thirds {
