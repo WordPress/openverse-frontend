@@ -92,7 +92,6 @@ runs:
         container-name: nuxt
         image: "ghcr.io/wordpress/openverse-frontend:${{ inputs.tag }}"
 
-
     - name: Deploy Amazon ECS task definition
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
