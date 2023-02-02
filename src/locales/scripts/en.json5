@@ -190,7 +190,7 @@
       or: "{symbol} signifies OR operation",
       not: "{symbol} negates a single token",
       prefix: "{symbol} at the end of a term signifies a prefix query",
-      precedence: "{open} and {close} signify precedence",
+      precedence: "{symbol} signify precedence",
       fuzziness: "{symbol} after a word signifies edit distance (fuzziness)",
       "aria-labels": {
         fuzziness: "tilde N",

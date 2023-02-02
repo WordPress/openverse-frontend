@@ -18,7 +18,7 @@
     <h2>{{ $t("search-guide.combine.title") }}</h2>
 
     <p>{{ $t("search-guide.combine.description") }}</p>
-    <ul class="not-prose">
+    <ul class="not-prose marker:text-dark-charcoal-20">
       <i18n
         v-for="[name, operator] in Object.entries(operators)"
         :key="name"
