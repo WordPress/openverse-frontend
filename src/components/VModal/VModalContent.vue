@@ -249,7 +249,7 @@ export default defineComponent({
 }
 /*
 For mobiles that do not support dvh units, we add a fallback padding
-to the modal content to make sure that no clickable elements is hidden
+to the modal content to make sure that no clickable elements are hidden
 by the address bar.
 */
 @supports not (height: 100dvh) {
