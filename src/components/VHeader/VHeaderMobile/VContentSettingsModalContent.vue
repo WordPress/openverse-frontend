@@ -38,7 +38,9 @@
           size="medium"
           class="label-regular gap-x-2"
         >
-          <VIcon :icon-path="filtersIcon" />{{ $t("filters.title") }}</VTab
+          <VFilterIconOrCounter :applied-filter-count="appliedFilterCount" />{{
+            $t("filters.title")
+          }}</VTab
         >
         <VIconButton
           class="self-center ms-auto hover:bg-dark-charcoal hover:text-white"
@@ -95,12 +97,15 @@ import VTab from "~/components/VTabs/VTab.vue"
 import VTabPanel from "~/components/VTabs/VTabPanel.vue"
 import VTabs from "~/components/VTabs/VTabs.vue"
 
+import VFilterIconOrCounter from "../VFilterIconOrCounter.vue"
+
 import closeIcon from "~/assets/icons/close-small.svg"
 import filtersIcon from "~/assets/icons/filter.svg"
 
 export default defineComponent({
   name: "VContentSettingsModalContent",
   components: {
+    VFilterIconOrCounter,
     VIcon,
     VModalContent,
     VButton,
