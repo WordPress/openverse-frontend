@@ -2,7 +2,7 @@
   <VLink
     itemprop="contentUrl"
     :title="image.title"
-    :href="`/image/${image.id}?q=${searchStore.searchTerm}`"
+    :href="`/image/${image.id}?q=${searchTerm}`"
     class="group block rounded-sm focus-bold-filled"
   >
     <figure
@@ -35,8 +35,6 @@
 <script lang="ts">
 import { defineComponent, PropType } from "@nuxtjs/composition-api"
 
-import { useSearchStore } from "~/stores/search"
-
 import type { ImageDetail } from "~/types/media"
 
 import VLink from "~/components/VLink.vue"
@@ -59,9 +57,12 @@ export default defineComponent({
       type: Object as PropType<ImageDetail>,
       required: true,
     },
+    searchTerm: {
+      type: String,
+      required: true,
+    },
   },
   setup(props) {
-    const searchStore = useSearchStore()
     const getImageUrl = () => {
       if (!props.image) return ""
       const url = props.image.thumbnail || props.image.url
@@ -79,7 +80,6 @@ export default defineComponent({
       }
     }
     return {
-      searchStore,
       getImageUrl,
       getImageForeignUrl,
       onImageLoadError,

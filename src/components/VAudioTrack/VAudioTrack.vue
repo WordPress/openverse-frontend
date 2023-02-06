@@ -61,7 +61,6 @@ import { useI18n } from "~/composables/use-i18n"
 
 import { useActiveMediaStore } from "~/stores/active-media"
 import { useMediaStore } from "~/stores/media"
-import { useSearchStore } from "~/stores/search"
 
 import { AUDIO } from "~/constants/media"
 
@@ -127,6 +126,14 @@ export default defineComponent({
     size: {
       type: String as PropType<AudioSize>,
     },
+    /**
+     * the search term that was used to find this track; This is used
+     * in the link to the track's detail page.
+     */
+    searchTerm: {
+      type: String,
+      required: true,
+    },
   },
   emits: {
     "shift-tab": defineEvent<[KeyboardEvent]>(),
@@ -137,7 +144,6 @@ export default defineComponent({
     const { $sentry } = useContext()
 
     const activeMediaStore = useActiveMediaStore()
-    const searchStore = useSearchStore()
     const route = useRoute()
 
     const activeAudio = useActiveAudio()
@@ -443,7 +449,7 @@ export default defineComponent({
     const layoutBasedProps = computed(() =>
       isComposite.value
         ? {
-            href: `/audio/${props.audio.id}/?q=${searchStore.searchTerm}`,
+            href: `/audio/${props.audio.id}/?q=${props.searchTerm}`,
             class: [
               "cursor-pointer",
               {
