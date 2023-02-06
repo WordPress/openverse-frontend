@@ -1,6 +1,6 @@
 <template>
   <VLink
-    :href="`/image/${image.id}?q=${searchStore.searchTerm}`"
+    :href="`/image/${image.id}?q=${searchTerm}`"
     class="group relative block w-full overflow-hidden rounded-sm bg-dark-charcoal-10 text-dark-charcoal-10 focus:outline-none focus:ring-[3px] focus:ring-pink focus:ring-offset-[3px]"
     :aria-label="image.title"
     :style="containerStyle"
@@ -37,8 +37,6 @@ import {
   ref,
 } from "@nuxtjs/composition-api"
 
-import { useSearchStore } from "~/stores/search"
-
 import type { ImageDetail } from "~/types/media"
 
 import VLicense from "~/components/VLicense/VLicense.vue"
@@ -67,10 +65,12 @@ export default defineComponent({
       type: Object as PropType<ImageDetail>,
       required: true,
     },
+    searchTerm: {
+      type: String,
+      required: true,
+    },
   },
   setup(props) {
-    const searchStore = useSearchStore()
-
     const imgHeight = ref(props.image.height || 100)
     const imgWidth = ref(props.image.width || 100)
 
@@ -156,7 +156,6 @@ export default defineComponent({
       getImageForeignUrl,
       onImageLoadError,
       getImgDimension,
-      searchStore,
     }
   },
 })
