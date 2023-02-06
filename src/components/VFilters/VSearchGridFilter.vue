@@ -27,7 +27,7 @@
       <template v-for="(filterType, index) in filterTypes">
         <!-- seperation line betwen safe  browsing category and all the rest -->
         <div
-          v-if="filterType === 'mature'"
+          v-if="filterType === 'mature' && isSenetiveContentEnabled"
           :key="index"
           class="absolute left-0 h-px w-full bg-dark-charcoal-20"
         />
@@ -64,6 +64,7 @@ import {
 import { kebab } from "case"
 
 import { useSearchStore } from "~/stores/search"
+import { useFeatureFlagStore } from "~/stores/feature-flag"
 import { areQueriesEqual, ApiQueryParams } from "~/utils/search-query-transform"
 import { Focus, focusIn, getFocusableElements } from "~/utils/focus-management"
 import type { FilterCategory } from "~/constants/filters"
@@ -103,12 +104,16 @@ export default defineComponent({
   },
   setup(props) {
     const searchStore = useSearchStore()
+    const featureFlagStore = useFeatureFlagStore()
 
     const { i18n } = useContext()
     const router = useRouter()
 
     const filtersFormRef = ref<HTMLFormElement>(null)
 
+    const isSenetiveContentEnabled = computed(() =>
+      featureFlagStore.isOn("toggle_senetive_content")
+    )
     const isAnyFilterApplied = computed(() => searchStore.isAnyFilterApplied)
     const filters = computed(() => searchStore.searchFilters)
     const filterTypes = computed(
@@ -185,6 +190,7 @@ export default defineComponent({
     }
 
     return {
+      isSenetiveContentEnabled,
       firstFocusableElement,
       filtersFormRef,
       isAnyFilterApplied,
