@@ -4,6 +4,7 @@ import {
   enableNewHeader,
   goToSearchTerm,
   languageDirections,
+  t,
 } from "~~/test/playwright/utils/navigation"
 import breakpoints from "~~/test/playwright/utils/breakpoints"
 
@@ -39,7 +40,7 @@ for (const dir of languageDirections) {
 
       await goToSearchTerm(page, "birds", { dir })
       await page.getByRole("button", { name: "Menu" }).click()
-      await page.getByRole("tab", { name: "Filters" }).click()
+      await page.getByRole("tab", { name: t("filters.title", dir) }).click()
 
       await expectSnapshot(`filters-modal-${dir}.png`, page)
     })
@@ -49,7 +50,7 @@ for (const dir of languageDirections) {
 
       await goToSearchTerm(page, "birds", { dir })
       await page.getByRole("button", { name: "Menu" }).click()
-      await page.getByRole("tab", { name: "Filters" }).click()
+      await page.getByRole("tab", { name: t("filters.title", dir) }).click()
 
       await page.locator('input[type="checkbox"]').first().check()
 
