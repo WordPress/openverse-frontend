@@ -3,7 +3,7 @@
     <div v-if="!isActive" class="flex w-full"><slot /></div>
     <VTeleport v-else to="modal">
       <div
-        class="fixed inset-0 z-40 flex min-h-screen w-full justify-center overflow-y-auto bg-white"
+        class="fixed inset-0 z-40 flex h-screen h-[100dvh] w-full justify-center overflow-y-auto bg-white"
       >
         <div
           ref="dialogRef"
@@ -66,19 +66,21 @@ export default defineComponent({
   ],
   setup(props, { attrs, emit }) {
     const focusTrapRef = ref<ComponentInstance | null>(null)
+    const nodeRef = ref<HTMLElement | null>(null)
+    const dialogRef = ref<HTMLElement | null>(null)
 
     const visibleRef = toRef(props, "isActive")
 
-    const nodeRef = ref<HTMLElement | null>(null)
+    const deactivateRef = ref()
+
     const { close } = useDialogControl({
       visibleRef,
       nodeRef,
       emit: emit as SetupContext["emit"],
+      deactivateFocusTrap: deactivateRef,
     })
 
-    const dialogRef = ref<HTMLElement | null>(null)
-
-    const { onKeyDown, onBlur } = useDialogContent({
+    const { onKeyDown, onBlur, deactivateFocusTrap } = useDialogContent({
       dialogElements: {
         dialogRef,
         triggerElementRef: ref(null),
@@ -95,6 +97,7 @@ export default defineComponent({
       emit: emit as SetupContext["emit"],
       attrs,
     })
+    deactivateRef.value = deactivateFocusTrap
 
     return {
       focusTrapRef,

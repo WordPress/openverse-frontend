@@ -8,6 +8,7 @@ import {
   IMAGE,
   MediaType,
   MODEL_3D,
+  searchPath,
   SupportedSearchType,
   VIDEO,
 } from "~/constants/media"
@@ -350,13 +351,19 @@ export const goToSearchTerm = async (
   const query = options.query ? `&${options.query}` : ""
   const headerMode = options.headerMode ?? NEW_HEADER
 
+  await setCookies(page.context(), {
+    uiDismissedBanners: [
+      "translation-ru",
+      "translation-en",
+      "translation-ar",
+      "translation-es",
+    ],
+  })
   if (mode === "SSR") {
-    const path = `search/${searchTypePath(searchType)}?q=${term}${query}`
+    const path = `${searchPath(searchType)}?q=${term}${query}`
     await page.goto(pathWithDir(path, dir))
-    await dismissTranslationBanner(page)
   } else {
-    await page.goto(pathWithDir(`/${query}`, dir))
-    await dismissTranslationBanner(page)
+    await page.goto(pathWithDir("/", dir))
     // Select the search type
     if (searchType !== "all") {
       await selectHomepageSearchType(page, searchType, dir, headerMode)
@@ -451,32 +458,22 @@ export const pathWithDir = (rawPath: string, dir: string) => {
 }
 
 export const enableNewHeader = async (page: Page) => {
-  // Add the new_header cookie
-  await page.context().addCookies([
-    {
-      name: "features",
-      value: "%7B%22new_header%22%3A%22on%22%7D",
-      domain: "localhost",
-      path: "/",
-    },
-  ])
+  // Set the `new_header` cookie to `on`, should be called before `page.goto`.
+  await setCookies(page.context(), { features: { new_header: "on" } })
 }
 
 export const enableOldHeader = async (page: Page) => {
-  // Add the new_header cookie
-  await page.context().addCookies([
-    {
-      name: "features",
-      value: "%7B%22new_header%22%3A%22off%22%7D",
-      domain: "localhost",
-      path: "/",
-    },
-  ])
+  // Set the `new_header` cookie to `off`, should be called before `page.goto`.
+  await setCookies(page.context(), { features: { new_header: "off" } })
+}
+
+export interface CookieMap {
+  [key: string]: string | boolean | string[] | CookieMap
 }
 
 export const setCookies = async (
   context: BrowserContext,
-  cookies: Record<string, string | boolean | string[]>
+  cookies: CookieMap
 ) => {
   await context.addCookies(
     Object.entries(cookies).map(([name, value]) => ({
