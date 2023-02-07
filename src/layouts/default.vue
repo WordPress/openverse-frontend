@@ -208,7 +208,7 @@ export default {
 
 <style scoped>
 .app {
-  @apply h-screen h-[100dvh];
+  @apply min-h-screen min-h-[100dvh];
 }
 .sidebar {
   /* Header height above md is 80px plus 1px for bottom border */
