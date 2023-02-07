@@ -31,7 +31,7 @@ test("should render a checked toggle switch if `checked` is true", () => {
   expect(toggleSwitch.element.checked).toBe(true)
 })
 
-test("should emit change event on change", async () => {
+test("should emit change event on change", () => {
   const wrapper = mount(VToggleSwitch)
 
   wrapper.vm.onChange()
