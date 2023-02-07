@@ -1,7 +1,7 @@
 <template>
   <VSkipToContentContainer
-    class="browse-page flex w-full flex-col md:px-10"
-    :class="[isNewHeaderEnabled ? 'px-6' : 'px-4']"
+    class="browse-page flex w-full flex-col"
+    :class="[isNewHeaderEnabled ? 'px-6 lg:px-10' : 'px-4 md:px-10']"
   >
     <VSearchGrid
       ref="searchGridRef"
