@@ -11,10 +11,10 @@
     "new_header": {
       "status": {
         "staging": "enabled",
-        "production": "disabled"
+        "production": "enabled"
       },
       "description": "Toggle the new header, including recent searches.",
-      "defaultState": "off"
+      "defaultState": "on"
     },
     "feat_disabled": {
       "status": "disabled",
