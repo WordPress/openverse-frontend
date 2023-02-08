@@ -131,7 +131,7 @@ export const useSearchStore = defineStore("search", {
       return mediaFilterKeys[state.searchType].reduce((obj, filterKey) => {
         if (
           filterKey === "mature" &&
-          !useFeatureFlagStore().isOn("toggle_senetive_content")
+          !useFeatureFlagStore().isOn("toggle_sensitive_content")
         ) {
           return obj
         }

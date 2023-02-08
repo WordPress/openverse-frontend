@@ -112,7 +112,7 @@ export default defineComponent({
     const filtersFormRef = ref<HTMLFormElement>(null)
 
     const isSenetiveContentEnabled = computed(() =>
-      featureFlagStore.isOn("toggle_senetive_content")
+      featureFlagStore.isOn("toggle_sensitive_content")
     )
     const isAnyFilterApplied = computed(() => searchStore.isAnyFilterApplied)
     const filters = computed(() => searchStore.searchFilters)

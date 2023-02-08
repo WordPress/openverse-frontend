@@ -82,7 +82,7 @@ describe("Search Store", () => {
         const filtersForDisplay = searchStore.searchFilters
         const expectedFilterCount = Math.max(
           0,
-          featureFlagStore.isOn("toggle_senetive_content")
+          featureFlagStore.isOn("toggle_sensitive_content")
             ? filterTypeCount
             : filterTypeCount - 1
         )
