@@ -27,7 +27,7 @@
       <template v-for="(filterType, index) in filterTypes">
         <!-- seperation line betwen safe  browsing category and all the rest -->
         <div
-          v-if="filterType === 'mature' && isSenetiveContentEnabled"
+          v-if="filterType === 'mature' && isSensitiveContentEnabled"
           :key="index"
           class="absolute left-0 h-px w-full bg-dark-charcoal-20"
         />
@@ -111,7 +111,7 @@ export default defineComponent({
 
     const filtersFormRef = ref<HTMLFormElement>(null)
 
-    const isSenetiveContentEnabled = computed(() =>
+    const isSensitiveContentEnabled = computed(() =>
       featureFlagStore.isOn("toggle_sensitive_content")
     )
     const isAnyFilterApplied = computed(() => searchStore.isAnyFilterApplied)
@@ -190,7 +190,7 @@ export default defineComponent({
     }
 
     return {
-      isSenetiveContentEnabled,
+      isSensitiveContentEnabled,
       firstFocusableElement,
       filtersFormRef,
       isAnyFilterApplied,
