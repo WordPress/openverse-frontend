@@ -204,6 +204,7 @@ const config: NuxtConfig = {
     { path: "/robots.txt", handler: "~/server-middleware/robots.js" },
   ],
   i18n: {
+    baseUrl: "https://openverse.org",
     locales: [
       {
         // unique identifier for the locale in Vue i18n

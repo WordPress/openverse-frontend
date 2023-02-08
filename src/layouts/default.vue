@@ -71,15 +71,10 @@ export default defineComponent({
     }
   },
   head() {
-    return {
-      ...this.$nuxtI18nHead({ addSeoAttributes: true, addDirAttribute: true }),
-      link: [
-        {
-          rel: "canonical",
-          href: "https://openverse.org" + this.$route.path,
-        },
-      ],
-    }
+    return this.$nuxtI18nHead({
+      addSeoAttributes: true,
+      addDirAttribute: true,
+    })
   },
 })
 </script>
