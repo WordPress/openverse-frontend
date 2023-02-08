@@ -87,6 +87,7 @@ import { useI18n } from "~/composables/use-i18n"
 import useSearchType from "~/composables/use-search-type"
 
 import VButton from "~/components/VButton.vue"
+import VFilterIconOrCounter from "~/components/VHeader/VFilterIconOrCounter.vue"
 import VIcon from "~/components/VIcon/VIcon.vue"
 import VIconButton from "~/components/VIconButton/VIconButton.vue"
 import VModalContent from "~/components/VModal/VModalContent.vue"
@@ -96,8 +97,6 @@ import VShowResultsButton from "~/components/VHeader/VHeaderMobile/VShowResultsB
 import VTab from "~/components/VTabs/VTab.vue"
 import VTabPanel from "~/components/VTabs/VTabPanel.vue"
 import VTabs from "~/components/VTabs/VTabs.vue"
-
-import VFilterIconOrCounter from "../VFilterIconOrCounter.vue"
 
 import closeIcon from "~/assets/icons/close-small.svg"
 import filtersIcon from "~/assets/icons/filter.svg"
