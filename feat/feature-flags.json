@@ -13,7 +13,7 @@
         "staging": "enabled",
         "production": "enabled"
       },
-      "description": "Toggle the new header, including recent searches.",
+      "description": "Toggle the new header, including recent searches."
     },
     "feat_disabled": {
       "status": "disabled",
