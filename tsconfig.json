@@ -97,7 +97,6 @@
     "src/constants/**/*",
     "src/server-middleware/healthcheck.js",
     /** End of non TypeScript files section */
-    "src/components/VSafeBrowsingFilter/VSafeBrowsingFilter.vue",
     "src/components/VToggleSwitch/VToggleSwitch.vue"
   ],
   "exclude": ["node_modules"],
