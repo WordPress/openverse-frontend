@@ -31,12 +31,9 @@ const meta = [
     name: "viewport",
     content: "width=device-width,initial-scale=1",
   },
-  // By default, tell all robots not to index pages. Will be overridden in the
+  // By default, tell all robots not to index pages. Will be overwritten in the
   // search, content and home pages.
   { hid: "robots", name: "robots", content: "noindex" },
-  // Tell Googlebot to crawl Openverse when iframed
-  // TODO: remove after the iframe is removed
-  { hid: "googlebot", name: "googlebot", content: "indexifembedded" },
   {
     vmid: "monetization",
     name: "monetization",
