@@ -204,6 +204,7 @@ const config: NuxtConfig = {
   ],
   serverMiddleware: [
     { path: "/healthcheck", handler: "~/server-middleware/healthcheck.js" },
+    { path: "/robots.txt", handler: "~/server-middleware/robots.js" },
   ],
   i18n: {
     locales: [
