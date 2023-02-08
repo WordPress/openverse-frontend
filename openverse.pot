@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2023-02-08T06:50:29+00:00\n"
+"POT-Creation-Date: 2023-02-08T10:14:55+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -795,7 +795,7 @@ msgctxt "error.audio"
 msgid "audio"
 msgstr ""
 
-#: src/components/VHeader/VHeaderMobile/VContentSettingsModalContent.vue:34
+#: src/components/VHeader/VHeaderMobile/VContentSettingsModalContent.vue:41
 msgctxt "filters.title"
 msgid "Filters"
 msgstr ""
@@ -1074,13 +1074,13 @@ msgid "Hide filters"
 msgstr ""
 
 #: src/components/VFilters/VSearchGridFilter.vue:18
-#: src/components/VHeader/VHeaderMobile/VContentSettingsModalContent.vue:153
+#: src/components/VHeader/VHeaderMobile/VContentSettingsModalContent.vue:161
 msgctxt "filter-list.clear"
 msgid "Clear filters"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VHeader/VHeaderMobile/VContentSettingsModalContent.vue:150
+#: src/components/VHeader/VHeaderMobile/VContentSettingsModalContent.vue:158
 msgctxt "filter-list.clear-numbered"
 msgid "Clear filters (###number###)"
 msgstr ""
@@ -1885,7 +1885,7 @@ msgctxt "modal.close"
 msgid "Close"
 msgstr ""
 
-#: src/components/VHeader/VHeaderMobile/VContentSettingsModalContent.vue:39
+#: src/components/VHeader/VHeaderMobile/VContentSettingsModalContent.vue:46
 msgctxt "modal.aria-close"
 msgid "Close the modal"
 msgstr ""
@@ -1946,10 +1946,10 @@ msgctxt "search-type.label"
 msgid "Type of content to search"
 msgstr ""
 
-#: src/components/VHeader/VHeaderMobile/VContentSettingsModalContent.vue:24
-#: src/components/VHeader/VHeaderMobile/VContentSettingsModalContent.vue:31
+#: src/components/VHeader/VHeaderMobile/VContentSettingsModalContent.vue:25
+#: src/components/VHeader/VHeaderMobile/VContentSettingsModalContent.vue:33
 msgctxt "search-type.heading"
-msgid "Content types"
+msgid "Content type"
 msgstr ""
 
 msgctxt "search-type.additional"
