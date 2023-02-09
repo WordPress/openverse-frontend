@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { defineComponent, useRouter } from "@nuxtjs/composition-api"
+import { defineComponent, useMeta, useRouter } from "@nuxtjs/composition-api"
 
 import { useSearchStore } from "~/stores/search"
 
@@ -67,19 +67,15 @@ export default defineComponent({
       router.push(searchStore.updateSearchPath({ type: ALL_MEDIA, searchTerm }))
     }
 
+    useMeta({
+      meta: [{ hid: "theme-color", name: "theme-color", content: "#ffe033" }],
+    })
+
     return {
       handleSearch,
       Oops,
     }
   },
-  head: {
-    meta: [
-      {
-        hid: "theme-color",
-        name: "theme-color",
-        content: "#ffe033",
-      },
-    ],
-  },
+  head: {},
 })
 </script>
