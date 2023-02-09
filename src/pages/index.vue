@@ -86,9 +86,6 @@ export default defineComponent({
     VImageCarousel,
     VLink,
   },
-  layout: () => {
-    return useFeatureFlagStore().isOn("new_header") ? "default" : "blank"
-  },
   setup() {
     const router = useRouter()
 
