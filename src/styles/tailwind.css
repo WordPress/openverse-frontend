@@ -43,19 +43,19 @@ Heading 1           - 90px - 7xl bold
 Heading 2           - 32px - 6xl bold
 Heading 3           - 28px - 5xl bold
 Heading 4           - 24px - 4xl bold
-Heading 5           - 19px - 3xl semibold
-Heading 6           - 16px - 2xl semibold
-Paragraph Large     - 16px - 2xl regular leading-larger
-Paragraph Small     - 14px - base regular leading-large
+Heading 5           - 19px - 3xl semi-bold
+Heading 6           - 16px - 2xl semi-bold
+Paragraph Large     - 16px - 2xl regular leading-[190%] (larger)
+Paragraph Small     - 14px - base regular leading-[170%] (large)
 Body                - 14px - base regular (default leading-normal)
 Description Regular - 14px - base
-Description Bold    - 14px - base semibold
-Label Bold          - 13px - sm semibold
+Description Bold    - 14px - base semi-bold
+Label Bold          - 13px - sm semi-bold
 Label Regular       - 13px - sm regular
 Caption Regular     - 12px - sr regular
-Caption Bold        - 12px - sr semibold
-Category            - 12px - sr semibold UPPERCASE
-Time                - 11px - xs semibold (default leading-[120%])
+Caption Bold        - 12px - sr semi-bold
+Category            - 12px - sr semi-bold UPPERCASE
+Time                - 11px - xs semi-bold (default leading-[120%])
 
 
 */
@@ -85,7 +85,7 @@ Time                - 11px - xs semibold (default leading-[120%])
   }
 
   .paragraph-large {
-    @apply leading-larger text-2xl;
+    @apply text-2xl leading-[190%];
   }
 
   .paragraph-small {
