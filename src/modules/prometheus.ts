@@ -6,6 +6,7 @@ import promBundle from "express-prom-bundle"
 import { searchTypes } from "../../src/constants/media"
 
 import type { ServerMiddleware, Module } from "@nuxt/types"
+import type { Server as ConnectServer } from "connect"
 
 let metricsServer: null | http.Server = null
 
@@ -53,17 +54,12 @@ const bundle = promBundle({
 }) as unknown as ServerMiddleware
 
 const PrometheusModule: Module = function () {
-  // Nuxt types don't fully type `this` parameter, this.nuxt is any.
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   this.nuxt.hook("close", () => {
     metricsServer?.close()
     // Clear registry so that metrics can re-register when the server restarts in development
     Prometheus.register.clear()
   })
-  // Nuxt types don't fully type `this` parameter, this.nuxt is any.
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
+
   this.nuxt.hook("listen", () => {
     // Serve Prometheus metrics on a separate port to allow production
     // metrics to be hidden behind security group settings
@@ -76,10 +72,8 @@ const PrometheusModule: Module = function () {
       })
       .listen(parseFloat(process.env.METRICS_PORT || "54641"), "0.0.0.0")
   })
-  // Nuxt types don't fully type `this` parameter, this.nuxt is any.
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  this.nuxt.hook("render:setupMiddleware", (app) => {
+
+  this.nuxt.hook("render:setupMiddleware", (app: ConnectServer) => {
     /**
      * Register this here so that it's registered at the absolute top
      * of the middleware stack. Using server-middleware puts it
