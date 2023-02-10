@@ -212,6 +212,7 @@ const config: NuxtConfig = {
     "@nuxtjs/redirect-module",
     "@nuxtjs/sentry",
     "cookie-universal-nuxt",
+    // Sitemap must be last to ensure that even routes created by other modules are added
     "@nuxtjs/sitemap",
   ],
   serverMiddleware: [
