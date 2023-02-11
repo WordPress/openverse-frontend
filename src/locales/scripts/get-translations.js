@@ -95,11 +95,16 @@ const fetchAndConvertJed1xTranslations = (locales) => {
   return Promise.allSettled(locales.map(fetchJed1xTranslation))
     .then((res) => {
       let successfulTranslations = []
+      let failedTranslations = []
       res.forEach(({ status, value }, index) => {
         if (status === "fulfilled" && !isEmpty(value)) {
           successfulTranslations[locales[index]] = value
+        } else {
+          failedTranslations.push(locales[index])
         }
       })
+      if (failedTranslations.length)
+        console.log(`Failed to fetch ${failedTranslations.join(", ")}`)
       return successfulTranslations
     })
     .then((res) => {
