@@ -41,7 +41,10 @@ const makeTranslationUrl =
  * @param {string} locale
  */
 const fetchJed1xTranslation = (locale) =>
-  axios.get(makeTranslationUrl("jed1x")(locale)).then((res) => res.data)
+  axios
+    .get(makeTranslationUrl("jed1x")(locale))
+    .then((res) => res.data)
+    .catch((err) => err.response.status)
 
 const replacePlaceholders = (json) => {
   if (json === null) {
@@ -100,7 +103,7 @@ const fetchAndConvertJed1xTranslations = (locales) => {
         if (status === "fulfilled" && !isEmpty(value)) {
           successfulTranslations[locales[index]] = value
         } else {
-          failedTranslations.push(locales[index])
+          failedTranslations.push(`${locales[index]} (${value})`)
         }
       })
       if (failedTranslations.length)
