@@ -194,7 +194,6 @@ const config: NuxtConfig = {
   buildModules: [
     "@nuxt/typescript-build",
     "@nuxtjs/composition-api/module",
-    "@nuxt/postcss8",
     "@nuxtjs/style-resources",
     "@nuxtjs/svg",
     "@nuxtjs/eslint-module",
@@ -277,22 +276,17 @@ const config: NuxtConfig = {
     filenames,
     friendlyErrors: false,
     postcss: {
-      plugins: {
-        tailwindcss: {},
-        autoprefixer: {},
-        "postcss-focus-visible": {},
+      postcssOptions: {
+        plugins: {
+          tailwindcss: {},
+          autoprefixer: {},
+          "postcss-focus-visible": {},
+        },
       },
     },
     extend(config, ctx) {
       // Enables use of IDE debuggers
       config.devtool = ctx.isClient ? "source-map" : "inline-source-map"
-
-      // Mitigates import errors for Pinia
-      config.module?.rules.push({
-        test: /\.mjs$/,
-        include: /node_modules/,
-        type: "javascript/auto",
-      })
     },
   },
   storybook: {
