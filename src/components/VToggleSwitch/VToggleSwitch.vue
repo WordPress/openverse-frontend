@@ -61,11 +61,6 @@ export default defineComponent({
   height: 18px;
 }
 
-.button:focus-within {
-  outline: 1.5px solid #c52b9b;
-  outline-offset: 1px;
-}
-
 .button,
 .button .layer {
   border-radius: 100px;
@@ -101,6 +96,11 @@ export default defineComponent({
   opacity: 0;
   cursor: pointer;
   z-index: 3;
+}
+
+.checkbox:focus-visible ~ .layer {
+  outline: 1.5px solid #c52b9b;
+  outline-offset: 1px;
 }
 
 .button .knob:before {
