@@ -25,7 +25,7 @@
       @keydown.shift.tab.exact="handleShiftTabKey"
     >
       <template v-for="(filterType, index) in filterTypes">
-        <!-- seperation line betwen safe  browsing category and all the rest -->
+        <!-- Divider above the sensitive content filter -->
         <div
           v-if="filterType === 'mature' && isSensitiveContentEnabled"
           :key="index"
