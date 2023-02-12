@@ -61,7 +61,7 @@ export default defineComponent({
   height: 18px;
 }
 
-.button:focus {
+.button:focus-within {
   outline: 1.5px solid #c52b9b;
   outline-offset: 1px;
 }
