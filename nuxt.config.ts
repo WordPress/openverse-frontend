@@ -1,22 +1,20 @@
 import path from "path"
 import fs from "fs"
 
-import promBundle from "express-prom-bundle"
-
 import pkg from "./package.json"
 import locales from "./src/locales/scripts/valid-locales.json"
 
-import { searchTypes } from "./src/constants/media"
 import { VIEWPORTS } from "./src/constants/screens"
 
 import { isProd } from "./src/utils/node-env"
 import { sentryConfig } from "./src/utils/sentry-config"
 import { env } from "./src/utils/env"
 
-import type { NuxtConfig, ServerMiddleware } from "@nuxt/types"
+import type http from "http"
+
+import type { NuxtConfig } from "@nuxt/types"
 import type { LocaleObject } from "@nuxtjs/i18n"
 import type { IncomingMessage, NextFunction } from "connect"
-import type http from "http"
 
 /**
  * The default metadata for the site. Can be extended and/or overwritten per page. And even in components!
@@ -29,12 +27,9 @@ const meta = [
     name: "viewport",
     content: "width=device-width,initial-scale=1",
   },
-  // By default, tell all robots not to index pages. Will be overridden in the
+  // By default, tell all robots not to index pages. Will be overwritten in the
   // search, content and home pages.
   { hid: "robots", name: "robots", content: "noindex" },
-  // Tell Googlebot to crawl Openverse when iframed
-  // TODO: remove after the iframe is removed
-  { hid: "googlebot", name: "googlebot", content: "indexifembedded" },
   {
     vmid: "monetization",
     name: "monetization",
@@ -137,6 +132,21 @@ const filenames: NonNullable<NuxtConfig["build"]>["filenames"] = {
     isDev ? "[path][name].[ext]" : `videos/${baseProdName}.[ext]`,
 }
 
+const openverseLocales = [
+  {
+    // unique identifier for the locale in Vue i18n
+    code: "en",
+    name: "English",
+    nativeName: "English",
+    // ISO code used for SEO purposes (html lang attribute)
+    iso: "en",
+    // wp_locale as found in GlotPress
+    wpLocale: "en_US",
+    file: "en.json",
+  },
+  ...(locales ?? []),
+].filter((l) => Boolean(l.iso)) as LocaleObject[]
+
 const config: NuxtConfig = {
   // eslint-disable-next-line no-undef
   version: pkg.version, // used to purge cache :)
@@ -195,27 +205,18 @@ const config: NuxtConfig = {
     "@nuxtjs/i18n",
     "@nuxtjs/redirect-module",
     "@nuxtjs/sentry",
-    "@nuxtjs/sitemap",
     "cookie-universal-nuxt",
+    "~/modules/prometheus.ts",
+    // Sitemap must be last to ensure that even routes created by other modules are added
+    "@nuxtjs/sitemap",
   ],
   serverMiddleware: [
     { path: "/healthcheck", handler: "~/server-middleware/healthcheck.js" },
+    { path: "/robots.txt", handler: "~/server-middleware/robots.js" },
   ],
   i18n: {
-    locales: [
-      {
-        // unique identifier for the locale in Vue i18n
-        code: "en",
-        name: "English",
-        nativeName: "English",
-        // ISO code used for SEO purposes (html lang attribute)
-        iso: "en",
-        // wp_locale as found in GlotPress
-        wpLocale: "en_US",
-        file: "en.json",
-      },
-      ...(locales ?? []),
-    ].filter((l) => Boolean(l.iso)) as LocaleObject[],
+    baseUrl: "https://openverse.org",
+    locales: openverseLocales,
     lazy: true,
     langDir: "locales",
     defaultLocale: "en",
@@ -232,6 +233,13 @@ const config: NuxtConfig = {
      * */
     detectBrowserLanguage: false,
     vueI18n: "~/plugins/vue-i18n",
+  },
+  sitemap: {
+    hostname: "https://openverse.org",
+    i18n: {
+      locales: openverseLocales.map((l) => l.iso),
+      routesNameSeparator: "___",
+    },
   },
   /**
    * Map the old route for /photos/_id page to /image/_id permanently to keep links working.
@@ -255,75 +263,6 @@ const config: NuxtConfig = {
     },
   },
   sentry: sentryConfig,
-  hooks: {
-    render: {
-      /**
-       * When modifying this function in development with automatic rebuilds enabled
-       * it _will_ crash your server with an error about duplicate metric name registration.
-       * To debug this function's behavior locally you will have to tolerate stopping and
-       * starting `pnpm dev` between each change to nuxt.config.ts. To prevent this from
-       * being a _general_ problem the metrics middleware is disabled in development
-       * mode, otherwise any change to `nuxt.config.ts` would cause this crash. If you
-       * need to debug metrics locally, comment out the early return in development.
-       */
-      setupMiddleware: (app) => {
-        if (process.env.NODE_ENV === "development") return
-
-        const bypassMetricsPathParts = [
-          /**
-           * Exclude static paths. Remove once we've moved static file
-           * hosting out of the SSR server's responsibilities.
-           */
-          "_nuxt",
-          /**
-           * Only include these paths in development. They do not exist in production
-           * so we can happily skip the extra iterations these path parts introduce.
-           */
-          ...(process.env.NODE_ENV === "development"
-            ? ["__webpack", "sse"]
-            : []),
-        ]
-        /**
-         * Register this here so that it's registered at the absolute top
-         * of the middleware stack. Using server-middleware puts it
-         * after a whole host of stuff.
-         *
-         * Note: The middleware only has access to server side navigations,
-         * as it is indeed an express middleware, not a Nuxt page middleware.
-         * There's no safe way to pipe client side metrics to Prometheus with
-         * this set up and if we wanted that anyway we'll want to invest into
-         * an actual RUM solution, not a systems monitoring solution like
-         * Prometheus. The implication of this is that the metrics will only
-         * include SSR'd requests. SPA navigations or anything else that
-         * happens exclusively on the client will not be measured. This is the
-         * expected behavior!
-         *
-         * @see {@link https://github.com/nuxt/nuxt.js/blob/dev/packages/server/src/server.js#L70-L138}
-         */
-        app.use(
-          promBundle({
-            bypass: (req) =>
-              bypassMetricsPathParts.some((p) => req.originalUrl.includes(p)),
-            includeMethod: true,
-            includePath: true,
-            normalizePath: [
-              ...searchTypes.map(
-                // Normalize single result pages with IDs in the path
-                (t) => [`/${t}/.*`, `/${t}/#id`] as [string, string]
-              ),
-            ],
-            /**
-             * promBundle creates an Express middleware function, which is type-incompatible
-             * with Nuxt's "connect" middleware functions. I guess they _are_ compatible,
-             * in actual code, or maybe just in the particular implementation of the prometheus
-             * bundle middleware. In any case, this cast is necessary to appeas TypeScript
-             * without an ugly ts-ignore.
-             */
-          }) as unknown as ServerMiddleware
-        )
-      },
-    },
-  },
   build: {
     templates: [
       {

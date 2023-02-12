@@ -24,6 +24,7 @@
       :audio="audio"
       :size="audioTrackSize"
       layout="row"
+      :search-term="searchTerm"
       @shift-tab="handleShiftTab($event, i)"
       @interacted="hideSnackbar"
       @mousedown.native="handleMouseDown"
@@ -43,13 +44,13 @@ import {
 } from "@nuxtjs/composition-api"
 
 import { useFocusFilters } from "~/composables/use-focus-filters"
+import { useSearchStore } from "~/stores/search"
+
 import { Focus } from "~/utils/focus-management"
 
 import { useUiStore } from "~/stores/ui"
 
 import { IsSidebarVisibleKey } from "~/types/provides"
-
-import { useFeatureFlagStore } from "~/stores/feature-flag"
 
 import VSnackbar from "~/components/VSnackbar.vue"
 import VAudioTrack from "~/components/VAudioTrack/VAudioTrack.vue"
@@ -68,17 +69,14 @@ export default defineComponent({
   },
   props: propTypes,
   setup(props) {
-    const featureFlagStore = useFeatureFlagStore()
-
     useMeta({
       title: `${props.searchTerm} | Openverse`,
-      meta: featureFlagStore.isOn("new_header")
-        ? [{ hid: "robots", name: "robots", content: "all" }]
-        : undefined,
     })
+    const searchStore = useSearchStore()
 
     const uiStore = useUiStore()
 
+    const searchTerm = computed(() => searchStore.searchTerm)
     const results = computed(() => props.resultItems.audio)
 
     const isDesktopLayout = computed(() => uiStore.isDesktopLayout)
@@ -115,6 +113,7 @@ export default defineComponent({
     }
 
     return {
+      searchTerm,
       results,
       audioTrackSize,
 

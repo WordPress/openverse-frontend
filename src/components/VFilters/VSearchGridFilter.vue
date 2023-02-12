@@ -11,7 +11,7 @@
         v-show="isAnyFilterApplied"
         id="clear-filter-button"
         variant="plain"
-        class="label-bold absolute py-1 px-4 text-pink end-0 hover:ring hover:ring-pink hover:ring-offset-tx"
+        class="label-bold absolute py-1 px-4 text-pink end-0 hover:ring hover:ring-pink"
         @click="clearFilters"
         @keydown.shift.tab.exact="focusFilterButton"
       >
@@ -59,9 +59,10 @@ import {
   ref,
   useContext,
   useRouter,
-  watch,
 } from "@nuxtjs/composition-api"
 import { kebab } from "case"
+
+import { watchDebounced } from "@vueuse/core"
 
 import { useSearchStore } from "~/stores/search"
 import { useFeatureFlagStore } from "~/stores/feature-flag"
@@ -128,13 +129,14 @@ export default defineComponent({
      * This watcher fires even when the queries are equal. We update the path only
      * when the queries change.
      */
-    watch(
+    watchDebounced(
       () => searchStore.searchQueryParams,
       (newQuery: ApiQueryParams, oldQuery: ApiQueryParams) => {
         if (!areQueriesEqual(newQuery, oldQuery)) {
           router.push(searchStore.getSearchPath())
         }
-      }
+      },
+      { debounce: 800, maxWait: 5000 }
     )
 
     const focusableElements = computed(() =>

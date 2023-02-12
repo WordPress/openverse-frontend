@@ -2,7 +2,6 @@
   "404": {
     title: "The content you’re looking for seems to have disappeared.",
     main: "Go to {link} or search for something similar from the field below.",
-    "search-placeholder": "Search for content to reuse",
   },
   hero: {
     subtitle: "Explore more than 600 million creative works",
@@ -669,7 +668,7 @@
     video: "Videos",
     "model-3d": "3D Models",
     label: "Type of content to search",
-    heading: "Content types",
+    heading: "Content type",
     additional: "Coming soon",
     "status-beta": "Beta",
     "see-image": "See all images",

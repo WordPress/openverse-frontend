@@ -27,6 +27,7 @@ import type { AudioDetail } from "~/types/media"
 import { useRelatedMediaStore } from "~/stores/media/related-media"
 import { useSingleResultStore } from "~/stores/media/single-result"
 import { useFeatureFlagStore } from "~/stores/feature-flag"
+import { useSearchStore } from "~/stores/search"
 import { createDetailPageMeta } from "~/utils/og"
 
 import VAudioDetails from "~/components/VAudioDetails/VAudioDetails.vue"
@@ -48,8 +49,12 @@ export default defineComponent({
     if (from.path.includes("/search/")) {
       to.meta.backToSearchPath = from.fullPath
     }
+    if (from.path.includes("/search/") && to.query.q) {
+      useSearchStore().setSearchTerm(to.query.q)
+    }
     next()
   },
+  layout: "content-layout",
   setup() {
     const route = useRoute()
     const singleResultStore = useSingleResultStore()

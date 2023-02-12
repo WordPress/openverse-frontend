@@ -73,6 +73,10 @@ import {
   layoutMappings,
 } from "~/constants/audio"
 import { useSeekable } from "~/composables/use-seekable"
+import {
+  useMatchSearchRoutes,
+  useMatchSingleResultRoutes,
+} from "~/composables/use-match-routes"
 
 import { defineEvent } from "~/types/emits"
 
@@ -125,6 +129,14 @@ export default defineComponent({
      */
     size: {
       type: String as PropType<AudioSize>,
+    },
+    /**
+     * the search term that was used to find this track; This is used
+     * in the link to the track's detail page.
+     */
+    searchTerm: {
+      type: String,
+      required: true,
     },
   },
   emits: {
@@ -296,9 +308,13 @@ export default defineComponent({
         localAudio?.removeEventListener(name, fn)
       )
 
+      const { matches: isSearchRoute } = useMatchSearchRoutes()
+      const { matches: isSingleResultRoute } = useMatchSingleResultRoutes()
+
       if (
-        route.value?.params?.id === props.audio.id ||
-        mediaStore.getItemById(AUDIO, props.audio.id)
+        (isSingleResultRoute.value &&
+          route.value?.params?.id === props.audio.id) ||
+        (isSearchRoute.value && mediaStore.getItemById(AUDIO, props.audio.id))
       ) {
         /**
          * If switching to any route other than the single result
@@ -441,7 +457,7 @@ export default defineComponent({
     const layoutBasedProps = computed(() =>
       isComposite.value
         ? {
-            href: `/audio/${props.audio.id}`,
+            href: `/audio/${props.audio.id}/?q=${props.searchTerm}`,
             class: [
               "cursor-pointer",
               {

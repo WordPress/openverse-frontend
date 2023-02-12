@@ -1,6 +1,7 @@
 <template>
   <VSkipToContentContainer
-    class="browse-page flex w-full flex-col px-4 md:px-10"
+    class="browse-page flex w-full flex-col"
+    :class="[isNewHeaderEnabled ? 'px-6 lg:px-10' : 'px-4 md:px-10']"
   >
     <VSearchGrid
       ref="searchGridRef"
@@ -39,6 +40,7 @@ import { computed, defineComponent, inject, ref } from "@nuxtjs/composition-api"
 import { Focus, focusIn } from "~/utils/focus-management"
 import { useMediaStore } from "~/stores/media"
 import { useSearchStore } from "~/stores/search"
+import { useFeatureFlagStore } from "~/stores/feature-flag"
 import { IsSidebarVisibleKey } from "~/types/provides"
 
 import VSearchGrid from "~/components/VSearchGrid.vue"
@@ -66,6 +68,7 @@ export default defineComponent({
     }
     next()
   },
+  layout: "content-layout",
   middleware({ route, redirect }) {
     /**
      * This anonymous middleware redirects any search without a query to the homepage.
@@ -83,6 +86,7 @@ export default defineComponent({
     const isSidebarVisible = inject(IsSidebarVisibleKey)
     const mediaStore = useMediaStore()
     const searchStore = useSearchStore()
+    const featureFlagStore = useFeatureFlagStore()
 
     // I don't know *exactly* why this is necessary, but without it
     // transitioning from the homepage to this page breaks the
@@ -107,6 +111,10 @@ export default defineComponent({
       )
     )
 
+    const isNewHeaderEnabled = computed(() =>
+      featureFlagStore.isOn("new_header")
+    )
+
     return {
       searchGridRef,
       showScrollButton,
@@ -120,6 +128,8 @@ export default defineComponent({
       resultItems,
       needsFetching,
       isSidebarVisible,
+
+      isNewHeaderEnabled,
     }
   },
   /**
