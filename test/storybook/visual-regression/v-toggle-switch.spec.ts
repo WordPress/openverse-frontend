@@ -8,29 +8,39 @@ test.describe("VToggleSwitch", () => {
   })
 
   test("default", async ({ page }) => {
-    expect(
-      await page.locator(".toggle-switch-container").screenshot()
-    ).toMatchSnapshot({ name: "default.png" })
+    expect(await page.locator(".screenshot-area").screenshot()).toMatchSnapshot(
+      { name: "default.png" }
+    )
   })
 
   test("on", async ({ page }) => {
-    const checkbox = page.locator('input[type="checkbox"]')
-    await checkbox.click()
-    expect(
-      await page.locator(".toggle-switch-container").screenshot()
-    ).toMatchSnapshot({ name: "on.png" })
+    const toggleSwitch = page.locator('input[type="checkbox"]')
+    await toggleSwitch.click()
+    expect(await page.locator(".screenshot-area").screenshot()).toMatchSnapshot(
+      { name: "on.png" }
+    )
   })
 
   test("on-and-off", async ({ page }) => {
     // toggle on and off again
-    const checkbox = page.locator('input[type="checkbox"]')
-    await checkbox.click()
+    const toggleSwitch = page.locator('input[type="checkbox"]')
+    await toggleSwitch.click()
 
-    await checkbox.click()
-    expect(
-      await page.locator(".toggle-switch-container").screenshot()
-    ).toMatchSnapshot({
-      name: "on-and-off.png",
-    })
+    await toggleSwitch.click()
+    expect(await page.locator(".screenshot-area").screenshot()).toMatchSnapshot(
+      {
+        name: "on-and-off.png",
+      }
+    )
+  })
+
+  test("focused", async ({ page }) => {
+    const toggleSwitch = page.locator("#toggle-switch")
+    await toggleSwitch.focus()
+    expect(await page.locator(".screenshot-area").screenshot()).toMatchSnapshot(
+      {
+        name: "focused.png",
+      }
+    )
   })
 })
