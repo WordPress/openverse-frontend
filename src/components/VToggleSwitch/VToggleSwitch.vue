@@ -61,6 +61,11 @@ export default defineComponent({
   height: 18px;
 }
 
+.button:focus {
+  outline: 1.5px solid #c52b9b;
+  outline-offset: 1px;
+}
+
 .button,
 .button .layer {
   border-radius: 100px;
