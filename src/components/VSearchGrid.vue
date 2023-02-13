@@ -1,5 +1,5 @@
 <template>
-  <section
+  <main
     v-if="
       !fetchState.hasStarted ||
       fetchState.isFetching ||
@@ -26,7 +26,7 @@
       :is-supported="supported"
       @tab="$emit('tab', $event)"
     />
-  </section>
+  </main>
   <VErrorSection v-else class="w-full py-10">
     <template #image>
       <VErrorImage error-code="NO_RESULT" />
