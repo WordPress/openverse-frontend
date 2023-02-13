@@ -1,15 +1,9 @@
 <template>
   <VContentPage>
-    <h1>
-      {{ $t("sources.title") }}
-    </h1>
+    <h1>{{ $t("sources.title") }}</h1>
 
-    <h2>
-      {{ $t("sources.cc-content.where", { openverse: "Openverse" }) }}
-    </h2>
-    <p>
-      {{ $t("sources.cc-content.content", { openverse: "Openverse" }) }}
-    </p>
+    <h2>{{ $t("sources.cc-content.where", { openverse: "Openverse" }) }}</h2>
+    <p>{{ $t("sources.cc-content.content", { openverse: "Openverse" }) }}</p>
     <i18n path="sources.cc-content.provider" tag="p">
       <template #flickr>
         <VLink href="https://www.flickr.com/">Flickr</VLink>
