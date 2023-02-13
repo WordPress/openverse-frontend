@@ -1,9 +1,7 @@
 <template>
-  <div
-    class="error relative flex flex-grow flex-col overflow-x-hidden px-6 sm:px-0"
-  >
+  <div class="error grid overflow-x-hidden">
     <svg
-      class="z-0 pointer-events-none absolute top-20 -mt-[10%] -ml-[20%] w-[140%] fill-dark-charcoal px-6 opacity-5 lg:mx-auto lg:ml-0 lg:w-full lg:px-16"
+      class="z-0 pointer-events-none col-start-1 row-start-1 -mx-[15%] fill-dark-charcoal opacity-5 lg:mx-15 lg:-mt-20"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 1320 569"
       aria-hidden="true"
@@ -13,11 +11,11 @@
     </svg>
 
     <main
-      class="page-404 flex w-full flex-shrink-0 flex-grow flex-col overflow-x-hidden px-6 lg:mx-auto lg:max-w-2xl lg:px-0"
+      class="page-404 col-start-1 row-start-1 flex flex-col justify-self-stretch px-6 lg:max-w-2xl lg:justify-self-center lg:px-0"
     >
       <!-- Push content by 1/4th height without absolute positioning. -->
       <div class="spacer grow" />
-      <div class="z-10 grow-[3] space-y-4 lg:space-y-6">
+      <VSkipToContentContainer class="z-10 grow-[3] space-y-4 lg:space-y-6">
         <h1 class="heading-5 lg:heading-2 mb-6 lg:mb-10 lg:leading-tight">
           {{ $t("404.title") }}
         </h1>
@@ -33,7 +31,7 @@
           </i18n>
         </p>
         <VStandaloneSearchBar route="404" @submit="handleSearch" />
-      </div>
+      </VSkipToContentContainer>
     </main>
   </div>
 </template>
@@ -45,6 +43,7 @@ import { useSearchStore } from "~/stores/search"
 
 import { ALL_MEDIA } from "~/constants/media"
 
+import VSkipToContentContainer from "~/components/VSkipToContentContainer.vue"
 import VStandaloneSearchBar from "~/components/VHeader/VSearchBar/VStandaloneSearchBar.vue"
 import VLink from "~/components/VLink.vue"
 
@@ -54,6 +53,7 @@ export default defineComponent({
   name: "VFourOhFour",
   components: {
     VLink,
+    VSkipToContentContainer,
     VStandaloneSearchBar,
   },
   props: ["error"],

@@ -17,7 +17,7 @@
       />
     </div>
 
-    <main
+    <div
       class="main grid h-full flex-grow"
       :class="[
         { 'has-sidebar': isSidebarVisible },
@@ -42,7 +42,7 @@
       >
         <VSearchGridFilter class="px-10 pt-8 pb-10" @close="closeSidebar" />
       </aside>
-    </main>
+    </div>
 
     <VModalTarget class="modal" />
     <VGlobalAudioSection />

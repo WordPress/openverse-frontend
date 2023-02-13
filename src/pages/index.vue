@@ -2,16 +2,18 @@
   <main
     class="index flex w-full flex-shrink-0 flex-grow flex-grow flex-col justify-center gap-6 px-6 sm:px-0 lg:flex-row lg:items-center lg:gap-0"
   >
-    <VHomepageContent
-      class="sm:px-14 md:px-20 lg:px-26 xl:w-[53.375rem] xl:pe-0"
-      :handle-search="handleSearch"
-      :search-type="searchType"
-      :set-search-type="setSearchType"
-      :is-sm="isSm"
-    />
+    <VSkipToContentContainer>
+      <VHomepageContent
+        class="sm:px-14 md:px-20 lg:px-26 xl:w-[53.375rem] xl:pe-0"
+        :handle-search="handleSearch"
+        :search-type="searchType"
+        :set-search-type="setSearchType"
+        :is-sm="isSm"
+      />
 
-    <!-- Image carousel -->
-    <VHomeGallery class="hidden h-full flex-grow xl:flex" />
+      <!-- Image carousel -->
+      <VHomeGallery class="hidden h-full flex-grow xl:flex" />
+    </VSkipToContentContainer>
   </main>
 </template>
 
@@ -36,11 +38,16 @@ import { useMediaStore } from "~/stores/media"
 import { useSearchStore } from "~/stores/search"
 import { useUiStore } from "~/stores/ui"
 
+import VHomeGallery from "~/components/VHomeGallery/VHomeGallery.vue"
+import VHomepageContent from "~/components/VHomepageContent.vue"
+import VSkipToContentContainer from "~/components/VSkipToContentContainer.vue"
+
 export default defineComponent({
   name: "HomePage",
   components: {
-    VHomeGallery: () => import("~/components/VHomeGallery/VHomeGallery.vue"),
-    VHomepageContent: () => import("~/components/VHomepageContent.vue"),
+    VHomeGallery,
+    VHomepageContent,
+    VSkipToContentContainer,
   },
   setup() {
     const router = useRouter()

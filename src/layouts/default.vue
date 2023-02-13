@@ -8,15 +8,8 @@
       <VBanners />
       <VHeaderInternal class="bg-yellow" />
     </div>
-
-    <main class="main grid h-full flex-grow">
-      <div
-        class="main-page flex h-full w-full min-w-0 flex-col justify-between"
-      >
-        <Nuxt />
-        <VFooter mode="search" class="bg-yellow" />
-      </div>
-    </main>
+    <Nuxt class="flex-grow" />
+    <VFooter mode="search" class="bg-yellow" />
 
     <VModalTarget class="modal" />
     <VGlobalAudioSection />
@@ -31,7 +24,9 @@ import { useLayout } from "~/composables/use-layout"
 import { useUiStore } from "~/stores/ui"
 
 import VBanners from "~/components/VBanner/VBanners.vue"
+import VFooter from "~/components/VFooter/VFooter.vue"
 import VGlobalAudioSection from "~/components/VGlobalAudioSection/VGlobalAudioSection.vue"
+import VHeaderInternal from "~/components/VHeader/VHeaderInternal.vue"
 import VModalTarget from "~/components/VModal/VModalTarget.vue"
 
 /**
@@ -41,11 +36,11 @@ export default defineComponent({
   name: "DefaultLayout",
   components: {
     VBanners,
-    VHeaderInternal: () => import("~/components/VHeader/VHeaderInternal.vue"),
-    VFooter: () => import("~/components/VFooter/VFooter.vue"),
+    VFooter,
+    VGlobalAudioSection,
+    VHeaderInternal,
     VModalTarget,
     VTeleportTarget,
-    VGlobalAudioSection,
   },
   setup() {
     const uiStore = useUiStore()
