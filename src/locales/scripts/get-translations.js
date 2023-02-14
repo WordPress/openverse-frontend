@@ -106,8 +106,9 @@ const fetchAndConvertJed1xTranslations = (locales) => {
           failedTranslations.push(`${locales[index]} (${value})`)
         }
       })
-      if (failedTranslations.length)
+      if (failedTranslations.length) {
         console.log(`Failed to fetch ${failedTranslations.join(", ")}`)
+      }
       return successfulTranslations
     })
     .then((res) => {
