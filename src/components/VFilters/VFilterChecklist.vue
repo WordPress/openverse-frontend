@@ -1,10 +1,6 @@
 <template>
-  <fieldset>
-    <legend
-      v-if="title"
-      class="text-sm font-semibold"
-      :class="{ 'pt-10': isMatureCategory }"
-    >
+  <fieldset class="mb-8">
+    <legend class="label-bold" :class="{ 'pt-10': isMatureCategory }">
       {{ title }}
     </legend>
     <p
@@ -31,7 +27,7 @@
         :id="item.code"
         :key="index"
         :checked="item.checked"
-        :name="itemName"
+        :name="title"
         :value="item.code"
         :disabled="isDisabled(item)"
         @change="onValueChange"
@@ -76,7 +72,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from "@nuxtjs/composition-api"
+import { defineComponent, PropType, computed } from "@nuxtjs/composition-api"
 
 import { useSearchStore } from "~/stores/search"
 import { useI18n } from "~/composables/use-i18n"
@@ -133,11 +129,7 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const i18n = useI18n()
-    const itemName = computed(() => {
-      return props.filterType === "searchBy"
-        ? i18n.t("filters.search-by.title")
-        : props.title
-    })
+
     const isMatureCategory = computed(() => props.filterType === "mature")
 
     const itemLabel = (item: FilterItem) =>
@@ -168,9 +160,8 @@ export default defineComponent({
     const icons = { help: helpIcon, closeSmall: closeSmallIcon }
 
     return {
-      icons,
-      itemName,
       isMatureCategory,
+      icons,
       isDisabled,
       itemLabel,
       onValueChange,
