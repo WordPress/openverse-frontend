@@ -34,7 +34,7 @@
     <div class="main-page flex h-full w-full min-w-0 flex-col justify-between">
       <Nuxt />
       <VFooter
-        mode="content"
+        :mode="isSearchHeader ? 'content' : 'search'"
         class="border-t border-dark-charcoal-20 bg-white"
       />
     </div>
