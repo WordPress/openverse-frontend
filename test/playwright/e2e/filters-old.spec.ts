@@ -38,9 +38,9 @@ const assertCheckboxCount = async (
 }
 
 const FILTER_COUNTS = {
-  [ALL_MEDIA]: 12,
-  [AUDIO]: 33,
-  [IMAGE]: 71,
+  [ALL_MEDIA]: 11,
+  [AUDIO]: 32,
+  [IMAGE]: 70,
 }
 
 for (const searchType of supportedSearchTypes) {
