@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2023-02-15T14:06:30+00:00\n"
+"POT-Creation-Date: 2023-02-15T14:07:43+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -581,190 +581,185 @@ msgid "Making WordPress Chat"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/search-help.vue:4
-#: src/pages/search-help.vue:244
+#: src/pages/search-help.vue:3
+#: src/pages/search-help.vue:195
 msgctxt "search-guide.title"
 msgid "###openverse### Syntax Guide"
 msgstr ""
 
-#: src/pages/search-help.vue:7
+#: src/pages/search-help.vue:4
 msgctxt "search-guide.intro"
 msgid "When you search, you can enter special symbols or words to your search term to make your search results more precise."
 msgstr ""
 
-#: src/pages/search-help.vue:11
+#: src/pages/search-help.vue:6
 msgctxt "search-guide.exact.title"
 msgid "Search for an exact match"
 msgstr ""
 
-#: src/pages/search-help.vue:17
+#: src/pages/search-help.vue:10
 msgctxt "search-guide.exact.aria-label"
 msgid "quote unquote Claude Monet"
 msgstr ""
 
-#: src/pages/search-help.vue:20
+#: src/pages/search-help.vue:13
 msgctxt "search-guide.exact.claude-monet"
 msgid "\"Claude Monet\""
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/search-help.vue:13
+#: src/pages/search-help.vue:7
 msgctxt "search-guide.exact.content"
 msgid "Put a word or phrase inside quotes. For example, ###link###."
 msgstr ""
 
-#: src/pages/search-help.vue:27
+#: src/pages/search-help.vue:18
 msgctxt "search-guide.combine.title"
 msgid "Combining terms"
 msgstr ""
 
-#: src/pages/search-help.vue:31
+#: src/pages/search-help.vue:20
 msgctxt "search-guide.combine.description"
 msgid "If you want to combine terms, you can use the following operators to perform more complex queries"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/search-help.vue:34
 msgctxt "search-guide.combine.and"
 msgid "###symbol### signifies AND operation"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/search-help.vue:43
 msgctxt "search-guide.combine.or"
 msgid "###symbol### signifies OR operation"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/search-help.vue:53
-msgctxt "search-guide.combine.negate"
+msgctxt "search-guide.combine.not"
 msgid "###symbol### negates a single token"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/search-help.vue:63
 msgctxt "search-guide.combine.prefix"
 msgid "###symbol### at the end of a term signifies a prefix query"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/search-help.vue:71
 msgctxt "search-guide.combine.precedence"
-msgid "###open### and ###close### signify precedence"
+msgid "###symbol### signify precedence"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/search-help.vue:87
 msgctxt "search-guide.combine.fuzziness"
 msgid "###symbol### after a word signifies edit distance (fuzziness)"
 msgstr ""
 
-#: src/pages/search-help.vue:91
 msgctxt "search-guide.combine.aria-labels.fuzziness"
 msgid "tilde N"
 msgstr ""
 
-#: src/pages/search-help.vue:74
 msgctxt "search-guide.combine.aria-labels.open"
 msgid "open parenthesis"
 msgstr ""
 
-#: src/pages/search-help.vue:81
 msgctxt "search-guide.combine.aria-labels.close"
 msgid "close parenthesis"
 msgstr ""
 
-#: src/pages/search-help.vue:66
 msgctxt "search-guide.combine.aria-labels.star"
 msgid "star symbol"
 msgstr ""
 
-#: src/pages/search-help.vue:57
-msgctxt "search-guide.combine.aria-labels.minus"
+msgctxt "search-guide.combine.aria-labels.not"
 msgid "minus symbol"
 msgstr ""
 
-#: src/pages/search-help.vue:38
-msgctxt "search-guide.combine.aria-labels.plus"
+msgctxt "search-guide.combine.aria-labels.and"
 msgid "plus symbol"
 msgstr ""
 
-#: src/pages/search-help.vue:47
+msgctxt "search-guide.combine.aria-labels.or"
+msgid "vertical bar symbol"
+msgstr ""
+
+msgctxt "search-guide.combine.aria-labels.prefix"
+msgid "asterisk symbol"
+msgstr ""
+
 msgctxt "search-guide.combine.aria-labels.vertical-bar"
 msgid "vertical bar symbol"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/search-help.vue:99
+#: src/pages/search-help.vue:22
 msgctxt "search-guide.example.and.description"
 msgid "Example: ###link######br### This will search for images related to both dog and cat."
 msgstr ""
 
-#: src/pages/search-help.vue:102
+#: src/pages/search-help.vue:42
 msgctxt "search-guide.example.and.aria-label"
 msgid "dog plus cat"
 msgstr ""
 
-#: src/pages/search-help.vue:105
+#: src/pages/search-help.vue:45
 msgctxt "search-guide.example.and.example"
 msgid "dog+cat"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/search-help.vue:113
+#: src/pages/search-help.vue:51
 msgctxt "search-guide.example.or.description"
 msgid "Example: ###link######br### This will search for images related to dog or cat, but not necessarily both."
 msgstr ""
 
-#: src/pages/search-help.vue:116
+#: src/pages/search-help.vue:54
 msgctxt "search-guide.example.or.aria-label"
 msgid "dog vertical bar cat"
 msgstr ""
 
-#: src/pages/search-help.vue:119
+#: src/pages/search-help.vue:57
 msgctxt "search-guide.example.or.example"
 msgid "dog|cat"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/search-help.vue:127
+#: src/pages/search-help.vue:65
 msgctxt "search-guide.example.negate.description"
 msgid "You can use the ###operator### to exclude a search term from the results."
 msgstr ""
 
-#: src/pages/search-help.vue:134
+#: src/pages/search-help.vue:72
 msgctxt "search-guide.example.negate.operator-name"
 msgid "operator (signifies NOT)"
 msgstr ""
 
-#: src/pages/search-help.vue:131
+#: src/pages/search-help.vue:69
 msgctxt "search-guide.example.negate.operator-aria-label"
 msgid "minus operator (signifies NOT)"
 msgstr ""
 
-#: src/pages/search-help.vue:142
+#: src/pages/search-help.vue:80
 msgctxt "search-guide.example.negate.aria-label"
 msgid "dog minus pug"
 msgstr ""
 
-#: src/pages/search-help.vue:145
+#: src/pages/search-help.vue:83
 msgctxt "search-guide.example.negate.example"
 msgid "dog -pug"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/search-help.vue:139
+#: src/pages/search-help.vue:77
 msgctxt "search-guide.example.negate.content"
 msgid "Example: ###link######br### This will search for images related to dog but won't include results related to 'pug'"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/search-help.vue:153
+#: src/pages/search-help.vue:91
 msgctxt "search-guide.example.prefix.description"
 msgid "You can use the ###operator-name### to mark a prefix term. This will match anything after the *."
 msgstr ""
 
-#: src/pages/search-help.vue:158
+#: src/pages/search-help.vue:96
 msgctxt "search-guide.example.prefix.operator-name"
 msgid "operator (wildcard)"
 msgstr ""
@@ -773,68 +768,68 @@ msgctxt "search-guide.example.prefix.operator-aria-label"
 msgid "star operator (wildcard)"
 msgstr ""
 
-#: src/pages/search-help.vue:156
-#: src/pages/search-help.vue:166
+#: src/pages/search-help.vue:94
+#: src/pages/search-help.vue:104
 msgctxt "search-guide.example.prefix.aria-label"
 msgid "net star symbol"
 msgstr ""
 
-#: src/pages/search-help.vue:169
+#: src/pages/search-help.vue:107
 msgctxt "search-guide.example.prefix.example"
 msgid "net*"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/search-help.vue:163
+#: src/pages/search-help.vue:101
 msgctxt "search-guide.example.prefix.content"
-msgid "Example: ###link######br### This will search for images matching anything with 'net'. This might include 'network', 'Netflix', 'Netherlands', etc.."
+msgid "Example: ###link######br### This will search for images matching anything with 'net'. This might include 'network', 'Netflix', 'Netherlands', etc."
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/search-help.vue:177
+#: src/pages/search-help.vue:115
 msgctxt "search-guide.example.precedence.description"
 msgid "You can use parentheses ###highlight### to specify precedence of terms or combine more complex queries."
 msgstr ""
 
-#: src/pages/search-help.vue:186
+#: src/pages/search-help.vue:124
 msgctxt "search-guide.example.precedence.aria-label"
 msgid "dogs plus open parenthesis corgis vertical bar labrador close parenthesis"
 msgstr ""
 
-#: src/pages/search-help.vue:189
+#: src/pages/search-help.vue:127
 msgctxt "search-guide.example.precedence.example"
 msgid "dogs + (corgis | labrador)"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/search-help.vue:183
+#: src/pages/search-help.vue:121
 msgctxt "search-guide.example.precedence.content"
 msgid "Example: ###link######br### This will search for images that match dogs that are either corgis or labrador."
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/search-help.vue:197
+#: src/pages/search-help.vue:135
 msgctxt "search-guide.example.fuzziness.description"
 msgid "You can use ###highlight### to specify some fuzzy logic to the term according to the ###link### — the number of one character changes that need to be made to one string to make it the same as another string."
 msgstr ""
 
-#: src/pages/search-help.vue:203
+#: src/pages/search-help.vue:141
 msgctxt "search-guide.example.fuzziness.link-text"
 msgid "Levenshtein Edit Distance"
 msgstr ""
 
-#: src/pages/search-help.vue:211
+#: src/pages/search-help.vue:149
 msgctxt "search-guide.example.fuzziness.aria-label"
 msgid "theatre tilde 1"
 msgstr ""
 
-#: src/pages/search-help.vue:214
+#: src/pages/search-help.vue:152
 msgctxt "search-guide.example.fuzziness.example"
 msgid "theatre~1"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/search-help.vue:208
+#: src/pages/search-help.vue:146
 msgctxt "search-guide.example.fuzziness.content"
 msgid "Example: ###link######br### This will search for images that match strings close to the term 'theatre' with a difference of one character. Results might include terms with different spellings like 'theater'."
 msgstr ""
