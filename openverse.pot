@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2023-02-15T06:24:26+00:00\n"
+"POT-Creation-Date: 2023-02-15T14:05:24+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -12,25 +12,23 @@ msgstr ""
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
-#: src/components/VFourOhFour.vue:32
+#: src/components/VFourOhFour.vue:22
 msgctxt "404.title"
 msgid "The content you’re looking for seems to have disappeared."
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VFourOhFour.vue:35
+#: src/components/VFourOhFour.vue:25
 msgctxt "404.main"
 msgid "Go to ###link### or search for something similar from the field below."
 msgstr ""
 
 #: src/components/VHomepageContent.vue:6
-#: src/components/VOldHomepageContent.vue:22
 msgctxt "hero.subtitle"
 msgid "Explore more than 600 million creative works"
 msgstr ""
 
 #: src/components/VHomepageContent.vue:10
-#: src/components/VOldHomepageContent.vue:26
 msgctxt "hero.description"
 msgid "An extensive library of free stock photos, images, and audio, available for free use."
 msgstr ""
@@ -38,22 +36,17 @@ msgstr ""
 #: src/components/VHeader/VHeaderMobile/VHeaderMobile.vue:46
 #: src/components/VHeader/VSearchBar/VSearchBar.vue:11
 #: src/components/VHeader/VSearchBar/VStandaloneSearchBar.vue:18
-#: src/components/VHeaderOld/VSearchBar/VSearchBarOld.vue:7
 msgctxt "hero.search.placeholder"
 msgid "Search for content"
 msgstr ""
 
 #. Do not translate words between ### ###.
 #: src/components/VHomepageContent.vue:59
-#: src/components/VOldHomepageContent.vue:53
-#: src/pages/index.vue:35
 msgctxt "hero.disclaimer.content"
 msgid "All ###openverse### content is under a ###license### or is in the public domain."
 msgstr ""
 
 #: src/components/VHomepageContent.vue:65
-#: src/components/VOldHomepageContent.vue:63
-#: src/pages/index.vue:46
 msgctxt "hero.disclaimer.license"
 msgid "Creative Commons license"
 msgstr ""
@@ -83,7 +76,6 @@ msgstr ""
 
 #: src/components/VHeader/VHomeLink.vue:7
 #: src/components/VHeader/VLogoButton.vue:5
-#: src/components/VHeaderOld/VLogoButtonOld.vue:5
 msgctxt "header.home-link"
 msgid "Home"
 msgstr ""
@@ -126,8 +118,6 @@ msgstr ""
 
 #: src/components/VHeader/VHeaderInternal.vue:19
 #: src/components/VHeader/VHeaderMobile/VContentSettingsModalContent.vue:3
-#: src/components/VHeaderOld/VPageMenu/VDesktopPageMenu.vue:6
-#: src/components/VHeaderOld/VPageMenu/VPageMenuButton.vue:6
 msgctxt "header.aria.menu"
 msgid "menu"
 msgstr ""
@@ -173,19 +163,13 @@ msgctxt "header.loading"
 msgid "Loading..."
 msgstr ""
 
-#: src/components/VContentSwitcherOld/VMobileMenuModal.vue:5
 #: src/components/VHeader/VFilterButton.vue:73
-#: src/components/VHeaderOld/VFilterButtonOld.vue:103
-#: src/components/VHeaderOld/VHeaderFilter.vue:22
-#: src/components/VHeaderOld/VPageMenu/VMobilePageMenu.vue:4
 msgctxt "header.filter-button.simple"
 msgid "Filters"
 msgstr ""
 
 #. Do not translate words between ### ###.
 #: src/components/VHeader/VFilterButton.vue:72
-#: src/components/VHeaderOld/VFilterButtonOld.vue:102
-#: src/components/VHeaderOld/VFilterButtonOld.vue:109
 msgctxt "header.filter-button.with-count"
 msgid "###count### Filter"
 msgid_plural "###count### Filters"
@@ -253,7 +237,7 @@ msgstr ""
 
 #. Do not translate words between ### ###.
 #: src/pages/about.vue:4
-#: src/pages/about.vue:154
+#: src/pages/about.vue:152
 msgctxt "about.title"
 msgid "About ###openverse###"
 msgstr ""
@@ -323,7 +307,7 @@ msgid "###openverse### Terms of Use"
 msgstr ""
 
 #: src/pages/sources.vue:4
-#: src/pages/sources.vue:113
+#: src/pages/sources.vue:111
 msgctxt "sources.title"
 msgid "Sources"
 msgstr ""
@@ -438,7 +422,7 @@ msgstr ""
 
 #: src/pages/about.vue:71
 #: src/pages/external-sources.vue:4
-#: src/pages/external-sources.vue:85
+#: src/pages/external-sources.vue:82
 msgctxt "external-sources-page.title"
 msgid "External Sources"
 msgstr ""
@@ -548,7 +532,7 @@ msgid "You can find links to external sources at the bottom of every ###openvers
 msgstr ""
 
 #: src/pages/privacy.vue:4
-#: src/pages/privacy.vue:65
+#: src/pages/privacy.vue:63
 msgctxt "privacy.title"
 msgid "Privacy"
 msgstr ""
@@ -598,7 +582,7 @@ msgstr ""
 
 #. Do not translate words between ### ###.
 #: src/pages/search-help.vue:4
-#: src/pages/search-help.vue:246
+#: src/pages/search-help.vue:244
 msgctxt "search-guide.title"
 msgid "###openverse### Syntax Guide"
 msgstr ""
@@ -856,7 +840,7 @@ msgid "Example: ###link######br### This will search for images that match string
 msgstr ""
 
 #: src/pages/feedback.vue:4
-#: src/pages/feedback.vue:73
+#: src/pages/feedback.vue:71
 msgctxt "feedback.title"
 msgid "Feedback"
 msgstr ""
@@ -897,14 +881,14 @@ msgid "An error occurred"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/image/_id/index.vue:257
+#: src/pages/image/_id/index.vue:239
 #: src/pages/image/_id/report.vue:95
 msgctxt "error.image-not-found"
 msgid "Couldn't find image with id ###id###"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/audio/_id/index.vue:94
+#: src/pages/audio/_id/index.vue:87
 msgctxt "error.media-not-found"
 msgid "Couldn't find ###mediaType### with id ###id###"
 msgstr ""
@@ -1518,7 +1502,7 @@ msgid "read more about the tool"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/image/_id/index.vue:65
+#: src/pages/image/_id/index.vue:54
 msgctxt "media-details.aria.creator-url"
 msgid "author ###name###"
 msgstr ""
@@ -1642,12 +1626,12 @@ msgid "Back to results"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/image/_id/index.vue:60
+#: src/pages/image/_id/index.vue:49
 msgctxt "image-details.creator"
 msgid "by ###name###"
 msgstr ""
 
-#: src/pages/image/_id/index.vue:48
+#: src/pages/image/_id/index.vue:37
 msgctxt "image-details.weblink"
 msgid "Get this image"
 msgstr ""
@@ -1747,7 +1731,7 @@ msgctxt "audio-details.information"
 msgid "Audio information"
 msgstr ""
 
-#: src/components/VAudioTrack/layouts/VFullLayout.vue:68
+#: src/components/VAudioTrack/layouts/VFullLayout.vue:61
 msgctxt "audio-details.weblink"
 msgid "Get this audio"
 msgstr ""
@@ -1941,7 +1925,7 @@ msgid "Loading..."
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/components/VAudioTrack/layouts/VFullLayout.vue:41
+#: src/components/VAudioTrack/layouts/VFullLayout.vue:34
 #: src/components/VAudioTrack/layouts/VRowLayout.vue:45
 msgctxt "audio-track.creator"
 msgid "by ###creator###"
@@ -1966,7 +1950,6 @@ msgstr ""
 #: src/components/VHeader/VSearchBar/VSearchButton.vue:3
 #: src/components/VHeader/VSearchBar/VSearchButton.vue:20
 #: src/components/VHeader/VSearchBar/VStandaloneSearchBar.vue:31
-#: src/components/VHeaderOld/VSearchBar/VSearchButtonOld.vue:4
 msgctxt "search.search"
 msgid "Search"
 msgstr ""
@@ -1975,8 +1958,6 @@ msgstr ""
 #: src/components/VHeader/VHeaderMobile/VHeaderMobile.vue:51
 #: src/components/VHeader/VSearchBar/VSearchBar.vue:14
 #: src/components/VHeader/VSearchBar/VStandaloneSearchBar.vue:21
-#: src/components/VHeaderOld/VSearchBar/VSearchBarOld.vue:11
-#: src/components/VHeaderOld/VSearchBar/VStandaloneSearchBarOld.vue:23
 msgctxt "search.search-bar-label"
 msgid "Search for content in ###openverse###"
 msgstr ""
@@ -2050,7 +2031,7 @@ msgctxt "download-button.download"
 msgid "Download"
 msgstr ""
 
-#: src/components/VAudioTrack/layouts/VFullLayout.vue:55
+#: src/components/VAudioTrack/layouts/VFullLayout.vue:48
 #: src/components/VAudioTrack/layouts/VRowLayout.vue:48
 #: src/components/VAudioTrack/layouts/VRowLayout.vue:58
 #: src/components/VAudioTrack/layouts/VRowLayout.vue:65
@@ -2062,7 +2043,7 @@ msgstr ""
 #: src/components/VContentReport/VContentReportPopover.vue:16
 #: src/components/VExternalSearch/VExternalSourceList.vue:6
 #: src/components/VHeader/VHeaderInternal.vue:62
-#: src/components/VModal/VModalContent.vue:48
+#: src/components/VModal/VModalContent.vue:42
 msgctxt "modal.close"
 msgid "Close"
 msgstr ""
@@ -2123,7 +2104,6 @@ msgid "3D Models"
 msgstr ""
 
 #: src/components/VContentSwitcher/VSearchTypePopover.vue:4
-#: src/components/VContentSwitcherOld/VSearchTypePopoverOld.vue:5
 msgctxt "search-type.label"
 msgid "Type of content to search"
 msgstr ""
@@ -2139,7 +2119,6 @@ msgid "Coming soon"
 msgstr ""
 
 #: src/components/VContentSwitcher/VSearchTypeItem.vue:14
-#: src/components/VContentSwitcherOld/VSearchTypeItemOld.vue:13
 msgctxt "search-type.status-beta"
 msgid "Beta"
 msgstr ""
