@@ -40,7 +40,7 @@ jobs:
 
       - uses: ./.github/actions/setup-node-env
 
-      - name: Run build
+      - name: Download translation strings
         run: pnpm i18n
         env:
           GLOTPRESS_USERNAME: ${{ secrets.MAKE_USERNAME }}
