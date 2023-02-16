@@ -9,10 +9,8 @@
       <VHeaderInternal class="bg-yellow" />
     </div>
 
-    <div
-      class="main-page flex max-h-full w-full min-w-0 flex-grow flex-col justify-between"
-    >
-      <Nuxt class="flex h-full w-full min-w-0 flex-grow" />
+    <div class="grid flex-grow grid-rows-[1fr,auto]">
+      <Nuxt />
       <VFooter mode="search" class="bg-yellow" />
     </div>
 
