@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openverse \n"
 "Report-Msgid-Bugs-To: https://github.com/wordpress/openverse/issues \n"
-"POT-Creation-Date: 2023-02-16T16:37:44+00:00\n"
+"POT-Creation-Date: 2023-02-16T18:54:50+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -876,14 +876,14 @@ msgid "An error occurred"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/image/_id/index.vue:239
-#: src/pages/image/_id/report.vue:95
+#: src/pages/image/_id/index.vue:241
+#: src/pages/image/_id/report.vue:100
 msgctxt "error.image-not-found"
 msgid "Couldn't find image with id ###id###"
 msgstr ""
 
 #. Do not translate words between ### ###.
-#: src/pages/audio/_id/index.vue:87
+#: src/pages/audio/_id/index.vue:89
 msgctxt "error.media-not-found"
 msgid "Couldn't find ###mediaType### with id ###id###"
 msgstr ""
@@ -2237,7 +2237,7 @@ msgctxt "recent-searches.disclaimer"
 msgid "Openverse does not store your recent searches, this information is kept locally in your browser."
 msgstr ""
 
-#: src/pages/image/_id/report.vue:28
+#: src/pages/image/_id/report.vue:29
 msgctxt "report.image-details"
 msgid "See image details"
 msgstr ""
