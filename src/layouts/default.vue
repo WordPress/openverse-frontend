@@ -9,14 +9,12 @@
       <VHeaderInternal class="bg-yellow" />
     </div>
 
-    <main class="main grid h-full flex-grow">
-      <div
-        class="main-page flex h-full w-full min-w-0 flex-col justify-between"
-      >
-        <Nuxt />
-        <VFooter mode="search" class="bg-yellow" />
-      </div>
-    </main>
+    <div
+      class="main-page flex max-h-full w-full min-w-0 flex-grow flex-col justify-between"
+    >
+      <Nuxt class="flex h-full w-full min-w-0 flex-grow" />
+      <VFooter mode="search" class="bg-yellow" />
+    </div>
 
     <VModalTarget class="modal" />
     <VGlobalAudioSection />
