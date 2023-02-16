@@ -1,5 +1,6 @@
 const axios = require("./axios")
 const { writeLocaleFile } = require("./utils")
+const jed1xJsonToJson = require("./jed1x-json-to-json")
 
 const DOWNLOAD_BASE_URL =
   "https://translate.wordpress.org/projects/meta/openverse"
@@ -27,7 +28,7 @@ const fetchJed1xAll = async (locales) => {
   let failed = {}
   results.forEach(({ status, value }, index) => {
     if (status === "fulfilled" && !isEmpty(value)) {
-      succeeded[locales[index]] = value
+      succeeded[locales[index]] = jed1xJsonToJson(value)
     } else {
       failed[locales[index]] = value
     }
