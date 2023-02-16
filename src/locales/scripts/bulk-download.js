@@ -39,7 +39,7 @@ const getAuthCookies = async (log, pwd) => {
   )
   if (
     res.status == 302 &&
-    res.headers["set-cookie"].join(" ").includes("wporg_loggged_in")
+    res.headers["set-cookie"].join(" ").includes("wporg_logged_in")
   ) {
     return res.headers["set-cookie"].map((cookie) =>
       cookie.substring(0, cookie.indexOf(";"))
