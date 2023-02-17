@@ -1,0 +1,87 @@
+{
+    meta: {
+        createdAt: '2023-02-17T14:43:58.409Z',
+        host: 'https://api.openverse.engineering',
+        resHumanReadable: true,
+    },
+    req: {
+        headers: {
+            connection: 'close',
+        },
+        url: '/v1/audio/?q=querywithnoresults&peaks=true',
+        method: 'GET',
+        body: '',
+    },
+    res: {
+        status: 200,
+        headers: {
+            date: [
+                'Fri, 17 Feb 2023 14:44:00 GMT',
+            ],
+            'content-type': [
+                'application/json',
+            ],
+            'content-length': [
+                '70',
+            ],
+            connection: [
+                'close',
+            ],
+            vary: [
+                'Accept, Authorization, Origin',
+            ],
+            allow: [
+                'GET, HEAD, OPTIONS',
+            ],
+            'x-frame-options': [
+                'DENY',
+            ],
+            'x-content-type-options': [
+                'nosniff',
+            ],
+            'referrer-policy': [
+                'same-origin',
+            ],
+            'cross-origin-opener-policy': [
+                'same-origin',
+            ],
+            'x-request-id': [
+                '7dcc6d31fb1944448351cc94c5dbab91',
+            ],
+            'cache-control': [
+                'max-age=14400',
+            ],
+            'cf-cache-status': [
+                'MISS',
+            ],
+            'last-modified': [
+                'Fri, 17 Feb 2023 14:44:00 GMT',
+            ],
+            'accept-ranges': [
+                'bytes',
+            ],
+            'server-timing': [
+                'cf-q-config;dur=6.0000002122251e-06',
+            ],
+            'strict-transport-security': [
+                'max-age=15552000; includeSubDomains; preload',
+            ],
+            server: [
+                'cloudflare',
+            ],
+            'cf-ray': [
+                '79af4c6948f6b9d5-OTP',
+            ],
+            'alt-svc': [
+                'h3=":443"; ma=86400, h3-29=":443"; ma=86400',
+            ],
+        },
+        body: {
+            result_count: 0,
+            page_count: 0,
+            page_size: 20,
+            page: 1,
+            results: [],
+        },
+    },
+}
