@@ -104,12 +104,16 @@
           :aria-label="$t('search-guide.example.prefix.aria-label')"
           :href="pathFromQuery('net*')"
         >
-          <em>{{ $t("search-guide.example.prefix.example") }}</em>
+          <em>net*</em>
         </VLink>
       </template>
       <template #br>
         <br />
       </template>
+      <template #net>net</template>
+      <template #network>network</template>
+      <template #netflix>Netflix</template>
+      <template #netherlands>Netherlands</template>
     </i18n>
 
     <i18n path="search-guide.example.precedence.description" tag="p">
