@@ -1,5 +1,5 @@
 <template>
-  <VSkipToContentContainer ref="nodeRef">
+  <VSkipToContentContainer>
     <h1
       class="mt-auto mb-2 text-[40px] font-light leading-tight lg:text-[63px]"
     >
@@ -113,13 +113,13 @@ export default {
     },
   },
   setup(props, { emit }) {
-    const nodeRef = ref<HTMLElement | null>(null)
     const searchTypeButtonRef = ref<InstanceType<
       typeof VSearchTypeButton
     > | null>(null)
     const searchBarRef = ref<InstanceType<typeof VStandaloneSearchBar> | null>(
       null
     )
+    const nodeRef = computed(() => searchBarRef.value?.$el)
 
     const { getSearchTypeProps } = useSearchType()
     const uiStore = useUiStore()
@@ -165,7 +165,6 @@ export default {
     })
 
     return {
-      nodeRef,
       searchTypeButtonRef,
       searchBarRef,
 
