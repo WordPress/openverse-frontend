@@ -35,7 +35,6 @@
         </template>
       </i18n>
     </ul>
-    <!-- eslint-disable @intlify/vue-i18n/no-raw-text -->
     <i18n path="search-guide.example.and.description" tag="p">
       <template #link>
         <VLink
@@ -62,6 +61,7 @@
       </template>
     </i18n>
 
+    <!-- eslint-disable @intlify/vue-i18n/no-raw-text -->
     <i18n path="search-guide.example.negate.description" tag="p" class="mt-4">
       <template #operator>
         <em
@@ -73,6 +73,7 @@
         >
       </template>
     </i18n>
+    <!-- eslint-enable @intlify/vue-i18n/no-raw-text -->
 
     <i18n path="search-guide.example.negate.content" tag="p" class="mb-4">
       <template #link>
@@ -88,6 +89,7 @@
       </template>
     </i18n>
 
+    <!-- eslint-disable @intlify/vue-i18n/no-raw-text -->
     <i18n path="search-guide.example.prefix.description" tag="p" class="mt-4">
       <template #operator>
         <em
@@ -115,9 +117,11 @@
       <template #netflix>Netflix</template>
       <template #netherlands>Netherlands</template>
     </i18n>
+    <!-- eslint-enable @intlify/vue-i18n/no-raw-text -->
 
     <i18n path="search-guide.example.precedence.description" tag="p">
       <template #highlight>
+        <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
         <em>( and )</em>
       </template>
     </i18n>
@@ -138,6 +142,7 @@
 
     <i18n path="search-guide.example.fuzziness.description" tag="p">
       <template #highlight>
+        <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
         <em aria-label="tilde N">~N</em>
       </template>
       <template #link>
@@ -160,7 +165,6 @@
         <br />
       </template>
     </i18n>
-    <!-- eslint-enable @intlify/vue-i18n/no-raw-text -->
   </VContentPage>
 </template>
 
