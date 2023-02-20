@@ -2,8 +2,8 @@
   <VIcon v-if="showIcon" :icon-path="filterIcon" />
   <p
     v-else
-    class="flex h-6 w-6 items-center justify-center bg-dark-charcoal-10"
-    :class="{ 'bg-dark-charcoal-10 group-hover:bg-dark-charcoal-20': pressed }"
+    class="flex h-6 w-6 items-center justify-center"
+    :class="pressed ? 'bg-tx' : 'bg-dark-charcoal-10'"
   >
     {{ appliedFilterCount }}
   </p>

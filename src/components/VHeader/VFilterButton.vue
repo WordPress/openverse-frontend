@@ -3,18 +3,17 @@
     id="filter-button"
     variant="plain"
     size="disabled"
-    class="align-center label-regular h-12 w-12 gap-2 self-center xl:w-auto xl:ps-3 xl:pe-4"
+    class="align-center label-regular h-12 w-12 gap-2 self-center border-tx xl:w-auto xl:ps-3 xl:pe-4"
     :class="
       pressed
-        ? 'border-tx bg-dark-charcoal text-white hover:bg-dark-charcoal-90'
-        : 'border-tx bg-tx hover:border-dark-charcoal-20 '
+        ? 'bg-dark-charcoal text-white hover:bg-dark-charcoal-90'
+        : 'bg-tx hover:border-dark-charcoal-20'
     "
     :pressed="pressed"
     :disabled="disabled"
     aria-controls="filters"
     :aria-label="ariaLabel"
     @click="$emit('toggle')"
-    @keydown.tab.exact="$emit('tab', $event)"
   >
     <VFilterIconOrCounter
       :applied-filter-count="filterCount"
@@ -51,7 +50,6 @@ export default defineComponent({
     },
   },
   emits: {
-    tab: defineEvent<[KeyboardEvent]>(),
     toggle: defineEvent(),
   },
   setup() {
