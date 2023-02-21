@@ -20,11 +20,13 @@
     <form ref="filtersFormRef" class="filters-form">
       <template v-for="(filterType, index) in filterTypes">
         <!-- Divider above the sensitive content filter -->
-        <div
-          v-if="filterType === 'mature' && isSensitiveContentEnabled"
-          :key="index"
-          class="absolute left-0 h-px w-full bg-dark-charcoal-20"
-        />
+        <div :key="index" class="relative">
+          <div
+            v-if="filterType === 'mature' && isSensitiveContentEnabled"
+            :class="[isMobile ? 'mobileDividerLine' : 'desktopDividerLine']"
+            class="absolute h-px bg-dark-charcoal-20"
+          />
+        </div>
         <VFilterChecklist
           :key="filterType"
           :options="filters[filterType]"
@@ -59,6 +61,7 @@ import { kebab } from "case"
 import { watchDebounced } from "@vueuse/core"
 
 import { useSearchStore } from "~/stores/search"
+import { useUiStore } from "~/stores/ui"
 import { useFeatureFlagStore } from "~/stores/feature-flag"
 import { areQueriesEqual, ApiQueryParams } from "~/utils/search-query-transform"
 import type { FilterCategory } from "~/constants/filters"
@@ -98,10 +101,12 @@ export default defineComponent({
   setup() {
     const searchStore = useSearchStore()
     const featureFlagStore = useFeatureFlagStore()
+    const uiStore = useUiStore()
 
     const { i18n } = useContext()
     const router = useRouter()
 
+    const isMobile = computed(() => !uiStore.isDesktopLayout)
     const filtersFormRef = ref<HTMLFormElement>(null)
 
     const isSensitiveContentEnabled = computed(() =>
@@ -130,6 +135,7 @@ export default defineComponent({
     )
 
     return {
+      isMobile,
       isSensitiveContentEnabled,
       filtersFormRef,
       isAnyFilterApplied,
@@ -142,3 +148,14 @@ export default defineComponent({
   },
 })
 </script>
+
+<style scoped>
+.mobileDividerLine {
+  width: calc(100% + 3rem);
+  left: -1.5rem;
+}
+.desktopDividerLine {
+  width: calc(100% + 5rem);
+  left: -2.5rem;
+}
+</style>
