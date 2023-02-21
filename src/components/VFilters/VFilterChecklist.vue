@@ -1,5 +1,5 @@
 <template>
-  <fieldset class="mb-8">
+  <fieldset>
     <legend class="label-bold" :class="{ 'pt-10': isMatureCategory }">
       {{ title }}
     </legend>
