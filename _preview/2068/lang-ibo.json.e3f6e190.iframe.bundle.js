@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[91],{"./src/locales/ibo.json":function(module){module.exports=JSON.parse("{}")}}]);

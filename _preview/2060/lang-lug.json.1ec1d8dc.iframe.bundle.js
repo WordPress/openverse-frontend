@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[97],{"./src/locales/lug.json":function(module){module.exports=JSON.parse("{}")}}]);

@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[152],{"./src/locales/tg.json":function(module){module.exports=JSON.parse("{}")}}]);
