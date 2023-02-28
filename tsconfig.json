@@ -84,7 +84,6 @@
     "src/components/VHeader/VPageLinks.vue",
     "src/components/VHeader/VSearchBar/**.vue",
     "src/components/VImageDetails/VRelatedImages.vue",
-
     "src/pages/about.vue",
     "src/pages/feedback.vue",
     "src/pages/search-help.vue",
@@ -96,8 +95,9 @@
      * with other tools we rely on.
      */
     "src/constants/**/*",
-    "src/server-middleware/healthcheck.js"
+    "src/server-middleware/healthcheck.js",
     /** End of non TypeScript files section */
+    "src/components/VToggleSwitch/VToggleSwitch.vue"
   ],
   "exclude": ["node_modules"],
   "vueCompilerOptions": {

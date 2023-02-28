@@ -2,6 +2,8 @@ import { nextTick } from "@nuxtjs/composition-api"
 
 import { setActivePinia, createPinia } from "~~/test/unit/test-utils/pinia"
 
+import { useFeatureFlagStore } from "~/stores/feature-flag"
+
 import { env } from "~/utils/env"
 
 import { filterData, mediaFilterKeys } from "~/constants/filters"
@@ -14,7 +16,6 @@ import {
 } from "~/constants/media"
 
 import { useSearchStore } from "~/stores/search"
-import { useFeatureFlagStore } from "~/stores/feature-flag"
 
 describe("Search Store", () => {
   beforeEach(() => {
